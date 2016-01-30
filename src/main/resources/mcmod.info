@@ -1,0 +1,17 @@
+[
+{
+  "modid": "Woot",
+  "name": "Woot",
+  "description": "The alternative mob spawner/grinder system",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.github.com/ipsis/Woot/",
+  "updateUrl": "",
+  "authorList": ["Ipsis"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": [
+    ]
+}
+]

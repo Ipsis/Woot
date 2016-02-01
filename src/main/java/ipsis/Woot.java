@@ -28,7 +28,7 @@ public class Woot {
         @Override
         @SideOnly(Side.CLIENT)
         public Item getTabIconItem() {
-            return Items.spawn_egg;
+            return Item.getItemFromBlock(ModBlocks.blockFactory);
         }
     };
 

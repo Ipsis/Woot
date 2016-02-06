@@ -1,13 +1,13 @@
 package ipsis;
 
+import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.init.ModRecipes;
-import ipsis.woot.manager.SpawnerManager2;
+import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -21,7 +21,7 @@ public class Woot {
 
     @Mod.Instance(Reference.MOD_ID)
     public static Woot instance;
-    public static SpawnerManager2 spawnerManager2 = new SpawnerManager2();
+    public static SpawnerManager spawnerManager = new SpawnerManager();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
@@ -39,6 +39,11 @@ public class Woot {
 
         ModBlocks.init();
         ModItems.init();
+
+        ConfigHandler.init(event.getSuggestedConfigurationFile());
+
+        /* TODO this needs to go after config load */
+        spawnerManager.init();
         proxy.preInit();
     }
 

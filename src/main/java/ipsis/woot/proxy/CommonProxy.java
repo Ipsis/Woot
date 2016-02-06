@@ -1,6 +1,7 @@
 package ipsis.woot.proxy;
 
 import ipsis.woot.event.HandlerLivingDropsEvent;
+import ipsis.woot.handler.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -24,6 +25,7 @@ public class CommonProxy {
     protected void registerEventHandlers() {
 
         MinecraftForge.EVENT_BUS.register(new HandlerLivingDropsEvent());
+        MinecraftForge.EVENT_BUS.register(new ConfigHandler());
     }
 
 }

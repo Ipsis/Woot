@@ -2,7 +2,7 @@ package ipsis.woot.init;
 
 import ipsis.woot.block.BlockContainerWoot;
 import ipsis.woot.block.BlockFactory;
-import ipsis.woot.tileentity.TileEntityFactory;
+import ipsis.woot.tileentity.TileEntitySpawner;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
@@ -14,7 +14,7 @@ public class ModBlocks {
 
     public static void registerTileEntities() {
 
-        GameRegistry.registerTileEntity(TileEntityFactory.class, "tile." + BlockFactory.BASENAME);
+        GameRegistry.registerTileEntity(TileEntitySpawner.class, "tile." + BlockFactory.BASENAME);
     }
 
     public static BlockContainerWoot blockFactory = new BlockFactory();

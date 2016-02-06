@@ -95,6 +95,19 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         return SpawnerManager.EnchantKey.NO_ENCHANT;
     }
 
+    void processPower() {
+
+        int drawnRf = spawnReq.getRfPerTick() * 1;
+        if (drawnRf == spawnReq.getRfPerTick()) {
+            consumedRf += drawnRf;
+        } else {
+            if (Settings.strictPower)
+                consumedRf = 0;
+            else
+                consumedRf += drawnRf;
+        }
+    }
+
     @Override
     public void update() {
 
@@ -114,13 +127,7 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         if (Woot.spawnerManager.isEmpty(mobName, enchantKey))
             return;
 
-        int drawnRf = spawnReq.getRfPerTick() * 1;
-        if (drawnRf == spawnReq.getRfPerTick()) {
-            consumedRf += drawnRf;
-        } else {
-            consumedRf += drawnRf;
-            /* TODO hardmode => consumedRf = 0; */
-        }
+        processPower();
 
         currSpawnTicks++;
         if (currSpawnTicks == spawnReq.getSpawnTime()) {

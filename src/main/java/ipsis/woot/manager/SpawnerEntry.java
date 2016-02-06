@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.oss.LogHelper;
+import ipsis.woot.reference.Settings;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -8,9 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SpawnerEntry {
-
-    static final int SAMPLE_SIZE = 100;
-    int getSampleSize() { return SAMPLE_SIZE; }
 
     HashMap<SpawnerManager.EnchantKey, List<SpawnerDrops>> dropMap;
 
@@ -23,7 +21,7 @@ public class SpawnerEntry {
 
     public boolean isFull(SpawnerManager.EnchantKey enchantKey) {
 
-        return dropMap.get(enchantKey).size() == getSampleSize();
+        return dropMap.get(enchantKey).size() == Settings.sampleSize;
     }
 
     public boolean addDrops(SpawnerManager.EnchantKey enchantKey, List<ItemStack> drops) {

@@ -26,6 +26,8 @@ public class Settings {
         public static final float DEF_LOOTING_III_MULTI = 50.0F;
 
         public static final float DEF_XP_I_MULTI = 2.0F;
+
+        public static final boolean DEF_STRICT_POWER = false;
     }
 
     public static int sampleSize;
@@ -42,5 +44,6 @@ public class Settings {
     public static float lootingIIMulti;
     public static float lootingIIIMulti;
     public static float xpIMulti;
+    public static boolean strictPower;
 
 }

@@ -40,6 +40,8 @@ public class ConfigHandler {
         Settings.lootingIIIMulti = Settings.Power.DEF_LOOTING_III_MULTI;
         Settings.xpIMulti = Settings.Power.DEF_XP_I_MULTI;
 
+        Settings.strictPower = Settings.Power.DEF_STRICT_POWER;
+
         if (configuration.hasChanged())
             configuration.save();
     }

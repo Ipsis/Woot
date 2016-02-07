@@ -30,13 +30,22 @@ public class Settings {
         public static final boolean DEF_STRICT_POWER = false;
     }
 
+    public static class Enchant {
+
+        public static final int DEF_LOOTING_I_LEVEL = 1;
+        public static final int DEF_LOOTING_II_LEVEL = 2;
+        public static final int DEF_LOOTING_III_LEVEL = 3;
+    }
+
     public static int sampleSize;
+    public static int learnTicks;
     public static int baseRf;
+
     public static int rateBaseTicks;
     public static int rateITicks;
     public static int rateIITicks;
     public static int rateIIITicks;
-    public static int learnTicks;
+
     public static float rateIMulti;
     public static float rateIIMulti;
     public static float rateIIIMulti;
@@ -44,6 +53,11 @@ public class Settings {
     public static float lootingIIMulti;
     public static float lootingIIIMulti;
     public static float xpIMulti;
+
     public static boolean strictPower;
+
+    public static int enchantLootingILevel;
+    public static int enchantLootingIILevel;
+    public static int enchantLootingIIILevel;
 
 }

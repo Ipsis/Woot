@@ -2,6 +2,7 @@ package ipsis.woot.util;
 
 import com.mojang.authlib.GameProfile;
 import ipsis.woot.manager.SpawnerManager;
+import ipsis.woot.reference.Settings;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -45,13 +46,13 @@ public class FakePlayerUtil {
 
         ItemStack itemStack = new ItemStack(Items.iron_sword);
         if (enchantKey == SpawnerManager.EnchantKey.LOOTING_I && swordLootingI == null) {
-            itemStack.addEnchantment(Enchantment.looting, 1);
+            itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingILevel);
             swordLootingI = itemStack;
         } else if (enchantKey == SpawnerManager.EnchantKey.LOOTING_II && swordLootingII == null) {
-            itemStack.addEnchantment(Enchantment.looting, 2);
+            itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingIILevel);
             swordLootingII = itemStack;
         } else if (enchantKey == SpawnerManager.EnchantKey.LOOTING_III && swordLootingIII == null) {
-            itemStack.addEnchantment(Enchantment.looting, 3);
+            itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingIIILevel);
             swordLootingIII = itemStack;
         }
     }

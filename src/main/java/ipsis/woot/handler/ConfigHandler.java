@@ -42,6 +42,10 @@ public class ConfigHandler {
 
         Settings.strictPower = Settings.Power.DEF_STRICT_POWER;
 
+        Settings.enchantLootingILevel = Settings.Enchant.DEF_LOOTING_I_LEVEL;
+        Settings.enchantLootingIILevel = Settings.Enchant.DEF_LOOTING_II_LEVEL;
+        Settings.enchantLootingIIILevel = Settings.Enchant.DEF_LOOTING_III_LEVEL;
+
         if (configuration.hasChanged())
             configuration.save();
     }

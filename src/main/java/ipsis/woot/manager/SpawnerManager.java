@@ -192,8 +192,10 @@ public class SpawnerManager {
             return;
 
         List<ItemStack> dropList = new ArrayList<ItemStack>();
-        for (EntityItem entityItem : entityItemList)
-            dropList.add(entityItem.getEntityItem().copy());
+        for (EntityItem entityItem : entityItemList) {
+            ItemStack itemStack = entityItem.getEntityItem();
+            dropList.add(ItemStack.copyItemStack(itemStack));
+        }
 
         e.addDrops(enchantKey, dropList);
     }

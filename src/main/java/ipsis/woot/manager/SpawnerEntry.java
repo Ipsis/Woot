@@ -28,30 +28,32 @@ public class SpawnerEntry {
 
         if (!isFull(enchantKey)) {
             dropMap.get(enchantKey).add(new SpawnerDrops(drops));
-
-            StringBuilder sb = new StringBuilder();
-            for (ItemStack itemStack : drops)
-                sb.append(" ").append(itemStack.getDisplayName());
-            LogHelper.info("addDrops: " + enchantKey + " " + sb.toString());
-
             return true;
         }
 
         return false;
     }
 
+    /**
+     * Returns an itemstack list that can be modified
+     */
     public List<ItemStack> getDrops(SpawnerManager.EnchantKey enchantKey) {
 
+        ArrayList<ItemStack> dropList = new ArrayList<ItemStack>();
+
         int pos = SpawnerManager.random.nextInt(dropMap.get(enchantKey).size());
-        return new ArrayList<ItemStack>(dropMap.get(enchantKey).get(pos).drops);
+        for (ItemStack i : dropMap.get(enchantKey).get(pos).drops)
+            dropList.add(ItemStack.copyItemStack(i));
+
+        return dropList;
     }
 
     class SpawnerDrops {
         List<ItemStack> drops = new ArrayList<ItemStack>();
 
         SpawnerDrops() { }
-        SpawnerDrops(List<ItemStack> drops) {
-            this.drops.addAll(drops);
+        SpawnerDrops(List<ItemStack> dropList) {
+            this.drops.addAll(dropList);
         }
     }
 }

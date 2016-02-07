@@ -169,8 +169,11 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
            if (consumedRf >= spawnReq.getTotalRf()) {
                List<ItemStack> dropList = Woot.spawnerManager.getDrops(mobName, enchantKey);
-               LogHelper.info("Generating drops: " + dropList);
-               /* TODO can be cache the neighbor tes? */
+
+               for (ItemStack s : dropList)
+                    if (s.stackSize == 0)
+                        LogHelper.info("Drop Items: size is 0 " + s);
+
                for (EnumFacing f : EnumFacing.values()) {
                    if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
                        TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
@@ -195,9 +198,11 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
                 *  Everything else is thrown away
                 */
            } else {
-               LogHelper.info("Not enough power provided " + consumedRf + ":" + spawnReq.getTotalRf());
+               if (Settings.strictPower)
+                   consumedRf = 0;
+
+               currSpawnTicks = 0;
            }
-            currSpawnTicks = 0;
             consumedRf = 0;
         }
     }

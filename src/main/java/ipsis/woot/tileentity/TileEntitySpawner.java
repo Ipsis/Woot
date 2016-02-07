@@ -154,56 +154,57 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         if (currLearnTicks >= Settings.learnTicks) {
             if (!Woot.spawnerManager.isFull(mobName, enchantKey)) {
                 /* Not full so fake another spawn */
+                LogHelper.info("Fake spawn");
                 Woot.spawnerManager.spawn(mobName, enchantKey, this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
         }
 
         /* Do we have any info on this mob yet - should only happen once per mob */
-        if (Woot.spawnerManager.isEmpty(mobName, enchantKey))
+        if (Woot.spawnerManager.isEmpty(mobName, enchantKey)) {
+            LogHelper.info("No spawn info for " + mobName + ":" + enchantKey);
             return;
+        }
 
         processPower();
 
         currSpawnTicks++;
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
-           if (consumedRf >= spawnReq.getTotalRf()) {
-               List<ItemStack> dropList = Woot.spawnerManager.getDrops(mobName, enchantKey);
+            LogHelper.info("Check spawn: " + consumedRf + "/" + spawnReq.getTotalRf());
+            if (consumedRf >= spawnReq.getTotalRf()) {
+                List<ItemStack> dropList = Woot.spawnerManager.getDrops(mobName, enchantKey);
 
-               for (ItemStack s : dropList)
-                    if (s.stackSize == 0)
-                        LogHelper.info("Drop Items: size is 0 " + s);
+                LogHelper.info(dropList);
 
-               for (EnumFacing f : EnumFacing.values()) {
-                   if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
-                       TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
-                       if (te == null)
-                           continue;
+                for (EnumFacing f : EnumFacing.values()) {
+                    if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
+                        TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+                        if (te == null)
+                            continue;
 
-                       if (!te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
-                           continue;
+                        if (!te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
+                            continue;
 
-                       IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
-                       for (int i = 0; i < dropList.size(); i++) {
-                           ItemStack result = ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(dropList.get(i), 1), false);
-                           if (result != null)
-                               dropList.get(i).stackSize = result.stackSize;
-                           else
-                               dropList.get(i).stackSize = 0;
-                       }
-                   }
-               }
+                        IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
+                        for (int i = 0; i < dropList.size(); i++) {
+                            ItemStack result = ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(dropList.get(i), 1), false);
+                            if (result != null)
+                                dropList.get(i).stackSize = result.stackSize;
+                            else
+                                dropList.get(i).stackSize = 0;
+                        }
+                    }
+                }
 
-               /**
-                *  Everything else is thrown away
-                */
-           } else {
-               if (Settings.strictPower)
-                   consumedRf = 0;
-
-               currSpawnTicks = 0;
-           }
-            consumedRf = 0;
+                /**
+                 *  Everything else is thrown away
+                 */
+            } else {
+                if (Settings.strictPower)
+                    consumedRf = 0;
+            }
+           currSpawnTicks = 0;
+           consumedRf = 0;
         }
     }
 }

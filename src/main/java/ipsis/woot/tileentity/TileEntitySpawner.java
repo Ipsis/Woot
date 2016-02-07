@@ -13,6 +13,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -167,6 +170,30 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
            if (consumedRf >= spawnReq.getTotalRf()) {
                List<ItemStack> dropList = Woot.spawnerManager.getDrops(mobName, enchantKey);
                LogHelper.info("Generating drops: " + dropList);
+               /* TODO can be cache the neighbor tes? */
+               for (EnumFacing f : EnumFacing.values()) {
+                   if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
+                       TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+                       if (te == null)
+                           continue;
+
+                       if (!te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
+                           continue;
+
+                       IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
+                       for (int i = 0; i < dropList.size(); i++) {
+                           ItemStack result = ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(dropList.get(i), 1), false);
+                           if (result != null)
+                               dropList.get(i).stackSize = result.stackSize;
+                           else
+                               dropList.get(i).stackSize = 0;
+                       }
+                   }
+               }
+
+               /**
+                *  Everything else is thrown away
+                */
            } else {
                LogHelper.info("Not enough power provided " + consumedRf + ":" + spawnReq.getTotalRf());
            }

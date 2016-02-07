@@ -14,6 +14,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class BlockFactory extends BlockContainerWoot {
 
@@ -55,10 +57,12 @@ public class BlockFactory extends BlockContainerWoot {
     @Override
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 
-        if (!worldIn.isRemote && neighborBlock instanceof BlockUpgrade)  {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof TileEntitySpawner)
-                ((TileEntitySpawner) te).scanUpgrades();
+        if (!worldIn.isRemote) {
+            if (neighborBlock instanceof BlockUpgrade) {
+                TileEntity te = worldIn.getTileEntity(pos);
+                if (te instanceof TileEntitySpawner)
+                    ((TileEntitySpawner) te).scanUpgrades();
+            }
         }
     }
 }

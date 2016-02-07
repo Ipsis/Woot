@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "rate_i": { "model": "woot:upgrade_rate_i" },
+    "rate_ii": { "model": "woot:upgrade_rate_ii" },
+    "rate_iii": { "model": "woot:upgrade_rate_iii" }
+  }
+}

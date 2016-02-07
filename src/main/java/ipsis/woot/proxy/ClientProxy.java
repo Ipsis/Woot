@@ -8,6 +8,7 @@ public class ClientProxy extends CommonProxy {
     protected void registerBlockItemModels() {
 
         ModBlocks.blockFactory.initModel();
+        ModBlocks.blockUpgrade.initModel();
     }
 
     @Override

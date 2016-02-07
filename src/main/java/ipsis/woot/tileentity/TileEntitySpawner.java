@@ -2,11 +2,16 @@ package ipsis.woot.tileentity;
 
 import ipsis.Woot;
 import ipsis.oss.LogHelper;
+import ipsis.woot.block.BlockUpgrade;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.Upgrade;
+import ipsis.woot.manager.UpgradeValidator;
 import ipsis.woot.reference.Settings;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 import java.util.ArrayList;
@@ -19,6 +24,7 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
     int currSpawnTicks;
     boolean isRunning;
     boolean isFormed;
+    boolean first;
     String mobName;
     SpawnerManager.SpawnReq spawnReq;
     SpawnerManager.EnchantKey enchantKey;
@@ -27,24 +33,6 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
     HashMap<Upgrade.Group, Upgrade> upgradeMap = new HashMap<Upgrade.Group, Upgrade>();
 
     public TileEntitySpawner() {
-        reset();
-    }
-
-    public void onFormed() {
-        /* TODO get the mobName */
-        reset();
-
-        addUpgrade(Woot.spawnerManager.getUpgrade(Upgrade.Type.LOOTING_I));
-        mobName = "Skeleton";
-        enchantKey = getEnchantKey();
-        isFormed = true;
-        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, getUpgrades(), Woot.spawnerManager.getXp(mobName, this));
-        isRunning = true;
-
-        LogHelper.info("onFormed: " + mobName + " " + enchantKey + " " + spawnReq);
-    }
-
-    void reset() {
         this.mobName = null;
         this.upgradeMap.clear();
         this.isFormed = false;
@@ -54,6 +42,56 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         this.consumedRf = 0;
         this.spawnReq = null;
         this.enchantKey = null;
+        this.first = false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Spawning: ").append(mobName).append("\n");
+        if (enchantKey != null)
+            sb.append("Enchant:  ").append(enchantKey).append("\n");
+        if (spawnReq != null)
+            sb.append("Spawnreq: ").append(spawnReq);
+        return sb.toString();
+    }
+
+    public void scanStructure() {
+        isFormed = true;
+        isRunning = true; /* TODO remove this */
+    }
+
+    public void scanUpgrades() {
+
+        upgradeMap.clear();
+        if (!isFormed)
+            return;
+
+        List<Upgrade> tmpUpgrades = new ArrayList<Upgrade>();
+
+        for (EnumFacing f : EnumFacing.values()) {
+            BlockPos pos = this.getPos().offset(f, 1);
+            if (worldObj.isBlockLoaded(pos)) {
+                Block b = worldObj.getBlockState(pos).getBlock();
+                if (b != null && b instanceof BlockUpgrade) {
+                    Upgrade.Type t = worldObj.getBlockState(this.getPos().offset(f, 1)).getValue(BlockUpgrade.VARIANT);
+                    tmpUpgrades.add(Woot.spawnerManager.getUpgrade(t));
+                }
+            }
+        }
+
+        if (UpgradeValidator.isUpgradeValid(tmpUpgrades)) {
+            for (Upgrade u : tmpUpgrades)
+                addUpgrade(u);
+        }
+
+        enchantKey = getEnchantKey();
+
+        mobName = "Skeleton";
+        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, getUpgrades(), Woot.spawnerManager.getXp(mobName, this));
+
+        LogHelper.info(this);
     }
 
     public List<Upgrade> getUpgrades() {
@@ -69,28 +107,11 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         return false;
     }
 
-    public void delUpgrade(Upgrade upgrade) {
-
-        if (upgradeMap.containsKey(upgrade.getGroup()))
-            upgradeMap.remove(upgrade.getGroup());
-    }
-
     SpawnerManager.EnchantKey getEnchantKey() {
 
         Upgrade upgrade = upgradeMap.get(Upgrade.Group.LOOTING);
-        if (upgrade != null) {
-            for (Upgrade u : upgradeMap.values()) {
-                /* TODO move this to an Upgrade method */
-                if (u.getGroup() == Upgrade.Group.LOOTING) {
-                    if (u.getType() == Upgrade.Type.LOOTING_I)
-                        return SpawnerManager.EnchantKey.LOOTING_I;
-                    else if (u.getType() == Upgrade.Type.LOOTING_I)
-                        return SpawnerManager.EnchantKey.LOOTING_II;
-                    if (u.getType() == Upgrade.Type.LOOTING_II)
-                        return SpawnerManager.EnchantKey.LOOTING_III;
-                }
-            }
-        }
+        if (upgrade != null)
+            return upgrade.getType().getEnchantKey();
 
         return SpawnerManager.EnchantKey.NO_ENCHANT;
     }
@@ -111,7 +132,19 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
     @Override
     public void update() {
 
-        if (worldObj.isRemote || !isRunning || !isFormed)
+        if (worldObj.isRemote)
+            return;
+
+        if (!first) {
+            scanStructure();
+            scanUpgrades();
+            first = true;
+        }
+
+        if (!isRunning)
+            return;
+
+        if (!isFormed)
             return;
 
         currLearnTicks++;

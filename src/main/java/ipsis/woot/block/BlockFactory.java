@@ -1,8 +1,10 @@
 package ipsis.woot.block;
 
+import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.tileentity.TileEntitySpawner;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +46,19 @@ public class BlockFactory extends BlockContainerWoot {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-        ((TileEntitySpawner)worldIn.getTileEntity(pos)).onFormed();
+        /* TODO fake startup until the multiblock is in place */
+        ((TileEntitySpawner)worldIn.getTileEntity(pos)).scanStructure();
+        ((TileEntitySpawner)worldIn.getTileEntity(pos)).scanUpgrades();
         return true;
+    }
+
+    @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+
+        if (!worldIn.isRemote && neighborBlock instanceof BlockUpgrade)  {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TileEntitySpawner)
+                ((TileEntitySpawner) te).scanUpgrades();
+        }
     }
 }

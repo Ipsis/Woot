@@ -10,13 +10,13 @@ public class CommonProxy {
     public void preInit() {
 
         registerBlockItemModels();
-        registerItemRenderers();
         registerEventHandlers();
     }
 
     public void init() {
     }
     public void postInit() {
+        registerItemRenderers();
     }
 
     protected void registerBlockItemModels() { }

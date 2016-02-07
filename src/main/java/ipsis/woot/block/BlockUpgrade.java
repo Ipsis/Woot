@@ -3,20 +3,26 @@ package ipsis.woot.block;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.Upgrade;
+import ipsis.woot.reference.Reference;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.sql.Ref;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockUpgrade extends BlockWoot {
@@ -65,7 +71,11 @@ public class BlockUpgrade extends BlockWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerBlock(ModBlocks.blockUpgrade, BASENAME);
+        ResourceLocation[] locations = new ResourceLocation[Upgrade.Type.VALUES.length];
+        for (int i = 0; i < Upgrade.Type.VALUES.length; i++)
+            locations[i] = new ResourceLocation(Reference.MOD_NAME_LOWER + ":" + BASENAME + "_" + Upgrade.Type.VALUES[i]);
+
+        ModelBakery.registerItemVariants(Item.getItemFromBlock(ModBlocks.blockUpgrade), locations);
     }
 
     @Override

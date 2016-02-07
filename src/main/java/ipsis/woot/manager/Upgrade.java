@@ -36,25 +36,29 @@ public class Upgrade {
     }
 
     public enum Type implements IStringSerializable {
-        RATE_I("rate_I"),
-        RATE_II("rate_II"),
-        RATE_III("rate_III"),
-        LOOTING_I("looting_I"),
-        LOOTING_II("looting_II"),
-        LOOTING_III("looting_III"),
-        XP_I("xp_I");
+        RATE_I("rate_i"),
+        RATE_II("rate_ii"),
+        RATE_III("rate_iii"),
+        LOOTING_I("looting_i"),
+        LOOTING_II("looting_ii"),
+        LOOTING_III("looting_iii"),
+        XP_I("xp_i"),;
 
         public static final Type[] VALUES = { RATE_I, RATE_II, RATE_III, LOOTING_I, LOOTING_II, LOOTING_III, XP_I };
 
         String name;
-
         Type(String name) {
-            this.name = name;
+           this.name = name;
         }
 
         @Override
         public String getName() {
-            return this.toString();
+            return this.name;
+        }
+
+        @Override
+        public String toString() {
+            return this.name;
         }
 
         public int getMetadata() {

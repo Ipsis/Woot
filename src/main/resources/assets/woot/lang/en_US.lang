@@ -2,10 +2,12 @@ itemgroup.Woot=Woot
 
 tile.Woot:factory.name=Mob Factory
 
-tile.Woot:upgrade.XP_I.name=XP Upgrade
-tile.Woot:upgrade.RATE_I.name=Rate I Upgrade
-tile.Woot:upgrade.RATE_II.name=Rate II Upgrade
-tile.Woot:upgrade.RATE_III.name=Rate III Upgrade
-tile.Woot:upgrade.LOOTING_I.name=Looting I Upgrade
-tile.Woot:upgrade.LOOTING_II.name=Looting II Upgrade
-tile.Woot:upgrade.LOOTING_III.name=Looting III Upgrade
+tile.Woot:upgrade.xp_i.name=XP I Upgrade
+tile.Woot:upgrade.xp_ii.name=XP II Upgrade
+tile.Woot:upgrade.xp_iii.name=XP III Upgrade
+tile.Woot:upgrade.rate_i.name=Rate I Upgrade
+tile.Woot:upgrade.rate_ii.name=Rate II Upgrade
+tile.Woot:upgrade.rate_iii.name=Rate III Upgrade
+tile.Woot:upgrade.looting_i.name=Looting I Upgrade
+tile.Woot:upgrade.looting_ii.name=Looting II Upgrade
+tile.Woot:upgrade.looting_iii.name=Looting III Upgrade

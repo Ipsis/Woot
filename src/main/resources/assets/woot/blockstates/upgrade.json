@@ -1,7 +1,11 @@
 {
   "variants": {
-    "rate_i": { "model": "woot:upgrade_rate_i" },
-    "rate_ii": { "model": "woot:upgrade_rate_ii" },
-    "rate_iii": { "model": "woot:upgrade_rate_iii" }
+    "variant=rate_i": { "model":"woot:upgrade_rate_i" },
+    "variant=rate_ii": { "model":"woot:upgrade_rate_ii" },
+    "variant=rate_iii": { "model":"woot:upgrade_rate_iii" },
+    "variant=looting_i": { "model":"woot:upgrade_looting_i" },
+    "variant=looting_ii": { "model":"woot:upgrade_looting_ii" },
+    "variant=looting_iii": { "model":"woot:upgrade_looting_iii" },
+    "variant=xp_i": { "model":"woot:upgrade_xp_i" }
   }
 }

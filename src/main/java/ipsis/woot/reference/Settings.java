@@ -6,10 +6,10 @@ public class Settings {
 
         public static final int DEF_SAMPLE_SIZE = 100;
 
-        public static final int DEF_RATE_BASE_TICKS = 16 * 20;
-        public static final int DEF_RATE_I_TICKS = 8 * 20;
-        public static final int DEF_RATE_II_TICKS = 4 * 20;
-        public static final int DEF_RATE_III_TICKS = 2 * 20;
+        public static final int DEF_RATE_BASE_TICKS = 8 * 20; /* 16 * 20; */
+        public static final int DEF_RATE_I_TICKS = 4 * 20; /*8 * 20; */
+        public static final int DEF_RATE_II_TICKS = 2 * 20; /*4 * 20; */
+        public static final int DEF_RATE_III_TICKS = 1 * 20; /* 2 * 20; */
 
         public static final int DEF_LEARN_TICKS = 40;
         public static final int DEF_BASE_RF = 1000;

@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/upgrade",
+  "parent": "woot:block/upgrade_rate_iii",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

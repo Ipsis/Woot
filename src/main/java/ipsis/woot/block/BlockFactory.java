@@ -8,6 +8,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -48,9 +52,15 @@ public class BlockFactory extends BlockContainerWoot {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-        /* TODO fake startup until the multiblock is in place */
-        ((TileEntitySpawner)worldIn.getTileEntity(pos)).scanStructure();
-        ((TileEntitySpawner)worldIn.getTileEntity(pos)).scanUpgrades();
+        ItemStack itemStack = playerIn.getCurrentEquippedItem();
+        if (itemStack != null)  {
+            if (itemStack.getItem() == Items.spawn_egg) {
+                String mobName = ItemMonsterPlacer.getEntityName(itemStack);
+                TileEntitySpawner te = (TileEntitySpawner)worldIn.getTileEntity(pos);
+                te.setMobName(mobName);
+            }
+        }
+
         return true;
     }
 

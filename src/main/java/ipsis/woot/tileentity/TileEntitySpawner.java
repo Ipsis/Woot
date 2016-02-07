@@ -36,7 +36,7 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
     HashMap<Upgrade.Group, Upgrade> upgradeMap = new HashMap<Upgrade.Group, Upgrade>();
 
     public TileEntitySpawner() {
-        this.mobName = null;
+        this.mobName = "Skeleton";
         this.upgradeMap.clear();
         this.isFormed = false;
         this.isRunning = false;
@@ -65,6 +65,12 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         isRunning = true; /* TODO remove this */
     }
 
+    public void setMobName(String mobName) {
+        this.mobName = mobName;
+        scanStructure();
+        scanUpgrades();
+    }
+
     public void scanUpgrades() {
 
         upgradeMap.clear();
@@ -90,8 +96,6 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         }
 
         enchantKey = getEnchantKey();
-
-        mobName = "Skeleton";
         spawnReq = Woot.spawnerManager.getSpawnReq(mobName, getUpgrades(), Woot.spawnerManager.getXp(mobName, this));
 
         LogHelper.info(this);

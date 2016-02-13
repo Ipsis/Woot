@@ -5,7 +5,7 @@ import ipsis.woot.block.BlockFactory;
 import ipsis.woot.block.BlockUpgrade;
 import ipsis.woot.block.BlockWoot;
 import ipsis.woot.item.ItemBlockUpgrade;
-import ipsis.woot.tileentity.TileEntitySpawner;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
@@ -18,7 +18,7 @@ public class ModBlocks {
 
     public static void registerTileEntities() {
 
-        GameRegistry.registerTileEntity(TileEntitySpawner.class, "tile." + BlockFactory.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactory.class, "tile." + BlockFactory.BASENAME);
     }
 
     public static BlockContainerWoot blockFactory = new BlockFactory();

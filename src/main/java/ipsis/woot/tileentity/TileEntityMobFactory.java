@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TileEntitySpawner extends TileEntity implements ITickable {
+public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     int currLearnTicks;
     int currSpawnTicks;
@@ -35,7 +35,7 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
 
     HashMap<Upgrade.Group, Upgrade> upgradeMap = new HashMap<Upgrade.Group, Upgrade>();
 
-    public TileEntitySpawner() {
+    public TileEntityMobFactory() {
         this.mobName = "Skeleton";
         this.upgradeMap.clear();
         this.isFormed = false;

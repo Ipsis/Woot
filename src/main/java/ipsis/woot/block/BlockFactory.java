@@ -1,9 +1,8 @@
 package ipsis.woot.block;
 
-import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.tileentity.TileEntitySpawner;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,15 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class BlockFactory extends BlockContainerWoot {
 
@@ -33,7 +29,7 @@ public class BlockFactory extends BlockContainerWoot {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        return new TileEntitySpawner();
+        return new TileEntityMobFactory();
     }
 
     @SideOnly(Side.CLIENT)
@@ -56,7 +52,7 @@ public class BlockFactory extends BlockContainerWoot {
         if (itemStack != null)  {
             if (itemStack.getItem() == Items.spawn_egg) {
                 String mobName = ItemMonsterPlacer.getEntityName(itemStack);
-                TileEntitySpawner te = (TileEntitySpawner)worldIn.getTileEntity(pos);
+                TileEntityMobFactory te = (TileEntityMobFactory)worldIn.getTileEntity(pos);
                 te.setMobName(mobName);
             }
         }
@@ -70,8 +66,8 @@ public class BlockFactory extends BlockContainerWoot {
         if (!worldIn.isRemote) {
             if (neighborBlock instanceof BlockUpgrade) {
                 TileEntity te = worldIn.getTileEntity(pos);
-                if (te instanceof TileEntitySpawner)
-                    ((TileEntitySpawner) te).scanUpgrades();
+                if (te instanceof TileEntityMobFactory)
+                    ((TileEntityMobFactory) te).scanUpgrades();
             }
         }
     }

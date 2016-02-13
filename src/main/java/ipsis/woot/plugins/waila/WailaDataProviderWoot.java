@@ -1,7 +1,7 @@
 package ipsis.woot.plugins.waila;
 
 import ipsis.woot.manager.Upgrade;
-import ipsis.woot.tileentity.TileEntitySpawner;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -31,8 +31,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
-        if (accessor.getTileEntity() instanceof TileEntitySpawner) {
-            TileEntitySpawner te = (TileEntitySpawner)accessor.getTileEntity();
+        if (accessor.getTileEntity() instanceof TileEntityMobFactory) {
+            TileEntityMobFactory te = (TileEntityMobFactory)accessor.getTileEntity();
 
 
             /* Display the mob spawn, spawn rate, rf/t */
@@ -62,6 +62,6 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     public static void callbackRegister(IWailaRegistrar registrar) {
 
-        registrar.registerBodyProvider(new WailaDataProviderWoot(), TileEntitySpawner.class);
+        registrar.registerBodyProvider(new WailaDataProviderWoot(), TileEntityMobFactory.class);
     }
 }

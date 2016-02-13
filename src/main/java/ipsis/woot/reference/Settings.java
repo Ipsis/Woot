@@ -13,6 +13,8 @@ public class Settings {
 
         public static final int DEF_LEARN_TICKS = 40;
         public static final int DEF_BASE_RF = 1000;
+
+        public static final boolean DEF_STRICT_FACTORY_SPAWNS = false;
     }
 
     public static class Power {
@@ -55,6 +57,7 @@ public class Settings {
     public static float xpIMulti;
 
     public static boolean strictPower;
+    public static boolean strictFactorySpawns;
 
     public static int enchantLootingILevel;
     public static int enchantLootingIILevel;

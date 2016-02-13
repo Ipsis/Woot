@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 import ipsis.woot.manager.SpawnerManager;
+import ipsis.woot.reference.Settings;
 import net.minecraft.util.DamageSource;
 
 public class DamageSourceWoot extends DamageSource {
@@ -51,5 +52,17 @@ public class DamageSourceWoot extends DamageSource {
 
     public SpawnerManager.EnchantKey getEnchantKey() {
         return enchantKey;
+    }
+
+    public static DamageSourceWoot getDamageSource(int lootingLevel) {
+
+        if (lootingLevel == Settings.enchantLootingILevel)
+            return inSpawnerLootingI;
+        else if (lootingLevel == Settings.enchantLootingIILevel)
+            return inSpawnerLootingII;
+        else if (lootingLevel == Settings.enchantLootingIIILevel)
+            return inSpawnerLootingIII;
+
+        return null;
     }
 }

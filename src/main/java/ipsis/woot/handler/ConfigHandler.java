@@ -41,6 +41,7 @@ public class ConfigHandler {
         Settings.xpIMulti = Settings.Power.DEF_XP_I_MULTI;
 
         Settings.strictPower = Settings.Power.DEF_STRICT_POWER;
+        Settings.strictFactorySpawns = Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS;
 
         Settings.enchantLootingILevel = Settings.Enchant.DEF_LOOTING_I_LEVEL;
         Settings.enchantLootingIILevel = Settings.Enchant.DEF_LOOTING_II_LEVEL;

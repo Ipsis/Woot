@@ -1,5 +1,6 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.manager.Upgrade;
 import ipsis.woot.tileentity.TileEntitySpawner;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -10,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -30,8 +32,19 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
         if (accessor.getTileEntity() instanceof TileEntitySpawner) {
+            TileEntitySpawner te = (TileEntitySpawner)accessor.getTileEntity();
+
 
             /* Display the mob spawn, spawn rate, rf/t */
+            currenttip.add(EnumChatFormatting.BLUE + te.getMobName());
+            if (te.getSpawnReq() != null) {
+                currenttip.add(EnumChatFormatting.GREEN + Integer.toString(te.getSpawnReq().getSpawnTime()) + " ticks");
+                currenttip.add(EnumChatFormatting.GREEN + Integer.toString(te.getSpawnReq().getRfPerTick()) + " RF/t");
+            }
+
+            for (Upgrade u : te.getUpgrades())
+                currenttip.add(EnumChatFormatting.YELLOW + u.getType().getName());
+
         }
 
         return currenttip;

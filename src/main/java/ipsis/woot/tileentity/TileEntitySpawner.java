@@ -48,6 +48,9 @@ public class TileEntitySpawner extends TileEntity implements ITickable {
         this.first = false;
     }
 
+    public String getMobName() { return mobName; }
+    public SpawnerManager.SpawnReq getSpawnReq() { return spawnReq; }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

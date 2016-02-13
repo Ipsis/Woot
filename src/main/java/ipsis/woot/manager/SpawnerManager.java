@@ -150,7 +150,11 @@ public class SpawnerManager {
                 try {
                 /* TODO Dev only version - change to access tranformer */
                     Field f = ReflectionHelper.findField(EntityLiving.class, "experienceValue");
-                    xpMap.put(mobName, f.getInt(entity));
+                    int xp = f.getInt(entity);
+                    if (xp <= 0)
+                        xp = 1;
+                    xpMap.put(mobName, xp);
+                    LogHelper.info("getXP: " + mobName + "->" + xp);
                 } catch (Exception e) {
                     LogHelper.error("Reflection of recentlyHit failed: " + e);
                 }

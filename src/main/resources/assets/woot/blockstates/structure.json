@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "module=block_1": { "model":"woot:structure_block_1" },
+    "module=block_2": { "model":"woot:structure_block_2" },
+    "module=block_3": { "model":"woot:structure_block_3" },
+    "module=block_4": { "model":"woot:structure_block_4" },
+    "module=block_5": { "model":"woot:structure_block_5" }
+  }
+}

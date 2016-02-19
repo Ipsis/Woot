@@ -1,12 +1,16 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
+import ipsis.oss.BlockPosHelper;
 import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockUpgrade;
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.Upgrade;
 import ipsis.woot.manager.UpgradeValidator;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.tileentity.multiblock.EnumMobFactorySize;
+import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -33,6 +37,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     SpawnerManager.EnchantKey enchantKey;
     int consumedRf;
 
+
+    boolean dirtyMultiblock;
+    static final int MIN_RESCAN_TICKS = 20;
+
     HashMap<Upgrade.Group, Upgrade> upgradeMap = new HashMap<Upgrade.Group, Upgrade>();
 
     public TileEntityMobFactory() {
@@ -46,6 +54,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.spawnReq = null;
         this.enchantKey = null;
         this.first = false;
+        this.dirtyMultiblock = false;
     }
 
     public String getMobName() { return mobName; }
@@ -87,8 +96,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             if (worldObj.isBlockLoaded(pos)) {
                 Block b = worldObj.getBlockState(pos).getBlock();
                 if (b != null && b instanceof BlockUpgrade) {
-                    Upgrade.Type t = worldObj.getBlockState(this.getPos().offset(f, 1)).getValue(BlockUpgrade.VARIANT);
-                    tmpUpgrades.add(Woot.spawnerManager.getUpgrade(t));
+//                    Upgrade.Type t = worldObj.getBlockState(this.getPos().offset(f, 1)).getValue(BlockUpgrade.VARIANT);
+//                    tmpUpgrades.add(Woot.spawnerManager.getUpgrade(t));
                 }
             }
         }
@@ -145,11 +154,18 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (worldObj.isRemote)
             return;
 
+        /*
         if (!first) {
             scanStructure();
             scanUpgrades();
             first = true;
+        } */
+
+        if (dirtyMultiblock && worldObj.getWorldTime() % MIN_RESCAN_TICKS == 0) {
+            scanSpawnerStructure();
+            dirtyMultiblock = false;
         }
+
 
         if (!isRunning)
             return;
@@ -213,5 +229,53 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
            currSpawnTicks = 0;
            consumedRf = 0;
         }
+    }
+
+    /**
+     * Multiblock
+     */
+    List<TileEntityMobFactoryStructure> structureBlocks = new ArrayList<TileEntityMobFactoryStructure>();
+
+    public void hello(TileEntityMobFactoryStructure block) {
+
+        LogHelper.info("hello:");
+        dirtyMultiblock = true;
+    }
+
+    public void goodbye(TileEntityMobFactoryStructure block) {
+
+        LogHelper.info("goodbye:");
+        dirtyMultiblock = true;
+    }
+
+    boolean isStructureTE(TileEntity te) {
+
+        if (te == null)
+            return false;
+
+        return te instanceof TileEntityMobFactoryStructure;
+    }
+
+    void determineFormed() {
+
+        boolean wasFormed = isFormed;
+
+        LogHelper.info("determineFormed: " + wasFormed + "->" + isFormed);
+        isFormed = scanSpawnerStructure();
+    }
+
+    public EnumFacing getFacing() { return this.facing; }
+
+    EnumFacing facing = EnumFacing.WEST;
+    boolean scanSpawnerStructure() {
+
+        EnumMobFactorySize size = null; //MobFactoryMultiblockLogic.validateFactory(this);
+        LogHelper.info("scanSpawnerStructure: " + size);
+        return size != null;
+    }
+
+    void scanSpawnerUpgrades() {
+
+
     }
 }

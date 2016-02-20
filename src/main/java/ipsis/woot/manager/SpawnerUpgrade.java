@@ -9,6 +9,11 @@ public class SpawnerUpgrade {
         this.upgradeType = upgradeType;
     }
 
+    public EnumSpawnerUpgrade getUpgradeType() {
+
+        return this.upgradeType;
+    }
+
     public SpawnerManager.EnchantKey getEnchantKey() {
 
         if (upgradeType == EnumSpawnerUpgrade.LOOTING_I)

@@ -1,20 +1,20 @@
 package ipsis.woot.tileentity;
 
 import ipsis.oss.LogHelper;
-import ipsis.woot.block.BlockMobFactoryUpgrade;
-import ipsis.woot.manager.Upgrade;
+import ipsis.woot.manager.SpawnerUpgrade;
+import ipsis.woot.manager.UpgradeManager;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TileEntityMobFarm extends TileEntity implements ITickable {
 
@@ -26,9 +26,9 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
     boolean dirtyUpgrade;
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
-    List<Upgrade.Type> upgradeList = new ArrayList<Upgrade.Type>();
+    List<SpawnerUpgrade> upgradeList = new ArrayList<SpawnerUpgrade>();
 
-    static final int MULTIBLOCK_MIN_REFRESH_TICKS = 20;
+    static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
 
     public TileEntityMobFarm() {
 
@@ -105,6 +105,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
             updateStructureBlocks(false);
         }
 
+        factoryTier = factorySetup.getSize();
         mobName = factorySetup.getMobName();
         structureBlockList = factorySetup.getBlockPosList();
         updateStructureBlocks(true);
@@ -114,40 +115,64 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 
     void onUpgradeCheck() {
 
-        LogHelper.info("onUpgradeChanged");
-    }
+        LogHelper.info("onUpgradeCheck: " + factoryTier);
 
-    void checkUpgrades() {
-
-        LogHelper.info("checkUpgrades:");
         upgradeList.clear();
+        if (factoryTier == EnumMobFactoryTier.TIER_ONE)
+            upgradeTier1();
+        else if (factoryTier == EnumMobFactoryTier.TIER_TWO)
+            upgradeTier2();
+        else if (factoryTier == EnumMobFactoryTier.TIER_THREE)
+            upgradeTier3();
 
-        if (factoryTier == EnumMobFactoryTier.TIER_ONE) {
-            // No upgrades available on size one
-        } else if (factoryTier == EnumMobFactoryTier.TIER_TWO) {
-            // One on left up to level 2
-            // One on right up to level 2
-
-            BlockPos offset = new BlockPos(1, 0, 0);
-            offset = BlockPosHelper.rotateToSouth(offset, facing.getOpposite());
-            BlockPos b = getPos().add(offset.getX(), offset.getY(), offset.getZ());
-            if (worldObj.isBlockLoaded(b)) {
-                IBlockState iBlockState = worldObj.getBlockState(b);
-                Block block = iBlockState.getBlock();
-                if (block instanceof BlockMobFactoryUpgrade) {
-                    // if is a level 1 upgrade
-                }
-            }
-
-        } else if (factoryTier == EnumMobFactoryTier.TIER_THREE) {
-        }
-
-        LogHelper.info("checkUpgrades: " + upgradeList);
+        for (SpawnerUpgrade u : upgradeList)
+            LogHelper.info("onUpgradeCheck: " + u.getUpgradeType() + "/" + u.getUpgradeTier());
     }
 
-    void handleDirtyStructure() {
+    void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
 
+        for (BlockPos p : upgradePos) {
 
+            BlockPos offset = BlockPosHelper.rotateFromSouth(p, getFacing().getOpposite());
+            BlockPos p2 = getPos().add(offset.getX(), offset.getY(), offset.getZ());
+            SpawnerUpgrade upgrade = UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier);
+            if (upgrade != null)
+                upgradeList.add(upgrade);
+        }
+    }
+
+    void upgradeTier1() {
+
+        BlockPos[] upgradePos = new BlockPos[] {
+                new BlockPos(1, 0, 0),
+                new BlockPos(-1, 0, 0)
+        };
+
+        upgradeTierX(upgradePos, 1);
+    }
+
+    void upgradeTier2() {
+
+        BlockPos[] upgradePos = new BlockPos[] {
+                new BlockPos(1, 0, 0),
+                new BlockPos(-1, 0, 0),
+                new BlockPos(2, 0, 0),
+                new BlockPos(-2, 0, 0)
+        };
+
+        upgradeTierX(upgradePos, 2);
+    }
+
+    void upgradeTier3() {
+
+        BlockPos[] upgradePos = new BlockPos[] {
+                new BlockPos(1, 0, 0),
+                new BlockPos(-1, 0, 0),
+                new BlockPos(2, 0, 0),
+                new BlockPos(-2, 0, 0)
+        };
+
+        upgradeTierX(upgradePos, 3);
     }
 
     @Override
@@ -156,9 +181,17 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
         if (worldObj.isRemote)
             return;
 
-        if (dirtyStructure && worldObj.getWorldTime() % MULTIBLOCK_MIN_REFRESH_TICKS == 0) {
+        if (dirtyStructure && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
             onStructureCheck();
             dirtyStructure = false;
+            dirtyUpgrade = false;
+            LogHelper.info("update: structure->recalc spawner requirements");
+        }
+
+        if (dirtyUpgrade && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
+            onUpgradeCheck();
+            dirtyUpgrade = false;
+            LogHelper.info("update: upgrade->recalc spawner requirements");
         }
 
         if (!isFormed())

@@ -1,7 +1,9 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.Upgrade;
 import ipsis.woot.tileentity.TileEntityMobFactory;
+import ipsis.woot.tileentity.TileEntityMobFarm;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -31,19 +33,22 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
-        if (accessor.getTileEntity() instanceof TileEntityMobFactory) {
-            TileEntityMobFactory te = (TileEntityMobFactory)accessor.getTileEntity();
+        if (accessor.getTileEntity() instanceof TileEntityMobFarm) {
+            TileEntityMobFarm te = (TileEntityMobFarm)accessor.getTileEntity();
 
+            if (!te.isFormed())
+                return currenttip;
 
             /* Display the mob spawn, spawn rate, rf/t */
+            currenttip.add(EnumChatFormatting.BLUE + te.getFactoryTier().toString());
             currenttip.add(EnumChatFormatting.BLUE + te.getMobName());
             if (te.getSpawnReq() != null) {
                 currenttip.add(EnumChatFormatting.GREEN + Integer.toString(te.getSpawnReq().getSpawnTime()) + " ticks");
                 currenttip.add(EnumChatFormatting.GREEN + Integer.toString(te.getSpawnReq().getRfPerTick()) + " RF/t");
             }
 
-            for (Upgrade u : te.getUpgrades())
-                currenttip.add(EnumChatFormatting.YELLOW + u.getType().getName());
+            for (SpawnerUpgrade u : te.getUpgradeList())
+                currenttip.add(EnumChatFormatting.YELLOW + u.getUpgradeType().toString());
 
         }
 
@@ -62,6 +67,6 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     public static void callbackRegister(IWailaRegistrar registrar) {
 
-        registrar.registerBodyProvider(new WailaDataProviderWoot(), TileEntityMobFactory.class);
+        registrar.registerBodyProvider(new WailaDataProviderWoot(), TileEntityMobFarm.class);
     }
 }

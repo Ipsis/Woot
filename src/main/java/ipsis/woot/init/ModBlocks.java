@@ -3,6 +3,7 @@ package ipsis.woot.init;
 import ipsis.woot.block.*;
 import ipsis.woot.item.ItemBlockStructure;
 import ipsis.woot.item.ItemBlockUpgrade;
+import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.tileentity.TileEntityMobFarm;
@@ -23,6 +24,7 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityMobFarm.class, "tile." + BlockMobFactory.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryStructure.class, "tile." + BlockMobFactoryStructure.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, "tile." + BlockMobFactoryController.BASENAME);
     }
 
     public static BlockContainerWoot blockFactory = new BlockMobFactory();

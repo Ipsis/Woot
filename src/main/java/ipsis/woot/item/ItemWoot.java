@@ -9,9 +9,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWoot extends Item {
 
-    public ItemWoot() {
+    public ItemWoot(String name) {
         super();
         setCreativeTab(Woot.tabWoot);
+        setUnlocalizedName(name);
     }
 
     @SideOnly(Side.CLIENT)

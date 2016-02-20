@@ -3,9 +3,8 @@ package ipsis.woot.proxy;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.manager.SpawnerUpgrade;
-import ipsis.woot.manager.Upgrade;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.client.Minecraft;
@@ -22,6 +21,8 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.blockUpgrade.initModel();
         ModBlocks.blockStructure.initModel();
         ModBlocks.blockController.initModel();
+
+        ModItems.itemPrism.initModel();
     }
 
     @Override

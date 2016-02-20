@@ -67,6 +67,26 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
         return this.facing;
     }
 
+    public String getMobName() {
+
+        return this.mobName;
+    }
+
+    public SpawnerManager.SpawnReq getSpawnReq() {
+
+        return this.spawnReq;
+    }
+
+    public EnumMobFactoryTier getFactoryTier() {
+
+        return this.factoryTier;
+    }
+
+    public List<SpawnerUpgrade> getUpgradeList() {
+
+        return this.upgradeList;
+    }
+
     public boolean isFormed() {
 
         return factoryTier != null && !mobName.equals("") && spawnReq != null;
@@ -213,31 +233,26 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
         if (!isFormed())
             return;
 
-        // Tick forwards
         currLearnTicks++;
-        currSpawnTicks++;
-
         if (currLearnTicks >= Settings.learnTicks) {
             if (!Woot.spawnerManager.isFull(mobName, enchantKey)) {
                 /* Not full so fake another spawn */
-                LogHelper.info("update: Fake spawn");
+                LogHelper.info("update: Fake spawn " + mobName);
                 Woot.spawnerManager.spawn(mobName, enchantKey, this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
         }
 
-        /* Do we have any info on this mob yet - should only happen once per mob */
-        if (Woot.spawnerManager.isEmpty(mobName, enchantKey)) {
-            LogHelper.info("update: No spawn info for " + mobName + ":" + enchantKey);
+        /* Do we have any info on this mob yet - should only happen until the first event fires */
+        if (Woot.spawnerManager.isEmpty(mobName, enchantKey))
             return;
-        }
 
+        currSpawnTicks++;
         processPower();
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
             onSpawn();
             currSpawnTicks = 0;
         }
-
     }
 
     public void interruptStructure() {

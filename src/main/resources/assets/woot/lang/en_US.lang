@@ -11,3 +11,5 @@ tile.Woot:upgrade.rate_iii.name=Rate III Upgrade
 tile.Woot:upgrade.looting_i.name=Looting I Upgrade
 tile.Woot:upgrade.looting_ii.name=Looting II Upgrade
 tile.Woot:upgrade.looting_iii.name=Looting III Upgrade
+
+item.Woot:prism.name=Mob Prism

@@ -2,11 +2,12 @@ package ipsis.woot.util;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 
 public class MobUtil {
 
-    public static String getMobName(EntityLiving entityLiving) {
+    public static String getMobName(EntityLivingBase entityLiving) {
 
         String name = EntityList.getEntityString(entityLiving);
         if (entityLiving instanceof EntitySkeleton) {

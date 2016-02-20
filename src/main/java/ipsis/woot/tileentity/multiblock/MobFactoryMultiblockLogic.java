@@ -2,10 +2,12 @@ package ipsis.woot.tileentity.multiblock;
 
 import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockMobFactoryStructure;
+import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFarm;
 import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
@@ -63,6 +65,22 @@ public class MobFactoryMultiblockLogic {
         LogHelper.info("validateFactory:");
 
         FactorySetup factorySetup = new FactorySetup();
+
+        BlockPos controllerPos = factory.getPos().up(1);
+        TileEntity te = factory.getWorld().getTileEntity(controllerPos);
+        if (!(te instanceof TileEntityMobFactoryController)) {
+            LogHelper.info("validateFactory: no controller");
+            return factorySetup;
+        }
+
+        TileEntityMobFactoryController teController = (TileEntityMobFactoryController)te;
+        if (teController.getMobName().equals("")) {
+            LogHelper.info("validateFactory: controller has no mob");
+            return factorySetup;
+        }
+        factorySetup.mobName = teController.getMobName();
+        LogHelper.info("validateFactory: " + factorySetup.mobName);
+
         BlockPos patternOrigin = factory.getPos().down(1);
         if (isSize(factory, tier))
             factorySetup.size = tier;

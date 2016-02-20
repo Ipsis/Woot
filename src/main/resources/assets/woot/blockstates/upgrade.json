@@ -6,6 +6,8 @@
     "variant=looting_i": { "model":"woot:upgrade_looting_i" },
     "variant=looting_ii": { "model":"woot:upgrade_looting_ii" },
     "variant=looting_iii": { "model":"woot:upgrade_looting_iii" },
-    "variant=xp_i": { "model":"woot:upgrade_xp_i" }
+    "variant=xp_i": { "model":"woot:upgrade_xp_i" },
+    "variant=xp_ii": { "model":"woot:upgrade_xp_ii" },
+    "variant=xp_iii": { "model":"woot:upgrade_xp_iii" }
   }
 }

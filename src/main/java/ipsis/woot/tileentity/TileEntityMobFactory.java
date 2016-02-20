@@ -2,7 +2,7 @@ package ipsis.woot.tileentity;
 
 import ipsis.Woot;
 import ipsis.oss.LogHelper;
-import ipsis.woot.block.BlockUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.Upgrade;
 import ipsis.woot.manager.UpgradeValidator;
@@ -92,8 +92,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             BlockPos pos = this.getPos().offset(f, 1);
             if (worldObj.isBlockLoaded(pos)) {
                 Block b = worldObj.getBlockState(pos).getBlock();
-                if (b != null && b instanceof BlockUpgrade) {
-//                    Upgrade.Type t = worldObj.getBlockState(this.getPos().offset(f, 1)).getValue(BlockUpgrade.VARIANT);
+                if (b != null && b instanceof BlockMobFactoryUpgrade) {
+//                    Upgrade.Type t = worldObj.getBlockState(this.getPos().offset(f, 1)).getValue(BlockMobFactoryUpgrade.VARIANT);
 //                    tmpUpgrades.add(Woot.spawnerManager.getUpgrade(t));
                 }
             }

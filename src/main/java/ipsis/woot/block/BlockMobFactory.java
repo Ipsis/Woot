@@ -5,7 +5,6 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFarm;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,11 +19,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFactory extends BlockContainerWoot {
+public class BlockMobFactory extends BlockContainerWoot {
 
     public static final String BASENAME = "factory";
 
-    public BlockFactory() {
+    public BlockMobFactory() {
 
         super(Material.rock, BASENAME);
     }
@@ -77,7 +76,7 @@ public class BlockFactory extends BlockContainerWoot {
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 
         if (!worldIn.isRemote) {
-            if (neighborBlock instanceof BlockUpgrade) {
+            if (neighborBlock instanceof BlockMobFactoryUpgrade) {
                 TileEntity te = worldIn.getTileEntity(pos);
                 if (te instanceof TileEntityMobFactory)
                     ((TileEntityMobFactory) te).scanUpgrades();

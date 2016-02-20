@@ -24,12 +24,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockUpgrade extends BlockContainerWoot {
+public class BlockMobFactoryUpgrade extends BlockContainerWoot {
 
     public static final String BASENAME = "upgrade";
 
     public static final PropertyEnum<EnumSpawnerUpgrade> VARIANT = PropertyEnum.<EnumSpawnerUpgrade>create("variant", EnumSpawnerUpgrade.class);
-    public BlockUpgrade() {
+    public BlockMobFactoryUpgrade() {
 
         super(Material.rock, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumSpawnerUpgrade.RATE_I));

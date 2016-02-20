@@ -1,7 +1,7 @@
 package ipsis.woot.tileentity;
 
 import ipsis.oss.LogHelper;
-import ipsis.woot.block.BlockUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.manager.Upgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -134,7 +134,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
             if (worldObj.isBlockLoaded(b)) {
                 IBlockState iBlockState = worldObj.getBlockState(b);
                 Block block = iBlockState.getBlock();
-                if (block instanceof BlockUpgrade) {
+                if (block instanceof BlockMobFactoryUpgrade) {
                     // if is a level 1 upgrade
                 }
             }

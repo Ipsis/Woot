@@ -1,6 +1,6 @@
 package ipsis.woot.manager;
 
-import ipsis.woot.block.BlockUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgrade;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
@@ -31,10 +31,10 @@ public class UpgradeManager {
             iBlockState = world.getBlockState(blockPos.add(0, yOffset, 0));
             block = iBlockState.getBlock();
 
-            if (!(block instanceof BlockUpgrade))
+            if (!(block instanceof BlockMobFactoryUpgrade))
                 break;
 
-            EnumSpawnerUpgrade u = iBlockState.getValue(BlockUpgrade.VARIANT);
+            EnumSpawnerUpgrade u = iBlockState.getValue(BlockMobFactoryUpgrade.VARIANT);
             SpawnerUpgrade tmpUpgrade  = upgradeMap.get(u);
             if (tmpUpgrade.getUpgradeTier() == yOffset + 1)
                 upgrade = tmpUpgrade;

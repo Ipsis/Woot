@@ -110,6 +110,7 @@ public class SpawnerManager {
         }
     }
 
+    /*
     public SpawnReq getSpawnReq(String mobName, List<Upgrade> upgrades, int xpLevel) {
 
         int totalRf = Settings.baseRf * xpLevel;
@@ -120,6 +121,21 @@ public class SpawnerManager {
                 totalRf *= upgrade.getPowerMult();
             if (upgrade.hasSpawnTicks())
                 spawnTime = upgrade.getSpawnTicks();
+        }
+
+        return new SpawnReq(totalRf, spawnTime);
+    } */
+
+    public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel) {
+
+        if (mobName.equals(""))
+            return null;
+
+        int totalRf = Settings.baseRf * xpLevel;
+        int spawnTime = Settings.rateBaseTicks;
+
+        for (SpawnerUpgrade upgrade : upgrades) {
+            // TODO walk the upgrade list
         }
 
         return new SpawnReq(totalRf, spawnTime);
@@ -235,6 +251,8 @@ public class SpawnerManager {
             } catch (Exception e) {
                 LogHelper.error("Reflection of recentlyHit failed: " + e);
             }
+        } else {
+            LogHelper.info("spawnEntity: failed for " + spawnMobName);
         }
 
         return entity;

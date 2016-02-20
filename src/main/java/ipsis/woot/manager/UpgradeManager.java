@@ -7,6 +7,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class UpgradeManager {
 
@@ -15,6 +16,12 @@ public class UpgradeManager {
         for (EnumSpawnerUpgrade u : EnumSpawnerUpgrade.values()) {
             upgradeMap.put(u, new SpawnerUpgrade(u));
         }
+    }
+
+    public static SpawnerManager.EnchantKey getEnchantKey(List<SpawnerUpgrade> upgradeList) {
+
+        // TODO walk for the highest looting
+        return SpawnerManager.EnchantKey.NO_ENCHANT;
     }
 
     public static SpawnerUpgrade scanUpgradeTotem(World world, BlockPos blockPos, int maxTier) {

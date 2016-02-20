@@ -105,7 +105,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         }
 
         enchantKey = getEnchantKey();
-        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, getUpgrades(), Woot.spawnerManager.getXp(mobName, this));
+       // spawnReq = Woot.spawnerManager.getSpawnReq(mobName, getUpgrades(), Woot.spawnerManager.getXp(mobName, this));
 
         LogHelper.info(this);
     }

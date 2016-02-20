@@ -3,6 +3,8 @@ package ipsis.woot.proxy;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.Upgrade;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
@@ -19,14 +21,15 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.blockFactory.initModel();
         ModBlocks.blockUpgrade.initModel();
         ModBlocks.blockStructure.initModel();
+        ModBlocks.blockController.initModel();
     }
 
     @Override
     protected void registerItemRenderers() {
 
         ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-        for (Upgrade.Type t : Upgrade.Type.VALUES) {
-            itemModelMesher.register(Item.getItemFromBlock(ModBlocks.blockUpgrade), t.getMetadata(),
+        for (EnumSpawnerUpgrade t : EnumSpawnerUpgrade.values()) {
+             itemModelMesher.register(Item.getItemFromBlock(ModBlocks.blockUpgrade), t.getMetadata(),
                     new ModelResourceLocation(Reference.MOD_ID_LOWER + ":" + BlockMobFactoryUpgrade.BASENAME + "_" + t.getName(), "inventory"));
         }
 

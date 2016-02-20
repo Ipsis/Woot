@@ -15,6 +15,7 @@ public class ModBlocks {
         GameRegistry.registerBlock(blockFactory, BlockMobFactory.BASENAME);
         GameRegistry.registerBlock(blockUpgrade, ItemBlockUpgrade.class, BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerBlock(blockStructure, ItemBlockStructure.class, BlockMobFactoryStructure.BASENAME);
+        GameRegistry.registerBlock(blockController, BlockMobFactoryController.BASENAME);
     }
 
     public static void registerTileEntities() {
@@ -27,4 +28,5 @@ public class ModBlocks {
     public static BlockContainerWoot blockFactory = new BlockMobFactory();
     public static BlockContainerWoot blockUpgrade = new BlockMobFactoryUpgrade();
     public static BlockContainerWoot blockStructure = new BlockMobFactoryStructure();
+    public static BlockContainerWoot blockController = new BlockMobFactoryController();
 }

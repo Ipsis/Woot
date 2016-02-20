@@ -30,7 +30,7 @@ public class MobFactoryMultiblockLogic {
             blockPosList = new ArrayList<BlockPos>();
             size = null;
             // TODO need to scan for the mob block
-            mobName = "pig";
+            mobName = "Pig";
         }
 
         public EnumMobFactoryTier getSize() { return this.size; }

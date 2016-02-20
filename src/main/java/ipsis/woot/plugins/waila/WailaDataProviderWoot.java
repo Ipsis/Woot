@@ -1,8 +1,6 @@
 package ipsis.woot.plugins.waila;
 
 import ipsis.woot.manager.SpawnerUpgrade;
-import ipsis.woot.manager.Upgrade;
-import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFarm;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;

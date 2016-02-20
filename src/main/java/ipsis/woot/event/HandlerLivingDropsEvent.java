@@ -1,7 +1,6 @@
 package ipsis.woot.event;
 
 import ipsis.Woot;
-import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.MobUtil;

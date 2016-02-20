@@ -11,13 +11,13 @@ public class DamageSourceWoot extends DamageSource {
     static final String IN_SPAWNER_LOOTING_II = IN_SPAWNER + ".lootingII";
     static final String IN_SPAWNER_LOOTING_III = IN_SPAWNER + ".lootingIII";
 
-    public static DamageSourceWoot inSpawner = new DamageSourceWoot(IN_SPAWNER, SpawnerManager.EnchantKey.NO_ENCHANT);
-    public static DamageSourceWoot inSpawnerLootingI = new DamageSourceWoot(IN_SPAWNER_LOOTING_I, SpawnerManager.EnchantKey.LOOTING_I);
-    public static DamageSourceWoot inSpawnerLootingII = new DamageSourceWoot(IN_SPAWNER_LOOTING_II, SpawnerManager.EnchantKey.LOOTING_II);
-    public static DamageSourceWoot inSpawnerLootingIII = new DamageSourceWoot(IN_SPAWNER_LOOTING_III, SpawnerManager.EnchantKey.LOOTING_III);
+    public static DamageSourceWoot inSpawner = new DamageSourceWoot(IN_SPAWNER, SpawnerManager.EnumEnchantKey.NO_ENCHANT);
+    public static DamageSourceWoot inSpawnerLootingI = new DamageSourceWoot(IN_SPAWNER_LOOTING_I, SpawnerManager.EnumEnchantKey.LOOTING_I);
+    public static DamageSourceWoot inSpawnerLootingII = new DamageSourceWoot(IN_SPAWNER_LOOTING_II, SpawnerManager.EnumEnchantKey.LOOTING_II);
+    public static DamageSourceWoot inSpawnerLootingIII = new DamageSourceWoot(IN_SPAWNER_LOOTING_III, SpawnerManager.EnumEnchantKey.LOOTING_III);
 
-    SpawnerManager.EnchantKey enchantKey;
-    public DamageSourceWoot(String damageType, SpawnerManager.EnchantKey enchantKey) {
+    SpawnerManager.EnumEnchantKey enchantKey;
+    public DamageSourceWoot(String damageType, SpawnerManager.EnumEnchantKey enchantKey) {
         super(damageType);
         this.enchantKey = enchantKey;
     }
@@ -36,21 +36,21 @@ public class DamageSourceWoot extends DamageSource {
         return null;
     }
 
-    public static DamageSourceWoot getDamageSource(SpawnerManager.EnchantKey enchantKey) {
+    public static DamageSourceWoot getDamageSource(SpawnerManager.EnumEnchantKey enchantKey) {
 
-        if (enchantKey == SpawnerManager.EnchantKey.NO_ENCHANT)
+        if (enchantKey == SpawnerManager.EnumEnchantKey.NO_ENCHANT)
             return inSpawner;
-        else if (enchantKey == SpawnerManager.EnchantKey.LOOTING_I)
+        else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_I)
             return inSpawnerLootingI;
-        else if (enchantKey == SpawnerManager.EnchantKey.LOOTING_II)
+        else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_II)
             return inSpawnerLootingII;
-        else if (enchantKey == SpawnerManager.EnchantKey.LOOTING_III)
+        else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_III)
             return inSpawnerLootingIII;
 
         return null;
     }
 
-    public SpawnerManager.EnchantKey getEnchantKey() {
+    public SpawnerManager.EnumEnchantKey getEnchantKey() {
         return enchantKey;
     }
 

@@ -19,16 +19,14 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class TileEntityMobFarm extends TileEntity implements ITickable {
+public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     EnumFacing facing;
     EnumMobFactoryTier factoryTier;
     String mobName;
-    SpawnerManager.EnchantKey enchantKey = SpawnerManager.EnchantKey.NO_ENCHANT;
+    SpawnerManager.EnumEnchantKey enchantKey = SpawnerManager.EnumEnchantKey.NO_ENCHANT;
     SpawnerManager.SpawnReq spawnReq;
 
     int currLearnTicks;
@@ -43,7 +41,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 
     static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
 
-    public TileEntityMobFarm() {
+    public TileEntityMobFactory() {
 
         this.facing = EnumFacing.SOUTH;
         this.dirtyStructure = true;

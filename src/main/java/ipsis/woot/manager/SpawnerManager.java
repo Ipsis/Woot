@@ -147,7 +147,7 @@ public class SpawnerManager {
             return 1; /* This should not happen */
     }
 
-    public boolean isEmpty(String mobName, EnchantKey enchantKey) {
+    public boolean isEmpty(String mobName, EnumEnchantKey enchantKey) {
 
         SpawnerEntry e = spawnerMap.get(mobName);
         if (e != null)
@@ -157,7 +157,7 @@ public class SpawnerManager {
         return true;
     }
 
-    public boolean isFull(String mobName, EnchantKey enchantKey) {
+    public boolean isFull(String mobName, EnumEnchantKey enchantKey) {
 
         SpawnerEntry e = spawnerMap.get(mobName);
         if (e != null)
@@ -168,7 +168,7 @@ public class SpawnerManager {
     }
 
 
-    public void addDrops(String mobName, EnchantKey enchantKey, List<EntityItem> entityItemList) {
+    public void addDrops(String mobName, EnumEnchantKey enchantKey, List<EntityItem> entityItemList) {
 
         SpawnerEntry e = getSpawnerEntry(mobName);
         if (e.isFull(enchantKey))
@@ -183,7 +183,7 @@ public class SpawnerManager {
         e.addDrops(enchantKey, dropList);
     }
 
-    public List<ItemStack> getDrops(String mobName, EnchantKey enchantKey) {
+    public List<ItemStack> getDrops(String mobName, EnumEnchantKey enchantKey) {
 
         if (isEmpty(mobName, enchantKey))
            return new ArrayList<ItemStack>();
@@ -221,7 +221,7 @@ public class SpawnerManager {
         return entity;
     }
 
-    public void spawn(String mobName, EnchantKey enchantKey, World world, BlockPos blockPos) {
+    public void spawn(String mobName, EnumEnchantKey enchantKey, World world, BlockPos blockPos) {
 
         Entity entity = spawnEntity(mobName, world, blockPos);
         if (entity == null)
@@ -240,7 +240,7 @@ public class SpawnerManager {
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
     }
 
-    public enum EnchantKey {
+    public enum EnumEnchantKey {
         NO_ENCHANT,
         LOOTING_I,
         LOOTING_II,

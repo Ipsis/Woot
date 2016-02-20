@@ -1,6 +1,5 @@
 package ipsis.woot.manager;
 
-import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import net.minecraft.item.ItemStack;
 
@@ -10,21 +9,21 @@ import java.util.List;
 
 public class SpawnerEntry {
 
-    HashMap<SpawnerManager.EnchantKey, List<SpawnerDrops>> dropMap;
+    HashMap<SpawnerManager.EnumEnchantKey, List<SpawnerDrops>> dropMap;
 
     public SpawnerEntry() {
 
-        dropMap = new HashMap<SpawnerManager.EnchantKey, List<SpawnerDrops>>();
-        for (SpawnerManager.EnchantKey enchantKey : SpawnerManager.EnchantKey.values())
+        dropMap = new HashMap<SpawnerManager.EnumEnchantKey, List<SpawnerDrops>>();
+        for (SpawnerManager.EnumEnchantKey enchantKey : SpawnerManager.EnumEnchantKey.values())
             dropMap.put(enchantKey, new ArrayList<SpawnerDrops>());
     }
 
-    public boolean isFull(SpawnerManager.EnchantKey enchantKey) {
+    public boolean isFull(SpawnerManager.EnumEnchantKey enchantKey) {
 
         return dropMap.get(enchantKey).size() == Settings.sampleSize;
     }
 
-    public boolean addDrops(SpawnerManager.EnchantKey enchantKey, List<ItemStack> drops) {
+    public boolean addDrops(SpawnerManager.EnumEnchantKey enchantKey, List<ItemStack> drops) {
 
         if (!isFull(enchantKey)) {
             dropMap.get(enchantKey).add(new SpawnerDrops(drops));
@@ -37,7 +36,7 @@ public class SpawnerEntry {
     /**
      * Returns an itemstack list that can be modified
      */
-    public List<ItemStack> getDrops(SpawnerManager.EnchantKey enchantKey) {
+    public List<ItemStack> getDrops(SpawnerManager.EnumEnchantKey enchantKey) {
 
         ArrayList<ItemStack> dropList = new ArrayList<ItemStack>();
 

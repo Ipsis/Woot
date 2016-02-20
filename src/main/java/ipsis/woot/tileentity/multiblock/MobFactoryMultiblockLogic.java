@@ -3,7 +3,7 @@ package ipsis.woot.tileentity.multiblock;
 import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.tileentity.TileEntityMobFarm;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -46,7 +46,7 @@ public class MobFactoryMultiblockLogic {
      * @param factory - the main factory TE
      * @return null if invalid else the size of the factory
      */
-    public static FactorySetup validateFactory(TileEntityMobFarm factory) {
+    public static FactorySetup validateFactory(TileEntityMobFactory factory) {
 
         FactorySetup factorySetup;
         factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_THREE);
@@ -60,7 +60,7 @@ public class MobFactoryMultiblockLogic {
         return validateFactory(factory, EnumMobFactoryTier.TIER_ONE);
     }
 
-    static FactorySetup validateFactory(TileEntityMobFarm factory, EnumMobFactoryTier tier) {
+    static FactorySetup validateFactory(TileEntityMobFactory factory, EnumMobFactoryTier tier) {
 
         LogHelper.info("validateFactory:");
 
@@ -120,7 +120,7 @@ public class MobFactoryMultiblockLogic {
         return factorySetup;
     }
 
-    static boolean isSize(TileEntityMobFarm factory, EnumMobFactoryTier size) {
+    static boolean isSize(TileEntityMobFactory factory, EnumMobFactoryTier size) {
 
         BlockPos pos;
         EnumMobFactoryModule module;

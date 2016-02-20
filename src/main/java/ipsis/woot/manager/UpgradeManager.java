@@ -34,10 +34,10 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.XP_III).setPowerMultiplier(Settings.xpIIIMulti);
     }
 
-    public static SpawnerManager.EnchantKey getEnchantKey(List<SpawnerUpgrade> upgradeList) {
+    public static SpawnerManager.EnumEnchantKey getEnchantKey(List<SpawnerUpgrade> upgradeList) {
 
         int tier = 0;
-        SpawnerManager.EnchantKey enchantKey = SpawnerManager.EnchantKey.NO_ENCHANT;
+        SpawnerManager.EnumEnchantKey enchantKey = SpawnerManager.EnumEnchantKey.NO_ENCHANT;
         for (SpawnerUpgrade upgrade : upgradeList) {
             if (upgrade.isLooting() && upgrade.getUpgradeTier() > tier) {
                 enchantKey = upgrade.getEnchantKey();

@@ -25,8 +25,8 @@ public class TileEntityMobFactoryController extends TileEntity {
     void updateMobFarm() {
 
         TileEntity te = worldObj.getTileEntity(getPos().offset(EnumFacing.DOWN));
-        if (te instanceof TileEntityMobFarm)
-            ((TileEntityMobFarm) te).interruptStructure();
+        if (te instanceof TileEntityMobFactory)
+            ((TileEntityMobFactory) te).interruptStructure();
     }
 
     public void blockAdded() {

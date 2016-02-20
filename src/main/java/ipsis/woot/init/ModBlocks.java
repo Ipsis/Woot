@@ -6,7 +6,7 @@ import ipsis.woot.item.ItemBlockUpgrade;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
-import ipsis.woot.tileentity.TileEntityMobFarm;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
@@ -21,7 +21,7 @@ public class ModBlocks {
 
     public static void registerTileEntities() {
 
-        GameRegistry.registerTileEntity(TileEntityMobFarm.class, "tile." + BlockMobFactory.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactory.class, "tile." + BlockMobFactory.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryStructure.class, "tile." + BlockMobFactoryStructure.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, "tile." + BlockMobFactoryController.BASENAME);

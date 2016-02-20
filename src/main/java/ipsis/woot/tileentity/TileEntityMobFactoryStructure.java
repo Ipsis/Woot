@@ -9,17 +9,17 @@ import java.util.Stack;
 
 public class TileEntityMobFactoryStructure extends TileEntity  {
 
-    TileEntityMobFarm master = null;
+    TileEntityMobFactory master = null;
     public boolean hasMaster() { return master != null; }
     public void clearMaster() { master = null; }
-    public void setMaster(TileEntityMobFarm master) { this.master = master; }
+    public void setMaster(TileEntityMobFactory master) { this.master = master; }
 
-    TileEntityMobFarm findMaster() {
+    TileEntityMobFactory findMaster() {
 
         List<TileEntityMobFactoryStructure> connectedTEs = new ArrayList<TileEntityMobFactoryStructure>();
         Stack<TileEntityMobFactoryStructure> traversingTEs = new Stack<TileEntityMobFactoryStructure>();
 
-        TileEntityMobFarm tmpMaster = null;
+        TileEntityMobFactory tmpMaster = null;
         boolean masterFound = false;
 
         traversingTEs.add(this);
@@ -31,9 +31,9 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
                 TileEntity te = worldObj.getTileEntity(currTE.getPos().offset(f));
                 if (te instanceof TileEntityMobFactoryStructure && !connectedTEs.contains(te)) {
                     traversingTEs.add((TileEntityMobFactoryStructure)te);
-                } else if (te instanceof TileEntityMobFarm) {
+                } else if (te instanceof TileEntityMobFactory) {
                     masterFound = true;
-                    tmpMaster = (TileEntityMobFarm)te;
+                    tmpMaster = (TileEntityMobFactory)te;
                 }
             }
         }
@@ -43,7 +43,7 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
 
     public void blockAdded() {
 
-        TileEntityMobFarm tmpMaster = findMaster();
+        TileEntityMobFactory tmpMaster = findMaster();
         if (tmpMaster != null)
             tmpMaster.interruptStructure();
     }

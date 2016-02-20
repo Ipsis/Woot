@@ -240,10 +240,4 @@ public class SpawnerManager {
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
     }
 
-    public enum EnumEnchantKey {
-        NO_ENCHANT,
-        LOOTING_I,
-        LOOTING_II,
-        LOOTING_III;
-    }
 }

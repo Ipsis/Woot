@@ -2,6 +2,7 @@ package ipsis.woot.tileentity;
 
 import ipsis.Woot;
 import ipsis.oss.LogHelper;
+import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
@@ -26,7 +27,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     EnumFacing facing;
     EnumMobFactoryTier factoryTier;
     String mobName;
-    SpawnerManager.EnumEnchantKey enchantKey = SpawnerManager.EnumEnchantKey.NO_ENCHANT;
+    EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
     SpawnerManager.SpawnReq spawnReq;
 
     int currLearnTicks;

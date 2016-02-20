@@ -9,21 +9,21 @@ import java.util.List;
 
 public class SpawnerEntry {
 
-    HashMap<SpawnerManager.EnumEnchantKey, List<SpawnerDrops>> dropMap;
+    HashMap<EnumEnchantKey, List<SpawnerDrops>> dropMap;
 
     public SpawnerEntry() {
 
-        dropMap = new HashMap<SpawnerManager.EnumEnchantKey, List<SpawnerDrops>>();
-        for (SpawnerManager.EnumEnchantKey enchantKey : SpawnerManager.EnumEnchantKey.values())
+        dropMap = new HashMap<EnumEnchantKey, List<SpawnerDrops>>();
+        for (EnumEnchantKey enchantKey : EnumEnchantKey.values())
             dropMap.put(enchantKey, new ArrayList<SpawnerDrops>());
     }
 
-    public boolean isFull(SpawnerManager.EnumEnchantKey enchantKey) {
+    public boolean isFull(EnumEnchantKey enchantKey) {
 
         return dropMap.get(enchantKey).size() == Settings.sampleSize;
     }
 
-    public boolean addDrops(SpawnerManager.EnumEnchantKey enchantKey, List<ItemStack> drops) {
+    public boolean addDrops(EnumEnchantKey enchantKey, List<ItemStack> drops) {
 
         if (!isFull(enchantKey)) {
             dropMap.get(enchantKey).add(new SpawnerDrops(drops));
@@ -36,7 +36,7 @@ public class SpawnerEntry {
     /**
      * Returns an itemstack list that can be modified
      */
-    public List<ItemStack> getDrops(SpawnerManager.EnumEnchantKey enchantKey) {
+    public List<ItemStack> getDrops(EnumEnchantKey enchantKey) {
 
         ArrayList<ItemStack> dropList = new ArrayList<ItemStack>();
 

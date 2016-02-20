@@ -1,7 +1,7 @@
 package ipsis.woot.util;
 
 import com.mojang.authlib.GameProfile;
-import ipsis.woot.manager.SpawnerManager;
+import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
@@ -27,31 +27,31 @@ public class FakePlayerUtil {
     static ItemStack swordLootingI;
     static ItemStack swordLootingII;
     static ItemStack swordLootingIII;
-    public static void setLooting(FakePlayer f, SpawnerManager.EnumEnchantKey enchantKey) {
+    public static void setLooting(FakePlayer f, EnumEnchantKey enchantKey) {
 
         ItemStack itemStack = null;
         createSword(enchantKey);
-        if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_I)
+        if (enchantKey == EnumEnchantKey.LOOTING_I)
             itemStack = swordLootingI;
-        else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_II)
+        else if (enchantKey == EnumEnchantKey.LOOTING_II)
             itemStack = swordLootingII;
-        else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_III)
+        else if (enchantKey == EnumEnchantKey.LOOTING_III)
             itemStack = swordLootingIII;
 
         if (f != null && itemStack != null)
             f.setCurrentItemOrArmor(0, itemStack);
     }
 
-    static void createSword(SpawnerManager.EnumEnchantKey enchantKey) {
+    static void createSword(EnumEnchantKey enchantKey) {
 
         ItemStack itemStack = new ItemStack(Items.iron_sword);
-        if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_I && swordLootingI == null) {
+        if (enchantKey == EnumEnchantKey.LOOTING_I && swordLootingI == null) {
             itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingILevel);
             swordLootingI = itemStack;
-        } else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_II && swordLootingII == null) {
+        } else if (enchantKey == EnumEnchantKey.LOOTING_II && swordLootingII == null) {
             itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingIILevel);
             swordLootingII = itemStack;
-        } else if (enchantKey == SpawnerManager.EnumEnchantKey.LOOTING_III && swordLootingIII == null) {
+        } else if (enchantKey == EnumEnchantKey.LOOTING_III && swordLootingIII == null) {
             itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingIIILevel);
             swordLootingIII = itemStack;
         }

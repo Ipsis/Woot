@@ -40,16 +40,16 @@ public class SpawnerUpgrade {
         return this.upgradeType;
     }
 
-    public SpawnerManager.EnumEnchantKey getEnchantKey() {
+    public EnumEnchantKey getEnchantKey() {
 
         if (upgradeType == EnumSpawnerUpgrade.LOOTING_I)
-            return SpawnerManager.EnumEnchantKey.LOOTING_I;
+            return EnumEnchantKey.LOOTING_I;
         else if (upgradeType == EnumSpawnerUpgrade.LOOTING_II)
-            return SpawnerManager.EnumEnchantKey.LOOTING_II;
+            return EnumEnchantKey.LOOTING_II;
         else if (upgradeType == EnumSpawnerUpgrade.LOOTING_III)
-            return SpawnerManager.EnumEnchantKey.LOOTING_III;
+            return EnumEnchantKey.LOOTING_III;
 
-        return SpawnerManager.EnumEnchantKey.NO_ENCHANT;
+        return EnumEnchantKey.NO_ENCHANT;
     }
 
     public boolean isLooting() {

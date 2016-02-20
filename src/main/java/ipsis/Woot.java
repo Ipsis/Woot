@@ -5,6 +5,7 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.init.ModRecipes;
 import ipsis.woot.manager.SpawnerManager;
+import ipsis.woot.manager.UpgradeManager;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
@@ -44,7 +45,7 @@ public class Woot {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
 
         /* TODO this needs to go after config load */
-        spawnerManager.init();
+        UpgradeManager.loadConfig();
         proxy.preInit();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");

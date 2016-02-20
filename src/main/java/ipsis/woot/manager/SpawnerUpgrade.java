@@ -3,10 +3,36 @@ package ipsis.woot.manager;
 public class SpawnerUpgrade {
 
     EnumSpawnerUpgrade upgradeType;
+    float powerMultiplier;
+    int spawnRate;
 
     public SpawnerUpgrade(EnumSpawnerUpgrade upgradeType) {
 
         this.upgradeType = upgradeType;
+        this.powerMultiplier = 1.0F;
+        this.spawnRate = 0;
+    }
+
+    public SpawnerUpgrade setPowerMultiplier(float powerMultiplier) {
+
+        this.powerMultiplier = powerMultiplier;
+        return this;
+    }
+
+    public float getPowerMultiplier() {
+
+        return this.powerMultiplier;
+    }
+
+    public SpawnerUpgrade setSpawnRate(int spawnRate) {
+
+        this.spawnRate = spawnRate;
+        return this;
+    }
+
+    public int getSpawnRate() {
+
+        return this.spawnRate;
     }
 
     public EnumSpawnerUpgrade getUpgradeType() {

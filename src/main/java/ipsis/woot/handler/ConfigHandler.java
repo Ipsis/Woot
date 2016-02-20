@@ -39,6 +39,8 @@ public class ConfigHandler {
         Settings.lootingIIMulti = Settings.Power.DEF_LOOTING_II_MULTI;
         Settings.lootingIIIMulti = Settings.Power.DEF_LOOTING_III_MULTI;
         Settings.xpIMulti = Settings.Power.DEF_XP_I_MULTI;
+        Settings.xpIIMulti = Settings.Power.DEF_XP_II_MULTI;
+        Settings.xpIIIMulti = Settings.Power.DEF_XP_III_MULTI;
 
         Settings.strictPower = Settings.Power.DEF_STRICT_POWER;
         Settings.strictFactorySpawns = Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS;

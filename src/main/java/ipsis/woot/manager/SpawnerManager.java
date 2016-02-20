@@ -53,30 +53,6 @@ import java.util.Random;
 
 public class SpawnerManager {
 
-    List<Upgrade> upgradeList = new ArrayList<Upgrade>();
-
-    public void init() {
-
-        upgradeList.add(new Upgrade(Upgrade.Type.RATE_I, Upgrade.Group.RATE, Settings.rateIMulti, Settings.rateITicks));
-        upgradeList.add(new Upgrade(Upgrade.Type.RATE_II, Upgrade.Group.RATE, Settings.rateIIMulti, Settings.rateIITicks));
-        upgradeList.add(new Upgrade(Upgrade.Type.RATE_III, Upgrade.Group.RATE, Settings.rateIIIMulti, Settings.rateIIITicks));
-        upgradeList.add(new Upgrade(Upgrade.Type.LOOTING_I, Upgrade.Group.LOOTING, Settings.lootingIMulti, 0));
-        upgradeList.add(new Upgrade(Upgrade.Type.LOOTING_II, Upgrade.Group.LOOTING, Settings.lootingIIMulti, 0));
-        upgradeList.add(new Upgrade(Upgrade.Type.LOOTING_III, Upgrade.Group.LOOTING, Settings.lootingIIIMulti, 0));
-        upgradeList.add(new Upgrade(Upgrade.Type.XP_I, Upgrade.Group.XP, Settings.xpIMulti, 0));
-    }
-
-    public Upgrade getUpgrade(Upgrade.Type type) {
-
-        for (Upgrade upgrade : upgradeList)
-            if (upgrade.getType() == type)
-                return upgrade;
-
-        /* Should never happen */
-        LogHelper.warn("getUpgrade: unmapped upgrade requested " + type);
-        return upgradeList.get(0);
-    }
-
     public class SpawnReq {
 
         int totalRf;
@@ -110,22 +86,6 @@ public class SpawnerManager {
         }
     }
 
-    /*
-    public SpawnReq getSpawnReq(String mobName, List<Upgrade> upgrades, int xpLevel) {
-
-        int totalRf = Settings.baseRf * xpLevel;
-        int spawnTime = Settings.rateBaseTicks;
-
-        for (Upgrade upgrade : upgrades) {
-            if (upgrade.hasPowerMult())
-                totalRf *= upgrade.getPowerMult();
-            if (upgrade.hasSpawnTicks())
-                spawnTime = upgrade.getSpawnTicks();
-        }
-
-        return new SpawnReq(totalRf, spawnTime);
-    } */
-
     public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel) {
 
         if (mobName.equals(""))
@@ -135,7 +95,10 @@ public class SpawnerManager {
         int spawnTime = Settings.rateBaseTicks;
 
         for (SpawnerUpgrade upgrade : upgrades) {
-            // TODO walk the upgrade list
+            totalRf *= upgrade.getPowerMultiplier();
+
+            if (upgrade.isRate())
+                spawnTime = upgrade.getSpawnRate();
         }
 
         return new SpawnReq(totalRf, spawnTime);

@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.woot.block.BlockMobFactoryUpgrade;
+import ipsis.woot.reference.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
@@ -18,10 +19,33 @@ public class UpgradeManager {
         }
     }
 
+    public static void loadConfig() {
+
+        upgradeMap.get(EnumSpawnerUpgrade.RATE_I).setPowerMultiplier(Settings.rateIMulti).setSpawnRate(Settings.rateITicks);
+        upgradeMap.get(EnumSpawnerUpgrade.RATE_II).setPowerMultiplier(Settings.rateIIMulti).setSpawnRate(Settings.rateIITicks);
+        upgradeMap.get(EnumSpawnerUpgrade.RATE_III).setPowerMultiplier(Settings.rateIIIMulti).setSpawnRate(Settings.rateIIITicks);
+
+        upgradeMap.get(EnumSpawnerUpgrade.LOOTING_I).setPowerMultiplier(Settings.lootingIMulti);
+        upgradeMap.get(EnumSpawnerUpgrade.LOOTING_II).setPowerMultiplier(Settings.lootingIIMulti);
+        upgradeMap.get(EnumSpawnerUpgrade.LOOTING_III).setPowerMultiplier(Settings.lootingIIIMulti);
+
+        upgradeMap.get(EnumSpawnerUpgrade.XP_I).setPowerMultiplier(Settings.xpIMulti);
+        upgradeMap.get(EnumSpawnerUpgrade.XP_II).setPowerMultiplier(Settings.xpIIMulti);
+        upgradeMap.get(EnumSpawnerUpgrade.XP_III).setPowerMultiplier(Settings.xpIIIMulti);
+    }
+
     public static SpawnerManager.EnchantKey getEnchantKey(List<SpawnerUpgrade> upgradeList) {
 
-        // TODO walk for the highest looting
-        return SpawnerManager.EnchantKey.NO_ENCHANT;
+        int tier = 0;
+        SpawnerManager.EnchantKey enchantKey = SpawnerManager.EnchantKey.NO_ENCHANT;
+        for (SpawnerUpgrade upgrade : upgradeList) {
+            if (upgrade.isLooting() && upgrade.getUpgradeTier() > tier) {
+                enchantKey = upgrade.getEnchantKey();
+                tier = upgrade.getUpgradeTier();
+            }
+        }
+
+        return enchantKey;
     }
 
     public static SpawnerUpgrade scanUpgradeTotem(World world, BlockPos blockPos, int maxTier) {

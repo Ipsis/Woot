@@ -28,6 +28,8 @@ public class Settings {
         public static final float DEF_LOOTING_III_MULTI = 50.0F;
 
         public static final float DEF_XP_I_MULTI = 2.0F;
+        public static final float DEF_XP_II_MULTI = 2.0F;
+        public static final float DEF_XP_III_MULTI = 2.0F;
 
         public static final boolean DEF_STRICT_POWER = false;
     }
@@ -55,6 +57,8 @@ public class Settings {
     public static float lootingIIMulti;
     public static float lootingIIIMulti;
     public static float xpIMulti;
+    public static float xpIIMulti;
+    public static float xpIIIMulti;
 
     public static boolean strictPower;
     public static boolean strictFactorySpawns;

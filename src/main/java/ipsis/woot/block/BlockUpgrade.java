@@ -89,4 +89,10 @@ public class BlockUpgrade extends BlockContainerWoot {
         TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
         te.blockAdded();
     }
+
+    @Override
+    public int getRenderType() {
+
+        return 3;
+    }
 }

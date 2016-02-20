@@ -108,13 +108,13 @@ public class MobFactoryMultiblockLogic {
         EnumMobFactoryModule module;
         if (size == EnumMobFactoryTier.TIER_ONE) {
             pos = new BlockPos(2, -1, -2);
-            module = EnumMobFactoryModule.BLOCK_1;
+            module = EnumMobFactoryModule.BLOCK_2;
         } else if (size == EnumMobFactoryTier.TIER_TWO) {
             pos = new BlockPos(3, -1, -3);
-            module = EnumMobFactoryModule.BLOCK_2;
+            module = EnumMobFactoryModule.BLOCK_3;
         } else {
             pos = new BlockPos(4, -1, -4);
-            module = EnumMobFactoryModule.BLOCK_3;
+            module = EnumMobFactoryModule.BLOCK_4;
         }
 
         pos = BlockPosHelper.rotateFromSouth(pos, factory.getFacing().getOpposite());

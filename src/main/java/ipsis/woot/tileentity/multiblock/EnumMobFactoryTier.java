@@ -5,6 +5,11 @@ import net.minecraft.util.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is based off the approach that WayOfTime handled the patterns for the BloodMagic Blood Altar.
+ * BloodMagic/src/main/java/WayofTime/bloodmagic/api/altar/EnumAltarTier.java
+ */
+
 public enum EnumMobFactoryTier {
 
     // All mappings are when facing south
@@ -26,12 +31,22 @@ public enum EnumMobFactoryTier {
 
             for (int z = -2; z <= 2; z+=4) {
                 for (int x = -2; x <= 2; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_1));
+                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
             }
             for (int x = -2; x <= 2; x+=4) {
                 for (int z = -1; z <= 1; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_1));
+                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
             }
+
+            structureModules.add(new MobFactoryModule(new BlockPos(2, 1, 2), EnumMobFactoryModule.BLOCK_2));
+            structureModules.add(new MobFactoryModule(new BlockPos(1, 1, 2), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(1, 2, 2), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(0, 1, 2), EnumMobFactoryModule.BLOCK_2));
+            structureModules.add(new MobFactoryModule(new BlockPos(0, 2, 2), EnumMobFactoryModule.BLOCK_2));
+            structureModules.add(new MobFactoryModule(new BlockPos(0, 3, 2), EnumMobFactoryModule.BLOCK_2));
+            structureModules.add(new MobFactoryModule(new BlockPos(-1, 1, 2), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(-1, 2, 2), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(-2, 1, 2), EnumMobFactoryModule.BLOCK_2));
         }
     },
     TIER_TWO() {
@@ -42,12 +57,20 @@ public enum EnumMobFactoryTier {
 
             for (int z = -3; z <= 3; z+=6) {
                 for (int x = -3; x <= 3; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
+                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
             }
             for (int x = -3; x <= 3; x+=6) {
                 for (int z = -2; z <= 2; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
+                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
             }
+
+            for (int y = 1; y < 5; y++) {
+                structureModules.add(new MobFactoryModule(new BlockPos(3, y, -3), EnumMobFactoryModule.BLOCK_3));
+                structureModules.add(new MobFactoryModule(new BlockPos(3, y, 3), EnumMobFactoryModule.BLOCK_3));
+                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, 3), EnumMobFactoryModule.BLOCK_3));
+                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, -3), EnumMobFactoryModule.BLOCK_3));
+            }
+
         }
     },
     TIER_THREE() {
@@ -58,11 +81,18 @@ public enum EnumMobFactoryTier {
 
             for (int z = -4; z <= 4; z+=8) {
                 for (int x = -4; x <= 4; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
+                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_4));
             }
             for (int x = -4; x <= 4; x+=8) {
                 for (int z = -3; z <= 3; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
+                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_4));
+            }
+
+            for (int y = 1; y < 5; y++) {
+                structureModules.add(new MobFactoryModule(new BlockPos(4, y, -4), EnumMobFactoryModule.BLOCK_4));
+                structureModules.add(new MobFactoryModule(new BlockPos(4, y, 4), EnumMobFactoryModule.BLOCK_4));
+                structureModules.add(new MobFactoryModule(new BlockPos(-4, y, 4), EnumMobFactoryModule.BLOCK_4));
+                structureModules.add(new MobFactoryModule(new BlockPos(-4, y, -4), EnumMobFactoryModule.BLOCK_4));
             }
         }
     };

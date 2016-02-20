@@ -1,16 +1,13 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
-import ipsis.oss.BlockPosHelper;
 import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockUpgrade;
-import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.Upgrade;
 import ipsis.woot.manager.UpgradeValidator;
 import ipsis.woot.reference.Settings;
-import ipsis.woot.tileentity.multiblock.EnumMobFactorySize;
-import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -269,7 +266,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     EnumFacing facing = EnumFacing.WEST;
     boolean scanSpawnerStructure() {
 
-        EnumMobFactorySize size = null; //MobFactoryMultiblockLogic.validateFactory(this);
+        EnumMobFactoryTier size = null; //MobFactoryMultiblockLogic.validateFactory(this);
         LogHelper.info("scanSpawnerStructure: " + size);
         return size != null;
     }

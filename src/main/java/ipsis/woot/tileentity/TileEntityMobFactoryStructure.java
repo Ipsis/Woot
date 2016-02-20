@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity;
 
-import ipsis.oss.LogHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -10,17 +9,17 @@ import java.util.Stack;
 
 public class TileEntityMobFactoryStructure extends TileEntity  {
 
-    TileEntityMobFarm master;
+    TileEntityMobFarm master = null;
     public boolean hasMaster() { return master != null; }
     public void clearMaster() { master = null; }
+    public void setMaster(TileEntityMobFarm master) { this.master = master; }
 
-    public void findMaster() {
-
-        TileEntityMobFarm oldMaster = master;
+    TileEntityMobFarm findMaster() {
 
         List<TileEntityMobFactoryStructure> connectedTEs = new ArrayList<TileEntityMobFactoryStructure>();
         Stack<TileEntityMobFactoryStructure> traversingTEs = new Stack<TileEntityMobFactoryStructure>();
 
+        TileEntityMobFarm tmpMaster = null;
         boolean masterFound = false;
 
         traversingTEs.add(this);
@@ -32,29 +31,29 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
                 TileEntity te = worldObj.getTileEntity(currTE.getPos().offset(f));
                 if (te instanceof TileEntityMobFactoryStructure && !connectedTEs.contains(te)) {
                     traversingTEs.add((TileEntityMobFactoryStructure)te);
-                } else if (te instanceof TileEntityMobFactory) {
+                } else if (te instanceof TileEntityMobFarm) {
                     masterFound = true;
-                    master = (TileEntityMobFarm)te;
+                    tmpMaster = (TileEntityMobFarm)te;
                 }
             }
         }
 
-        if (oldMaster != null && oldMaster != master)
-            LogHelper.info("findMaster: changed master TE");
+        return tmpMaster;
     }
 
     public void blockAdded() {
 
-        findMaster();
-        if (hasMaster())
-            master.nudge();
+        TileEntityMobFarm tmpMaster = findMaster();
+        if (tmpMaster != null)
+            tmpMaster.interruptStructure();
     }
 
     @Override
     public void invalidate() {
 
+        // Master will be set by the farm when it finds the block
         if (hasMaster()) {
-            master.nudge();
+            master.interruptStructure();
         }
     }
 

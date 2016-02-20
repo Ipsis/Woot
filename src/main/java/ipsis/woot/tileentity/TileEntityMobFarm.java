@@ -3,7 +3,7 @@ package ipsis.woot.tileentity;
 import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockUpgrade;
 import ipsis.woot.manager.Upgrade;
-import ipsis.woot.tileentity.multiblock.EnumMobFactorySize;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.block.Block;
@@ -19,11 +19,14 @@ import java.util.List;
 public class TileEntityMobFarm extends TileEntity implements ITickable {
 
     EnumFacing facing;
-    EnumMobFactorySize factorySize;
+    EnumMobFactoryTier factoryTier;
     String mobName;
 
     boolean dirtyStructure;
-    boolean dirtyUpgrades;
+    boolean dirtyUpgrade;
+    List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
+    List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
+    List<Upgrade.Type> upgradeList = new ArrayList<Upgrade.Type>();
 
     static final int MULTIBLOCK_MIN_REFRESH_TICKS = 20;
 
@@ -31,8 +34,8 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
 
         this.facing = EnumFacing.SOUTH;
         this.dirtyStructure = true;
-        this.dirtyUpgrades = false;
-        this.factorySize = null;
+        this.dirtyUpgrade = false;
+        this.factoryTier = null;
         this.mobName = "Pig";
     }
 
@@ -46,47 +49,82 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
         return this.facing;
     }
 
-    public void setMobName(String mobName) {
-
-        // TODO changing this causes a power recalc!
-        this.mobName = mobName;
-    }
-
-    public String getMobName() {
-
-        return this.mobName;
-    }
-
     public boolean isFormed() {
 
-        return factorySize != null;
+        return factoryTier != null && mobName.equals("");
     }
 
-    void checkFactory() {
+    void updateStructureBlocks(boolean connected) {
 
-        LogHelper.info("checkFactory");
-
-        EnumMobFactorySize oldSize = factorySize;
-        MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this);
-        if (factorySetup.isValid()) {
-
+        for (BlockPos p : structureBlockList) {
+            if (worldObj.isBlockLoaded(p)) {
+                TileEntity te = worldObj.getTileEntity(p);
+                if (te instanceof TileEntityMobFactoryStructure) {
+                    if (connected)
+                        ((TileEntityMobFactoryStructure) te).setMaster(this);
+                    else
+                        ((TileEntityMobFactoryStructure) te).clearMaster();
+                }
+            }
         }
-        LogHelper.info("checkFactory: " + oldSize + "->" + factorySize);
-
-        if (isFormed() && factorySize != oldSize)
-            checkUpgrades();
     }
 
-    List<Upgrade.Type> upgradeList = new ArrayList<Upgrade.Type>();
+    void disconnectUpgradeBlocks(boolean connected) {
+
+        for (BlockPos p : upgradeBlockList) {
+            if (worldObj.isBlockLoaded(p)) {
+                TileEntity te = worldObj.getTileEntity(p);
+                if (te instanceof TileEntityMobFactoryUpgrade) {
+                    if (connected)
+                        ((TileEntityMobFactoryUpgrade) te).setMaster(this);
+                    else
+                        ((TileEntityMobFactoryUpgrade) te).clearMaster();
+                }
+            }
+        }
+    }
+
+    void onStructureCheck() {
+
+        LogHelper.info("onStructureChanged");
+
+        EnumMobFactoryTier oldFactoryTier = factoryTier;
+        MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this);
+
+        if (factorySetup.getSize() == null) {
+            LogHelper.info("onStructureChanged: new size is null");
+            updateStructureBlocks(false);
+            disconnectUpgradeBlocks(false);
+            factoryTier = factorySetup.getSize();
+            mobName = "";
+            return;
+        }
+
+        if (oldFactoryTier != factoryTier) {
+            LogHelper.info("onStructureChanged: new size != old size");
+            updateStructureBlocks(false);
+        }
+
+        mobName = factorySetup.getMobName();
+        structureBlockList = factorySetup.getBlockPosList();
+        updateStructureBlocks(true);
+
+        onUpgradeCheck();
+    }
+
+    void onUpgradeCheck() {
+
+        LogHelper.info("onUpgradeChanged");
+    }
 
     void checkUpgrades() {
 
         LogHelper.info("checkUpgrades:");
         upgradeList.clear();
 
-        if (factorySize == EnumMobFactorySize.SIZE_ONE) {
+        if (factoryTier == EnumMobFactoryTier.TIER_ONE) {
             // No upgrades available on size one
-        } else if (factorySize == EnumMobFactorySize.SIZE_TWO) {
+        } else if (factoryTier == EnumMobFactoryTier.TIER_TWO) {
             // One on left up to level 2
             // One on right up to level 2
 
@@ -101,7 +139,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
                 }
             }
 
-        } else if (factorySize == EnumMobFactorySize.SIZE_THREE) {
+        } else if (factoryTier == EnumMobFactoryTier.TIER_THREE) {
         }
 
         LogHelper.info("checkUpgrades: " + upgradeList);
@@ -119,7 +157,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
             return;
 
         if (dirtyStructure && worldObj.getWorldTime() % MULTIBLOCK_MIN_REFRESH_TICKS == 0) {
-            checkFactory();
+            onStructureCheck();
             dirtyStructure = false;
         }
 
@@ -127,9 +165,15 @@ public class TileEntityMobFarm extends TileEntity implements ITickable {
             return;
     }
 
-    public void nudge() {
+    public void interruptStructure() {
 
-        LogHelper.info("nudge");
+        LogHelper.info("interruptStructure");
         dirtyStructure = true;
+    }
+
+    public void interruptUpgrade() {
+
+        LogHelper.info("interruptUpgrade");
+        dirtyUpgrade = true;
     }
 }

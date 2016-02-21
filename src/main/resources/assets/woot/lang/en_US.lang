@@ -20,3 +20,9 @@ tile.Woot:upgrade.decapitate_ii.name=Decapitate II Upgrade
 tile.Woot:upgrade.decapitate_iii.name=Decapitate III Upgrade
 
 item.Woot:prism.name=Mob Prism
+
+waila.Woot:factory.tier=Tier
+waila.Woot:factory.mob=Mob
+waila.Woot:factory.spawnTime=Time
+waila.Woot:factory.totalRf=Total Cost
+waila.Woot:factory.tickRf=Tick Cost

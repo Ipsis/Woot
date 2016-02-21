@@ -8,6 +8,12 @@
     "variant=looting_iii": { "model":"woot:upgrade_looting_iii" },
     "variant=xp_i": { "model":"woot:upgrade_xp_i" },
     "variant=xp_ii": { "model":"woot:upgrade_xp_ii" },
-    "variant=xp_iii": { "model":"woot:upgrade_xp_iii" }
+    "variant=xp_iii": { "model":"woot:upgrade_xp_iii" },
+    "variant=mass_i": { "model":"woot:upgrade_mass_i" },
+    "variant=mass_ii": { "model":"woot:upgrade_mass_ii" },
+    "variant=mass_iii": { "model":"woot:upgrade_mass_iii" },
+    "variant=decapitate_i": { "model":"woot:upgrade_decapitate_i" },
+    "variant=decapitate_ii": { "model":"woot:upgrade_decapitate_ii" },
+    "variant=decapitate_iii": { "model":"woot:upgrade_decapitate_iii" }
   }
 }

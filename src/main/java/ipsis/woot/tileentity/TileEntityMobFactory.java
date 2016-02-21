@@ -30,6 +30,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     String mobName;
     EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
     SpawnerManager.SpawnReq spawnReq;
+    boolean nbtLoaded;
 
     int currLearnTicks;
     int currSpawnTicks;
@@ -42,16 +43,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     List<SpawnerUpgrade> upgradeList = new ArrayList<SpawnerUpgrade>();
 
     static final String NBT_FACING = "facing";
-    static final String NBT_TIER = "tier";
-    static final String NBT_MOB_NAME = "mobName";
-    static final String NBT_ENCHANT_KEY = "enchantKey";
-    static final String NBT_CURR_LEARN_TICK = "learnTicks";
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
     static final String NBT_CONSUMED_RF = "consumedRf";
-    static final String NBT_UPGRADES = "upgrades";
-    static final String NBT_UPGRADE = "upgrade";
-    static final String NBT_UPGRADES_POS = "upgradesPos";
-    static final String NBT_STRUCTURE_POS = "structurePos";
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
@@ -62,80 +55,21 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (!isFormed())
             return;
 
-        compound.setByte(NBT_TIER, (byte)factoryTier.ordinal());
-        compound.setString(NBT_MOB_NAME, mobName);
-        compound.setByte(NBT_ENCHANT_KEY, (byte)enchantKey.ordinal());
-        spawnReq.writeToNBT(compound);
-        compound.setInteger(NBT_CURR_LEARN_TICK, currLearnTicks);
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
-
-        NBTTagList upgradeTagList = new NBTTagList();
-        for (SpawnerUpgrade u : upgradeList) {
-            NBTTagCompound c = new NBTTagCompound();
-            c.setByte(NBT_UPGRADE, (byte)u.getUpgradeType().ordinal());
-        }
-        compound.setTag(NBT_UPGRADES, upgradeTagList);
-
-        NBTTagList upgradePosTagList = new NBTTagList();
-        for (BlockPos p : upgradeBlockList) {
-            NBTTagCompound c = new NBTTagCompound();
-            BlockPosHelper.writeToNBT(p, c);
-            upgradePosTagList.appendTag(c);
-        }
-        compound.setTag(NBT_UPGRADES_POS, upgradePosTagList);
-
-        NBTTagList structurePosTagList = new NBTTagList();
-        for (BlockPos p : structureBlockList) {
-            NBTTagCompound c = new NBTTagCompound();
-            BlockPosHelper.writeToNBT(p, c);
-            structurePosTagList.appendTag(c);
-        }
-        compound.setTag(NBT_STRUCTURE_POS, structurePosTagList);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
-        upgradeList.clear();
-        upgradeBlockList.clear();
-        structureBlockList.clear();
-
         facing = EnumFacing.getFront(compound.getByte(NBT_FACING));
 
-        if (!compound.hasKey(NBT_TIER))
-            return;
-
-        factoryTier = EnumMobFactoryTier.getTier(compound.getByte(NBT_TIER));
-        mobName = compound.getString(NBT_MOB_NAME);
-        enchantKey = EnumEnchantKey.getEnchantKey(compound.getByte(NBT_ENCHANT_KEY));
-        spawnReq = SpawnerManager.SpawnReq.readFromNBT(compound);
-        currLearnTicks = compound.getInteger(NBT_CURR_LEARN_TICK);
-        currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
-        consumedRf = compound.getInteger(NBT_CONSUMED_RF);
-
-        NBTTagList nbtTagList = compound.getTagList(NBT_UPGRADES, Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < nbtTagList.tagCount(); i++) {
-            NBTTagCompound c = nbtTagList.getCompoundTagAt(i);
-            EnumSpawnerUpgrade spawnerUpgrade = EnumSpawnerUpgrade.getFromMetadata(c.getByte(NBT_UPGRADE));
-            upgradeList.add(UpgradeManager.getSpawnerUpgrade(spawnerUpgrade));
+        if (compound.hasKey(NBT_CURR_SPAWN_TICK)) {
+            currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
+            consumedRf = compound.getInteger(NBT_CONSUMED_RF);
+            nbtLoaded = true;
         }
-
-        nbtTagList = compound.getTagList(NBT_UPGRADES_POS, Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < nbtTagList.tagCount(); i++) {
-            NBTTagCompound c = nbtTagList.getCompoundTagAt(i);
-            upgradeBlockList.add(BlockPosHelper.readFromNBT(c));
-        }
-
-        nbtTagList = compound.getTagList(NBT_STRUCTURE_POS, Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < nbtTagList.tagCount(); i++) {
-            NBTTagCompound c = nbtTagList.getCompoundTagAt(i);
-            structureBlockList.add(BlockPosHelper.readFromNBT(c));
-        }
-
-        updateStructureBlocks(true);
-        updateUpgradeBlocks(true);
     }
 
     static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
@@ -148,6 +82,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.factoryTier = null;
         this.mobName = MobManager.INVALID_MOB_NAME;
         this.spawnReq = null;
+        this.nbtLoaded = false;
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -268,8 +203,14 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeList, Woot.spawnerManager.getXp(mobName, this));
         enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
-        consumedRf = 0;
-        currSpawnTicks = 0;
+
+        if (nbtLoaded) {
+            /* Preserver on load */
+            nbtLoaded = false;
+        } else {
+            consumedRf = 0;
+            currSpawnTicks = 0;
+        }
         updateUpgradeBlocks(true);
 
     }

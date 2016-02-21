@@ -12,7 +12,13 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
     LOOTING_III,
     XP_I,
     XP_II,
-    XP_III;
+    XP_III,
+    MASS_I,
+    MASS_II,
+    MASS_III,
+    DECAPITATE_I,
+    DECAPITATE_II,
+    DECAPITATE_III;
 
     public int getMetadata() {
 

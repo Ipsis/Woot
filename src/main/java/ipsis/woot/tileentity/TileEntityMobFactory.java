@@ -2,14 +2,12 @@ package ipsis.woot.tileentity;
 
 import ipsis.Woot;
 import ipsis.oss.LogHelper;
-import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.manager.SpawnerManager;
-import ipsis.woot.manager.SpawnerUpgrade;
-import ipsis.woot.manager.UpgradeManager;
+import ipsis.woot.manager.*;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -48,7 +46,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.dirtyStructure = true;
         this.dirtyUpgrade = false;
         this.factoryTier = null;
-        this.mobName = "Pig";
+        this.mobName = MobManager.INVALID_MOB_NAME;
         this.spawnReq = null;
 
         currLearnTicks = 0;
@@ -88,7 +86,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     public boolean isFormed() {
 
-        return factoryTier != null && !mobName.equals("") && spawnReq != null;
+        return factoryTier != null && MobManager.isValidMobName(mobName) && spawnReq != null;
     }
 
     void updateStructureBlocks(boolean connected) {
@@ -106,7 +104,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         }
     }
 
-    void disconnectUpgradeBlocks(boolean connected) {
+    void updateUpgradeBlocks(boolean connected) {
 
         for (BlockPos p : upgradeBlockList) {
             if (worldObj.isBlockLoaded(p)) {
@@ -131,9 +129,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (factorySetup.getSize() == null) {
             LogHelper.info("onStructureChanged: new size is null");
             updateStructureBlocks(false);
-            disconnectUpgradeBlocks(false);
+            updateUpgradeBlocks(false);
             factoryTier = factorySetup.getSize();
-            mobName = "";
+            mobName = MobManager.INVALID_MOB_NAME;
             return;
         }
 
@@ -147,6 +145,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         structureBlockList = factorySetup.getBlockPosList();
         updateStructureBlocks(true);
 
+        LogHelper.info("onStructureChanged: tier=" + factoryTier + " mob=" + mobName);
         onUpgradeCheck();
     }
 
@@ -154,7 +153,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         LogHelper.info("onUpgradeCheck: " + factoryTier);
 
+        updateUpgradeBlocks(false);
         upgradeList.clear();
+        upgradeBlockList.clear();
         if (factoryTier == EnumMobFactoryTier.TIER_ONE)
             upgradeTier1();
         else if (factoryTier == EnumMobFactoryTier.TIER_TWO)
@@ -166,9 +167,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             LogHelper.info("onUpgradeCheck: " + u.getUpgradeType() + "/" + u.getUpgradeTier());
 
         spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeList, Woot.spawnerManager.getXp(mobName, this));
-        enchantKey = UpgradeManager.getEnchantKey(upgradeList);
+        enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
         consumedRf = 0;
         currSpawnTicks = 0;
+        updateUpgradeBlocks(true);
+
     }
 
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
@@ -177,9 +180,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
             BlockPos offset = BlockPosHelper.rotateFromSouth(p, getFacing().getOpposite());
             BlockPos p2 = getPos().add(offset.getX(), offset.getY(), offset.getZ());
-            SpawnerUpgrade upgrade = UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier);
-            if (upgrade != null)
-                upgradeList.add(upgrade);
+            UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier, upgradeList, upgradeBlockList);
         }
     }
 
@@ -220,13 +221,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             onStructureCheck();
             dirtyStructure = false;
             dirtyUpgrade = false;
-            LogHelper.info("update: structure->recalc spawner requirements");
         }
 
         if (dirtyUpgrade && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
             onUpgradeCheck();
             dirtyUpgrade = false;
-            LogHelper.info("update: upgrade->recalc spawner requirements");
         }
 
         if (!isFormed())
@@ -236,7 +235,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (currLearnTicks >= Settings.learnTicks) {
             if (!Woot.spawnerManager.isFull(mobName, enchantKey)) {
                 /* Not full so fake another spawn */
-                LogHelper.info("update: Fake spawn " + mobName);
+                LogHelper.info("update: Fake spawn " + mobName + " " + enchantKey);
                 Woot.spawnerManager.spawn(mobName, enchantKey, this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
@@ -249,6 +248,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         currSpawnTicks++;
         processPower();
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
+            LogHelper.info("update: Factory generate " + mobName);
             onSpawn();
             currSpawnTicks = 0;
         }
@@ -285,30 +285,38 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         LogHelper.info("Check spawn: " + consumedRf + "/" + spawnReq.getTotalRf());
         if (consumedRf >= spawnReq.getTotalRf()) {
-            List<ItemStack> dropList = Woot.spawnerManager.getDrops(mobName, enchantKey);
 
-            LogHelper.info(dropList);
-
-            for (EnumFacing f : EnumFacing.values()) {
-                if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
-                    TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
-                    if (te == null)
-                        continue;
-
-                    if (!te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
-                        continue;
+            EnumFacing f = getFacing();
+            if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
+                TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
 
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
-                    for (int i = 0; i < dropList.size(); i++) {
-                        ItemStack result = ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(dropList.get(i), 1), false);
-                        if (result != null)
-                            dropList.get(i).stackSize = result.stackSize;
-                        else
-                            dropList.get(i).stackSize = 0;
+
+                    SpawnerUpgrade upgradeMass = UpgradeManager.getMassUpgrade(upgradeList);
+                    int maxMass = Settings.massBaseMobs;
+                    if (upgradeMass != null)
+                        maxMass = upgradeMass.getMass();
+
+                    for (int mass = 0; mass < maxMass; mass++) {
+
+                        SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnLoot(mobName, upgradeList);
+                        LogHelper.info("Loot: " + spawnLoot.getDropList());
+                        LogHelper.info("XP: " + spawnLoot.getXp());
+                        for (int i = 0; i < spawnLoot.getDropList().size(); i++) {
+                            ItemStack result = ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(spawnLoot.getDropList().get(i), 1), false);
+                            if (result != null)
+                                spawnLoot.getDropList().get(i).stackSize = result.stackSize;
+                            else
+                                spawnLoot.getDropList().get(i).stackSize = 0;
+                        }
+
+                        /* XP as xp bottles for now */
+                        ItemStack bottleXp = new ItemStack(Items.experience_bottle);
+                        ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(bottleXp, spawnLoot.getXp()), false);
                     }
                 }
             }
-
             /** Everything else is thrown away */
         } else {
             if (Settings.strictPower)

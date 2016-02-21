@@ -51,6 +51,7 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
     @Override
     public void invalidate() {
 
+        // Master will be set by the farm when it finds the block
         if (hasMaster()) {
             master.interruptUpgrade();
         }

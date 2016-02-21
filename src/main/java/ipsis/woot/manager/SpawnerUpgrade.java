@@ -4,13 +4,19 @@ public class SpawnerUpgrade {
 
     EnumSpawnerUpgrade upgradeType;
     float powerMultiplier;
-    int spawnRate;
+    int v; /* type specific value */
+
+    @Override
+    public String toString() {
+
+        return upgradeType + " pwr:" + powerMultiplier + " v:" + v;
+    }
 
     public SpawnerUpgrade(EnumSpawnerUpgrade upgradeType) {
 
         this.upgradeType = upgradeType;
         this.powerMultiplier = 1.0F;
-        this.spawnRate = 0;
+        this.v = 0;
     }
 
     public SpawnerUpgrade setPowerMultiplier(float powerMultiplier) {
@@ -26,13 +32,35 @@ public class SpawnerUpgrade {
 
     public SpawnerUpgrade setSpawnRate(int spawnRate) {
 
-        this.spawnRate = spawnRate;
+        this.v = spawnRate;
         return this;
     }
 
     public int getSpawnRate() {
 
-        return this.spawnRate;
+        return this.v;
+    }
+
+    public SpawnerUpgrade setMass(int mass) {
+
+        this.v = mass;
+        return  this;
+    }
+
+    public int getMass() {
+
+        return this.v;
+    }
+
+    public SpawnerUpgrade setDecapitateChance(int decapitateChance) {
+
+        this.v = decapitateChance;
+        return this;
+    }
+
+    public int getDecapitateChance() {
+
+        return this.v;
     }
 
     public EnumSpawnerUpgrade getUpgradeType() {
@@ -73,6 +101,20 @@ public class SpawnerUpgrade {
                 upgradeType == EnumSpawnerUpgrade.XP_III;
     }
 
+    public boolean isMass() {
+
+        return upgradeType == EnumSpawnerUpgrade.MASS_I ||
+                upgradeType == EnumSpawnerUpgrade.MASS_II ||
+                upgradeType == EnumSpawnerUpgrade.MASS_III;
+    }
+
+    public boolean isDecapitate() {
+
+        return upgradeType == EnumSpawnerUpgrade.DECAPITATE_I ||
+                upgradeType == EnumSpawnerUpgrade.DECAPITATE_II ||
+                upgradeType == EnumSpawnerUpgrade.DECAPITATE_III;
+    }
+
     public int getUpgradeTier() {
 
         int tier;
@@ -80,16 +122,22 @@ public class SpawnerUpgrade {
             case LOOTING_I:
             case RATE_I:
             case XP_I:
+            case MASS_I:
+            case DECAPITATE_I:
                 tier = 1;
                 break;
             case LOOTING_II:
             case RATE_II:
             case XP_II:
+            case MASS_II:
+            case DECAPITATE_II:
                 tier = 2;
                 break;
             case LOOTING_III:
             case RATE_III:
             case XP_III:
+            case MASS_III:
+            case DECAPITATE_III:
                 tier = 3;
                 break;
             default:

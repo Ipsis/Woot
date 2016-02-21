@@ -4,6 +4,7 @@ import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.init.ModRecipes;
+import ipsis.woot.manager.MobManager;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.UpgradeManager;
 import ipsis.woot.proxy.CommonProxy;
@@ -24,6 +25,7 @@ public class Woot {
     @Mod.Instance(Reference.MOD_ID)
     public static Woot instance;
     public static SpawnerManager spawnerManager = new SpawnerManager();
+    public static MobManager mobManager = new MobManager();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

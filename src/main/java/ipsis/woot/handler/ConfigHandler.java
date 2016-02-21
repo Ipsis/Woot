@@ -32,6 +32,15 @@ public class ConfigHandler {
         Settings.rateIITicks = Settings.Spawner.DEF_RATE_II_TICKS;
         Settings.rateIIITicks = Settings.Spawner.DEF_RATE_III_TICKS;
 
+        Settings.massBaseMobs = Settings.Spawner.DEF_MASS_MOBS;
+        Settings.massIMobs = Settings.Spawner.DEF_MASS_I_MOBS;
+        Settings.massIIMobs = Settings.Spawner.DEF_MASS_II_MOBS;
+        Settings.massIIIMobs = Settings.Spawner.DEF_MASS_III_MOBS;
+
+        Settings.decapitateIChance = Settings.Spawner.DEF_DECAPITATE_I_CHANCE;
+        Settings.decapitateIIChance = Settings.Spawner.DEF_DECAPITATE_II_CHANCE;
+        Settings.decapitateIIIChance = Settings.Spawner.DEF_DECAPITATE_III_CHANCE;
+
         Settings.rateIMulti = Settings.Power.DEF_RATE_I_MULTI;
         Settings.rateIIMulti = Settings.Power.DEF_RATE_II_MULTI;
         Settings.rateIIIMulti = Settings.Power.DEF_RATE_III_MULTI;
@@ -41,6 +50,12 @@ public class ConfigHandler {
         Settings.xpIMulti = Settings.Power.DEF_XP_I_MULTI;
         Settings.xpIIMulti = Settings.Power.DEF_XP_II_MULTI;
         Settings.xpIIIMulti = Settings.Power.DEF_XP_III_MULTI;
+        Settings.massIMulti = Settings.Power.DEF_MASS_I_MULTI;
+        Settings.massIIMulti = Settings.Power.DEF_MASS_II_MULTI;
+        Settings.massIIIMulti = Settings.Power.DEF_MASS_III_MULTI;
+        Settings.decapitateIMulti = Settings.Power.DEF_DECAPITATE_I_MULTI;
+        Settings.decapitateIIMulti = Settings.Power.DEF_DECAPITATE_II_MULTI;
+        Settings.decapitateIIIMulti = Settings.Power.DEF_DECAPITATE_III_MULTI;
 
         Settings.strictPower = Settings.Power.DEF_STRICT_POWER;
         Settings.strictFactorySpawns = Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS;

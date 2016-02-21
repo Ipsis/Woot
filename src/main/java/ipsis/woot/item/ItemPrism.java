@@ -1,9 +1,11 @@
 package ipsis.woot.item;
 
+import ipsis.Woot;
+import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.manager.MobManager;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.util.MobUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,10 +37,10 @@ public class ItemPrism extends ItemWoot {
         ModelHelper.registerItem(ModItems.itemPrism, BASENAME);
     }
 
-    public static ItemStack getItemStack(String mobName) {
+    public static ItemStack getItemStack(String mobName, String displayName) {
 
         ItemStack itemStack = new ItemStack(ModItems.itemPrism);
-        setMobName(itemStack, mobName);
+        setMobName(itemStack, mobName, displayName);
         return itemStack;
     }
 
@@ -47,15 +50,23 @@ public class ItemPrism extends ItemWoot {
         if (attacker.worldObj.isRemote)
             return false;
 
-        /* No spawning players! */
-        if (hasMobName(stack) || target instanceof EntityPlayer)
+        if (hasMobName(stack))
             return false;
 
-        String mobName = MobUtil.getMobName(target);
-        // TODO blacklist
+        if (Woot.mobManager.isBlacklisted(target))
+            return false;
 
-        setMobName(stack, mobName);
-        return true;
+        String mobName = Woot.mobManager.getMobName(target);
+        String displayName = target.getName();
+
+        LogHelper.info("Try capture " + mobName + ":" + displayName);
+
+        if (MobManager.isValidMobName(mobName)) {
+            setMobName(stack, mobName, displayName);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -69,8 +80,8 @@ public class ItemPrism extends ItemWoot {
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryController) {
-            if (((TileEntityMobFactoryController) te).getMobName().equals("")) {
-                ((TileEntityMobFactoryController) te).setMobName(getMobName(stack));
+            if (!MobManager.isValidMobName(((TileEntityMobFactoryController) te).getMobName())) {
+                ((TileEntityMobFactoryController) te).setMobName(getMobName(stack), getDisplayName(stack));
                 return true;
             }
         }
@@ -82,12 +93,14 @@ public class ItemPrism extends ItemWoot {
      * All we store in the prism is the name of the mob
      */
     static final String NBT_MOBNAME = "mobName";
-    public static void setMobName(ItemStack itemStack, String mobName) {
+    static final String NBT_DISPLAYNAME = "displayName";
+    public static void setMobName(ItemStack itemStack, String mobName, String displayName) {
 
         if (itemStack.getTagCompound() == null)
             itemStack.setTagCompound(new NBTTagCompound());
 
         itemStack.getTagCompound().setString(NBT_MOBNAME, mobName);
+        itemStack.getTagCompound().setString(NBT_DISPLAYNAME, displayName);
     }
 
     public static String getMobName(ItemStack itemStack) {
@@ -98,19 +111,30 @@ public class ItemPrism extends ItemWoot {
         return itemStack.getTagCompound().getString(NBT_MOBNAME);
     }
 
+    public static String getDisplayName(ItemStack itemStack) {
+
+        if (itemStack.getTagCompound() == null)
+            return "";
+
+        return itemStack.getTagCompound().getString(NBT_DISPLAYNAME);
+    }
+
     static boolean hasMobName(ItemStack itemStack) {
 
         if (itemStack.getItem() != ModItems.itemPrism)
             return false;
 
-        return !getMobName(itemStack).equals("");
+        return MobManager.isValidMobName(getMobName(itemStack));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        if (stack != null)
-            tooltip.add(String.format("Mob: %s", getMobName(stack)));
+        if (stack != null && hasMobName(stack) && MobManager.isValidMobName(getMobName(stack))) {
+            String displayName = getDisplayName(stack);
+            if (!displayName.equals(""))
+                tooltip.add(String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
+        }
     }
 }

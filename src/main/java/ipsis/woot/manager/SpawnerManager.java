@@ -4,7 +4,6 @@ import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerUtil;
-import ipsis.woot.util.MobUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -82,24 +81,26 @@ public class SpawnerManager {
 
         @Override
         public String toString() {
-            return "totalRf:" + totalRf + " spawnTime:" + spawnTime + " rfPerTick:" + getRfPerTick();
+            return "totalRf:" + totalRf + " RF, spawnTime:" + spawnTime + " ticks, rfPerTick:" + getRfPerTick();
         }
     }
 
+
     public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel) {
 
-        if (mobName.equals(""))
+        if (!MobManager.isValidMobName(mobName))
             return null;
 
         int totalRf = Settings.baseRf * xpLevel;
         int spawnTime = Settings.rateBaseTicks;
 
-        for (SpawnerUpgrade upgrade : upgrades) {
-            totalRf *= upgrade.getPowerMultiplier();
+        SpawnerUpgrade u = UpgradeManager.getRateUpgrade(upgrades);
+        if (u != null)
+            spawnTime = u.getSpawnRate();
 
-            if (upgrade.isRate())
-                spawnTime = upgrade.getSpawnRate();
-        }
+
+        for (SpawnerUpgrade upgrade : upgrades)
+            totalRf *= upgrade.getPowerMultiplier();
 
         return new SpawnReq(totalRf, spawnTime);
     }
@@ -118,6 +119,14 @@ public class SpawnerManager {
         }
 
         return e;
+    }
+
+    public int getXp(String mobName) {
+
+        if (!xpMap.containsKey(mobName))
+            return 1;
+        else
+            return xpMap.get(mobName);
     }
 
     public int getXp(String mobName, TileEntity te) {
@@ -194,11 +203,11 @@ public class SpawnerManager {
 
     private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {
 
-        String spawnMobName = MobUtil.getBaseMobName(mobName);
+        String spawnMobName = MobManager.getBaseMobName(mobName);
         Entity entity = EntityList.createEntityByName(spawnMobName, world);
 
         if (entity != null) {
-            if (MobUtil.isWitherSkeleton(mobName))
+            if (MobManager.isWitherSkeleton(mobName))
                 ((EntitySkeleton) entity).setSkeletonType(1);
 
             ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), (IEntityLivingData) null);
@@ -238,6 +247,38 @@ public class SpawnerManager {
         EntityDamageSource entityDamageSource = new EntityDamageSource(damageSourceWoot.getDamageType(), fakePlayer);
 
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
+    }
+
+    int getXp(String mobName, SpawnerUpgrade upgrade) {
+
+        if (upgrade == null)
+            return getXp(mobName);
+
+        return getXp(mobName) * (upgrade.getUpgradeTier() + 1);
+    }
+
+    public SpawnLoot getSpawnLoot(String mobName, List<SpawnerUpgrade> upgrades) {
+
+        SpawnLoot spawnLoot = new SpawnLoot();
+        spawnLoot.drops = getDrops(mobName, UpgradeManager.getLootingEnchant(upgrades));
+        spawnLoot.xp = getXp(mobName, UpgradeManager.getXpUpgrade(upgrades));
+
+        return spawnLoot;
+    }
+
+    public class SpawnLoot {
+
+        List<ItemStack> drops;
+        int xp;
+
+        public SpawnLoot() {
+
+            this.xp = 0;
+            this.drops = new ArrayList<ItemStack>();
+        }
+
+        public int getXp() { return this.xp; }
+        public List<ItemStack> getDropList() { return this.drops; }
     }
 
 }

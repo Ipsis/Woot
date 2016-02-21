@@ -1,19 +1,25 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.item.ItemPrism;
+import ipsis.woot.manager.MobManager;
+import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
 public class TileEntityMobFactoryController extends TileEntity {
 
     String mobName;
+    String displayName;
     public TileEntityMobFactoryController() {
 
         mobName = "";
+        displayName = "";
     }
 
-    public void setMobName(String mobName) {
+    public void setMobName(String mobName, String displayName) {
 
         this.mobName = mobName;
+        this.displayName = displayName;
         updateMobFarm();
     }
 
@@ -38,5 +44,8 @@ public class TileEntityMobFactoryController extends TileEntity {
     public void invalidate() {
 
         updateMobFarm();
+
+        if (MobManager.isValidMobName(mobName))
+            ItemStackHelper.spawnInWorld(worldObj, pos, ItemPrism.getItemStack(mobName, displayName));
     }
 }

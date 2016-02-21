@@ -3,6 +3,7 @@ package ipsis.woot.block;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.item.ItemPrism;
+import ipsis.woot.manager.MobManager;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.block.material.Material;
@@ -45,18 +46,5 @@ public class BlockMobFactoryController extends BlockContainerWoot {
 
         TileEntityMobFactoryController te = (TileEntityMobFactoryController) worldIn.getTileEntity(pos);
         te.blockAdded();
-    }
-
-    @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileEntityMobFactoryController) {
-            if (!(((TileEntityMobFactoryController) te).getMobName().equals(""))) {
-                ItemStackHelper.spawnInWorld(worldIn, pos, ItemPrism.getItemStack(((TileEntityMobFactoryController) te).getMobName()));
-            }
-        }
-
-        super.breakBlock(worldIn, pos, state);
     }
 }

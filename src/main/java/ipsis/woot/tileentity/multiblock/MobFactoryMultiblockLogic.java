@@ -31,8 +31,7 @@ public class MobFactoryMultiblockLogic {
 
             blockPosList = new ArrayList<BlockPos>();
             size = null;
-            // TODO need to scan for the mob block
-            mobName = "Pig";
+            mobName = "";
         }
 
         public EnumMobFactoryTier getSize() { return this.size; }
@@ -62,8 +61,6 @@ public class MobFactoryMultiblockLogic {
 
     static FactorySetup validateFactory(TileEntityMobFactory factory, EnumMobFactoryTier tier) {
 
-        LogHelper.info("validateFactory:");
-
         FactorySetup factorySetup = new FactorySetup();
 
         BlockPos controllerPos = factory.getPos().up(1);
@@ -87,7 +84,7 @@ public class MobFactoryMultiblockLogic {
         else
             return factorySetup;
 
-        LogHelper.info("validateFactory: might be " + factorySetup.size);
+        //LogHelper.info("validateFactory: might be " + factorySetup.size);
 
         for (MobFactoryModule s : factorySetup.size.structureModules) {
 
@@ -112,7 +109,7 @@ public class MobFactoryMultiblockLogic {
                 return new FactorySetup();
             }
 
-            LogHelper.info("validateFactory: matched " + p + " " + block);
+            //LogHelper.info("validateFactory: matched " + p + " " + block);
             factorySetup.blockPosList.add(p);
         }
 
@@ -140,7 +137,7 @@ public class MobFactoryMultiblockLogic {
 
         IBlockState iBlockState = factory.getWorld().getBlockState(pos);
         Block b = iBlockState.getBlock();
-        LogHelper.info("isSize: " + size + " checking " + pos + " " + b);
+        //LogHelper.info("isSize: " + size + " checking " + pos + " " + b);
         if (b instanceof BlockMobFactoryStructure)
             return ((BlockMobFactoryStructure)b).getModuleTypeFromState(iBlockState) == module;
 

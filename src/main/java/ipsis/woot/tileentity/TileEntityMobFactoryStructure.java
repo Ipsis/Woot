@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -10,6 +11,7 @@ import java.util.Stack;
 public class TileEntityMobFactoryStructure extends TileEntity  {
 
     TileEntityMobFactory master = null;
+
     public boolean hasMaster() { return master != null; }
     public void clearMaster() { master = null; }
     public void setMaster(TileEntityMobFactory master) { this.master = master; }

@@ -9,10 +9,13 @@ import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -37,6 +40,103 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
     List<SpawnerUpgrade> upgradeList = new ArrayList<SpawnerUpgrade>();
+
+    static final String NBT_FACING = "facing";
+    static final String NBT_TIER = "tier";
+    static final String NBT_MOB_NAME = "mobName";
+    static final String NBT_ENCHANT_KEY = "enchantKey";
+    static final String NBT_CURR_LEARN_TICK = "learnTicks";
+    static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
+    static final String NBT_CONSUMED_RF = "consumedRf";
+    static final String NBT_UPGRADES = "upgrades";
+    static final String NBT_UPGRADE = "upgrade";
+    static final String NBT_UPGRADES_POS = "upgradesPos";
+    static final String NBT_STRUCTURE_POS = "structurePos";
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+
+        compound.setByte(NBT_FACING, (byte)facing.ordinal());
+
+        if (!isFormed())
+            return;
+
+        compound.setByte(NBT_TIER, (byte)factoryTier.ordinal());
+        compound.setString(NBT_MOB_NAME, mobName);
+        compound.setByte(NBT_ENCHANT_KEY, (byte)enchantKey.ordinal());
+        spawnReq.writeToNBT(compound);
+        compound.setInteger(NBT_CURR_LEARN_TICK, currLearnTicks);
+        compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
+        compound.setInteger(NBT_CONSUMED_RF, consumedRf);
+
+        NBTTagList upgradeTagList = new NBTTagList();
+        for (SpawnerUpgrade u : upgradeList) {
+            NBTTagCompound c = new NBTTagCompound();
+            c.setByte(NBT_UPGRADE, (byte)u.getUpgradeType().ordinal());
+        }
+        compound.setTag(NBT_UPGRADES, upgradeTagList);
+
+        NBTTagList upgradePosTagList = new NBTTagList();
+        for (BlockPos p : upgradeBlockList) {
+            NBTTagCompound c = new NBTTagCompound();
+            BlockPosHelper.writeToNBT(p, c);
+            upgradePosTagList.appendTag(c);
+        }
+        compound.setTag(NBT_UPGRADES_POS, upgradePosTagList);
+
+        NBTTagList structurePosTagList = new NBTTagList();
+        for (BlockPos p : structureBlockList) {
+            NBTTagCompound c = new NBTTagCompound();
+            BlockPosHelper.writeToNBT(p, c);
+            structurePosTagList.appendTag(c);
+        }
+        compound.setTag(NBT_STRUCTURE_POS, structurePosTagList);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+
+        upgradeList.clear();
+        upgradeBlockList.clear();
+        structureBlockList.clear();
+
+        facing = EnumFacing.getFront(compound.getByte(NBT_FACING));
+
+        if (!compound.hasKey(NBT_TIER))
+            return;
+
+        factoryTier = EnumMobFactoryTier.getTier(compound.getByte(NBT_TIER));
+        mobName = compound.getString(NBT_MOB_NAME);
+        enchantKey = EnumEnchantKey.getEnchantKey(compound.getByte(NBT_ENCHANT_KEY));
+        spawnReq = SpawnerManager.SpawnReq.readFromNBT(compound);
+        currLearnTicks = compound.getInteger(NBT_CURR_LEARN_TICK);
+        currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
+        consumedRf = compound.getInteger(NBT_CONSUMED_RF);
+
+        NBTTagList nbtTagList = compound.getTagList(NBT_UPGRADES, Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < nbtTagList.tagCount(); i++) {
+            NBTTagCompound c = nbtTagList.getCompoundTagAt(i);
+            EnumSpawnerUpgrade spawnerUpgrade = EnumSpawnerUpgrade.getFromMetadata(c.getByte(NBT_UPGRADE));
+            upgradeList.add(UpgradeManager.getSpawnerUpgrade(spawnerUpgrade));
+        }
+
+        nbtTagList = compound.getTagList(NBT_UPGRADES_POS, Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < nbtTagList.tagCount(); i++) {
+            NBTTagCompound c = nbtTagList.getCompoundTagAt(i);
+            upgradeBlockList.add(BlockPosHelper.readFromNBT(c));
+        }
+
+        nbtTagList = compound.getTagList(NBT_STRUCTURE_POS, Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < nbtTagList.tagCount(); i++) {
+            NBTTagCompound c = nbtTagList.getCompoundTagAt(i);
+            structureBlockList.add(BlockPosHelper.readFromNBT(c));
+        }
+
+        updateStructureBlocks(true);
+        updateUpgradeBlocks(true);
+    }
 
     static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
 

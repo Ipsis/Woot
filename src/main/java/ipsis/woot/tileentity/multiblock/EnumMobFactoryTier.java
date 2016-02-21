@@ -102,4 +102,12 @@ public enum EnumMobFactoryTier {
     public List<MobFactoryModule> getStructureModules() { return structureModules; }
 
     void buildStructureMap() { }
+
+    public static EnumMobFactoryTier getTier(int v) {
+
+        if (v < 0 || v > values().length - 1)
+            v = 0;
+
+        return values()[v];
+    }
 }

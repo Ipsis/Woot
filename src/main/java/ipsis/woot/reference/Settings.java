@@ -28,25 +28,25 @@ public class Settings {
 
     public static class Power {
 
-        public static final float DEF_RATE_I_MULTI = 2.0F;
-        public static final float DEF_RATE_II_MULTI = 10.0F;
-        public static final float DEF_RATE_III_MULTI = 50.0F;
+        public static final int DEF_RATE_I_RF_TICK = 40;
+        public static final int DEF_RATE_II_RF_TICK = 80;
+        public static final int DEF_RATE_III_RF_TICK = 120;
 
-        public static final float DEF_LOOTING_I_MULTI = 2.0F;
-        public static final float DEF_LOOTING_II_MULTI = 10.0F;
-        public static final float DEF_LOOTING_III_MULTI = 50.0F;
+        public static final int DEF_LOOTING_I_RF_TICK = 40;
+        public static final int DEF_LOOTING_II_RF_TICK = 80;
+        public static final int DEF_LOOTING_III_RF_TICK = 120;
 
-        public static final float DEF_DECAPITATE_I_MULTI = 2.0F;
-        public static final float DEF_DECAPITATE_II_MULTI = 2.0F;
-        public static final float DEF_DECAPITATE_III_MULTI = 2.0F;
+        public static final int DEF_DECAPITATE_I_RF_TICK = 40;
+        public static final int DEF_DECAPITATE_II_RF_TICK = 80;
+        public static final int DEF_DECAPITATE_III_RF_TICK = 120;
 
-        public static final float DEF_XP_I_MULTI = 2.0F;
-        public static final float DEF_XP_II_MULTI = 2.0F;
-        public static final float DEF_XP_III_MULTI = 2.0F;
+        public static final int DEF_XP_I_RF_TICK = 40;
+        public static final int DEF_XP_II_RF_TICK = 80;
+        public static final int DEF_XP_III_RF_TICK = 120;
 
-        public static final float DEF_MASS_I_MULTI = 2.0F;
-        public static final float DEF_MASS_II_MULTI = 2.0F;
-        public static final float DEF_MASS_III_MULTI = 2.0F;
+        public static final int DEF_MASS_I_RF_TICK = 40;
+        public static final int DEF_MASS_II_RF_TICK = 80;
+        public static final int DEF_MASS_III_RF_TICK = 120;
 
         public static final boolean DEF_STRICT_POWER = false;
     }
@@ -71,21 +71,21 @@ public class Settings {
     public static int massIIMobs;
     public static int massIIIMobs;
 
-    public static float rateIMulti;
-    public static float rateIIMulti;
-    public static float rateIIIMulti;
-    public static float lootingIMulti;
-    public static float lootingIIMulti;
-    public static float lootingIIIMulti;
-    public static float xpIMulti;
-    public static float xpIIMulti;
-    public static float xpIIIMulti;
-    public static float massIMulti;
-    public static float massIIMulti;
-    public static float massIIIMulti;
-    public static float decapitateIMulti;
-    public static float decapitateIIMulti;
-    public static float decapitateIIIMulti;
+    public static int rateIRfTick;
+    public static int rateIIRfTick;
+    public static int rateIIIRfTick;
+    public static int lootingIRfTick;
+    public static int lootingIIRfTick;
+    public static int lootingIIIRfTick;
+    public static int xpIRfTick;
+    public static int xpIIRfTick;
+    public static int xpIIIRfTick;
+    public static int massIRfTick;
+    public static int massIIRfTick;
+    public static int massIIIRfTick;
+    public static int decapitateIRfTick;
+    public static int decapitateIIRfTick;
+    public static int decapitateIIIRfTick;
 
     public static boolean strictPower;
     public static boolean strictFactorySpawns;

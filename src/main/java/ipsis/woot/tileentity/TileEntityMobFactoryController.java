@@ -3,6 +3,7 @@ package ipsis.woot.tileentity;
 import ipsis.woot.item.ItemPrism;
 import ipsis.woot.manager.MobManager;
 import ipsis.woot.util.ItemStackHelper;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -10,10 +11,30 @@ public class TileEntityMobFactoryController extends TileEntity {
 
     String mobName;
     String displayName;
+
+    static final String NBT_MOB_NAME = "mobName";
+    static final String NBT_DISPLAY_NAME = "displayName";
+
     public TileEntityMobFactoryController() {
 
         mobName = "";
         displayName = "";
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+
+        compound.setString(NBT_MOB_NAME, mobName);
+        compound.setString(NBT_DISPLAY_NAME, displayName);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+
+        mobName = compound.getString(NBT_MOB_NAME);
+        displayName = compound.getString(NBT_DISPLAY_NAME);
     }
 
     public void setMobName(String mobName, String displayName) {

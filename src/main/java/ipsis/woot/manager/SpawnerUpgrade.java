@@ -3,31 +3,31 @@ package ipsis.woot.manager;
 public class SpawnerUpgrade {
 
     EnumSpawnerUpgrade upgradeType;
-    float powerMultiplier;
+    int rfCostPerTick;
     int v; /* type specific value */
 
     @Override
     public String toString() {
 
-        return upgradeType + " pwr:" + powerMultiplier + " v:" + v;
+        return upgradeType + " pwr:" + rfCostPerTick + " v:" + v;
     }
 
     public SpawnerUpgrade(EnumSpawnerUpgrade upgradeType) {
 
         this.upgradeType = upgradeType;
-        this.powerMultiplier = 1.0F;
+        this.rfCostPerTick = 1;
         this.v = 0;
     }
 
-    public SpawnerUpgrade setPowerMultiplier(float powerMultiplier) {
+    public SpawnerUpgrade setRfCostPerTick(int rfCostPerTick) {
 
-        this.powerMultiplier = powerMultiplier;
+        this.rfCostPerTick = rfCostPerTick;
         return this;
     }
 
-    public float getPowerMultiplier() {
+    public int getRfCostPerTick() {
 
-        return this.powerMultiplier;
+        return this.rfCostPerTick;
     }
 
     public SpawnerUpgrade setSpawnRate(int spawnRate) {

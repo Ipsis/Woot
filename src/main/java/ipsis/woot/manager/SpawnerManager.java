@@ -8,6 +8,8 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EntityDamageSource;
@@ -23,36 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Spawner mechanics
- *
- * Vanilla spawner spawns @ minimum of 10 seconds
- *
- * EnergyBaseCost = (PowerAcceptRate * 200) = 12000RF for a exp 1 mob
- *
- * SpawnCost = (EnergyBaseCost * ExperienceLevel) * LootingModifier
- * SpawnMass = 1->4 mobs
- *
- * PowerAcceptRate = 60 RF/tick
- * PowerAcceptRate POWER_I = 120 RF/tick
- * PowerAcceptRate POWER_II = 240 RF/tick
- * PowerAcceptRate POWER_III = 480 RF/tick
- *
- * SpawnRate = SpawnCost / PowerAcceptRate
- *
- *
- *
- * There are two 'costs'
- *
- * The amount of power required to perform the spawn
- * The rate of spawning
- *
- *
- */
-
 public class SpawnerManager {
 
-    public class SpawnReq {
+    public static class SpawnReq {
 
         int totalRf;
         int spawnTime;
@@ -71,6 +46,21 @@ public class SpawnerManager {
             return 1;
         }
 
+        static final String NBT_SPAWN_REQ_TOTAL_RF = "reqTotalRf";
+        static final String NBT_SPAWN_REQ_SPAWN_TIME = "reqSpawnTime";
+        public void writeToNBT(NBTTagCompound compound) {
+
+            compound.setInteger(NBT_SPAWN_REQ_TOTAL_RF, totalRf);
+            compound.setInteger(NBT_SPAWN_REQ_SPAWN_TIME, spawnTime);
+        }
+
+        public static SpawnReq readFromNBT(NBTTagCompound compound) {
+
+            int rf = compound.getInteger(NBT_SPAWN_REQ_TOTAL_RF);
+            int time = compound.getInteger(NBT_SPAWN_REQ_SPAWN_TIME);
+            return new SpawnReq(rf, time);
+        }
+
         public int getTotalRf() {
             return totalRf;
         }
@@ -85,7 +75,6 @@ public class SpawnerManager {
         }
     }
 
-
     public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel) {
 
         if (!MobManager.isValidMobName(mobName))
@@ -98,10 +87,11 @@ public class SpawnerManager {
         if (u != null)
             spawnTime = u.getSpawnRate();
 
-
+        int upgradeRfPerTick = 0;
         for (SpawnerUpgrade upgrade : upgrades)
-            totalRf *= upgrade.getPowerMultiplier();
+            upgradeRfPerTick += upgrade.getRfCostPerTick();
 
+        totalRf += (spawnTime * upgradeRfPerTick);
         return new SpawnReq(totalRf, spawnTime);
     }
 

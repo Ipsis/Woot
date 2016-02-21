@@ -1,5 +1,6 @@
 package ipsis.woot.util;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
@@ -38,5 +39,18 @@ public class BlockPosHelper {
             return new BlockPos(blockPos.getX() * -1, blockPos.getY(), blockPos.getZ() * -1);
         else
             return new BlockPos(blockPos);
+    }
+
+
+    public static void writeToNBT(BlockPos p, NBTTagCompound compound) {
+
+        compound.setInteger("xCoord", p.getX());
+        compound.setInteger("yCoord", p.getY());
+        compound.setInteger("zCoord", p.getZ());
+    }
+
+    public static BlockPos readFromNBT(NBTTagCompound compound) {
+
+        return new BlockPos(compound.getInteger("xCoord"), compound.getInteger("yCoord"), compound.getInteger("zCoord"));
     }
 }

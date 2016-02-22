@@ -56,11 +56,11 @@ public class DamageSourceWoot extends DamageSource {
 
     public static DamageSourceWoot getDamageSource(int lootingLevel) {
 
-        if (lootingLevel == Settings.enchantLootingILevel)
+        if (lootingLevel == Settings.lootingILevel)
             return inSpawnerLootingI;
-        else if (lootingLevel == Settings.enchantLootingIILevel)
+        else if (lootingLevel == Settings.lootingIILevel)
             return inSpawnerLootingII;
-        else if (lootingLevel == Settings.enchantLootingIIILevel)
+        else if (lootingLevel == Settings.lootingIIILevel)
             return inSpawnerLootingIII;
 
         return null;

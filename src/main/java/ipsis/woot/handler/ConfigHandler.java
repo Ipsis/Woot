@@ -1,12 +1,16 @@
 package ipsis.woot.handler;
 
+import ipsis.woot.reference.Config;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.util.StringHelper;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
+import java.util.Set;
 
 public class ConfigHandler {
 
@@ -20,49 +24,73 @@ public class ConfigHandler {
         }
     }
 
+    static int getConfigInt(String key, int def) {
+
+        return configuration.get(Configuration.CATEGORY_GENERAL, key, def, StringHelper.localize(Lang.getLangConfigValue(key))).getInt(def);
+    }
+    static boolean getConfigBool(String key, boolean def) {
+
+        return configuration.get(Configuration.CATEGORY_GENERAL, key, def, StringHelper.localize(Lang.getLangConfigValue(key))).getBoolean(def);
+    }
+
     static void loadConfiguration() {
 
-        Settings.learnTicks = Settings.Spawner.DEF_LEARN_TICKS;
-        Settings.sampleSize = Settings.Spawner.DEF_SAMPLE_SIZE;
+        /**
+         * Global settings
+         */
+        Settings.sampleSize = getConfigInt(Config.General.SAMPLE_SIZE, Settings.Spawner.DEF_SAMPLE_SIZE);
+        Settings.learnTicks = getConfigInt(Config.General.LEARN_TICKS, Settings.Spawner.DEF_LEARN_TICKS);
+        Settings.strictFactorySpawns = getConfigBool(Config.General.STRICT_SPAWNS, Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS);
+        Settings.strictPower = getConfigBool(Config.General.STRICT_POWER, Settings.Spawner.DEF_STRICT_POWER);
+        Settings.baseRf = getConfigInt(Config.General.BASE_RF, Settings.Spawner.DEF_BASE_RF);
+        Settings.baseMobCount = getConfigInt(Config.General.BASE_MOB_COUNT, Settings.Spawner.DEF_BASE_MOB_COUNT);
+        Settings.baseRateTicks = getConfigInt(Config.General.BASE_RATE_TICKS, Settings.Spawner.DEF_BASE_RATE_TICKS);
 
-        Settings.baseRf = Settings.Spawner.DEF_BASE_RF;
+        /**
+         * Power
+         */
+        Settings.rateIRfTick = getConfigInt(Config.Power.RATE_I_COST, Settings.Power.DEF_RATE_I_RF_TICK);
+        Settings.rateIIRfTick = getConfigInt(Config.Power.RATE_II_COST, Settings.Power.DEF_RATE_II_RF_TICK);
+        Settings.rateIIIRfTick = getConfigInt(Config.Power.RATE_III_COST, Settings.Power.DEF_RATE_III_RF_TICK);
 
-        Settings.rateBaseTicks = Settings.Spawner.DEF_RATE_BASE_TICKS;
-        Settings.rateITicks = Settings.Spawner.DEF_RATE_I_TICKS;
-        Settings.rateIITicks = Settings.Spawner.DEF_RATE_II_TICKS;
-        Settings.rateIIITicks = Settings.Spawner.DEF_RATE_III_TICKS;
+        Settings.lootingIRfTick = getConfigInt(Config.Power.LOOTING_I_COST, Settings.Power.DEF_LOOTING_I_RF_TICK);
+        Settings.lootingIIRfTick = getConfigInt(Config.Power.LOOTING_II_COST, Settings.Power.DEF_LOOTING_II_RF_TICK);
+        Settings.lootingIIIRfTick = getConfigInt(Config.Power.LOOTING_III_COST, Settings.Power.DEF_LOOTING_III_RF_TICK);
 
-        Settings.massBaseMobs = Settings.Spawner.DEF_MASS_MOBS;
-        Settings.massIMobs = Settings.Spawner.DEF_MASS_I_MOBS;
-        Settings.massIIMobs = Settings.Spawner.DEF_MASS_II_MOBS;
-        Settings.massIIIMobs = Settings.Spawner.DEF_MASS_III_MOBS;
+        Settings.xpIRfTick = getConfigInt(Config.Power.XP_I_COST, Settings.Power.DEF_XP_I_RF_TICK);
+        Settings.xpIIRfTick = getConfigInt(Config.Power.XP_II_COST, Settings.Power.DEF_XP_II_RF_TICK);
+        Settings.xpIIIRfTick = getConfigInt(Config.Power.XP_III_COST, Settings.Power.DEF_XP_III_RF_TICK);
 
-        Settings.decapitateIChance = Settings.Spawner.DEF_DECAPITATE_I_CHANCE;
-        Settings.decapitateIIChance = Settings.Spawner.DEF_DECAPITATE_II_CHANCE;
-        Settings.decapitateIIIChance = Settings.Spawner.DEF_DECAPITATE_III_CHANCE;
+        Settings.massIRfTick = getConfigInt(Config.Power.MASS_I_COST, Settings.Power.DEF_MASS_I_RF_TICK);
+        Settings.massIIRfTick = getConfigInt(Config.Power.MASS_II_COST, Settings.Power.DEF_MASS_II_RF_TICK);
+        Settings.massIIIRfTick = getConfigInt(Config.Power.MASS_III_COST, Settings.Power.DEF_MASS_III_RF_TICK);
 
-        Settings.rateIRfTick = Settings.Power.DEF_RATE_I_RF_TICK;
-        Settings.rateIIRfTick = Settings.Power.DEF_RATE_II_RF_TICK;
-        Settings.rateIIIRfTick = Settings.Power.DEF_RATE_III_RF_TICK;
-        Settings.lootingIRfTick = Settings.Power.DEF_LOOTING_I_RF_TICK;
-        Settings.lootingIIRfTick = Settings.Power.DEF_LOOTING_II_RF_TICK;
-        Settings.lootingIIIRfTick = Settings.Power.DEF_LOOTING_III_RF_TICK;
-        Settings.xpIRfTick = Settings.Power.DEF_XP_I_RF_TICK;
-        Settings.xpIIRfTick = Settings.Power.DEF_XP_II_RF_TICK;
-        Settings.xpIIIRfTick = Settings.Power.DEF_XP_III_RF_TICK;
-        Settings.massIRfTick = Settings.Power.DEF_MASS_I_RF_TICK;
-        Settings.massIIRfTick = Settings.Power.DEF_MASS_II_RF_TICK;
-        Settings.massIIIRfTick = Settings.Power.DEF_MASS_III_RF_TICK;
-        Settings.decapitateIRfTick = Settings.Power.DEF_DECAPITATE_I_RF_TICK;
-        Settings.decapitateIIRfTick = Settings.Power.DEF_DECAPITATE_II_RF_TICK;
-        Settings.decapitateIIIRfTick = Settings.Power.DEF_DECAPITATE_III_RF_TICK;
+        Settings.decapitateIRfTick = getConfigInt(Config.Power.DECAP_I_COST, Settings.Power.DEF_DECAPITATE_I_RF_TICK);
+        Settings.decapitateIIRfTick = getConfigInt(Config.Power.DECAP_II_COST, Settings.Power.DEF_DECAPITATE_II_RF_TICK);
+        Settings.decapitateIIIRfTick = getConfigInt(Config.Power.DECAP_III_COST, Settings.Power.DEF_DECAPITATE_III_RF_TICK);
 
-        Settings.strictPower = Settings.Power.DEF_STRICT_POWER;
-        Settings.strictFactorySpawns = Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS;
+        /**
+         * Upgrades
+         */
+        Settings.lootingILevel = getConfigInt(Config.Upgrades.LOOTING_I_LEVEL, Settings.Upgrades.DEF_LOOTING_I_LEVEL);
+        Settings.lootingIILevel = getConfigInt(Config.Upgrades.LOOTING_II_LEVEL, Settings.Upgrades.DEF_LOOTING_II_LEVEL);
+        Settings.lootingIIILevel = getConfigInt(Config.Upgrades.LOOTING_III_LEVEL, Settings.Upgrades.DEF_LOOTING_III_LEVEL);
 
-        Settings.enchantLootingILevel = Settings.Enchant.DEF_LOOTING_I_LEVEL;
-        Settings.enchantLootingIILevel = Settings.Enchant.DEF_LOOTING_II_LEVEL;
-        Settings.enchantLootingIIILevel = Settings.Enchant.DEF_LOOTING_III_LEVEL;
+        Settings.rateITicks = getConfigInt(Config.Upgrades.RATE_I_TICKS, Settings.Upgrades.DEF_RATE_I_TICKS);
+        Settings.rateIITicks = getConfigInt(Config.Upgrades.RATE_II_TICKS, Settings.Upgrades.DEF_RATE_II_TICKS);
+        Settings.rateIIITicks = getConfigInt(Config.Upgrades.RATE_III_TICKS, Settings.Upgrades.DEF_RATE_III_TICKS);
+
+        Settings.massIMobs = getConfigInt(Config.Upgrades.MASS_I_MOB_COUNT, Settings.Upgrades.DEF_MASS_I_MOBS);
+        Settings.massIIMobs = getConfigInt(Config.Upgrades.MASS_II_MOB_COUNT, Settings.Upgrades.DEF_MASS_II_MOBS);
+        Settings.massIIIMobs = getConfigInt(Config.Upgrades.MASS_III_MOB_COUNT, Settings.Upgrades.DEF_MASS_III_MOBS);
+
+        Settings.decapitateIChance = getConfigInt(Config.Upgrades.DECAP_I_CHANCE, Settings.Upgrades.DEF_DECAPITATE_I_CHANCE);
+        Settings.decapitateIIChance = getConfigInt(Config.Upgrades.DECAP_II_CHANCE, Settings.Upgrades.DEF_DECAPITATE_II_CHANCE);
+        Settings.decapitateIIIChance = getConfigInt(Config.Upgrades.DECAP_III_CHANCE, Settings.Upgrades.DEF_DECAPITATE_III_CHANCE);
+
+        Settings.xpIBoost = getConfigInt(Config.Upgrades.XP_I_BOOST, Settings.Upgrades.DEF_XP_I_BOOST);
+        Settings.xpIIBoost = getConfigInt(Config.Upgrades.XP_II_BOOST, Settings.Upgrades.DEF_XP_II_BOOST);
+        Settings.xpIIIBoost = getConfigInt(Config.Upgrades.XP_III_BOOST, Settings.Upgrades.DEF_XP_III_BOOST);
 
         if (configuration.hasChanged())
             configuration.save();

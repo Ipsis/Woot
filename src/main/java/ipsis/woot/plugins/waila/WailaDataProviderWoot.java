@@ -73,7 +73,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
 
             SpawnerUpgrade upgradeMass = UpgradeManager.getMassUpgrade(tile.getUpgradeList());
-            int maxMass = Settings.massBaseMobs;
+            int maxMass = Settings.baseMobCount;
             if (upgradeMass != null)
                 maxMass = upgradeMass.getMass();
             tag.setInteger("mobCount", maxMass);

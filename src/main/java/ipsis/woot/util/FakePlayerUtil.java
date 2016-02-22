@@ -46,13 +46,13 @@ public class FakePlayerUtil {
 
         ItemStack itemStack = new ItemStack(Items.iron_sword);
         if (enchantKey == EnumEnchantKey.LOOTING_I && swordLootingI == null) {
-            itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingILevel);
+            itemStack.addEnchantment(Enchantment.looting, Settings.lootingILevel);
             swordLootingI = itemStack;
         } else if (enchantKey == EnumEnchantKey.LOOTING_II && swordLootingII == null) {
-            itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingIILevel);
+            itemStack.addEnchantment(Enchantment.looting, Settings.lootingIILevel);
             swordLootingII = itemStack;
         } else if (enchantKey == EnumEnchantKey.LOOTING_III && swordLootingIII == null) {
-            itemStack.addEnchantment(Enchantment.looting, Settings.enchantLootingIIILevel);
+            itemStack.addEnchantment(Enchantment.looting, Settings.lootingIIILevel);
             swordLootingIII = itemStack;
         }
     }

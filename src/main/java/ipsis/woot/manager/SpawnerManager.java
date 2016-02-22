@@ -9,7 +9,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EntityDamageSource;
@@ -81,7 +80,7 @@ public class SpawnerManager {
             return null;
 
         int totalRf = Settings.baseRf * xpLevel;
-        int spawnTime = Settings.rateBaseTicks;
+        int spawnTime = Settings.baseRateTicks;
 
         SpawnerUpgrade u = UpgradeManager.getRateUpgrade(upgrades);
         if (u != null)

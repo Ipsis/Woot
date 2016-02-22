@@ -27,3 +27,13 @@ waila.Woot:factory.spawnTime=Time
 waila.Woot:factory.totalRf=Total Cost
 waila.Woot:factory.tickRf=Tick Cost
 waila.Woot:factory.mobCount=Num Of Mobs
+
+config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
+config.Woot:globalLearnTicks=Number of ticks between fake spawn learning
+config.Woot:globalStrictSpawns=Learn only from mob factory spawning
+config.Woot:globalStrictPower=Must provide full RF/tick or lose progress
+config.Woot:globalBaseRF=Base RF cost per mob level
+
+config.Woot.rateI_RFTick=Rate I cost (RF/tick)
+config.Woot.rateII_RFTick=Rate II cost (RF/tick)
+config.Woot.rateIII_RFTick=Rate III cost (RF/tick)

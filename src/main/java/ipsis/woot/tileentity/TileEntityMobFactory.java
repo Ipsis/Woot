@@ -10,12 +10,10 @@ import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -336,7 +334,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
 
                     SpawnerUpgrade upgradeMass = UpgradeManager.getMassUpgrade(upgradeList);
-                    int maxMass = Settings.massBaseMobs;
+                    int maxMass = Settings.baseMobCount;
                     if (upgradeMass != null)
                         maxMass = upgradeMass.getMass();
 

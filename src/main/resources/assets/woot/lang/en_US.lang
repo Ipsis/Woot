@@ -26,3 +26,4 @@ waila.Woot:factory.mob=Mob
 waila.Woot:factory.spawnTime=Time
 waila.Woot:factory.totalRf=Total Cost
 waila.Woot:factory.tickRf=Tick Cost
+waila.Woot:factory.mobCount=Num Of Mobs

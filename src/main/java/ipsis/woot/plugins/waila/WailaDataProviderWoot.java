@@ -1,6 +1,9 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.manager.SpawnerUpgrade;
+import ipsis.woot.manager.UpgradeManager;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -40,6 +43,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
                     ": " + EnumMobFactoryTier.getTier(tag.getByte("tier")));
             currenttip.add(EnumChatFormatting.BLUE + I18n.format("waila." + Reference.MOD_ID + ":factory.mob") +
                     ": " + tag.getString("displayName"));
+            currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.mobCount") +
+                    ": " + tag.getInteger("mobCount"));
             currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.spawnTime") +
                     ": " + tag.getInteger("spawnTicks") + " ticks");
             currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.totalRf") +
@@ -66,6 +71,12 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             tag.setInteger("spawnTicks", tile.getSpawnReq().getSpawnTime());
             tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());
             tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
+
+            SpawnerUpgrade upgradeMass = UpgradeManager.getMassUpgrade(tile.getUpgradeList());
+            int maxMass = Settings.massBaseMobs;
+            if (upgradeMass != null)
+                maxMass = upgradeMass.getMass();
+            tag.setInteger("mobCount", maxMass);
         }
         return tag;
     }

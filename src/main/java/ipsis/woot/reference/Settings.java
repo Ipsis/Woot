@@ -8,7 +8,9 @@ public class Settings {
         public static final int DEF_LEARN_TICKS = 40;
         public static final boolean DEF_STRICT_FACTORY_SPAWNS = false;
         public static final boolean DEF_STRICT_POWER = false;
-        public static final int DEF_BASE_RF = 1000;
+        public static final int DEF_TIER_I_RF = 1000;
+        public static final int DEF_TIER_II_RF = 2000;
+        public static final int DEF_TIER_III_RF = 4000;
         public static final int DEF_BASE_MOB_COUNT = 1;
         public static final int DEF_BASE_RATE_TICKS = 8 * 20; /* 16 * 20; */
     }
@@ -66,9 +68,11 @@ public class Settings {
     public static int learnTicks;
     public static boolean strictFactorySpawns;
     public static boolean strictPower;
-    public static int baseRf;
     public static int baseMobCount;
     public static int baseRateTicks;
+    public static int tierIRF;
+    public static int tierIIRF;
+    public static int tierIIIRF;
 
     /**
      * Upgrade costs per tick

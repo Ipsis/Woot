@@ -8,7 +8,9 @@ public class Config {
         public static final String LEARN_TICKS = "globalLearnTicks";
         public static final String STRICT_SPAWNS = "globalStrictSpawns";
         public static final String STRICT_POWER = "globalStrictPower";
-        public static final String BASE_RF = "globalBaseRF";
+        public static final String TIER_I_RF = "globalTierIRF";
+        public static final String TIER_II_RF = "globalTierIIRF";
+        public static final String TIER_III_RF = "globalTierIIIRF";
         public static final String BASE_MOB_COUNT = "globalBaseMobCount";
         public static final String BASE_RATE_TICKS = "globalBaseRateTicks";
     }

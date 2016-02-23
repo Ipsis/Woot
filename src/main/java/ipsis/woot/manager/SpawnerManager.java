@@ -2,6 +2,7 @@ package ipsis.woot.manager;
 
 import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerUtil;
 import net.minecraft.entity.*;
@@ -74,12 +75,20 @@ public class SpawnerManager {
         }
     }
 
-    public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel) {
+    public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel, EnumMobFactoryTier tier) {
 
         if (!MobManager.isValidMobName(mobName))
             return null;
 
-        int totalRf = Settings.baseRf * xpLevel;
+        int baseRF;
+        if (tier == EnumMobFactoryTier.TIER_ONE)
+            baseRF = Settings.tierIRF;
+        else if (tier == EnumMobFactoryTier.TIER_TWO)
+            baseRF = Settings.tierIIRF;
+        else
+            baseRF = Settings.tierIIIRF;
+
+        int totalRf = baseRF * xpLevel;
         int spawnTime = Settings.baseRateTicks;
 
         SpawnerUpgrade u = UpgradeManager.getRateUpgrade(upgrades);

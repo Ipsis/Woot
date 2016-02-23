@@ -32,7 +32,9 @@ config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Number of ticks between fake spawn learning
 config.Woot:globalStrictSpawns=Learn only from mob factory spawning
 config.Woot:globalStrictPower=Must provide full RF/tick or lose progress
-config.Woot:globalBaseRF=Base RF cost per mob level
+config.Woot:globalTierIRF=Tier I RF cost per mob level
+config.Woot:globalTierIIRF=Tier II RF cost per mob level
+config.Woot:globalTierIIIRF=Tier III RF cost per mob level
 config.Woot:globalBaseMobCount=Number of mobs to spawn
 config.Woot:globalBaseRateTicks=Number of ticks to spawn mobs
 

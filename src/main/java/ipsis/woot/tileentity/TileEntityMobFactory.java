@@ -199,7 +199,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         for (SpawnerUpgrade u : upgradeList)
             LogHelper.info("onUpgradeCheck: " + u.getUpgradeType() + "/" + u.getUpgradeTier());
 
-        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeList, Woot.spawnerManager.getXp(mobName, this));
+        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeList, Woot.spawnerManager.getXp(mobName, this), factoryTier);
         enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
         LogHelper.info("onUpgradeCheck: " + enchantKey + " " + spawnReq);
 

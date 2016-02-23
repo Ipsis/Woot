@@ -63,6 +63,17 @@ public class SpawnerUpgrade {
         return this.v;
     }
 
+    public SpawnerUpgrade setXpBoost(int boost) {
+
+        this.v = boost;
+        return this;
+    }
+
+    public int getXpBoost() {
+
+        return this.v;
+    }
+
     public EnumSpawnerUpgrade getUpgradeType() {
 
         return this.upgradeType;

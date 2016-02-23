@@ -29,9 +29,9 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.LOOTING_II).setRfCostPerTick(Settings.lootingIIRfTick);
         upgradeMap.get(EnumSpawnerUpgrade.LOOTING_III).setRfCostPerTick(Settings.lootingIIIRfTick);
 
-        upgradeMap.get(EnumSpawnerUpgrade.XP_I).setRfCostPerTick(Settings.xpIRfTick);
-        upgradeMap.get(EnumSpawnerUpgrade.XP_II).setRfCostPerTick(Settings.xpIIRfTick);
-        upgradeMap.get(EnumSpawnerUpgrade.XP_III).setRfCostPerTick(Settings.xpIIIRfTick);
+        upgradeMap.get(EnumSpawnerUpgrade.XP_I).setRfCostPerTick(Settings.xpIRfTick).setXpBoost(Settings.xpIBoost);
+        upgradeMap.get(EnumSpawnerUpgrade.XP_II).setRfCostPerTick(Settings.xpIIRfTick).setXpBoost(Settings.xpIIBoost);
+        upgradeMap.get(EnumSpawnerUpgrade.XP_III).setRfCostPerTick(Settings.xpIIIRfTick).setXpBoost(Settings.xpIIIBoost);
 
         upgradeMap.get(EnumSpawnerUpgrade.MASS_I).setRfCostPerTick(Settings.massIRfTick).setMass(Settings.massIMobs);
         upgradeMap.get(EnumSpawnerUpgrade.MASS_II).setRfCostPerTick(Settings.massIIRfTick).setMass(Settings.massIIMobs);

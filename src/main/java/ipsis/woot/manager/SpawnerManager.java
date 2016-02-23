@@ -243,7 +243,7 @@ public class SpawnerManager {
         if (upgrade == null)
             return getXp(mobName);
 
-        return getXp(mobName) * (upgrade.getUpgradeTier() + 1);
+        return getXp(mobName) * upgrade.getXpBoost();
     }
 
     public SpawnLoot getSpawnLoot(String mobName, List<SpawnerUpgrade> upgrades) {

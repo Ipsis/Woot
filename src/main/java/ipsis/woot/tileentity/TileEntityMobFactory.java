@@ -333,28 +333,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
 
-                    SpawnerUpgrade upgradeMass = UpgradeManager.getMassUpgrade(upgradeList);
-                    int maxMass = Settings.baseMobCount;
-                    if (upgradeMass != null)
-                        maxMass = upgradeMass.getMass();
+                    SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(mobName, upgradeList);
+                    LogHelper.info("Loot: " + spawnLoot.getDropList());
+                    LogHelper.info("XP: " + spawnLoot.getXp());
+                    for (ItemStack itemStack : spawnLoot.getDropList())
+                        ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
 
-                    for (int mass = 0; mass < maxMass; mass++) {
-
-                        SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnLoot(mobName, upgradeList);
-                        LogHelper.info("Loot: " + spawnLoot.getDropList());
-                        LogHelper.info("XP: " + spawnLoot.getXp());
-                        for (int i = 0; i < spawnLoot.getDropList().size(); i++) {
-                            ItemStack result = ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(spawnLoot.getDropList().get(i), 1), false);
-                            if (result != null)
-                                spawnLoot.getDropList().get(i).stackSize = result.stackSize;
-                            else
-                                spawnLoot.getDropList().get(i).stackSize = 0;
-                        }
-
-                        /* XP as xp bottles for now */
-                        ItemStack bottleXp = new ItemStack(Items.experience_bottle);
-                        ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(bottleXp, spawnLoot.getXp()), false);
-                    }
+                    /* XP as xp bottles for now */
+                    ItemStack bottleXp = new ItemStack(Items.experience_bottle);
+                    ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(bottleXp, spawnLoot.getXp()), false);
                 }
             }
             /** Everything else is thrown away */

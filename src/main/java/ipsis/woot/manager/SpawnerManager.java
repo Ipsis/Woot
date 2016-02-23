@@ -246,11 +246,20 @@ public class SpawnerManager {
         return getXp(mobName) * upgrade.getXpBoost();
     }
 
-    public SpawnLoot getSpawnLoot(String mobName, List<SpawnerUpgrade> upgrades) {
+    public SpawnLoot getSpawnerLoot(String mobName, List<SpawnerUpgrade> upgrades) {
 
         SpawnLoot spawnLoot = new SpawnLoot();
-        spawnLoot.drops = getDrops(mobName, UpgradeManager.getLootingEnchant(upgrades));
-        spawnLoot.xp = getXp(mobName, UpgradeManager.getXpUpgrade(upgrades));
+        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        SpawnerUpgrade u = UpgradeManager.getMassUpgrade(upgrades);
+        if (u != null)
+            mobCount = u.getMass();
+
+        for (int i = 0; i < mobCount; i++) {
+            List<ItemStack> dropList = getDrops(mobName, UpgradeManager.getLootingEnchant(upgrades));
+            spawnLoot.drops.addAll(dropList);
+            spawnLoot.xp += getXp(mobName, UpgradeManager.getXpUpgrade(upgrades));
+            // TODO beheading
+        }
 
         return spawnLoot;
     }

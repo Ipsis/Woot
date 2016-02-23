@@ -54,9 +54,9 @@ public class Settings {
         public static final int DEF_DECAPITATE_II_CHANCE = 30;
         public static final int DEF_DECAPITATE_III_CHANCE = 70;
 
-        public static final int DEF_XP_I_BOOST = 2;
-        public static final int DEF_XP_II_BOOST = 4;
-        public static final int DEF_XP_III_BOOST = 8;
+        public static final int DEF_XP_I_BOOST = 1;
+        public static final int DEF_XP_II_BOOST = 2;
+        public static final int DEF_XP_III_BOOST = 4;
     }
 
     /**

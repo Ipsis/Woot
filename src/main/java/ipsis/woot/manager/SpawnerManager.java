@@ -240,8 +240,9 @@ public class SpawnerManager {
 
     int getXp(String mobName, SpawnerUpgrade upgrade) {
 
+        // Require the XP upgrade to get XP
         if (upgrade == null)
-            return getXp(mobName);
+            return 0;
 
         return getXp(mobName) * upgrade.getXpBoost();
     }

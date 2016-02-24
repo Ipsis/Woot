@@ -21,12 +21,10 @@ tile.Woot:upgrade.decapitate_iii.name=Decapitate III Upgrade
 
 item.Woot:prism.name=Mob Prism
 
-waila.Woot:factory.tier=Tier
-waila.Woot:factory.mob=Mob
-waila.Woot:factory.spawnTime=Time
-waila.Woot:factory.totalRf=Total Cost
-waila.Woot:factory.tickRf=Tick Cost
-waila.Woot:factory.mobCount=Num Of Mobs
+waila.Woot:factory.tier=Tier %s
+waila.Woot:factory.mob=Mob %s
+waila.Woot:factory.rate=Spawn %d mobs every %d ticks
+waila.Woot:factory.cost=Costs %dRF @ %dRf/tick
 
 config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Number of ticks between fake spawn learning

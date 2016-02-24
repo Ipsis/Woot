@@ -2,10 +2,12 @@ package ipsis.woot.plugins.waila;
 
 import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.util.StringHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -39,18 +41,16 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("displayName")) {
 
-            currenttip.add(EnumChatFormatting.BLUE + I18n.format("waila." + Reference.MOD_ID + ":factory.tier") +
-                    ": " + EnumMobFactoryTier.getTier(tag.getByte("tier")));
-            currenttip.add(EnumChatFormatting.BLUE + I18n.format("waila." + Reference.MOD_ID + ":factory.mob") +
-                    ": " + tag.getString("displayName"));
-            currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.mobCount") +
-                    ": " + tag.getInteger("mobCount"));
-            currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.spawnTime") +
-                    ": " + tag.getInteger("spawnTicks") + " ticks");
-            currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.totalRf") +
-                    ": " + tag.getInteger("spawnRf") + " RF");
-            currenttip.add(EnumChatFormatting.GREEN + I18n.format("waila." + Reference.MOD_ID + ":factory.tickRf") +
-                    ": " + tag.getInteger("rfPerTick") + " RF/tick");
+            EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
+
+            currenttip.add(EnumChatFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
+                    (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB),
+                    tag.getString("displayName")));
+            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
+                    tag.getInteger("mobCount"), tag.getInteger("spawnTicks")));
+            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
+                    tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
         }
 
         return currenttip;

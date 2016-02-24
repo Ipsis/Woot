@@ -2,8 +2,13 @@ package ipsis.woot.block;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.manager.SpawnerUpgrade;
+import ipsis.woot.manager.UpgradeManager;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -22,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryUpgrade extends BlockContainerWoot {
+public class BlockMobFactoryUpgrade extends BlockContainerWoot implements ITooltipInfo {
 
     public static final String BASENAME = "upgrade";
 
@@ -92,5 +97,75 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot {
     public int getRenderType() {
 
         return 3;
+    }
+
+    @Override
+    public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
+
+        EnumSpawnerUpgrade type = EnumSpawnerUpgrade.getFromMetadata(meta);
+        switch (type) {
+            case RATE_I:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateITicks));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.rateIRfTick));
+                break;
+            case RATE_II:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateIITicks));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.rateIIRfTick));
+                break;
+            case RATE_III:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateIIITicks));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.rateIIIRfTick));
+                break;
+            case LOOTING_I:
+                toolTip.add(StringHelper.localize(Lang.TOOLTIP_LOOTING_I_EFFECT));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIRfTick));
+                break;
+            case LOOTING_II:
+                toolTip.add(StringHelper.localize(Lang.TOOLTIP_LOOTING_II_EFFECT));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIIRfTick));
+                break;
+            case LOOTING_III:
+                toolTip.add(StringHelper.localize(Lang.TOOLTIP_LOOTING_III_EFFECT));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIIIRfTick));
+                break;
+            case XP_I:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_EFFECT), Settings.xpIBoost));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIRfTick));
+                break;
+            case XP_II:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_EFFECT), Settings.xpIIBoost));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIIRfTick));
+                break;
+            case XP_III:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_EFFECT), Settings.xpIIIBoost));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIIIRfTick));
+                break;
+            case MASS_I:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_MASS_EFFECT), Settings.massIMobs));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.massIRfTick));
+                break;
+            case MASS_II:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_MASS_EFFECT), Settings.massIIMobs));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.massIIRfTick));
+                break;
+            case MASS_III:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_MASS_EFFECT), Settings.massIIIMobs));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.massIIIRfTick));
+                break;
+            case DECAPITATE_I:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_DECAP_EFFECT), Settings.decapitateIChance));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.decapitateIRfTick));
+                break;
+            case DECAPITATE_II:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_DECAP_EFFECT), Settings.decapitateIIChance));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.decapitateIIRfTick));
+                break;
+            case DECAPITATE_III:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_DECAP_EFFECT), Settings.decapitateIIIChance));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.decapitateIIIRfTick));
+                break;
+            default:
+                break;
+        }
     }
 }

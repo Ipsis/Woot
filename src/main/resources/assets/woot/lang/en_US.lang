@@ -69,3 +69,15 @@ config.Woot:decapIII_percentage=Decapitate III chance to drop head
 config.Woot:xpI_boost=XP I experience multiplier
 config.Woot:xpII_boost=XP II experience multiplier
 config.Woot:xpIII_boost=XP III experience multiplier
+
+tooltip.Woot:factory_cost=Tier %s costs %dRF for each mob spawned
+
+tooltip.Woot:upgrade_cost=Costs %d RF/tick for each mob spawned
+
+tooltip.Woot:upgrade_rate_effect=Spawn mobs every %d ticks
+tooltip.Woot:upgrade_lootingI_effect=Applys Looting I enchant to kills
+tooltip.Woot:upgrade_lootingII_effect=Applys Looting II enchant to kills
+tooltip.Woot:upgrade_lootingIII_effect=Applys Looting III enchant to kills
+tooltip.Woot:upgrade_xp_effect=Increases XP by %d%%
+tooltip.Woot:upgrade_mass_effect=Spawn %d mobs
+tooltip.Woot:upgrade_decap_effect=Increases chance to decapitate to %d%%

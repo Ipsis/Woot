@@ -2,7 +2,10 @@ package ipsis.woot.block;
 
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.reference.Lang;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,7 +16,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMobFactory extends BlockContainerWoot {
+import java.util.List;
+
+public class BlockMobFactory extends BlockContainerWoot implements ITooltipInfo {
 
     public static final String BASENAME = "factory";
 
@@ -49,5 +54,13 @@ public class BlockMobFactory extends BlockContainerWoot {
     public int getRenderType() {
 
         return 3;
+    }
+
+    @Override
+    public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
+
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRF));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRF));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRF));
     }
 }

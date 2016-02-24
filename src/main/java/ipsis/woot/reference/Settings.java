@@ -12,7 +12,7 @@ public class Settings {
         public static final int DEF_TIER_II_RF = 2000;
         public static final int DEF_TIER_III_RF = 4000;
         public static final int DEF_BASE_MOB_COUNT = 1;
-        public static final int DEF_BASE_RATE_TICKS = 8 * 20; /* 16 * 20; */
+        public static final int DEF_BASE_RATE_TICKS = 16 * 20;
     }
 
     public static class Power {
@@ -44,13 +44,13 @@ public class Settings {
         public static final int DEF_LOOTING_II_LEVEL = 2;
         public static final int DEF_LOOTING_III_LEVEL = 3;
 
-        public static final int DEF_RATE_I_TICKS = 4 * 20; /*8 * 20; */
-        public static final int DEF_RATE_II_TICKS = 2 * 20; /*4 * 20; */
-        public static final int DEF_RATE_III_TICKS = 1 * 20; /* 2 * 20; */
+        public static final int DEF_RATE_I_TICKS = 8 * 20;
+        public static final int DEF_RATE_II_TICKS = 4 * 20;
+        public static final int DEF_RATE_III_TICKS = 2 * 20;
 
-        public static final int DEF_MASS_I_MOBS = 8;
-        public static final int DEF_MASS_II_MOBS = 12;
-        public static final int DEF_MASS_III_MOBS = 16;
+        public static final int DEF_MASS_I_MOBS = 4;
+        public static final int DEF_MASS_II_MOBS = 6;
+        public static final int DEF_MASS_III_MOBS = 8;
 
         public static final int DEF_DECAPITATE_I_CHANCE = 10;
         public static final int DEF_DECAPITATE_II_CHANCE = 30;

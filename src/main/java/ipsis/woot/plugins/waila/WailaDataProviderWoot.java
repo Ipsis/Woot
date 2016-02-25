@@ -77,7 +77,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
         TileEntityMobFactory tile = (TileEntityMobFactory)te;
         if (tile.isFormed()) {
-            tag.setString("displayName", tile.getMobName());
+            tag.setString("displayName", tile.getDisplayName());
             tag.setByte("tier", (byte)tile.getFactoryTier().ordinal());
             tag.setInteger("spawnTicks", tile.getSpawnReq().getSpawnTime());
             tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());

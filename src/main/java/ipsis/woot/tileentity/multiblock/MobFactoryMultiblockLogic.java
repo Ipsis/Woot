@@ -26,18 +26,21 @@ public class MobFactoryMultiblockLogic {
         List<BlockPos> blockPosList;
         EnumMobFactoryTier size;
         String mobName;
+        String displayName;
 
         public FactorySetup() {
 
             blockPosList = new ArrayList<BlockPos>();
             size = null;
             mobName = "";
+            displayName = "";
         }
 
         public EnumMobFactoryTier getSize() { return this.size; }
         public List<BlockPos> getBlockPosList() { return this.blockPosList; }
         public boolean isValid() { return this.size != null; }
         public String getMobName() { return this.mobName; }
+        public String getDisplayName() { return this.displayName; }
     }
 
     /**
@@ -76,6 +79,7 @@ public class MobFactoryMultiblockLogic {
             return factorySetup;
         }
         factorySetup.mobName = teController.getMobName();
+        factorySetup.displayName = teController.getDisplayName();
         LogHelper.info("validateFactory: " + factorySetup.mobName);
 
         BlockPos patternOrigin = factory.getPos().down(1);

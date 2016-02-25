@@ -26,6 +26,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     EnumFacing facing;
     EnumMobFactoryTier factoryTier;
     String mobName;
+    String displayName;
     EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
     SpawnerManager.SpawnReq spawnReq;
     boolean nbtLoaded;
@@ -79,6 +80,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.dirtyUpgrade = false;
         this.factoryTier = null;
         this.mobName = MobManager.INVALID_MOB_NAME;
+        this.displayName = MobManager.INVALID_MOB_NAME;
         this.spawnReq = null;
         this.nbtLoaded = false;
         this.upgradeSetup = null;
@@ -101,6 +103,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     public String getMobName() {
 
         return this.mobName;
+    }
+
+    public String getDisplayName() {
+
+        return this.displayName;
     }
 
     public SpawnerManager.SpawnReq getSpawnReq() {
@@ -166,6 +173,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             updateUpgradeBlocks(false);
             factoryTier = factorySetup.getSize();
             mobName = MobManager.INVALID_MOB_NAME;
+            displayName = MobManager.INVALID_MOB_NAME;
             return;
         }
 
@@ -176,6 +184,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         factoryTier = factorySetup.getSize();
         mobName = factorySetup.getMobName();
+        displayName = factorySetup.getDisplayName();
         structureBlockList = factorySetup.getBlockPosList();
         updateStructureBlocks(true);
 

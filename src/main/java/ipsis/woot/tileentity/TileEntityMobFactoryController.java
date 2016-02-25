@@ -49,6 +49,11 @@ public class TileEntityMobFactoryController extends TileEntity {
         return mobName;
     }
 
+    public String getDisplayName() {
+
+        return displayName;
+    }
+
     void updateMobFarm() {
 
         TileEntity te = worldObj.getTileEntity(getPos().offset(EnumFacing.DOWN));

@@ -75,7 +75,7 @@ public class SpawnerManager {
         }
     }
 
-    public SpawnReq getSpawnReq(String mobName, List<SpawnerUpgrade> upgrades, int xpLevel, EnumMobFactoryTier tier) {
+    public SpawnReq getSpawnReq(String mobName, UpgradeSetup upgradeSetup, int xpLevel, EnumMobFactoryTier tier) {
 
         if (!MobManager.isValidMobName(mobName))
             return null;
@@ -91,15 +91,10 @@ public class SpawnerManager {
         int totalRf = baseRF * xpLevel;
         int spawnTime = Settings.baseRateTicks;
 
-        SpawnerUpgrade u = UpgradeManager.getRateUpgrade(upgrades);
-        if (u != null)
-            spawnTime = u.getSpawnRate();
+        if (upgradeSetup.hasRateUpgrade())
+            spawnTime = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate();
 
-        int upgradeRfPerTick = 0;
-        for (SpawnerUpgrade upgrade : upgrades)
-            upgradeRfPerTick += upgrade.getRfCostPerTick();
-
-        totalRf += (spawnTime * upgradeRfPerTick);
+        totalRf += (spawnTime * upgradeSetup.getRfPerTickCost());
         return new SpawnReq(totalRf, spawnTime);
     }
 
@@ -256,18 +251,18 @@ public class SpawnerManager {
         return getXp(mobName) * upgrade.getXpBoost();
     }
 
-    public SpawnLoot getSpawnerLoot(String mobName, List<SpawnerUpgrade> upgrades) {
+    public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup) {
 
         SpawnLoot spawnLoot = new SpawnLoot();
         int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
-        SpawnerUpgrade u = UpgradeManager.getMassUpgrade(upgrades);
-        if (u != null)
-            mobCount = u.getMass();
+        if (upgradeSetup.hasMassUpgrade())
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 
         for (int i = 0; i < mobCount; i++) {
-            List<ItemStack> dropList = getDrops(mobName, UpgradeManager.getLootingEnchant(upgrades));
+            List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
             spawnLoot.drops.addAll(dropList);
-            spawnLoot.xp += getXp(mobName, UpgradeManager.getXpUpgrade(upgrades));
+            if (upgradeSetup.hasXpUpgrade())
+                spawnLoot.xp += getXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
             // TODO beheading
         }
 

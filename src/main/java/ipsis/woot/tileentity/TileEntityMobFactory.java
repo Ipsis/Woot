@@ -29,6 +29,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
     SpawnerManager.SpawnReq spawnReq;
     boolean nbtLoaded;
+    UpgradeSetup upgradeSetup;
 
     int currLearnTicks;
     int currSpawnTicks;
@@ -38,7 +39,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     boolean dirtyUpgrade;
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
-    List<SpawnerUpgrade> upgradeList = new ArrayList<SpawnerUpgrade>();
 
     static final String NBT_FACING = "facing";
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
@@ -81,6 +81,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.mobName = MobManager.INVALID_MOB_NAME;
         this.spawnReq = null;
         this.nbtLoaded = false;
+        this.upgradeSetup = null;
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -112,9 +113,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         return this.factoryTier;
     }
 
-    public List<SpawnerUpgrade> getUpgradeList() {
+    public UpgradeSetup getUpgradeSetup() {
 
-        return this.upgradeList;
+        return this.upgradeSetup;
     }
 
     public boolean isFormed() {
@@ -187,7 +188,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         LogHelper.info("onUpgradeCheck: " + factoryTier);
 
         updateUpgradeBlocks(false);
-        upgradeList.clear();
+        upgradeSetup = null;
         upgradeBlockList.clear();
         if (factoryTier == EnumMobFactoryTier.TIER_ONE)
             upgradeTier1();
@@ -196,11 +197,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         else if (factoryTier == EnumMobFactoryTier.TIER_THREE)
             upgradeTier3();
 
-        for (SpawnerUpgrade u : upgradeList)
-            LogHelper.info("onUpgradeCheck: " + u.getUpgradeType() + "/" + u.getUpgradeTier());
+        for (EnumSpawnerUpgrade u : upgradeSetup.getUpgradeList())
+            LogHelper.info("onUpgradeCheck: " + u);
 
-        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeList, Woot.spawnerManager.getXp(mobName, this), factoryTier);
-        enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
+        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeSetup, Woot.spawnerManager.getXp(mobName, this), factoryTier);
+        enchantKey = upgradeSetup.getEnchantKey();
         LogHelper.info("onUpgradeCheck: " + enchantKey + " " + spawnReq);
 
         if (nbtLoaded) {
@@ -216,12 +217,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
 
+        List<SpawnerUpgrade> tmpUpgradeList = new ArrayList<SpawnerUpgrade>();
         for (BlockPos p : upgradePos) {
 
             BlockPos offset = BlockPosHelper.rotateFromSouth(p, getFacing().getOpposite());
             BlockPos p2 = getPos().add(offset.getX(), offset.getY(), offset.getZ());
-            UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier, upgradeList, upgradeBlockList);
+            UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier, tmpUpgradeList, upgradeBlockList);
         }
+
+        upgradeSetup = new UpgradeSetup(tmpUpgradeList);
     }
 
     void upgradeTier1() {
@@ -333,7 +337,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
 
-                    SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(mobName, upgradeList);
+                    SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(mobName, upgradeSetup);
                     LogHelper.info("Loot: " + spawnLoot.getDropList());
                     LogHelper.info("XP: " + spawnLoot.getXp());
                     for (ItemStack itemStack : spawnLoot.getDropList())

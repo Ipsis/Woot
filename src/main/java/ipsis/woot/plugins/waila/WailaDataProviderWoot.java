@@ -1,7 +1,9 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
+import ipsis.woot.manager.UpgradeSetup;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
@@ -15,7 +17,9 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
@@ -51,6 +55,13 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
                     tag.getInteger("mobCount"), tag.getInteger("spawnTicks")));
             currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
                     tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
+
+            if (tag.hasKey("upgrades")) {
+                byte[] a = tag.getByteArray("upgrades");
+                for (int i = 0; i < a.length; i++) {
+                    currenttip.add(EnumSpawnerUpgrade.getFromMetadata(a[i]).toString());
+                }
+            }
         }
 
         return currenttip;
@@ -72,11 +83,27 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());
             tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
 
-            SpawnerUpgrade upgradeMass = UpgradeManager.getMassUpgrade(tile.getUpgradeList());
             int maxMass = Settings.baseMobCount;
-            if (upgradeMass != null)
-                maxMass = upgradeMass.getMass();
+            UpgradeSetup upgradeSetup = tile.getUpgradeSetup();
+            if (upgradeSetup != null) {
+                if (upgradeSetup.hasMassUpgrade())
+                    maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+            }
             tag.setInteger("mobCount", maxMass);
+
+            if (upgradeSetup != null) {
+                List<EnumSpawnerUpgrade> upgradeList = tile.getUpgradeSetup().getUpgradeList();
+                if (!upgradeList.isEmpty()) {
+                    byte[] u = new byte[upgradeList.size()];
+                    int i = 0;
+                    for (EnumSpawnerUpgrade upgrade : upgradeList) {
+                        u[i] = (byte)upgrade.ordinal();
+                        i++;
+                    }
+
+                    tag.setTag("upgrades", new NBTTagByteArray(u));
+                }
+            }
         }
         return tag;
     }

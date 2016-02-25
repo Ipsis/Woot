@@ -89,7 +89,7 @@ public class UpgradeManager {
         SpawnerUpgrade u = null;
         int tier = 0;
         for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isRate() && upgrade.getUpgradeTier() > tier) {
+            if (upgrade.isLooting() && upgrade.getUpgradeTier() > tier) {
                 tier = upgrade.getUpgradeTier();
                 u = upgrade;
             }

@@ -91,6 +91,10 @@ public class SpawnerManager {
         int totalRf = baseRF * xpLevel;
         int spawnTime = Settings.baseRateTicks;
 
+        // The baseRF is per Mob
+        if (upgradeSetup.hasMassUpgrade())
+            totalRf += (baseRF * UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass());
+
         if (upgradeSetup.hasRateUpgrade())
             spawnTime = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate();
 

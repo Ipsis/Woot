@@ -31,13 +31,16 @@ public class SpawnerManager {
 
         int totalRf;
         int spawnTime;
+        int rfPerTick;
 
         public SpawnReq(int totalRf, int spawnTime) {
             this.totalRf = totalRf;
             this.spawnTime = spawnTime;
+
+            this.rfPerTick = calcRfPerTick();
         }
 
-        public int getRfPerTick() {
+        public int calcRfPerTick() {
 
             if (spawnTime > 0) {
                 float rfpertick = (float)totalRf / spawnTime;
@@ -65,13 +68,13 @@ public class SpawnerManager {
             return totalRf;
         }
 
-        public int getSpawnTime() {
-            return spawnTime;
-        }
+        public int getSpawnTime() { return spawnTime; }
+
+        public int getRfPerTick() { return rfPerTick; }
 
         @Override
         public String toString() {
-            return "totalRf:" + totalRf + " RF, spawnTime:" + spawnTime + " ticks, rfPerTick:" + getRfPerTick();
+            return totalRf + "RF " + spawnTime + " ticks @ " + rfPerTick + "RF/tick";
         }
     }
 

@@ -27,7 +27,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     EnumMobFactoryTier factoryTier;
     String mobName;
     String displayName;
-    EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
     SpawnerManager.SpawnReq spawnReq;
     boolean nbtLoaded;
     UpgradeSetup upgradeSetup;
@@ -210,8 +209,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             LogHelper.info("onUpgradeCheck: " + u);
 
         spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeSetup, Woot.spawnerManager.getXp(mobName, this), factoryTier);
-        enchantKey = upgradeSetup.getEnchantKey();
-        LogHelper.info("onUpgradeCheck: " + enchantKey + " " + spawnReq);
+        LogHelper.info("onUpgradeCheck: " + upgradeSetup.getEnchantKey() + " " + spawnReq);
 
         if (nbtLoaded) {
             /* Preserver on load */
@@ -286,16 +284,16 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         currLearnTicks++;
         if (currLearnTicks >= Settings.learnTicks) {
-            if (!Woot.spawnerManager.isFull(mobName, enchantKey)) {
+            if (!Woot.spawnerManager.isFull(mobName, upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
-                LogHelper.info("update: Fake spawn " + mobName + " " + enchantKey);
-                Woot.spawnerManager.spawn(mobName, enchantKey, this.worldObj, this.getPos());
+                LogHelper.info("update: Fake spawn " + mobName + " " + upgradeSetup.getEnchantKey());
+                Woot.spawnerManager.spawn(mobName, upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
         }
 
         /* Do we have any info on this mob yet - should only happen until the first event fires */
-        if (Woot.spawnerManager.isEmpty(mobName, enchantKey))
+        if (Woot.spawnerManager.isEmpty(mobName, upgradeSetup.getEnchantKey()))
             return;
 
         currSpawnTicks++;

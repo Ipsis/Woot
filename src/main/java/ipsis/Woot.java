@@ -7,6 +7,7 @@ import ipsis.woot.init.ModRecipes;
 import ipsis.woot.manager.MobManager;
 import ipsis.woot.manager.SpawnerManager;
 import ipsis.woot.manager.UpgradeManager;
+import ipsis.woot.manager.XpManager;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,6 +27,7 @@ public class Woot {
     public static Woot instance;
     public static SpawnerManager spawnerManager = new SpawnerManager();
     public static MobManager mobManager = new MobManager();
+    public static XpManager xpManager = new XpManager();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

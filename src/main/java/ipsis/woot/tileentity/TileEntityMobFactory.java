@@ -205,7 +205,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             LogHelper.info("onUpgradeCheck: " + u);
 
         spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup,
-                Woot.spawnerManager.getXp(controllerConfig.getMobName(), this), factoryTier);
+                Woot.spawnerManager.getSpawnXp(controllerConfig.getMobName(), this), factoryTier);
         LogHelper.info("onUpgradeCheck: " + upgradeSetup.getEnchantKey() + " " + spawnReq);
 
         if (nbtLoaded) {

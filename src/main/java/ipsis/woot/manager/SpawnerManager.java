@@ -1,5 +1,6 @@
 package ipsis.woot.manager;
 
+import ipsis.Woot;
 import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -108,7 +109,6 @@ public class SpawnerManager {
 
     public static Random random = new Random();
     HashMap<String, SpawnerEntry> spawnerMap = new HashMap<String, SpawnerEntry>();
-    HashMap<String, Integer> xpMap = new HashMap<String, Integer>();
 
     SpawnerEntry getSpawnerEntry(String mobName) {
 
@@ -121,17 +121,9 @@ public class SpawnerManager {
         return e;
     }
 
-    public int getXp(String mobName) {
+    public int getSpawnXp(String mobName, TileEntity te) {
 
-        if (!xpMap.containsKey(mobName))
-            return 1;
-        else
-            return xpMap.get(mobName);
-    }
-
-    public int getXp(String mobName, TileEntity te) {
-
-        if (!xpMap.containsKey(mobName)) {
+        if (!Woot.xpManager.isKnown(mobName)) {
             /* spawn and store */
             Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos());
             if (entity != null) {
@@ -139,9 +131,7 @@ public class SpawnerManager {
                 /* TODO Dev only version - change to access tranformer */
                     Field f = ReflectionHelper.findField(EntityLiving.class, "experienceValue");
                     int xp = f.getInt(entity);
-                    if (xp <= 0)
-                        xp = 1;
-                    xpMap.put(mobName, xp);
+                    Woot.xpManager.addMapping(mobName, xp);
                     LogHelper.info("getXP: " + mobName + "->" + xp);
                 } catch (Exception e) {
                     LogHelper.error("Reflection of recentlyHit failed: " + e);
@@ -149,11 +139,7 @@ public class SpawnerManager {
             }
         }
 
-        Integer xp = xpMap.get(mobName);
-        if (xp != null)
-            return xp;
-        else
-            return 1; /* This should not happen */
+        return Woot.xpManager.getSpawnXp(mobName);
     }
 
     public boolean isEmpty(String mobName, EnumEnchantKey enchantKey) {
@@ -249,13 +235,13 @@ public class SpawnerManager {
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
     }
 
-    int getXp(String mobName, SpawnerUpgrade upgrade) {
+    int getDeathXp(String mobName, SpawnerUpgrade upgrade) {
 
         // Require the XP upgrade to get XP
         if (upgrade == null)
             return 0;
 
-        int base = getXp(mobName);
+        int base = Woot.xpManager.getDeathXp(mobName);
         float boost = (float)upgrade.getXpBoost();
         return base + (int)((base / 100.0F) * boost);
     }
@@ -271,7 +257,7 @@ public class SpawnerManager {
             List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
             spawnLoot.drops.addAll(dropList);
             if (upgradeSetup.hasXpUpgrade())
-                spawnLoot.xp += getXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
+                spawnLoot.xp += getDeathXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
             // TODO beheading
         }
 

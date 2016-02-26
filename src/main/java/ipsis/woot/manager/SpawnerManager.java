@@ -248,7 +248,9 @@ public class SpawnerManager {
         if (upgrade == null)
             return 0;
 
-        return getXp(mobName) * upgrade.getXpBoost();
+        int base = getXp(mobName);
+        float boost = (float)upgrade.getXpBoost();
+        return base + (int)((base / 100.0F) * boost);
     }
 
     public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup) {

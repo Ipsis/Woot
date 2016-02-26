@@ -83,7 +83,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.displayName = MobManager.INVALID_MOB_NAME;
         this.spawnReq = null;
         this.nbtLoaded = false;
-        this.upgradeSetup = null;
+        this.upgradeSetup = new UpgradeSetup();
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -197,7 +197,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         LogHelper.info("onUpgradeCheck: " + factoryTier);
 
         updateUpgradeBlocks(false);
-        upgradeSetup = null;
+        upgradeSetup.clear();
         upgradeBlockList.clear();
         if (factoryTier == EnumMobFactoryTier.TIER_ONE)
             upgradeTier1();
@@ -234,7 +234,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier, tmpUpgradeList, upgradeBlockList);
         }
 
-        upgradeSetup = new UpgradeSetup(tmpUpgradeList);
+        upgradeSetup.processUpgrades(tmpUpgradeList);
     }
 
     void upgradeTier1() {

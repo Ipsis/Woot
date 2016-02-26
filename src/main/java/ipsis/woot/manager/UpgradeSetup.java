@@ -17,49 +17,58 @@ public class UpgradeSetup {
 
     int rfPerTickCost;
 
-    public UpgradeSetup(List<SpawnerUpgrade> upgradeList) {
+    public UpgradeSetup() {
 
+        upgradeList = new ArrayList<EnumSpawnerUpgrade>();
+        clear();
+    }
+
+    public void clear() {
+
+        enchantKey = EnumEnchantKey.NO_ENCHANT;
+        rateUpgrade = null;
+        lootingUpgrade = null;
+        xpUpgrade = null;
+        massUpgrade = null;
+        decapitateUpgrade = null;
+        upgradeList.clear();
+    }
+
+    public void processUpgrades(List<SpawnerUpgrade> upgradeList) {
+
+        clear();
         this.enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
-        this.upgradeList = new ArrayList<EnumSpawnerUpgrade>();
 
-        SpawnerUpgrade u = UpgradeManager.getMassUpgrade(upgradeList);
+        SpawnerUpgrade u;
+
+        u = UpgradeManager.getMassUpgrade(upgradeList);
         if (u != null) {
             massUpgrade = u.getUpgradeType();
             this.upgradeList.add(massUpgrade);
-        } else {
-            massUpgrade = null;
         }
 
         u = UpgradeManager.getRateUpgrade(upgradeList);
         if (u != null) {
-            rateUpgrade =  u.getUpgradeType();
+            rateUpgrade = u.getUpgradeType();
             this.upgradeList.add(rateUpgrade);
-        } else {
-            rateUpgrade = null;
         }
 
         u = UpgradeManager.getDecapitateUpgrade(upgradeList);
         if (u != null) {
             decapitateUpgrade = u.getUpgradeType();
             this.upgradeList.add(decapitateUpgrade);
-        } else {
-            decapitateUpgrade = null;
         }
 
         u = UpgradeManager.getLootingUpgrade(upgradeList);
         if (u != null) {
             lootingUpgrade = u.getUpgradeType();
             this.upgradeList.add(lootingUpgrade);
-        } else {
-            lootingUpgrade = null;
         }
 
         u = UpgradeManager.getXpUpgrade(upgradeList);
         if (u != null) {
             xpUpgrade = u.getUpgradeType();
             this.upgradeList.add(xpUpgrade);
-        } else {
-            xpUpgrade = null;
         }
 
         rfPerTickCost = 0;

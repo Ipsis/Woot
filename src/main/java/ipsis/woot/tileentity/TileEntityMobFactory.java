@@ -25,11 +25,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     EnumFacing facing;
     EnumMobFactoryTier factoryTier;
-    String mobName;
-    String displayName;
     SpawnerManager.SpawnReq spawnReq;
     boolean nbtLoaded;
     UpgradeSetup upgradeSetup;
+    ControllerConfig controllerConfig;
 
     int currLearnTicks;
     int currSpawnTicks;
@@ -78,11 +77,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.dirtyStructure = true;
         this.dirtyUpgrade = false;
         this.factoryTier = null;
-        this.mobName = MobManager.INVALID_MOB_NAME;
-        this.displayName = MobManager.INVALID_MOB_NAME;
         this.spawnReq = null;
         this.nbtLoaded = false;
         this.upgradeSetup = new UpgradeSetup();
+        this.controllerConfig = new ControllerConfig();
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -101,12 +99,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     public String getMobName() {
 
-        return this.mobName;
+        return this.controllerConfig.getMobName();
     }
 
     public String getDisplayName() {
 
-        return this.displayName;
+        return this.controllerConfig.getDisplayName();
     }
 
     public SpawnerManager.SpawnReq getSpawnReq() {
@@ -126,7 +124,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     public boolean isFormed() {
 
-        return factoryTier != null && MobManager.isValidMobName(mobName) && spawnReq != null;
+        return factoryTier != null && MobManager.isValidMobName(controllerConfig.getMobName()) && spawnReq != null;
     }
 
     void updateStructureBlocks(boolean connected) {
@@ -171,8 +169,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             updateStructureBlocks(false);
             updateUpgradeBlocks(false);
             factoryTier = factorySetup.getSize();
-            mobName = MobManager.INVALID_MOB_NAME;
-            displayName = MobManager.INVALID_MOB_NAME;
+            controllerConfig.clearMobName();
             return;
         }
 
@@ -182,12 +179,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         }
 
         factoryTier = factorySetup.getSize();
-        mobName = factorySetup.getMobName();
-        displayName = factorySetup.getDisplayName();
+        controllerConfig.setMobName(factorySetup.getMobName(), factorySetup.getDisplayName());
         structureBlockList = factorySetup.getBlockPosList();
         updateStructureBlocks(true);
 
-        LogHelper.info("onStructureChanged: tier=" + factoryTier + " mob=" + mobName);
+        LogHelper.info("onStructureChanged: tier=" + factoryTier + " mob=" + controllerConfig.getMobName());
         onUpgradeCheck();
     }
 
@@ -208,7 +204,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         for (EnumSpawnerUpgrade u : upgradeSetup.getUpgradeList())
             LogHelper.info("onUpgradeCheck: " + u);
 
-        spawnReq = Woot.spawnerManager.getSpawnReq(mobName, upgradeSetup, Woot.spawnerManager.getXp(mobName, this), factoryTier);
+        spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup,
+                Woot.spawnerManager.getXp(controllerConfig.getMobName(), this), factoryTier);
         LogHelper.info("onUpgradeCheck: " + upgradeSetup.getEnchantKey() + " " + spawnReq);
 
         if (nbtLoaded) {
@@ -284,22 +281,22 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         currLearnTicks++;
         if (currLearnTicks >= Settings.learnTicks) {
-            if (!Woot.spawnerManager.isFull(mobName, upgradeSetup.getEnchantKey())) {
+            if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
-                LogHelper.info("update: Fake spawn " + mobName + " " + upgradeSetup.getEnchantKey());
-                Woot.spawnerManager.spawn(mobName, upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
+                LogHelper.info("update: Fake spawn " + controllerConfig.getMobName() + " " + upgradeSetup.getEnchantKey());
+                Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
         }
 
         /* Do we have any info on this mob yet - should only happen until the first event fires */
-        if (Woot.spawnerManager.isEmpty(mobName, upgradeSetup.getEnchantKey()))
+        if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
         currSpawnTicks++;
         processPower();
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
-            LogHelper.info("update: Factory generate " + mobName);
+            LogHelper.info("update: Factory generate " + controllerConfig.getMobName());
             onSpawn();
             currSpawnTicks = 0;
         }
@@ -344,7 +341,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
 
-                    SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(mobName, upgradeSetup);
+                    SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup);
                     LogHelper.info("Loot: " + spawnLoot.getDropList());
                     LogHelper.info("XP: " + spawnLoot.getXp());
                     for (ItemStack itemStack : spawnLoot.getDropList())

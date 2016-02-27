@@ -2,10 +2,7 @@ package ipsis.woot.block;
 
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.item.ItemPrism;
-import ipsis.woot.manager.MobManager;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;

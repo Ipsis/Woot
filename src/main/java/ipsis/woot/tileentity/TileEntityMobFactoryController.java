@@ -1,7 +1,8 @@
 package ipsis.woot.tileentity;
 
+import ipsis.Woot;
 import ipsis.woot.item.ItemPrism;
-import ipsis.woot.manager.MobManager;
+import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -71,7 +72,7 @@ public class TileEntityMobFactoryController extends TileEntity {
 
         updateMobFarm();
 
-        if (MobManager.isValidMobName(mobName))
+        if (Woot.mobRegistry.isValidMobName(mobName))
             ItemStackHelper.spawnInWorld(worldObj, pos, ItemPrism.getItemStack(mobName, displayName));
     }
 }

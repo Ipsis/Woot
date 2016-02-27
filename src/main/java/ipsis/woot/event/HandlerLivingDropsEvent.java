@@ -20,7 +20,7 @@ public class HandlerLivingDropsEvent {
              *  Killed in one of our spawners, but we dont care which one.
              *  We only store the drop information.
              */
-            String mobID = Woot.mobManager.getMobName((EntityLiving)e.entity);
+            String mobID = Woot.mobRegistry.createWootName((EntityLiving)e.entity);
             if (!Woot.spawnerManager.isFull(mobID, damageSourceWoot.getEnchantKey()))
                 Woot.spawnerManager.addDrops(mobID, damageSourceWoot.getEnchantKey(), e.drops);
 
@@ -30,7 +30,7 @@ public class HandlerLivingDropsEvent {
             /**
              * Convert the non-spawner kill into a damage source if possible
              */
-            String mobID = Woot.mobManager.getMobName((EntityLiving)e.entity);
+            String mobID = Woot.mobRegistry.createWootName((EntityLiving)e.entity);
             damageSourceWoot = DamageSourceWoot.getDamageSource(e.lootingLevel);
             if (damageSourceWoot != null && !Woot.spawnerManager.isFull(mobID, damageSourceWoot.getEnchantKey()))
                 Woot.spawnerManager.addDrops(mobID, damageSourceWoot.getEnchantKey(), e.drops);

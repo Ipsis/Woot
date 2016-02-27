@@ -8,7 +8,6 @@ import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -81,7 +80,7 @@ public class SpawnerManager {
 
     public SpawnReq getSpawnReq(String mobName, UpgradeSetup upgradeSetup, int xpLevel, EnumMobFactoryTier tier) {
 
-        if (!MobManager.isValidMobName(mobName))
+        if (!Woot.mobRegistry.isValidMobName(mobName))
             return null;
 
         int baseRF;
@@ -123,23 +122,23 @@ public class SpawnerManager {
 
     public int getSpawnXp(String mobName, TileEntity te) {
 
-        if (!Woot.xpManager.isKnown(mobName)) {
-            /* spawn and store */
+        if (!Woot.mobRegistry.hasXp(mobName)) {
             Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos());
             if (entity != null) {
                 try {
                 /* TODO Dev only version - change to access tranformer */
                     Field f = ReflectionHelper.findField(EntityLiving.class, "experienceValue");
                     int xp = f.getInt(entity);
-                    Woot.xpManager.addMapping(mobName, xp);
+                    Woot.mobRegistry.addMapping(mobName, xp);
                     LogHelper.info("getXP: " + mobName + "->" + xp);
                 } catch (Exception e) {
-                    LogHelper.error("Reflection of recentlyHit failed: " + e);
+                    LogHelper.error("Reflection of experienceValue failed: " + e);
                 }
             }
+            entity = null;
         }
 
-        return Woot.xpManager.getSpawnXp(mobName);
+        return Woot.mobRegistry.getSpawnXp(mobName);
     }
 
     public boolean isEmpty(String mobName, EnumEnchantKey enchantKey) {
@@ -189,13 +188,9 @@ public class SpawnerManager {
 
     private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {
 
-        String spawnMobName = MobManager.getBaseMobName(mobName);
-        Entity entity = EntityList.createEntityByName(spawnMobName, world);
+        Entity entity = Woot.mobRegistry.createEntity(mobName, world);
 
         if (entity != null) {
-            if (MobManager.isWitherSkeleton(mobName))
-                ((EntitySkeleton) entity).setSkeletonType(1);
-
             ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), (IEntityLivingData) null);
             entity.setPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
@@ -210,7 +205,7 @@ public class SpawnerManager {
                 LogHelper.error("Reflection of recentlyHit failed: " + e);
             }
         } else {
-            LogHelper.info("spawnEntity: failed for " + spawnMobName);
+            LogHelper.info("spawnEntity: failed for " + mobName);
         }
 
         return entity;
@@ -235,13 +230,13 @@ public class SpawnerManager {
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
     }
 
-    int getDeathXp(String mobName, SpawnerUpgrade upgrade) {
+    int calcDeathXp(String mobName, SpawnerUpgrade upgrade) {
 
         // Require the XP upgrade to get XP
         if (upgrade == null)
             return 0;
 
-        int base = Woot.xpManager.getDeathXp(mobName);
+        int base = Woot.mobRegistry.getDeathXp(mobName);
         float boost = (float)upgrade.getXpBoost();
         return base + (int)((base / 100.0F) * boost);
     }
@@ -257,7 +252,7 @@ public class SpawnerManager {
             List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
             spawnLoot.drops.addAll(dropList);
             if (upgradeSetup.hasXpUpgrade())
-                spawnLoot.xp += getDeathXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
+                spawnLoot.xp += calcDeathXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
             // TODO beheading
         }
 

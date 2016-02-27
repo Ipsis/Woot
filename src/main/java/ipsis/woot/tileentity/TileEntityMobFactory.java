@@ -124,7 +124,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     public boolean isFormed() {
 
-        return factoryTier != null && MobManager.isValidMobName(controllerConfig.getMobName()) && spawnReq != null;
+        return factoryTier != null && Woot.mobRegistry.isValidMobName(controllerConfig.getMobName()) && spawnReq != null;
     }
 
     void updateStructureBlocks(boolean connected) {

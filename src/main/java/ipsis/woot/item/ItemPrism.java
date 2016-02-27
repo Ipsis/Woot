@@ -4,8 +4,8 @@ import ipsis.Woot;
 import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
-import ipsis.woot.manager.MobManager;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -53,20 +53,14 @@ public class ItemPrism extends ItemWoot {
         if (hasMobName(stack))
             return false;
 
-        if (Woot.mobManager.isBlacklisted(target))
+        String wootName = Woot.mobRegistry.onEntityLiving((EntityLiving)target);
+        if (!Woot.mobRegistry.isValidMobName(wootName))
             return false;
 
-        String mobName = Woot.mobManager.getMobName(target);
-        String displayName = target.getName();
-
-        LogHelper.info("Try capture " + mobName + ":" + displayName);
-
-        if (MobManager.isValidMobName(mobName)) {
-            setMobName(stack, mobName, displayName);
-            return true;
-        }
-
-        return false;
+        String displayName = Woot.mobRegistry.getDisplayName(wootName);
+        LogHelper.info("Try capture " + wootName + ":" + displayName);
+        setMobName(stack, wootName, displayName);
+        return true;
     }
 
     @Override
@@ -80,7 +74,7 @@ public class ItemPrism extends ItemWoot {
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryController) {
-            if (!MobManager.isValidMobName(((TileEntityMobFactoryController) te).getMobName())) {
+            if (!Woot.mobRegistry.isValidMobName(((TileEntityMobFactoryController) te).getMobName())) {
                 ((TileEntityMobFactoryController) te).setMobName(getMobName(stack), getDisplayName(stack));
                 return true;
             }
@@ -124,14 +118,14 @@ public class ItemPrism extends ItemWoot {
         if (itemStack.getItem() != ModItems.itemPrism)
             return false;
 
-        return MobManager.isValidMobName(getMobName(itemStack));
+        return Woot.mobRegistry.isValidMobName(getMobName(itemStack));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        if (stack != null && hasMobName(stack) && MobManager.isValidMobName(getMobName(stack))) {
+        if (stack != null && hasMobName(stack) && Woot.mobRegistry.isValidMobName(getMobName(stack))) {
             String displayName = getDisplayName(stack);
             if (!displayName.equals(""))
                 tooltip.add(String.format("Mob: %s", StatCollector.translateToLocal(displayName)));

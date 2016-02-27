@@ -7,7 +7,7 @@ public class ControllerConfig {
 
     public ControllerConfig() {
 
-        this(MobManager.INVALID_MOB_NAME);
+        this(MobRegistry.INVALID_MOB_NAME);
     }
 
     public ControllerConfig(String mobName) {
@@ -44,8 +44,8 @@ public class ControllerConfig {
 
     public void clearMobName() {
 
-        this.mobName = MobManager.INVALID_MOB_NAME;
-        this.displayName = MobManager.INVALID_MOB_NAME;
+        this.mobName = MobRegistry.INVALID_MOB_NAME;
+        this.displayName = MobRegistry.INVALID_MOB_NAME;
     }
 
 }

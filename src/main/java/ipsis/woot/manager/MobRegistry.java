@@ -1,12 +1,14 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -83,10 +85,27 @@ public class MobRegistry {
 
     void extraEntitySetup(MobInfo mobInfo, Entity entity) {
 
-        if (mobInfo.wootMobName.equals(Reference.MOD_ID + ":" + "wither:Skeleton") && entity instanceof EntitySkeleton) {
-            ((EntitySkeleton) entity).setSkeletonType(1);
-        }
         // TODO slime size
+        if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
+            ((EntitySkeleton) entity).setSkeletonType(1);
+        } else if (isSlime(mobInfo.wootMobName, entity)) {
+            if (((EntitySlime)entity).getSlimeSize() != 1)
+                LogHelper.info("TODO EntitySlime.setSize(1)");
+        }
+    }
+
+    boolean isWitherSkeleton(String wootName, Entity entity) {
+
+        if (entity instanceof EntitySkeleton)
+            return wootName.equals(Reference.MOD_ID + ":" + "wither:Skeleton");
+        return false;
+    }
+
+    boolean isSlime(String wootName, Entity entity) {
+
+        if (entity instanceof EntitySlime)
+            return wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
+        return false;
     }
 
     public Entity createEntity(String wootName, World world) {

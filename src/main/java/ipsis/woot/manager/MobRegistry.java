@@ -85,12 +85,11 @@ public class MobRegistry {
 
     void extraEntitySetup(MobInfo mobInfo, Entity entity) {
 
-        // TODO slime size
         if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
             ((EntitySkeleton) entity).setSkeletonType(1);
         } else if (isSlime(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() != 1)
-                LogHelper.info("TODO EntitySlime.setSize(1)");
+                ((EntitySlime)entity).setSlimeSize(1);
         }
     }
 

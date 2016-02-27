@@ -125,15 +125,8 @@ public class SpawnerManager {
         if (!Woot.mobRegistry.hasXp(mobName)) {
             Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos());
             if (entity != null) {
-                try {
-                /* TODO Dev only version - change to access tranformer */
-                    Field f = ReflectionHelper.findField(EntityLiving.class, "experienceValue");
-                    int xp = f.getInt(entity);
-                    Woot.mobRegistry.addMapping(mobName, xp);
-                    LogHelper.info("getXP: " + mobName + "->" + xp);
-                } catch (Exception e) {
-                    LogHelper.error("Reflection of experienceValue failed: " + e);
-                }
+                int xp = ((EntityLiving)entity).experienceValue;
+                Woot.mobRegistry.addMapping(mobName, xp);
             }
             entity = null;
         }
@@ -197,13 +190,7 @@ public class SpawnerManager {
             /**
              * Random loot drop needs a non-zero recentlyHit value
              */
-            try {
-            /* TODO Dev only version - change to access tranformer */
-                Field f = ReflectionHelper.findField(EntityLivingBase.class, "recentlyHit");
-                f.setInt(entity, 100);
-            } catch (Exception e) {
-                LogHelper.error("Reflection of recentlyHit failed: " + e);
-            }
+            ((EntityLivingBase)entity).recentlyHit = 100;
         } else {
             LogHelper.info("spawnEntity: failed for " + mobName);
         }

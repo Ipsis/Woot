@@ -83,9 +83,6 @@ public class TileEntityMobFactoryController extends TileEntity {
     public void invalidate() {
 
         updateMobFarm();
-
-        if (Woot.mobRegistry.isValidMobName(mobName))
-            ItemStackHelper.spawnInWorld(worldObj, pos, ItemPrism.getItemStack(mobName, displayName));
     }
 
     public ItemStack getDroppedItemStack() {

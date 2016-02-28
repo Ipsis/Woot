@@ -37,13 +37,6 @@ public class ItemPrism extends ItemWoot {
         ModelHelper.registerItem(ModItems.itemPrism, BASENAME);
     }
 
-    public static ItemStack getItemStack(String mobName, String displayName) {
-
-        ItemStack itemStack = new ItemStack(ModItems.itemPrism);
-        setMobName(itemStack, mobName, displayName);
-        return itemStack;
-    }
-
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 

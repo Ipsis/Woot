@@ -11,6 +11,7 @@ import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,16 +33,17 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
 
     public static final String BASENAME = "upgrade";
 
+    public static final PropertyBool ACTIVE = PropertyBool.create("active");
     public static final PropertyEnum<EnumSpawnerUpgrade> VARIANT = PropertyEnum.<EnumSpawnerUpgrade>create("variant", EnumSpawnerUpgrade.class);
     public BlockMobFactoryUpgrade() {
 
         super(Material.rock, BASENAME);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumSpawnerUpgrade.RATE_I));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumSpawnerUpgrade.RATE_I).withProperty(ACTIVE, false));
     }
 
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {VARIANT});
+        return new BlockState(this, new IProperty[] {VARIANT, ACTIVE});
     }
 
     @Override
@@ -60,7 +63,7 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
-        return this.getDefaultState().withProperty(VARIANT, EnumSpawnerUpgrade.getFromMetadata(meta));
+        return this.getDefaultState().withProperty(VARIANT, EnumSpawnerUpgrade.getFromMetadata(meta)).withProperty(ACTIVE, false);
     }
 
     @Override
@@ -167,5 +170,19 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
             default:
                 break;
         }
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+
+        if (worldIn.getTileEntity(pos) instanceof TileEntityMobFactoryUpgrade) {
+            TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
+            boolean formed = false;
+            if (te != null)
+                formed = te.isClientHasMaster();
+            return state.withProperty(ACTIVE, formed);
+        }
+
+        return state;
     }
 }

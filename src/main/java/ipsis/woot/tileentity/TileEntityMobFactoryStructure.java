@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity;
 
+import ipsis.oss.LogHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -11,10 +12,20 @@ import java.util.Stack;
 public class TileEntityMobFactoryStructure extends TileEntity  {
 
     TileEntityMobFactory master = null;
+    boolean clientHasMaster;
+
+    private static final int SET_MASTER = 0;
+    public boolean isClientHasMaster() { return clientHasMaster; }
 
     public boolean hasMaster() { return master != null; }
-    public void clearMaster() { master = null; }
-    public void setMaster(TileEntityMobFactory master) { this.master = master; }
+    public void clearMaster() {
+        master = null;
+        worldObj.addBlockEvent(this.getPos(), this.getBlockType(), SET_MASTER, 0);
+    }
+    public void setMaster(TileEntityMobFactory master) {
+        this.master = master;
+        worldObj.addBlockEvent(this.getPos(), this.getBlockType(), SET_MASTER, 1);
+    }
 
     TileEntityMobFactory findMaster() {
 
@@ -59,4 +70,18 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
         }
     }
 
+    @Override
+    public boolean receiveClientEvent(int id, int type) {
+        if (worldObj.isRemote) {
+            if (id == SET_MASTER) {
+                if (type == 1)
+                    clientHasMaster = true;
+                else
+                    clientHasMaster = false;
+            }
+            worldObj.markBlockForUpdate(pos);
+        }
+
+        return true;
+    }
 }

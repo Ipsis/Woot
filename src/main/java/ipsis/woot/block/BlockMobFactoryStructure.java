@@ -1,9 +1,11 @@
 package ipsis.woot.block;
 
+import ipsis.oss.LogHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
+import ipsis.woot.util.UnlistedPropertyBoolean;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -16,7 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,6 +31,8 @@ import java.util.List;
 public class BlockMobFactoryStructure extends BlockContainerWoot{
 
     public static final String BASENAME = "structure";
+
+    public static final UnlistedPropertyBoolean FORMED = new UnlistedPropertyBoolean("FORMED");
 
     public static final PropertyEnum<EnumMobFactoryModule> MODULE = PropertyEnum.<EnumMobFactoryModule>create("module", EnumMobFactoryModule.class);
     public BlockMobFactoryStructure() {
@@ -59,7 +67,24 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {MODULE});
+        IUnlistedProperty[] unlistedProperties = new IUnlistedProperty[]{ FORMED };
+        return new ExtendedBlockState(this, new IProperty[] { MODULE }, unlistedProperties);
+    }
+
+    @Override
+    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        if (state instanceof IExtendedBlockState) {
+
+            IExtendedBlockState extendedBlockState = (IExtendedBlockState)state;
+            TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure)world.getTileEntity(pos);
+            boolean formed = false;
+            if (te != null)
+                formed = te.isClientHasMaster();
+
+            return extendedBlockState.withProperty(FORMED, formed);
+        }
+
+        return state;
     }
 
     @Override

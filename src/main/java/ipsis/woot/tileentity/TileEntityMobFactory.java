@@ -1,5 +1,7 @@
 package ipsis.woot.tileentity;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
 import ipsis.oss.LogHelper;
 import ipsis.woot.manager.*;
@@ -21,7 +23,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityMobFactory extends TileEntity implements ITickable {
+public class TileEntityMobFactory extends TileEntity implements ITickable, IEnergyReceiver {
 
     EnumFacing facing;
     EnumMobFactoryTier factoryTier;
@@ -54,6 +56,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
+
+        energyStorage.writeToNBT(compound);
     }
 
     @Override
@@ -67,6 +71,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             consumedRf = compound.getInteger(NBT_CONSUMED_RF);
             nbtLoaded = true;
         }
+
+        energyStorage.readFromNBT(compound);
     }
 
     static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
@@ -318,7 +324,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     void processPower() {
 
         // TODO actually get the drawn rf rather than fake it
-        int drawnRf = spawnReq.getRfPerTick() * 1;
+        int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
         if (drawnRf == spawnReq.getRfPerTick()) {
             consumedRf += drawnRf;
         } else {
@@ -358,5 +364,45 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                 consumedRf = 0;
         }
         consumedRf = 0;
+    }
+
+    /**
+     * RF interface
+     */
+    static final int RF_STORED = 50000;
+    static final int MAX_RF_TICK = 10000;
+    protected EnergyStorage energyStorage = new EnergyStorage(RF_STORED, MAX_RF_TICK);
+
+    @Override
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
+
+        // TODO down only
+        if (isFormed())
+            return energyStorage.receiveEnergy(maxReceive, simulate);
+
+        return 0;
+    }
+
+    @Override
+    public int getEnergyStored(EnumFacing from) {
+
+        if (isFormed())
+            return energyStorage.getEnergyStored();
+        return 0;
+    }
+
+    @Override
+    public int getMaxEnergyStored(EnumFacing from) {
+
+        if (isFormed())
+            return energyStorage.getMaxEnergyStored();
+        return 0;
+    }
+
+    @Override
+    public boolean canConnectEnergy(EnumFacing from) {
+
+        // TODO down only
+        return true;
     }
 }

@@ -1,9 +1,13 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
+import ipsis.woot.block.BlockMobFactoryController;
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.item.ItemPrism;
 import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.util.ItemStackHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -25,17 +29,25 @@ public class TileEntityMobFactoryController extends TileEntity {
     @Override
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
+        writeControllerToNBT(compound);
+    }
+
+    public void writeControllerToNBT(NBTTagCompound compound) {
 
         compound.setString(NBT_MOB_NAME, mobName);
         compound.setString(NBT_DISPLAY_NAME, displayName);
     }
 
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
+    public void readControllerFromNBT(NBTTagCompound compound) {
 
         mobName = compound.getString(NBT_MOB_NAME);
         displayName = compound.getString(NBT_DISPLAY_NAME);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        readControllerFromNBT(compound);
     }
 
     public void setMobName(String mobName, String displayName) {
@@ -74,5 +86,17 @@ public class TileEntityMobFactoryController extends TileEntity {
 
         if (Woot.mobRegistry.isValidMobName(mobName))
             ItemStackHelper.spawnInWorld(worldObj, pos, ItemPrism.getItemStack(mobName, displayName));
+    }
+
+    public ItemStack getDroppedItemStack() {
+
+        ItemStack itemStack = new ItemStack(Item.getItemFromBlock(ModBlocks.blockController), 1);
+        if (Woot.mobRegistry.isValidMobName(mobName)) {
+            NBTTagCompound tag = new NBTTagCompound();
+            writeControllerToNBT(tag);
+            itemStack.setTagCompound(tag);
+        }
+
+        return itemStack;
     }
 }

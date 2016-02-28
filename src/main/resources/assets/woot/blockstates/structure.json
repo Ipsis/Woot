@@ -1,15 +1,15 @@
 {
   "forge_marker": 1,
   "variants": {
-    "formed=true,module=block_1": { "model": "woot:structure_block_1" },
-    "formed=true,module=block_2": { "model": "woot:structure_block_2" },
-    "formed=true,module=block_3": { "model": "woot:structure_block_3" },
-    "formed=true,module=block_4": { "model": "woot:structure_block_4" },
-    "formed=true,module=block_5": { "model": "woot:structure_block_5" },
-    "formed=false,module=block_1": { "model": "woot:structure_block_5" },
-    "formed=false,module=block_2": { "model": "woot:structure_block_4" },
+    "formed=true,module=block_1": { "model": "woot:structure_block_1_formed" },
+    "formed=true,module=block_2": { "model": "woot:structure_block_2_formed" },
+    "formed=true,module=block_3": { "model": "woot:structure_block_3_formed" },
+    "formed=true,module=block_4": { "model": "woot:structure_block_4_formed" },
+    "formed=true,module=block_5": { "model": "woot:structure_block_5_formed" },
+    "formed=false,module=block_1": { "model": "woot:structure_block_1" },
+    "formed=false,module=block_2": { "model": "woot:structure_block_2" },
     "formed=false,module=block_3": { "model": "woot:structure_block_3" },
-    "formed=false,module=block_4": { "model": "woot:structure_block_2" },
-    "formed=false,module=block_5": { "model": "woot:structure_block_1" }
+    "formed=false,module=block_4": { "model": "woot:structure_block_4" },
+    "formed=false,module=block_5": { "model": "woot:structure_block_5" }
   }
 }

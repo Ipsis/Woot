@@ -179,7 +179,7 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
             TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
             boolean formed = false;
             if (te != null)
-                formed = te.isClientHasMaster();
+                formed = te.isClientFormed();
             return state.withProperty(ACTIVE, formed);
         }
 

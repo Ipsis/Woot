@@ -88,7 +88,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
             TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure) worldIn.getTileEntity(pos);
             boolean formed = false;
             if (te != null)
-                formed = te.isClientHasMaster();
+                formed = te.isClientFormed();
             return state.withProperty(FORMED, formed);
         }
 

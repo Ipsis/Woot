@@ -1,7 +1,9 @@
 package ipsis.woot.tileentity;
 
-import ipsis.oss.LogHelper;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
@@ -12,19 +14,22 @@ import java.util.Stack;
 public class TileEntityMobFactoryStructure extends TileEntity  {
 
     TileEntityMobFactory master = null;
-    boolean clientHasMaster;
-
-    private static final int SET_MASTER = 0;
-    public boolean isClientHasMaster() { return clientHasMaster; }
 
     public boolean hasMaster() { return master != null; }
     public void clearMaster() {
-        master = null;
-        worldObj.addBlockEvent(this.getPos(), this.getBlockType(), SET_MASTER, 0);
+
+        if (master != null) {
+            master = null;
+            worldObj.markBlockForUpdate(pos);
+        }
     }
+
     public void setMaster(TileEntityMobFactory master) {
-        this.master = master;
-        worldObj.addBlockEvent(this.getPos(), this.getBlockType(), SET_MASTER, 1);
+
+        if (this.master != master) {
+            this.master = master;
+            worldObj.markBlockForUpdate(pos);
+        }
     }
 
     TileEntityMobFactory findMaster() {
@@ -71,17 +76,19 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
     }
 
     @Override
-    public boolean receiveClientEvent(int id, int type) {
-        if (worldObj.isRemote) {
-            if (id == SET_MASTER) {
-                if (type == 1)
-                    clientHasMaster = true;
-                else
-                    clientHasMaster = false;
-            }
-            worldObj.markBlockForUpdate(pos);
-        }
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        super.writeToNBT(nbtTagCompound);
+        nbtTagCompound.setBoolean("formed", master != null);
+        return new S35PacketUpdateTileEntity(this.pos, getBlockMetadata(), nbtTagCompound);
+    }
 
-        return true;
+    boolean isClientFormed;
+    public boolean isClientFormed() { return isClientFormed; }
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        super.readFromNBT(pkt.getNbtCompound());
+        isClientFormed = pkt.getNbtCompound().getBoolean("formed");
+        worldObj.markBlockForUpdate(pos);
     }
 }

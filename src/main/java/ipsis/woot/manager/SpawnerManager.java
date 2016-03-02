@@ -240,7 +240,11 @@ public class SpawnerManager {
             spawnLoot.drops.addAll(dropList);
             if (upgradeSetup.hasXpUpgrade())
                 spawnLoot.xp += calcDeathXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
-            // TODO beheading
+            if (upgradeSetup.hasDecapitateUpgrade()) {
+                ItemStack headStack = Woot.headRegistry.handleDecap(mobName, upgradeSetup.getDecapitateUpgrade());
+                if (headStack != null)
+                    spawnLoot.drops.add(headStack);
+            }
         }
 
         return spawnLoot;

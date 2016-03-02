@@ -49,6 +49,11 @@ public class MobRegistry {
         return  Reference.MOD_ID + ":" + name;
     }
 
+    public String createWootName(String name) {
+
+        return Reference.MOD_ID + ":" + name;
+    }
+
     public String onEntityLiving(EntityLiving entityLiving) {
 
         // blacklist is based off Minecraft names

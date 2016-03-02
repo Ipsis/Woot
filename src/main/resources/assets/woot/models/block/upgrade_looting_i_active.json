@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "woot:blocks/upgrade_looting_i_active"
+  }
+}

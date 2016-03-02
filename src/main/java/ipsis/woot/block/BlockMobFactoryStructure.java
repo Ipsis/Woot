@@ -1,11 +1,13 @@
 package ipsis.woot.block;
 
+import ipsis.oss.LogHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,11 +29,13 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
     public static final String BASENAME = "structure";
 
+    public static final PropertyBool FORMED = PropertyBool.create("formed");
     public static final PropertyEnum<EnumMobFactoryModule> MODULE = PropertyEnum.<EnumMobFactoryModule>create("module", EnumMobFactoryModule.class);
+
     public BlockMobFactoryStructure() {
 
         super (Material.rock, BASENAME);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
     }
 
     @Override
@@ -59,7 +64,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {MODULE});
+        return new BlockState(this, new IProperty[] { MODULE, FORMED });
     }
 
     @Override
@@ -77,9 +82,23 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     }
 
     @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+
+        if (worldIn.getTileEntity(pos) instanceof TileEntityMobFactoryStructure) {
+            TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure) worldIn.getTileEntity(pos);
+            boolean formed = false;
+            if (te != null)
+                formed = te.isClientFormed();
+            return state.withProperty(FORMED, formed);
+        }
+
+        return state;
+    }
+
+    @Override
     public IBlockState getStateFromMeta(int meta) {
 
-        return this.getDefaultState().withProperty(MODULE, EnumMobFactoryModule.byMetadata(meta));
+        return this.getDefaultState().withProperty(MODULE, EnumMobFactoryModule.byMetadata(meta)).withProperty(FORMED, false);
     }
 
     @Override

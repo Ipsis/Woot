@@ -24,6 +24,7 @@ public class Woot {
     public static Woot instance;
     public static SpawnerManager spawnerManager = new SpawnerManager();
     public static MobRegistry mobRegistry = new MobRegistry();
+    public static HeadRegistry headRegistry = new HeadRegistry();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
@@ -63,5 +64,6 @@ public class Woot {
     public void postInit(FMLPostInitializationEvent event) {
 
         proxy.postInit();
+        headRegistry.init();
     }
 }

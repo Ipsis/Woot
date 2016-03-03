@@ -69,7 +69,9 @@ public enum EnumMobFactoryTier {
             }
 
             structureModules.add(new MobFactoryModule(new BlockPos(2, 1, 2), EnumMobFactoryModule.BLOCK_2));
+            structureModules.add(new MobFactoryModule(new BlockPos(2, 2, 2), EnumMobFactoryModule.BLOCK_2));
             structureModules.add(new MobFactoryModule(new BlockPos(-2, 1, 2), EnumMobFactoryModule.BLOCK_2));
+            structureModules.add(new MobFactoryModule(new BlockPos(-2, 2, 2), EnumMobFactoryModule.BLOCK_2));
 
 
             for (int z = -3; z <= 3; z+=6) {
@@ -138,15 +140,20 @@ public enum EnumMobFactoryTier {
 
             for (int y = 1; y <= 3; y++) {
                 structureModules.add(new MobFactoryModule(new BlockPos(3, y, -3), EnumMobFactoryModule.BLOCK_3));
+                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, -3), EnumMobFactoryModule.BLOCK_3));
+            }
+
+            for (int y = 1; y <= 4; y++) {
                 structureModules.add(new MobFactoryModule(new BlockPos(3, y, 3), EnumMobFactoryModule.BLOCK_3));
                 structureModules.add(new MobFactoryModule(new BlockPos(-3, y, 3), EnumMobFactoryModule.BLOCK_3));
-                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, -3), EnumMobFactoryModule.BLOCK_3));
             }
 
             structureModules.add(new MobFactoryModule(new BlockPos(1, 1, 3), EnumMobFactoryModule.BLOCK_3));
             structureModules.add(new MobFactoryModule(new BlockPos(1, 2, 3), EnumMobFactoryModule.BLOCK_3));
+            structureModules.add(new MobFactoryModule(new BlockPos(1, 3, 3), EnumMobFactoryModule.BLOCK_3));
             structureModules.add(new MobFactoryModule(new BlockPos(-1, 1, 3), EnumMobFactoryModule.BLOCK_3));
             structureModules.add(new MobFactoryModule(new BlockPos(-1, 2, 3), EnumMobFactoryModule.BLOCK_3));
+            structureModules.add(new MobFactoryModule(new BlockPos(-1, 3, 3), EnumMobFactoryModule.BLOCK_3));
 
             structureModules.add(new MobFactoryModule(new BlockPos(3, 4, 3), EnumMobFactoryModule.BLOCK_3));
             structureModules.add(new MobFactoryModule(new BlockPos(-3, 4, 3), EnumMobFactoryModule.BLOCK_3));

@@ -185,4 +185,10 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
 
         return state;
     }
+
+    @Override
+    public boolean isOpaqueCube() {
+
+        return false;
+    }
 }

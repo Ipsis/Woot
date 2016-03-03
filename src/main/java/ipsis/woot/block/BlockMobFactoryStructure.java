@@ -117,4 +117,10 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
         ModelBakery.registerItemVariants(Item.getItemFromBlock(ModBlocks.blockStructure), locations);
     }
+
+    @Override
+    public boolean isOpaqueCube() {
+
+        return false;
+    }
 }

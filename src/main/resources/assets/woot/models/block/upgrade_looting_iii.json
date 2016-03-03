@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube_all",
+  "parent": "woot:block/small_cube_all",
   "textures": {
     "all": "woot:blocks/upgrade_looting_iii"
   }

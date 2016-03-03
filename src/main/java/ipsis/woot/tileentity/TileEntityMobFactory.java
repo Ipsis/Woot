@@ -366,6 +366,14 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         consumedRf = 0;
     }
 
+    @Override
+    public void invalidate() {
+
+        updateStructureBlocks(false);
+        updateUpgradeBlocks(false);
+        super.invalidate();
+    }
+
     /**
      * RF interface
      */

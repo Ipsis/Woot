@@ -1,6 +1,5 @@
 package ipsis.woot.block;
 
-import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;

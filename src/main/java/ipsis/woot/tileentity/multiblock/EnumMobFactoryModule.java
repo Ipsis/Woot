@@ -2,7 +2,6 @@ package ipsis.woot.tileentity.multiblock;
 
 import net.minecraft.util.IStringSerializable;
 
-// TODO need actual block types
 public enum EnumMobFactoryModule implements IStringSerializable {
 
     BLOCK_1("block_1"),

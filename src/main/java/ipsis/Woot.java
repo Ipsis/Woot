@@ -47,8 +47,6 @@ public class Woot {
         ModItems.init();
 
         ConfigHandler.init(event.getSuggestedConfigurationFile());
-
-        /* TODO this needs to go after config load */
         UpgradeManager.loadConfig();
         proxy.preInit();
 

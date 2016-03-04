@@ -1,11 +1,7 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
-import ipsis.woot.block.BlockMobFactoryController;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.item.ItemPrism;
-import ipsis.woot.manager.MobRegistry;
-import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

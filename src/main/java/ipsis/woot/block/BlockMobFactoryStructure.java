@@ -1,6 +1,5 @@
 package ipsis.woot.block;
 
-import ipsis.oss.LogHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;

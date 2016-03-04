@@ -3,6 +3,12 @@ itemGroup.Woot=Woot
 tile.Woot:factory.name=Mob Factory
 tile.Woot:controller.name=Mob Controller
 
+tile.Woot:structure.block_1.name=Mob Factory Ring 1
+tile.Woot:structure.block_2.name=Mob Factory Ring 2
+tile.Woot:structure.block_3.name=Mob Factory Ring 3
+tile.Woot:structure.block_4.name=Mob Factory Ring 4
+tile.Woot:structure.block_5.name=Mob Factory Core
+
 tile.Woot:upgrade.xp_i.name=XP I Upgrade
 tile.Woot:upgrade.xp_ii.name=XP II Upgrade
 tile.Woot:upgrade.xp_iii.name=XP III Upgrade
@@ -64,9 +70,9 @@ config.Woot:massIII_mobCount=Mass III number of mobs
 config.Woot:decapI_percentage=Decapitate I chance to drop head
 config.Woot:decapII_percentage=Decapitate II chance to drop head
 config.Woot:decapIII_percentage=Decapitate III chance to drop head
-config.Woot:xpI_boost=XP I experience multiplier
-config.Woot:xpII_boost=XP II experience multiplier
-config.Woot:xpIII_boost=XP III experience multiplier
+config.Woot:xpI_boost=XP I experience percentage
+config.Woot:xpII_boost=XP II experience percentage
+config.Woot:xpIII_boost=XP III experience percentage
 
 tooltip.Woot:factory_cost=Tier %s costs %dRF for each mob spawned
 

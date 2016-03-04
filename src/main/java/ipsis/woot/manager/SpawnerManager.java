@@ -217,13 +217,15 @@ public class SpawnerManager {
 
     int calcDeathXp(String mobName, SpawnerUpgrade upgrade) {
 
-        // Require the XP upgrade to get XP
-        if (upgrade == null)
-            return 0;
-
         int base = Woot.mobRegistry.getDeathXp(mobName);
+        if (upgrade == null)
+            return base;
+
         float boost = (float)upgrade.getXpBoost();
-        return base + (int)((base / 100.0F) * boost);
+        int extra = (int)((base / 100.0F) * boost);
+        if (extra < 1)
+            extra = 1;
+        return base + extra;
     }
 
     public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup) {

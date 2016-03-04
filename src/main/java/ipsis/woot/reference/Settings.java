@@ -52,13 +52,13 @@ public class Settings {
         public static final int DEF_MASS_II_MOBS = 6;
         public static final int DEF_MASS_III_MOBS = 8;
 
-        public static final int DEF_DECAPITATE_I_CHANCE = 10;
-        public static final int DEF_DECAPITATE_II_CHANCE = 30;
-        public static final int DEF_DECAPITATE_III_CHANCE = 70;
+        public static final int DEF_DECAPITATE_I_CHANCE = 20;
+        public static final int DEF_DECAPITATE_II_CHANCE = 40;
+        public static final int DEF_DECAPITATE_III_CHANCE = 80;
 
-        public static final int DEF_XP_I_BOOST = 1;
-        public static final int DEF_XP_II_BOOST = 2;
-        public static final int DEF_XP_III_BOOST = 4;
+        public static final int DEF_XP_I_BOOST = 20;
+        public static final int DEF_XP_II_BOOST = 40;
+        public static final int DEF_XP_III_BOOST = 80;
     }
 
     /**

@@ -23,7 +23,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class SpawnerManager {
 
@@ -106,7 +105,6 @@ public class SpawnerManager {
     }
 
 
-    public static Random random = new Random();
     HashMap<String, SpawnerEntry> spawnerMap = new HashMap<String, SpawnerEntry>();
 
     SpawnerEntry getSpawnerEntry(String mobName) {

@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
-import java.util.Random;
 
 public class HeadRegistry {
 
@@ -62,8 +61,7 @@ public class HeadRegistry {
         if (headConfig == null)
             return null;
 
-        int v = new Random().nextInt(100) + 1;
-        if (v > u.getDecapitateChance())
+        if (Woot.random.nextInt(100) + 1 > u.getDecapitateChance())
             return ItemStack.copyItemStack(headConfig.headStack);
 
         return null;

@@ -1,5 +1,6 @@
 package ipsis.woot.manager;
 
+import ipsis.Woot;
 import ipsis.woot.reference.Settings;
 import net.minecraft.item.ItemStack;
 
@@ -40,7 +41,7 @@ public class SpawnerEntry {
 
         ArrayList<ItemStack> dropList = new ArrayList<ItemStack>();
 
-        int pos = SpawnerManager.random.nextInt(dropMap.get(enchantKey).size());
+        int pos = Woot.random.nextInt(dropMap.get(enchantKey).size());
         for (ItemStack i : dropMap.get(enchantKey).get(pos).drops)
             dropList.add(ItemStack.copyItemStack(i));
 

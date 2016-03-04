@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Random;
+
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
 public class Woot {
 
@@ -25,6 +27,7 @@ public class Woot {
     public static SpawnerManager spawnerManager = new SpawnerManager();
     public static MobRegistry mobRegistry = new MobRegistry();
     public static HeadRegistry headRegistry = new HeadRegistry();
+    public static Random random = new Random();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

@@ -134,6 +134,8 @@ public class UpgradeManager {
         IBlockState iBlockState;
         Block block;
 
+        // ALL the upgrades must be of the same type
+        EnumSpawnerUpgrade firstUpgrade = null;
         for (int yOffset = 0; yOffset < maxTier; yOffset++) {
 
             iBlockState = world.getBlockState(blockPos.add(0, yOffset, 0));
@@ -143,6 +145,11 @@ public class UpgradeManager {
                 break;
 
             EnumSpawnerUpgrade u = iBlockState.getValue(BlockMobFactoryUpgrade.VARIANT);
+            if (firstUpgrade == null)
+                firstUpgrade = u;
+            else if (!checkUpgrade(firstUpgrade, u))
+                break;
+
             SpawnerUpgrade tmpUpgrade  = upgradeMap.get(u);
             if (tmpUpgrade.getUpgradeTier() == yOffset + 1) {
                 upgradeList.add(tmpUpgrade);
@@ -153,6 +160,22 @@ public class UpgradeManager {
         }
 
         return upgradeList;
+    }
+
+    static boolean checkUpgrade(EnumSpawnerUpgrade first, EnumSpawnerUpgrade u) {
+
+        if (first == EnumSpawnerUpgrade.RATE_I)
+            return u == EnumSpawnerUpgrade.RATE_II || u == EnumSpawnerUpgrade.RATE_III;
+        else if (first == EnumSpawnerUpgrade.DECAPITATE_I)
+            return u == EnumSpawnerUpgrade.DECAPITATE_II || u == EnumSpawnerUpgrade.DECAPITATE_III;
+        else if (first == EnumSpawnerUpgrade.LOOTING_I)
+            return u == EnumSpawnerUpgrade.LOOTING_II || u == EnumSpawnerUpgrade.LOOTING_III;
+        else if (first == EnumSpawnerUpgrade.MASS_I)
+            return u == EnumSpawnerUpgrade.MASS_II || u == EnumSpawnerUpgrade.MASS_III;
+        else if (first == EnumSpawnerUpgrade.XP_I)
+            return u == EnumSpawnerUpgrade.XP_II || u == EnumSpawnerUpgrade.XP_III;
+
+        return false;
     }
 
     public static SpawnerUpgrade getSpawnerUpgrade(EnumSpawnerUpgrade u) {

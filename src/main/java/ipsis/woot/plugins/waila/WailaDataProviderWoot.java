@@ -1,6 +1,7 @@
 package ipsis.woot.plugins.waila;
 
 import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
 import ipsis.woot.manager.UpgradeSetup;
 import ipsis.woot.reference.Lang;
@@ -55,7 +56,16 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             if (tag.hasKey("upgrades")) {
                 byte[] a = tag.getByteArray("upgrades");
                 for (int i = 0; i < a.length; i++) {
-                    currenttip.add(EnumSpawnerUpgrade.getFromMetadata(a[i]).toString());
+                    EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
+                    SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
+                    EnumChatFormatting f;
+                    if (u.getUpgradeTier() == 1)
+                        f = EnumChatFormatting.GRAY;
+                    else if (u.getUpgradeTier() == 2)
+                        f = EnumChatFormatting.GOLD;
+                    else
+                        f = EnumChatFormatting.AQUA;
+                    currenttip.add(f + StringHelper.localize( Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
                 }
             }
         }

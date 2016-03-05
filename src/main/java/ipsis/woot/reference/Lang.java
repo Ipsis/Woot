@@ -28,4 +28,6 @@ public class Lang {
     public static final String TOOLTIP_XP_EFFECT = TAG_TOOLTIP + "upgrade_xp_effect";
     public static final String TOOLTIP_MASS_EFFECT = TAG_TOOLTIP + "upgrade_mass_effect";
     public static final String TOOLTIP_DECAP_EFFECT = TAG_TOOLTIP + "upgrade_decap_effect";
+
+    public static final String TOOLTIP_UPGRADE = TAG_TOOLTIP + "upgrade.";
 }

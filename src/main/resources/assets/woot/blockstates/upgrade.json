@@ -1,9 +1,9 @@
 {
   "forge_marker": 1,
   "variants": {
-    "active=true,variant=rate_i": { "model":"woot:upgrade_rate_i" },
-    "active=true,variant=rate_ii": { "model":"woot:upgrade_rate_ii" },
-    "active=true,variant=rate_iii": { "model":"woot:upgrade_rate_iii" },
+    "active=true,variant=rate_i": { "model":"woot:upgrade_rate_i_active" },
+    "active=true,variant=rate_ii": { "model":"woot:upgrade_rate_ii_active" },
+    "active=true,variant=rate_iii": { "model":"woot:upgrade_rate_iii_active" },
     "active=true,variant=looting_i": { "model":"woot:upgrade_looting_i_active" },
     "active=true,variant=looting_ii": { "model":"woot:upgrade_looting_ii_active" },
     "active=true,variant=looting_iii": { "model":"woot:upgrade_looting_iii_active" },

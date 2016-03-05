@@ -1,6 +1,8 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/orientable",
   "textures": {
-    "all": "woot:blocks/factory"
+    "top": "woot:blocks/factory_base",
+    "front": "woot:blocks/factory",
+    "side": "woot:blocks/factory_base"
   }
 }

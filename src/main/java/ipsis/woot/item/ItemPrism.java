@@ -124,4 +124,10 @@ public class ItemPrism extends ItemWoot {
                 tooltip.add(String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
         }
     }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        
+        return hasMobName(stack);
+    }
 }

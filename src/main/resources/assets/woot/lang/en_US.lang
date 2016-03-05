@@ -102,3 +102,7 @@ tooltip.Woot:upgrade.mass_iii=Mob Count III
 tooltip.Woot:upgrade.decapitate_i=Mob Beheading I
 tooltip.Woot:upgrade.decapitate_ii=Mob Beheading II
 tooltip.Woot:upgrade.decapitate_iii=Mob Beheading III
+
+tooltip.Woot:xpShard=Right click to use and gain experience
+tooltip.Woot:prism.0=Attack to capture mob
+tooltip.Woot:prism.1=Use on controller to program

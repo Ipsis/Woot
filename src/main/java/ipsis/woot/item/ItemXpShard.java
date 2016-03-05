@@ -2,11 +2,15 @@ package ipsis.woot.item;
 
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.reference.Lang;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemXpShard extends ItemWoot {
 
@@ -38,5 +42,12 @@ public class ItemXpShard extends ItemWoot {
         }
 
         return itemStackIn;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+
+        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME));
     }
 }

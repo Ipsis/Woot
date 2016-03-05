@@ -3,6 +3,7 @@ package ipsis.woot.item;
 import ipsis.Woot;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -116,10 +118,12 @@ public class ItemPrism extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
+        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".0"));
+        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".1"));
         if (stack != null && hasMobName(stack) && Woot.mobRegistry.isValidMobName(getMobName(stack))) {
             String displayName = getDisplayName(stack);
             if (!displayName.equals(""))
-                tooltip.add(String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
+                tooltip.add(EnumChatFormatting.GREEN + String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
         }
     }
 

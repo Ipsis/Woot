@@ -14,7 +14,7 @@ public class TileEntityMobFactoryController extends TileEntity {
     String displayName;
 
     static final String NBT_MOB_NAME = "mobName";
-    static final String NBT_DISPLAY_NAME = "displayName";
+    public static final String NBT_DISPLAY_NAME = "displayName";
 
     public TileEntityMobFactoryController() {
 

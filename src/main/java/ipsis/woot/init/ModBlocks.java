@@ -1,6 +1,7 @@
 package ipsis.woot.init;
 
 import ipsis.woot.block.*;
+import ipsis.woot.item.ItemBlockController;
 import ipsis.woot.item.ItemBlockStructure;
 import ipsis.woot.item.ItemBlockUpgrade;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
@@ -16,7 +17,7 @@ public class ModBlocks {
         GameRegistry.registerBlock(blockFactory, BlockMobFactory.BASENAME);
         GameRegistry.registerBlock(blockUpgrade, ItemBlockUpgrade.class, BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerBlock(blockStructure, ItemBlockStructure.class, BlockMobFactoryStructure.BASENAME);
-        GameRegistry.registerBlock(blockController, BlockMobFactoryController.BASENAME);
+        GameRegistry.registerBlock(blockController, ItemBlockController.class, BlockMobFactoryController.BASENAME);
     }
 
     public static void registerTileEntities() {

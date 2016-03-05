@@ -26,6 +26,7 @@ tile.Woot:upgrade.decapitate_ii.name=Decapitate II Upgrade
 tile.Woot:upgrade.decapitate_iii.name=Decapitate III Upgrade
 
 item.Woot:prism.name=Mob Prism
+item.Woot:xpShard.name=Xp Shard
 
 waila.Woot:factory.tier=Tier %s
 waila.Woot:factory.mob=Spawning %s

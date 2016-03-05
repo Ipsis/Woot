@@ -3,6 +3,7 @@ package ipsis.woot.tileentity;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
+import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.*;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -336,8 +337,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                         ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
 
                     /* XP as xp bottles for now */
-                    ItemStack bottleXp = new ItemStack(Items.experience_bottle);
-                    ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(bottleXp, spawnLoot.getXp()), false);
+                    ItemStack xpShards = new ItemStack(ModItems.itemXpShard);
+                    ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(xpShards, spawnLoot.getXp()), false);
                 }
             }
             /** Everything else is thrown away */

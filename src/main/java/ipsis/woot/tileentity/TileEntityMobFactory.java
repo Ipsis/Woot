@@ -3,7 +3,6 @@ package ipsis.woot.tileentity;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
-import ipsis.oss.LogHelper;
 import ipsis.woot.manager.*;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -165,13 +164,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     void onStructureCheck() {
 
-        LogHelper.info("onStructureChanged");
-
         EnumMobFactoryTier oldFactoryTier = factoryTier;
         MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this);
 
         if (factorySetup.getSize() == null) {
-            LogHelper.info("onStructureChanged: new size is null");
             updateStructureBlocks(false);
             updateUpgradeBlocks(false);
             factoryTier = factorySetup.getSize();
@@ -180,7 +176,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
 
         if (oldFactoryTier != factoryTier) {
-            LogHelper.info("onStructureChanged: new size != old size");
             updateStructureBlocks(false);
         }
 
@@ -189,13 +184,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         structureBlockList = factorySetup.getBlockPosList();
         updateStructureBlocks(true);
 
-        LogHelper.info("onStructureChanged: tier=" + factoryTier + " mob=" + controllerConfig.getMobName());
         onUpgradeCheck();
     }
 
     void onUpgradeCheck() {
-
-        LogHelper.info("onUpgradeCheck: " + factoryTier);
 
         updateUpgradeBlocks(false);
         upgradeSetup.clear();
@@ -207,12 +199,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         else if (factoryTier == EnumMobFactoryTier.TIER_THREE)
             upgradeTier3();
 
-        for (EnumSpawnerUpgrade u : upgradeSetup.getUpgradeList())
-            LogHelper.info("onUpgradeCheck: " + u);
-
         spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup,
                 Woot.spawnerManager.getSpawnXp(controllerConfig.getMobName(), this), factoryTier);
-        LogHelper.info("onUpgradeCheck: " + upgradeSetup.getEnchantKey() + " " + spawnReq);
 
         if (nbtLoaded) {
             /* Preserver on load */
@@ -289,7 +277,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (currLearnTicks >= Settings.learnTicks) {
             if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
-                LogHelper.info("update: Fake spawn " + controllerConfig.getMobName() + " " + upgradeSetup.getEnchantKey());
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
@@ -302,7 +289,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         currSpawnTicks++;
         processPower();
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
-            LogHelper.info("update: Factory generate " + controllerConfig.getMobName());
             onSpawn();
             currSpawnTicks = 0;
         }
@@ -310,13 +296,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     public void interruptStructure() {
 
-        LogHelper.info("interruptStructure");
         dirtyStructure = true;
     }
 
     public void interruptUpgrade() {
 
-        LogHelper.info("interruptUpgrade");
         dirtyUpgrade = true;
     }
 
@@ -338,7 +322,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     void onSpawn() {
 
-        LogHelper.info("Check spawn: " + consumedRf + "/" + spawnReq.getTotalRf());
         if (consumedRf >= spawnReq.getTotalRf()) {
 
             EnumFacing f = getFacing();
@@ -349,8 +332,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                     IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
 
                     SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup);
-                    LogHelper.info("Loot: " + spawnLoot.getDropList());
-                    LogHelper.info("XP: " + spawnLoot.getXp());
                     for (ItemStack itemStack : spawnLoot.getDropList())
                         ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
 

@@ -1,7 +1,6 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
-import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
@@ -51,7 +50,6 @@ public class ItemPrism extends ItemWoot {
             return false;
 
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
-        LogHelper.info("Try capture " + wootName + ":" + displayName);
         setMobName(stack, wootName, displayName);
         return true;
     }

@@ -69,18 +69,15 @@ public class MobFactoryMultiblockLogic {
         BlockPos controllerPos = factory.getPos().up(1);
         TileEntity te = factory.getWorld().getTileEntity(controllerPos);
         if (!(te instanceof TileEntityMobFactoryController)) {
-            LogHelper.info("validateFactory: no controller");
             return factorySetup;
         }
 
         TileEntityMobFactoryController teController = (TileEntityMobFactoryController)te;
-        if (teController.getMobName().equals("")) {
-            LogHelper.info("validateFactory: controller has no mob");
+        if (teController.getMobName().equals(""))
             return factorySetup;
-        }
+        
         factorySetup.mobName = teController.getMobName();
         factorySetup.displayName = teController.getDisplayName();
-        LogHelper.info("validateFactory: " + factorySetup.mobName);
 
         BlockPos patternOrigin = factory.getPos().down(1);
         if (isSize(factory, tier))
@@ -88,15 +85,12 @@ public class MobFactoryMultiblockLogic {
         else
             return factorySetup;
 
-        //LogHelper.info("validateFactory: might be " + factorySetup.size);
-
         for (MobFactoryModule s : factorySetup.size.structureModules) {
 
             BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), factory.getFacing().getOpposite());
             p = patternOrigin.add(p);
 
             if (!factory.getWorld().isBlockLoaded(p)) {
-                LogHelper.info("validateFactory: unloaded " + p);
                 return new FactorySetup();
             }
 
@@ -104,20 +98,16 @@ public class MobFactoryMultiblockLogic {
             Block block = iBlockState.getBlock();
 
             if (!(block instanceof BlockMobFactoryStructure)) {
-                LogHelper.info("validateFactory: invalid " + p + " " + block);
                 return new FactorySetup();
             }
 
             if (!(((BlockMobFactoryStructure)block).getModuleTypeFromState(iBlockState) == s.moduleType)) {
-                LogHelper.info("validateFactory: did not find " + p + " " + s.moduleType);
                 return new FactorySetup();
             }
 
-            //LogHelper.info("validateFactory: matched " + p + " " + block);
             factorySetup.blockPosList.add(p);
         }
 
-        LogHelper.info("validateFactory: factory is size " + factorySetup.size);
         return factorySetup;
     }
 
@@ -141,7 +131,6 @@ public class MobFactoryMultiblockLogic {
 
         IBlockState iBlockState = factory.getWorld().getBlockState(pos);
         Block b = iBlockState.getBlock();
-        //LogHelper.info("isSize: " + size + " checking " + pos + " " + b);
         if (b instanceof BlockMobFactoryStructure)
             return ((BlockMobFactoryStructure)b).getModuleTypeFromState(iBlockState) == module;
 

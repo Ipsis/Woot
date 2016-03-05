@@ -230,11 +230,14 @@ public class SpawnerManager {
         if (upgradeSetup.hasMassUpgrade())
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 
+        SpawnerUpgrade xpUpgrade = null;
+        if (upgradeSetup.hasXpUpgrade())
+            xpUpgrade = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade());
+
         for (int i = 0; i < mobCount; i++) {
             List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
             spawnLoot.drops.addAll(dropList);
-            if (upgradeSetup.hasXpUpgrade())
-                spawnLoot.xp += calcDeathXp(mobName, UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade()));
+            spawnLoot.xp += calcDeathXp(mobName, xpUpgrade);
             if (upgradeSetup.hasDecapitateUpgrade()) {
                 ItemStack headStack = Woot.headRegistry.handleDecap(mobName, upgradeSetup.getDecapitateUpgrade());
                 if (headStack != null)

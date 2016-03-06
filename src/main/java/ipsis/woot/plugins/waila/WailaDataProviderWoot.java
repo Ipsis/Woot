@@ -7,6 +7,7 @@ import ipsis.woot.manager.UpgradeSetup;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
+import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -26,6 +27,8 @@ import java.util.List;
 
 public class WailaDataProviderWoot implements IWailaDataProvider {
 
+    private static WailaDataProviderWoot INSTANCE = new WailaDataProviderWoot();
+
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return null;
@@ -38,6 +41,49 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        if (accessor.getTileEntity() instanceof TileEntityMobFactory)
+            return getWailaBodyFactory(itemStack, currenttip, accessor, config);
+        else if (accessor.getTileEntity() instanceof TileEntityMobFactoryController)
+            return getWailaBodyController(itemStack, currenttip, accessor, config);
+
+        return currenttip;
+    }
+
+    @Override
+    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return currenttip;
+    }
+
+    @Override
+    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+
+        if (te instanceof TileEntityMobFactory)
+            return getNBTDataFactory(player, te, tag, world, pos);
+        else if (te instanceof TileEntityMobFactoryController)
+            return getNBTDataController(player, te, tag, world, pos);
+
+        return tag;
+    }
+
+    public List<String> getWailaBodyController(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        NBTTagCompound tag = accessor.getNBTData();
+        if (tag.hasKey("displayName"))
+            currenttip.add(EnumChatFormatting.GREEN + tag.getString("displayName"));
+        return currenttip;
+    }
+
+    public NBTTagCompound getNBTDataController(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+
+        TileEntityMobFactoryController controller = (TileEntityMobFactoryController)te;
+        String displayName = controller.getDisplayName();
+        if (!displayName.equals(""))
+            tag.setString("displayName", displayName);
+        return tag;
+    }
+
+    public List<String> getWailaBodyFactory(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("displayName")) {
@@ -69,17 +115,10 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
                 }
             }
         }
-
         return currenttip;
     }
 
-    @Override
-    public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        return currenttip;
-    }
-
-    @Override
-    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+    public NBTTagCompound getNBTDataFactory(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
 
         TileEntityMobFactory tile = (TileEntityMobFactory)te;
         if (tile.isFormed()) {
@@ -116,7 +155,9 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     public static void callbackRegister(IWailaRegistrar registrar) {
 
-        registrar.registerBodyProvider(new WailaDataProviderWoot(), TileEntityMobFactory.class);
-        registrar.registerNBTProvider(new WailaDataProviderWoot(), TileEntityMobFactory.class);
+        registrar.registerBodyProvider(INSTANCE, TileEntityMobFactory.class);
+        registrar.registerBodyProvider(INSTANCE, TileEntityMobFactoryController.class);
+        registrar.registerNBTProvider(INSTANCE, TileEntityMobFactory.class);
+        registrar.registerNBTProvider(INSTANCE, TileEntityMobFactoryController.class);
     }
 }

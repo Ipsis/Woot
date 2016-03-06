@@ -212,8 +212,11 @@ public class SpawnerManager {
 
     int calcDeathXp(String mobName, SpawnerUpgrade upgrade) {
 
-        int base = Woot.mobRegistry.getDeathXp(mobName);
         if (upgrade == null)
+            return 0;
+
+        int base = Woot.mobRegistry.getDeathXp(mobName);
+        if (upgrade.getUpgradeType() == EnumSpawnerUpgrade.XP_II)
             return base;
 
         float boost = (float)upgrade.getXpBoost();

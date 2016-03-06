@@ -130,7 +130,7 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
                 toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIIIRfTick));
                 break;
             case XP_I:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_EFFECT), Settings.xpIBoost));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_BASE_EFFECT), Settings.xpIBoost));
                 toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIRfTick));
                 break;
             case XP_II:

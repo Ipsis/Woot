@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class MobRegistry {
 
     public static final String INVALID_MOB_NAME = "InvalidMob";
@@ -198,3 +199,15 @@ public class MobRegistry {
         }
     }
 }
+
+/**
+ * Reference amounts:
+ *
+ * EntityMob: 5
+ *
+ * EntityWither: 50
+ * EntityBlaze: 10
+ * EntityEndermite: 3
+ * EntityGhast: 5
+ * EntityGuardian: 10
+ */

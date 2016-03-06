@@ -3,13 +3,14 @@ package ipsis.woot.tileentity;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
+import ipsis.oss.LogHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -35,6 +36,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int currLearnTicks;
     int currSpawnTicks;
     int consumedRf;
+    int storedXp;
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
@@ -44,6 +46,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     static final String NBT_FACING = "facing";
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
     static final String NBT_CONSUMED_RF = "consumedRf";
+    static final String NBT_STORED_XP = "storedXp";
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
@@ -56,6 +59,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
+        compound.setInteger(NBT_STORED_XP, storedXp);
 
         energyStorage.writeToNBT(compound);
     }
@@ -69,6 +73,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (compound.hasKey(NBT_CURR_SPAWN_TICK)) {
             currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
             consumedRf = compound.getInteger(NBT_CONSUMED_RF);
+            storedXp = compound.getInteger(NBT_STORED_XP);
             nbtLoaded = true;
         }
 
@@ -91,6 +96,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         currLearnTicks = 0;
         currSpawnTicks = 0;
         consumedRf = 0;
+        storedXp = 0;
     }
 
     public void setFacing(EnumFacing facing) {
@@ -336,9 +342,13 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                     for (ItemStack itemStack : spawnLoot.getDropList())
                         ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
 
-                    /* XP as xp bottles for now */
-                    ItemStack xpShards = new ItemStack(ModItems.itemXpShard);
-                    ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(xpShards, spawnLoot.getXp()), false);
+                    storedXp += spawnLoot.getXp();
+                    int c = storedXp / ItemXpShard.XP_VALUE;
+                    if (c != 0) {
+                        ItemStack xpShards = new ItemStack(ModItems.itemXpShard);
+                        ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(xpShards, c), false);
+                        storedXp = storedXp - (c * ItemXpShard.XP_VALUE);
+                    }
                 }
             }
             /** Everything else is thrown away */

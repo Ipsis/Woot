@@ -15,6 +15,7 @@ import java.util.List;
 public class ItemXpShard extends ItemWoot {
 
     public static final String BASENAME = "xpShard";
+    public static final int XP_VALUE = 16;
 
     public ItemXpShard() {
 
@@ -35,7 +36,7 @@ public class ItemXpShard extends ItemWoot {
         if (itemStackIn != null) {
 
             worldIn.playSoundAtEntity(playerIn, "random.orb", 0.1F, 0.5F * ((itemRand.nextFloat() - itemRand.nextFloat()) * 0.7F + 1.8F));
-            playerIn.addExperience(1);
+            playerIn.addExperience(XP_VALUE);
 
             if (!playerIn.capabilities.isCreativeMode)
                 itemStackIn.stackSize--;
@@ -48,6 +49,7 @@ public class ItemXpShard extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME));
+        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".0"));
+        tooltip.add(String.format(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".1"), XP_VALUE));
     }
 }

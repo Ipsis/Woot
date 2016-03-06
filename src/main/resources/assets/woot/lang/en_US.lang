@@ -104,6 +104,7 @@ tooltip.Woot:upgrade.decapitate_i=Mob Beheading I
 tooltip.Woot:upgrade.decapitate_ii=Mob Beheading II
 tooltip.Woot:upgrade.decapitate_iii=Mob Beheading III
 
-tooltip.Woot:xpShard=Right click to use and gain experience
+tooltip.Woot:xpShard.0=Right click to use and gain experience
+tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob
 tooltip.Woot:prism.1=Use on controller to program

@@ -172,11 +172,14 @@ public enum EnumMobFactoryTier {
                 structureModules.add(new MobFactoryModule(new BlockPos(4, y, 4), EnumMobFactoryModule.BLOCK_4));
                 structureModules.add(new MobFactoryModule(new BlockPos(-4, y, 4), EnumMobFactoryModule.BLOCK_4));
                 structureModules.add(new MobFactoryModule(new BlockPos(-4, y, -4), EnumMobFactoryModule.BLOCK_4));
+                structureModules.add(new MobFactoryModule(new BlockPos(0, y, 4), EnumMobFactoryModule.BLOCK_4));
             }
 
             structureModules.add(new MobFactoryModule(new BlockPos(4, 5, 4), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(0, 4, 4), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(0, 5, 4), EnumMobFactoryModule.BLOCK_5));
             structureModules.add(new MobFactoryModule(new BlockPos(-4, 5, 4), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(4, 5, -4), EnumMobFactoryModule.BLOCK_5));
+            structureModules.add(new MobFactoryModule(new BlockPos(-4, 5, -4), EnumMobFactoryModule.BLOCK_5));
         }
     };
 

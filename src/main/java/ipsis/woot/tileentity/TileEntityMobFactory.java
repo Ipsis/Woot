@@ -371,14 +371,13 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
      * RF interface
      */
     static final int RF_STORED = 50000;
-    static final int MAX_RF_TICK = 10000;
+    static final int MAX_RF_TICK = 32000;
     protected EnergyStorage energyStorage = new EnergyStorage(RF_STORED, MAX_RF_TICK);
 
     @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
 
-        // TODO down only
-        if (isFormed())
+        if (from != EnumFacing.DOWN && isFormed())
             return energyStorage.receiveEnergy(maxReceive, simulate);
 
         return 0;
@@ -387,16 +386,18 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public int getEnergyStored(EnumFacing from) {
 
-        if (isFormed())
+        if (from != EnumFacing.DOWN && isFormed())
             return energyStorage.getEnergyStored();
+
         return 0;
     }
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
 
-        if (isFormed())
+        if (from != EnumFacing.DOWN && isFormed())
             return energyStorage.getMaxEnergyStored();
+
         return 0;
     }
 
@@ -404,6 +405,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     public boolean canConnectEnergy(EnumFacing from) {
 
         // TODO down only
-        return true;
+        return from == EnumFacing.DOWN;
     }
 }

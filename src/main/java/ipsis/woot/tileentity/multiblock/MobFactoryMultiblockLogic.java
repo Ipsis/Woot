@@ -79,7 +79,7 @@ public class MobFactoryMultiblockLogic {
         factorySetup.mobName = teController.getMobName();
         factorySetup.displayName = teController.getDisplayName();
 
-        BlockPos patternOrigin = factory.getPos().down(1);
+        BlockPos patternOrigin = factory.getPos(); //.down(1);
         if (isSize(factory, tier))
             factorySetup.size = tier;
         else
@@ -98,10 +98,12 @@ public class MobFactoryMultiblockLogic {
             Block block = iBlockState.getBlock();
 
             if (!(block instanceof BlockMobFactoryStructure)) {
+                LogHelper.info("Not a structure:" + block);
                 return new FactorySetup();
             }
 
             if (!(((BlockMobFactoryStructure)block).getModuleTypeFromState(iBlockState) == s.moduleType)) {
+                LogHelper.info("Wrong " + p + " type want=" + s.moduleType + " got=" + ((BlockMobFactoryStructure) block).getModuleTypeFromState(iBlockState));
                 return new FactorySetup();
             }
 

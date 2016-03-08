@@ -12,182 +12,208 @@ import java.util.List;
 
 public enum EnumMobFactoryTier {
 
-    // All mappings are when facing south
-    // When facing south, left is east (+z), right is west (-z)
     TIER_ONE() {
         @Override
         void buildStructureMap() {
 
-            structureModules.add(new MobFactoryModule(new BlockPos(0, 1, 1), EnumMobFactoryModule.BLOCK_1));
+            String pattern[][] = {
+                    {
+                            "bbbbb",
+                            "baaab",
+                            "ba-ab",
+                            "baaab",
+                            "bbbbb"
+                    },
+                    {
+                            "-----",
+                            "-----",
+                            "--o--",
+                            "--a--",
+                            "b---b"
+                    },
+                    {
+                            "-----",
+                            "-----",
+                            "-----",
+                            "-----",
+                            "e---e"
+                    }
+            };
 
-            // Level 0
-            for (int z = -1; z <= 1; z++) {
-                for (int x = -1; x <= 1; x++) {
-                    if (x == 0 && z == 0)
-                        continue;
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_1));
-                }
-            }
-
-            for (int z = -2; z <= 2; z+=4) {
-                for (int x = -2; x <= 2; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
-            }
-            for (int x = -2; x <= 2; x+=4) {
-                for (int z = -1; z <= 1; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
-            }
-
-            structureModules.add(new MobFactoryModule(new BlockPos(2, 1, 2), EnumMobFactoryModule.BLOCK_2));
-            structureModules.add(new MobFactoryModule(new BlockPos(2, 2, 2), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(-2, 1, 2), EnumMobFactoryModule.BLOCK_2));
-            structureModules.add(new MobFactoryModule(new BlockPos(-2, 2, 2), EnumMobFactoryModule.BLOCK_5));
+            parsePattern(structureModules, pattern, 1, 2, 2);
         }
     },
     TIER_TWO() {
         @Override
         void buildStructureMap() {
 
-            structureModules.add(new MobFactoryModule(new BlockPos(0, 1, 1), EnumMobFactoryModule.BLOCK_1));
+            String pattern[][] = {
+                    {
+                            "ccccccc",
+                            "cbbbbbc",
+                            "cbaaabc",
+                            "cba-abc",
+                            "cbaaabc",
+                            "cbbbbbc",
+                            "ccccccc"
+                    },
+                    {
+                            "c-----c",
+                            "-------",
+                            "-------",
+                            "---o---",
+                            "---a---",
+                            "-b---b-",
+                            "c-c-c-c"
+                    },
+                    {
+                            "c-----c",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-b---b-",
+                            "c-c-c-c"
+                    },
+                    {
+                            "c-----c",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "c-e-e-c"
+                    },
+                    {
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "e-----e"
+                    }
+            };
 
-            // Level 0
-            for (int z = -1; z <= 1; z++) {
-                for (int x = -1; x <= 1; x++) {
-                    if (x == 0 && z == 0)
-                        continue;
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_1));
-                }
-            }
-
-            for (int z = -2; z <= 2; z+=4) {
-                for (int x = -2; x <= 2; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
-            }
-            for (int x = -2; x <= 2; x+=4) {
-                for (int z = -1; z <= 1; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
-            }
-
-            structureModules.add(new MobFactoryModule(new BlockPos(2, 1, 2), EnumMobFactoryModule.BLOCK_2));
-            structureModules.add(new MobFactoryModule(new BlockPos(2, 2, 2), EnumMobFactoryModule.BLOCK_2));
-            structureModules.add(new MobFactoryModule(new BlockPos(-2, 1, 2), EnumMobFactoryModule.BLOCK_2));
-            structureModules.add(new MobFactoryModule(new BlockPos(-2, 2, 2), EnumMobFactoryModule.BLOCK_2));
-
-
-            for (int z = -3; z <= 3; z+=6) {
-                for (int x = -3; x <= 3; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
-            }
-            for (int x = -3; x <= 3; x+=6) {
-                for (int z = -2; z <= 2; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
-            }
-
-            for (int y = 1; y <= 3; y++) {
-                structureModules.add(new MobFactoryModule(new BlockPos(3, y, -3), EnumMobFactoryModule.BLOCK_3));
-                structureModules.add(new MobFactoryModule(new BlockPos(3, y, 3), EnumMobFactoryModule.BLOCK_3));
-                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, 3), EnumMobFactoryModule.BLOCK_3));
-                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, -3), EnumMobFactoryModule.BLOCK_3));
-            }
-
-            structureModules.add(new MobFactoryModule(new BlockPos(1, 1, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(1, 2, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(-1, 1, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(-1, 2, 3), EnumMobFactoryModule.BLOCK_3));
-
-            structureModules.add(new MobFactoryModule(new BlockPos(3, 4, 3), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(1, 3, 3), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(-1, 3, 3), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(-3, 4, 3), EnumMobFactoryModule.BLOCK_5));
+            parsePattern(structureModules, pattern, 1, 3, 3);
         }
     },
     TIER_THREE() {
         @Override
         void buildStructureMap() {
+            String pattern[][] = {
+                    {
+                            "ddddddddd",
+                            "dcccccccd",
+                            "dcbbbbbcd",
+                            "dcbaaabcd",
+                            "dcba-abcd",
+                            "dcbaaabcd",
+                            "dcbbbbbcd",
+                            "dcccccccd",
+                            "ddddddddd"
+                    },
+                    {
+                            "d-------d",
+                            "-c-----c-",
+                            "---------",
+                            "---------",
+                            "----o----",
+                            "---------",
+                            "--b---b--",
+                            "-c-c-c-c-",
+                            "d---d---d"
+                    },
+                    {
+                            "d-------d",
+                            "-c-----c-",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "-c-c-c-c-",
+                            "d---d---d"
+                    },
+                    {
+                            "d-------d",
+                            "-c-----c-",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "-c-c-c-c-",
+                            "d---d---d"
+                    },
+                    {
+                            "d-------d",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "-c-----c-",
+                            "d---d---d"
+                    },
+                    {
+                            "e-------e",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "---------",
+                            "e---e---e"
+                    }
+            };
 
-            structureModules.add(new MobFactoryModule(new BlockPos(0, 1, 1), EnumMobFactoryModule.BLOCK_1));
-
-            // Level 0
-            for (int z = -1; z <= 1; z++) {
-                for (int x = -1; x <= 1; x++) {
-                    if (x == 0 && z == 0)
-                        continue;
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_1));
-                }
-            }
-
-            for (int z = -2; z <= 2; z+=4) {
-                for (int x = -2; x <= 2; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
-            }
-            for (int x = -2; x <= 2; x+=4) {
-                for (int z = -1; z <= 1; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_2));
-            }
-
-            structureModules.add(new MobFactoryModule(new BlockPos(2, 1, 2), EnumMobFactoryModule.BLOCK_2));
-            structureModules.add(new MobFactoryModule(new BlockPos(-2, 1, 2), EnumMobFactoryModule.BLOCK_2));
-
-
-            for (int z = -3; z <= 3; z+=6) {
-                for (int x = -3; x <= 3; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
-            }
-            for (int x = -3; x <= 3; x+=6) {
-                for (int z = -2; z <= 2; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_3));
-            }
-
-            for (int y = 1; y <= 3; y++) {
-                structureModules.add(new MobFactoryModule(new BlockPos(3, y, -3), EnumMobFactoryModule.BLOCK_3));
-                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, -3), EnumMobFactoryModule.BLOCK_3));
-            }
-
-            for (int y = 1; y <= 4; y++) {
-                structureModules.add(new MobFactoryModule(new BlockPos(3, y, 3), EnumMobFactoryModule.BLOCK_3));
-                structureModules.add(new MobFactoryModule(new BlockPos(-3, y, 3), EnumMobFactoryModule.BLOCK_3));
-            }
-
-            structureModules.add(new MobFactoryModule(new BlockPos(1, 1, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(1, 2, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(1, 3, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(-1, 1, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(-1, 2, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(-1, 3, 3), EnumMobFactoryModule.BLOCK_3));
-
-            structureModules.add(new MobFactoryModule(new BlockPos(3, 4, 3), EnumMobFactoryModule.BLOCK_3));
-            structureModules.add(new MobFactoryModule(new BlockPos(-3, 4, 3), EnumMobFactoryModule.BLOCK_3));
-
-            for (int z = -4; z <= 4; z+=8) {
-                for (int x = -4; x <= 4; x++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_4));
-            }
-            for (int x = -4; x <= 4; x+=8) {
-                for (int z = -3; z <= 3; z++)
-                    structureModules.add(new MobFactoryModule(new BlockPos(x, 0, z), EnumMobFactoryModule.BLOCK_4));
-            }
-
-            for (int y = 1; y <= 4; y++) {
-                structureModules.add(new MobFactoryModule(new BlockPos(4, y, -4), EnumMobFactoryModule.BLOCK_4));
-                structureModules.add(new MobFactoryModule(new BlockPos(4, y, 4), EnumMobFactoryModule.BLOCK_4));
-                structureModules.add(new MobFactoryModule(new BlockPos(-4, y, 4), EnumMobFactoryModule.BLOCK_4));
-                structureModules.add(new MobFactoryModule(new BlockPos(-4, y, -4), EnumMobFactoryModule.BLOCK_4));
-                structureModules.add(new MobFactoryModule(new BlockPos(0, y, 4), EnumMobFactoryModule.BLOCK_4));
-            }
-
-            structureModules.add(new MobFactoryModule(new BlockPos(4, 5, 4), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(0, 5, 4), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(-4, 5, 4), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(4, 5, -4), EnumMobFactoryModule.BLOCK_5));
-            structureModules.add(new MobFactoryModule(new BlockPos(-4, 5, -4), EnumMobFactoryModule.BLOCK_5));
+            parsePattern(structureModules, pattern, 1, 4, 4);
         }
     };
 
+    private static void parsePattern(List<MobFactoryModule> modules, String[][] pattern, int originLayer, int originRow, int originColumn) {
+
+        for (int currLayer = 0; currLayer < pattern.length; currLayer++) {
+            int dLayer = (originLayer - currLayer) * -1;
+            for (int currRow = 0; currRow < pattern[0].length; currRow++) {
+                int dRow = (originRow - currRow) * -1;
+                for (int currCol = 0; currCol < pattern[0][0].length(); currCol++) {
+                    char c = pattern[currLayer][currRow].charAt(currCol);
+                    int dCol = (originColumn - currCol) * -1;
+
+                    // - = anything, o = origin marker
+                    if (c == '-' || c == 'o')
+                        continue;
+
+                    EnumMobFactoryModule m = EnumMobFactoryModule.BLOCK_1;
+                    if (c == 'a')
+                        m = EnumMobFactoryModule.BLOCK_1;
+                    else if (c == 'b')
+                        m = EnumMobFactoryModule.BLOCK_2;
+                    else if (c == 'c')
+                        m = EnumMobFactoryModule.BLOCK_3;
+                    else if (c == 'd')
+                        m = EnumMobFactoryModule.BLOCK_4;
+                    else if (c == 'e')
+                        m = EnumMobFactoryModule.BLOCK_5;
+
+                    modules.add(new MobFactoryModule(new BlockPos(dCol, dLayer, dRow), m));
+                }
+            }
+        }
+    }
+
     ArrayList<MobFactoryModule> structureModules = new ArrayList<MobFactoryModule>();
 
-    public List<MobFactoryModule> getStructureModules() { return structureModules; }
+    public List<MobFactoryModule> getStructureModules() {
+        return structureModules;
+    }
 
-    void buildStructureMap() { }
+    void buildStructureMap() {
+    }
 
     public static EnumMobFactoryTier getTier(int v) {
 

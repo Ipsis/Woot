@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity.multiblock;
 
-import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactory;
@@ -79,7 +78,7 @@ public class MobFactoryMultiblockLogic {
         factorySetup.mobName = teController.getMobName();
         factorySetup.displayName = teController.getDisplayName();
 
-        BlockPos patternOrigin = factory.getPos().down(1);
+        BlockPos patternOrigin = factory.getPos();
         if (isSize(factory, tier))
             factorySetup.size = tier;
         else

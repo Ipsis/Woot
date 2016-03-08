@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity.multiblock;
 
-import ipsis.oss.LogHelper;
 import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
@@ -96,7 +95,7 @@ public enum EnumMobFactoryTier {
                     }
             };
 
-            parsePattern(structureModules, pattern, 1, 2, 2);
+            parsePattern(structureModules, pattern, 1, 3, 3);
         }
     },
     TIER_THREE() {
@@ -171,13 +170,12 @@ public enum EnumMobFactoryTier {
                     }
             };
 
-            parsePattern(structureModules, pattern, 1, 2, 2);
+            parsePattern(structureModules, pattern, 1, 4, 4);
         }
     };
 
     private static void parsePattern(List<MobFactoryModule> modules, String[][] pattern, int originLayer, int originRow, int originColumn) {
 
-        LogHelper.info(("buildMap: layers=" + pattern.length + " rows=" + pattern[0].length) + " columns=" + pattern[0][0].length());
         for (int currLayer = 0; currLayer < pattern.length; currLayer++) {
             int dLayer = (originLayer - currLayer) * -1;
             for (int currRow = 0; currRow < pattern[0].length; currRow++) {

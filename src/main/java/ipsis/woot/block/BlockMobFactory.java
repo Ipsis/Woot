@@ -44,19 +44,8 @@ public class BlockMobFactory extends BlockContainerWoot implements ITooltipInfo 
 
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 
-        /**
-         * setBlockState causes the associated TE to be destroyed and a new one created, if the state
-         * is not the default. So do that FIRST then poke the TE.
-         * Probably shouldn't be storing facing in the block state AND the TE
-         */
         EnumFacing f = placer.getHorizontalFacing().getOpposite();
         worldIn.setBlockState(pos, state.withProperty(FACING, f), 2);
-
-        if (!worldIn.isRemote) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (te != null && te instanceof TileEntityMobFactory)
-                ((TileEntityMobFactory) te).setFacing(f);
-        }
     }
 
     @SideOnly(Side.CLIENT)

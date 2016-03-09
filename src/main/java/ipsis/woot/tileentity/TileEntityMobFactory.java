@@ -3,7 +3,7 @@ package ipsis.woot.tileentity;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
-import ipsis.oss.LogHelper;
+import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
@@ -26,7 +26,6 @@ import java.util.List;
 
 public class TileEntityMobFactory extends TileEntity implements ITickable, IEnergyReceiver {
 
-    EnumFacing facing;
     EnumMobFactoryTier factoryTier;
     SpawnerManager.SpawnReq spawnReq;
     boolean nbtLoaded;
@@ -52,8 +51,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
-        compound.setByte(NBT_FACING, (byte)facing.ordinal());
-
         if (!isFormed())
             return;
 
@@ -67,8 +64,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-
-        facing = EnumFacing.getFront(compound.getByte(NBT_FACING));
 
         if (compound.hasKey(NBT_CURR_SPAWN_TICK)) {
             currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
@@ -84,7 +79,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     public TileEntityMobFactory() {
 
-        this.facing = EnumFacing.SOUTH;
         this.dirtyStructure = true;
         this.dirtyUpgrade = false;
         this.factoryTier = null;
@@ -97,16 +91,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         currSpawnTicks = 0;
         consumedRf = 0;
         storedXp = 0;
-    }
-
-    public void setFacing(EnumFacing facing) {
-
-        this.facing = facing;
-    }
-
-    public EnumFacing getFacing() {
-
-        return this.facing;
     }
 
     public String getMobName() {
@@ -223,9 +207,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
 
         List<SpawnerUpgrade> tmpUpgradeList = new ArrayList<SpawnerUpgrade>();
+        EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
         for (BlockPos p : upgradePos) {
 
-            BlockPos offset = BlockPosHelper.rotateFromSouth(p, getFacing().getOpposite());
+            BlockPos offset = BlockPosHelper.rotateFromSouth(p, f.getOpposite());
             BlockPos p2 = getPos().add(offset.getX(), offset.getY(), offset.getZ());
             UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier, tmpUpgradeList, upgradeBlockList);
         }
@@ -331,7 +316,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         if (consumedRf >= spawnReq.getTotalRf()) {
 
-            EnumFacing f = getFacing();
+            EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
             if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
                 TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
                 if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
@@ -370,8 +355,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     /**
      * RF interface
      */
-    static final int RF_STORED = 50000;
     static final int MAX_RF_TICK = 32000;
+    static final int RF_STORED = MAX_RF_TICK * 10;
     protected EnergyStorage energyStorage = new EnergyStorage(RF_STORED, MAX_RF_TICK);
 
     @Override
@@ -386,7 +371,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public int getEnergyStored(EnumFacing from) {
 
-        if (from != EnumFacing.DOWN && isFormed())
+        if (from != EnumFacing.DOWN)
             return energyStorage.getEnergyStored();
 
         return 0;
@@ -395,7 +380,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
 
-        if (from != EnumFacing.DOWN && isFormed())
+        if (from != EnumFacing.DOWN)
             return energyStorage.getMaxEnergyStored();
 
         return 0;
@@ -404,7 +389,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public boolean canConnectEnergy(EnumFacing from) {
 
-        // TODO down only
         return from == EnumFacing.DOWN;
     }
 }

@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity.multiblock;
 
+import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactory;
@@ -8,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,9 +86,10 @@ public class MobFactoryMultiblockLogic {
         else
             return factorySetup;
 
+        EnumFacing f = factory.getWorld().getBlockState(factory.getPos()).getValue(BlockMobFactory.FACING);
         for (MobFactoryModule s : factorySetup.size.structureModules) {
 
-            BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), factory.getFacing().getOpposite());
+            BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), f.getOpposite());
             p = patternOrigin.add(p);
 
             if (!factory.getWorld().isBlockLoaded(p)) {
@@ -125,7 +128,8 @@ public class MobFactoryMultiblockLogic {
             module = EnumMobFactoryModule.BLOCK_4;
         }
 
-        pos = BlockPosHelper.rotateFromSouth(pos, factory.getFacing().getOpposite());
+        EnumFacing f = factory.getWorld().getBlockState(factory.getPos()).getValue(BlockMobFactory.FACING);
+        pos = BlockPosHelper.rotateFromSouth(pos, f.getOpposite());
         pos = factory.getPos().add(pos.getX(), pos.getY(), pos.getZ());
 
         IBlockState iBlockState = factory.getWorld().getBlockState(pos);

@@ -362,7 +362,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
 
-        if (from != EnumFacing.DOWN && isFormed())
+        if (from == EnumFacing.DOWN && isFormed())
             return energyStorage.receiveEnergy(maxReceive, simulate);
 
         return 0;
@@ -371,7 +371,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public int getEnergyStored(EnumFacing from) {
 
-        if (from != EnumFacing.DOWN)
+        if (from == EnumFacing.DOWN)
             return energyStorage.getEnergyStored();
 
         return 0;
@@ -380,7 +380,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
 
-        if (from != EnumFacing.DOWN)
+        if (from == EnumFacing.DOWN)
             return energyStorage.getMaxEnergyStored();
 
         return 0;

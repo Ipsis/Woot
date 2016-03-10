@@ -301,7 +301,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         // TODO actually get the drawn rf rather than fake it
         int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
-        drawnRf = spawnReq.getRfPerTick();
+//        drawnRf = spawnReq.getRfPerTick();
         if (drawnRf == spawnReq.getRfPerTick()) {
             consumedRf += drawnRf;
         } else {
@@ -337,11 +337,17 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                 }
             }
             /** Everything else is thrown away */
+
+            /**
+             * Clear the power used - this uses ALL the consumed power
+             * This means that if you don't provide the correct RF/tick then it will eat all the power that you
+             * gave it until the spawn ticks was reached.
+             */
+            consumedRf = 0;
         } else {
             if (Settings.strictPower)
                 consumedRf = 0;
         }
-        consumedRf = 0;
     }
 
     @Override

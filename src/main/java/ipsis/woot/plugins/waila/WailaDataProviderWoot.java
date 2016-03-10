@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -99,6 +100,10 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
                     tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
 
+            int energy    = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
+            int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
+            currenttip.add(EnumChatFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
+
             if (tag.hasKey("upgrades")) {
                 byte[] a = tag.getByteArray("upgrades");
                 for (int i = 0; i < a.length; i++) {
@@ -127,6 +132,9 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             tag.setInteger("spawnTicks", tile.getSpawnReq().getSpawnTime());
             tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());
             tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
+
+            tag.setInteger("Energy",     tile.getEnergyStored(EnumFacing.DOWN));
+            tag.setInteger("MaxStorage", tile.getMaxEnergyStored(EnumFacing.DOWN));
 
             int maxMass = Settings.baseMobCount;
             UpgradeSetup upgradeSetup = tile.getUpgradeSetup();

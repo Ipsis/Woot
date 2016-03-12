@@ -299,9 +299,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     void processPower() {
 
-        // TODO actually get the drawn rf rather than fake it
         int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
-//        drawnRf = spawnReq.getRfPerTick();
         if (drawnRf == spawnReq.getRfPerTick()) {
             consumedRf += drawnRf;
         } else {

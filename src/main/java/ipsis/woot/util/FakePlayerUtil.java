@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class FakePlayerUtil {
 
-    static GameProfile WOOT_GAME_PROFILE = new GameProfile(UUID.randomUUID(), "[Woot]");
+    static GameProfile WOOT_GAME_PROFILE = new GameProfile(UUID.nameUUIDFromBytes("[Woot]".getBytes()), "[Woot]");
     static FakePlayer fakePlayer;
 
     public static FakePlayer getFakePlayer(WorldServer world) {

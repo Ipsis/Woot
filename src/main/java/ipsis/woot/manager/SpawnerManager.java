@@ -229,6 +229,18 @@ public class SpawnerManager {
         return base + extra;
     }
 
+    void enchantItemStack(ItemStack itemStack, DifficultyInstance difficulty) {
+
+        /* Same way as vanilla setEnchantmentBasedOnDifficulty */
+        float f = difficulty.getClampedAdditionalDifficulty();
+        EnchantmentHelper.addRandomEnchantment(Woot.random, itemStack, (int)(5.0F + f * (float)Woot.random.nextInt(18)));
+    }
+
+    boolean shouldEnchant(DifficultyInstance difficulty) {
+
+        return  Woot.random.nextFloat() < (0.25F  * difficulty.getClampedAdditionalDifficulty());
+    }
+
     public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup, DifficultyInstance difficulty) {
 
         SpawnLoot spawnLoot = new SpawnLoot();
@@ -241,14 +253,29 @@ public class SpawnerManager {
             xpUpgrade = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade());
 
         for (int i = 0; i < mobCount; i++) {
+
             List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
-            for (ItemStack stack : dropList) {
-                if (stack.isItemEnchanted()) {
-                    stack.getTagCompound().removeTag("ench");
-                    /* Same way as vanilla setEnchantmentBasedOnDifficulty */
-                    float f = difficulty.getClampedAdditionalDifficulty();
-                    EnchantmentHelper.addRandomEnchantment(Woot.random, stack,
-                            (int)(5.0F + f * (float)Woot.random.nextInt(18)));
+            if (!dropList.isEmpty()) {
+
+                boolean shouldEnchant = shouldEnchant(difficulty);
+
+                /* cycle a present enchant */
+                for (ItemStack stack : dropList) {
+                    if (stack.isItemEnchanted()) {
+                        shouldEnchant = false;
+                        stack.getTagCompound().removeTag("ench");
+                        enchantItemStack(stack, difficulty);
+                    }
+                }
+
+                /* force add an enchant */
+                if (shouldEnchant) {
+                    for (ItemStack stack : dropList) {
+                        if (stack.isItemEnchantable()) {
+                            enchantItemStack(stack, difficulty);
+                            break;
+                        }
+                    }
                 }
             }
 

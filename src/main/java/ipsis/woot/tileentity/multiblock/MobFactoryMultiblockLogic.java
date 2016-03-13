@@ -119,7 +119,7 @@ public class MobFactoryMultiblockLogic {
         EnumMobFactoryModule module;
         if (size == EnumMobFactoryTier.TIER_ONE) {
             pos = new BlockPos(2, -1, -2);
-            module = EnumMobFactoryModule.BLOCK_2;
+            module = EnumMobFactoryModule.BLOCK_1;
         } else if (size == EnumMobFactoryTier.TIER_TWO) {
             pos = new BlockPos(3, -1, -3);
             module = EnumMobFactoryModule.BLOCK_3;

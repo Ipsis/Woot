@@ -18,11 +18,11 @@ public enum EnumMobFactoryTier {
 
             String pattern[][] = {
                     {
-                            "bbbbb",
-                            "baaab",
-                            "ba-ab",
-                            "baaab",
-                            "bbbbb"
+                            "ababa",
+                            "babab",
+                            "ab-ba",
+                            "babab",
+                            "ababa"
                     },
                     {
                             "-----",
@@ -50,11 +50,11 @@ public enum EnumMobFactoryTier {
             String pattern[][] = {
                     {
                             "ccccccc",
-                            "cbbbbbc",
-                            "cbaaabc",
-                            "cba-abc",
-                            "cbaaabc",
-                            "cbbbbbc",
+                            "cababac",
+                            "cbababc",
+                            "cab-bac",
+                            "cbababc",
+                            "cababac",
                             "ccccccc"
                     },
                     {
@@ -105,11 +105,11 @@ public enum EnumMobFactoryTier {
                     {
                             "ddddddddd",
                             "dcccccccd",
-                            "dcbbbbbcd",
-                            "dcbaaabcd",
-                            "dcba-abcd",
-                            "dcbaaabcd",
-                            "dcbbbbbcd",
+                            "dcababacd",
+                            "dcbababcd",
+                            "dcab-bacd",
+                            "dcbababcd",
+                            "dcababacd",
                             "dcccccccd",
                             "ddddddddd"
                     },

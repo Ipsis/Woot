@@ -245,13 +245,11 @@ public class SpawnerManager {
             List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
             for (ItemStack stack : dropList) {
                 if (stack.isItemEnchanted()) {
-                    LogHelper.info("getSpawnerLoot: Before " + stack.getEnchantmentTagList());
                     stack.getTagCompound().removeTag("ench");
                     /* Same way as vanilla setEnchantmentBasedOnDifficulty */
                     float f = difficulty.getClampedAdditionalDifficulty();
                     EnchantmentHelper.addRandomEnchantment(Woot.random, stack,
                             (int)(5.0F + f * (float)Woot.random.nextInt(18)));
-                    LogHelper.info("getSpawnerLoot: After " + stack.getEnchantmentTagList());
                 }
             }
 

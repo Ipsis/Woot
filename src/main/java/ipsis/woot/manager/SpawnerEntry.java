@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * NB
+ * We store the items and equipment dropped from the fake fill.
+ * However, a mob will only have enchanted equipment a certain percentage of time.
+ * Plus, it will only drop that equipment a certain percentage of time.
+ * Therefore even if it spawns with one, doesn't say it turns into a drop.
+ * eg. from a 100 spawns, 4 spawned with enchants, but only 1 dropped it.
+ */
 public class SpawnerEntry {
 
     HashMap<EnumEnchantKey, List<SpawnerDrops>> dropMap;

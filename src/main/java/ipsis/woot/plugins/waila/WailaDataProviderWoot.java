@@ -9,6 +9,7 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -70,10 +71,13 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     public List<String> getWailaBodyController(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
         NBTTagCompound tag = accessor.getNBTData();
-        if (tag.hasKey("displayName"))
-            currenttip.add(EnumChatFormatting.GREEN + tag.getString("displayName"));
-        if (tag.hasKey("xpCost"))
-            currenttip.add(EnumChatFormatting.GREEN + Integer.toString(tag.getInteger("xpCost")) + " xp");
+        if (tag.hasKey("displayName") && tag.hasKey("xpCost")) {
+            EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(tag.getInteger("xpCost"));
+            currenttip.add(EnumChatFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
+            currenttip.add(EnumChatFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
+                            (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+
+        }
         return currenttip;
     }
 

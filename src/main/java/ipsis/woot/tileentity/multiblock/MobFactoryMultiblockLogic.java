@@ -110,8 +110,30 @@ public class MobFactoryMultiblockLogic {
             factorySetup.blockPosList.add(p);
         }
 
+        /**
+         * Mob cost must not exceed tier
+         */
+        if (factorySetup.size == EnumMobFactoryTier.TIER_ONE && teController.getXpValue() > TIER_I_MOB_CAP)
+            return new FactorySetup();
+        else if (factorySetup.size == EnumMobFactoryTier.TIER_TWO && teController.getXpValue() > TIER_II_MOB_CAP)
+            return new FactorySetup();
+
         return factorySetup;
     }
+
+    public static EnumMobFactoryTier getTier(int xp) {
+
+        if (xp <= TIER_I_MOB_CAP)
+            return EnumMobFactoryTier.TIER_ONE;
+        else if (xp <= TIER_II_MOB_CAP)
+            return EnumMobFactoryTier.TIER_TWO;
+
+        return EnumMobFactoryTier.TIER_THREE;
+    }
+
+    public static int TIER_I_MOB_CAP = 5;
+    public static int TIER_II_MOB_CAP = 20;
+    public static int TIER_III_MOB_CAP = 65535;
 
     static boolean isSize(TileEntityMobFactory factory, EnumMobFactoryTier size) {
 

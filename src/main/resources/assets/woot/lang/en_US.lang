@@ -35,6 +35,7 @@ waila.Woot:factory.tier=Tier %s
 waila.Woot:factory.mob=Spawning %s
 waila.Woot:factory.rate=Spawn %d mob(s) every %d ticks
 waila.Woot:factory.cost=Costs %dRF @ %dRF/tick
+waila.Woot:controller.tier=Requires Tier %s
 
 config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Number of ticks between fake spawn learning

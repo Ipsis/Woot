@@ -15,6 +15,7 @@ public class Lang {
     public static final String WAILA_FACTORY_MOB = TAG_WAILA + "factory.mob";
     public static final String WAILA_FACTORY_RATE = TAG_WAILA + "factory.rate";
     public static final String WAILA_FACTORY_COST = TAG_WAILA + "factory.cost";
+    public static final String WAILA_CONTROLLER_TIER = TAG_WAILA + "controller.tier";
 
     public static final String TOOLTIP_FACTORY_COST = TAG_TOOLTIP + "factory_cost";
 

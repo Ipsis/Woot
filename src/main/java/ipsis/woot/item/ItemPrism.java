@@ -68,7 +68,7 @@ public class ItemPrism extends ItemWoot {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryController) {
             if (!Woot.mobRegistry.isValidMobName(((TileEntityMobFactoryController) te).getMobName())) {
-                ((TileEntityMobFactoryController) te).setMobName(getMobName(stack), getDisplayName(stack));
+                ((TileEntityMobFactoryController) te).setMobName(getMobName(stack), getDisplayName(stack), getXp(stack));
                 if (!playerIn.capabilities.isCreativeMode)
                     stack.stackSize--;
                 return true;

@@ -12,14 +12,17 @@ public class TileEntityMobFactoryController extends TileEntity {
 
     String mobName;
     String displayName;
+    int xpValue;
 
     static final String NBT_MOB_NAME = "mobName";
     public static final String NBT_DISPLAY_NAME = "displayName";
+    static final String NBT_XP_VALUE = "mobXpCost";
 
     public TileEntityMobFactoryController() {
 
         mobName = "";
         displayName = "";
+        xpValue = 1;
     }
 
     @Override
@@ -32,12 +35,14 @@ public class TileEntityMobFactoryController extends TileEntity {
 
         compound.setString(NBT_MOB_NAME, mobName);
         compound.setString(NBT_DISPLAY_NAME, displayName);
+        compound.setInteger(NBT_XP_VALUE, xpValue);
     }
 
     public void readControllerFromNBT(NBTTagCompound compound) {
 
         mobName = compound.getString(NBT_MOB_NAME);
         displayName = compound.getString(NBT_DISPLAY_NAME);
+        xpValue = compound.getInteger(NBT_XP_VALUE);
     }
 
     @Override
@@ -46,10 +51,11 @@ public class TileEntityMobFactoryController extends TileEntity {
         readControllerFromNBT(compound);
     }
 
-    public void setMobName(String mobName, String displayName) {
+    public void setMobName(String mobName, String displayName, int xp) {
 
         this.mobName = mobName;
         this.displayName = displayName;
+        this.xpValue = xp;
         updateMobFarm();
     }
 
@@ -61,6 +67,11 @@ public class TileEntityMobFactoryController extends TileEntity {
     public String getDisplayName() {
 
         return displayName;
+    }
+
+    public int getXpValue() {
+
+        return xpValue;
     }
 
     void updateMobFarm() {

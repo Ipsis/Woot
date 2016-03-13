@@ -72,6 +72,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("displayName"))
             currenttip.add(EnumChatFormatting.GREEN + tag.getString("displayName"));
+        if (tag.hasKey("xpCost"))
+            currenttip.add(EnumChatFormatting.GREEN + Integer.toString(tag.getInteger("xpCost")) + " xp");
         return currenttip;
     }
 
@@ -81,6 +83,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         String displayName = controller.getDisplayName();
         if (!displayName.equals(""))
             tag.setString("displayName", displayName);
+        tag.setInteger("xpCost", controller.getXpValue());
         return tag;
     }
 

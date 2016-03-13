@@ -3,11 +3,14 @@ itemGroup.Woot=Woot
 tile.Woot:factory.name=Mob Factory
 tile.Woot:controller.name=Mob Controller
 
-tile.Woot:structure.block_1.name=Mob Factory Ring 1
-tile.Woot:structure.block_2.name=Mob Factory Ring 2
-tile.Woot:structure.block_3.name=Mob Factory Ring 3
-tile.Woot:structure.block_4.name=Mob Factory Ring 4
-tile.Woot:structure.block_5.name=Mob Factory Core
+tile.Woot:structure.block_1.name=Mob Factory Block Gray
+tile.Woot:structure.block_2.name=Mob Factory Block Red
+tile.Woot:structure.block_3.name=Mob Factory Block Green
+tile.Woot:structure.block_4.name=Mob Factory Block Blue
+tile.Woot:structure.block_5.name=Mob Factory Block Orange
+tile.Woot:structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
+tile.Woot:structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
+tile.Woot:structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone
 
 tile.Woot:upgrade.xp_i.name=XP I Upgrade
 tile.Woot:upgrade.xp_ii.name=XP II Upgrade

@@ -8,9 +8,12 @@ public enum EnumMobFactoryModule implements IStringSerializable {
     BLOCK_2("block_2"),
     BLOCK_3("block_3"),
     BLOCK_4("block_4"),
-    BLOCK_5("block_5");
+    BLOCK_5("block_5"),
+    CAP_I("tier_i_cap"),
+    CAP_II("tier_ii_cap"),
+    CAP_III("tier_iii_cap");
 
-    public static EnumMobFactoryModule[] VALUES = { BLOCK_1, BLOCK_2, BLOCK_3, BLOCK_4, BLOCK_5 };
+    public static EnumMobFactoryModule[] VALUES = { BLOCK_1, BLOCK_2, BLOCK_3, BLOCK_4, BLOCK_5, CAP_I, CAP_II, CAP_III };
 
 
     String name;

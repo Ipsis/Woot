@@ -36,7 +36,7 @@ public enum EnumMobFactoryTier {
                             "-----",
                             "-----",
                             "-----",
-                            "e---e"
+                            "x---x"
                     }
             };
 
@@ -82,7 +82,7 @@ public enum EnumMobFactoryTier {
                             "-------",
                             "-------",
                             "-------",
-                            "c-e-e-c"
+                            "c-y-y-c"
                     },
                     {
                             "-------",
@@ -91,7 +91,7 @@ public enum EnumMobFactoryTier {
                             "-------",
                             "-------",
                             "-------",
-                            "e-----e"
+                            "y-----y"
                     }
             };
 
@@ -158,7 +158,7 @@ public enum EnumMobFactoryTier {
                             "d---d---d"
                     },
                     {
-                            "e-------e",
+                            "z-------z",
                             "---------",
                             "---------",
                             "---------",
@@ -166,7 +166,7 @@ public enum EnumMobFactoryTier {
                             "---------",
                             "---------",
                             "---------",
-                            "e---e---e"
+                            "z---z---z"
                     }
             };
 
@@ -199,6 +199,12 @@ public enum EnumMobFactoryTier {
                         m = EnumMobFactoryModule.BLOCK_4;
                     else if (c == 'e')
                         m = EnumMobFactoryModule.BLOCK_5;
+                    else if (c == 'x')
+                        m = EnumMobFactoryModule.CAP_I;
+                    else if (c == 'y')
+                        m = EnumMobFactoryModule.CAP_II;
+                    else if (c == 'z')
+                        m = EnumMobFactoryModule.CAP_III;
 
                     modules.add(new MobFactoryModule(new BlockPos(dCol, dLayer, dRow), m));
                 }

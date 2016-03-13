@@ -1,10 +1,12 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerUtil;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -13,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -156,6 +159,7 @@ public class SpawnerManager {
         if (e.isFull(enchantKey))
             return;
 
+        LogHelper.info("addDrops:" );
         List<ItemStack> dropList = new ArrayList<ItemStack>();
         for (EntityItem entityItem : entityItemList) {
             ItemStack itemStack = entityItem.getEntityItem();
@@ -226,7 +230,7 @@ public class SpawnerManager {
         return base + extra;
     }
 
-    public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup) {
+    public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup, DifficultyInstance difficulty) {
 
         SpawnLoot spawnLoot = new SpawnLoot();
         int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
@@ -239,6 +243,18 @@ public class SpawnerManager {
 
         for (int i = 0; i < mobCount; i++) {
             List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
+            for (ItemStack stack : dropList) {
+                if (stack.isItemEnchanted()) {
+                    LogHelper.info("getSpawnerLoot: Before " + stack.getEnchantmentTagList());
+                    stack.getTagCompound().removeTag("ench");
+                    /* Same way as vanilla setEnchantmentBasedOnDifficulty */
+                    float f = difficulty.getClampedAdditionalDifficulty();
+                    EnchantmentHelper.addRandomEnchantment(Woot.random, stack,
+                            (int)(5.0F + f * (float)Woot.random.nextInt(18)));
+                    LogHelper.info("getSpawnerLoot: After " + stack.getEnchantmentTagList());
+                }
+            }
+
             spawnLoot.drops.addAll(dropList);
             spawnLoot.xp += calcDeathXp(mobName, xpUpgrade);
             if (upgradeSetup.hasDecapitateUpgrade()) {

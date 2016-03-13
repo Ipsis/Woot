@@ -159,7 +159,6 @@ public class SpawnerManager {
         if (e.isFull(enchantKey))
             return;
 
-        LogHelper.info("addDrops:" );
         List<ItemStack> dropList = new ArrayList<ItemStack>();
         for (EntityItem entityItem : entityItemList) {
             ItemStack itemStack = entityItem.getEntityItem();

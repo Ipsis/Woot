@@ -52,7 +52,7 @@ public class ItemPrism extends ItemWoot {
             return false;
 
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
-        setMobName(stack, wootName, displayName);
+        setMobName(stack, wootName, displayName, ((EntityLiving) target).experienceValue);
         return true;
     }
 
@@ -83,13 +83,15 @@ public class ItemPrism extends ItemWoot {
      */
     static final String NBT_MOBNAME = "mobName";
     static final String NBT_DISPLAYNAME = "displayName";
-    public static void setMobName(ItemStack itemStack, String mobName, String displayName) {
+    static final String NBT_XP_VALUE = "mobXpCost";
+    public static void setMobName(ItemStack itemStack, String mobName, String displayName, int xp) {
 
         if (itemStack.getTagCompound() == null)
             itemStack.setTagCompound(new NBTTagCompound());
 
         itemStack.getTagCompound().setString(NBT_MOBNAME, mobName);
         itemStack.getTagCompound().setString(NBT_DISPLAYNAME, displayName);
+        itemStack.getTagCompound().setInteger(NBT_XP_VALUE, xp);
     }
 
     public static String getMobName(ItemStack itemStack) {
@@ -106,6 +108,14 @@ public class ItemPrism extends ItemWoot {
             return "";
 
         return itemStack.getTagCompound().getString(NBT_DISPLAYNAME);
+    }
+
+    public static int getXp(ItemStack itemStack) {
+
+        if (itemStack.getTagCompound() == null)
+            return 1;
+
+        return itemStack.getTagCompound().getInteger(NBT_XP_VALUE);
     }
 
     static boolean hasMobName(ItemStack itemStack) {
@@ -126,6 +136,8 @@ public class ItemPrism extends ItemWoot {
             String displayName = getDisplayName(stack);
             if (!displayName.equals(""))
                 tooltip.add(EnumChatFormatting.GREEN + String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
+
+            tooltip.add(EnumChatFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
         }
     }
 

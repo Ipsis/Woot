@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/structure_tier_III_cap",
+  "parent": "woot:block/structure_tier_iii_cap",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

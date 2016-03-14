@@ -27,7 +27,7 @@ public class ItemXpShard extends ItemWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemXpShard, BASENAME);
+        ModelHelper.registerItem(ModItems.itemXpShard, BASENAME.toLowerCase());
     }
 
     @Override

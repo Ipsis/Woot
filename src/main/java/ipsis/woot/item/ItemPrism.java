@@ -3,6 +3,7 @@ package ipsis.woot.item;
 import ipsis.Woot;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import net.minecraft.entity.EntityLiving;
@@ -85,6 +86,9 @@ public class ItemPrism extends ItemWoot {
     static final String NBT_DISPLAYNAME = "displayName";
     static final String NBT_XP_VALUE = "mobXpCost";
     public static void setMobName(ItemStack itemStack, String mobName, String displayName, int xp) {
+
+        if (xp <= 0)
+            xp = MobRegistry.MobInfo.MIN_XP_VALUE;
 
         if (itemStack.getTagCompound() == null)
             itemStack.setTagCompound(new NBTTagCompound());

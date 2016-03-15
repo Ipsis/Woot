@@ -155,6 +155,8 @@ public class MobRegistry {
 
     public class MobInfo {
 
+        public final static int MIN_XP_VALUE = 1;
+
         String wootMobName;
         String mcMobName;
         String displayName;
@@ -190,7 +192,7 @@ public class MobRegistry {
         public void setXp(int mobXp) {
 
             if (mobXp == 0) {
-                this.spawnXp = 1;
+                this.spawnXp = MIN_XP_VALUE;
                 this.deathXp = 0;
             } else {
                 this.spawnXp = mobXp;

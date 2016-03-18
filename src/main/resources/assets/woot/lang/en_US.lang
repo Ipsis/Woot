@@ -81,7 +81,7 @@ config.Woot:xpIII_boost=XP III experience percentage
 
 tooltip.Woot:factory_cost=Tier %s costs %dRF for each mob spawned
 
-tooltip.Woot:upgrade_cost=Costs %d RF/tick for each mob spawned
+tooltip.Woot:upgrade_cost=Costs %d RF/tick
 
 tooltip.Woot:upgrade_rate_effect=Spawn mobs every %d ticks
 tooltip.Woot:upgrade_lootingI_effect=Applys Looting I enchant to kills

@@ -90,16 +90,11 @@ public class SpawnerManager {
         else
             baseRF = Settings.tierIIIRF;
 
-        int totalRf = baseRF * xpLevel;
-        int spawnTime = Settings.baseRateTicks;
+        int mobRf = baseRF * xpLevel;
+        int mobCount = upgradeSetup.hasMassUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass() : 1;
+        int spawnTime = upgradeSetup.hasRateUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate() : Settings.baseRateTicks;
 
-        // The baseRF is per Mob
-        if (upgradeSetup.hasMassUpgrade())
-            totalRf += (baseRF * UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass());
-
-        if (upgradeSetup.hasRateUpgrade())
-            spawnTime = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate();
-
+        int totalRf = mobRf * mobCount;
         totalRf += (spawnTime * upgradeSetup.getRfPerTickCost());
         return new SpawnReq(totalRf, spawnTime);
     }

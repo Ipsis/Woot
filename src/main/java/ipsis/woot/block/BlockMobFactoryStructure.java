@@ -11,6 +11,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -110,11 +113,15 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     @Override
     public void initModel() {
 
-        ResourceLocation[] locations = new ResourceLocation[EnumMobFactoryModule.values().length];
-        for (int i = 0; i < EnumMobFactoryModule.values().length; i++)
-            locations[i] = new ResourceLocation(Reference.MOD_NAME_LOWER + ":" + BASENAME + "_" + EnumMobFactoryModule.VALUES[i]);
+        Item itemBlockVariants = GameRegistry.findItem(Reference.MOD_ID, BASENAME);
 
-        ModelBakery.registerItemVariants(Item.getItemFromBlock(ModBlocks.blockStructure), locations);
+        for (int i = 0; i < EnumMobFactoryModule.values().length; i++) {
+
+            EnumMobFactoryModule e = EnumMobFactoryModule.VALUES[i];
+            ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(
+                    Reference.MOD_ID + ":" + BASENAME + "_" + e, "inventory");
+            ModelLoader.setCustomModelResourceLocation(itemBlockVariants, i, itemModelResourceLocation);
+        }
     }
 
     @Override

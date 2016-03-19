@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 
-    public static void init() {
+    public static void preInit() {
 
         GameRegistry.registerBlock(blockFactory, BlockMobFactory.BASENAME);
         GameRegistry.registerBlock(blockUpgrade, ItemBlockUpgrade.class, BlockMobFactoryUpgrade.BASENAME);

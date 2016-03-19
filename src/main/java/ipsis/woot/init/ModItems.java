@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 
-    public static void init() {
+    public static void preInit() {
 
         GameRegistry.registerItem(itemPrism, ItemPrism.BASENAME);
         GameRegistry.registerItem(itemXpShard, ItemXpShard.BASENAME);

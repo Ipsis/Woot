@@ -17,7 +17,9 @@ import net.minecraftforge.common.MinecraftForge;
 public class ClientProxy extends CommonProxy {
 
     @Override
-    protected void registerBlockItemModels() {
+    public void preInit() {
+
+        super.preInit();
 
         ModBlocks.blockFactory.initModel();
         ModBlocks.blockUpgrade.initModel();
@@ -27,27 +29,22 @@ public class ClientProxy extends CommonProxy {
         ModItems.itemPrism.initModel();
         ModItems.itemXpShard.initModel();
         ModItems.itemSkull.initModel();;
-    }
 
-    @Override
-    protected void registerItemRenderers() {
-
-        ItemModelMesher itemModelMesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-        for (EnumSpawnerUpgrade t : EnumSpawnerUpgrade.values()) {
-             itemModelMesher.register(Item.getItemFromBlock(ModBlocks.blockUpgrade), t.getMetadata(),
-                    new ModelResourceLocation(Reference.MOD_ID_LOWER + ":" + BlockMobFactoryUpgrade.BASENAME + "_" + t.getName(), "inventory"));
-        }
-
-        for (EnumMobFactoryModule m : EnumMobFactoryModule.VALUES) {
-            itemModelMesher.register(Item.getItemFromBlock(ModBlocks.blockStructure), m.getMetadata(),
-                    new ModelResourceLocation(Reference.MOD_ID_LOWER + ":" + BlockMobFactoryStructure.BASENAME + "_" + m.getName(), "inventory"));
-        }
-    }
-
-    @Override
-    protected void registerEventHandlers() {
-        super.registerEventHandlers();
+        ModBlocks.registerTileEntities();
 
         MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
+    }
+
+    @Override
+    public void init() {
+
+        super.init();
+    }
+
+    @Override
+    public void postInit() {
+
+        super.postInit();
+
     }
 }

@@ -43,12 +43,10 @@ public class Woot {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
-        ModBlocks.init();
-        ModItems.init();
+        proxy.preInit();
 
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         UpgradeManager.loadConfig();
-        proxy.preInit();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
     }
@@ -56,8 +54,6 @@ public class Woot {
     @Mod.EventHandler
     public void init(FMLPreInitializationEvent event) {
 
-        ModRecipes.init();
-        ModBlocks.registerTileEntities();
         proxy.init();
     }
 

@@ -2,8 +2,6 @@ package ipsis;
 
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.init.ModItems;
-import ipsis.woot.init.ModRecipes;
 import ipsis.woot.manager.*;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;

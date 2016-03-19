@@ -1,7 +1,6 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
-import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;

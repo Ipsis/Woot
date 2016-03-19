@@ -32,6 +32,9 @@ item.Woot:prism.name=Mob Prism
 item.Woot:xpShard.name=Xp Shard
 item.Woot:factoryFrame.name=Factory Frame
 item.Woot:factoryUpgrade.name=Factory Upgrade
+item.Woot:skull.iron.name=Iron Plated Skull
+item.Woot:skull.gold.name=Gold Plated Skull
+item.Woot:skull.diamond.name=Diamond Encrusted Skull
 
 waila.Woot:factory.tier=Tier %s
 waila.Woot:factory.mob=Spawning %s

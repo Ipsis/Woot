@@ -4,7 +4,6 @@ import ipsis.woot.block.*;
 import ipsis.woot.item.ItemBlockController;
 import ipsis.woot.item.ItemBlockStructure;
 import ipsis.woot.item.ItemBlockUpgrade;
-import ipsis.woot.item.ItemFactoryFrame;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;

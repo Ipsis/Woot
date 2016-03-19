@@ -18,6 +18,6 @@ public class ItemFactoryUpgrade extends ItemWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemFactoryUpgrade, BASENAME);
+        ModelHelper.registerItem(ModItems.itemFactoryUpgrade, BASENAME.toLowerCase());
     }
 }

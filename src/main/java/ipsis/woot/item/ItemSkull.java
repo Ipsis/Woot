@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ItemSkull extends ItemWoot {
 
-    public static final String BASENAME = "itemSkull";
+    public static final String BASENAME = "skull";
 
     public static final String[] VARIANTS = new String[] {
             "iron", "gold", "diamond"

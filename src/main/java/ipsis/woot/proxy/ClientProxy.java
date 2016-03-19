@@ -26,6 +26,7 @@ public class ClientProxy extends CommonProxy {
 
         ModItems.itemPrism.initModel();
         ModItems.itemXpShard.initModel();
+        ModItems.itemSkull.initModel();;
     }
 
     @Override

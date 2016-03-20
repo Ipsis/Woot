@@ -10,14 +10,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -40,8 +41,8 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {VARIANT, ACTIVE});
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[] {VARIANT, ACTIVE});
     }
 
     @Override
@@ -99,9 +100,9 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
     }
 
     @Override
-    public int getRenderType() {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
 
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
@@ -189,7 +190,7 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube(IBlockState state) {
 
         return false;
     }

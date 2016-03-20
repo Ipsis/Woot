@@ -11,9 +11,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -227,7 +227,10 @@ public class SpawnerManager {
 
         /* Same way as vanilla setEnchantmentBasedOnDifficulty */
         float f = difficulty.getClampedAdditionalDifficulty();
-        EnchantmentHelper.addRandomEnchantment(Woot.random, itemStack, (int)(5.0F + f * (float)Woot.random.nextInt(18)));
+
+        // TODO allowTreasure ?
+        boolean allowTreasure = false;
+        EnchantmentHelper.addRandomEnchantment(Woot.random, itemStack, (int)(5.0F + f * (float)Woot.random.nextInt(18)), allowTreasure);
     }
 
     boolean shouldEnchant(DifficultyInstance difficulty) {

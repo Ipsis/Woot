@@ -3,7 +3,7 @@ package ipsis.woot.item;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Reference;
-import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

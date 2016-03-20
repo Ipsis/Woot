@@ -90,8 +90,10 @@ public class MobRegistry {
         if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
             ((EntitySkeleton) entity).setSkeletonType(1);
         } else if (isSlime(mobInfo.wootMobName, entity)) {
+            // TODO setSlimeSize
+            /*
             if (((EntitySlime)entity).getSlimeSize() != 1)
-                ((EntitySlime)entity).setSlimeSize(1);
+                ((EntitySlime)entity).setSlimeSize(1); */
         }
     }
 

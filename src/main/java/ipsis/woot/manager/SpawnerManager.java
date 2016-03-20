@@ -228,7 +228,6 @@ public class SpawnerManager {
         /* Same way as vanilla setEnchantmentBasedOnDifficulty */
         float f = difficulty.getClampedAdditionalDifficulty();
 
-        // TODO allowTreasure ?
         boolean allowTreasure = false;
         EnchantmentHelper.addRandomEnchantment(Woot.random, itemStack, (int)(5.0F + f * (float)Woot.random.nextInt(18)), allowTreasure);
     }

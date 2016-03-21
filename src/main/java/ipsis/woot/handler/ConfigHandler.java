@@ -1,5 +1,6 @@
 package ipsis.woot.handler;
 
+import ipsis.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
@@ -46,6 +47,12 @@ public class ConfigHandler {
         Settings.tierIIIRF = getConfigInt(Config.General.TIER_III_RF, Settings.Spawner.DEF_TIER_III_RF);
         Settings.baseMobCount = getConfigInt(Config.General.BASE_MOB_COUNT, Settings.Spawner.DEF_BASE_MOB_COUNT);
         Settings.baseRateTicks = getConfigInt(Config.General.BASE_RATE_TICKS, Settings.Spawner.DEF_BASE_RATE_TICKS);
+
+        Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
+                Settings.prismBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+
+        for (int i = 0; i < Settings.prismBlacklist.length; i++)
+            LogHelper.info("Prism Blacklist: " + Settings.prismBlacklist[i]);
 
         /**
          * Power

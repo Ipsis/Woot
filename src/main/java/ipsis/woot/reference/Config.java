@@ -13,6 +13,7 @@ public class Config {
         public static final String TIER_III_RF = "globalTierIIIRF";
         public static final String BASE_MOB_COUNT = "globalBaseMobCount";
         public static final String BASE_RATE_TICKS = "globalBaseRateTicks";
+        public static final String PRISM_BLACKLIST = "globalPrismBlacklist";
     }
 
     public static class Power {

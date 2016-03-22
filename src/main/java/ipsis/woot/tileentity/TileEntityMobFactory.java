@@ -3,6 +3,7 @@ package ipsis.woot.tileentity;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
+import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
@@ -36,6 +37,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int currSpawnTicks;
     int consumedRf;
     int storedXp;
+    boolean running;
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
@@ -46,6 +48,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
     static final String NBT_CONSUMED_RF = "consumedRf";
     static final String NBT_STORED_XP = "storedXp";
+    static final String NBT_RUNNING = "running";
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
@@ -57,6 +60,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
         compound.setInteger(NBT_STORED_XP, storedXp);
+        compound.setBoolean(NBT_RUNNING, running);
 
         energyStorage.writeToNBT(compound);
     }
@@ -69,6 +73,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
             consumedRf = compound.getInteger(NBT_CONSUMED_RF);
             storedXp = compound.getInteger(NBT_STORED_XP);
+            running = compound.getBoolean(NBT_RUNNING);
             nbtLoaded = true;
         }
 
@@ -91,6 +96,17 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         currSpawnTicks = 0;
         consumedRf = 0;
         storedXp = 0;
+        running = true;
+    }
+
+    public void setRunning(boolean running) {
+
+        this.running = running;
+    }
+
+    public boolean getRunning() {
+
+        return this.running;
     }
 
     public String getMobName() {
@@ -276,6 +292,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         /* Do we have any info on this mob yet - should only happen until the first event fires */
         if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
+            return;
+
+        if (!running)
             return;
 
         currSpawnTicks++;

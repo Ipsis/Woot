@@ -1,11 +1,13 @@
 package ipsis.woot.block;
 
+import ipsis.oss.LogHelper;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -46,6 +48,24 @@ public class BlockMobFactory extends BlockContainerWoot implements ITooltipInfo 
 
         EnumFacing f = placer.getHorizontalFacing().getOpposite();
         worldIn.setBlockState(pos, state.withProperty(FACING, f), 2);
+    }
+
+    @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+
+        if (worldIn.isRemote)
+            return;
+
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (!(te instanceof TileEntityMobFactory))
+            return;
+
+        if (worldIn.isBlockPowered(pos)) {
+            /* Apply redstone power to stop */
+            ((TileEntityMobFactory) te).setRunning(false);
+        } else {
+            ((TileEntityMobFactory) te).setRunning(true);
+        }
     }
 
     @SideOnly(Side.CLIENT)

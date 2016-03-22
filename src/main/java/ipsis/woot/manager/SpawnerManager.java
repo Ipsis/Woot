@@ -35,10 +35,16 @@ public class SpawnerManager {
             this.totalRf = totalRf;
             this.spawnTime = spawnTime;
 
+            /**
+             * Depending on the values, the resultant value can exceed the totalRf.
+             * We therefore update the totalRf.
+             * Blame rounding. It's a bitch :)
+             */
             this.rfPerTick = calcRfPerTick();
+            this.totalRf = this.rfPerTick * this.spawnTime;
         }
 
-        public int calcRfPerTick() {
+        int calcRfPerTick() {
 
             if (spawnTime > 0) {
                 float rfpertick = (float)totalRf / spawnTime;

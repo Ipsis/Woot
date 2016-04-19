@@ -1,5 +1,6 @@
 package ipsis;
 
+import ipsis.woot.command.CommandWoot;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.*;
@@ -9,10 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,6 +46,12 @@ public class Woot {
         UpgradeManager.loadConfig();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
+    }
+
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event) {
+
+        event.registerServerCommand(new CommandWoot());
     }
 
     @Mod.EventHandler

@@ -5,23 +5,20 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerUtil;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SpawnerManager {
 
@@ -116,6 +113,48 @@ public class SpawnerManager {
         }
 
         return e;
+    }
+
+    public void cmdDumpTable(ICommandSender sender) {
+
+        for (String mobName : spawnerMap.keySet()) {
+            SpawnerEntry e = spawnerMap.get(mobName);
+            sender.addChatMessage(new ChatComponentText(String.format("%s:%s %d loot entries", mobName, EnumEnchantKey.NO_ENCHANT, e.dropMap.get(EnumEnchantKey.NO_ENCHANT).size())));
+            sender.addChatMessage(new ChatComponentText(String.format("%s:%s %d loot entries", mobName, EnumEnchantKey.LOOTING_I, e.dropMap.get(EnumEnchantKey.LOOTING_I).size())));
+            sender.addChatMessage(new ChatComponentText(String.format("%s:%s %d loot entries", mobName, EnumEnchantKey.LOOTING_II, e.dropMap.get(EnumEnchantKey.LOOTING_II).size())));
+            sender.addChatMessage(new ChatComponentText(String.format("%s:%s %d loot entries", mobName, EnumEnchantKey.LOOTING_III, e.dropMap.get(EnumEnchantKey.LOOTING_III).size())));
+        }
+    }
+
+    public void cmdDumpMobs(ICommandSender sender) {
+
+        for (String mobName : spawnerMap.keySet()) {
+            sender.addChatMessage(new ChatComponentText(mobName));
+        }
+    }
+
+    public void cmdClearTableEntry(ICommandSender sender, String mobName, EnumEnchantKey key) {
+
+        SpawnerEntry e = spawnerMap.get(mobName);
+        if (e == null)
+            sender.addChatMessage(new ChatComponentText(String.format("No entry for %s", mobName)));
+
+        int size = e.dropMap.get(key).size();
+        clearTableEntry(mobName, key);
+        sender.addChatMessage(new ChatComponentText(String.format("%s:%s cleared %d entries", mobName, key, size)));
+    }
+
+    public void cmdClear(ICommandSender sender) {
+
+        spawnerMap.clear();
+        sender.addChatMessage(new ChatComponentText("Cleared all entries in loot tables"));
+    }
+
+    public void clearTableEntry(String mobName, EnumEnchantKey key) {
+
+        SpawnerEntry e = spawnerMap.get(mobName);
+        if (e != null)
+            e.dropMap.get(key).clear();
     }
 
     public int getSpawnXp(String mobName, TileEntity te) {

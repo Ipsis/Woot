@@ -3,6 +3,7 @@ package ipsis.woot.block;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Lang;
+import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.util.StringHelper;
@@ -32,6 +33,7 @@ public class BlockMobFactory extends BlockContainerWoot implements ITooltipInfo 
 
         super(Material.rock, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override

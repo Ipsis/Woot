@@ -2,6 +2,7 @@ package ipsis.woot.block;
 
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -26,6 +27,7 @@ public class BlockMobFactoryController extends BlockContainerWoot {
     public BlockMobFactoryController() {
 
         super(Material.rock, BASENAME);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override

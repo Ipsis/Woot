@@ -26,6 +26,7 @@ public class ItemSkull extends ItemWoot {
         super(BASENAME);
         setMaxStackSize(16);
         setHasSubtypes(true);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override

@@ -7,11 +7,11 @@ public class ModItems {
 
     public static void preInit() {
 
-        GameRegistry.registerItem(itemPrism, ItemPrism.BASENAME);
-        GameRegistry.registerItem(itemXpShard, ItemXpShard.BASENAME);
-        GameRegistry.registerItem(itemSkull, ItemSkull.BASENAME);
-        GameRegistry.registerItem(itemFactoryFrame, ItemFactoryFrame.BASENAME);
-        GameRegistry.registerItem(itemFactoryUpgrade, ItemFactoryUpgrade.BASENAME);
+        GameRegistry.register(itemPrism);
+        GameRegistry.register(itemXpShard);
+        GameRegistry.register(itemSkull);
+        GameRegistry.register(itemFactoryFrame);
+        GameRegistry.register(itemFactoryUpgrade);
     }
 
     public static ItemWoot itemPrism = new ItemPrism();

@@ -3,6 +3,7 @@ package ipsis.woot.item;
 import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Lang;
+import ipsis.woot.reference.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -23,6 +24,7 @@ public class ItemXpShard extends ItemWoot {
 
         super(BASENAME);
         setMaxStackSize(64);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

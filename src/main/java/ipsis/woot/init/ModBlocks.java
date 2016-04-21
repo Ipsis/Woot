@@ -8,16 +8,21 @@ import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.tileentity.TileEntityMobFactory;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 
     public static void preInit() {
 
-        GameRegistry.registerBlock(blockFactory, BlockMobFactory.BASENAME);
-        GameRegistry.registerBlock(blockUpgrade, ItemBlockUpgrade.class, BlockMobFactoryUpgrade.BASENAME);
-        GameRegistry.registerBlock(blockStructure, ItemBlockStructure.class, BlockMobFactoryStructure.BASENAME);
-        GameRegistry.registerBlock(blockController, ItemBlockController.class, BlockMobFactoryController.BASENAME);
+        GameRegistry.register(blockFactory);
+        GameRegistry.register(blockUpgrade);
+        GameRegistry.register(blockStructure);
+        GameRegistry.register(blockController);
+        GameRegistry.register(new ItemBlock(blockFactory).setRegistryName(blockFactory.getRegistryName()));
+        GameRegistry.register(new ItemBlockUpgrade(blockUpgrade).setRegistryName(blockUpgrade.getRegistryName()));
+        GameRegistry.register(new ItemBlockStructure(blockStructure).setRegistryName(blockStructure.getRegistryName()));
+        GameRegistry.register(new ItemBlockController(blockController).setRegistryName(blockController.getRegistryName()));
     }
 
     public static void registerTileEntities() {

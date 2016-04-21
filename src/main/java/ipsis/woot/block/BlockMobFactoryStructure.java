@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -36,6 +37,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
         super (Material.rock, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override
@@ -111,7 +113,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     @Override
     public void initModel() {
 
-        Item itemBlockVariants = GameRegistry.findItem(Reference.MOD_ID, BASENAME);
+        Item itemBlockVariants = Item.itemRegistry.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
         for (int i = 0; i < EnumMobFactoryModule.values().length; i++) {
 

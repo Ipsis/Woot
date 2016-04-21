@@ -5,6 +5,7 @@ import ipsis.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.reference.Lang;
+import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,6 +33,7 @@ public class ItemPrism extends ItemWoot {
 
         super(BASENAME);
         setMaxStackSize(1);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

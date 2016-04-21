@@ -11,24 +11,23 @@ import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
-import mcp.mobius.waila.api.IWailaRegistrar;
+//import mcp.mobius.waila.api.IWailaConfigHandler;
+//import mcp.mobius.waila.api.IWailaDataAccessor;
+//import mcp.mobius.waila.api.IWailaDataProvider;
+//import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class WailaDataProviderWoot implements IWailaDataProvider {
-
+public class WailaDataProviderWoot /*implements IWailaDataProvider*/ {
+/*
     private static WailaDataProviderWoot INSTANCE = new WailaDataProviderWoot();
 
     @Override
@@ -175,4 +174,5 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         registrar.registerNBTProvider(INSTANCE, TileEntityMobFactory.class);
         registrar.registerNBTProvider(INSTANCE, TileEntityMobFactoryController.class);
     }
+    */
 }

@@ -11,23 +11,23 @@ public class ItemTooltipHandler {
     @SubscribeEvent
     public void onItemToolTipEvent(ItemTooltipEvent event) {
 
-        if (event.entityPlayer == null)
+        if (event.getEntityPlayer() == null)
             return;
 
-        if (event.itemStack == null)
+        if (event.getItemStack() == null)
             return;
 
-        Block block = Block.getBlockFromItem(event.itemStack.getItem());
+        Block block = Block.getBlockFromItem(event.getItemStack().getItem());
         if (block == null || !(block instanceof ITooltipInfo))
             return;
 
-        int meta = event.itemStack.getMetadata();
+        int meta = event.getItemStack().getMetadata();
 
         boolean detail = false;
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
             detail = true;
 
-        ((ITooltipInfo)block).getTooltip(event.toolTip, event.showAdvancedItemTooltips, meta, detail);
+        ((ITooltipInfo)block).getTooltip(event.getToolTip(), event.isShowAdvancedItemTooltips(), meta, detail);
     }
 
 }

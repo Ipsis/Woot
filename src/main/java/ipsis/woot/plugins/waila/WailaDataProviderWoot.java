@@ -15,6 +15,10 @@ import ipsis.woot.util.StringHelper;
 //import mcp.mobius.waila.api.IWailaDataAccessor;
 //import mcp.mobius.waila.api.IWailaDataProvider;
 //import mcp.mobius.waila.api.IWailaRegistrar;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
+import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByteArray;
@@ -22,12 +26,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class WailaDataProviderWoot /*implements IWailaDataProvider*/ {
-/*
+public class WailaDataProviderWoot implements IWailaDataProvider {
     private static WailaDataProviderWoot INSTANCE = new WailaDataProviderWoot();
 
     @Override
@@ -72,8 +76,8 @@ public class WailaDataProviderWoot /*implements IWailaDataProvider*/ {
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("displayName") && tag.hasKey("xpCost")) {
             EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(tag.getInteger("xpCost"));
-            currenttip.add(EnumChatFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
-            currenttip.add(EnumChatFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
+            currenttip.add(TextFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
+            currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
                             (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
 
         }
@@ -97,31 +101,31 @@ public class WailaDataProviderWoot /*implements IWailaDataProvider*/ {
 
             EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
 
-            currenttip.add(EnumChatFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
+            currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
                     (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
-            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB),
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB),
                     tag.getString("displayName")));
-            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
                     tag.getInteger("mobCount"), tag.getInteger("spawnTicks")));
-            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
                     tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
 
             int energy    = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
             int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
-            currenttip.add(EnumChatFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
+            currenttip.add(TextFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
 
             if (tag.hasKey("upgrades")) {
                 byte[] a = tag.getByteArray("upgrades");
                 for (int i = 0; i < a.length; i++) {
                     EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
                     SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
-                    EnumChatFormatting f;
+                    TextFormatting f;
                     if (u.getUpgradeTier() == 1)
-                        f = EnumChatFormatting.GRAY;
+                        f = TextFormatting.GRAY;
                     else if (u.getUpgradeTier() == 2)
-                        f = EnumChatFormatting.GOLD;
+                        f = TextFormatting.GOLD;
                     else
-                        f = EnumChatFormatting.AQUA;
+                        f = TextFormatting.AQUA;
                     currenttip.add(f + StringHelper.localize( Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
                 }
             }
@@ -174,5 +178,4 @@ public class WailaDataProviderWoot /*implements IWailaDataProvider*/ {
         registrar.registerNBTProvider(INSTANCE, TileEntityMobFactory.class);
         registrar.registerNBTProvider(INSTANCE, TileEntityMobFactoryController.class);
     }
-    */
 }

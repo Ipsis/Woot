@@ -13,6 +13,7 @@ public class CommonProxy {
 
         ModBlocks.preInit();
         ModItems.preInit();
+        ModBlocks.registerTileEntities();
 
         MinecraftForge.EVENT_BUS.register(new HandlerLivingDropsEvent());
         MinecraftForge.EVENT_BUS.register(new ConfigHandler());

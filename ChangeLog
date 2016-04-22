@@ -1,6 +1,12 @@
 Builder's Guides ChangeLog
 ==========================
 
+1.9-0.2.0-beta
+-----------
+
+Fixes
+* BUG0015 - Crash on server when placing a base block
+
 1.9-0.1.0-beta
 -----------
 

@@ -1,4 +1,4 @@
-package ipsis.oss;
+package ipsis.woot.oss;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;

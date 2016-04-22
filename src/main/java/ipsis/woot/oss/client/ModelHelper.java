@@ -1,4 +1,4 @@
-package ipsis.oss.client;
+package ipsis.woot.oss.client;
 
 import ipsis.woot.reference.Reference;
 import net.minecraft.block.Block;

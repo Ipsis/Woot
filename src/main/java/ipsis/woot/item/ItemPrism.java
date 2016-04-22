@@ -1,7 +1,7 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.reference.Lang;

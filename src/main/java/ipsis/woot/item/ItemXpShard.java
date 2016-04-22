@@ -1,6 +1,6 @@
 package ipsis.woot.item;
 
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;

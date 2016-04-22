@@ -1,6 +1,6 @@
 package ipsis.woot.block;
 
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;

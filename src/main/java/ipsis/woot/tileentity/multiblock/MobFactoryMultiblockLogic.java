@@ -2,6 +2,7 @@ package ipsis.woot.tileentity.multiblock;
 
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
+import ipsis.woot.tileentity.LayoutBlockInfo;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.util.BlockPosHelper;
@@ -61,6 +62,17 @@ public class MobFactoryMultiblockLogic {
             return factorySetup;
 
         return validateFactory(factory, EnumMobFactoryTier.TIER_ONE);
+    }
+
+    public static void getFactoryLayout(EnumMobFactoryTier tier, BlockPos origin, EnumFacing facing, List<LayoutBlockInfo> layoutBlockInfoList) {
+
+        layoutBlockInfoList.clear();
+        for (MobFactoryModule s : tier.structureModules) {
+
+            BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), facing.getOpposite());
+            p = origin.add(p);
+            layoutBlockInfoList.add(new LayoutBlockInfo(p, s.moduleType));
+        }
     }
 
     static FactorySetup validateFactory(TileEntityMobFactory factory, EnumMobFactoryTier tier) {

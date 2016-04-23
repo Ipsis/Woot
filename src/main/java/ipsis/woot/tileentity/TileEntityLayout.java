@@ -1,10 +1,17 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +36,22 @@ public class TileEntityLayout extends TileEntity {
 
     public void refreshLayout() {
 
-        MobFactoryMultiblockLogic.getFactoryLayout(tier, this.getPos(), facing, layoutBlockInfoList);
+        // The server never needs the block list - it is only used for rendering
+        if (this.worldObj != null && this.worldObj.isRemote) {
+            layoutBlockInfoList.clear();
+            MobFactoryMultiblockLogic.getFactoryLayout(tier, this.getPos(), facing, layoutBlockInfoList);
+        }
     }
 
     public void setFacing(EnumFacing facing) {
         this.facing = facing;
+        markDirty();
     }
 
     public void setNextTier() {
 
         this.tier = this.tier.getNext();
+        markDirty();
         refreshLayout();
     }
 
@@ -63,5 +76,19 @@ public class TileEntityLayout extends TileEntity {
         tier = EnumMobFactoryTier.getTier(compound.getInteger("tier"));
 
         refreshLayout();
+    }
+
+    @Override
+    public Packet<?> getDescriptionPacket() {
+
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        this.writeToNBT(nbtTagCompound);
+        return new SPacketUpdateTileEntity(this.getPos(), 0, nbtTagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+
+        this.readFromNBT(pkt.getNbtCompound());
     }
 }

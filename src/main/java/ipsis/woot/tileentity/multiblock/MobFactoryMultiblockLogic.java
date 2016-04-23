@@ -66,7 +66,6 @@ public class MobFactoryMultiblockLogic {
 
     public static void getFactoryLayout(EnumMobFactoryTier tier, BlockPos origin, EnumFacing facing, List<LayoutBlockInfo> layoutBlockInfoList) {
 
-        layoutBlockInfoList.clear();
         for (MobFactoryModule s : tier.structureModules) {
 
             BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), facing.getOpposite());

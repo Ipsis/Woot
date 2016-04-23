@@ -26,7 +26,7 @@ public class BlockLayout extends BlockContainerWoot {
 
     public BlockLayout() {
 
-        super(Material.ground, BASENAME);
+        super(Material.rock, BASENAME);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
@@ -63,14 +63,14 @@ public class BlockLayout extends BlockContainerWoot {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null && te instanceof TileEntityLayout) {
-            ((TileEntityLayout) te).setNextTier();
-            EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();
-            if (!worldIn.isRemote)
-                playerIn.addChatComponentMessage(
-                        new TextComponentString(
-                                String.format("Tier %s", (tier == EnumMobFactoryTier.TIER_ONE ? "I" : tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III"))));
+        if (!worldIn.isRemote) {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te != null && te instanceof TileEntityLayout) {
+                ((TileEntityLayout) te).setNextTier();
+                EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();
+                playerIn.addChatComponentMessage(new TextComponentString(String.format("Tier %s", (tier == EnumMobFactoryTier.TIER_ONE ? "I" : tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III"))));
+                worldIn.notifyBlockUpdate(pos, state, state, 4);
+            }
         }
 
         return true;

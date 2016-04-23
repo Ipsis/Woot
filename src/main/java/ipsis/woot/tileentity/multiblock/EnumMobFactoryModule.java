@@ -1,24 +1,32 @@
 package ipsis.woot.tileentity.multiblock;
 
+import ipsis.woot.util.WootColor;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumMobFactoryModule implements IStringSerializable {
 
-    BLOCK_1("block_1"),
-    BLOCK_2("block_2"),
-    BLOCK_3("block_3"),
-    BLOCK_4("block_4"),
-    BLOCK_5("block_5"),
-    CAP_I("tier_i_cap"),
-    CAP_II("tier_ii_cap"),
-    CAP_III("tier_iii_cap");
+    BLOCK_1("block_1", WootColor.GRAY),
+    BLOCK_2("block_2", WootColor.RED),
+    BLOCK_3("block_3", WootColor.GREEN),
+    BLOCK_4("block_4", WootColor.PURPLE),
+    BLOCK_5("block_5", WootColor.ORANGE),
+    CAP_I("tier_i_cap", WootColor.LIGHTGRAY),
+    CAP_II("tier_ii_cap", WootColor.YELLOW),
+    CAP_III("tier_iii_cap", WootColor.CYAN);
 
     public static EnumMobFactoryModule[] VALUES = { BLOCK_1, BLOCK_2, BLOCK_3, BLOCK_4, BLOCK_5, CAP_I, CAP_II, CAP_III };
 
 
     String name;
-    EnumMobFactoryModule(String name) {
+    WootColor color;
+    EnumMobFactoryModule(String name, WootColor color) {
         this.name = name;
+        this.color = color;
+    }
+
+    public WootColor getColor() {
+
+        return this.color;
     }
 
     @Override

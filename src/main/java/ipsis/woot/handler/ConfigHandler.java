@@ -1,6 +1,6 @@
 package ipsis.woot.handler;
 
-import ipsis.oss.LogHelper;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;

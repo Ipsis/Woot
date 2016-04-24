@@ -53,6 +53,11 @@ public class MobRegistry {
 
         // blacklist is based off Minecraft names
         String name = EntityList.getEntityString(entityLiving);
+
+        // Remove this always
+        if (name.equals("EnderDragon"))
+            return INVALID_MOB_NAME;
+
         for (int i = 0; i < Settings.prismBlacklist.length; i++) {
             if (Settings.prismBlacklist[i].equals(name))
                 return INVALID_MOB_NAME;

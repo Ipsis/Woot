@@ -8,6 +8,9 @@ Features
 * Added layout block to show a visual guide for the factory layout. Right-click to change the factory tier.
 * Added "woot" command for ops to display and flush the mob tables
 
+Fixes
+* BUG0018 - Blacklist the EnderDragon
+
 1.9-0.2.0-beta
 --------------
 

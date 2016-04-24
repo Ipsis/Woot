@@ -118,3 +118,8 @@ tooltip.Woot:xpShard.0=Right click to use and gain experience
 tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob
 tooltip.Woot:prism.1=Use on controller to program
+
+commands.woot.usage=woot {dump|flush}
+command.Woot:woot.usage=woot {dump|flush}
+command.Woot:woot.dump.usage=woot dump {table|mobs}
+command.Woot:woot.flush.usage=woot flush {all|<mob> {NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III}}

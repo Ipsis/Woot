@@ -2,6 +2,7 @@ itemGroup.Woot=Woot
 
 tile.Woot:factory.name=Mob Factory
 tile.Woot:controller.name=Mob Controller
+tile.Woot:layout.name=Mob Factory Layout
 
 tile.Woot:structure.block_1.name=Mob Factory Block Gray
 tile.Woot:structure.block_2.name=Mob Factory Block Red

@@ -174,6 +174,19 @@ public enum EnumMobFactoryTier {
         }
     };
 
+    public static final EnumMobFactoryTier[] VALID_TIERS = new EnumMobFactoryTier[] { TIER_ONE, TIER_TWO, TIER_THREE };
+
+    public EnumMobFactoryTier getNext() {
+
+        int next = ordinal();
+        next++;
+
+        if (next < 0 || next >= VALID_TIERS.length)
+            next = 0;
+
+        return VALID_TIERS[next];
+    }
+
     private static void parsePattern(List<MobFactoryModule> modules, String[][] pattern, int originLayer, int originRow, int originColumn) {
 
         for (int currLayer = 0; currLayer < pattern.length; currLayer++) {

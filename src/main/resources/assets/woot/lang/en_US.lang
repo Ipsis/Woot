@@ -52,6 +52,7 @@ config.Woot:globalTierIIRF=Tier II RF cost per mob level
 config.Woot:globalTierIIIRF=Tier III RF cost per mob level
 config.Woot:globalBaseMobCount=Number of mobs to spawn
 config.Woot:globalBaseRateTicks=Number of ticks to spawn mobs
+config.Woot:globalPrismBlacklist=List of entities that cannot be spawned
 
 config.Woot:rateI_RFTick=Rate I cost (RF/tick)
 config.Woot:rateII_RFTick=Rate II cost (RF/tick)

@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.woot.reference.Reference;
+import ipsis.woot.reference.Settings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -8,16 +9,13 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class MobRegistry {
 
     public static final String INVALID_MOB_NAME = "InvalidMob";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
-    List<String> mobBlacklist = new ArrayList<String>();
 
     public static String getMcName(String wootName) {
 
@@ -54,8 +52,16 @@ public class MobRegistry {
     public String onEntityLiving(EntityLiving entityLiving) {
 
         // blacklist is based off Minecraft names
-        if (mobBlacklist.contains(EntityList.getEntityString(entityLiving)))
+        String name = EntityList.getEntityString(entityLiving);
+
+        // Remove this always
+        if (name.equals("EnderDragon"))
             return INVALID_MOB_NAME;
+
+        for (int i = 0; i < Settings.prismBlacklist.length; i++) {
+            if (Settings.prismBlacklist[i].equals(name))
+                return INVALID_MOB_NAME;
+        }
 
         String wootName = createWootName(entityLiving);
         if (!mobInfoHashMap.containsKey(wootName)) {

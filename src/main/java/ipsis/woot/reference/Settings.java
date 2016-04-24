@@ -73,6 +73,7 @@ public class Settings {
     public static int tierIRF;
     public static int tierIIRF;
     public static int tierIIIRF;
+    public static String[] prismBlacklist = new String[0];
 
     /**
      * Upgrade costs per tick
@@ -119,5 +120,4 @@ public class Settings {
     public static int xpIBoost;
     public static int xpIIBoost;
     public static int xpIIIBoost;
-
 }

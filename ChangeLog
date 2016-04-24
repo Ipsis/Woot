@@ -1,14 +1,21 @@
 Builder's Guides ChangeLog
 ==========================
 
+1.9-0.3.0-beta
+--------------
+
+Features
+* Added layout block to show a visual guide for the factory layout. Right-click to change the factory tier.
+* Added "woot" command for ops to display and flush the mob tables
+
 1.9-0.2.0-beta
------------
+--------------
 
 Fixes
 * BUG0015 - Crash on server when placing a base block
 
 1.9-0.1.0-beta
------------
+--------------
 
 Features:
 * Minecraft 1.9 version

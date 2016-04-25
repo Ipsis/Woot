@@ -1,6 +1,12 @@
 Woot ChangeLog
 ==============
 
+1.8.9-0.3.0-beta
+-----------
+
+Fixes
+* XXXXXXX - Fix crash when the player dies due to incorrect handling of LivingDropEvent :(
+
 1.8.9-0.2.0-beta
 -----------
 

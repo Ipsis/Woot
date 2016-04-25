@@ -1,6 +1,13 @@
 Builder's Guides ChangeLog
 ==========================
 
+1.9-0.4.0-beta
+--------------
+
+Fixes
+* BUG0021 - Handle LivingDropsEvent being called on players death
+* XXXXXXX - Add missing block to the Tier III layout
+
 1.9-0.3.0-beta
 --------------
 

@@ -13,27 +13,33 @@ public class HandlerLivingDropsEvent {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onLivingDropsEvent(LivingDropsEvent e) {
 
-        DamageSourceWoot damageSourceWoot = DamageSourceWoot.getDamageSource(e.getSource().damageType);
-        if (damageSourceWoot != null) {
+        /**
+         * This is called for players and mobs
+         */
+        if (e.getEntity() instanceof EntityLiving) {
 
-            /**
-             *  Killed in one of our spawners, but we dont care which one.
-             *  We only store the drop information.
-             */
-            String mobID = Woot.mobRegistry.createWootName((EntityLiving)e.getEntity());
-            if (!Woot.spawnerManager.isFull(mobID, damageSourceWoot.getEnchantKey()))
-                Woot.spawnerManager.addDrops(mobID, damageSourceWoot.getEnchantKey(), e.getDrops());
+            DamageSourceWoot damageSourceWoot = DamageSourceWoot.getDamageSource(e.getSource().damageType);
+            if (damageSourceWoot != null) {
 
-            e.setCanceled(true);
-        } else if (!Settings.strictFactorySpawns) {
+                /**
+                 *  Killed in one of our spawners, but we dont care which one.
+                 *  We only store the drop information.
+                 */
+                String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
+                if (!Woot.spawnerManager.isFull(mobID, damageSourceWoot.getEnchantKey()))
+                    Woot.spawnerManager.addDrops(mobID, damageSourceWoot.getEnchantKey(), e.getDrops());
 
-            /**
-             * Convert the non-spawner kill into a damage source if possible
-             */
-            String mobID = Woot.mobRegistry.createWootName((EntityLiving)e.getEntity());
-            damageSourceWoot = DamageSourceWoot.getDamageSource(e.getLootingLevel());
-            if (damageSourceWoot != null && !Woot.spawnerManager.isFull(mobID, damageSourceWoot.getEnchantKey()))
-                Woot.spawnerManager.addDrops(mobID, damageSourceWoot.getEnchantKey(), e.getDrops());
+                e.setCanceled(true);
+            } else if (!Settings.strictFactorySpawns) {
+
+                /**
+                 * Convert the non-spawner kill into a damage source if possible
+                 */
+                String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
+                damageSourceWoot = DamageSourceWoot.getDamageSource(e.getLootingLevel());
+                if (damageSourceWoot != null && !Woot.spawnerManager.isFull(mobID, damageSourceWoot.getEnchantKey()))
+                    Woot.spawnerManager.addDrops(mobID, damageSourceWoot.getEnchantKey(), e.getDrops());
+            }
         }
     }
 }

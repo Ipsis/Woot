@@ -9,6 +9,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -206,6 +207,11 @@ public class SpawnerManager {
             return;
         EntityDamageSource entityDamageSource = new EntityDamageSource(damageSourceWoot.getDamageType(), fakePlayer);
 
+        /**
+         * BUG0022 - Need to set the attackingPlayer or the 1.9 loot tables will not
+         * give us all the drops, as some are conditional on killed_by_player
+         */
+        ((EntityLivingBase)entity).attackingPlayer = (EntityPlayer)fakePlayer;
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
     }
 

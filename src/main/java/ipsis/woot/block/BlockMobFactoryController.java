@@ -26,7 +26,7 @@ public class BlockMobFactoryController extends BlockContainerWoot {
 
     public BlockMobFactoryController() {
 
-        super(Material.rock, BASENAME);
+        super(Material.ROCK, BASENAME);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 

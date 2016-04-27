@@ -24,28 +24,28 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemPrism),
                         "ggg", "geg", "ggg",
-                        'g', "paneGlass", 'e', Items.ender_eye));
+                        'g', "paneGlass", 'e', Items.ENDER_EYE));
 
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemFactoryFrame, 9),
                         "sis", "ici", "sis",
                         's', "slabWood",
-                        'i', new ItemStack(Blocks.iron_bars),
-                        'c', new ItemStack(Blocks.chest)));
+                        'i', new ItemStack(Blocks.IRON_BARS),
+                        'c', new ItemStack(Blocks.CHEST)));
 
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemFactoryUpgrade),
                         "s s", "gfg", "srs",
                         's', "stone", 'g', "nuggetGold", 'f', ModItems.itemFactoryFrame,
-                        'r', Items.redstone));
+                        'r', Items.REDSTONE));
 
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 2, 0),
                         "   ", "sis", "   ",
-                        's', new ItemStack(Items.skull, 1, OreDictionary.WILDCARD_VALUE), 'i', "ingotIron"));
+                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE), 'i', "ingotIron"));
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 4, 1),
@@ -65,7 +65,7 @@ public class ModRecipes {
                         new ItemStack(ModBlocks.blockController),
                         "fsf", "beb", "bfb",
                         'f', ModItems.itemFactoryFrame,
-                        's', new ItemStack(Items.skull, 1, OreDictionary.WILDCARD_VALUE),
+                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE),
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE)));
 
@@ -75,11 +75,11 @@ public class ModRecipes {
                         "fuf", "bdb", "hfr",
                         'f', ModItems.itemFactoryFrame,
                         'u', ModItems.itemFactoryUpgrade,
-                        's', new ItemStack(Items.skull, 1, OreDictionary.WILDCARD_VALUE),
+                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE),
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE),
-                        'h', Blocks.hopper,
-                        'r', Items.redstone));
+                        'h', Blocks.HOPPER,
+                        'r', Items.REDSTONE));
 
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
@@ -126,35 +126,35 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.RATE_I.ordinal()),
                         "rbr", "rur", "rbr",
-                        'r', "dustRedstone", 'u', ModItems.itemFactoryUpgrade, 'b', Blocks.redstone_block));
+                        'r', "dustRedstone", 'u', ModItems.itemFactoryUpgrade, 'b', Blocks.REDSTONE_BLOCK));
 
         /* Looting upgrades */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.LOOTING_I.ordinal()),
                         "e e", " u ", "e e",
-                        'e', Items.glowstone_dust, 'u', ModItems.itemFactoryUpgrade));
+                        'e', Items.GLOWSTONE_DUST, 'u', ModItems.itemFactoryUpgrade));
 
         /* XP upgrades */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.XP_I.ordinal()),
                         "e e", " u ", "e e",
-                        'e', Items.blaze_powder, 'u', ModItems.itemFactoryUpgrade));
+                        'e', Items.BLAZE_POWDER, 'u', ModItems.itemFactoryUpgrade));
 
         /* Mass upgrades */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.MASS_I.ordinal()),
                         "h h", " u ", "h h",
-                        'h', new ItemStack(Items.skull, 1, OreDictionary.WILDCARD_VALUE), 'u', ModItems.itemFactoryUpgrade));
+                        'h', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE), 'u', ModItems.itemFactoryUpgrade));
 
         /* Decapitate upgrades */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.DECAPITATE_I.ordinal()),
                         "e e", " u ", "e e",
-                        'e', Items.ender_pearl, 'u', ModItems.itemFactoryUpgrade));
+                        'e', Items.ENDER_PEARL, 'u', ModItems.itemFactoryUpgrade));
 
         /**
          * Upgrades

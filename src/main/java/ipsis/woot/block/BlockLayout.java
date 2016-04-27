@@ -26,7 +26,7 @@ public class BlockLayout extends BlockContainerWoot {
 
     public BlockLayout() {
 
-        super(Material.rock, BASENAME);
+        super(Material.ROCK, BASENAME);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 

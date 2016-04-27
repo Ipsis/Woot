@@ -37,7 +37,7 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
     public static final PropertyEnum<EnumSpawnerUpgrade> VARIANT = PropertyEnum.<EnumSpawnerUpgrade>create("variant", EnumSpawnerUpgrade.class);
     public BlockMobFactoryUpgrade() {
 
-        super(Material.rock, BASENAME);
+        super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumSpawnerUpgrade.RATE_I).withProperty(ACTIVE, false));
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
@@ -77,7 +77,7 @@ public class BlockMobFactoryUpgrade extends BlockContainerWoot implements IToolt
     @Override
     public void initModel() {
 
-        Item itemBlockVariants = Item.itemRegistry.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
+        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
         for (int i = 0; i < EnumSpawnerUpgrade.values().length; i++) {
 

@@ -31,7 +31,7 @@ public class BlockMobFactory extends BlockContainerWoot implements ITooltipInfo 
 
     public BlockMobFactory() {
 
-        super(Material.rock, BASENAME);
+        super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }

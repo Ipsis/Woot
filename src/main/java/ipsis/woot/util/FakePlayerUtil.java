@@ -47,7 +47,7 @@ public class FakePlayerUtil {
     static void createSword(EnumEnchantKey enchantKey) {
 
         // TODO check the looting enchantment
-        ItemStack itemStack = new ItemStack(Items.iron_sword);
+        ItemStack itemStack = new ItemStack(Items.IRON_SWORD);
         if (enchantKey == EnumEnchantKey.LOOTING_I && swordLootingI == null) {
             itemStack.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingILevel);
             swordLootingI = itemStack;

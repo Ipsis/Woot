@@ -35,7 +35,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
     public BlockMobFactoryStructure() {
 
-        super (Material.rock, BASENAME);
+        super (Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
@@ -113,7 +113,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     @Override
     public void initModel() {
 
-        Item itemBlockVariants = Item.itemRegistry.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
+        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
         for (int i = 0; i < EnumMobFactoryModule.values().length; i++) {
 

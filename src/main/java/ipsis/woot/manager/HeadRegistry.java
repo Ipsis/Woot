@@ -27,15 +27,15 @@ public class HeadRegistry {
 
         // EntitySkeleton.java
         key = Woot.mobRegistry.createWootName("none:Skeleton");
-        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.skull, 1, 0)));
+        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 0)));
         key = Woot.mobRegistry.createWootName("wither:Skeleton");
-        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.skull, 1, 1)));
+        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 1)));
         // EntityZombie.java
         key = Woot.mobRegistry.createWootName("none:Zombie");
-        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.skull, 1, 2)));
+        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 2)));
         // EntityCreeper.java
         key = Woot.mobRegistry.createWootName("none:Creeper");
-        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.skull, 1, 4)));
+        headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 4)));
     }
 
     void initModded() {

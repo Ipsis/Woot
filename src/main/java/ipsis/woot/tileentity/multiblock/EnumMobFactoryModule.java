@@ -8,7 +8,7 @@ public enum EnumMobFactoryModule implements IStringSerializable {
     BLOCK_1("block_1", WootColor.GRAY),
     BLOCK_2("block_2", WootColor.RED),
     BLOCK_3("block_3", WootColor.GREEN),
-    BLOCK_4("block_4", WootColor.PURPLE),
+    BLOCK_4("block_4", WootColor.BLUE),
     BLOCK_5("block_5", WootColor.ORANGE),
     CAP_I("tier_i_cap", WootColor.LIGHTGRAY),
     CAP_II("tier_ii_cap", WootColor.YELLOW),

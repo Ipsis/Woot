@@ -1,14 +1,18 @@
 package ipsis.woot.manager;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 
@@ -96,10 +100,23 @@ public class MobRegistry {
         if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
             ((EntitySkeleton) entity).setSkeletonType(1);
         } else if (isSlime(mobInfo.wootMobName, entity)) {
-            // TODO setSlimeSize
-            /*
             if (((EntitySlime)entity).getSlimeSize() != 1)
-                ((EntitySlime)entity).setSlimeSize(1); */
+                setSlimeSize((EntitySlime)entity, 1);
+        } else if (isMagmaCube(mobInfo.wootMobName, entity)) {
+            if (((EntitySlime)entity).getSlimeSize() == 1)
+                setSlimeSize((EntitySlime)entity, 2);
+        }
+    }
+
+    private void setSlimeSize(EntitySlime entitySlime, int size) {
+
+        String[] methodNames = new String[]{ "func_70799_a", "setSlimeSize" };
+
+        try {
+            Method m = ReflectionHelper.findMethod(EntitySlime.class, null, methodNames, int.class);
+            m.invoke(entitySlime, size);
+        } catch (Throwable e){
+            LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }
     }
 
@@ -114,6 +131,13 @@ public class MobRegistry {
 
         if (entity instanceof EntitySlime)
             return wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
+        return false;
+    }
+
+    boolean isMagmaCube(String wootName, Entity entity) {
+
+        if (entity instanceof EntityMagmaCube)
+            return wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
         return false;
     }
 

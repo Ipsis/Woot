@@ -10,6 +10,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -90,5 +91,19 @@ public class TileEntityLayout extends TileEntity {
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 
         this.readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+
+        /**
+         * This defaults to the bounding box size which will be a single blocks.
+         * For this block we need it to be a bit larger to accommodate the largest tier factory
+         */
+        BlockPos pos = getPos();
+        return new AxisAlignedBB(
+                pos.add(-EnumMobFactoryTier.getMaxXZOffset(), -1, -EnumMobFactoryTier.getMaxXZOffset()),
+                pos.add(EnumMobFactoryTier.getMaxXZOffset(), EnumMobFactoryTier.getMaxYOffset() - 1, EnumMobFactoryTier.getMaxXZOffset()));
     }
 }

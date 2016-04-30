@@ -174,6 +174,21 @@ public enum EnumMobFactoryTier {
         }
     };
 
+    /**
+     *
+     * @return the offset from center of the widest factory tier
+     */
+    public static int getMaxXZOffset() {
+        return 4;
+    }
+
+    /**
+     * @return the height of the tallest factory tier
+     */
+    public static int getMaxYOffset() {
+        return 6;
+    }
+
     public static final EnumMobFactoryTier[] VALID_TIERS = new EnumMobFactoryTier[] { TIER_ONE, TIER_TWO, TIER_THREE };
 
     public EnumMobFactoryTier getNext() {

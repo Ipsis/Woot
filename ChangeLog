@@ -1,6 +1,15 @@
 Builder's Guides ChangeLog
 ==========================
 
+1.9-0.5.0-beta
+--------------
+
+Fixes
+* BUG0022 - Set the attacking player to FakePlayer before a fake kill, to generate the player-kill specific drops eg. blaze rods
+* BUG0023 - Only learn vanilla slime drops when the slime is the correct size to produce drops
+* BUG0024 - Layout block rendering stops when TE out of view
+* BUG0026 - Layout block shows Tier III factory blue blocks as purple
+
 1.9-0.4.0-beta
 --------------
 

@@ -3,6 +3,7 @@ package ipsis.woot.block;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryStructure extends BlockContainerWoot{
+public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityProvider {
 
     public static final String BASENAME = "structure";
 

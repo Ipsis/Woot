@@ -6,6 +6,7 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -29,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryUpgrade extends BlockContainerWoot implements ITooltipInfo {
+public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, ITileEntityProvider {
 
     public static final String BASENAME = "upgrade";
 

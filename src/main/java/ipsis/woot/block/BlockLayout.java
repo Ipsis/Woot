@@ -5,6 +5,7 @@ import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityLayout;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLayout extends BlockContainerWoot {
+public class BlockLayout extends BlockWoot implements ITileEntityProvider {
 
     public static final String BASENAME = "layout";
 

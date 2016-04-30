@@ -33,9 +33,9 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityLayout.class, "tile." + BlockLayout.BASENAME);
     }
 
-    public static BlockContainerWoot blockFactory = new BlockMobFactory();
-    public static BlockContainerWoot blockUpgrade = new BlockMobFactoryUpgrade();
-    public static BlockContainerWoot blockStructure = new BlockMobFactoryStructure();
-    public static BlockContainerWoot blockController = new BlockMobFactoryController();
-    public static BlockContainerWoot blockLayout = new BlockLayout();
+    public static BlockWoot blockFactory = new BlockMobFactory();
+    public static BlockWoot blockUpgrade = new BlockMobFactoryUpgrade();
+    public static BlockWoot blockStructure = new BlockMobFactoryStructure();
+    public static BlockWoot blockController = new BlockMobFactoryController();
+    public static BlockWoot blockLayout = new BlockLayout();
 }

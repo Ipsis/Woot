@@ -334,12 +334,13 @@ public class SpawnerManager {
     public void cmdClearTableEntry(ICommandSender sender, String mobName, EnumEnchantKey key) {
 
         SpawnerEntry e = spawnerMap.get(mobName);
-        if (e == null)
+        if (e == null) {
             sender.addChatMessage(new TextComponentString(String.format("No entry for %s", mobName)));
-
-        int size = e.dropMap.get(key).size();
-        clearTableEntry(mobName, key);
-        sender.addChatMessage(new TextComponentString(String.format("%s:%s cleared %d entries", mobName, key, size)));
+        } else {
+            int size = e.dropMap.get(key).size();
+            clearTableEntry(mobName, key);
+            sender.addChatMessage(new TextComponentString(String.format("%s:%s cleared %d entries", mobName, key, size)));
+        }
     }
 
     public void cmdClear(ICommandSender sender) {

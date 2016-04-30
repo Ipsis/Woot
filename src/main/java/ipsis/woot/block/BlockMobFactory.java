@@ -1,11 +1,16 @@
 package ipsis.woot.block;
 
+import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.manager.SpawnerUpgrade;
+import ipsis.woot.manager.UpgradeManager;
+import ipsis.woot.manager.UpgradeSetup;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -14,15 +19,20 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEntityProvider {
@@ -50,6 +60,57 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
         EnumFacing f = placer.getHorizontalFacing().getOpposite();
         worldIn.setBlockState(pos, state.withProperty(FACING, f), 2);
+    }
+
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+        if (!worldIn.isRemote && (worldIn.getTileEntity(pos) instanceof  TileEntityMobFactory)) {
+
+            TileEntityMobFactory te = (TileEntityMobFactory)worldIn.getTileEntity(pos);
+
+            List<String> out = new ArrayList<String>();
+            out.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
+                    (te.getFactoryTier() == EnumMobFactoryTier.TIER_ONE ? "I" : te.getFactoryTier() == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+
+            out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getDisplayName()));
+
+
+            int maxMass = Settings.baseMobCount;
+            UpgradeSetup upgradeSetup = te.getUpgradeSetup();
+            if (upgradeSetup != null) {
+                if (upgradeSetup.hasMassUpgrade())
+                    maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+            }
+            out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
+                    maxMass, te.getSpawnReq().getSpawnTime()));
+            out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
+                    te.getSpawnReq().getTotalRf(), te.getSpawnReq().getRfPerTick()));
+            //out.add(TextFormatting.RED + String.format("%d / %d RF", te.getEnergyStored(EnumFacing.DOWN), te.getMaxEnergyStored(EnumFacing.DOWN)));
+
+
+            if (upgradeSetup != null) {
+                List<EnumSpawnerUpgrade> upgradeList = te.getUpgradeSetup().getUpgradeList();
+                if (!upgradeList.isEmpty()) {
+
+                    for (EnumSpawnerUpgrade upgrade : upgradeList) {
+                        SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(upgrade);
+                        TextFormatting f;
+                        if (u.getUpgradeTier() == 1)
+                            f = TextFormatting.GRAY;
+                        else if (u.getUpgradeTier() == 2)
+                            f = TextFormatting.GOLD;
+                        else
+                            f = TextFormatting.AQUA;
+                        out.add(f + StringHelper.localize( Lang.TOOLTIP_UPGRADE + upgrade));
+                    }
+                }
+            }
+
+            for (String s : out)
+                playerIn.addChatComponentMessage(new TextComponentString(s));
+        }
+        return true;
     }
 
     @SideOnly(Side.CLIENT)

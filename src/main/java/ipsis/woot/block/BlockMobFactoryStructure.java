@@ -21,7 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -73,7 +72,7 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     @Override
     public int damageDropped(IBlockState state) {
 
-        return ((EnumMobFactoryModule)state.getValue(MODULE)).getMetadata();
+        return state.getValue(MODULE).getMetadata();
     }
 
     @SideOnly(Side.CLIENT)
@@ -107,7 +106,7 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     @Override
     public int getMetaFromState(IBlockState state) {
 
-        return ((EnumMobFactoryModule)state.getValue(MODULE)).getMetadata();
+        return state.getValue(MODULE).getMetadata();
     }
 
     @SideOnly(Side.CLIENT)

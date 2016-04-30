@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity;
 
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import net.minecraft.nbt.NBTTagCompound;

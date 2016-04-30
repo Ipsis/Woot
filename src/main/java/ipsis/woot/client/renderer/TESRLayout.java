@@ -1,17 +1,11 @@
 package ipsis.woot.client.renderer;
 
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.LayoutBlockInfo;
 import ipsis.woot.tileentity.TileEntityLayout;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import ipsis.woot.util.RenderUtils;
-import ipsis.woot.util.WootColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 

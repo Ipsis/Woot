@@ -9,7 +9,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -179,7 +178,7 @@ public class SpawnerManager {
         Entity entity = Woot.mobRegistry.createEntity(mobName, world);
 
         if (entity != null) {
-            ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), (IEntityLivingData) null);
+            ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
             entity.setPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
             /**
@@ -211,7 +210,7 @@ public class SpawnerManager {
          * BUG0022 - Need to set the attackingPlayer or the 1.9 loot tables will not
          * give us all the drops, as some are conditional on killed_by_player
          */
-        ((EntityLivingBase)entity).attackingPlayer = (EntityPlayer)fakePlayer;
+        ((EntityLivingBase)entity).attackingPlayer = fakePlayer;
         ((EntityLivingBase) entity).onDeath(entityDamageSource);
     }
 

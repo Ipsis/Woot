@@ -4,7 +4,6 @@ import com.mojang.authlib.GameProfile;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLootBonus;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;

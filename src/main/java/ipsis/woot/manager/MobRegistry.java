@@ -122,23 +122,17 @@ public class MobRegistry {
 
     boolean isWitherSkeleton(String wootName, Entity entity) {
 
-        if (entity instanceof EntitySkeleton)
-            return wootName.equals(Reference.MOD_ID + ":" + "wither:Skeleton");
-        return false;
+        return entity instanceof EntitySkeleton && wootName.equals(Reference.MOD_ID + ":" + "wither:Skeleton");
     }
 
     boolean isSlime(String wootName, Entity entity) {
 
-        if (entity instanceof EntitySlime)
-            return wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
-        return false;
+        return entity instanceof EntitySlime && wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
     }
 
     boolean isMagmaCube(String wootName, Entity entity) {
 
-        if (entity instanceof EntityMagmaCube)
-            return wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
-        return false;
+        return entity instanceof EntityMagmaCube && wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
     }
 
     public Entity createEntity(String wootName, World world) {
@@ -155,10 +149,8 @@ public class MobRegistry {
 
     public boolean hasXp(String wootName) {
 
-        if (mobInfoHashMap.containsKey(wootName))
-            return mobInfoHashMap.get(wootName).hasXp();
+        return mobInfoHashMap.containsKey(wootName) && mobInfoHashMap.get(wootName).hasXp();
 
-        return false;
     }
 
     public int getSpawnXp(String wootName) {

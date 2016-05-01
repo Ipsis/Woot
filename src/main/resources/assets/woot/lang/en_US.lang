@@ -44,7 +44,7 @@ waila.Woot:factory.cost=Costs %dRF @ %dRF/tick
 waila.Woot:controller.tier=Requires Tier %s
 
 config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
-config.Woot:globalLearnTicks=Number of ticks between fake spawn learning
+config.Woot:globalLearnTicks=Minimum number of ticks between fake spawn learning
 config.Woot:globalStrictSpawns=Learn only from mob factory spawning
 config.Woot:globalStrictPower=Must provide full RF/tick or lose progress
 config.Woot:globalTierIRF=Tier I RF cost per mob level

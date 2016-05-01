@@ -36,6 +36,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int currSpawnTicks;
     int consumedRf;
     int storedXp;
+    int learnTicksOffset;
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
@@ -91,6 +92,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         currSpawnTicks = 0;
         consumedRf = 0;
         storedXp = 0;
+
+        learnTicksOffset = Settings.learnTicks + Woot.random.nextInt(11);
     }
 
     public String getMobName() {
@@ -266,7 +269,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             return;
 
         currLearnTicks++;
-        if (currLearnTicks >= Settings.learnTicks) {
+        if (currLearnTicks >= learnTicksOffset) {
             if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());

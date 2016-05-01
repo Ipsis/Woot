@@ -68,47 +68,49 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         if (!worldIn.isRemote && (worldIn.getTileEntity(pos) instanceof  TileEntityMobFactory)) {
 
             TileEntityMobFactory te = (TileEntityMobFactory)worldIn.getTileEntity(pos);
+            if (te.isFormed()) {
 
-            List<String> out = new ArrayList<String>();
-            out.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                    (te.getFactoryTier() == EnumMobFactoryTier.TIER_ONE ? "I" : te.getFactoryTier() == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+                List<String> out = new ArrayList<String>();
+                out.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
+                        (te.getFactoryTier() == EnumMobFactoryTier.TIER_ONE ? "I" : te.getFactoryTier() == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
 
-            out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getDisplayName()));
-
-
-            int maxMass = Settings.baseMobCount;
-            UpgradeSetup upgradeSetup = te.getUpgradeSetup();
-            if (upgradeSetup != null) {
-                if (upgradeSetup.hasMassUpgrade())
-                    maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
-            }
-            out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
-                    maxMass, te.getSpawnReq().getSpawnTime()));
-            out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
-                    te.getSpawnReq().getTotalRf(), te.getSpawnReq().getRfPerTick()));
-            //out.add(TextFormatting.RED + String.format("%d / %d RF", te.getEnergyStored(EnumFacing.DOWN), te.getMaxEnergyStored(EnumFacing.DOWN)));
+                out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getDisplayName()));
 
 
-            if (upgradeSetup != null) {
-                List<EnumSpawnerUpgrade> upgradeList = te.getUpgradeSetup().getUpgradeList();
-                if (!upgradeList.isEmpty()) {
+                int maxMass = Settings.baseMobCount;
+                UpgradeSetup upgradeSetup = te.getUpgradeSetup();
+                if (upgradeSetup != null) {
+                    if (upgradeSetup.hasMassUpgrade())
+                        maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+                }
+                out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
+                        maxMass, te.getSpawnReq().getSpawnTime()));
+                out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
+                        te.getSpawnReq().getTotalRf(), te.getSpawnReq().getRfPerTick()));
+                //out.add(TextFormatting.RED + String.format("%d / %d RF", te.getEnergyStored(EnumFacing.DOWN), te.getMaxEnergyStored(EnumFacing.DOWN)));
 
-                    for (EnumSpawnerUpgrade upgrade : upgradeList) {
-                        SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(upgrade);
-                        TextFormatting f;
-                        if (u.getUpgradeTier() == 1)
-                            f = TextFormatting.GRAY;
-                        else if (u.getUpgradeTier() == 2)
-                            f = TextFormatting.GOLD;
-                        else
-                            f = TextFormatting.AQUA;
-                        out.add(f + StringHelper.localize( Lang.TOOLTIP_UPGRADE + upgrade));
+
+                if (upgradeSetup != null) {
+                    List<EnumSpawnerUpgrade> upgradeList = te.getUpgradeSetup().getUpgradeList();
+                    if (!upgradeList.isEmpty()) {
+
+                        for (EnumSpawnerUpgrade upgrade : upgradeList) {
+                            SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(upgrade);
+                            TextFormatting f;
+                            if (u.getUpgradeTier() == 1)
+                                f = TextFormatting.GRAY;
+                            else if (u.getUpgradeTier() == 2)
+                                f = TextFormatting.GOLD;
+                            else
+                                f = TextFormatting.AQUA;
+                            out.add(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + upgrade));
+                        }
                     }
                 }
-            }
 
-            for (String s : out)
-                playerIn.addChatComponentMessage(new TextComponentString(s));
+                for (String s : out)
+                    playerIn.addChatComponentMessage(new TextComponentString(s));
+            }
         }
         return true;
     }

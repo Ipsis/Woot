@@ -5,10 +5,17 @@ Builder's Guides ChangeLog
 --------------
 
 Fixes
+* BUG0014 - Right click on factory block will show configuration in chat
+* BUG0017 - Waila tooltips are incorrect for upgrades and structure blocks
 * BUG0022 - Set the attacking player to FakePlayer before a fake kill, to generate the player-kill specific drops eg. blaze rods
 * BUG0023 - Only learn vanilla slime drops when the slime is the correct size to produce drops
 * BUG0024 - Layout block rendering stops when TE out of view
+* BUG0025 - Set the correct size of slime (==1) and magma cube (>1) when fake spawning, to get the loot drop size mobs
 * BUG0026 - Layout block shows Tier III factory blue blocks as purple
+* BUG0027 - Staggered background mob spawning
+
+Build Environment:
+* Forge - 1.9-12.16.0.1868
 
 1.9-0.4.0-beta
 --------------

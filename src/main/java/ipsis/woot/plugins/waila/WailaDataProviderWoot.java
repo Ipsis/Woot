@@ -1,5 +1,6 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
@@ -8,17 +9,16 @@ import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
+import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
-//import mcp.mobius.waila.api.IWailaConfigHandler;
-//import mcp.mobius.waila.api.IWailaDataAccessor;
-//import mcp.mobius.waila.api.IWailaDataProvider;
-//import mcp.mobius.waila.api.IWailaRegistrar;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByteArray;
@@ -36,6 +36,16 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        Block block = accessor.getBlock();
+
+        if (block == ModBlocks.blockStructure) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockStructure, 1, meta);
+        } else if (block == ModBlocks.blockUpgrade) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockUpgrade, 1, meta);
+        }
         return null;
     }
 
@@ -173,6 +183,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     public static void callbackRegister(IWailaRegistrar registrar) {
 
+        registrar.registerStackProvider(INSTANCE, TileEntityMobFactoryStructure.class);
+        registrar.registerStackProvider(INSTANCE, TileEntityMobFactoryUpgrade.class);
         registrar.registerBodyProvider(INSTANCE, TileEntityMobFactory.class);
         registrar.registerBodyProvider(INSTANCE, TileEntityMobFactoryController.class);
         registrar.registerNBTProvider(INSTANCE, TileEntityMobFactory.class);

@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -53,6 +54,18 @@ public class MobRegistry {
         return Reference.MOD_ID + ":" + name;
     }
 
+    private String createDisplayName(EntityLiving entityLiving) {
+
+        if (entityLiving instanceof  EntitySkeleton) {
+            if (((EntitySkeleton) entityLiving).getSkeletonType() == 1)
+                return I18n.translateToLocal("entity.Woot:witherskelly.name");
+            else
+                return entityLiving.getName();
+        } else {
+            return entityLiving.getName();
+        }
+    }
+
     public String onEntityLiving(EntityLiving entityLiving) {
 
         // blacklist is based off Minecraft names
@@ -68,13 +81,14 @@ public class MobRegistry {
         }
 
         String wootName = createWootName(entityLiving);
+        String displayName = createDisplayName(entityLiving);
         if (!mobInfoHashMap.containsKey(wootName)) {
-            MobInfo info = new MobInfo(wootName, entityLiving.getName());
+            MobInfo info = new MobInfo(wootName, displayName);
             mobInfoHashMap.put(wootName, info);
         } else {
             MobInfo mobInfo = mobInfoHashMap.get(wootName);
             if (mobInfo.displayName.equals(INVALID_MOB_NAME))
-                mobInfo.displayName = entityLiving.getName();
+                mobInfo.displayName = displayName;
         }
 
         return wootName;

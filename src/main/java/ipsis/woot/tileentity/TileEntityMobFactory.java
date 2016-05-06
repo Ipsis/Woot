@@ -7,6 +7,7 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -281,11 +282,16 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
-        currSpawnTicks++;
-        processPower();
-        if (currSpawnTicks == spawnReq.getSpawnTime()) {
-            onSpawn();
-            currSpawnTicks = 0;
+        /**
+         * Powered block turns us off
+         */
+        if (!worldObj.isBlockPowered(pos)) {
+            currSpawnTicks++;
+            processPower();
+            if (currSpawnTicks == spawnReq.getSpawnTime()) {
+                onSpawn();
+                currSpawnTicks = 0;
+            }
         }
     }
 

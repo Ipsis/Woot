@@ -43,10 +43,35 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
 
-    static final String NBT_FACING = "facing";
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
     static final String NBT_CONSUMED_RF = "consumedRf";
     static final String NBT_STORED_XP = "storedXp";
+
+    void setCurrSpawnTicks(int ticks) {
+        if (currSpawnTicks != ticks) {
+            currSpawnTicks = ticks;
+            markDirty();
+        }
+    }
+
+    void incCurrSpawnTicks() {
+        currSpawnTicks++;
+        markDirty();
+    }
+
+    void setConsumedRf(int rf) {
+        if (consumedRf != rf) {
+            consumedRf = rf;
+            markDirty();
+        }
+    }
+
+    void setStoredXp(int xp) {
+        if (storedXp != xp) {
+            storedXp = xp;
+            markDirty();
+        }
+    }
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
@@ -200,8 +225,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             /* Preserver on load */
             nbtLoaded = false;
         } else {
-            consumedRf = 0;
-            currSpawnTicks = 0;
+            setConsumedRf(0);
+            setCurrSpawnTicks(0);
         }
         updateUpgradeBlocks(true);
 
@@ -281,11 +306,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
-        currSpawnTicks++;
+        incCurrSpawnTicks();
         processPower();
         if (currSpawnTicks == spawnReq.getSpawnTime()) {
             onSpawn();
-            currSpawnTicks = 0;
+            setCurrSpawnTicks(0);
         }
     }
 
@@ -304,12 +329,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
         if (drawnRf == spawnReq.getRfPerTick()) {
-            consumedRf += drawnRf;
+            setConsumedRf(consumedRf + drawnRf);
         } else {
             if (Settings.strictPower)
-                consumedRf = 0;
+                setConsumedRf(0);
             else
-                consumedRf += drawnRf;
+                setConsumedRf(consumedRf + drawnRf);
         }
     }
 
@@ -344,10 +369,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
              * This means that if you don't provide the correct RF/tick then it will eat all the power that you
              * gave it until the spawn ticks was reached.
              */
-            consumedRf = 0;
+            setConsumedRf(0);
         } else {
             if (Settings.strictPower)
-                consumedRf = 0;
+                setConsumedRf(0);
         }
     }
 

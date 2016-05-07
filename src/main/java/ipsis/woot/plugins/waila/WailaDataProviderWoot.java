@@ -119,6 +119,9 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
                     tag.getInteger("mobCount"), tag.getInteger("spawnTicks")));
             currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
                     tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
+            boolean running = tag.getBoolean("running");
+            currenttip.add(TextFormatting.GREEN + String.format(
+                    running ? StringHelper.localize(Lang.WAILA_FACTORY_RUNNING) : StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
 
             int energy    = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
             int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
@@ -152,6 +155,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             tag.setInteger("spawnTicks", tile.getSpawnReq().getSpawnTime());
             tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());
             tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
+            tag.setBoolean("running", tile.isRunning());
 
             tag.setInteger("Energy",     tile.getEnergyStored(EnumFacing.DOWN));
             tag.setInteger("MaxStorage", tile.getMaxEnergyStored(EnumFacing.DOWN));

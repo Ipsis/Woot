@@ -38,6 +38,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int consumedRf;
     int storedXp;
     int learnTicksOffset;
+    boolean running;
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
@@ -48,6 +49,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
     static final String NBT_CONSUMED_RF = "consumedRf";
     static final String NBT_STORED_XP = "storedXp";
+    static final String NBT_RUNNING = "running";
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
@@ -59,6 +61,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
         compound.setInteger(NBT_STORED_XP, storedXp);
+        compound.setBoolean(NBT_RUNNING, running);
 
         energyStorage.writeToNBT(compound);
     }
@@ -71,6 +74,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
             consumedRf = compound.getInteger(NBT_CONSUMED_RF);
             storedXp = compound.getInteger(NBT_STORED_XP);
+            if (compound.hasKey(NBT_RUNNING))
+                running = compound.getBoolean(NBT_RUNNING);
+            else
+                running = true;
             nbtLoaded = true;
         }
 
@@ -93,6 +100,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         currSpawnTicks = 0;
         consumedRf = 0;
         storedXp = 0;
+        running = true;
 
         learnTicksOffset = Settings.learnTicks + Woot.random.nextInt(11);
     }
@@ -120,6 +128,19 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     public UpgradeSetup getUpgradeSetup() {
 
         return this.upgradeSetup;
+    }
+
+    void setRunning(boolean running) {
+
+        if (this.running != running) {
+            this.running = running;
+            markDirty();
+        }
+    }
+
+    public boolean isRunning() {
+
+        return running;
     }
 
     public boolean isFormed() {
@@ -266,6 +287,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             dirtyUpgrade = false;
         }
 
+        boolean powered = worldObj.isBlockPowered(pos);
+        if (running && powered)
+            setRunning(false);
+        else if (!running && !powered)
+            setRunning(true);
+
         if (!isFormed())
             return;
 
@@ -282,10 +309,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
-        /**
-         * Powered block turns us off
-         */
-        if (!worldObj.isBlockPowered(pos)) {
+        if (running) {
             currSpawnTicks++;
             processPower();
             if (currSpawnTicks == spawnReq.getSpawnTime()) {

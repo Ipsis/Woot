@@ -28,9 +28,9 @@ tile.Woot:upgrade.mass_iii.name=Mass III Upgrade
 tile.Woot:upgrade.decapitate_i.name=Decapitate I Upgrade
 tile.Woot:upgrade.decapitate_ii.name=Decapitate II Upgrade
 tile.Woot:upgrade.decapitate_iii.name=Decapitate III Upgrade
-tile.Woot:upgrade.efficiency_i.name=Efficiency I Upgrade
-tile.Woot:upgrade.efficiency_ii.name=Efficiency II Upgrade
-tile.Woot:upgrade.efficiency_iii.name=Efficiency III Upgrade
+tile.Woot:upgradeb.efficiency_i.name=Efficiency I Upgrade
+tile.Woot:upgradeb.efficiency_ii.name=Efficiency II Upgrade
+tile.Woot:upgradeb.efficiency_iii.name=Efficiency III Upgrade
 
 item.Woot:prism.name=Mob Prism
 item.Woot:xpShard.name=Xp Shard
@@ -92,9 +92,9 @@ config.Woot:decapIII_percentage=Decapitate III chance to drop head
 config.Woot:xpI_boost=XP I experience percentage
 config.Woot:xpII_boost=XP II experience percentage
 config.Woot:xpIII_boost=XP III experience percentage
-config.Woot:efficiencyI_boost=Efficiency I increase in efficiency
-config.Woot:efficiencyII_boost=Efficiency II increase in efficiency
-config.Woot:efficiencyIII_boost=Efficiency III increase in efficiency
+config.Woot:efficiencyI_percentage=Efficiency I increase in efficiency
+config.Woot:efficiencyII_percentage=Efficiency II increase in efficiency
+config.Woot:efficiencyIII_percentage=Efficiency III increase in efficiency
 
 tooltip.Woot:factory_cost=Tier %s costs %dRF for each mob spawned
 
@@ -108,7 +108,7 @@ tooltip.Woot:upgrade_xp_effect=Increases XP collected by %d%%
 tooltip.Woot:upgrade_xp_base_effect=Collect XP
 tooltip.Woot:upgrade_mass_effect=Spawn %d mobs
 tooltip.Woot:upgrade_decap_effect=Increases chance to decapitate to %d%%
-tooltip.Woot:upgrade_efficiency_effect=Increase factory efficiency and reduce power cost
+tooltip.Woot:upgrade_efficiency_effect=Reduce factory power cost by %d%%
 
 tooltip.Woot:upgrade.rate_i=Spawn Rate I
 tooltip.Woot:upgrade.rate_ii=Spawn Rate II

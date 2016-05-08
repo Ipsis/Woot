@@ -34,11 +34,12 @@ public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, I
     public static final String BASENAME = "upgrade";
 
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
-    public static final PropertyEnum<EnumSpawnerUpgrade> VARIANT = PropertyEnum.<EnumSpawnerUpgrade>create("variant", EnumSpawnerUpgrade.class);
+    public static final PropertyEnum<EnumVariantUpgrade> VARIANT =
+            PropertyEnum.<EnumVariantUpgrade>create("variant", EnumVariantUpgrade.class);
     public BlockMobFactoryUpgrade() {
 
         super(Material.ROCK, BASENAME);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumSpawnerUpgrade.RATE_I).withProperty(ACTIVE, false));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumVariantUpgrade.RATE_I).withProperty(ACTIVE, false));
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
@@ -64,7 +65,7 @@ public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, I
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
-        return this.getDefaultState().withProperty(VARIANT, EnumSpawnerUpgrade.getFromMetadata(meta)).withProperty(ACTIVE, false);
+        return this.getDefaultState().withProperty(VARIANT, EnumVariantUpgrade.getFromMetadata(meta)).withProperty(ACTIVE, false);
     }
 
     @Override
@@ -79,9 +80,9 @@ public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, I
 
         Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
-        for (int i = 0; i < EnumSpawnerUpgrade.values().length; i++) {
+        for (int i = 0; i < EnumVariantUpgrade.values().length; i++) {
 
-            EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(i);
+            EnumVariantUpgrade e = EnumVariantUpgrade.getFromMetadata(i);
             ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(
                     Reference.MOD_ID + ":" + BASENAME + "_" + e, "inventory");
             ModelLoader.setCustomModelResourceLocation(itemBlockVariants, i, itemModelResourceLocation);
@@ -110,7 +111,7 @@ public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, I
     @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        EnumSpawnerUpgrade type = EnumSpawnerUpgrade.getFromMetadata(meta);
+        EnumVariantUpgrade type = EnumVariantUpgrade.getFromMetadata(meta);
         switch (type) {
             case RATE_I:
                 toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateITicks));

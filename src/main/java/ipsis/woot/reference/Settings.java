@@ -60,9 +60,9 @@ public class Settings {
         public static final int DEF_XP_II_BOOST = 40;
         public static final int DEF_XP_III_BOOST = 80;
 
-        public static final int DEF_EFFICIENCY_I_EFFECT = 15;
-        public static final int DEF_EFFICIENCY_II_EFFECT = 25;
-        public static final int DEF_EFFICIENCY_III_EFFECT = 30;
+        public static final int DEF_EFFICIENCY_I_PERCENTAGE = 15;
+        public static final int DEF_EFFICIENCY_II_PERCENTAGE = 25;
+        public static final int DEF_EFFICIENCY_III_PERCENTAGE = 30;
     }
 
     /**

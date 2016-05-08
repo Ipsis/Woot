@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.woot.block.BlockMobFactoryUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.reference.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -40,6 +41,10 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.DECAPITATE_I).setRfCostPerTick(Settings.decapitateIRfTick).setDecapitateChance(Settings.decapitateIChance);
         upgradeMap.get(EnumSpawnerUpgrade.DECAPITATE_II).setRfCostPerTick(Settings.decapitateIIRfTick).setDecapitateChance(Settings.decapitateIIChance);
         upgradeMap.get(EnumSpawnerUpgrade.DECAPITATE_III).setRfCostPerTick(Settings.decapitateIIIRfTick).setDecapitateChance(Settings.decapitateIIIChance);
+
+        upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_I).setRfCostPerTick(0).setEfficiency(Settings.efficiencyI);
+        upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_II).setRfCostPerTick(0).setEfficiency(Settings.efficiencyII);
+        upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_III).setRfCostPerTick(0).setEfficiency(Settings.efficiencyIII);
     }
 
     public static EnumEnchantKey getLootingEnchant(List<SpawnerUpgrade> upgradeList) {
@@ -126,6 +131,35 @@ public class UpgradeManager {
         return xpUpgrade;
     }
 
+    public static SpawnerUpgrade getEfficiencyUpgrade(List<SpawnerUpgrade> upgradeList) {
+
+        SpawnerUpgrade efficiencyUpgrade = null;
+        int tier = 0;
+        for (SpawnerUpgrade upgrade : upgradeList) {
+            if (upgrade.isEfficiency() && upgrade.getUpgradeTier() > tier) {
+                tier = upgrade.getUpgradeTier();
+                efficiencyUpgrade = upgrade;
+            }
+        }
+
+        return efficiencyUpgrade;
+    }
+
+    static boolean isUpgradeBlock(Block b) {
+
+        return b instanceof BlockMobFactoryUpgrade || b instanceof BlockMobFactoryUpgradeB;
+    }
+
+    static EnumSpawnerUpgrade getUpgradeFromBlockState(IBlockState iBlockState, Block b) {
+
+        if (b instanceof BlockMobFactoryUpgrade)
+            return EnumSpawnerUpgrade.getFromVariant(iBlockState.getValue(BlockMobFactoryUpgrade.VARIANT));
+        else if (b instanceof BlockMobFactoryUpgradeB)
+            return EnumSpawnerUpgrade.getFromVariant(iBlockState.getValue(BlockMobFactoryUpgradeB.VARIANT));
+        else
+            return null;
+    }
+
     public static List<SpawnerUpgrade> scanUpgradeTotem(World world, BlockPos blockPos, int maxTier, List<SpawnerUpgrade> upgradeList, List<BlockPos> blockPosList) {
 
         if (!world.isBlockLoaded(blockPos) || maxTier <= 0)
@@ -141,10 +175,13 @@ public class UpgradeManager {
             iBlockState = world.getBlockState(blockPos.add(0, yOffset, 0));
             block = iBlockState.getBlock();
 
-            if (!(block instanceof BlockMobFactoryUpgrade))
+            if (!isUpgradeBlock(block))
                 break;
 
-            EnumSpawnerUpgrade u = iBlockState.getValue(BlockMobFactoryUpgrade.VARIANT);
+            EnumSpawnerUpgrade u = getUpgradeFromBlockState(iBlockState, block);
+            if (u == null)
+                break;
+
             if (firstUpgrade == null)
                 firstUpgrade = u;
             else if (!checkUpgrade(firstUpgrade, u))
@@ -174,6 +211,9 @@ public class UpgradeManager {
             return u == EnumSpawnerUpgrade.MASS_II || u == EnumSpawnerUpgrade.MASS_III;
         else if (first == EnumSpawnerUpgrade.XP_I)
             return u == EnumSpawnerUpgrade.XP_II || u == EnumSpawnerUpgrade.XP_III;
+        else if (first == EnumSpawnerUpgrade.EFFICIENCY_I)
+            return u == EnumSpawnerUpgrade.EFFICIENCY_II || u == EnumSpawnerUpgrade.EFFICIENCY_III;
+
 
         return false;
     }

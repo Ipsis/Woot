@@ -60,5 +60,9 @@ public class Config {
         public static final String XP_I_BOOST = "xpI_boost";
         public static final String XP_II_BOOST = "xpII_boost";
         public static final String XP_III_BOOST = "xpIII_boost";
+
+        public static final String EFFICIENCY_I_PERCENTAGE = "efficiencyI_percentage";
+        public static final String EFFICIENCY_II_PERCENTAGE = "efficiencyII_percentage";
+        public static final String EFFICIENCY_III_PERCENTAGE = "efficiencyIII_percentage";
     }
 }

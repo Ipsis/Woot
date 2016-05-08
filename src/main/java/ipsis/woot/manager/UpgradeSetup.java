@@ -12,6 +12,7 @@ public class UpgradeSetup {
     EnumSpawnerUpgrade xpUpgrade;
     EnumSpawnerUpgrade massUpgrade;
     EnumSpawnerUpgrade decapitateUpgrade;
+    EnumSpawnerUpgrade efficiencyUpgrade;
 
     List<EnumSpawnerUpgrade> upgradeList;
 
@@ -31,6 +32,7 @@ public class UpgradeSetup {
         xpUpgrade = null;
         massUpgrade = null;
         decapitateUpgrade = null;
+        efficiencyUpgrade = null;
         upgradeList.clear();
     }
 
@@ -71,6 +73,12 @@ public class UpgradeSetup {
             this.upgradeList.add(xpUpgrade);
         }
 
+        u = UpgradeManager.getEfficiencyUpgrade(upgradeList);
+        if (u != null) {
+            efficiencyUpgrade = u.getUpgradeType();
+            this.upgradeList.add(efficiencyUpgrade);
+        }
+
         rfPerTickCost = 0;
         // Look at ALL the upgrades passed in
         for (SpawnerUpgrade spawnerUpgrade : upgradeList) {
@@ -83,6 +91,7 @@ public class UpgradeSetup {
     public boolean hasDecapitateUpgrade() { return decapitateUpgrade != null; }
     public boolean hasLootingUpgrade() { return lootingUpgrade != null; }
     public boolean hasXpUpgrade() { return xpUpgrade != null; }
+    public boolean hasEfficiencyUpgrade() { return efficiencyUpgrade != null; }
     public List<EnumSpawnerUpgrade> getUpgradeList() { return this.upgradeList; }
     public int getRfPerTickCost() { return rfPerTickCost; }
     public EnumSpawnerUpgrade getMassUpgrade() { return massUpgrade; }
@@ -90,5 +99,6 @@ public class UpgradeSetup {
     public EnumSpawnerUpgrade getDecapitateUpgrade() { return decapitateUpgrade; }
     public EnumSpawnerUpgrade getLootingUpgrade() { return lootingUpgrade; }
     public EnumSpawnerUpgrade getXpUpgrade() { return xpUpgrade; }
+    public EnumSpawnerUpgrade getEfficiencyUpgrade() { return efficiencyUpgrade; }
     public EnumEnchantKey getEnchantKey() { return enchantKey; }
 }

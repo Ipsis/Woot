@@ -74,6 +74,17 @@ public class SpawnerUpgrade {
         return this.v;
     }
 
+    public SpawnerUpgrade setEfficiency(int percentage) {
+
+        this.v = percentage;
+        return this;
+    }
+
+    public int getEfficiency() {
+
+        return this.v;
+    }
+
     public EnumSpawnerUpgrade getUpgradeType() {
 
         return this.upgradeType;
@@ -126,6 +137,13 @@ public class SpawnerUpgrade {
                 upgradeType == EnumSpawnerUpgrade.DECAPITATE_III;
     }
 
+    public boolean isEfficiency() {
+
+        return upgradeType == EnumSpawnerUpgrade.EFFICIENCY_I ||
+                upgradeType == EnumSpawnerUpgrade.EFFICIENCY_II ||
+                upgradeType == EnumSpawnerUpgrade.EFFICIENCY_III;
+    }
+
     public int getUpgradeTier() {
 
         int tier;
@@ -135,6 +153,7 @@ public class SpawnerUpgrade {
             case XP_I:
             case MASS_I:
             case DECAPITATE_I:
+            case EFFICIENCY_I:
                 tier = 1;
                 break;
             case LOOTING_II:
@@ -142,6 +161,7 @@ public class SpawnerUpgrade {
             case XP_II:
             case MASS_II:
             case DECAPITATE_II:
+            case EFFICIENCY_II:
                 tier = 2;
                 break;
             case LOOTING_III:
@@ -149,6 +169,7 @@ public class SpawnerUpgrade {
             case XP_III:
             case MASS_III:
             case DECAPITATE_III:
+            case EFFICIENCY_III:
                 tier = 3;
                 break;
             default:

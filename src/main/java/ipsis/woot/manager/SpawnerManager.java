@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;
@@ -15,7 +16,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -98,6 +98,16 @@ public class SpawnerManager {
 
         int totalRf = mobRf * mobCount;
         totalRf += (spawnTime * upgradeSetup.getRfPerTickCost());
+
+        if (upgradeSetup.hasEfficiencyUpgrade()) {
+            int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
+            int saving = (int)((totalRf / 100.0F) * f);
+            LogHelper.info("Saving of " + saving + " from " + totalRf);
+            totalRf -= saving;
+            if (totalRf < 0)
+                totalRf = 1;
+        }
+
         return new SpawnReq(totalRf, spawnTime);
     }
 

@@ -17,6 +17,7 @@ public class ClientProxy extends CommonProxy {
 
         ModBlocks.blockFactory.initModel();
         ModBlocks.blockUpgrade.initModel();
+        ModBlocks.blockUpgradeB.initModel();
         ModBlocks.blockStructure.initModel();
         ModBlocks.blockController.initModel();
         ModBlocks.blockLayout.initModel();

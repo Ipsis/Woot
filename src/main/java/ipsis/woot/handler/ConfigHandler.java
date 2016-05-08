@@ -100,6 +100,10 @@ public class ConfigHandler {
         Settings.xpIIBoost = getConfigInt(Config.Upgrades.XP_II_BOOST, Settings.Upgrades.DEF_XP_II_BOOST);
         Settings.xpIIIBoost = getConfigInt(Config.Upgrades.XP_III_BOOST, Settings.Upgrades.DEF_XP_III_BOOST);
 
+        Settings.efficiencyI = getConfigInt(Config.Upgrades.EFFICIENCY_I_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_I_PERCENTAGE);
+        Settings.efficiencyII = getConfigInt(Config.Upgrades.EFFICIENCY_II_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_II_PERCENTAGE);
+        Settings.efficiencyIII = getConfigInt(Config.Upgrades.EFFICIENCY_III_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_III_PERCENTAGE);
+
         if (configuration.hasChanged())
             configuration.save();
     }

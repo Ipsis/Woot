@@ -45,6 +45,9 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         } else if (block == ModBlocks.blockUpgrade) {
             int meta = accessor.getMetadata();
             return new ItemStack(ModBlocks.blockUpgrade, 1, meta);
+        } else if (block == ModBlocks.blockUpgradeB) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockUpgradeB, 1, meta);
         }
         return null;
     }

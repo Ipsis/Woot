@@ -42,6 +42,8 @@ waila.Woot:factory.mob=Spawning %s
 waila.Woot:factory.rate=Spawn %d mob(s) every %d ticks
 waila.Woot:factory.cost=Costs %dRF @ %dRF/tick
 waila.Woot:controller.tier=Requires Tier %s
+waila.Woot:factory.running=Factory is running
+waila.Woot:factory.stopped=Factory is stopped
 
 entity.Woot:witherskelly.name=Wither Skeleton
 

@@ -1,5 +1,6 @@
 package ipsis.woot.block;
 
+import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
@@ -28,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryUpgradeB extends BlockWoot implements ITooltipInfo, ITileEntityProvider {
+public class BlockMobFactoryUpgradeB extends BlockMobFactoryUpgradeBase implements ITooltipInfo {
 
     public static final String BASENAME = "upgradeb";
 
@@ -38,9 +39,8 @@ public class BlockMobFactoryUpgradeB extends BlockWoot implements ITooltipInfo, 
 
     public BlockMobFactoryUpgradeB() {
 
-        super(Material.ROCK, BASENAME);
+        super(BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumVariantUpgradeB.EFFICIENCY_I).withProperty(ACTIVE, false));
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override
@@ -90,41 +90,10 @@ public class BlockMobFactoryUpgradeB extends BlockWoot implements ITooltipInfo, 
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-
-        return new TileEntityMobFactoryUpgrade();
-    }
-
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-
-        TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
-        te.blockAdded();
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        EnumVariantUpgradeB type = EnumVariantUpgradeB.getFromMetadata(meta);
-        switch (type) {
-            case EFFICIENCY_I:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_EFFICIENCY_EFFECT), Settings.efficiencyI));
-                break;
-            case EFFICIENCY_II:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_EFFICIENCY_EFFECT), Settings.efficiencyII));
-                break;
-            case EFFICIENCY_III:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_EFFICIENCY_EFFECT), Settings.efficiencyIII));
-                break;
-            default:
-                break;
-        }
+        EnumSpawnerUpgrade type = EnumSpawnerUpgrade.getFromVariant(EnumVariantUpgradeB.getFromMetadata(meta));
+        getUpgradeTooltip(type, toolTip, showAdvanced, meta, detail);
     }
 
     @Override
@@ -139,11 +108,5 @@ public class BlockMobFactoryUpgradeB extends BlockWoot implements ITooltipInfo, 
         }
 
         return state;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-
-        return false;
     }
 }

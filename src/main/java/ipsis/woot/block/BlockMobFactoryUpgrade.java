@@ -1,13 +1,8 @@
 package ipsis.woot.block;
 
 import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
-import ipsis.woot.util.StringHelper;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -17,30 +12,27 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, ITileEntityProvider {
+public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implements  ITooltipInfo {
 
     public static final String BASENAME = "upgrade";
 
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
     public static final PropertyEnum<EnumVariantUpgrade> VARIANT =
             PropertyEnum.<EnumVariantUpgrade>create("variant", EnumVariantUpgrade.class);
+
     public BlockMobFactoryUpgrade() {
 
-        super(Material.ROCK, BASENAME);
+        super(BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumVariantUpgrade.RATE_I).withProperty(ACTIVE, false));
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override
@@ -90,92 +82,10 @@ public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, I
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-
-        return new TileEntityMobFactoryUpgrade();
-    }
-
-    @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-
-        TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
-        te.blockAdded();
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        EnumVariantUpgrade type = EnumVariantUpgrade.getFromMetadata(meta);
-        switch (type) {
-            case RATE_I:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateITicks));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.rateIRfTick));
-                break;
-            case RATE_II:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateIITicks));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.rateIIRfTick));
-                break;
-            case RATE_III:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_RATE_EFFECT), Settings.rateIIITicks));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.rateIIIRfTick));
-                break;
-            case LOOTING_I:
-                toolTip.add(StringHelper.localize(Lang.TOOLTIP_LOOTING_I_EFFECT));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIRfTick));
-                break;
-            case LOOTING_II:
-                toolTip.add(StringHelper.localize(Lang.TOOLTIP_LOOTING_II_EFFECT));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIIRfTick));
-                break;
-            case LOOTING_III:
-                toolTip.add(StringHelper.localize(Lang.TOOLTIP_LOOTING_III_EFFECT));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.lootingIIIRfTick));
-                break;
-            case XP_I:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_BASE_EFFECT), Settings.xpIBoost));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIRfTick));
-                break;
-            case XP_II:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_EFFECT), Settings.xpIIBoost));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIIRfTick));
-                break;
-            case XP_III:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_XP_EFFECT), Settings.xpIIIBoost));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.xpIIIRfTick));
-                break;
-            case MASS_I:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_MASS_EFFECT), Settings.massIMobs));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.massIRfTick));
-                break;
-            case MASS_II:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_MASS_EFFECT), Settings.massIIMobs));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.massIIRfTick));
-                break;
-            case MASS_III:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_MASS_EFFECT), Settings.massIIIMobs));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.massIIIRfTick));
-                break;
-            case DECAPITATE_I:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_DECAP_EFFECT), Settings.decapitateIChance));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.decapitateIRfTick));
-                break;
-            case DECAPITATE_II:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_DECAP_EFFECT), Settings.decapitateIIChance));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.decapitateIIRfTick));
-                break;
-            case DECAPITATE_III:
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_DECAP_EFFECT), Settings.decapitateIIIChance));
-                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.decapitateIIIRfTick));
-                break;
-            default:
-                break;
-        }
+        EnumSpawnerUpgrade type = EnumSpawnerUpgrade.getFromVariant(EnumVariantUpgrade.getFromMetadata(meta));
+        getUpgradeTooltip(type, toolTip, showAdvanced, meta, detail);
     }
 
     @Override
@@ -192,9 +102,4 @@ public class BlockMobFactoryUpgrade extends BlockWoot implements ITooltipInfo, I
         return state;
     }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-
-        return false;
-    }
 }

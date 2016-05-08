@@ -43,6 +43,8 @@ waila.Woot:factory.rate=Spawn %d mob(s) every %d ticks
 waila.Woot:factory.cost=Costs %dRF @ %dRF/tick
 waila.Woot:controller.tier=Requires Tier %s
 
+entity.Woot:witherskelly.name=Wither Skeleton
+
 config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Minimum number of ticks between fake spawn learning
 config.Woot:globalStrictSpawns=Learn only from mob factory spawning

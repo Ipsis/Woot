@@ -1,7 +1,6 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;
@@ -102,7 +101,6 @@ public class SpawnerManager {
         if (upgradeSetup.hasEfficiencyUpgrade()) {
             int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
             int saving = (int)((totalRf / 100.0F) * f);
-            LogHelper.info("Saving of " + saving + " from " + totalRf);
             totalRf -= saving;
             if (totalRf < 0)
                 totalRf = 1;

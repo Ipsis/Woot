@@ -18,6 +18,7 @@ public class Lang {
     public static final String WAILA_CONTROLLER_TIER = TAG_WAILA + "controller.tier";
     public static final String WAILA_FACTORY_RUNNING = TAG_WAILA + "factory.running";
     public static final String WAILA_FACTORY_STOPPED = TAG_WAILA + "factory.stopped";
+    public static final String WAILA_EXTRA_UPGRADE = TAG_WAILA + "factory.sneak";
 
     public static final String TOOLTIP_FACTORY_COST = TAG_TOOLTIP + "factory_cost";
 

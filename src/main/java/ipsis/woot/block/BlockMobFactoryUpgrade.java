@@ -50,7 +50,7 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
     @Override
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
 
-        for (EnumSpawnerUpgrade u : EnumSpawnerUpgrade.values())
+        for (EnumVariantUpgrade u : EnumVariantUpgrade.values())
             list.add(new ItemStack(itemIn, 1, u.getMetadata()));
     }
 

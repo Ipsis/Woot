@@ -43,37 +43,37 @@ public class UpgradeSetup {
 
         SpawnerUpgrade u;
 
-        u = UpgradeManager.getMassUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.MASS);
         if (u != null) {
             massUpgrade = u.getUpgradeType();
             this.upgradeList.add(massUpgrade);
         }
 
-        u = UpgradeManager.getRateUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.RATE);
         if (u != null) {
             rateUpgrade = u.getUpgradeType();
             this.upgradeList.add(rateUpgrade);
         }
 
-        u = UpgradeManager.getDecapitateUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.DECAPITATE);
         if (u != null) {
             decapitateUpgrade = u.getUpgradeType();
             this.upgradeList.add(decapitateUpgrade);
         }
 
-        u = UpgradeManager.getLootingUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.LOOTING);
         if (u != null) {
             lootingUpgrade = u.getUpgradeType();
             this.upgradeList.add(lootingUpgrade);
         }
 
-        u = UpgradeManager.getXpUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.XP);
         if (u != null) {
             xpUpgrade = u.getUpgradeType();
             this.upgradeList.add(xpUpgrade);
         }
 
-        u = UpgradeManager.getEfficiencyUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.EFFICIENCY);
         if (u != null) {
             efficiencyUpgrade = u.getUpgradeType();
             this.upgradeList.add(efficiencyUpgrade);

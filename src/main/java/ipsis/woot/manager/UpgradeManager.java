@@ -61,88 +61,47 @@ public class UpgradeManager {
         return enchantKey;
     }
 
-    public static SpawnerUpgrade getMassUpgrade(List<SpawnerUpgrade> upgradeList) {
-
-        SpawnerUpgrade massUpgrade = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isMass() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                massUpgrade = upgrade;
-            }
-        }
-
-        return massUpgrade;
+    public enum EnumUpgradeType {
+        LOOTING,
+        MASS,
+        RATE,
+        DECAPITATE,
+        XP,
+        EFFICIENCY;
     }
 
-    public static SpawnerUpgrade getRateUpgrade(List<SpawnerUpgrade> upgradeList) {
+    static boolean isUpgradeMatch(SpawnerUpgrade u, EnumUpgradeType type) {
 
-        SpawnerUpgrade u = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isRate() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                u = upgrade;
-            }
+        switch (type) {
+            case LOOTING:
+                return u.isLooting();
+            case MASS:
+                return u.isMass();
+            case RATE:
+                return u.isRate();
+            case DECAPITATE:
+                return u.isDecapitate();
+            case XP:
+                return u.isXp();
+            case EFFICIENCY:
+                return u.isEfficiency();
+            default:
+                return false;
         }
-
-        return u;
     }
 
-    public static SpawnerUpgrade getLootingUpgrade(List<SpawnerUpgrade> upgradeList) {
+    public static SpawnerUpgrade getUpgrade(List<SpawnerUpgrade> upgradeList, EnumUpgradeType type) {
 
-        SpawnerUpgrade u = null;
+        SpawnerUpgrade spawnerUpgrade = null;
         int tier = 0;
         for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isLooting() && upgrade.getUpgradeTier() > tier) {
+            if (isUpgradeMatch(upgrade, type) && upgrade.getUpgradeTier() > tier) {
                 tier = upgrade.getUpgradeTier();
-                u = upgrade;
+                spawnerUpgrade = upgrade;
             }
         }
 
-        return u;
-    }
-
-    public static SpawnerUpgrade getDecapitateUpgrade(List<SpawnerUpgrade> upgradeList) {
-
-        SpawnerUpgrade u = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isDecapitate() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                u = upgrade;
-            }
-        }
-
-        return u;
-    }
-
-    public static SpawnerUpgrade getXpUpgrade(List<SpawnerUpgrade> upgradeList) {
-
-        SpawnerUpgrade xpUpgrade = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isXp() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                xpUpgrade = upgrade;
-            }
-        }
-
-        return xpUpgrade;
-    }
-
-    public static SpawnerUpgrade getEfficiencyUpgrade(List<SpawnerUpgrade> upgradeList) {
-
-        SpawnerUpgrade efficiencyUpgrade = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isEfficiency() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                efficiencyUpgrade = upgrade;
-            }
-        }
-
-        return efficiencyUpgrade;
+        return spawnerUpgrade;
     }
 
     static boolean isUpgradeBlock(Block b) {

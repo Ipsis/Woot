@@ -13,6 +13,9 @@ Fixes
 * BUG0032 - Cleanup markDirty usage to ensure changes to NBT are saved
 * BUG0033 - XP shard had no use sound
 
+Build Environment:
+* Forge - 1.9-12.16.1.1887
+
 1.9-0.5.0-beta
 --------------
 

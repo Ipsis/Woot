@@ -4,9 +4,12 @@ Builder's Guides ChangeLog
 1.9-0.6.0-beta
 --------------
 
+Features
+* Added efficiency upgrade
+* Added redstone control to the factory
+
 Fixes
 * BUG0030 - Prism shows skeleton for wither skeleton
-* BUG0031 - Add redstone control to the factory
 * BUG0032 - Cleanup markDirty usage to ensure changes to NBT are saved
 * BUG0033 - XP shard had no use sound
 

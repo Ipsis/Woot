@@ -45,6 +45,9 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         } else if (block == ModBlocks.blockUpgrade) {
             int meta = accessor.getMetadata();
             return new ItemStack(ModBlocks.blockUpgrade, 1, meta);
+        } else if (block == ModBlocks.blockUpgradeB) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockUpgradeB, 1, meta);
         }
         return null;
     }
@@ -127,20 +130,25 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
             currenttip.add(TextFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
 
-            if (tag.hasKey("upgrades")) {
-                byte[] a = tag.getByteArray("upgrades");
-                for (int i = 0; i < a.length; i++) {
-                    EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
-                    SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
-                    TextFormatting f;
-                    if (u.getUpgradeTier() == 1)
-                        f = TextFormatting.GRAY;
-                    else if (u.getUpgradeTier() == 2)
-                        f = TextFormatting.GOLD;
-                    else
-                        f = TextFormatting.AQUA;
-                    currenttip.add(f + StringHelper.localize( Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
+            if (accessor.getPlayer().isSneaking()) {
+
+                if (tag.hasKey("upgrades")) {
+                    byte[] a = tag.getByteArray("upgrades");
+                    for (int i = 0; i < a.length; i++) {
+                        EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
+                        SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
+                        TextFormatting f;
+                        if (u.getUpgradeTier() == 1)
+                            f = TextFormatting.GRAY;
+                        else if (u.getUpgradeTier() == 2)
+                            f = TextFormatting.GOLD;
+                        else
+                            f = TextFormatting.AQUA;
+                        currenttip.add(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
+                    }
                 }
+            } else {
+                currenttip.add(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
             }
         }
         return currenttip;

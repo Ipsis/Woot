@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.woot.block.BlockMobFactoryUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.reference.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -40,6 +41,10 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.DECAPITATE_I).setRfCostPerTick(Settings.decapitateIRfTick).setDecapitateChance(Settings.decapitateIChance);
         upgradeMap.get(EnumSpawnerUpgrade.DECAPITATE_II).setRfCostPerTick(Settings.decapitateIIRfTick).setDecapitateChance(Settings.decapitateIIChance);
         upgradeMap.get(EnumSpawnerUpgrade.DECAPITATE_III).setRfCostPerTick(Settings.decapitateIIIRfTick).setDecapitateChance(Settings.decapitateIIIChance);
+
+        upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_I).setRfCostPerTick(0).setEfficiency(Settings.efficiencyI);
+        upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_II).setRfCostPerTick(0).setEfficiency(Settings.efficiencyII);
+        upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_III).setRfCostPerTick(0).setEfficiency(Settings.efficiencyIII);
     }
 
     public static EnumEnchantKey getLootingEnchant(List<SpawnerUpgrade> upgradeList) {
@@ -56,74 +61,62 @@ public class UpgradeManager {
         return enchantKey;
     }
 
-    public static SpawnerUpgrade getMassUpgrade(List<SpawnerUpgrade> upgradeList) {
-
-        SpawnerUpgrade massUpgrade = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isMass() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                massUpgrade = upgrade;
-            }
-        }
-
-        return massUpgrade;
+    public enum EnumUpgradeType {
+        LOOTING,
+        MASS,
+        RATE,
+        DECAPITATE,
+        XP,
+        EFFICIENCY;
     }
 
-    public static SpawnerUpgrade getRateUpgrade(List<SpawnerUpgrade> upgradeList) {
+    static boolean isUpgradeMatch(SpawnerUpgrade u, EnumUpgradeType type) {
 
-        SpawnerUpgrade u = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isRate() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                u = upgrade;
-            }
+        switch (type) {
+            case LOOTING:
+                return u.isLooting();
+            case MASS:
+                return u.isMass();
+            case RATE:
+                return u.isRate();
+            case DECAPITATE:
+                return u.isDecapitate();
+            case XP:
+                return u.isXp();
+            case EFFICIENCY:
+                return u.isEfficiency();
+            default:
+                return false;
         }
-
-        return u;
     }
 
-    public static SpawnerUpgrade getLootingUpgrade(List<SpawnerUpgrade> upgradeList) {
+    public static SpawnerUpgrade getUpgrade(List<SpawnerUpgrade> upgradeList, EnumUpgradeType type) {
 
-        SpawnerUpgrade u = null;
+        SpawnerUpgrade spawnerUpgrade = null;
         int tier = 0;
         for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isLooting() && upgrade.getUpgradeTier() > tier) {
+            if (isUpgradeMatch(upgrade, type) && upgrade.getUpgradeTier() > tier) {
                 tier = upgrade.getUpgradeTier();
-                u = upgrade;
+                spawnerUpgrade = upgrade;
             }
         }
 
-        return u;
+        return spawnerUpgrade;
     }
 
-    public static SpawnerUpgrade getDecapitateUpgrade(List<SpawnerUpgrade> upgradeList) {
+    static boolean isUpgradeBlock(Block b) {
 
-        SpawnerUpgrade u = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isDecapitate() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                u = upgrade;
-            }
-        }
-
-        return u;
+        return b instanceof BlockMobFactoryUpgrade || b instanceof BlockMobFactoryUpgradeB;
     }
 
-    public static SpawnerUpgrade getXpUpgrade(List<SpawnerUpgrade> upgradeList) {
+    static EnumSpawnerUpgrade getUpgradeFromBlockState(IBlockState iBlockState, Block b) {
 
-        SpawnerUpgrade xpUpgrade = null;
-        int tier = 0;
-        for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isXp() && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
-                xpUpgrade = upgrade;
-            }
-        }
-
-        return xpUpgrade;
+        if (b instanceof BlockMobFactoryUpgrade)
+            return EnumSpawnerUpgrade.getFromVariant(iBlockState.getValue(BlockMobFactoryUpgrade.VARIANT));
+        else if (b instanceof BlockMobFactoryUpgradeB)
+            return EnumSpawnerUpgrade.getFromVariant(iBlockState.getValue(BlockMobFactoryUpgradeB.VARIANT));
+        else
+            return null;
     }
 
     public static List<SpawnerUpgrade> scanUpgradeTotem(World world, BlockPos blockPos, int maxTier, List<SpawnerUpgrade> upgradeList, List<BlockPos> blockPosList) {
@@ -141,10 +134,13 @@ public class UpgradeManager {
             iBlockState = world.getBlockState(blockPos.add(0, yOffset, 0));
             block = iBlockState.getBlock();
 
-            if (!(block instanceof BlockMobFactoryUpgrade))
+            if (!isUpgradeBlock(block))
                 break;
 
-            EnumSpawnerUpgrade u = iBlockState.getValue(BlockMobFactoryUpgrade.VARIANT);
+            EnumSpawnerUpgrade u = getUpgradeFromBlockState(iBlockState, block);
+            if (u == null)
+                break;
+
             if (firstUpgrade == null)
                 firstUpgrade = u;
             else if (!checkUpgrade(firstUpgrade, u))
@@ -174,6 +170,9 @@ public class UpgradeManager {
             return u == EnumSpawnerUpgrade.MASS_II || u == EnumSpawnerUpgrade.MASS_III;
         else if (first == EnumSpawnerUpgrade.XP_I)
             return u == EnumSpawnerUpgrade.XP_II || u == EnumSpawnerUpgrade.XP_III;
+        else if (first == EnumSpawnerUpgrade.EFFICIENCY_I)
+            return u == EnumSpawnerUpgrade.EFFICIENCY_II || u == EnumSpawnerUpgrade.EFFICIENCY_III;
+
 
         return false;
     }

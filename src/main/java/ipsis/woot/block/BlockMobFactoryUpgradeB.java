@@ -1,8 +1,13 @@
 package ipsis.woot.block;
 
 import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
+import ipsis.woot.util.StringHelper;
+import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -12,27 +17,30 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implements  ITooltipInfo {
+public class BlockMobFactoryUpgradeB extends BlockMobFactoryUpgradeBase implements ITooltipInfo {
 
-    public static final String BASENAME = "upgrade";
+    public static final String BASENAME = "upgradeb";
 
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
-    public static final PropertyEnum<EnumVariantUpgrade> VARIANT =
-            PropertyEnum.<EnumVariantUpgrade>create("variant", EnumVariantUpgrade.class);
+    public static final PropertyEnum<EnumVariantUpgradeB> VARIANT =
+            PropertyEnum.<EnumVariantUpgradeB>create("variant", EnumVariantUpgradeB.class);
 
-    public BlockMobFactoryUpgrade() {
+    public BlockMobFactoryUpgradeB() {
 
         super(BASENAME);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumVariantUpgrade.RATE_I).withProperty(ACTIVE, false));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumVariantUpgradeB.EFFICIENCY_I).withProperty(ACTIVE, false));
     }
 
     @Override
@@ -50,14 +58,14 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
     @Override
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
 
-        for (EnumVariantUpgrade u : EnumVariantUpgrade.values())
+        for (EnumVariantUpgradeB u : EnumVariantUpgradeB.values())
             list.add(new ItemStack(itemIn, 1, u.getMetadata()));
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
-        return this.getDefaultState().withProperty(VARIANT, EnumVariantUpgrade.getFromMetadata(meta)).withProperty(ACTIVE, false);
+        return this.getDefaultState().withProperty(VARIANT, EnumVariantUpgradeB.getFromMetadata(meta)).withProperty(ACTIVE, false);
     }
 
     @Override
@@ -72,9 +80,9 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
 
         Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
-        for (int i = 0; i < EnumVariantUpgrade.values().length; i++) {
+        for (int i = 0; i < EnumVariantUpgradeB.values().length; i++) {
 
-            EnumVariantUpgrade e = EnumVariantUpgrade.getFromMetadata(i);
+            EnumVariantUpgradeB e = EnumVariantUpgradeB.getFromMetadata(i);
             ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(
                     Reference.MOD_ID + ":" + BASENAME + "_" + e, "inventory");
             ModelLoader.setCustomModelResourceLocation(itemBlockVariants, i, itemModelResourceLocation);
@@ -84,7 +92,7 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
     @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        EnumSpawnerUpgrade type = EnumSpawnerUpgrade.getFromVariant(EnumVariantUpgrade.getFromMetadata(meta));
+        EnumSpawnerUpgrade type = EnumSpawnerUpgrade.getFromVariant(EnumVariantUpgradeB.getFromMetadata(meta));
         getUpgradeTooltip(type, toolTip, showAdvanced, meta, detail);
     }
 
@@ -101,5 +109,4 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
 
         return state;
     }
-
 }

@@ -61,6 +61,11 @@ public class ModRecipes {
     static void initBlockRecipes() {
 
         GameRegistry.addRecipe(
+                new ShapelessOreRecipe(
+                        ModBlocks.blockLayout,
+                        new ItemStack(ModItems.itemFactoryFrame), "stone"));
+
+        GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockController),
                         "fsf", "beb", "bfb",

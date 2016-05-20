@@ -12,6 +12,7 @@ public class UpgradeSetup {
     EnumSpawnerUpgrade xpUpgrade;
     EnumSpawnerUpgrade massUpgrade;
     EnumSpawnerUpgrade decapitateUpgrade;
+    EnumSpawnerUpgrade efficiencyUpgrade;
 
     List<EnumSpawnerUpgrade> upgradeList;
 
@@ -31,6 +32,7 @@ public class UpgradeSetup {
         xpUpgrade = null;
         massUpgrade = null;
         decapitateUpgrade = null;
+        efficiencyUpgrade = null;
         upgradeList.clear();
     }
 
@@ -41,34 +43,40 @@ public class UpgradeSetup {
 
         SpawnerUpgrade u;
 
-        u = UpgradeManager.getMassUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.MASS);
         if (u != null) {
             massUpgrade = u.getUpgradeType();
             this.upgradeList.add(massUpgrade);
         }
 
-        u = UpgradeManager.getRateUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.RATE);
         if (u != null) {
             rateUpgrade = u.getUpgradeType();
             this.upgradeList.add(rateUpgrade);
         }
 
-        u = UpgradeManager.getDecapitateUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.DECAPITATE);
         if (u != null) {
             decapitateUpgrade = u.getUpgradeType();
             this.upgradeList.add(decapitateUpgrade);
         }
 
-        u = UpgradeManager.getLootingUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.LOOTING);
         if (u != null) {
             lootingUpgrade = u.getUpgradeType();
             this.upgradeList.add(lootingUpgrade);
         }
 
-        u = UpgradeManager.getXpUpgrade(upgradeList);
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.XP);
         if (u != null) {
             xpUpgrade = u.getUpgradeType();
             this.upgradeList.add(xpUpgrade);
+        }
+
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.EFFICIENCY);
+        if (u != null) {
+            efficiencyUpgrade = u.getUpgradeType();
+            this.upgradeList.add(efficiencyUpgrade);
         }
 
         rfPerTickCost = 0;
@@ -83,6 +91,7 @@ public class UpgradeSetup {
     public boolean hasDecapitateUpgrade() { return decapitateUpgrade != null; }
     public boolean hasLootingUpgrade() { return lootingUpgrade != null; }
     public boolean hasXpUpgrade() { return xpUpgrade != null; }
+    public boolean hasEfficiencyUpgrade() { return efficiencyUpgrade != null; }
     public List<EnumSpawnerUpgrade> getUpgradeList() { return this.upgradeList; }
     public int getRfPerTickCost() { return rfPerTickCost; }
     public EnumSpawnerUpgrade getMassUpgrade() { return massUpgrade; }
@@ -90,5 +99,6 @@ public class UpgradeSetup {
     public EnumSpawnerUpgrade getDecapitateUpgrade() { return decapitateUpgrade; }
     public EnumSpawnerUpgrade getLootingUpgrade() { return lootingUpgrade; }
     public EnumSpawnerUpgrade getXpUpgrade() { return xpUpgrade; }
+    public EnumSpawnerUpgrade getEfficiencyUpgrade() { return efficiencyUpgrade; }
     public EnumEnchantKey getEnchantKey() { return enchantKey; }
 }

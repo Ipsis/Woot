@@ -1,9 +1,9 @@
 package ipsis.woot.item;
 
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Reference;
-import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,6 +26,7 @@ public class ItemSkull extends ItemWoot {
         super(BASENAME);
         setMaxStackSize(16);
         setHasSubtypes(true);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override

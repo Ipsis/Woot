@@ -1,14 +1,19 @@
 package ipsis.woot.manager;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 
@@ -49,23 +54,40 @@ public class MobRegistry {
         return Reference.MOD_ID + ":" + name;
     }
 
+    private String createDisplayName(EntityLiving entityLiving) {
+
+        if (entityLiving instanceof  EntitySkeleton) {
+            if (((EntitySkeleton) entityLiving).getSkeletonType() == 1)
+                return I18n.translateToLocal("entity.Woot:witherskelly.name");
+            else
+                return entityLiving.getName();
+        } else {
+            return entityLiving.getName();
+        }
+    }
+
     public String onEntityLiving(EntityLiving entityLiving) {
 
         // blacklist is based off Minecraft names
         String name = EntityList.getEntityString(entityLiving);
+        // Remove this always
+        if (name.equals("EnderDragon"))
+            return INVALID_MOB_NAME;
+
         for (int i = 0; i < Settings.prismBlacklist.length; i++) {
             if (Settings.prismBlacklist[i].equals(name))
                 return INVALID_MOB_NAME;
         }
 
         String wootName = createWootName(entityLiving);
+        String displayName = createDisplayName(entityLiving);
         if (!mobInfoHashMap.containsKey(wootName)) {
-            MobInfo info = new MobInfo(wootName, entityLiving.getName());
+            MobInfo info = new MobInfo(wootName, displayName);
             mobInfoHashMap.put(wootName, info);
         } else {
             MobInfo mobInfo = mobInfoHashMap.get(wootName);
             if (mobInfo.displayName.equals(INVALID_MOB_NAME))
-                mobInfo.displayName = entityLiving.getName();
+                mobInfo.displayName = displayName;
         }
 
         return wootName;
@@ -92,22 +114,38 @@ public class MobRegistry {
             ((EntitySkeleton) entity).setSkeletonType(1);
         } else if (isSlime(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() != 1)
-                ((EntitySlime)entity).setSlimeSize(1);
+                setSlimeSize((EntitySlime)entity, 1);
+        } else if (isMagmaCube(mobInfo.wootMobName, entity)) {
+            if (((EntitySlime)entity).getSlimeSize() == 1)
+                setSlimeSize((EntitySlime)entity, 2);
+        }
+    }
+
+    private void setSlimeSize(EntitySlime entitySlime, int size) {
+
+        String[] methodNames = new String[]{ "func_70799_a", "setSlimeSize" };
+
+        try {
+            Method m = ReflectionHelper.findMethod(EntitySlime.class, null, methodNames, int.class);
+            m.invoke(entitySlime, size);
+        } catch (Throwable e){
+            LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }
     }
 
     boolean isWitherSkeleton(String wootName, Entity entity) {
 
-        if (entity instanceof EntitySkeleton)
-            return wootName.equals(Reference.MOD_ID + ":" + "wither:Skeleton");
-        return false;
+        return entity instanceof EntitySkeleton && wootName.equals(Reference.MOD_ID + ":" + "wither:Skeleton");
     }
 
     boolean isSlime(String wootName, Entity entity) {
 
-        if (entity instanceof EntitySlime)
-            return wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
-        return false;
+        return entity instanceof EntitySlime && wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
+    }
+
+    boolean isMagmaCube(String wootName, Entity entity) {
+
+        return entity instanceof EntityMagmaCube && wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
     }
 
     public Entity createEntity(String wootName, World world) {
@@ -124,10 +162,8 @@ public class MobRegistry {
 
     public boolean hasXp(String wootName) {
 
-        if (mobInfoHashMap.containsKey(wootName))
-            return mobInfoHashMap.get(wootName).hasXp();
+        return mobInfoHashMap.containsKey(wootName) && mobInfoHashMap.get(wootName).hasXp();
 
-        return false;
     }
 
     public int getSpawnXp(String wootName) {

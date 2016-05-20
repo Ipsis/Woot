@@ -1,11 +1,12 @@
 package ipsis.woot.util;
 
-import net.minecraft.util.StatCollector;
+
+import net.minecraft.util.text.translation.I18n;
 
 public class StringHelper {
 
     public static String localize(String s) {
 
-        return StatCollector.translateToLocal(s);
+        return I18n.translateToLocal(s);
     }
 }

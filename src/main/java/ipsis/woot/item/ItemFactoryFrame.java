@@ -1,7 +1,8 @@
 package ipsis.woot.item;
 
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.reference.Reference;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -12,6 +13,7 @@ public class ItemFactoryFrame extends ItemWoot {
     public ItemFactoryFrame() {
 
         super(BASENAME);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

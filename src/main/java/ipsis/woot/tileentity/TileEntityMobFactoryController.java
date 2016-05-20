@@ -56,6 +56,7 @@ public class TileEntityMobFactoryController extends TileEntity {
         this.mobName = mobName;
         this.displayName = displayName;
         this.xpValue = xp;
+        markDirty();
         updateMobFarm();
     }
 

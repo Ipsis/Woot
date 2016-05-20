@@ -1,7 +1,7 @@
 package ipsis.woot.item;
 
 import ipsis.woot.block.BlockMobFactoryUpgrade;
-import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.block.EnumVariantUpgrade;
 import ipsis.woot.util.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -18,7 +18,7 @@ public class ItemBlockUpgrade extends ItemBlock {
     @Override
     public int getMetadata(int damage) {
 
-        if (damage < 0 || damage >= EnumSpawnerUpgrade.values().length)
+        if (damage < 0 || damage >= EnumVariantUpgrade.values().length)
             return 0;
 
         return damage;
@@ -26,6 +26,6 @@ public class ItemBlockUpgrade extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryUpgrade.BASENAME) + "." + EnumSpawnerUpgrade.getFromMetadata(stack.getMetadata());
+        return UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryUpgrade.BASENAME) + "." + EnumVariantUpgrade.getFromMetadata(stack.getMetadata());
     }
 }

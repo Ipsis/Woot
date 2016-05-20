@@ -1,4 +1,4 @@
-package ipsis.oss;
+package ipsis.woot.oss;
 
 import ipsis.woot.reference.Reference;
 import net.minecraftforge.fml.common.FMLLog;

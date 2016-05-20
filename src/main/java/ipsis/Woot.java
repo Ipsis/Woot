@@ -49,12 +49,6 @@ public class Woot {
     }
 
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
-
-        event.registerServerCommand(new CommandWoot());
-    }
-
-    @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
         proxy.init();
@@ -65,5 +59,11 @@ public class Woot {
 
         proxy.postInit();
         headRegistry.init();
+    }
+
+    @Mod.EventHandler
+    public void serverLoad(FMLServerStartingEvent event) {
+
+        event.registerServerCommand(new CommandWoot());
     }
 }

@@ -1,10 +1,11 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.reference.Lang;
+import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,10 +13,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,6 +33,7 @@ public class ItemPrism extends ItemWoot {
 
         super(BASENAME);
         setMaxStackSize(1);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)
@@ -58,13 +62,13 @@ public class ItemPrism extends ItemWoot {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
         if (worldIn.isRemote)
-            return true;
+            return EnumActionResult.SUCCESS;
 
         if (!hasMobName(stack))
-            return false;
+            return EnumActionResult.FAIL;
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryController) {
@@ -72,11 +76,11 @@ public class ItemPrism extends ItemWoot {
                 ((TileEntityMobFactoryController) te).setMobName(getMobName(stack), getDisplayName(stack), getXp(stack));
                 if (!playerIn.capabilities.isCreativeMode)
                     stack.stackSize--;
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     /**
@@ -134,14 +138,14 @@ public class ItemPrism extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".0"));
-        tooltip.add(StatCollector.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".1"));
+        tooltip.add(I18n.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".0"));
+        tooltip.add(I18n.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".1"));
         if (stack != null && hasMobName(stack) && Woot.mobRegistry.isValidMobName(getMobName(stack))) {
             String displayName = getDisplayName(stack);
             if (!displayName.equals(""))
-                tooltip.add(EnumChatFormatting.GREEN + String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
+                tooltip.add(TextFormatting.GREEN + String.format("Mob: %s", I18n.translateToLocal(displayName)));
 
-            tooltip.add(EnumChatFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
+            tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
         }
     }
 

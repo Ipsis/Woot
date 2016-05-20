@@ -3,7 +3,6 @@ package ipsis.woot.tileentity;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
-import ipsis.oss.LogHelper;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
@@ -15,7 +14,7 @@ import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -37,6 +36,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int currSpawnTicks;
     int consumedRf;
     int storedXp;
+    int learnTicksOffset;
     boolean running;
 
     boolean dirtyStructure;
@@ -44,11 +44,36 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
 
-    static final String NBT_FACING = "facing";
     static final String NBT_CURR_SPAWN_TICK = "spawnTicks";
     static final String NBT_CONSUMED_RF = "consumedRf";
     static final String NBT_STORED_XP = "storedXp";
     static final String NBT_RUNNING = "running";
+
+    void setCurrSpawnTicks(int ticks) {
+        if (currSpawnTicks != ticks) {
+            currSpawnTicks = ticks;
+            markDirty();
+        }
+    }
+
+    void incCurrSpawnTicks() {
+        currSpawnTicks++;
+        markDirty();
+    }
+
+    void setConsumedRf(int rf) {
+        if (consumedRf != rf) {
+            consumedRf = rf;
+            markDirty();
+        }
+    }
+
+    void setStoredXp(int xp) {
+        if (storedXp != xp) {
+            storedXp = xp;
+            markDirty();
+        }
+    }
 
     @Override
     public void writeToNBT(NBTTagCompound compound) {
@@ -73,7 +98,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             currSpawnTicks = compound.getInteger(NBT_CURR_SPAWN_TICK);
             consumedRf = compound.getInteger(NBT_CONSUMED_RF);
             storedXp = compound.getInteger(NBT_STORED_XP);
-            running = compound.getBoolean(NBT_RUNNING);
+            if (compound.hasKey(NBT_RUNNING))
+                running = compound.getBoolean(NBT_RUNNING);
+            else
+                running = true;
             nbtLoaded = true;
         }
 
@@ -97,16 +125,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         consumedRf = 0;
         storedXp = 0;
         running = true;
-    }
 
-    public void setRunning(boolean running) {
-
-        this.running = running;
-    }
-
-    public boolean getRunning() {
-
-        return this.running;
+        learnTicksOffset = Settings.learnTicks + Woot.random.nextInt(11);
     }
 
     public String getMobName() {
@@ -132,6 +152,19 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     public UpgradeSetup getUpgradeSetup() {
 
         return this.upgradeSetup;
+    }
+
+    void setRunning(boolean running) {
+
+        if (this.running != running) {
+            this.running = running;
+            markDirty();
+        }
+    }
+
+    public boolean isRunning() {
+
+        return running;
     }
 
     public boolean isFormed() {
@@ -213,8 +246,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             /* Preserver on load */
             nbtLoaded = false;
         } else {
-            consumedRf = 0;
-            currSpawnTicks = 0;
+            setConsumedRf(0);
+            setCurrSpawnTicks(0);
         }
         updateUpgradeBlocks(true);
 
@@ -278,11 +311,17 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             dirtyUpgrade = false;
         }
 
+        boolean powered = worldObj.isBlockPowered(pos);
+        if (running && powered)
+            setRunning(false);
+        else if (!running && !powered)
+            setRunning(true);
+
         if (!isFormed())
             return;
 
         currLearnTicks++;
-        if (currLearnTicks >= Settings.learnTicks) {
+        if (currLearnTicks >= learnTicksOffset) {
             if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
@@ -294,14 +333,13 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
-        if (!running)
-            return;
-
-        currSpawnTicks++;
-        processPower();
-        if (currSpawnTicks == spawnReq.getSpawnTime()) {
-            onSpawn();
-            currSpawnTicks = 0;
+        incCurrSpawnTicks();
+        if (running) {
+            processPower();
+            if (currSpawnTicks == spawnReq.getSpawnTime()) {
+                onSpawn();
+                setCurrSpawnTicks(0);
+            }
         }
     }
 
@@ -320,12 +358,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
         if (drawnRf == spawnReq.getRfPerTick()) {
-            consumedRf += drawnRf;
+            setConsumedRf(consumedRf + drawnRf);
         } else {
             if (Settings.strictPower)
-                consumedRf = 0;
+                setConsumedRf(0);
             else
-                consumedRf += drawnRf;
+                setConsumedRf(consumedRf + drawnRf);
         }
     }
 
@@ -360,10 +398,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
              * This means that if you don't provide the correct RF/tick then it will eat all the power that you
              * gave it until the spawn ticks was reached.
              */
-            consumedRf = 0;
+            setConsumedRf(0);
         } else {
             if (Settings.strictPower)
-                consumedRf = 0;
+                setConsumedRf(0);
         }
     }
 

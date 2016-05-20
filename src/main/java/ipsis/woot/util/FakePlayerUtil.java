@@ -5,6 +5,7 @@ import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -39,20 +40,21 @@ public class FakePlayerUtil {
             itemStack = swordLootingIII;
 
         if (f != null && itemStack != null)
-            f.setCurrentItemOrArmor(0, itemStack);
+            f.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, itemStack);
     }
 
     static void createSword(EnumEnchantKey enchantKey) {
 
-        ItemStack itemStack = new ItemStack(Items.iron_sword);
+        // TODO check the looting enchantment
+        ItemStack itemStack = new ItemStack(Items.IRON_SWORD);
         if (enchantKey == EnumEnchantKey.LOOTING_I && swordLootingI == null) {
-            itemStack.addEnchantment(Enchantment.looting, Settings.lootingILevel);
+            itemStack.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingILevel);
             swordLootingI = itemStack;
         } else if (enchantKey == EnumEnchantKey.LOOTING_II && swordLootingII == null) {
-            itemStack.addEnchantment(Enchantment.looting, Settings.lootingIILevel);
+            itemStack.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIILevel);
             swordLootingII = itemStack;
         } else if (enchantKey == EnumEnchantKey.LOOTING_III && swordLootingIII == null) {
-            itemStack.addEnchantment(Enchantment.looting, Settings.lootingIIILevel);
+            itemStack.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIIILevel);
             swordLootingIII = itemStack;
         }
     }

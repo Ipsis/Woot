@@ -3,28 +3,30 @@ package ipsis.woot.block;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactoryStructure extends BlockContainerWoot{
+public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityProvider {
 
     public static final String BASENAME = "structure";
 
@@ -33,14 +35,15 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
 
     public BlockMobFactoryStructure() {
 
-        super (Material.rock, BASENAME);
+        super (Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override
-    public int getRenderType() {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
 
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     public EnumMobFactoryModule getModuleTypeFromState(IBlockState state) {
@@ -62,14 +65,14 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] { MODULE, FORMED });
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[] { MODULE, FORMED });
     }
 
     @Override
     public int damageDropped(IBlockState state) {
 
-        return ((EnumMobFactoryModule)state.getValue(MODULE)).getMetadata();
+        return state.getValue(MODULE).getMetadata();
     }
 
     @SideOnly(Side.CLIENT)
@@ -103,14 +106,14 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     @Override
     public int getMetaFromState(IBlockState state) {
 
-        return ((EnumMobFactoryModule)state.getValue(MODULE)).getMetadata();
+        return state.getValue(MODULE).getMetadata();
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void initModel() {
 
-        Item itemBlockVariants = GameRegistry.findItem(Reference.MOD_ID, BASENAME);
+        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
         for (int i = 0; i < EnumMobFactoryModule.values().length; i++) {
 
@@ -122,7 +125,7 @@ public class BlockMobFactoryStructure extends BlockContainerWoot{
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube(IBlockState state) {
 
         return false;
     }

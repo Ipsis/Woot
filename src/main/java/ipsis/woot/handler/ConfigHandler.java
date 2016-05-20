@@ -1,6 +1,6 @@
 package ipsis.woot.handler;
 
-import ipsis.oss.LogHelper;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
@@ -100,13 +100,18 @@ public class ConfigHandler {
         Settings.xpIIBoost = getConfigInt(Config.Upgrades.XP_II_BOOST, Settings.Upgrades.DEF_XP_II_BOOST);
         Settings.xpIIIBoost = getConfigInt(Config.Upgrades.XP_III_BOOST, Settings.Upgrades.DEF_XP_III_BOOST);
 
+        Settings.efficiencyI = getConfigInt(Config.Upgrades.EFFICIENCY_I_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_I_PERCENTAGE);
+        Settings.efficiencyII = getConfigInt(Config.Upgrades.EFFICIENCY_II_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_II_PERCENTAGE);
+        Settings.efficiencyIII = getConfigInt(Config.Upgrades.EFFICIENCY_III_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_III_PERCENTAGE);
+
         if (configuration.hasChanged())
             configuration.save();
     }
 
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.modID.equalsIgnoreCase(Reference.MOD_ID))
+
+        if (event.getModID().equalsIgnoreCase(Reference.MOD_ID))
             loadConfiguration();
     }
 }

@@ -1,6 +1,6 @@
 package ipsis.woot.tileentity.multiblock;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +119,7 @@ public enum EnumMobFactoryTier {
                             "---------",
                             "---------",
                             "----o----",
-                            "---------",
+                            "----a----",
                             "--b---b--",
                             "-c-c-c-c-",
                             "d---d---d"
@@ -173,6 +173,34 @@ public enum EnumMobFactoryTier {
             parsePattern(structureModules, pattern, 1, 4, 4);
         }
     };
+
+    /**
+     *
+     * @return the offset from center of the widest factory tier
+     */
+    public static int getMaxXZOffset() {
+        return 4;
+    }
+
+    /**
+     * @return the height of the tallest factory tier
+     */
+    public static int getMaxYOffset() {
+        return 6;
+    }
+
+    public static final EnumMobFactoryTier[] VALID_TIERS = new EnumMobFactoryTier[] { TIER_ONE, TIER_TWO, TIER_THREE };
+
+    public EnumMobFactoryTier getNext() {
+
+        int next = ordinal();
+        next++;
+
+        if (next < 0 || next >= VALID_TIERS.length)
+            next = 0;
+
+        return VALID_TIERS[next];
+    }
 
     private static void parsePattern(List<MobFactoryModule> modules, String[][] pattern, int originLayer, int originRow, int originColumn) {
 

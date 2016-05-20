@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class ItemBlockController extends ItemBlock {
 
             String displayName = stack.getTagCompound().getString(TileEntityMobFactoryController.NBT_DISPLAY_NAME);
             if (!displayName.equals(""))
-                tooltip.add(String.format("Mob: %s", StatCollector.translateToLocal(displayName)));
+                tooltip.add(String.format("Mob: %s", I18n.translateToLocal(displayName)));
         }
 
         super.addInformation(stack, playerIn, tooltip, advanced);

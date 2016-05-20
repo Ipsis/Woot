@@ -1,5 +1,6 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
@@ -8,6 +9,8 @@ import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
+import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
@@ -15,24 +18,37 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class WailaDataProviderWoot implements IWailaDataProvider {
-
     private static WailaDataProviderWoot INSTANCE = new WailaDataProviderWoot();
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+
+        Block block = accessor.getBlock();
+
+        if (block == ModBlocks.blockStructure) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockStructure, 1, meta);
+        } else if (block == ModBlocks.blockUpgrade) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockUpgrade, 1, meta);
+        } else if (block == ModBlocks.blockUpgradeB) {
+            int meta = accessor.getMetadata();
+            return new ItemStack(ModBlocks.blockUpgradeB, 1, meta);
+        }
         return null;
     }
 
@@ -73,8 +89,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("displayName") && tag.hasKey("xpCost")) {
             EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(tag.getInteger("xpCost"));
-            currenttip.add(EnumChatFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
-            currenttip.add(EnumChatFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
+            currenttip.add(TextFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
+            currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
                             (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
 
         }
@@ -98,33 +114,41 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
             EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
 
-            currenttip.add(EnumChatFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
+            currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
                     (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
-            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB),
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB),
                     tag.getString("displayName")));
-            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
                     tag.getInteger("mobCount"), tag.getInteger("spawnTicks")));
-            currenttip.add(EnumChatFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
                     tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
+            boolean running = tag.getBoolean("running");
+            currenttip.add(TextFormatting.GREEN + String.format(
+                    running ? StringHelper.localize(Lang.WAILA_FACTORY_RUNNING) : StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
 
             int energy    = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
             int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
-            currenttip.add(EnumChatFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
+            currenttip.add(TextFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
 
-            if (tag.hasKey("upgrades")) {
-                byte[] a = tag.getByteArray("upgrades");
-                for (int i = 0; i < a.length; i++) {
-                    EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
-                    SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
-                    EnumChatFormatting f;
-                    if (u.getUpgradeTier() == 1)
-                        f = EnumChatFormatting.GRAY;
-                    else if (u.getUpgradeTier() == 2)
-                        f = EnumChatFormatting.GOLD;
-                    else
-                        f = EnumChatFormatting.AQUA;
-                    currenttip.add(f + StringHelper.localize( Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
+            if (accessor.getPlayer().isSneaking()) {
+
+                if (tag.hasKey("upgrades")) {
+                    byte[] a = tag.getByteArray("upgrades");
+                    for (int i = 0; i < a.length; i++) {
+                        EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
+                        SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
+                        TextFormatting f;
+                        if (u.getUpgradeTier() == 1)
+                            f = TextFormatting.GRAY;
+                        else if (u.getUpgradeTier() == 2)
+                            f = TextFormatting.GOLD;
+                        else
+                            f = TextFormatting.AQUA;
+                        currenttip.add(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
+                    }
                 }
+            } else {
+                currenttip.add(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
             }
         }
         return currenttip;
@@ -139,6 +163,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             tag.setInteger("spawnTicks", tile.getSpawnReq().getSpawnTime());
             tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());
             tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
+            tag.setBoolean("running", tile.isRunning());
 
             tag.setInteger("Energy",     tile.getEnergyStored(EnumFacing.DOWN));
             tag.setInteger("MaxStorage", tile.getMaxEnergyStored(EnumFacing.DOWN));
@@ -170,6 +195,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
     public static void callbackRegister(IWailaRegistrar registrar) {
 
+        registrar.registerStackProvider(INSTANCE, TileEntityMobFactoryStructure.class);
+        registrar.registerStackProvider(INSTANCE, TileEntityMobFactoryUpgrade.class);
         registrar.registerBodyProvider(INSTANCE, TileEntityMobFactory.class);
         registrar.registerBodyProvider(INSTANCE, TileEntityMobFactoryController.class);
         registrar.registerNBTProvider(INSTANCE, TileEntityMobFactory.class);

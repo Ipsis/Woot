@@ -1,15 +1,18 @@
 package ipsis.woot.block;
 
-import ipsis.oss.client.ModelHelper;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,13 +21,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockMobFactoryController extends BlockContainerWoot {
+public class BlockMobFactoryController extends BlockWoot implements ITileEntityProvider {
 
     public static final String BASENAME = "controller";
 
     public BlockMobFactoryController() {
 
-        super(Material.rock, BASENAME);
+        super(Material.ROCK, BASENAME);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
     @Override
@@ -40,9 +44,9 @@ public class BlockMobFactoryController extends BlockContainerWoot {
     }
 
     @Override
-    public int getRenderType() {
+    public EnumBlockRenderType getRenderType(IBlockState state) {
 
-        return 3;
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
@@ -84,12 +88,16 @@ public class BlockMobFactoryController extends BlockContainerWoot {
     }
 
     @Override
-    public boolean removedByPlayer(World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 
         IBlockState iBlockState = world.getBlockState(pos);
         this.onBlockDestroyedByPlayer(world, pos, iBlockState);
-        if (willHarvest)
-            this.harvestBlock(world, player, pos, iBlockState, world.getTileEntity(pos));
+        if (willHarvest) {
+            // TODO need to check harvesting of blocks
+            ItemStack itemstack1 = player.getHeldItemMainhand();
+            ItemStack itemstack2 = itemstack1 == null ? null : itemstack1.copy();
+            this.harvestBlock(world, player, pos, iBlockState, world.getTileEntity(pos), itemstack2);
+        }
 
         world.setBlockToAir(pos);
         /**

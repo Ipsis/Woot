@@ -3,13 +3,13 @@ package ipsis.woot.manager;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -58,7 +58,7 @@ public class MobRegistry {
 
         if (entityLiving instanceof  EntitySkeleton) {
             if (((EntitySkeleton) entityLiving).getSkeletonType() == 1)
-                return I18n.translateToLocal("entity.Woot:witherskelly.name");
+                return StringHelper.localize("entity.Woot:witherskelly.name");
             else
                 return entityLiving.getName();
         } else {

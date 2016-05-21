@@ -4,6 +4,7 @@ import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -11,7 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -65,7 +65,7 @@ public class ItemXpShard extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        tooltip.add(I18n.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".0"));
-        tooltip.add(String.format(I18n.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".1"), XP_VALUE));
+        tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".0"));
+        tooltip.add(String.format(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".1"), XP_VALUE));
     }
 }

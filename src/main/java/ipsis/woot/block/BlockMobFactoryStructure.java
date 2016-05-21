@@ -40,12 +40,6 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
     public EnumMobFactoryModule getModuleTypeFromState(IBlockState state) {
 
         return EnumMobFactoryModule.byMetadata(getMetaFromState(state));

@@ -44,12 +44,6 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
         TileEntityMobFactoryController te = (TileEntityMobFactoryController) worldIn.getTileEntity(pos);

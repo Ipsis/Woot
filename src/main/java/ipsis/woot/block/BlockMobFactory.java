@@ -123,12 +123,6 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
         toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRF));

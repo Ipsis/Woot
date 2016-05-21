@@ -36,18 +36,6 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
         te.blockAdded();
     }
 
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-
-        return false;
-    }
-
     public void getUpgradeTooltip(EnumSpawnerUpgrade u, List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
         switch (u) {

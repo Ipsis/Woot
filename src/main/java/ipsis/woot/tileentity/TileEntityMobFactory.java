@@ -76,11 +76,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
         if (!isFormed())
-            return;
+            return compound;
 
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
@@ -88,6 +88,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         compound.setBoolean(NBT_RUNNING, running);
 
         energyStorage.writeToNBT(compound);
+        return compound;
     }
 
     @Override

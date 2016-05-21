@@ -8,6 +8,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -79,8 +80,9 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
         }
     }
 
+    @Nullable
     @Override
-    public Packet getDescriptionPacket() {
+    public SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
         nbtTagCompound.setBoolean("formed", master != null);

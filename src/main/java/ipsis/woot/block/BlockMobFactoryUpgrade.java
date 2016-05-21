@@ -102,4 +102,9 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
         return state;
     }
 
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+
+        return false;
+    }
 }

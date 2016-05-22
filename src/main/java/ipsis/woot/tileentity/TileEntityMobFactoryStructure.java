@@ -83,17 +83,24 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", master != null);
+
+        NBTTagCompound nbtTagCompound = getUpdateTag();
         return new SPacketUpdateTileEntity(this.pos, getBlockMetadata(), nbtTagCompound);
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        nbtTagCompound.setBoolean("formed", master != null);
+        return nbtTagCompound;
     }
 
     boolean isClientFormed;
     public boolean isClientFormed() { return isClientFormed; }
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-        super.readFromNBT(pkt.getNbtCompound());
+
         isClientFormed = pkt.getNbtCompound().getBoolean("formed");
         IBlockState iblockstate = this.getWorld().getBlockState(pos);
         worldObj.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);

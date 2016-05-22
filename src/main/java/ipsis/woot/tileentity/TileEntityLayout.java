@@ -84,9 +84,16 @@ public class TileEntityLayout extends TileEntity {
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
 
+        NBTTagCompound nbtTagCompound = getUpdateTag();
+        return new SPacketUpdateTileEntity(this.getPos(), 0, nbtTagCompound);
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         this.writeToNBT(nbtTagCompound);
-        return new SPacketUpdateTileEntity(this.getPos(), 0, nbtTagCompound);
+        return nbtTagCompound;
     }
 
     @Override

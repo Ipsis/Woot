@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.util.WorldHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -22,9 +23,7 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
 
         if (master != null) {
             master = null;
-            IBlockState iblockstate = this.getWorld().getBlockState(pos);
-            // TODO notifyBlockUpdate 4?
-            worldObj.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
+            WorldHelper.updateClient(getWorld(), getPos());
         }
     }
 
@@ -32,8 +31,7 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
 
         if (this.master != master) {
             this.master = master;
-            IBlockState iblockstate = this.getWorld().getBlockState(pos);
-            worldObj.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
+            WorldHelper.updateClient(getWorld(), getPos());
         }
     }
 
@@ -80,6 +78,33 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
         }
     }
 
+    boolean isClientFormed;
+    public boolean isClientFormed() { return isClientFormed; }
+
+    /**
+     * ChunkData packet handling
+     * Currently calls readFromNBT on reception
+     */
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        super.writeToNBT(nbtTagCompound);
+        nbtTagCompound.setBoolean("formed", master != null);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+
+        super.handleUpdateTag(tag);
+        isClientFormed = tag.getBoolean("formed");
+    }
+
+    /**
+     * UpdateTileEntity packet handling
+     */
+
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
@@ -89,20 +114,11 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
     }
 
     @Override
-    public NBTTagCompound getUpdateTag() {
-
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        nbtTagCompound.setBoolean("formed", master != null);
-        return nbtTagCompound;
-    }
-
-    boolean isClientFormed;
-    public boolean isClientFormed() { return isClientFormed; }
-    @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 
-        isClientFormed = pkt.getNbtCompound().getBoolean("formed");
-        IBlockState iblockstate = this.getWorld().getBlockState(pos);
-        worldObj.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
+        handleUpdateTag(pkt.getNbtCompound());
+        WorldHelper.updateClient(getWorld(), getPos());
     }
+
+
 }

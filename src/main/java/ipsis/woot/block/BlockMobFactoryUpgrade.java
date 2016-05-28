@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -102,9 +103,4 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
         return state;
     }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-
-        return false;
-    }
 }

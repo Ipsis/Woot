@@ -6,6 +6,7 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -121,9 +124,18 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
         return false;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 
-        return true;
+        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryUpgrade) {
+            TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade)blockAccess.getTileEntity(pos);
+            boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
+
+            if (validBlock && !te.isClientFormed())
+                return true;
+        }
+
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 }

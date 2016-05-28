@@ -128,6 +128,14 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 
-        return true;
+        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryStructure) {
+            TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure)blockAccess.getTileEntity(pos);
+            boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
+
+            if (validBlock && !te.isClientFormed())
+                return true;
+        }
+
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 }

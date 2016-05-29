@@ -6,12 +6,16 @@ import ipsis.woot.manager.UpgradeManager;
 import ipsis.woot.manager.UpgradeSetup;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.plugins.top.ITOPInfoProvider;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -35,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEntityProvider {
+public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEntityProvider, ITOPInfoProvider {
 
     public static final String BASENAME = "factory";
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -151,4 +155,86 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
+
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+
+        TileEntity te = world.getTileEntity(data.getPos());
+        if (te instanceof TileEntityMobFactory) {
+            TileEntityMobFactory factoryTE = (TileEntityMobFactory)te;
+
+            if (factoryTE.isFormed()) {
+
+                PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
+
+                probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
+                        (info.tier == EnumMobFactoryTier.TIER_ONE ? "I" : info.tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
+                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
+                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));
+
+                if (info.isRunning)
+                    probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RUNNING)));
+                else
+                    probeInfo.text(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
+
+                probeInfo.text(TextFormatting.RED + String.format("%d / %d RF", info.storedRF, info.totalRF));
+
+                if (mode == ProbeMode.EXTENDED) {
+
+                    if (factoryTE.getUpgradeSetup() != null) {
+
+                        for (EnumSpawnerUpgrade e : factoryTE.getUpgradeSetup().getUpgradeList()) {
+
+                            TextFormatting f;
+                            SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
+
+                            if (u.getUpgradeTier() == 1)
+                                f = TextFormatting.GRAY;
+                            else if (u.getUpgradeTier() == 2)
+                                f = TextFormatting.GOLD;
+                            else
+                                f = TextFormatting.AQUA;
+
+                            probeInfo.text(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + e));
+                        }
+                    }
+
+                } else {
+                    probeInfo.text(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
+                }
+            }
+        }
+    }
+
+    private class PluginTooltipInfo {
+
+        public String displayName;
+        public EnumMobFactoryTier tier;
+        public int spawnTime;
+        public int spawnTickRF;
+        public int spawnRF;
+        public int storedRF;
+        public int totalRF;
+        public boolean isRunning;
+        public int maxMass;
+
+        public PluginTooltipInfo(TileEntityMobFactory te) {
+
+            displayName = te.getDisplayName();
+            tier = te.getFactoryTier();
+            spawnTime = te.getSpawnReq().getSpawnTime();
+            spawnTickRF = te.getSpawnReq().getRfPerTick();
+            spawnRF = te.getSpawnReq().getTotalRf();
+            storedRF = te.getEnergyStored(EnumFacing.DOWN);
+            totalRF = te.getMaxEnergyStored(EnumFacing.DOWN);
+            isRunning = te.isRunning();
+
+            maxMass = Settings.baseMobCount;
+            UpgradeSetup upgradeSetup = te.getUpgradeSetup();
+            if (upgradeSetup != null && upgradeSetup.hasMassUpgrade())
+                maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+        }
+    }
+
 }

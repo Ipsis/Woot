@@ -5,7 +5,9 @@ import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.init.ModRecipes;
+import ipsis.woot.plugins.top.TOPCompat;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 
 public class CommonProxy {
 
@@ -17,6 +19,9 @@ public class CommonProxy {
 
         MinecraftForge.EVENT_BUS.register(new HandlerLivingDropsEvent());
         MinecraftForge.EVENT_BUS.register(new ConfigHandler());
+
+        if (Loader.isModLoaded("theoneprobe"))
+            TOPCompat.register();
     }
 
     public void init() {

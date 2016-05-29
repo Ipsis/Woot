@@ -2,8 +2,16 @@ package ipsis.woot.block;
 
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.plugins.top.ITOPInfoProvider;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.util.StringHelper;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockMobFactoryController extends BlockWoot implements ITileEntityProvider {
+public class BlockMobFactoryController extends BlockWoot implements ITileEntityProvider, ITOPInfoProvider {
 
     public static final String BASENAME = "controller";
 
@@ -101,4 +110,21 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
         return false;
     }
 
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+
+        TileEntity te = world.getTileEntity(data.getPos());
+        if (te instanceof TileEntityMobFactoryController) {
+            TileEntityMobFactoryController controllerTE = (TileEntityMobFactoryController)te;
+
+            if (!controllerTE.getDisplayName().equals((""))) {
+
+                EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(controllerTE.getXpValue());
+                probeInfo.text(TextFormatting.GREEN + String.format("%s : %s XP", controllerTE.getDisplayName(), controllerTE.getXpValue()));
+                probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
+                        (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+            }
+        }
+
+    }
 }

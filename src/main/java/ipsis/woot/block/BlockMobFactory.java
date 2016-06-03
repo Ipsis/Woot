@@ -178,8 +178,6 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 else
                     probeInfo.text(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
 
-                probeInfo.text(TextFormatting.RED + String.format("%d / %d RF", info.storedRF, info.totalRF));
-
                 if (mode == ProbeMode.EXTENDED) {
 
                     if (factoryTE.getUpgradeSetup() != null) {

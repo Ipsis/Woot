@@ -123,8 +123,11 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
             currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
                     tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
             boolean running = tag.getBoolean("running");
-            currenttip.add(TextFormatting.GREEN + String.format(
-                    running ? StringHelper.localize(Lang.WAILA_FACTORY_RUNNING) : StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
+            if (running)
+                currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RUNNING)));
+            else
+                currenttip.add(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
+
 
             int energy    = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
             int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");

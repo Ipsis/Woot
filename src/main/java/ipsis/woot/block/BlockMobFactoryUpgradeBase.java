@@ -138,4 +138,16 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
 
         return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
+
+    /**
+     * The enum is split over multiple blocks because of metadata limits
+     * This function returns the metadata value for the enum , depending on the block it is on
+     */
+    public static int getBlockSplitMeta(EnumSpawnerUpgrade u) {
+
+        if (u.ordinal() >= EnumSpawnerUpgrade.RATE_I.ordinal() && u.ordinal() <= EnumSpawnerUpgrade.DECAPITATE_III.ordinal())
+            return u.ordinal();
+
+        return u.ordinal() - (EnumSpawnerUpgrade.DECAPITATE_III.ordinal() + 1);
+    }
 }

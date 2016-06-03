@@ -1,5 +1,6 @@
 package ipsis.woot.init;
 
+import ipsis.woot.block.BlockMobFactoryUpgradeBase;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.init.Blocks;
@@ -161,6 +162,13 @@ public class ModRecipes {
                         "e e", " u ", "e e",
                         'e', Items.ENDER_PEARL, 'u', ModItems.itemFactoryUpgrade));
 
+        /* Efficiency upgrades */
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeBase.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_I)),
+                        "c c", " u ", "t t",
+                        'c', Blocks.LAPIS_BLOCK, 'u', ModItems.itemFactoryUpgrade, 't', Blocks.REDSTONE_TORCH));
+
         /**
          * Upgrades
          */
@@ -174,7 +182,7 @@ public class ModRecipes {
                 { EnumSpawnerUpgrade.MASS_II, EnumSpawnerUpgrade.MASS_I },
                 { EnumSpawnerUpgrade.MASS_III, EnumSpawnerUpgrade.MASS_II },
                 { EnumSpawnerUpgrade.DECAPITATE_II, EnumSpawnerUpgrade.DECAPITATE_I },
-                { EnumSpawnerUpgrade.DECAPITATE_III, EnumSpawnerUpgrade.DECAPITATE_II }
+                { EnumSpawnerUpgrade.DECAPITATE_III, EnumSpawnerUpgrade.DECAPITATE_II },
         };
 
         for (int x = 0; x < maps.length; x++) {
@@ -182,6 +190,19 @@ public class ModRecipes {
                     new ItemStack(ModBlocks.blockUpgrade, 1, maps[x][0].ordinal()),
                     "r r", " u ", "r r",
                     'r', new ItemStack(ModBlocks.blockUpgrade, 1, maps[x][1].ordinal()), 'u', ModItems.itemFactoryUpgrade);
+        }
+
+        maps = new EnumSpawnerUpgrade[][]{
+                {EnumSpawnerUpgrade.EFFICIENCY_II, EnumSpawnerUpgrade.EFFICIENCY_I},
+                {EnumSpawnerUpgrade.EFFICIENCY_III, EnumSpawnerUpgrade.EFFICIENCY_II}
+        };
+
+        for (int x = 0; x < maps.length; x++) {
+            GameRegistry.addShapedRecipe(
+                    new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeBase.getBlockSplitMeta(maps[x][0])),
+                    "r r", " u ", "r r",
+                    'r', new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeBase.getBlockSplitMeta(maps[x][1])),
+                    'u', ModItems.itemFactoryUpgrade);
         }
     }
 }

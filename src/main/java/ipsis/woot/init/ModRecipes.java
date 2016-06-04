@@ -46,12 +46,12 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 2, 0),
                         "   ", "sis", "   ",
-                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE), 'i', "ingotIron"));
+                        's', ModOreDictionary.ORE_DICT_SKULL, 'i', "ingotIron"));
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 4, 1),
                         " i ", "igi", " i ",
-                        'i', new ItemStack(ModItems.itemSkull, 1, 0), 'g', "ingotGold") );
+                        'i', ModOreDictionary.ORE_DICT_SKULL, 'g', "ingotGold") );
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 5, 2),
@@ -71,7 +71,7 @@ public class ModRecipes {
                         new ItemStack(ModBlocks.blockController),
                         "fsf", "beb", "bfb",
                         'f', ModItems.itemFactoryFrame,
-                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE),
+                        's', ModOreDictionary.ORE_DICT_SKULL,
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE)));
 
@@ -81,7 +81,7 @@ public class ModRecipes {
                         "fuf", "bdb", "hfr",
                         'f', ModItems.itemFactoryFrame,
                         'u', ModItems.itemFactoryUpgrade,
-                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE),
+                        's', ModOreDictionary.ORE_DICT_SKULL,
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE),
                         'h', Blocks.HOPPER,
@@ -153,7 +153,7 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.MASS_I.ordinal()),
                         "h h", " u ", "h h",
-                        'h', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE), 'u', ModItems.itemFactoryUpgrade));
+                        'h', ModOreDictionary.ORE_DICT_SKULL, 'u', ModItems.itemFactoryUpgrade));
 
         /* Decapitate upgrades */
         GameRegistry.addRecipe(

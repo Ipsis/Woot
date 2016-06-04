@@ -3,16 +3,20 @@ package ipsis;
 import ipsis.woot.command.CommandWoot;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Random;
 
@@ -46,6 +50,9 @@ public class Woot {
         UpgradeManager.loadConfig();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
+
+        ModOreDictionary.preInit();
+
     }
 
     @Mod.EventHandler

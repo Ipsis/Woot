@@ -337,7 +337,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         incCurrSpawnTicks();
         if (running) {
             processPower();
-            if (currSpawnTicks == spawnReq.getSpawnTime()) {
+            if (currSpawnTicks >= spawnReq.getSpawnTime()) {
                 onSpawn();
                 setCurrSpawnTicks(0);
             }

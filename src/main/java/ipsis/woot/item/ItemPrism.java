@@ -7,6 +7,8 @@ import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -146,6 +148,10 @@ public class ItemPrism extends ItemWoot {
                 tooltip.add(TextFormatting.GREEN + String.format("Mob: %s", StringHelper.localize(displayName)));
 
             tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
+
+            EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(getXp(stack));
+            tooltip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
+                    (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
         }
     }
 

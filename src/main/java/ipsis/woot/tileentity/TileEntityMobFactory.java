@@ -334,8 +334,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
-        incCurrSpawnTicks();
         if (running) {
+            incCurrSpawnTicks();
             processPower();
             if (currSpawnTicks >= spawnReq.getSpawnTime()) {
                 onSpawn();

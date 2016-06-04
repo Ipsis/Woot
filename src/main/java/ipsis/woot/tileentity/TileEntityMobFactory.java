@@ -254,6 +254,14 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     }
 
+    /**
+     * Validate the structure and indicate to the user why it cannot be formed
+     */
+    public void manualValidate() {
+
+        MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this, true);
+    }
+
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
 
         List<SpawnerUpgrade> tmpUpgradeList = new ArrayList<SpawnerUpgrade>();

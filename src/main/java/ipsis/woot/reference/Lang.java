@@ -5,6 +5,7 @@ public class Lang {
     public static final String TAG_CONFIG = "config." + Reference.MOD_ID + ":";
     public static final String TAG_TOOLTIP = "tooltip." + Reference.MOD_ID + ":";
     public static final String TAG_WAILA = "waila." + Reference.MOD_ID + ":";
+    public static final String TAG_VALIDATE = "validate." + Reference.MOD_ID + ":";
 
     public static String getLangConfigValue(String tag) {
 
@@ -37,4 +38,9 @@ public class Lang {
     public static final String TOOLTIP_EFFICIENCY_EFFECT = TAG_TOOLTIP + "upgrade_efficiency_effect";
 
     public static final String TOOLTIP_UPGRADE = TAG_TOOLTIP + "upgrade.";
+
+    public static final String VALIDATE_FACTORY_MISSING_CONTROLLER = TAG_VALIDATE + "factory.missing_controller";
+    public static final String VALIDATE_FACTORY_MISSING_MOB = TAG_VALIDATE + "factory.missing_mob";
+    public static final String VALIDATE_FACTORY_INVALID_BLOCK = TAG_VALIDATE + "factory.invalid_block";
+    public static final String VALIDATE_FACTORY_MOB_TIER = TAG_VALIDATE + "factory.mob_tier";
 }

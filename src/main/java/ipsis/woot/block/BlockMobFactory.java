@@ -115,6 +115,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
                 for (String s : out)
                     playerIn.addChatComponentMessage(new TextComponentString(s));
+            } else {
+                te.manualValidate();
             }
         }
         return true;

@@ -143,3 +143,9 @@ commands.Woot:woot.dump.summary=%s:%s %d loot entries
 commands.Woot:woot.dump.mobs.summary=Mob name %s
 commands.Woot:woot.flush.all.summary=Flushed all loot tables
 commands.Woot:woot.flush.type.summary=%s:%s cleared %d entries
+
+validate.Woot:factory.missing_controller=No mob controller
+validate.Woot:factory.missing_mob=No mob programmed into controller
+validate.Woot:factory.invalid_block=%s: Invalid block at %d,%d,%d  not a %s
+validate.Woot:factory.mob_tier=Mob needs higher tier factory
+

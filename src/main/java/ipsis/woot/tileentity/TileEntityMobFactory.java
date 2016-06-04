@@ -11,6 +11,7 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -257,9 +258,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     /**
      * Validate the structure and indicate to the user why it cannot be formed
      */
-    public void manualValidate() {
+    public void manualValidate(EntityPlayer player) {
 
-        MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this, true);
+        MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this, true, player);
     }
 
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {

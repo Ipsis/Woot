@@ -115,10 +115,19 @@ public class MobFactoryMultiblockLogic {
         factorySetup.displayName = teController.getDisplayName();
 
         BlockPos patternOrigin = factory.getPos();
-        if (isSize(factory, tier))
+
+        /**
+         * Only do this if not manually validating as this will shortcut the check
+         * For manual validation we want to start checking
+         */
+        if (!feedback) {
+            if (isSize(factory, tier))
+                factorySetup.size = tier;
+            else
+                return factorySetup;
+        } else {
             factorySetup.size = tier;
-        else
-            return factorySetup;
+        }
 
         EnumFacing f = factory.getWorld().getBlockState(factory.getPos()).getValue(BlockMobFactory.FACING);
         for (MobFactoryModule s : factorySetup.size.structureModules) {

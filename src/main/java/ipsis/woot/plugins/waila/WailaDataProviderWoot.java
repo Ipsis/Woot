@@ -1,5 +1,6 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.manager.SpawnerUpgrade;
@@ -112,26 +113,19 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("displayName")) {
 
-            EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
+            BlockMobFactory.PluginTooltipInfo info = BlockMobFactory.PluginTooltipInfo.fromNBT(tag);
 
             currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                    (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
-            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB),
-                    tag.getString("displayName")));
-            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
-                    tag.getInteger("mobCount"), tag.getInteger("spawnTicks")));
-            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST),
-                    tag.getInteger("spawnRf"), tag.getInteger("rfPerTick")));
-            boolean running = tag.getBoolean("running");
-            if (running)
+                    (info.tier == EnumMobFactoryTier.TIER_ONE ? "I" : info.tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
+            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));
+            if (info.isRunning)
                 currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RUNNING)));
             else
                 currenttip.add(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
 
-
-            int energy    = accessor.getNBTInteger(accessor.getNBTData(), "Energy");
-            int maxEnergy = accessor.getNBTInteger(accessor.getNBTData(), "MaxStorage");
-            currenttip.add(TextFormatting.RED + String.format("%d / %d RF", energy, maxEnergy));
+            currenttip.add(TextFormatting.RED + String.format("%d / %d RF", info.storedRF, info.totalRF));
 
             if (accessor.getPlayer().isSneaking()) {
 
@@ -149,6 +143,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
                             f = TextFormatting.AQUA;
                         currenttip.add(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + EnumSpawnerUpgrade.getFromMetadata(a[i])));
                     }
+                } else {
+                    currenttip.add(StringHelper.localize(Lang.WAILA_NO_UPGRADES));
                 }
             } else {
                 currenttip.add(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
@@ -161,25 +157,10 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
         TileEntityMobFactory tile = (TileEntityMobFactory)te;
         if (tile.isFormed()) {
-            tag.setString("displayName", tile.getDisplayName());
-            tag.setByte("tier", (byte)tile.getFactoryTier().ordinal());
-            tag.setInteger("spawnTicks", tile.getSpawnReq().getSpawnTime());
-            tag.setInteger("spawnRf", tile.getSpawnReq().getTotalRf());
-            tag.setInteger("rfPerTick", tile.getSpawnReq().getRfPerTick());
-            tag.setBoolean("running", tile.isRunning());
+            BlockMobFactory.PluginTooltipInfo info = new BlockMobFactory.PluginTooltipInfo(tile);
+            info.toNBT(tag);
 
-            tag.setInteger("Energy",     tile.getEnergyStored(EnumFacing.DOWN));
-            tag.setInteger("MaxStorage", tile.getMaxEnergyStored(EnumFacing.DOWN));
-
-            int maxMass = Settings.baseMobCount;
-            UpgradeSetup upgradeSetup = tile.getUpgradeSetup();
-            if (upgradeSetup != null) {
-                if (upgradeSetup.hasMassUpgrade())
-                    maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
-            }
-            tag.setInteger("mobCount", maxMass);
-
-            if (upgradeSetup != null) {
+            if (tile.getUpgradeSetup() != null) {
                 List<EnumSpawnerUpgrade> upgradeList = tile.getUpgradeSetup().getUpgradeList();
                 if (!upgradeList.isEmpty()) {
                     byte[] u = new byte[upgradeList.size()];

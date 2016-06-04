@@ -25,6 +25,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumHand;
@@ -196,6 +197,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
                             probeInfo.text(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + e));
                         }
+                    } else {
+                        probeInfo.text(StringHelper.localize(Lang.WAILA_NO_UPGRADES));
                     }
 
                 } else {
@@ -205,7 +208,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         }
     }
 
-    private class PluginTooltipInfo {
+    public static class PluginTooltipInfo {
 
         public String displayName;
         public EnumMobFactoryTier tier;
@@ -232,6 +235,37 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             UpgradeSetup upgradeSetup = te.getUpgradeSetup();
             if (upgradeSetup != null && upgradeSetup.hasMassUpgrade())
                 maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+        }
+
+        private PluginTooltipInfo() { }
+
+        public void toNBT(NBTTagCompound tag) {
+
+            tag.setString("displayName", displayName);
+            tag.setByte("tier", (byte)tier.ordinal());
+            tag.setInteger("spawnTicks", spawnTime);
+            tag.setInteger("spawnRf", spawnRF);
+            tag.setInteger("rfPerTick", spawnTickRF);
+            tag.setBoolean("running", isRunning);
+            tag.setInteger("energy", storedRF);
+            tag.setInteger("maxEnergy", totalRF);
+            tag.setInteger("mobCount", maxMass);
+        }
+
+        public static PluginTooltipInfo fromNBT(NBTTagCompound tag) {
+
+            PluginTooltipInfo info = new PluginTooltipInfo();
+
+            info.displayName = tag.getString("displayName");
+            info.tier = EnumMobFactoryTier.getTier(tag.getByte("tier"));
+            info.spawnTime = tag.getInteger("spawnTicks");
+            info.spawnRF = tag.getInteger("spawnRf");
+            info.spawnTickRF = tag.getInteger("rfPerTick");
+            info.isRunning = tag.getBoolean("running");
+            info.storedRF = tag.getInteger("energy");
+            info.totalRF = tag.getInteger("maxEnergy");
+            info.maxMass = tag.getInteger("mobCount");
+            return info;
         }
     }
 

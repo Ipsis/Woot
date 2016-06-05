@@ -5,6 +5,7 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -20,6 +21,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -27,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +129,23 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
                         (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
             }
         }
+    }
 
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+        if (!worldIn.isRemote) {
+            
+            BlockPos factoryPos = pos.offset(EnumFacing.DOWN, 1);
+
+            boolean isController = worldIn.getTileEntity(pos) instanceof TileEntityMobFactoryController;
+            boolean isFactory = worldIn.getTileEntity(factoryPos) instanceof TileEntityMobFactory;
+
+            if (isController && isFactory)
+                return worldIn.getBlockState(factoryPos).getBlock().onBlockActivated(worldIn, factoryPos,
+                        worldIn.getBlockState(factoryPos), playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+        }
+
+        return true;
     }
 }

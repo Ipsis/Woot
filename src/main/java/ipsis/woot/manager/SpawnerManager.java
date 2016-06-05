@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DamageSourceWoot;
+import ipsis.woot.util.FakePlayerPool;
 import ipsis.woot.util.FakePlayerUtil;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -209,10 +210,9 @@ public class SpawnerManager {
         if (entity == null)
             return;
 
-        FakePlayer fakePlayer = FakePlayerUtil.getFakePlayer((WorldServer)world);
+        FakePlayer fakePlayer = FakePlayerPool.getFakePlayer((WorldServer)world, enchantKey);
         if (fakePlayer == null)
             return;
-        FakePlayerUtil.setLooting(fakePlayer, enchantKey);
 
         DamageSourceWoot damageSourceWoot = DamageSourceWoot.getDamageSource(enchantKey);
         if (damageSourceWoot == null)

@@ -4,6 +4,8 @@ import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.HashMap;
 
@@ -60,6 +62,14 @@ public class TierMapper {
         if (Woot.mobRegistry.isValidMobName(entityName)) {
             LogHelper.info("Adding tier mapping " + entityName + "->" + t);
             mapper.put(entityName, t);
+        }
+    }
+
+    public void cmdDumpTiers(ICommandSender sender) {
+
+        for (String mobName : mapper.keySet()) {
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.tiers.summary",
+                    mobName, mapper.get(mobName).getTranslated()));
         }
     }
 }

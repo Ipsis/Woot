@@ -1,10 +1,12 @@
 package ipsis.woot.handler;
 
+import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -47,12 +49,29 @@ public class ConfigHandler {
         Settings.tierIIIRF = getConfigInt(Config.General.TIER_III_RF, Settings.Spawner.DEF_TIER_III_RF);
         Settings.baseMobCount = getConfigInt(Config.General.BASE_MOB_COUNT, Settings.Spawner.DEF_BASE_MOB_COUNT);
         Settings.baseRateTicks = getConfigInt(Config.General.BASE_RATE_TICKS, Settings.Spawner.DEF_BASE_RATE_TICKS);
+        Settings.tierIMobXpCap = getConfigInt(Config.General.TIER_I_MOB_XP_CAP, Settings.Spawner.DEF_TIER_I_MOB_XP_CAP);
+        Settings.tierIIMobXpCap = getConfigInt(Config.General.TIER_II_MOB_XP_CAP, Settings.Spawner.DEF_TIER_II_MOB_XP_CAP);
+        Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.prismBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
 
         for (int i = 0; i < Settings.prismBlacklist.length; i++)
             LogHelper.info("Prism Blacklist: " + Settings.prismBlacklist[i]);
+
+        Settings.tierIMobs = configuration.getStringList(Config.General.TIER_I_MOB_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_I_MOB_LIST)));
+        Settings.tierIIMobs = configuration.getStringList(Config.General.TIER_II_MOB_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_II_MOB_LIST)));
+        Settings.tierIIIMobs = configuration.getStringList(Config.General.TIER_III_MOB_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_III_MOB_LIST)));
+
+        for (int i = 0; i < Settings.tierIMobs.length; i++)
+            Woot.tierMapper.addMapping(Settings.tierIMobs[i], EnumMobFactoryTier.TIER_ONE);
+        for (int i = 0; i < Settings.tierIIMobs.length; i++)
+            Woot.tierMapper.addMapping(Settings.tierIIMobs[i], EnumMobFactoryTier.TIER_TWO);
+        for (int i = 0; i < Settings.tierIIIMobs.length; i++)
+            Woot.tierMapper.addMapping(Settings.tierIIIMobs[i], EnumMobFactoryTier.TIER_THREE);
 
         /**
          * Power

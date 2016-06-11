@@ -1,5 +1,6 @@
 package ipsis.woot.block;
 
+import ipsis.Woot;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -123,7 +124,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
 
             if (!controllerTE.getDisplayName().equals((""))) {
 
-                EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(controllerTE.getXpValue());
+                EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(controllerTE.getMobName(), controllerTE.getXpValue());
                 probeInfo.text(TextFormatting.GREEN + String.format("%s : %s XP", controllerTE.getDisplayName(), controllerTE.getXpValue()));
                 probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
                         (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));

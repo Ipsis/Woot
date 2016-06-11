@@ -29,6 +29,7 @@ public class Woot {
     public static MobRegistry mobRegistry = new MobRegistry();
     public static HeadRegistry headRegistry = new HeadRegistry();
     public static Random random = new Random();
+    public static TierMapper tierMapper = new TierMapper();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

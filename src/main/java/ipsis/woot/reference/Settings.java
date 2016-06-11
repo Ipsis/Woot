@@ -13,6 +13,9 @@ public class Settings {
         public static final int DEF_TIER_III_RF = 4000;
         public static final int DEF_BASE_MOB_COUNT = 1;
         public static final int DEF_BASE_RATE_TICKS = 16 * 20;
+        public static final int DEF_TIER_I_MOB_XP_CAP = 5;
+        public static final int DEF_TIER_II_MOB_XP_CAP = 20;
+        public static final int DEF_TIER_III_MOB_XP_CAP = 65535;
     }
 
     public static class Power {
@@ -77,7 +80,13 @@ public class Settings {
     public static int tierIRF;
     public static int tierIIRF;
     public static int tierIIIRF;
+    public static int tierIMobXpCap;
+    public static int tierIIMobXpCap;
+    public static int tierIIIMobXpCap;
     public static String[] prismBlacklist = new String[0];
+    public static String[] tierIMobs = new String[0];
+    public static String[] tierIIMobs = new String[0];
+    public static String[] tierIIIMobs = new String[0];
 
     /**
      * Upgrade costs per tick

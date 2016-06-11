@@ -1,6 +1,7 @@
 package ipsis.woot.tileentity.multiblock;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.oss.LogHelper;
@@ -163,12 +164,7 @@ public class MobFactoryMultiblockLogic {
         /**
          * Mob cost must not exceed tier
          */
-        boolean validMobLevel = true;
-        if (factorySetup.size == EnumMobFactoryTier.TIER_ONE && teController.getXpValue() > TIER_I_MOB_CAP)
-            validMobLevel = false;
-        else if (factorySetup.size == EnumMobFactoryTier.TIER_TWO && teController.getXpValue() > TIER_II_MOB_CAP)
-            validMobLevel = false;
-
+        boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);
         if (!validMobLevel) {
             if (feedback)
                 validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
@@ -177,20 +173,6 @@ public class MobFactoryMultiblockLogic {
 
         return factorySetup;
     }
-
-    public static EnumMobFactoryTier getTier(int xp) {
-
-        if (xp <= TIER_I_MOB_CAP)
-            return EnumMobFactoryTier.TIER_ONE;
-        else if (xp <= TIER_II_MOB_CAP)
-            return EnumMobFactoryTier.TIER_TWO;
-
-        return EnumMobFactoryTier.TIER_THREE;
-    }
-
-    public static int TIER_I_MOB_CAP = 5;
-    public static int TIER_II_MOB_CAP = 20;
-    public static int TIER_III_MOB_CAP = 65535;
 
     static boolean isSize(TileEntityMobFactory factory, EnumMobFactoryTier size) {
 

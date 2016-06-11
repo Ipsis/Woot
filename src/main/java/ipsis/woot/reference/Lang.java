@@ -6,6 +6,7 @@ public class Lang {
     public static final String TAG_TOOLTIP = "tooltip." + Reference.MOD_ID + ":";
     public static final String TAG_WAILA = "waila." + Reference.MOD_ID + ":";
     public static final String TAG_VALIDATE = "validate." + Reference.MOD_ID + ":";
+    public static final String TAG_CHAT = "chat." + Reference.MOD_ID + ":";
 
     public static String getLangConfigValue(String tag) {
 
@@ -43,4 +44,7 @@ public class Lang {
     public static final String VALIDATE_FACTORY_MISSING_MOB = TAG_VALIDATE + "factory.missing_mob";
     public static final String VALIDATE_FACTORY_INVALID_BLOCK = TAG_VALIDATE + "factory.invalid_block";
     public static final String VALIDATE_FACTORY_MOB_TIER = TAG_VALIDATE + "factory.mob_tier";
+
+    public static final String CHAT_PRISM_BLACKLIST = TAG_CHAT + "prism.blacklist";
+    public static final String CHAT_PRISM_PROGRAM = TAG_CHAT + "prism.program";
 }

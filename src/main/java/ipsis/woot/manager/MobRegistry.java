@@ -66,19 +66,22 @@ public class MobRegistry {
         }
     }
 
-    public String onEntityLiving(EntityLiving entityLiving) {
+    public boolean isBlacklisted(String wootName) {
 
-        // blacklist is based off Minecraft names
-        String name = EntityList.getEntityString(entityLiving);
-        // Remove this always
-        if (name.equals("EnderDragon"))
-            return INVALID_MOB_NAME;
+        if (wootName.equals("Woot:none:EnderDrageon"))
+            return true;
 
         for (int i = 0; i < Settings.prismBlacklist.length; i++) {
-            if (Settings.prismBlacklist[i].equals(name))
-                return INVALID_MOB_NAME;
+            if (Settings.prismBlacklist[i].equals(wootName))
+                return true;
         }
 
+        return false;
+    }
+
+    public String onEntityLiving(EntityLiving entityLiving) {
+
+        String name = EntityList.getEntityString(entityLiving);
         String wootName = createWootName(entityLiving);
         String displayName = createDisplayName(entityLiving);
         if (!mobInfoHashMap.containsKey(wootName)) {

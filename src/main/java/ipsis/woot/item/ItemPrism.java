@@ -62,11 +62,20 @@ public class ItemPrism extends ItemWoot {
         String wootName = Woot.mobRegistry.onEntityLiving((EntityLiving)target);
         if (!Woot.mobRegistry.isValidMobName(wootName))
             return false;
-
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
+
+        if (Woot.mobRegistry.isBlacklisted(wootName)) {
+            ((EntityPlayer) attacker).addChatComponentMessage(
+                    new TextComponentString(String.format(
+                            StringHelper.localize(Lang.CHAT_PRISM_BLACKLIST), displayName, wootName)));
+            return false;
+        }
+
         setMobName(stack, wootName, displayName, ((EntityLiving) target).experienceValue);
         ((EntityPlayer)attacker).addChatComponentMessage(
-                new TextComponentString(String.format("Programmed %s [%s]", displayName, wootName)));
+                new TextComponentString(String.format(
+                        StringHelper.localize(Lang.CHAT_PRISM_PROGRAM), displayName, wootName)));
+
         return true;
     }
 

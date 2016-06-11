@@ -142,6 +142,9 @@ tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob
 tooltip.Woot:prism.1=Use on controller to program
 
+chat.Woot:prism.blacklist=Mob %s is blacklisted (%s)
+chat.Woot:prism.program=Mob %s programmed (%s)
+
 commands.Woot:woot.usage=Use /woot <subcommand>. Subcommands are dump, flush.
 commands.Woot:woot.usage.dump=Use /woot dump <type>. Valid types are table and mobs.
 commands.Woot:woot.usage.flush=Use /woot flush <all|<mob> <looting>>. Valid looting are NO_ENCHANT, LOOTING_I, LOOTING_II, LOOTING_III

@@ -2,6 +2,7 @@
   "parent": "block/orientable",
   "textures": {
     "top": "woot:blocks/factory_base",
+    "down": "woot:blocks/factory_bottom",
     "front": "woot:blocks/factory",
     "side": "woot:blocks/factory_base"
   }

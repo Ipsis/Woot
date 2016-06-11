@@ -70,7 +70,13 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-        if (!worldIn.isRemote && (worldIn.getTileEntity(pos) instanceof  TileEntityMobFactory)) {
+        if (heldItem != null)
+            return false;
+
+        if (worldIn.isRemote)
+            return true;
+
+        if (worldIn.getTileEntity(pos) instanceof  TileEntityMobFactory) {
 
             TileEntityMobFactory te = (TileEntityMobFactory)worldIn.getTileEntity(pos);
             if (te.isFormed()) {

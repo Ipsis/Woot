@@ -4,12 +4,14 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -20,6 +22,7 @@ import java.util.HashMap;
 public class MobRegistry {
 
     public static final String INVALID_MOB_NAME = "InvalidMob";
+    public static final String ENDER_DRAGON = "Woot:none:EnderDragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
 
     public static String getMcName(String wootName) {
@@ -68,7 +71,7 @@ public class MobRegistry {
 
     public boolean isBlacklisted(String wootName) {
 
-        if (wootName.equals("Woot:none:EnderDrageon"))
+        if (isEnderDragon(wootName))
             return true;
 
         for (int i = 0; i < Settings.prismBlacklist.length; i++) {
@@ -77,6 +80,13 @@ public class MobRegistry {
         }
 
         return false;
+    }
+
+    public void cmdDumpBlacklist(ICommandSender sender) {
+
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
+        for (int i = 0; i < Settings.prismBlacklist.length; i++)
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", Settings.prismBlacklist[i]));
     }
 
     public String onEntityLiving(EntityLiving entityLiving) {
@@ -134,6 +144,11 @@ public class MobRegistry {
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }
+    }
+
+    boolean isEnderDragon(String wootName) {
+
+        return ENDER_DRAGON.equals(wootName);
     }
 
     boolean isWitherSkeleton(String wootName, Entity entity) {

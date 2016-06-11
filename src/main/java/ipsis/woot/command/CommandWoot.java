@@ -59,6 +59,8 @@ public class CommandWoot extends CommandBase {
             Woot.spawnerManager.cmdDumpMobs(sender);
         else if ("tiers".equals(type))
             Woot.tierMapper.cmdDumpTiers(sender);
+        else if ("blacklist".equals(type))
+            Woot.mobRegistry.cmdDumpBlacklist(sender);
         else
             throw new WrongUsageException("commands.Woot:woot.usage");
     }

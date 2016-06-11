@@ -1,5 +1,7 @@
 package ipsis.woot.tileentity.multiblock;
 
+import ipsis.woot.reference.Lang;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -173,6 +175,12 @@ public enum EnumMobFactoryTier {
             parsePattern(structureModules, pattern, 1, 4, 4);
         }
     };
+
+    public String getTranslated() {
+
+        return String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
+                this == TIER_ONE ? "I" : this == TIER_TWO ? "II" : "III");
+    }
 
     /**
      *

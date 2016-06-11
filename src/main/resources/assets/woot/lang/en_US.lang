@@ -59,9 +59,15 @@ config.Woot:globalStrictPower=Must provide full RF/tick or lose progress
 config.Woot:globalTierIRF=Tier I RF cost per mob level
 config.Woot:globalTierIIRF=Tier II RF cost per mob level
 config.Woot:globalTierIIIRF=Tier III RF cost per mob level
+config.Woot.globalTierIMobXpCap=Tier I max mob XP
+config.Woot.globalTierIIMobXpCap=Tier II max mob XP
+config.Woot.globalTierIIIMobXpCap=Tier III max mob XP
 config.Woot:globalBaseMobCount=Number of mobs to spawn
 config.Woot:globalBaseRateTicks=Number of ticks to spawn mobs
 config.Woot:globalPrismBlacklist=List of entities that cannot be spawned
+config.Woot:globalTierIMobList=List of entities that need a Tier I factory
+config.Woot:globalTierIIMobList=List of entities that need a Tier II factory
+config.Woot:globalTierIIIMobList=List of entities that need a Tier III factory
 
 config.Woot:rateI_RFTick=Rate I cost (RF/tick)
 config.Woot:rateII_RFTick=Rate II cost (RF/tick)

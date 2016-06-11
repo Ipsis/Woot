@@ -11,6 +11,12 @@ public class Config {
         public static final String TIER_I_RF = "globalTierIRF";
         public static final String TIER_II_RF = "globalTierIIRF";
         public static final String TIER_III_RF = "globalTierIIIRF";
+        public static final String TIER_I_MOB_XP_CAP = "globalTierIMobXpCap";
+        public static final String TIER_II_MOB_XP_CAP = "globalTierIIMobXpCap";
+        public static final String TIER_III_MOB_XP_CAP = "globalTierIIIMobXpCap";
+        public static final String TIER_I_MOB_LIST = "globalTierIMobList";
+        public static final String TIER_II_MOB_LIST = "globalTierIIMobList";
+        public static final String TIER_III_MOB_LIST = "globalTierIIIMobList";
         public static final String BASE_MOB_COUNT = "globalBaseMobCount";
         public static final String BASE_RATE_TICKS = "globalBaseRateTicks";
         public static final String PRISM_BLACKLIST = "globalPrismBlacklist";

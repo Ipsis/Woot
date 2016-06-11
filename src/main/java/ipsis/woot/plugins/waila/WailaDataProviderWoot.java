@@ -1,5 +1,6 @@
 package ipsis.woot.plugins.waila;
 
+import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
@@ -88,8 +89,8 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     public List<String> getWailaBodyController(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
         NBTTagCompound tag = accessor.getNBTData();
-        if (tag.hasKey("displayName") && tag.hasKey("xpCost")) {
-            EnumMobFactoryTier t = MobFactoryMultiblockLogic.getTier(tag.getInteger("xpCost"));
+        if (tag.hasKey("displayName") && tag.hasKey("xpCost") && tag.hasKey("tier")) {
+            EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
             currenttip.add(TextFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
             currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
                             (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
@@ -105,6 +106,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         if (!displayName.equals(""))
             tag.setString("displayName", displayName);
         tag.setInteger("xpCost", controller.getXpValue());
+        tag.setByte("tier", (byte)Woot.tierMapper.getTierForEntity(controller.getMobName(), controller.getXpValue()).ordinal());
         return tag;
     }
 

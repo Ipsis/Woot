@@ -7,6 +7,7 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -39,6 +40,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int storedXp;
     int learnTicksOffset;
     boolean running;
+    int structureTicks;
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
@@ -127,6 +129,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         consumedRf = 0;
         storedXp = 0;
         running = true;
+        structureTicks = 0;
 
         learnTicksOffset = Settings.learnTicks + Woot.random.nextInt(11);
     }
@@ -310,16 +313,21 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (worldObj.isRemote)
             return;
 
-        if (dirtyStructure && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
+        structureTicks++;
+
+        if (dirtyStructure && structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS) {
             onStructureCheck();
             dirtyStructure = false;
             dirtyUpgrade = false;
         }
 
-        if (dirtyUpgrade && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
+        if (dirtyUpgrade && structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS) {
             onUpgradeCheck();
             dirtyUpgrade = false;
         }
+
+        if (structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS)
+            structureTicks = 0;
 
         boolean powered = worldObj.isBlockPowered(pos);
         if (running && powered)

@@ -54,17 +54,17 @@ public class ConfigHandler {
         Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
-                Settings.prismBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+                Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
 
         for (int i = 0; i < Settings.prismBlacklist.length; i++)
             LogHelper.info("Prism Blacklist: " + Settings.prismBlacklist[i]);
 
         Settings.tierIMobs = configuration.getStringList(Config.General.TIER_I_MOB_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_I_MOB_LIST)));
+                Settings.Progression.DEF_TIER_I_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_I_MOB_LIST)));
         Settings.tierIIMobs = configuration.getStringList(Config.General.TIER_II_MOB_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_II_MOB_LIST)));
+                Settings.Progression.DEF_TIER_II_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_II_MOB_LIST)));
         Settings.tierIIIMobs = configuration.getStringList(Config.General.TIER_III_MOB_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_III_MOB_LIST)));
+                Settings.Progression.DEF_TIER_III_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_III_MOB_LIST)));
 
         for (int i = 0; i < Settings.tierIMobs.length; i++)
             Woot.tierMapper.addMapping(Settings.tierIMobs[i], EnumMobFactoryTier.TIER_ONE);

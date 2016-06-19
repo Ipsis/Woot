@@ -1,11 +1,14 @@
 package ipsis.woot.init;
 
 import ipsis.woot.block.BlockMobFactoryUpgradeBase;
+import ipsis.woot.init.recipes.ShapedOreHammerRecipe;
+import ipsis.woot.init.recipes.ShapelessOreFileRecipe;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -15,48 +18,143 @@ public class ModRecipes {
 
     public static void init() {
 
+        initToolRecipes();
+        initDyeRecipes();
         initItemRecipes();
         initBlockRecipes();
+        initUpgradeRecipes();
+
+        initRecipesCompat();
+    }
+
+    static void initToolRecipes() {
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModItems.itemYahHammer),
+                        "fff", " w ", "sws",
+                        'f', ModItems.itemFerrocrete,
+                        'w', "stickWood",
+                        's', Items.STRING));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModItems.itemIronFile),
+                        "iii", "fff", "   ",
+                        'i', "ingotIron", 'f', Items.FLINT));
+    }
+
+    static void initDyeRecipes() {
+
+        /**
+         * Dyes
+         */
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModItems.itemDyePlate),
+                        "cgc", " d ", "c c",
+                        'c', Items.CLAY_BALL,
+                        'g', "ingotGold",
+                        'd', "slabWood"));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModItems.itemDyeCasing),
+                        "cgc", " d ", "c c",
+                        'c', Items.CLAY_BALL,
+                        'g', "ingotGold",
+                        'd', "stone"));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModItems.itemDyeCasing),
+                        "cgc", " d ", "c c",
+                        'c', Items.CLAY_BALL,
+                        'g', "ingotGold",
+                        'd', ModOreDictionary.ORE_DICT_SKULL));
+
+        /**
+         * Hammered Outputs
+         */
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemFerrocretePlate, 4),
+                        "hf ", " d ", " o ",
+                        'h', ModItems.itemYahHammer,
+                        'f', ModItems.itemFerrocrete,
+                        'd', ModItems.itemDyePlate,
+                        'o', Blocks.OBSIDIAN));
+
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemFactoryCasing, 4),
+                        "php",
+                        " d ",
+                        "pop",
+                        'h', ModItems.itemYahHammer,
+                        'p', ModItems.itemFerrocretePlate,
+                        'd', ModItems.itemDyeCasing,
+                        'o', Blocks.OBSIDIAN));
+
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemSkull, 2, 0),
+                        "hi ",
+                        "sds",
+                        " o ",
+                        's', ModOreDictionary.ORE_DICT_SKULL,
+                        'i', "ingotIron",
+                        'h', ModItems.itemYahHammer,
+                        'd', ModItems.itemDyeSkull,
+                        'o', Blocks.OBSIDIAN));
+
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemSkull, 4, 1),
+                        "hg ",
+                        "sds",
+                        "sos",
+                        's', new ItemStack(ModItems.itemSkull, 1, 0),
+                        'g', "ingotGold",
+                        'h', ModItems.itemYahHammer,
+                        'd', ModItems.itemDyeSkull,
+                        'o', Blocks.OBSIDIAN));
+
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemSkull, 5, 2),
+                        "hgs",
+                        "sds",
+                        "sos",
+                        's', new ItemStack(ModItems.itemSkull, 1, 1),
+                        'g', "gemDiamond",
+                        'h', ModItems.itemYahHammer,
+                        'd', ModItems.itemDyeSkull,
+                        'o', Blocks.OBSIDIAN));
     }
 
     static void initItemRecipes() {
 
         GameRegistry.addRecipe(
+                new ShapelessOreFileRecipe(
+                        new ItemStack(ModItems.itemPulverisedFerrocrete, 2),
+                        "ingotIron",
+                        Blocks.NETHER_BRICK,
+                        Items.CLAY_BALL,
+                        ModItems.itemIronFile));
+
+        GameRegistry.addSmelting(ModItems.itemPulverisedFerrocrete, new ItemStack(ModItems.itemFerrocrete), 0.01F);
+
+        GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemPrism),
-                        "ggg", "geg", "ggg",
+                        "fgf", "geg", "fgf",
+                        'f', ModItems.itemFerrocrete,
                         'g', "paneGlass", 'e', Items.ENDER_EYE));
+    }
 
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemFactoryFrame, 9),
-                        "sis", "ici", "sis",
-                        's', "slabWood",
-                        'i', new ItemStack(Blocks.IRON_BARS),
-                        'c', new ItemStack(Blocks.CHEST)));
+    static void initUpgradeRecipes() {
 
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemFactoryUpgrade),
-                        "s s", "gfg", "srs",
-                        's', "stone", 'g', "nuggetGold", 'f', ModItems.itemFactoryFrame,
-                        'r', Items.REDSTONE));
-
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemSkull, 2, 0),
-                        "   ", "sis", "   ",
-                        's', ModOreDictionary.ORE_DICT_SKULL, 'i', "ingotIron"));
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemSkull, 4, 1),
-                        " i ", "igi", " i ",
-                        'i', ModOreDictionary.ORE_DICT_SKULL, 'g', "ingotGold") );
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemSkull, 5, 2),
-                        "ggg", " d ", "g g",
-                        'g', new ItemStack(ModItems.itemSkull, 1, 1), 'd', "gemDiamond") );
     }
 
     static void initBlockRecipes() {
@@ -64,22 +162,36 @@ public class ModRecipes {
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         ModBlocks.blockLayout,
-                        new ItemStack(ModItems.itemFactoryFrame), "stone"));
+                        ModItems.itemFactoryCasing, "stone"));
 
+        GameRegistry.addRecipe(
+                new ShapelessOreRecipe(
+                        ModItems.itemFactoryCap,
+                        ModItems.itemFactoryCasing, "ingotGold"));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        ModItems.itemFactoryUpgrade,
+                        "s s", "gfg", "srs",
+                        's', "stone", 'g', "nuggetGold", 'f', ModItems.itemFactoryCasing,
+                        'r', Items.REDSTONE));
+
+        /* TODO Controller */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockController),
                         "fsf", "beb", "bfb",
-                        'f', ModItems.itemFactoryFrame,
+                        'f', ModItems.itemFactoryCasing,
                         's', ModOreDictionary.ORE_DICT_SKULL,
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE)));
 
+        /* TODO Factory */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockFactory),
                         "fuf", "bdb", "hfr",
-                        'f', ModItems.itemFactoryFrame,
+                        'f', ModItems.itemFactoryCasing,
                         'u', ModItems.itemFactoryUpgrade,
                         's', ModOreDictionary.ORE_DICT_SKULL,
                         'e', "gemEmerald",
@@ -87,45 +199,76 @@ public class ModRecipes {
                         'h', Blocks.HOPPER,
                         'r', Items.REDSTONE));
 
+        /**
+         * Factory Blocks
+         */
+
+        /* Gray */
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_1.ordinal()),
-                        "dyeGray", new ItemStack(ModItems.itemFactoryFrame)));
+                        "bone", ModItems.itemFactoryCasing));
+
+        /* Red */
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_2.ordinal()),
-                        "dyeRed", new ItemStack(ModItems.itemFactoryFrame)));
+                        Items.ROTTEN_FLESH, ModItems.itemFactoryCasing));
+
+        /* Green */
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_3.ordinal()),
-                        "dyeGreen", new ItemStack(ModItems.itemFactoryFrame)));
+                        Items.BLAZE_POWDER, ModItems.itemFactoryCasing));
+
+        /* Blue */
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_4.ordinal()),
-                        "dyeBlue", new ItemStack(ModItems.itemFactoryFrame)));
+                        "enderpearl", ModItems.itemFactoryCasing));
 
-        /*
+        /* Orange */
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_5.ordinal()),
-                        "dyeOrange", new ItemStack(ModBlocks.blockFactoryFrame)));
-                        */
+                        Items.GHAST_TEAR, ModItems.itemFactoryCasing));
 
+
+        /**
+         * Cap stones
+         */
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.CAP_I.ordinal()),
-                        "sgs", "gig", "sgs",
+                        "scs", "gig", "sgs",
+                        'c', ModItems.itemFactoryCap,
                         's', "stone", 'g', "dustGlowstone", 'i', new ItemStack(ModItems.itemSkull, 1, 0)));
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.CAP_II.ordinal()),
-                        "sgs", "gig", "sgs",
+                        "scs", "gig", "sgs",
+                        'c', ModItems.itemFactoryCap,
                         's', "stone", 'g', "dustGlowstone", 'i', new ItemStack(ModItems.itemSkull, 1, 1)));
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.CAP_III.ordinal()),
-                        "sgs", "gig", "sgs",
+                        "scs", "gig", "sgs",
+                        'c', ModItems.itemFactoryCap,
                         's', "stone", 'g', "dustGlowstone", 'i', new ItemStack(ModItems.itemSkull, 1, 2)));
+    }
+
+    static void initRecipesCompat() {
+
+        /* Factory Frame -> Factory Casing */
+        GameRegistry.addShapelessRecipe(
+                        new ItemStack(ModItems.itemFactoryCasing),
+                        ModItems.itemFactoryFrame);
+
+        initBlockRecipesCompat();
+    }
+
+    static void initBlockRecipesCompat() {
+
 
         /* Rate upgrades */
         GameRegistry.addRecipe(

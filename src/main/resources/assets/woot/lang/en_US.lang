@@ -6,9 +6,9 @@ tile.Woot:layout.name=Mob Factory Layout
 
 tile.Woot:structure.block_1.name=Mob Factory Block Gray
 tile.Woot:structure.block_2.name=Mob Factory Block Red
-tile.Woot:structure.block_3.name=Mob Factory Block Green
-tile.Woot:structure.block_4.name=Mob Factory Block Blue
-tile.Woot:structure.block_5.name=Mob Factory Block Orange
+tile.Woot:structure.block_3.name=Mob Factory Block Orange
+tile.Woot:structure.block_4.name=Mob Factory Block Green
+tile.Woot:structure.block_5.name=Mob Factory Block White
 tile.Woot:structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
 tile.Woot:structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
 tile.Woot:structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone
@@ -32,13 +32,28 @@ tile.Woot:upgradeb.efficiency_i.name=Efficiency I Upgrade
 tile.Woot:upgradeb.efficiency_ii.name=Efficiency II Upgrade
 tile.Woot:upgradeb.efficiency_iii.name=Efficiency III Upgrade
 
+item.Woot:ironFile.name=Iron File
+item.Woot:yahHammer.name=Yah Hammer
+
+item.Woot:pulverisedFerrocrete.name=Pulverised Ferrocrete
+item.Woot:ferrocrete.name=Ferrocrete
+
+item.Woot:dyePlate.name=Plate Dye
+item.Woot:dyeCasing.name=Casing Dye
+item.Woot:dyeSkull.name=Skull Dye
+
 item.Woot:prism.name=Mob Prism
 item.Woot:xpShard.name=Xp Shard
-item.Woot:factoryFrame.name=Factory Frame
-item.Woot:factoryUpgrade.name=Factory Upgrade
 item.Woot:skull.iron.name=Iron Plated Skull
 item.Woot:skull.gold.name=Gold Plated Skull
 item.Woot:skull.diamond.name=Diamond Encrusted Skull
+
+item.Woot:ferrocretePlate.name=Ferrocrete Plate
+item.Woot:factoryCasing.name=Factory Casing
+item.Woot:factoryCap.name=Factory Cap
+
+item.Woot:factoryFrame.name=Factory Frame [Deprecated]
+item.Woot:factoryUpgrade.name=Factory Upgrade [Deprecated]
 
 waila.Woot:factory.tier=Tier %s
 waila.Woot:factory.mob=Spawning %s

@@ -3,9 +3,7 @@ package ipsis.woot.manager;
 import ipsis.Woot;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerPool;
-import ipsis.woot.util.FakePlayerUtil;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -13,8 +11,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
@@ -214,17 +212,12 @@ public class SpawnerManager {
         if (fakePlayer == null)
             return;
 
-        DamageSourceWoot damageSourceWoot = DamageSourceWoot.getDamageSource(enchantKey);
-        if (damageSourceWoot == null)
-            return;
-        EntityDamageSource entityDamageSource = new EntityDamageSource(damageSourceWoot.getDamageType(), fakePlayer);
-
         /**
          * BUG0022 - Need to set the attackingPlayer or the 1.9 loot tables will not
          * give us all the drops, as some are conditional on killed_by_player
          */
         ((EntityLivingBase)entity).attackingPlayer = fakePlayer;
-        ((EntityLivingBase) entity).onDeath(entityDamageSource);
+        ((EntityLivingBase) entity).onDeath(DamageSource.causePlayerDamage(fakePlayer));
     }
 
     int calcDeathXp(String mobName, SpawnerUpgrade upgrade) {

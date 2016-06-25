@@ -7,7 +7,6 @@ import ipsis.woot.util.FakePlayerPool;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -115,17 +114,6 @@ public class SpawnerManager {
 
     HashMap<String, SpawnerEntry> spawnerMap = new HashMap<String, SpawnerEntry>();
 
-    SpawnerEntry getSpawnerEntry(String mobName) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e == null) {
-            e = new SpawnerEntry();
-            spawnerMap.put(mobName, e);
-        }
-
-        return e;
-    }
-
     public int getSpawnXp(String mobName, TileEntity te) {
 
         if (!Woot.mobRegistry.hasXp(mobName)) {
@@ -158,31 +146,6 @@ public class SpawnerManager {
 
         /* No entry yet so it cannot be full */
         return false;
-    }
-
-
-    public void addDrops(String mobName, EnumEnchantKey enchantKey, List<EntityItem> entityItemList) {
-
-        SpawnerEntry e = getSpawnerEntry(mobName);
-        if (e.isFull(enchantKey))
-            return;
-
-        List<ItemStack> dropList = new ArrayList<ItemStack>();
-        for (EntityItem entityItem : entityItemList) {
-            ItemStack itemStack = entityItem.getEntityItem();
-            dropList.add(ItemStack.copyItemStack(itemStack));
-        }
-
-        e.addDrops(enchantKey, dropList);
-    }
-
-    public List<ItemStack> getDrops(String mobName, EnumEnchantKey enchantKey) {
-
-        if (isEmpty(mobName, enchantKey))
-           return new ArrayList<ItemStack>();
-
-        SpawnerEntry e = getSpawnerEntry(mobName);
-        return e.getDrops(enchantKey);
     }
 
     private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {

@@ -39,11 +39,7 @@ public class HandlerLivingDropsEvent {
                  */
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
                 EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-                if (!Woot.spawnerManager.isFull(mobID, key))
-                    Woot.spawnerManager.addDrops(mobID, key, e.getDrops());
-
                 Woot.lootManager.handleDropInfo(mobID, key, e.getDrops());
-                EntityPlayer entityPlayer = (EntityPlayer)e.getSource().getEntity();
 
 
             } else if (!Settings.strictFactorySpawns) {
@@ -70,9 +66,6 @@ public class HandlerLivingDropsEvent {
                  */
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
                 EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-                if (!Woot.spawnerManager.isFull(mobID, key))
-                    Woot.spawnerManager.addDrops(mobID, key, e.getDrops());
-
                 Woot.lootManager.handleDropInfo(mobID, key, e.getDrops());
             }
         }

@@ -5,6 +5,7 @@ import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
+import ipsis.woot.manager.loot.LootManager;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,6 +31,7 @@ public class Woot {
     public static HeadRegistry headRegistry = new HeadRegistry();
     public static Random random = new Random();
     public static TierMapper tierMapper = new TierMapper();
+    public static LootManager lootManager = new LootManager();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

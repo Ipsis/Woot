@@ -263,7 +263,7 @@ public class SpawnerManager {
 
         for (int i = 0; i < mobCount; i++) {
 
-            List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
+            List<ItemStack> dropList = Woot.lootManager.getLoot(mobName, upgradeSetup.getEnchantKey(), 1);
             if (!dropList.isEmpty()) {
 
                 boolean shouldEnchant = shouldEnchant(difficulty);
@@ -324,8 +324,7 @@ public class SpawnerManager {
             SpawnerEntry e = spawnerMap.get(mobName);
 
             for (EnumEnchantKey key : EnumEnchantKey.values())
-                    sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.summary",
-                            mobName, key, e.dropMap.get(key).size()));
+                Woot.lootManager.dump(sender, mobName, key);
         }
     }
 

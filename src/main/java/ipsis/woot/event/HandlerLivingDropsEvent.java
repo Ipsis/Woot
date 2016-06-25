@@ -6,8 +6,10 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.FakePlayerPool;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -40,6 +42,10 @@ public class HandlerLivingDropsEvent {
                 if (!Woot.spawnerManager.isFull(mobID, key))
                     Woot.spawnerManager.addDrops(mobID, key, e.getDrops());
 
+                Woot.lootManager.handleDropInfo(mobID, key, e.getDrops());
+                EntityPlayer entityPlayer = (EntityPlayer)e.getSource().getEntity();
+
+
             } else if (!Settings.strictFactorySpawns) {
 
                 /**
@@ -66,6 +72,8 @@ public class HandlerLivingDropsEvent {
                 EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
                 if (!Woot.spawnerManager.isFull(mobID, key))
                     Woot.spawnerManager.addDrops(mobID, key, e.getDrops());
+
+                Woot.lootManager.handleDropInfo(mobID, key, e.getDrops());
             }
         }
     }

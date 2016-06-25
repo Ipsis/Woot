@@ -1,6 +1,8 @@
 package ipsis.woot.manager.loot;
 
+import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.reference.Settings;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -13,10 +15,10 @@ public class LootTable {
 
     String wootName;
 
-    List<MobDrop> mobDroplist;
-    List<MobDrop> mobDroplistLootingI;
-    List<MobDrop> mobDroplistLootingII;
-    List<MobDrop> mobDroplistLootingIII;
+    List<Drop> mobDroplist;
+    List<Drop> mobDroplistLootingI;
+    List<Drop> mobDroplistLootingII;
+    List<Drop> mobDroplistLootingIII;
 
     Integer sampleSize;
     Integer sampleSizeLootingI;
@@ -29,10 +31,10 @@ public class LootTable {
 
         this.wootName = wootName;
 
-        mobDroplist = new ArrayList<MobDrop>();
-        mobDroplistLootingI = new ArrayList<MobDrop>();
-        mobDroplistLootingII = new ArrayList<MobDrop>();
-        mobDroplistLootingIII = new ArrayList<MobDrop>();
+        mobDroplist = new ArrayList<Drop>();
+        mobDroplistLootingI = new ArrayList<Drop>();
+        mobDroplistLootingII = new ArrayList<Drop>();
+        mobDroplistLootingIII = new ArrayList<Drop>();
 
         sampleSize = 0;
         sampleSizeLootingI = 0;
@@ -40,33 +42,33 @@ public class LootTable {
         sampleSizeLootingIII = 0;
     }
 
+    public boolean isFull(EnumEnchantKey key) {
+
+        int size = getSize(key);
+        return size == Settings.sampleSize;
+    }
+
+    public boolean isEmpty(EnumEnchantKey key) {
+
+        int size = getSize(key);
+        return size == 0;
+    }
+
     public void update(EnumEnchantKey key, List<EntityItem> drops) {
 
-        List<MobDrop> dropList = null;
-
-        if (key == EnumEnchantKey.NO_ENCHANT) {
-            sampleSize++;
-            dropList = mobDroplist;
-        } else if (key == EnumEnchantKey.LOOTING_I) {
-            sampleSizeLootingI++;
-            dropList = mobDroplistLootingI;
-        } else if (key == EnumEnchantKey.LOOTING_II) {
-            sampleSizeLootingII++;
-            dropList = mobDroplistLootingII;
-        } else if (key == EnumEnchantKey.LOOTING_III) {
-            sampleSizeLootingIII++;
-            dropList = mobDroplistLootingIII;
-        }
+        List<Drop> dropList = getList(key);
 
         // This should NEVER happen
         if (dropList == null)
             return;
 
+        incSize(key);
+
         for (EntityItem entityItem : drops) {
             ItemStack itemStack = entityItem.getEntityItem();
 
             boolean found = false;
-            for (MobDrop d : dropList) {
+            for (Drop d : dropList) {
                 if (d.itemStack.isItemEqualIgnoreDurability(itemStack)) {
                     d.update(itemStack.stackSize);
                     found = true;
@@ -74,7 +76,7 @@ public class LootTable {
             }
 
             if (!found) {
-                MobDrop d = new MobDrop(itemStack);
+                Drop d = new Drop(itemStack);
                 d.update(itemStack.stackSize);
                 dropList.add(d);
             }
@@ -83,34 +85,21 @@ public class LootTable {
 
     public void dump(ICommandSender sender, EnumEnchantKey key) {
 
-        int size = 0;
-        List<MobDrop> dropList = null;
-        if (key == EnumEnchantKey.NO_ENCHANT) {
-            dropList = mobDroplist;
-            size = sampleSize;
-        } else if (key == EnumEnchantKey.LOOTING_I) {
-            dropList = mobDroplistLootingI;
-            size = sampleSizeLootingI;
-        } else if (key == EnumEnchantKey.LOOTING_II) {
-            dropList = mobDroplistLootingII;
-            size = sampleSizeLootingII;
-        } else if (key == EnumEnchantKey.LOOTING_III) {
-            dropList = mobDroplistLootingIII;
-            size = sampleSizeLootingIII;
-        }
+        int size = getSize(key);
+        List<Drop> dropList = getList(key);
 
-        if (dropList == null) {
+        if (dropList == null || size == 0) {
             sender.addChatMessage(new TextComponentString(String.format("Mob: %s/%s is empty", wootName, key)));
         } else {
-            for (MobDrop d : dropList) {
-               d.dump(sender, wootName, key, size);
+            for (Drop d : dropList) {
+               d.dump(sender, wootName, key, d.count, size);
             }
         }
     }
 
-    private List<MobDrop> getList(EnumEnchantKey key) {
+    private List<Drop> getList(EnumEnchantKey key) {
 
-        List<MobDrop> dropList = null;
+        List<Drop> dropList = null;
         if (key == EnumEnchantKey.NO_ENCHANT) {
             dropList = mobDroplist;
         } else if (key == EnumEnchantKey.LOOTING_I) {
@@ -124,9 +113,21 @@ public class LootTable {
         return dropList;
     }
 
-    private int getSize(EnumEnchantKey key) {
+    private void incSize(EnumEnchantKey key) {
 
-        int size = 0;
+        if (key == EnumEnchantKey.NO_ENCHANT)
+            sampleSize++;
+        else if (key == EnumEnchantKey.LOOTING_I)
+            sampleSizeLootingI++;
+        else if (key == EnumEnchantKey.LOOTING_II)
+            sampleSizeLootingII++;
+        else if (key == EnumEnchantKey.LOOTING_III)
+            sampleSizeLootingIII++;
+    }
+
+    private Integer getSize(EnumEnchantKey key) {
+
+        Integer size = 0;
         if (key == EnumEnchantKey.NO_ENCHANT)
             size = sampleSize;
         else if (key == EnumEnchantKey.LOOTING_I)
@@ -139,20 +140,20 @@ public class LootTable {
         return size;
     }
 
-    public void getLoot(EnumEnchantKey key, int numMobs, List<ItemStack> loot) {
+    public void getLoot(EnumEnchantKey key, List<ItemStack> loot) {
 
-        List<MobDrop> dropList = getList(key);
+        List<Drop> dropList = getList(key);
         int size = getSize(key);
 
         if (dropList == null || size == 0)
             return;
 
-        for (int mob = 0; mob < numMobs; mob++) {
-
-            for (MobDrop drop : dropList) {
-                ItemStack itemStack = drop.getLoot(size);
-                if (itemStack != null)
-                    loot.add(itemStack);
+        for (Drop drop : dropList) {
+            float chance = Woot.lootManager.RAND.nextFloat();
+            if (chance <= drop.getChance(size)) {
+                ItemStack dropStack = ItemStack.copyItemStack(drop.itemStack);
+                dropStack.stackSize = drop.getWeightedSize();
+                loot.add(dropStack);
             }
         }
     }

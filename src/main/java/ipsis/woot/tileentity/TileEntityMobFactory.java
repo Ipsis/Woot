@@ -340,7 +340,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         currLearnTicks++;
         if (currLearnTicks >= learnTicksOffset) {
-            if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
+            if (!Woot.lootManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
@@ -348,7 +348,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
 
         /* Do we have any info on this mob yet - should only happen until the first event fires */
-        if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
+        if (Woot.lootManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
         if (running) {

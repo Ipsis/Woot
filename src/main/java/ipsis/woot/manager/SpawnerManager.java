@@ -111,9 +111,6 @@ public class SpawnerManager {
         return new SpawnReq(totalRf, spawnTime);
     }
 
-
-    HashMap<String, SpawnerEntry> spawnerMap = new HashMap<String, SpawnerEntry>();
-
     public int getSpawnXp(String mobName, TileEntity te) {
 
         if (!Woot.mobRegistry.hasXp(mobName)) {
@@ -126,26 +123,6 @@ public class SpawnerManager {
         }
 
         return Woot.mobRegistry.getSpawnXp(mobName);
-    }
-
-    public boolean isEmpty(String mobName, EnumEnchantKey enchantKey) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null)
-            return e.dropMap.get(enchantKey).isEmpty();
-
-        /* No entry yet so it is empty */
-        return true;
-    }
-
-    public boolean isFull(String mobName, EnumEnchantKey enchantKey) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null)
-            return e.dropMap.get(enchantKey).size() == Settings.sampleSize;
-
-        /* No entry yet so it cannot be full */
-        return false;
     }
 
     private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {
@@ -226,7 +203,7 @@ public class SpawnerManager {
 
         for (int i = 0; i < mobCount; i++) {
 
-            List<ItemStack> dropList = Woot.lootManager.getLoot(mobName, upgradeSetup.getEnchantKey(), 1);
+            List<ItemStack> dropList = Woot.lootManager.getLoot(mobName, upgradeSetup.getEnchantKey());
             if (!dropList.isEmpty()) {
 
                 boolean shouldEnchant = shouldEnchant(difficulty);
@@ -277,48 +254,4 @@ public class SpawnerManager {
         public int getXp() { return this.xp; }
         public List<ItemStack> getDropList() { return this.drops; }
     }
-
-    /**
-     * Command interface
-     */
-    public void cmdDumpTable(ICommandSender sender) {
-
-        for (String mobName : spawnerMap.keySet()) {
-            SpawnerEntry e = spawnerMap.get(mobName);
-
-            for (EnumEnchantKey key : EnumEnchantKey.values())
-                Woot.lootManager.dump(sender, mobName, key);
-        }
-    }
-
-    public void cmdDumpMobs(ICommandSender sender) {
-
-        for (String mobName : spawnerMap.keySet()) {
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.mobs.summary", mobName));
-        }
-    }
-
-    public void cmdFlushTableEntry(ICommandSender sender, String mobName, EnumEnchantKey key) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null) {
-            int size = e.dropMap.get(key).size();
-            flushTableEntry(mobName, key);
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.type.summary", mobName, key, size));
-        }
-    }
-
-    public void cmdFlushTables(ICommandSender sender) {
-
-        spawnerMap.clear();
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.all.summary"));
-    }
-
-    public void flushTableEntry(String mobName, EnumEnchantKey key) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null)
-            e.dropMap.get(key).clear();
-    }
-
 }

@@ -4,7 +4,7 @@ public class Settings {
 
     public static class Spawner {
 
-        public static final int DEF_SAMPLE_SIZE = 10000;
+        public static final int DEF_SAMPLE_SIZE = 1000;
         public static final int DEF_LEARN_TICKS = 5;
         public static final boolean DEF_STRICT_FACTORY_SPAWNS = false;
         public static final boolean DEF_STRICT_POWER = false;

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class LootManager {
+public class LootPool {
 
     HashMap<String, LootTable> lootMap = new HashMap<String, LootTable>();
     public Random RAND = new Random();

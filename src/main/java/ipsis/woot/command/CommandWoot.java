@@ -54,7 +54,7 @@ public class CommandWoot extends CommandBase {
         if ("table".equals(type))
             dumpLootTable(sender, args);
         else if ("mobs".equals(type))
-            Woot.lootManager.cmdDumpMobs(sender);
+            Woot.lootPool.cmdDumpMobs(sender);
         else if ("tiers".equals(type))
             Woot.tierMapper.cmdDumpTiers(sender);
         else if ("blacklist".equals(type))
@@ -83,6 +83,6 @@ public class CommandWoot extends CommandBase {
         else
             throw new WrongUsageException("commands.Woot:woot.usage.flush");
 
-        Woot.lootManager.cmdDumpTable(sender, mobName, enumEnchantKey);
+        Woot.lootPool.cmdDumpTable(sender, mobName, enumEnchantKey);
     }
 }

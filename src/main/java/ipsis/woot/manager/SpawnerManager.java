@@ -4,7 +4,6 @@ import ipsis.Woot;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.FakePlayerPool;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.item.ItemStack;
@@ -13,7 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -203,7 +201,7 @@ public class SpawnerManager {
 
         for (int i = 0; i < mobCount; i++) {
 
-            List<ItemStack> dropList = Woot.lootManager.getLoot(mobName, upgradeSetup.getEnchantKey());
+            List<ItemStack> dropList = Woot.lootPool.getLoot(mobName, upgradeSetup.getEnchantKey());
             if (!dropList.isEmpty()) {
 
                 boolean shouldEnchant = shouldEnchant(difficulty);

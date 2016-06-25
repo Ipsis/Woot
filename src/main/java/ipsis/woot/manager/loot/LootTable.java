@@ -149,7 +149,7 @@ public class LootTable {
             return;
 
         for (Drop drop : dropList) {
-            float chance = Woot.lootManager.RAND.nextFloat();
+            float chance = Woot.lootPool.RAND.nextFloat();
             if (chance <= drop.getChance(size)) {
                 ItemStack dropStack = ItemStack.copyItemStack(drop.itemStack);
                 dropStack.stackSize = drop.getWeightedSize();

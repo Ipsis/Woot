@@ -5,19 +5,16 @@ import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
-import ipsis.woot.manager.loot.LootManager;
+import ipsis.woot.manager.loot.LootPool;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Random;
 
@@ -31,7 +28,7 @@ public class Woot {
     public static HeadRegistry headRegistry = new HeadRegistry();
     public static Random random = new Random();
     public static TierMapper tierMapper = new TierMapper();
-    public static LootManager lootManager = new LootManager();
+    public static LootPool lootPool = new LootPool();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

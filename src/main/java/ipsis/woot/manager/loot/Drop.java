@@ -48,7 +48,7 @@ public class Drop {
 
     public int getWeightedSize() {
 
-        DropData dropData = WeightedRandom.getRandomItem(Woot.lootManager.RAND, dropList);
+        DropData dropData = WeightedRandom.getRandomItem(Woot.lootPool.RAND, dropList);
         if (dropData != null)
             return dropData.stackSize;
 

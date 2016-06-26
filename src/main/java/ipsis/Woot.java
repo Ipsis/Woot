@@ -7,7 +7,9 @@ import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTable;
 import ipsis.woot.manager.loot.LootTableManager;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.proxy.CommonProxy;
+import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -53,7 +55,7 @@ public class Woot {
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
 
         ModOreDictionary.preInit();
-
+        Files.init(event);
     }
 
     @Mod.EventHandler
@@ -70,8 +72,17 @@ public class Woot {
     }
 
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
+    public void serverStart(FMLServerStartingEvent event) {
 
+        LogHelper.info("Load world loot configuration");
+        LOOT_TABLE_MANAGER.load();
         event.registerServerCommand(new CommandWoot());
+    }
+
+    @Mod.EventHandler
+    public void serverStop(FMLServerStoppingEvent event) {
+
+        LogHelper.info("Save world loot configuration");
+        LOOT_TABLE_MANAGER.save();
     }
 }

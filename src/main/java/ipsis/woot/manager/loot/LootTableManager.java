@@ -1,6 +1,8 @@
 package ipsis.woot.manager.loot;
 
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.reference.Files;
+import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -13,9 +15,6 @@ import java.util.List;
 public class LootTableManager {
 
     private HashMap<String, LootTable> lootMap;
-
-    public void loadWorldDataFromJson(String json) { }
-    public String saveWorldDataToJson() { return ""; }
 
     public LootTableManager() {
 
@@ -83,5 +82,14 @@ public class LootTableManager {
             String s = e.getDrops(key, detail);
             sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.table.summary", s));
         }
+    }
+
+    /**
+     * Loot file handling
+     */
+    public void load() { }
+    public void save() {
+
+        SerializationHelper.writeHashMapToFile(lootMap, Files.lootFile);
     }
 }

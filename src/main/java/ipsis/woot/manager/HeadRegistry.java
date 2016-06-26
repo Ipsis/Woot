@@ -61,7 +61,8 @@ public class HeadRegistry {
         if (headConfig == null)
             return null;
 
-        if (Woot.random.nextInt(100) + 1 > u.getDecapitateChance())
+        // TODO this is SO WRONG
+        if (Woot.RANDOM.nextInt(100) + 1 > u.getDecapitateChance())
             return ItemStack.copyItemStack(headConfig.headStack);
 
         return null;

@@ -2,7 +2,6 @@ package ipsis.woot.event;
 
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.FakePlayerPool;
 import net.minecraft.entity.EntityLiving;
@@ -37,8 +36,8 @@ public class HandlerLivingDropsEvent {
                  */
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
                 EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-                if (!Woot.spawnerManager.isFull(mobID, key))
-                    Woot.spawnerManager.addDrops(mobID, key, e.getDrops());
+                Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops());
+
 
             } else if (!Settings.strictFactorySpawns) {
 
@@ -64,8 +63,7 @@ public class HandlerLivingDropsEvent {
                  */
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
                 EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-                if (!Woot.spawnerManager.isFull(mobID, key))
-                    Woot.spawnerManager.addDrops(mobID, key, e.getDrops());
+                Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops());
             }
         }
     }

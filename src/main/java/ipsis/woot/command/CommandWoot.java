@@ -39,8 +39,6 @@ public class CommandWoot extends CommandBase {
             throw new WrongUsageException("commands.Woot:woot.usage");
         } else if ("dump".equals(args[0])) {
             dumpTable(sender, args);
-        } else if ("flush".equals(args[0])) {
-            flushTable(sender, args);
         } else {
             throw new WrongUsageException("commands.Woot:woot.usage");
         }
@@ -48,51 +46,47 @@ public class CommandWoot extends CommandBase {
 
     private void dumpTable(ICommandSender sender, String[] args) throws CommandException {
 
-        if (args.length != 2)
+        if (args.length < 2)
             throw new WrongUsageException("commands.Woot:woot.usage.dump");
 
         String type = args[1];
 
         if ("table".equals(type))
-            Woot.spawnerManager.cmdDumpTable(sender);
+            dumpLootTable(sender, args);
         else if ("mobs".equals(type))
-            Woot.spawnerManager.cmdDumpMobs(sender);
+            Woot.LOOT_TABLE_MANAGER.dumpMobs(sender);
         else if ("tiers".equals(type))
             Woot.tierMapper.cmdDumpTiers(sender);
         else if ("blacklist".equals(type))
             Woot.mobRegistry.cmdDumpBlacklist(sender);
         else
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.Woot:woot.usage.dump");
     }
 
-    private void flushTable(ICommandSender sender, String[] args) throws CommandException {
+    private void dumpLootTable(ICommandSender sender, String[] args) throws CommandException {
 
-        if (args.length != 2 && args.length != 3)
-            throw new WrongUsageException("commands.Woot:woot.usage.flush");
+        if (args.length < 4)
+            throw new WrongUsageException("commands.Woot:woot.usage.dump.table");
 
-        if (args.length == 2) {
-            if (args[1].equals("all"))
-                Woot.spawnerManager.cmdFlushTables(sender);
-            else
-                throw new WrongUsageException("commands.Woot:woot.usage.flush");
-        } else {
+        String mobName = args[2];
+        String key = args[3];
 
-            String mobName = args[1];
-            String key = args[2];
+        EnumEnchantKey enumEnchantKey;
+        if (key.equals(EnumEnchantKey.NO_ENCHANT.toString()))
+            enumEnchantKey = EnumEnchantKey.NO_ENCHANT;
+        else if (key.equals(EnumEnchantKey.LOOTING_I.toString()))
+            enumEnchantKey = EnumEnchantKey.LOOTING_I;
+        else if (key.equals(EnumEnchantKey.LOOTING_II.toString()))
+            enumEnchantKey = EnumEnchantKey.LOOTING_II;
+        else if (key.equals(EnumEnchantKey.LOOTING_III.toString()))
+            enumEnchantKey = EnumEnchantKey.LOOTING_III;
+        else
+            throw new WrongUsageException("commands.Woot:woot.dump.table");
 
-            EnumEnchantKey enumEnchantKey;
-            if (key.equals(EnumEnchantKey.NO_ENCHANT.toString()))
-                enumEnchantKey = EnumEnchantKey.NO_ENCHANT;
-            else if (key.equals(EnumEnchantKey.LOOTING_I.toString()))
-                enumEnchantKey = EnumEnchantKey.LOOTING_I;
-            else if (key.equals(EnumEnchantKey.LOOTING_II.toString()))
-                enumEnchantKey = EnumEnchantKey.LOOTING_II;
-            else if (key.equals(EnumEnchantKey.LOOTING_III.toString()))
-                enumEnchantKey = EnumEnchantKey.LOOTING_III;
-            else
-                throw new WrongUsageException("commands.Woot:woot.usage.flush");
+        boolean detail = false;
+        if (args.length == 5 && args[4].equals("detail"))
+            detail = true;
 
-            Woot.spawnerManager.cmdFlushTableEntry(sender, mobName, enumEnchantKey);
-        }
+        Woot.LOOT_TABLE_MANAGER.dumpDrops(sender, mobName, enumEnchantKey, detail);
     }
 }

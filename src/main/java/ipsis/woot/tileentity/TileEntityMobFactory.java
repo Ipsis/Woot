@@ -7,7 +7,6 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -131,7 +130,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         running = true;
         structureTicks = 0;
 
-        learnTicksOffset = Settings.learnTicks + Woot.random.nextInt(11);
+        learnTicksOffset = Settings.learnTicks + Woot.RANDOM.nextInt(11);
     }
 
     public String getMobName() {
@@ -340,7 +339,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         currLearnTicks++;
         if (currLearnTicks >= learnTicksOffset) {
-            if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
+            if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
@@ -348,7 +347,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
 
         /* Do we have any info on this mob yet - should only happen until the first event fires */
-        if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
+        if (Woot.LOOT_TABLE_MANAGER.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
         if (running) {

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import ipsis.woot.manager.loot.Drop;
+import ipsis.woot.manager.loot.LootPool;
 import ipsis.woot.manager.loot.LootTable;
 
 import java.io.*;
@@ -20,6 +22,10 @@ public class SerializationHelper {
     public static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .enableComplexMapKeySerialization()
+            .registerTypeAdapter(LootTable.class, new LootTable.Serializer())
+            .registerTypeAdapter(LootPool.class, new LootPool.Serializer())
+            .registerTypeAdapter(Drop.class, new Drop.Serializer())
+            .registerTypeAdapter(Drop.DropData.class, new Drop.DropData.Serializer())
             .create();
 
     public static void writeHashMapToFile(HashMap<String, LootTable> map, File file) {

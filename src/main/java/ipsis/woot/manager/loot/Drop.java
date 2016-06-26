@@ -1,5 +1,6 @@
 package ipsis.woot.manager.loot;
 
+import com.google.gson.*;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
 import net.minecraft.command.ICommandSender;
@@ -7,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.TextComponentString;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,28 @@ public class Drop {
         return 1;
     }
 
+    /**
+     * Serialization
+     */
+    public static class Serializer implements JsonSerializer<Drop>, JsonDeserializer<Drop> {
+
+        @Override
+        public Drop deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return null;
+        }
+
+        @Override
+        public JsonElement serialize(Drop src, Type typeOfSrc, JsonSerializationContext context) {
+
+            JsonObject jsonObject = new JsonObject();
+            // TODO how to handle the itemstack
+            jsonObject.addProperty("item", src.itemStack.getDisplayName());
+            jsonObject.addProperty("count", src.count);
+            jsonObject.add("weights", context.serialize(src.weights));
+            return jsonObject;
+        }
+    }
+
     public static class DropData extends WeightedRandom.Item {
 
         public final int stackSize;
@@ -68,7 +92,28 @@ public class Drop {
         public void incItemWeight() {
             itemWeight++;
         }
+
+        /**
+         * Serialization
+         */
+        public static class Serializer implements JsonSerializer<DropData>, JsonDeserializer<DropData> {
+
+            @Override
+            public DropData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return null;
+            }
+
+            @Override
+            public JsonElement serialize(DropData src, Type typeOfSrc, JsonSerializationContext context) {
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("stack_size", src.stackSize);
+                jsonObject.addProperty("weight", src.itemWeight);
+                return jsonObject;
+            }
+        }
     }
+
 }
 
 

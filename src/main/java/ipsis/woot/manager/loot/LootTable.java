@@ -1,11 +1,13 @@
 package ipsis.woot.manager.loot;
 
+import com.google.gson.*;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class LootTable {
@@ -103,5 +105,25 @@ public class LootTable {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Serialization
+     */
+    public static class Serializer implements JsonSerializer<LootTable>, JsonDeserializer<LootTable> {
+
+        @Override
+        public LootTable deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return null;
+        }
+
+        @Override
+        public JsonElement serialize(LootTable src, Type typeOfSrc, JsonSerializationContext context) {
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("mob", src.mobName);
+            jsonObject.add("pools", context.serialize(src.pools));
+            return jsonObject;
+        }
     }
 }

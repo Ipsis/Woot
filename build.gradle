@@ -47,6 +47,9 @@ version = "${config.minecraft_version}-${config.mod_version}"
 group= "ipsis.woot" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "woot"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 minecraft {
     version = "${config.minecraft_version}-${config.forge_version}"
     runDir = "run"
@@ -67,7 +70,7 @@ minecraft {
 dependencies {
     deobfCompile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
     deobfCompile "mezz.jei:jei_1.9.4:3.4.0.202"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.9.4-1.0.4-14"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.9.4-1.0.11-24"
 }
 
 processResources

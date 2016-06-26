@@ -82,17 +82,24 @@ public class LootTable {
         }
     }
 
-    public String getDrops(EnumEnchantKey key) {
+    public String getDrops(EnumEnchantKey key, boolean detail) {
 
         StringBuilder sb = new StringBuilder();
         LootPool pool = getLootPool(key);
+        sb.append(pool.samples).append(" ");
         for (Drop d : pool.drops) {
             float chance = ((float)d.count/(float)pool.samples) * 100.0F;
-            sb.append("[").
-                    append(d.itemStack.getDisplayName()).
-                    append(":").
-                    append(String.format("%.2f%%", chance)).
-                    append("]");
+            sb.append(String.format("[ %dx%s @ %.2f%%",
+                    d.count, d.itemStack.getDisplayName(), chance));
+
+            if (detail) {
+                sb.append(" ");
+                for (Drop.DropData dd : d.weights) {
+                   sb.append(String.format("(s%d:w%d)", dd.stackSize, dd.itemWeight));
+                }
+            }
+
+            sb.append(" ]");
         }
 
         return sb.toString();

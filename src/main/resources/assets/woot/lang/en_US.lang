@@ -147,9 +147,9 @@ chat.Woot:prism.program=Mob %s programmed (%s)
 
 commands.Woot:woot.usage=Use /woot <dump|flush>
 commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|blacklist|tiers>
-commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III>
-commands.Woot:woot.dump.summary=%s:%s %d loot entries
-commands.Woot:woot.dump.mobs.summary=Mob %s
+commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III> [detail]
+commands.Woot:woot.dump.mobs.summary=Mobs %s
+commands.Woot:woot.dump.table.summary=Drops %s
 commands.Woot:woot.dump.tiers.summary=Mob %s %s
 commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
 

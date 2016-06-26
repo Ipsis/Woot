@@ -65,7 +65,7 @@ public class CommandWoot extends CommandBase {
 
     private void dumpLootTable(ICommandSender sender, String[] args) throws CommandException {
 
-        if (args.length != 4)
+        if (args.length < 4)
             throw new WrongUsageException("commands.Woot:woot.usage.dump.table");
 
         String mobName = args[2];
@@ -83,6 +83,10 @@ public class CommandWoot extends CommandBase {
         else
             throw new WrongUsageException("commands.Woot:woot.dump.table");
 
-        Woot.LOOT_TABLE_MANAGER.dumpDrops(sender, mobName, enumEnchantKey);
+        boolean detail = false;
+        if (args.length == 5 && args[4].equals("detail"))
+            detail = true;
+
+        Woot.LOOT_TABLE_MANAGER.dumpDrops(sender, mobName, enumEnchantKey, detail);
     }
 }

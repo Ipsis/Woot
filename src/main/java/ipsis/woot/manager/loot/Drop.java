@@ -55,17 +55,6 @@ public class Drop {
         return 1;
     }
 
-    public void dump(ICommandSender sender, String wootName, EnumEnchantKey key, int count, int sampleSize) {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Mob: %s/%s %s@%.2f%% [", wootName, key, itemStack.getDisplayName(), getChance(sampleSize) * 100.0F));
-        for (DropData d : weights)
-            sb.append(String.format(" s:%d/w:%d ", d.stackSize, d.itemWeight));
-        sb.append("]");
-
-        sender.addChatMessage(new TextComponentString(sb.toString()));
-    }
-
     public static class DropData extends WeightedRandom.Item {
 
         public final int stackSize;

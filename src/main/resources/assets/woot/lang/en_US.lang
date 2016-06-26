@@ -145,15 +145,13 @@ tooltip.Woot:prism.1=Use on controller to program
 chat.Woot:prism.blacklist=Mob %s is blacklisted (%s)
 chat.Woot:prism.program=Mob %s programmed (%s)
 
-commands.Woot:woot.usage=Use /woot <subcommand>. Subcommands are dump, flush.
-commands.Woot:woot.usage.dump=Use /woot dump <type>. Valid types are table, mobs, blacklist and tiers.
-commands.Woot:woot.usage.flush=Use /woot flush <all|<mob> <looting>>. Valid looting are NO_ENCHANT, LOOTING_I, LOOTING_II, LOOTING_III
+commands.Woot:woot.usage=Use /woot <dump|flush>
+commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|blacklist|tiers>
+commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III>
 commands.Woot:woot.dump.summary=%s:%s %d loot entries
 commands.Woot:woot.dump.mobs.summary=Mob %s
 commands.Woot:woot.dump.tiers.summary=Mob %s %s
 commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
-commands.Woot:woot.flush.all.summary=Flushed all loot tables
-commands.Woot:woot.flush.type.summary=%s:%s cleared %d entries
 
 validate.Woot:factory.missing_controller=%s: No mob controller
 validate.Woot:factory.missing_mob=%s: No mob programmed into controller

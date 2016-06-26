@@ -180,12 +180,12 @@ public class SpawnerManager {
         float f = difficulty.getClampedAdditionalDifficulty();
 
         boolean allowTreasure = false;
-        EnchantmentHelper.addRandomEnchantment(Woot.random, itemStack, (int)(5.0F + f * (float)Woot.random.nextInt(18)), allowTreasure);
+        EnchantmentHelper.addRandomEnchantment(Woot.RANDOM, itemStack, (int)(5.0F + f * (float)Woot.RANDOM.nextInt(18)), allowTreasure);
     }
 
     boolean shouldEnchant(DifficultyInstance difficulty) {
 
-        return  Woot.random.nextFloat() < (0.25F  * difficulty.getClampedAdditionalDifficulty());
+        return  Woot.RANDOM.nextFloat() < (0.25F  * difficulty.getClampedAdditionalDifficulty());
     }
 
     public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup, DifficultyInstance difficulty) {
@@ -201,7 +201,7 @@ public class SpawnerManager {
 
         for (int i = 0; i < mobCount; i++) {
 
-            List<ItemStack> dropList = Woot.lootPool.getLoot(mobName, upgradeSetup.getEnchantKey());
+            List<ItemStack> dropList = Woot.LOOT_TABLE_MANAGER.getDrops(mobName, upgradeSetup.getEnchantKey());
             if (!dropList.isEmpty()) {
 
                 boolean shouldEnchant = shouldEnchant(difficulty);

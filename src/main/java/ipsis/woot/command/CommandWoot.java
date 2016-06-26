@@ -46,7 +46,7 @@ public class CommandWoot extends CommandBase {
 
     private void dumpTable(ICommandSender sender, String[] args) throws CommandException {
 
-        if (args.length <= 2)
+        if (args.length < 2)
             throw new WrongUsageException("commands.Woot:woot.usage.dump");
 
         String type = args[1];
@@ -54,19 +54,19 @@ public class CommandWoot extends CommandBase {
         if ("table".equals(type))
             dumpLootTable(sender, args);
         else if ("mobs".equals(type))
-            Woot.lootPool.cmdDumpMobs(sender);
+            Woot.LOOT_TABLE_MANAGER.dumpMobs(sender);
         else if ("tiers".equals(type))
             Woot.tierMapper.cmdDumpTiers(sender);
         else if ("blacklist".equals(type))
             Woot.mobRegistry.cmdDumpBlacklist(sender);
         else
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.Woot:woot.usage.dump");
     }
 
     private void dumpLootTable(ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length != 4)
-            throw new WrongUsageException("commands.Woot:woot.usage.flush");
+            throw new WrongUsageException("commands.Woot:woot.usage.dump.table");
 
         String mobName = args[2];
         String key = args[3];
@@ -81,8 +81,8 @@ public class CommandWoot extends CommandBase {
         else if (key.equals(EnumEnchantKey.LOOTING_III.toString()))
             enumEnchantKey = EnumEnchantKey.LOOTING_III;
         else
-            throw new WrongUsageException("commands.Woot:woot.usage.flush");
+            throw new WrongUsageException("commands.Woot:woot.dump.table");
 
-        Woot.lootPool.cmdDumpTable(sender, mobName, enumEnchantKey);
+        Woot.LOOT_TABLE_MANAGER.dumpDrops(sender, mobName, enumEnchantKey);
     }
 }

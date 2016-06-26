@@ -14,7 +14,7 @@ public class Drop {
 
     ItemStack itemStack;
     int count;
-    List<DropData> dropList;
+    List<DropData> weights;
 
     public float getChance(int sampleSize) {
 
@@ -28,14 +28,14 @@ public class Drop {
 
         this.itemStack = ItemStack.copyItemStack(itemStack);
         count = 0;
-        dropList = new ArrayList<DropData>();
+        weights = new ArrayList<DropData>();
     }
 
     public void update(int stackSize) {
 
         count++;
         boolean found = false;
-        for (DropData dropData: dropList) {
+        for (DropData dropData: weights) {
             if (dropData.stackSize == stackSize) {
                 dropData.incItemWeight();
                 found = true;
@@ -43,12 +43,12 @@ public class Drop {
         }
 
         if (!found)
-            dropList.add(new DropData(stackSize, 1));
+            weights.add(new DropData(stackSize, 1));
     }
 
     public int getWeightedSize() {
 
-        DropData dropData = WeightedRandom.getRandomItem(Woot.lootPool.RAND, dropList);
+        DropData dropData = WeightedRandom.getRandomItem(Woot.RANDOM, weights);
         if (dropData != null)
             return dropData.stackSize;
 
@@ -59,7 +59,7 @@ public class Drop {
 
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Mob: %s/%s %s@%.2f%% [", wootName, key, itemStack.getDisplayName(), getChance(sampleSize) * 100.0F));
-        for (DropData d : dropList)
+        for (DropData d : weights)
             sb.append(String.format(" s:%d/w:%d ", d.stackSize, d.itemWeight));
         sb.append("]");
 

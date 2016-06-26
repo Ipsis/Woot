@@ -14,7 +14,7 @@ public class Files {
     public static void init(FMLPreInitializationEvent event) {
 
         globalDataDirectory = new File(event.getModConfigurationDirectory().getParentFile(),
-                "data" + File.separator + Reference.MOD_NAME_LOWER);
+                File.separator + Reference.MOD_NAME_LOWER);
 
         lootFile = new File(globalDataDirectory, LOOT_FILENAME);
     }

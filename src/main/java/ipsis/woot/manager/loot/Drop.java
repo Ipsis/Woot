@@ -1,12 +1,18 @@
 package ipsis.woot.manager.loot;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JsonUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.TextComponentString;
+import scala.actors.threadpool.Arrays;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,17 +70,35 @@ public class Drop {
 
         @Override
         public Drop deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return null;
+
+            JsonObject jsonObject = JsonUtils.getJsonObject(json, "drop");
+            String itemName = JsonUtils.getString(jsonObject, "item");
+            ItemStack itemStack = ItemStackHelper.getItemStackFromName(itemName);
+            if (itemName == null)
+                return null;
+
+            int count = JsonUtils.getInt(jsonObject, "count");
+            DropData[] weights =
+                    (DropData[])JsonUtils.deserializeClass(jsonObject, "weights", context, DropData[].class);
+
+            Drop drop = new Drop(itemStack);
+            drop.count = count;
+            drop.weights = Arrays.asList(weights);
+            return drop;
         }
 
         @Override
         public JsonElement serialize(Drop src, Type typeOfSrc, JsonSerializationContext context) {
 
             JsonObject jsonObject = new JsonObject();
-            // TODO how to handle the itemstack
-            jsonObject.addProperty("item", src.itemStack.getDisplayName());
-            jsonObject.addProperty("count", src.count);
-            jsonObject.add("weights", context.serialize(src.weights));
+            String itemName = ItemStackHelper.getItemStackName(src.itemStack);
+            if (itemName != null) {
+                jsonObject.addProperty("item", itemName);
+                jsonObject.addProperty("count", src.count);
+                jsonObject.add("weights", context.serialize(src.weights));
+            } else {
+                jsonObject = null;
+            }
             return jsonObject;
         }
     }
@@ -100,7 +124,12 @@ public class Drop {
 
             @Override
             public DropData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                return null;
+
+                JsonObject jsonObject = JsonUtils.getJsonObject(json, "drop data");
+                int stackSize = JsonUtils.getInt(jsonObject, "stack_size", 1);
+                int weight = JsonUtils.getInt(jsonObject, "weight", 1);
+
+                return new DropData(stackSize, weight);
             }
 
             @Override

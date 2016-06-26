@@ -6,6 +6,7 @@ import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JsonUtils;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -114,7 +115,15 @@ public class LootTable {
 
         @Override
         public LootTable deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return null;
+
+            JsonObject jsonObject = JsonUtils.getJsonObject(json, "table");
+            String mobName = JsonUtils.getString(jsonObject, "mob");
+
+            LootPool[] pools = (LootPool[])(JsonUtils.deserializeClass(jsonObject, "pools", context, LootPool[].class));
+
+            LootTable lootTable = new LootTable(mobName);
+            lootTable.pools = pools;
+            return lootTable;
         }
 
         @Override

@@ -74,7 +74,6 @@ public class Woot {
     @Mod.EventHandler
     public void serverStart(FMLServerStartingEvent event) {
 
-        LogHelper.info("Load world loot configuration");
         LOOT_TABLE_MANAGER.load();
         event.registerServerCommand(new CommandWoot());
     }
@@ -82,7 +81,6 @@ public class Woot {
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
 
-        LogHelper.info("Save world loot configuration");
         LOOT_TABLE_MANAGER.save();
     }
 }

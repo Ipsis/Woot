@@ -1,6 +1,7 @@
 package ipsis.woot.manager.loot;
 
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
 import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
@@ -8,6 +9,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,9 +89,22 @@ public class LootTableManager {
     /**
      * Loot file handling
      */
-    public void load() { }
+    public void load() {
+
+        LogHelper.info("LootTableManager: Load loot statistics from " + Files.lootFile.toString());
+        lootMap = null;
+        try {
+            lootMap = SerializationHelper.readHashMapFromFile(Files.lootFile);
+        } catch (FileNotFoundException e) {
+            /**
+             * If it is no there then we start empty
+             */
+            lootMap = new HashMap<String, LootTable>();
+        }
+    }
     public void save() {
 
+        LogHelper.info("LootTableManager: Save loot statistics to " + Files.lootFile.toString());
         SerializationHelper.writeHashMapToFile(lootMap, Files.lootFile);
     }
 }

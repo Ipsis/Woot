@@ -16,6 +16,8 @@ import scala.actors.threadpool.Arrays;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Drop {
@@ -83,7 +85,7 @@ public class Drop {
 
             Drop drop = new Drop(itemStack);
             drop.count = count;
-            drop.weights = Arrays.asList(weights);
+            Collections.addAll(drop.weights, weights);
             return drop;
         }
 

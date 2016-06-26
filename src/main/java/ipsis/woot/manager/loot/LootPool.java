@@ -3,10 +3,10 @@ package ipsis.woot.manager.loot;
 import com.google.gson.*;
 import ipsis.woot.manager.EnumEnchantKey;
 import net.minecraft.util.JsonUtils;
-import scala.actors.threadpool.Arrays;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LootPool {
@@ -42,7 +42,7 @@ public class LootPool {
 
             LootPool lootPool = new LootPool(key);
             lootPool.samples = samples;
-            lootPool.drops = Arrays.asList(drops);
+            Collections.addAll(lootPool.drops, drops);
             return lootPool;
         }
 

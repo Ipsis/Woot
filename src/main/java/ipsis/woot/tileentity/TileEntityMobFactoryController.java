@@ -66,7 +66,7 @@ public class TileEntityMobFactoryController extends TileEntity {
         return mobName;
     }
 
-    public String getDisplayName() {
+    public String getModDisplayName() {
 
         return displayName;
     }

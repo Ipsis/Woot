@@ -3,6 +3,7 @@
 /bin
 /build
 /eclipse
+/classes
 /.classpath
 /.project
 /libs

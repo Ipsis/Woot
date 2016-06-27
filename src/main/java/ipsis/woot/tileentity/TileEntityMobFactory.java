@@ -139,7 +139,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         return this.controllerConfig.getMobName();
     }
 
-    public String getDisplayName() {
+    public String getMobDisplayName() {
 
         return this.controllerConfig.getDisplayName();
     }

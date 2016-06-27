@@ -1,12 +1,16 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +21,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,15 +53,29 @@ public class ItemPrism extends ItemWoot {
         if (attacker.worldObj.isRemote)
             return false;
 
+        if (!(attacker instanceof EntityPlayer))
+            return false;
+
         if (hasMobName(stack))
             return false;
 
         String wootName = Woot.mobRegistry.onEntityLiving((EntityLiving)target);
         if (!Woot.mobRegistry.isValidMobName(wootName))
             return false;
-
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
+
+        if (Woot.mobRegistry.isBlacklisted(wootName)) {
+            ((EntityPlayer) attacker).addChatComponentMessage(
+                    new TextComponentString(String.format(
+                            StringHelper.localize(Lang.CHAT_PRISM_BLACKLIST), displayName, wootName)));
+            return false;
+        }
+
         setMobName(stack, wootName, displayName, ((EntityLiving) target).experienceValue);
+        ((EntityPlayer)attacker).addChatComponentMessage(
+                new TextComponentString(String.format(
+                        StringHelper.localize(Lang.CHAT_PRISM_PROGRAM), displayName, wootName)));
+
         return true;
     }
 
@@ -138,14 +156,17 @@ public class ItemPrism extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        tooltip.add(I18n.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".0"));
-        tooltip.add(I18n.translateToLocal(Lang.TAG_TOOLTIP + BASENAME + ".1"));
+        tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".0"));
+        tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".1"));
         if (stack != null && hasMobName(stack) && Woot.mobRegistry.isValidMobName(getMobName(stack))) {
             String displayName = getDisplayName(stack);
             if (!displayName.equals(""))
-                tooltip.add(TextFormatting.GREEN + String.format("Mob: %s", I18n.translateToLocal(displayName)));
+                tooltip.add(TextFormatting.GREEN + String.format("Mob: %s", StringHelper.localize(displayName)));
 
             tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
+
+            EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(getMobName(stack), getXp(stack));
+            tooltip.add(TextFormatting.BLUE + t.getTranslated());
         }
     }
 

@@ -6,13 +6,18 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -34,18 +39,6 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
 
         TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
         te.blockAdded();
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-
-        return false;
     }
 
     public void getUpgradeTooltip(EnumSpawnerUpgrade u, List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
@@ -123,5 +116,38 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+
+        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryUpgrade) {
+            TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade)blockAccess.getTileEntity(pos);
+            boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
+
+            if (validBlock && !te.isClientFormed())
+                return true;
+        }
+
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
+    /**
+     * The enum is split over multiple blocks because of metadata limits
+     * This function returns the metadata value for the enum , depending on the block it is on
+     */
+    public static int getBlockSplitMeta(EnumSpawnerUpgrade u) {
+
+        if (u.ordinal() >= EnumSpawnerUpgrade.RATE_I.ordinal() && u.ordinal() <= EnumSpawnerUpgrade.DECAPITATE_III.ordinal())
+            return u.ordinal();
+
+        return u.ordinal() - (EnumSpawnerUpgrade.DECAPITATE_III.ordinal() + 1);
     }
 }

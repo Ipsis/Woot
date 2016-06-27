@@ -3,13 +3,15 @@ package ipsis.woot.manager;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.util.StringHelper;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -20,6 +22,7 @@ import java.util.HashMap;
 public class MobRegistry {
 
     public static final String INVALID_MOB_NAME = "InvalidMob";
+    public static final String ENDER_DRAGON = "Woot:none:EnderDragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
 
     public static String getMcName(String wootName) {
@@ -58,7 +61,7 @@ public class MobRegistry {
 
         if (entityLiving instanceof  EntitySkeleton) {
             if (((EntitySkeleton) entityLiving).getSkeletonType() == 1)
-                return I18n.translateToLocal("entity.Woot:witherskelly.name");
+                return StringHelper.localize("entity.Woot:witherskelly.name");
             else
                 return entityLiving.getName();
         } else {
@@ -66,19 +69,29 @@ public class MobRegistry {
         }
     }
 
-    public String onEntityLiving(EntityLiving entityLiving) {
+    public boolean isBlacklisted(String wootName) {
 
-        // blacklist is based off Minecraft names
-        String name = EntityList.getEntityString(entityLiving);
-        // Remove this always
-        if (name.equals("EnderDragon"))
-            return INVALID_MOB_NAME;
+        if (isEnderDragon(wootName))
+            return true;
 
         for (int i = 0; i < Settings.prismBlacklist.length; i++) {
-            if (Settings.prismBlacklist[i].equals(name))
-                return INVALID_MOB_NAME;
+            if (Settings.prismBlacklist[i].equals(wootName))
+                return true;
         }
 
+        return false;
+    }
+
+    public void cmdDumpBlacklist(ICommandSender sender) {
+
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
+        for (int i = 0; i < Settings.prismBlacklist.length; i++)
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", Settings.prismBlacklist[i]));
+    }
+
+    public String onEntityLiving(EntityLiving entityLiving) {
+
+        String name = EntityList.getEntityString(entityLiving);
         String wootName = createWootName(entityLiving);
         String displayName = createDisplayName(entityLiving);
         if (!mobInfoHashMap.containsKey(wootName)) {
@@ -131,6 +144,11 @@ public class MobRegistry {
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }
+    }
+
+    boolean isEnderDragon(String wootName) {
+
+        return ENDER_DRAGON.equals(wootName);
     }
 
     boolean isWitherSkeleton(String wootName, Entity entity) {

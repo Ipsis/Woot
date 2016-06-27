@@ -3,8 +3,13 @@ package ipsis;
 import ipsis.woot.command.CommandWoot;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
+import ipsis.woot.manager.loot.LootTable;
+import ipsis.woot.manager.loot.LootTableManager;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.proxy.CommonProxy;
+import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -24,7 +29,9 @@ public class Woot {
     public static SpawnerManager spawnerManager = new SpawnerManager();
     public static MobRegistry mobRegistry = new MobRegistry();
     public static HeadRegistry headRegistry = new HeadRegistry();
-    public static Random random = new Random();
+    public static Random RANDOM = new Random();
+    public static TierMapper tierMapper = new TierMapper();
+    public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
@@ -46,6 +53,9 @@ public class Woot {
         UpgradeManager.loadConfig();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
+
+        ModOreDictionary.preInit();
+        Files.init(event);
     }
 
     @Mod.EventHandler
@@ -62,8 +72,15 @@ public class Woot {
     }
 
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event) {
+    public void serverStart(FMLServerStartingEvent event) {
 
+        LOOT_TABLE_MANAGER.load();
         event.registerServerCommand(new CommandWoot());
+    }
+
+    @Mod.EventHandler
+    public void serverStop(FMLServerStoppingEvent event) {
+
+        LOOT_TABLE_MANAGER.save();
     }
 }

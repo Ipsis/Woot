@@ -48,6 +48,7 @@ waila.Woot:controller.tier=Requires Tier %s
 waila.Woot:factory.running=Factory is running
 waila.Woot:factory.stopped=Factory is stopped
 waila.Woot:factory.sneak=Sneak for installed upgrades
+waila.Woot:factory.nullupgrades=No upgrades installed
 
 entity.Woot:witherskelly.name=Wither Skeleton
 
@@ -58,9 +59,15 @@ config.Woot:globalStrictPower=Must provide full RF/tick or lose progress
 config.Woot:globalTierIRF=Tier I RF cost per mob level
 config.Woot:globalTierIIRF=Tier II RF cost per mob level
 config.Woot:globalTierIIIRF=Tier III RF cost per mob level
+config.Woot.globalTierIMobXpCap=Tier I max mob XP
+config.Woot.globalTierIIMobXpCap=Tier II max mob XP
+config.Woot.globalTierIIIMobXpCap=Tier III max mob XP
 config.Woot:globalBaseMobCount=Number of mobs to spawn
 config.Woot:globalBaseRateTicks=Number of ticks to spawn mobs
 config.Woot:globalPrismBlacklist=List of entities that cannot be spawned
+config.Woot:globalTierIMobList=List of entities that need a Tier I factory
+config.Woot:globalTierIIMobList=List of entities that need a Tier II factory
+config.Woot:globalTierIIIMobList=List of entities that need a Tier III factory
 
 config.Woot:rateI_RFTick=Rate I cost (RF/tick)
 config.Woot:rateII_RFTick=Rate II cost (RF/tick)
@@ -135,10 +142,19 @@ tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob
 tooltip.Woot:prism.1=Use on controller to program
 
-commands.Woot:woot.usage=Use /woot <subcommand>. Subcommands are dump, flush.
-commands.Woot:woot.usage.dump=Use /woot dump <type>. Valid types are table and mobs.
-commands.Woot:woot.usage.flush=Use /woot flush <all|<mob> <looting>>. Valid looting are NO_ENCHANT, LOOTING_I, LOOTING_II, LOOTING_III
-commands.Woot:woot.dump.summary=%s:%s %d loot entries
-commands.Woot:woot.dump.mobs.summary=Mob name %s
-commands.Woot:woot.flush.all.summary=Flushed all loot tables
-commands.Woot:woot.flush.type.summary=%s:%s cleared %d entries
+chat.Woot:prism.blacklist=Mob %s is blacklisted (%s)
+chat.Woot:prism.program=Mob %s programmed (%s)
+
+commands.Woot:woot.usage=Use /woot <dump|flush>
+commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|blacklist|tiers>
+commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III> [detail]
+commands.Woot:woot.dump.mobs.summary=Mobs %s
+commands.Woot:woot.dump.table.summary=Drops %s
+commands.Woot:woot.dump.tiers.summary=Mob %s %s
+commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
+
+validate.Woot:factory.missing_controller=%s: No mob controller
+validate.Woot:factory.missing_mob=%s: No mob programmed into controller
+validate.Woot:factory.invalid_block=%s: Invalid block at %d, %d, %d not a %s
+validate.Woot:factory.mob_tier=%s: Mob needs higher tier factory
+

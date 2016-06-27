@@ -11,6 +11,7 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -38,6 +39,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     int storedXp;
     int learnTicksOffset;
     boolean running;
+    int structureTicks;
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
@@ -76,11 +78,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
         if (!isFormed())
-            return;
+            return compound;
 
         compound.setInteger(NBT_CURR_SPAWN_TICK, currSpawnTicks);
         compound.setInteger(NBT_CONSUMED_RF, consumedRf);
@@ -88,6 +90,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         compound.setBoolean(NBT_RUNNING, running);
 
         energyStorage.writeToNBT(compound);
+        return compound;
     }
 
     @Override
@@ -125,8 +128,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         consumedRf = 0;
         storedXp = 0;
         running = true;
+        structureTicks = 0;
 
-        learnTicksOffset = Settings.learnTicks + Woot.random.nextInt(11);
+        learnTicksOffset = Settings.learnTicks + Woot.RANDOM.nextInt(11);
     }
 
     public String getMobName() {
@@ -253,6 +257,14 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     }
 
+    /**
+     * Validate the structure and indicate to the user why it cannot be formed
+     */
+    public void manualValidate(EntityPlayer player) {
+
+        MobFactoryMultiblockLogic.FactorySetup factorySetup = MobFactoryMultiblockLogic.validateFactory(this, true, player);
+    }
+
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
 
         List<SpawnerUpgrade> tmpUpgradeList = new ArrayList<SpawnerUpgrade>();
@@ -300,16 +312,21 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (worldObj.isRemote)
             return;
 
-        if (dirtyStructure && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
+        structureTicks++;
+
+        if (dirtyStructure && structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS) {
             onStructureCheck();
             dirtyStructure = false;
             dirtyUpgrade = false;
         }
 
-        if (dirtyUpgrade && worldObj.getWorldTime() % MULTIBLOCK_BACKOFF_SCAN_TICKS == 0) {
+        if (dirtyUpgrade && structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS) {
             onUpgradeCheck();
             dirtyUpgrade = false;
         }
+
+        if (structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS)
+            structureTicks = 0;
 
         boolean powered = worldObj.isBlockPowered(pos);
         if (running && powered)
@@ -322,7 +339,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         currLearnTicks++;
         if (currLearnTicks >= learnTicksOffset) {
-            if (!Woot.spawnerManager.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
+            if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
@@ -330,13 +347,13 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
 
         /* Do we have any info on this mob yet - should only happen until the first event fires */
-        if (Woot.spawnerManager.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
+        if (Woot.LOOT_TABLE_MANAGER.isEmpty(controllerConfig.getMobName(), upgradeSetup.getEnchantKey()))
             return;
 
-        incCurrSpawnTicks();
         if (running) {
+            incCurrSpawnTicks();
             processPower();
-            if (currSpawnTicks == spawnReq.getSpawnTime()) {
+            if (currSpawnTicks >= spawnReq.getSpawnTime()) {
                 onSpawn();
                 setCurrSpawnTicks(0);
             }

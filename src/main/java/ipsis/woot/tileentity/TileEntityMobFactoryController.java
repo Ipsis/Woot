@@ -26,9 +26,10 @@ public class TileEntityMobFactoryController extends TileEntity {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         writeControllerToNBT(compound);
+        return compound;
     }
 
     public void writeControllerToNBT(NBTTagCompound compound) {

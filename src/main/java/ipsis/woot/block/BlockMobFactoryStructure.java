@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -38,12 +39,6 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
         super (Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
     }
 
     public EnumMobFactoryModule getModuleTypeFromState(IBlockState state) {
@@ -128,5 +123,19 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     public boolean isOpaqueCube(IBlockState state) {
 
         return false;
+    }
+
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+
+        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryStructure) {
+            TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure)blockAccess.getTileEntity(pos);
+            boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
+
+            if (validBlock && !te.isClientFormed())
+                return true;
+        }
+
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 }

@@ -12,7 +12,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -45,12 +44,6 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-
-        return EnumBlockRenderType.MODEL;
-    }
-
-    @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 
         TileEntity te = worldIn.getTileEntity(pos);
@@ -80,12 +73,7 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
     @Override
     public boolean isOpaqueCube(IBlockState state) {
 
-        return false;
-    }
-
-    @Override
-    public boolean isBlockNormalCube(IBlockState state) {
-
+        /* This stops the TESR rendering really dark! */
         return false;
     }
 }

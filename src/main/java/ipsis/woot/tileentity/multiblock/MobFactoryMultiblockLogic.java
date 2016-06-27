@@ -1,16 +1,24 @@
 package ipsis.woot.tileentity.multiblock;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
+import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.tileentity.LayoutBlockInfo;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.util.BlockPosHelper;
+import ipsis.woot.util.StringHelper;
+import ipsis.woot.util.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,20 +56,25 @@ public class MobFactoryMultiblockLogic {
     /**
      * Validates a factory
      * @param factory - the main factory TE
+     * @param feedback - should be tell the client what is wrong
      * @return null if invalid else the size of the factory
      */
-    public static FactorySetup validateFactory(TileEntityMobFactory factory) {
+    public static FactorySetup validateFactory(TileEntityMobFactory factory, boolean feedback, EntityPlayer player) {
 
         FactorySetup factorySetup;
-        factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_THREE);
+        factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_THREE, feedback, player);
         if (factorySetup.size != null)
             return factorySetup;
 
-        factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_TWO);
+        factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_TWO, feedback, player);
         if (factorySetup.size != null)
             return factorySetup;
 
-        return validateFactory(factory, EnumMobFactoryTier.TIER_ONE);
+        return validateFactory(factory, EnumMobFactoryTier.TIER_ONE, feedback, player);
+    }
+
+    public static FactorySetup validateFactory(TileEntityMobFactory factory) {
+        return validateFactory(factory, false, null);
     }
 
     public static void getFactoryLayout(EnumMobFactoryTier tier, BlockPos origin, EnumFacing facing, List<LayoutBlockInfo> layoutBlockInfoList) {
@@ -74,28 +87,48 @@ public class MobFactoryMultiblockLogic {
         }
     }
 
-    static FactorySetup validateFactory(TileEntityMobFactory factory, EnumMobFactoryTier tier) {
+    static void validateChat(EntityPlayer player, String s) {
+
+        if (player != null)
+            player.addChatComponentMessage(new TextComponentString(s));
+    }
+
+    static FactorySetup validateFactory(TileEntityMobFactory factory, EnumMobFactoryTier tier, boolean feedback, EntityPlayer player) {
 
         FactorySetup factorySetup = new FactorySetup();
 
         BlockPos controllerPos = factory.getPos().up(1);
         TileEntity te = factory.getWorld().getTileEntity(controllerPos);
         if (!(te instanceof TileEntityMobFactoryController)) {
+            if (feedback)
+                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_CONTROLLER), tier));
             return factorySetup;
         }
 
         TileEntityMobFactoryController teController = (TileEntityMobFactoryController)te;
-        if (teController.getMobName().equals(""))
+        if (teController.getMobName().equals("")) {
+            if (feedback && player != null)
+                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_MOB), tier));
             return factorySetup;
+        }
         
         factorySetup.mobName = teController.getMobName();
         factorySetup.displayName = teController.getDisplayName();
 
         BlockPos patternOrigin = factory.getPos();
-        if (isSize(factory, tier))
+
+        /**
+         * Only do this if not manually validating as this will shortcut the check
+         * For manual validation we want to start checking
+         */
+        if (!feedback) {
+            if (isSize(factory, tier))
+                factorySetup.size = tier;
+            else
+                return factorySetup;
+        } else {
             factorySetup.size = tier;
-        else
-            return factorySetup;
+        }
 
         EnumFacing f = factory.getWorld().getBlockState(factory.getPos()).getValue(BlockMobFactory.FACING);
         for (MobFactoryModule s : factorySetup.size.structureModules) {
@@ -103,18 +136,25 @@ public class MobFactoryMultiblockLogic {
             BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), f.getOpposite());
             p = patternOrigin.add(p);
 
-            if (!factory.getWorld().isBlockLoaded(p)) {
+            if (!factory.getWorld().isBlockLoaded(p))
                 return new FactorySetup();
-            }
 
             IBlockState iBlockState = factory.getWorld().getBlockState(p);
             Block block = iBlockState.getBlock();
 
             if (!(block instanceof BlockMobFactoryStructure)) {
+                if (feedback) {
+                    String name = UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + s.moduleType + ".name";
+                    validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
+                }
                 return new FactorySetup();
             }
 
             if (!(((BlockMobFactoryStructure)block).getModuleTypeFromState(iBlockState) == s.moduleType)) {
+                if (feedback) {
+                    String name = UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + s.moduleType + ".name";
+                    validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
+                }
                 return new FactorySetup();
             }
 
@@ -124,27 +164,15 @@ public class MobFactoryMultiblockLogic {
         /**
          * Mob cost must not exceed tier
          */
-        if (factorySetup.size == EnumMobFactoryTier.TIER_ONE && teController.getXpValue() > TIER_I_MOB_CAP)
+        boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);
+        if (!validMobLevel) {
+            if (feedback)
+                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
             return new FactorySetup();
-        else if (factorySetup.size == EnumMobFactoryTier.TIER_TWO && teController.getXpValue() > TIER_II_MOB_CAP)
-            return new FactorySetup();
+        }
 
         return factorySetup;
     }
-
-    public static EnumMobFactoryTier getTier(int xp) {
-
-        if (xp <= TIER_I_MOB_CAP)
-            return EnumMobFactoryTier.TIER_ONE;
-        else if (xp <= TIER_II_MOB_CAP)
-            return EnumMobFactoryTier.TIER_TWO;
-
-        return EnumMobFactoryTier.TIER_THREE;
-    }
-
-    public static int TIER_I_MOB_CAP = 5;
-    public static int TIER_II_MOB_CAP = 20;
-    public static int TIER_III_MOB_CAP = 65535;
 
     static boolean isSize(TileEntityMobFactory factory, EnumMobFactoryTier size) {
 

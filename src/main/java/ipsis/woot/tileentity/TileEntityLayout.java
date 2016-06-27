@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +62,12 @@ public class TileEntityLayout extends TileEntity {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
         compound.setInteger("facing", facing.ordinal());
         compound.setInteger("tier", tier.ordinal());
+        return compound;
     }
 
     @Override
@@ -78,12 +80,20 @@ public class TileEntityLayout extends TileEntity {
         refreshLayout();
     }
 
+    @Nullable
     @Override
-    public Packet<?> getDescriptionPacket() {
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        NBTTagCompound nbtTagCompound = getUpdateTag();
+        return new SPacketUpdateTileEntity(this.getPos(), 0, nbtTagCompound);
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         this.writeToNBT(nbtTagCompound);
-        return new SPacketUpdateTileEntity(this.getPos(), 0, nbtTagCompound);
+        return nbtTagCompound;
     }
 
     @Override

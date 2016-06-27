@@ -1,5 +1,6 @@
 package ipsis.woot.init;
 
+import ipsis.woot.block.BlockMobFactoryUpgradeBase;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.init.Blocks;
@@ -45,12 +46,12 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 2, 0),
                         "   ", "sis", "   ",
-                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE), 'i', "ingotIron"));
+                        's', ModOreDictionary.ORE_DICT_SKULL, 'i', "ingotIron"));
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 4, 1),
                         " i ", "igi", " i ",
-                        'i', new ItemStack(ModItems.itemSkull, 1, 0), 'g', "ingotGold") );
+                        'i', ModOreDictionary.ORE_DICT_SKULL, 'g', "ingotGold") );
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 5, 2),
@@ -70,7 +71,7 @@ public class ModRecipes {
                         new ItemStack(ModBlocks.blockController),
                         "fsf", "beb", "bfb",
                         'f', ModItems.itemFactoryFrame,
-                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE),
+                        's', ModOreDictionary.ORE_DICT_SKULL,
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE)));
 
@@ -80,7 +81,7 @@ public class ModRecipes {
                         "fuf", "bdb", "hfr",
                         'f', ModItems.itemFactoryFrame,
                         'u', ModItems.itemFactoryUpgrade,
-                        's', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE),
+                        's', ModOreDictionary.ORE_DICT_SKULL,
                         'e', "gemEmerald",
                         'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE),
                         'h', Blocks.HOPPER,
@@ -152,7 +153,7 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.MASS_I.ordinal()),
                         "h h", " u ", "h h",
-                        'h', new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE), 'u', ModItems.itemFactoryUpgrade));
+                        'h', ModOreDictionary.ORE_DICT_SKULL, 'u', ModItems.itemFactoryUpgrade));
 
         /* Decapitate upgrades */
         GameRegistry.addRecipe(
@@ -160,6 +161,13 @@ public class ModRecipes {
                         new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.DECAPITATE_I.ordinal()),
                         "e e", " u ", "e e",
                         'e', Items.ENDER_PEARL, 'u', ModItems.itemFactoryUpgrade));
+
+        /* Efficiency upgrades */
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeBase.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_I)),
+                        "c c", " u ", "t t",
+                        'c', Blocks.LAPIS_BLOCK, 'u', ModItems.itemFactoryUpgrade, 't', Blocks.REDSTONE_TORCH));
 
         /**
          * Upgrades
@@ -174,7 +182,7 @@ public class ModRecipes {
                 { EnumSpawnerUpgrade.MASS_II, EnumSpawnerUpgrade.MASS_I },
                 { EnumSpawnerUpgrade.MASS_III, EnumSpawnerUpgrade.MASS_II },
                 { EnumSpawnerUpgrade.DECAPITATE_II, EnumSpawnerUpgrade.DECAPITATE_I },
-                { EnumSpawnerUpgrade.DECAPITATE_III, EnumSpawnerUpgrade.DECAPITATE_II }
+                { EnumSpawnerUpgrade.DECAPITATE_III, EnumSpawnerUpgrade.DECAPITATE_II },
         };
 
         for (int x = 0; x < maps.length; x++) {
@@ -182,6 +190,19 @@ public class ModRecipes {
                     new ItemStack(ModBlocks.blockUpgrade, 1, maps[x][0].ordinal()),
                     "r r", " u ", "r r",
                     'r', new ItemStack(ModBlocks.blockUpgrade, 1, maps[x][1].ordinal()), 'u', ModItems.itemFactoryUpgrade);
+        }
+
+        maps = new EnumSpawnerUpgrade[][]{
+                {EnumSpawnerUpgrade.EFFICIENCY_II, EnumSpawnerUpgrade.EFFICIENCY_I},
+                {EnumSpawnerUpgrade.EFFICIENCY_III, EnumSpawnerUpgrade.EFFICIENCY_II}
+        };
+
+        for (int x = 0; x < maps.length; x++) {
+            GameRegistry.addShapedRecipe(
+                    new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeBase.getBlockSplitMeta(maps[x][0])),
+                    "r r", " u ", "r r",
+                    'r', new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeBase.getBlockSplitMeta(maps[x][1])),
+                    'u', ModItems.itemFactoryUpgrade);
         }
     }
 }

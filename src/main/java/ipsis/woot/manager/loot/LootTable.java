@@ -119,7 +119,11 @@ public class LootTable {
             JsonObject jsonObject = JsonUtils.getJsonObject(json, "table");
             String mobName = JsonUtils.getString(jsonObject, "mob");
 
-            LootPool[] pools = (LootPool[])(JsonUtils.deserializeClass(jsonObject, "pools", context, LootPool[].class));
+            LootPool[] pools;
+            if (jsonObject.has("pools"))
+                pools = (LootPool[])(JsonUtils.deserializeClass(jsonObject, "pools", context, LootPool[].class));
+            else
+                pools = new LootPool[0];
 
             LootTable lootTable = new LootTable(mobName);
             lootTable.pools = pools;

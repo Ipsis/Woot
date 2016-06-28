@@ -76,12 +76,15 @@ public class Drop {
             JsonObject jsonObject = JsonUtils.getJsonObject(json, "drop");
             String itemName = JsonUtils.getString(jsonObject, "item");
             ItemStack itemStack = ItemStackHelper.getItemStackFromName(itemName);
-            if (itemName == null)
-                return null;
+            if (itemStack == null)
+                throw new JsonParseException("Invalid loot item name \'" + itemName + "\'");
 
             int count = JsonUtils.getInt(jsonObject, "count");
-            DropData[] weights =
-                    (DropData[])JsonUtils.deserializeClass(jsonObject, "weights", context, DropData[].class);
+            DropData[] weights;
+            if (jsonObject.has("weights"))
+                weights = (DropData[])JsonUtils.deserializeClass(jsonObject, "weights", context, DropData[].class);
+            else
+                weights = new DropData[0];
 
             Drop drop = new Drop(itemStack);
             drop.count = count;
@@ -94,13 +97,12 @@ public class Drop {
 
             JsonObject jsonObject = new JsonObject();
             String itemName = ItemStackHelper.getItemStackName(src.itemStack);
-            if (itemName != null) {
-                jsonObject.addProperty("item", itemName);
-                jsonObject.addProperty("count", src.count);
-                jsonObject.add("weights", context.serialize(src.weights));
-            } else {
-                jsonObject = null;
-            }
+            if (itemName == null)
+                throw new JsonParseException("Cannot create itemname from stack");
+
+            jsonObject.addProperty("item", itemName);
+            jsonObject.addProperty("count", src.count);
+            jsonObject.add("weights", context.serialize(src.weights));
             return jsonObject;
         }
     }

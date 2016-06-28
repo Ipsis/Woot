@@ -1,5 +1,6 @@
 package ipsis.woot.manager.loot;
 
+import com.google.gson.JsonParseException;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
@@ -102,6 +103,7 @@ public class LootTableManager {
             lootMap = new HashMap<String, LootTable>();
         }
     }
+
     public void save() {
 
         LogHelper.info("LootTableManager: Save loot statistics to " + Files.lootFile.toString());

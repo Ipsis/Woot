@@ -38,7 +38,11 @@ public class LootPool {
             EnumEnchantKey key = EnumEnchantKey.valueOf(keyString);
             int samples = JsonUtils.getInt(jsonObject, "samples");
 
-            Drop[] drops = (Drop[])(JsonUtils.deserializeClass(jsonObject, "drops", context, Drop[].class));
+            Drop[] drops;
+            if (jsonObject.has("drops"))
+                drops = (Drop[])(JsonUtils.deserializeClass(jsonObject, "drops", context, Drop[].class));
+            else
+                drops = new Drop[0];
 
             LootPool lootPool = new LootPool(key);
             lootPool.samples = samples;

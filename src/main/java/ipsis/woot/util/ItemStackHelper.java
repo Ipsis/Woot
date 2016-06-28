@@ -46,6 +46,7 @@ public class ItemStackHelper {
     }
 
     public static ResourceLocation getItemName(Item item) {
+
         if (item == null)
             return null;
 
@@ -53,6 +54,7 @@ public class ItemStackHelper {
     }
 
     public static String getItemStackName(ItemStack itemStack) {
+
         if (itemStack == null)
             return null;
 

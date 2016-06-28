@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken;
 import ipsis.woot.manager.loot.Drop;
 import ipsis.woot.manager.loot.LootPool;
 import ipsis.woot.manager.loot.LootTable;
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.reference.Files;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -38,6 +40,8 @@ public class SerializationHelper {
         try {
             map = GSON.fromJson(readJsonFile(file), LOOT_MAP_TYPE);
         } catch (JsonParseException e) {
+            LogHelper.warn("Failed to load loot table from \'" + file.toString() + "\' " + e.getMessage());
+            map = new HashMap<String, LootTable>();
         }
 
         return map;

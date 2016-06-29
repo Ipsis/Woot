@@ -4,8 +4,10 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
@@ -76,8 +78,10 @@ public class Drop {
             JsonObject jsonObject = JsonUtils.getJsonObject(json, "drop");
             String itemName = JsonUtils.getString(jsonObject, "item");
             ItemStack itemStack = ItemStackHelper.getItemStackFromName(itemName);
-            if (itemStack == null)
-                throw new JsonParseException("Invalid loot item name \'" + itemName + "\'");
+            if (itemStack == null) {
+                LogHelper.warn("Invalid loot item name \'" + itemName + "\'");
+                itemStack = new ItemStack(Blocks.DIRT);
+            }
 
             int count = JsonUtils.getInt(jsonObject, "count");
             DropData[] weights;

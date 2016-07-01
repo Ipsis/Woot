@@ -80,7 +80,7 @@ public class Drop {
             ItemStack itemStack = ItemStackHelper.getItemStackFromName(itemName);
             if (itemStack == null) {
                 LogHelper.warn("Invalid loot item name \'" + itemName + "\'");
-                itemStack = new ItemStack(Blocks.DIRT);
+                itemStack = new ItemStack(Blocks.BEDROCK);
             }
 
             int count = JsonUtils.getInt(jsonObject, "count");

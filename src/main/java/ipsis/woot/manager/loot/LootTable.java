@@ -3,8 +3,11 @@ package ipsis.woot.manager.loot;
 import com.google.gson.*;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 
@@ -78,6 +81,9 @@ public class LootTable {
         for (Drop d : pool.drops) {
             float chance = Woot.RANDOM.nextFloat();
             if (chance <= d.getChance(pool.samples)) {
+                if (Item.getItemFromBlock(Blocks.BEDROCK) == d.itemStack.getItem())
+                    continue;
+
                 ItemStack dropStack = ItemStack.copyItemStack(d.itemStack);
                 dropStack.stackSize = d.getWeightedSize();
                 loot.add(dropStack);

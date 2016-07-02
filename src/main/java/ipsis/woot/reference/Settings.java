@@ -19,6 +19,22 @@ public class Settings {
         public static final boolean DEF_PRISM_USE_WHITELIST = false;
     }
 
+    public static class Progression {
+
+        public static final String[] DEF_PRISM_BLACKLIST = { };
+        public static final String[] DEF_TIER_I_MOBS = { };
+        public static final String[] DEF_TIER_II_MOBS = {
+                "Woot:none:Blaze",
+                "Woot:Wither:Skeleton"
+        };
+        public static final String[] DEF_TIER_III_MOBS = {
+                "Woot:none:Enderman",
+                "Woot:none:IronGolem",
+                "Woot:none:Ghast"
+        };
+
+    }
+
     public static class Power {
 
         public static final int DEF_RATE_I_RF_TICK = 40;

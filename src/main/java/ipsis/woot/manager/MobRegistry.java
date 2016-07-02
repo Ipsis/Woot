@@ -275,13 +275,42 @@ public class MobRegistry {
 }
 
 /**
- * Reference amounts:
+ * Vanilla Mobs and default XP - reference only
  *
- * EntityMob: 5
  *
- * EntityWither: 50
- * EntityBlaze: 10
- * EntityEndermite: 3
- * EntityGhast: 5
- * EntityGuardian: 10
+ * Dragon - 12000(?)
+ * Wither - 50
+ *
+ * Blaze - 10
+ * Cave Spider - 5
+ * Creeper - 5
+ * Enderman - 5
+ * Endermite - 3
+ * Ghast - 5
+ * Giant Zombie - 5
+ * Guardian - 10
+ * Iron Golem - 1
+ * Magma Cube - 2
+ * Zombie Pigman - 5
+ * Shulker - 5
+ * Silverfish  - 5
+ * Skeleton - 5
+ * Slime - 4
+ * Spider - 5
+ * Witch - 5
+ * Wither Skeleton - 5
+ * Zombie - 5
+ *
+ * Bat - 1
+ * Chicken - 1
+ * Cow - 1
+ * Horse - 1
+ * Mooshroom - 1
+ * Ocelot - 1
+ * Pig - 1
+ * Rabbit - 1
+ * Sheep - 1
+ * Squid - 1
+ * Villager - 1
+ * Wolf - 1
  */

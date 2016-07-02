@@ -94,13 +94,15 @@ public class MobRegistry {
     public void cmdDumpPrism(ICommandSender sender) {
 
         //sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
-
-        if (Settings.usePrismWhitelist)
+        if (Settings.usePrismWhitelist) {
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.title", Settings.prismWhitelist.length));
             for (int i = 0; i < Settings.prismWhitelist.length; i++)
                 sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
-        else
+        } else {
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.title", Settings.prismBlacklist.length));
             for (int i = 0; i < Settings.prismBlacklist.length; i++)
                 sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
+        }
     }
 
     public String onEntityLiving(EntityLiving entityLiving) {

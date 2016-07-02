@@ -152,6 +152,8 @@ commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I
 commands.Woot:woot.dump.mobs.summary=Mobs %s
 commands.Woot:woot.dump.table.summary=Drops %s
 commands.Woot:woot.dump.tiers.summary=Mob %s %s
+commands.Woot:woot.dump.tiers.title=Mob/Tier Tier (%d entries)
+commands.Woot:woot.dump.prism.title=Prism Capture (%d entries)
 commands.Woot:woot.dump.prism.blacklist.summary=Blacklisted: %s
 commands.Woot:woot.dump.prism.whitelist.summary=Whitelisted: %s
 

@@ -1,12 +1,16 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
+import ipsis.woot.init.ModItems;
+import ipsis.woot.item.ItemPrism;
 import ipsis.woot.manager.EnumEnchantKey;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.SoundCategory;
 
 public class CommandWoot extends CommandBase {
     @Override
@@ -39,9 +43,60 @@ public class CommandWoot extends CommandBase {
             throw new WrongUsageException("commands.Woot:woot.usage");
         } else if ("dump".equals(args[0])) {
             dumpTable(sender, args);
+        } else if ("give".equals(args[0])) {
+            give(server, sender, args);
         } else {
             throw new WrongUsageException("commands.Woot:woot.usage");
         }
+    }
+
+    private void give(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+
+        if (args.length != 4)
+            throw new WrongUsageException("commands.Woot:woot.usage.give");
+
+        EntityPlayer entityplayer = getPlayer(server, sender, args[1]);
+        String wootName = args[2];
+        int xp = parseInt(args[3]);
+
+        ItemStack itemstack = ItemPrism.getItemStack(wootName, xp);
+        if (itemstack == null)
+            return;
+
+        /* straight from the CommandGive code */
+        boolean flag = entityplayer.inventory.addItemStackToInventory(itemstack);
+
+        if (flag)
+        {
+            /* added to the players inventory */
+            entityplayer.worldObj.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
+                    SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((entityplayer.getRNG().nextFloat() - entityplayer.getRNG().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            entityplayer.inventoryContainer.detectAndSendChanges();
+        }
+
+        if (flag && itemstack.stackSize <= 0)
+        {
+            itemstack.stackSize = 1;
+            sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1);
+            EntityItem entityitem1 = entityplayer.dropItem(itemstack, false);
+
+            if (entityitem1 != null)
+            {
+                entityitem1.makeFakeItem();
+            }
+        }
+        else
+        {
+            sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1 - itemstack.stackSize);
+            EntityItem entityitem = entityplayer.dropItem(itemstack, false);
+
+            if (entityitem != null)
+            {
+                entityitem.setNoPickupDelay();
+                entityitem.setOwner(entityplayer.getName());
+            }
+        }
+
     }
 
     private void dumpTable(ICommandSender sender, String[] args) throws CommandException {

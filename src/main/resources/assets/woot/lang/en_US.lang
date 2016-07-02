@@ -146,6 +146,7 @@ chat.Woot:prism.invalid=Mob %s cannot be captured (%s)
 chat.Woot:prism.program=Mob %s programmed (%s)
 
 commands.Woot:woot.usage=Use /woot <dump|flush>
+commands.Woot:woot.usage.give=Use /woot give <player> <woot mob name> <xp>
 commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|blacklist|tiers>
 commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III> [detail]
 commands.Woot:woot.dump.mobs.summary=Mobs %s

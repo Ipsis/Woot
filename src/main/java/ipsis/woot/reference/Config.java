@@ -20,6 +20,8 @@ public class Config {
         public static final String BASE_MOB_COUNT = "globalBaseMobCount";
         public static final String BASE_RATE_TICKS = "globalBaseRateTicks";
         public static final String PRISM_BLACKLIST = "globalPrismBlacklist";
+        public static final String PRISM_WHITELIST = "globalPrismWhitelist";
+        public static final String PRISM_USE_WHITELIST = "globalPrismUseWhitelist";
     }
 
     public static class Power {

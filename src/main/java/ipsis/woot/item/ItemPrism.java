@@ -1,7 +1,6 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
@@ -9,7 +8,6 @@ import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -64,10 +62,10 @@ public class ItemPrism extends ItemWoot {
             return false;
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
 
-        if (Woot.mobRegistry.isBlacklisted(wootName)) {
+        if (!Woot.mobRegistry.isPrismValid(wootName)) {
             ((EntityPlayer) attacker).addChatComponentMessage(
                     new TextComponentString(String.format(
-                            StringHelper.localize(Lang.CHAT_PRISM_BLACKLIST), displayName, wootName)));
+                            StringHelper.localize(Lang.CHAT_PRISM_INVALID), displayName, wootName)));
             return false;
         }
 

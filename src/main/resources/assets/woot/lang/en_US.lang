@@ -142,7 +142,7 @@ tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob
 tooltip.Woot:prism.1=Use on controller to program
 
-chat.Woot:prism.blacklist=Mob %s is blacklisted (%s)
+chat.Woot:prism.invalid=Mob %s cannot be captured (%s)
 chat.Woot:prism.program=Mob %s programmed (%s)
 
 commands.Woot:woot.usage=Use /woot <dump|flush>
@@ -151,7 +151,8 @@ commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I
 commands.Woot:woot.dump.mobs.summary=Mobs %s
 commands.Woot:woot.dump.table.summary=Drops %s
 commands.Woot:woot.dump.tiers.summary=Mob %s %s
-commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
+commands.Woot:woot.dump.prism.blacklist.summary=Blacklisted: %s
+commands.Woot:woot.dump.prism.whitelist.summary=Whitelisted: %s
 
 validate.Woot:factory.missing_controller=%s: No mob controller
 validate.Woot:factory.missing_mob=%s: No mob programmed into controller

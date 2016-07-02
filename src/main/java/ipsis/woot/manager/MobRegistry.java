@@ -69,24 +69,38 @@ public class MobRegistry {
         }
     }
 
-    public boolean isBlacklisted(String wootName) {
+    public boolean isPrismValid(String wootName) {
 
         if (isEnderDragon(wootName))
-            return true;
+            return false;
 
-        for (int i = 0; i < Settings.prismBlacklist.length; i++) {
-            if (Settings.prismBlacklist[i].equals(wootName))
-                return true;
+        String[] mobList;
+        if (Settings.usePrismWhitelist)
+            mobList = Settings.prismWhitelist;
+        else
+            mobList = Settings.prismBlacklist;
+
+        for (int i = 0; i < mobList.length; i++) {
+            if (mobList[i].equals(wootName)) {
+                return mobList == Settings.prismWhitelist;
+            }
         }
 
-        return false;
+        // not on blacklist: valid
+        // not on whitelist: invalid
+        return mobList == Settings.prismBlacklist;
     }
 
-    public void cmdDumpBlacklist(ICommandSender sender) {
+    public void cmdDumpPrism(ICommandSender sender) {
 
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
-        for (int i = 0; i < Settings.prismBlacklist.length; i++)
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", Settings.prismBlacklist[i]));
+        //sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
+
+        if (Settings.usePrismWhitelist)
+            for (int i = 0; i < Settings.prismWhitelist.length; i++)
+                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
+        else
+            for (int i = 0; i < Settings.prismBlacklist.length; i++)
+                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
     }
 
     public String onEntityLiving(EntityLiving entityLiving) {

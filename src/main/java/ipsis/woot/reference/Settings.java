@@ -16,6 +16,7 @@ public class Settings {
         public static final int DEF_TIER_I_MOB_XP_CAP = 5;
         public static final int DEF_TIER_II_MOB_XP_CAP = 20;
         public static final int DEF_TIER_III_MOB_XP_CAP = 65535;
+        public static final boolean DEF_PRISM_USE_WHITELIST = false;
     }
 
     public static class Power {
@@ -84,6 +85,8 @@ public class Settings {
     public static int tierIIMobXpCap;
     public static int tierIIIMobXpCap;
     public static String[] prismBlacklist = new String[0];
+    public static String[] prismWhitelist = new String[0];
+    public static boolean usePrismWhitelist;
     public static String[] tierIMobs = new String[0];
     public static String[] tierIIMobs = new String[0];
     public static String[] tierIIIMobs = new String[0];

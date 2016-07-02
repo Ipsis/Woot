@@ -55,9 +55,17 @@ public class ConfigHandler {
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.prismBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+        Settings.prismWhitelist = configuration.getStringList(Config.General.PRISM_WHITELIST, Configuration.CATEGORY_GENERAL,
+                Settings.prismWhitelist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_WHITELIST)));
+        Settings.usePrismWhitelist = getConfigBool(Config.General.PRISM_USE_WHITELIST, Settings.Spawner.DEF_PRISM_USE_WHITELIST);
 
-        for (int i = 0; i < Settings.prismBlacklist.length; i++)
-            LogHelper.info("Prism Blacklist: " + Settings.prismBlacklist[i]);
+        if (Settings.usePrismWhitelist) {
+            for (int i = 0; i < Settings.prismWhitelist.length; i++)
+                LogHelper.info("Using Prism Whitelist: " + Settings.prismWhitelist[i]);
+        } else {
+            for (int i = 0; i < Settings.prismBlacklist.length; i++)
+                LogHelper.info("Using Prism Blacklist: " + Settings.prismBlacklist[i]);
+        }
 
         Settings.tierIMobs = configuration.getStringList(Config.General.TIER_I_MOB_LIST, Configuration.CATEGORY_GENERAL,
                 Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_I_MOB_LIST)));

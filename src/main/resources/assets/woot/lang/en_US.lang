@@ -142,7 +142,7 @@ tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob
 tooltip.Woot:prism.1=Use on controller to program
 
-chat.Woot:prism.blacklist=Mob %s is blacklisted (%s)
+chat.Woot:prism.invalid=Mob %s cannot be captured (%s)
 chat.Woot:prism.program=Mob %s programmed (%s)
 
 commands.Woot:woot.usage=Use /woot <subcommand>. Subcommands are dump, flush.
@@ -151,7 +151,8 @@ commands.Woot:woot.usage.flush=Use /woot flush <all|<mob> <looting>>. Valid loot
 commands.Woot:woot.dump.summary=%s:%s %d loot entries
 commands.Woot:woot.dump.mobs.summary=Mob %s
 commands.Woot:woot.dump.tiers.summary=Mob %s %s
-commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
+commands.Woot:woot.dump.prism.blacklist.summary=Blacklisted: %s
+commands.Woot:woot.dump.prism.whitelist.summary=Whitelisted: %s
 commands.Woot:woot.flush.all.summary=Flushed all loot tables
 commands.Woot:woot.flush.type.summary=%s:%s cleared %d entries
 

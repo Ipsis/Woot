@@ -45,6 +45,6 @@ public class Lang {
     public static final String VALIDATE_FACTORY_INVALID_BLOCK = TAG_VALIDATE + "factory.invalid_block";
     public static final String VALIDATE_FACTORY_MOB_TIER = TAG_VALIDATE + "factory.mob_tier";
 
-    public static final String CHAT_PRISM_BLACKLIST = TAG_CHAT + "prism.blacklist";
+    public static final String CHAT_PRISM_INVALID = TAG_CHAT + "prism.invalid";
     public static final String CHAT_PRISM_PROGRAM = TAG_CHAT + "prism.program";
 }

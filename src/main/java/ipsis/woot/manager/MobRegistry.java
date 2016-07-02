@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -40,7 +41,7 @@ public class MobRegistry {
 
         String name = EntityList.getEntityString(entityLiving);
         if (entityLiving instanceof EntitySkeleton) {
-            if (((EntitySkeleton) entityLiving).getSkeletonType() == 1)
+            if (((EntitySkeleton) entityLiving).func_189771_df() == SkeletonType.WITHER)
                 name = "wither:" + name;
             else
                 name = "none:" + name;
@@ -60,7 +61,7 @@ public class MobRegistry {
     private String createDisplayName(EntityLiving entityLiving) {
 
         if (entityLiving instanceof  EntitySkeleton) {
-            if (((EntitySkeleton) entityLiving).getSkeletonType() == 1)
+            if (((EntitySkeleton) entityLiving).func_189771_df() == SkeletonType.WITHER)
                 return StringHelper.localize("entity.Woot:witherskelly.name");
             else
                 return entityLiving.getName();
@@ -140,7 +141,7 @@ public class MobRegistry {
     void extraEntitySetup(MobInfo mobInfo, Entity entity) {
 
         if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
-            ((EntitySkeleton) entity).setSkeletonType(1);
+            ((EntitySkeleton) entity).func_189768_a(SkeletonType.WITHER);
         } else if (isSlime(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() != 1)
                 setSlimeSize((EntitySlime)entity, 1);

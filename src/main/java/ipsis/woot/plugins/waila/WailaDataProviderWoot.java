@@ -6,15 +6,12 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.manager.SpawnerUpgrade;
 import ipsis.woot.manager.UpgradeManager;
-import ipsis.woot.manager.UpgradeSetup;
 import ipsis.woot.reference.Lang;
-import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -27,7 +24,6 @@ import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -102,7 +98,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     public NBTTagCompound getNBTDataController(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
 
         TileEntityMobFactoryController controller = (TileEntityMobFactoryController)te;
-        String displayName = controller.getDisplayName();
+        String displayName = controller.getModDisplayName();
         if (!displayName.equals(""))
             tag.setString("displayName", displayName);
         tag.setInteger("xpCost", controller.getXpValue());

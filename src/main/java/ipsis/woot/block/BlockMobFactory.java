@@ -27,7 +27,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -85,7 +84,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 out.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
                         (te.getFactoryTier() == EnumMobFactoryTier.TIER_ONE ? "I" : te.getFactoryTier() == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
 
-                out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getDisplayName()));
+                out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getMobDisplayName()));
 
 
                 int maxMass = Settings.baseMobCount;
@@ -230,7 +229,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
         public PluginTooltipInfo(TileEntityMobFactory te) {
 
-            displayName = te.getDisplayName();
+            displayName = te.getMobDisplayName();
             tier = te.getFactoryTier();
             spawnTime = te.getSpawnReq().getSpawnTime();
             spawnTickRF = te.getSpawnReq().getRfPerTick();

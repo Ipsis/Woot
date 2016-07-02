@@ -9,7 +9,6 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -21,7 +20,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -122,10 +120,10 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
         if (te instanceof TileEntityMobFactoryController) {
             TileEntityMobFactoryController controllerTE = (TileEntityMobFactoryController)te;
 
-            if (!controllerTE.getDisplayName().equals((""))) {
+            if (!controllerTE.getModDisplayName().equals((""))) {
 
                 EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(controllerTE.getMobName(), controllerTE.getXpValue());
-                probeInfo.text(TextFormatting.GREEN + String.format("%s : %s XP", controllerTE.getDisplayName(), controllerTE.getXpValue()));
+                probeInfo.text(TextFormatting.GREEN + String.format("%s : %s XP", controllerTE.getModDisplayName(), controllerTE.getXpValue()));
                 probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
                         (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
             }

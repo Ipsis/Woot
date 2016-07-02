@@ -4,7 +4,6 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.tileentity.LayoutBlockInfo;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
@@ -113,7 +112,7 @@ public class MobFactoryMultiblockLogic {
         }
         
         factorySetup.mobName = teController.getMobName();
-        factorySetup.displayName = teController.getDisplayName();
+        factorySetup.displayName = teController.getModDisplayName();
 
         BlockPos patternOrigin = factory.getPos();
 

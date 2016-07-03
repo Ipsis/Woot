@@ -25,20 +25,19 @@ public class ClientProxy extends CommonProxy {
         ModItems.itemPrism.initModel();
         ModItems.itemXpShard.initModel();
         ModItems.itemSkull.initModel();
+        ModItems.itemShard.initModel();
+        ModItems.itemDye.initModel();
         ModItems.itemFactoryFrame.initModel();
 
         ModItems.itemYahHammer.initModel();
-        ModItems.itemIronFile.initModel();
         ModItems.itemPulverisedFerrocrete.initModel();
         ModItems.itemFerrocrete.initModel();
-        ModItems.itemDyePlate.initModel();
-        ModItems.itemDyeCasing.initModel();
-        ModItems.itemDyeSkull.initModel();
 
         ModItems.itemFerrocretePlate.initModel();
         ModItems.itemFactoryCasing.initModel();
         ModItems.itemFactoryUpgrade.initModel();
         ModItems.itemFactoryCap.initModel();
+        ModItems.itemFactoryConnector.initModel();
 
         MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
 

@@ -32,28 +32,36 @@ tile.Woot:upgradeb.efficiency_i.name=Efficiency I Upgrade
 tile.Woot:upgradeb.efficiency_ii.name=Efficiency II Upgrade
 tile.Woot:upgradeb.efficiency_iii.name=Efficiency III Upgrade
 
-item.Woot:ironFile.name=Iron File
 item.Woot:yahHammer.name=Yah Hammer
 
-item.Woot:pulverisedFerrocrete.name=Pulverised Ferrocrete
-item.Woot:ferrocrete.name=Ferrocrete
-
-item.Woot:dyePlate.name=Plate Dye
-item.Woot:dyeCasing.name=Casing Dye
-item.Woot:dyeSkull.name=Skull Dye
+item.Woot:pulverisedFerrocrete.name=Pulverised UnderIron
+item.Woot:ferrocrete.name=UnderIron
 
 item.Woot:prism.name=Mob Prism
 item.Woot:xpShard.name=Xp Shard
 item.Woot:skull.iron.name=Iron Plated Skull
 item.Woot:skull.gold.name=Gold Plated Skull
 item.Woot:skull.diamond.name=Diamond Encrusted Skull
+item.Woot:shard.diamond.name=Diamond Shard
+item.Woot:shard.emerald.name=Emerald Shard
+item.Woot:shard.quartz.name=Quartz Shard
+item.Woot:dye.plate.name=Plate Dye
+item.Woot:dye.casing.name=Casing Dye
+item.Woot:dye.skull.name=Skull Dye
+item.Woot:dye.connector.name=Connector Dye
+item.Woot:dye.shard.name=Shard Dye
+item.Woot:dye.mesh.name=Mesh Dye
+item.Woot:dye.prism.name=Prism Dye
+item.Woot:factoryUpgrade.tier_i=Tier I Upgrade
+item.Woot:factoryUpgrade.tier_ii=Tier II Upgrade
+item.Woot:factoryUpgrade.tier_iii=Tier III Upgrade
 
-item.Woot:ferrocretePlate.name=Ferrocrete Plate
+item.Woot:ferrocretePlate.name=UnderIron Plate
 item.Woot:factoryCasing.name=Factory Casing
 item.Woot:factoryCap.name=Factory Cap
+item.Woot:factoryConnector.name=Factory Connector
 
 item.Woot:factoryFrame.name=Factory Frame [Deprecated]
-item.Woot:factoryUpgrade.name=Factory Upgrade [Deprecated]
 
 waila.Woot:factory.tier=Tier %s
 waila.Woot:factory.mob=Spawning %s

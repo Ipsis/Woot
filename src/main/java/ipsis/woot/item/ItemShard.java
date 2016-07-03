@@ -1,7 +1,7 @@
 package ipsis.woot.item;
 
-import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Reference;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,47 +13,48 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemFactoryUpgrade extends ItemWoot {
+public class ItemShard extends ItemWoot {
 
-    public static final String BASENAME = "factoryUpgrade";
+    public static final String BASENANE = "shard";
 
     public static final String[] VARIANTS = new String[] {
-            EnumUpgradeTier.TIER_I.getName(), EnumUpgradeTier.TIER_II.getName(), EnumUpgradeTier.TIER_III.getName()
+            EnumShardType.DIAMOND.getName(),
+            EnumShardType.EMERALD.getName(),
+            EnumShardType.QUARTZ.getName(),
     };
 
-    public enum EnumUpgradeTier {
-
-        TIER_I("tier_i"), TIER_II("tier_ii"), TIER_III("tier_iii");
+    public enum EnumShardType {
+        DIAMOND("diamond"), EMERALD("emerald"), QUARTZ("quartz");
 
         public int getMeta() {
             return ordinal();
         }
 
-        EnumUpgradeTier(String name) {
+        EnumShardType(String name) {
             this.name = name;
         }
 
         private String name;
+
         public String getName() {
             return this.name;
         }
     }
 
-    public ItemFactoryUpgrade() {
+    public ItemShard() {
 
-        super(BASENAME);
+        super(BASENANE);
         setMaxStackSize(64);
         setHasSubtypes(true);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID_LOWER, BASENANE);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void initModel() {
 
         for (int i = 0; i < VARIANTS.length; i++) {
-            ModelHelper.registerItem(ModItems.itemFactoryUpgrade, i, BASENAME + "." + VARIANTS[i]);
-            ModelBakery.registerItemVariants(ModItems.itemFactoryUpgrade, new ResourceLocation(Reference.MOD_ID + ":" + BASENAME + "." + VARIANTS[i]));
+            ModelHelper.registerItem(ModItems.itemShard, i, BASENANE + "." + VARIANTS[i]);
+            ModelBakery.registerItemVariants(ModItems.itemShard,  new ResourceLocation(Reference.MOD_ID + ":" + BASENANE + "." + VARIANTS[i]));
         }
     }
 

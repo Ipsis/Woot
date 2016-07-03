@@ -2,11 +2,13 @@ package ipsis.woot.init.recipes;
 
 import ipsis.woot.item.ItemDye;
 import ipsis.woot.item.ItemYahHammer;
+import ipsis.woot.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockObsidian;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 /**
@@ -14,6 +16,10 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
  */
 
 public class ShapedOreHammerRecipe extends ShapedOreRecipe {
+
+    static {
+        RecipeSorter.register(Reference.MOD_ID + ":Hammer", ShapedOreHammerRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shapeless");
+    }
 
 
     public ShapedOreHammerRecipe(ItemStack result, Object... recipe) {

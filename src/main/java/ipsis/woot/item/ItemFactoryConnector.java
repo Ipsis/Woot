@@ -1,16 +1,15 @@
 package ipsis.woot.item;
 
 import ipsis.woot.init.ModItems;
-import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Reference;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemDyeCasing extends ItemDye {
+public class ItemFactoryConnector extends ItemWoot {
 
-    public static final String BASENAME = "dyeCasing";
+    public static final String BASENAME = "factoryConnector";
 
-    public ItemDyeCasing() {
+    public ItemFactoryConnector() {
 
         super(BASENAME);
         setMaxStackSize(64);
@@ -21,6 +20,6 @@ public class ItemDyeCasing extends ItemDye {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemDyeCasing, BASENAME.toLowerCase());
+        initModel(ModItems.itemFactoryConnector, BASENAME.toLowerCase());
     }
 }

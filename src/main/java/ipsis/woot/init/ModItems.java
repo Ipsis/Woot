@@ -18,6 +18,7 @@ public class ModItems {
         GameRegistry.register(itemFerrocrete);
         GameRegistry.register(itemFerrocretePlate);
         GameRegistry.register(itemFactoryCasing);
+        GameRegistry.register(itemPrismFrame);
 
         GameRegistry.register(itemYahHammer);
 
@@ -35,6 +36,7 @@ public class ModItems {
     public static ItemWoot itemFactoryFrame = new ItemFactoryFrame();
     public static ItemWoot itemFactoryUpgrade = new ItemFactoryUpgrade();
     public static ItemWoot itemFactoryConnector = new ItemFactoryConnector();
+    public static ItemWoot itemPrismFrame = new ItemPrismFrame();
 
     public static ItemWoot itemFerrocretePlate = new ItemFerrocretePlate();
     public static ItemWoot itemFactoryCasing = new ItemFactoryCasing();

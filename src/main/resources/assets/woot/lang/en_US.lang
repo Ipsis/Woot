@@ -38,6 +38,7 @@ item.Woot:pulverisedFerrocrete.name=Pulverised UnderIron
 item.Woot:ferrocrete.name=UnderIron
 
 item.Woot:prism.name=Mob Prism
+item.Woot:prismFrame.name=Mob Prism Frame
 item.Woot:xpShard.name=Xp Shard
 item.Woot:skull.iron.name=Iron Plated Skull
 item.Woot:skull.gold.name=Gold Plated Skull
@@ -52,9 +53,9 @@ item.Woot:dye.connector.name=Connector Dye
 item.Woot:dye.shard.name=Shard Dye
 item.Woot:dye.mesh.name=Mesh Dye
 item.Woot:dye.prism.name=Prism Dye
-item.Woot:factoryUpgrade.tier_i=Tier I Upgrade
-item.Woot:factoryUpgrade.tier_ii=Tier II Upgrade
-item.Woot:factoryUpgrade.tier_iii=Tier III Upgrade
+item.Woot:factoryUpgrade.tier_i.name=Tier I Upgrade
+item.Woot:factoryUpgrade.tier_ii.name=Tier II Upgrade
+item.Woot:factoryUpgrade.tier_iii.name=Tier III Upgrade
 
 item.Woot:ferrocretePlate.name=UnderIron Plate
 item.Woot:factoryCasing.name=Factory Casing

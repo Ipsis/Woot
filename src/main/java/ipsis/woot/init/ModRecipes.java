@@ -1,5 +1,7 @@
 package ipsis.woot.init;
 
+import ipsis.woot.block.BlockMobFactoryUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.init.recipes.ShapedOreHammerRecipe;
 import ipsis.woot.item.ItemDye;
 import ipsis.woot.item.ItemFactoryUpgrade;
@@ -42,67 +44,45 @@ public class ModRecipes {
                         's', Items.STRING));
     }
 
+
+    private static void initDyeRecipe(Object in, ItemStack out) {
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        out,
+                        "cgc", " i ", "c c",
+                        'c', Blocks.OBSIDIAN,
+                        'g', "ingotGold",
+                        'i', in));
+    }
+
     private static void initDyeRecipes() {
 
         /**
          * Dyes
          */
 
-        // Plate Dye
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PLATE.getMeta()),
-                        "cgc", " d ", "c c",
-                        'c', Items.CLAY_BALL,
-                        'g', "ingotGold",
-                        'd', "slabWood"));
-
-        // Casing Dye
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CASING.getMeta()),
-                        "cgc", " d ", "c c",
-                        'c', Items.CLAY_BALL,
-                        'g', "ingotGold",
-                        'd', "stone"));
-
-        // Skull Dye
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
-                        "cgc", " d ", "c c",
-                        'c', Items.CLAY_BALL,
-                        'g', "ingotGold",
-                        'd', ModOreDictionary.ORE_DICT_SKULL));
-
-        // Connector Dye
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CONNECTOR.getMeta()),
-                        "cgc", " d ", "c c",
-                        'c', Items.CLAY_BALL,
-                        'g', "ingotGold",
-                        'd', "dustRedstone"));
-
-        // Shard Dye
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
-                        "cgc", " d ", "c c",
-                        'c', Items.CLAY_BALL,
-                        'g', "ingotGold",
-                        'd', Items.FLINT));
-
-        // Mesh Dye
-        GameRegistry.addRecipe(
-                new ShapedOreRecipe(
-                        new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()),
-                        "cgc", " d ", "c c",
-                        'c', Items.CLAY_BALL,
-                        'g', "ingotGold",
-                        'd', Blocks.IRON_BARS));
-
-        // TODO Prism Dye
+        initDyeRecipe(
+                "stone",
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CASING.getMeta()));
+        initDyeRecipe(
+                "dustRedstone",
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CONNECTOR.getMeta()));
+        initDyeRecipe(
+                "slabWood",
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PLATE.getMeta()));
+        initDyeRecipe(
+                Items.FLINT,
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()));
+        initDyeRecipe(
+                ModOreDictionary.ORE_DICT_SKULL,
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()));
+        initDyeRecipe(
+                Blocks.IRON_BARS,
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()));
+        initDyeRecipe(
+                "enderpearl",
+                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PRISM.getMeta()));
 
         /**
          * Hammered Outputs
@@ -115,6 +95,17 @@ public class ModRecipes {
                         'h', ModItems.itemYahHammer,
                         'f', ModItems.itemFerrocrete,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PLATE.getMeta()),
+                        'o', Blocks.OBSIDIAN));
+
+        // Prism Frame
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemPrismFrame),
+                        "he ", "fdf", " o ",
+                        'h', ModItems.itemYahHammer,
+                        'f', ModItems.itemFerrocrete,
+                        'e', Items.ENDER_EYE,
+                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PRISM.getMeta()),
                         'o', Blocks.OBSIDIAN));
 
         // Factory Casing
@@ -240,9 +231,28 @@ public class ModRecipes {
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemPrism),
-                        "fgf", "geg", "fgf",
-                        'f', ModItems.itemFerrocrete,
-                        'g', "paneGlass", 'e', Items.ENDER_EYE));
+                        "roy", "wfw", "gbv",
+                        'r', "dyeRed",
+                        'o', "dyeOrange",
+                        'y', "dyeYellow",
+                        'g', "dyeGreen",
+                        'b', "dyeBlue",
+                        'v', "dyePurple",
+                        'w', ModItems.itemFerrocrete,
+                        'f', ModItems.itemPrismFrame));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(ModItems.itemPrism),
+                        "roy", "wfw", "gbv",
+                        'r', "dyeRed",
+                        'o', "dyeOrange",
+                        'y', "dyeYellow",
+                        'g', "dyeGreen",
+                        'b', "dyeLightBlue",
+                        'v', "dyePurple",
+                        'w', ModItems.itemFerrocrete,
+                        'f', Items.EMERALD));
     }
 
     private static void initUpgradeRecipes() {
@@ -306,9 +316,9 @@ public class ModRecipes {
         book2.addEnchantment(Enchantments.POWER, 2);
         book3.addEnchantment(Enchantments.POWER, 3);
 
-        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.RATE_I.ordinal());
-        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.RATE_II.ordinal());
-        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.RATE_III.ordinal());
+        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.RATE_I));
+        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.RATE_II));
+        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.RATE_III));
 
         String i1 = "dustRedstone";
         String i2 = "blockRedstone";
@@ -325,9 +335,9 @@ public class ModRecipes {
         book2.addEnchantment(Enchantments.LOOTING, 2);
         book3.addEnchantment(Enchantments.LOOTING, 3);
 
-        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.LOOTING_I.ordinal());
-        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.LOOTING_II.ordinal());
-        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.LOOTING_III.ordinal());
+        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.LOOTING_I));
+        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.LOOTING_II));
+        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.LOOTING_III));
 
         String i1 = "gemLapis";
         String i2 = "blockLapis";
@@ -344,9 +354,9 @@ public class ModRecipes {
         book2.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 2);
         book3.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 3);
 
-        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.XP_I.ordinal());
-        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.XP_II.ordinal());
-        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.XP_III.ordinal());
+        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.XP_I));
+        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.XP_II));
+        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.XP_III));
 
         Item i1 = Items.FISH;
 
@@ -362,9 +372,9 @@ public class ModRecipes {
         book2.addEnchantment(Enchantments.FORTUNE, 2);
         book3.addEnchantment(Enchantments.FORTUNE, 3);
 
-        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.MASS_I.ordinal());
-        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.MASS_II.ordinal());
-        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.MASS_III.ordinal());
+        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.MASS_I));
+        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.MASS_II));
+        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.MASS_III));
 
         Item i1 = Items.ENDER_PEARL;
         Item i2 = Items.END_CRYSTAL;
@@ -381,9 +391,9 @@ public class ModRecipes {
         book2.addEnchantment(Enchantments.SHARPNESS, 2);
         book3.addEnchantment(Enchantments.SHARPNESS, 3);
 
-        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.DECAPITATE_I.ordinal());
-        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.DECAPITATE_II.ordinal());
-        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, EnumSpawnerUpgrade.DECAPITATE_III.ordinal());
+        ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.DECAPITATE_I));
+        ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.DECAPITATE_II));
+        ItemStack out3 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.DECAPITATE_III));
 
         Item i1 = Items.ENDER_PEARL;
 
@@ -399,9 +409,9 @@ public class ModRecipes {
         book2.addEnchantment(Enchantments.EFFICIENCY, 2);
         book3.addEnchantment(Enchantments.EFFICIENCY, 3);
 
-        ItemStack out1 = new ItemStack(ModBlocks.blockUpgradeB, 1, EnumSpawnerUpgrade.EFFICIENCY_I.ordinal());
-        ItemStack out2 = new ItemStack(ModBlocks.blockUpgradeB, 1, EnumSpawnerUpgrade.EFFICIENCY_II.ordinal());
-        ItemStack out3 = new ItemStack(ModBlocks.blockUpgradeB, 1, EnumSpawnerUpgrade.EFFICIENCY_III.ordinal());
+        ItemStack out1 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_I));
+        ItemStack out2 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_II));
+        ItemStack out3 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_III));
 
         Item i1 = Items.COMPARATOR;
 
@@ -426,58 +436,58 @@ public class ModRecipes {
                         'c', ModItems.itemFactoryCasing,
                         'r', ModItems.itemFactoryConnector));
 
-        /* TODO Controller */
+        // Controller
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockController),
-                        "fsf", "beb", "bfb",
-                        'f', ModItems.itemFactoryCasing,
+                        "sgs", "gfg", "scs",
                         's', ModOreDictionary.ORE_DICT_SKULL,
-                        'e', "gemEmerald",
-                        'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE)));
+                        'g', "blockGlass",
+                        'c', ModItems.itemFactoryConnector,
+                        'f', ModItems.itemFactoryCasing
+                )
+        );
 
-        /* TODO Factory */
+        // Factory
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         new ItemStack(ModBlocks.blockFactory),
-                        "fuf", "bdb", "hfr",
-                        'f', ModItems.itemFactoryCasing,
-                        'u', ModItems.itemFactoryUpgrade,
-                        's', ModOreDictionary.ORE_DICT_SKULL,
-                        'e', "gemEmerald",
-                        'b', new ItemStack(ModBlocks.blockStructure, 1, OreDictionary.WILDCARD_VALUE),
-                        'h', Blocks.HOPPER,
-                        'r', Items.REDSTONE));
+                        "cxc", "yfz", "c c",
+                        'c', ModItems.itemFactoryConnector,
+                        'x', new ItemStack(ModItems.itemFactoryUpgrade, 1, ItemFactoryUpgrade.EnumUpgradeTier.TIER_I.getMeta()),
+                        'y', new ItemStack(ModItems.itemFactoryUpgrade, 1, ItemFactoryUpgrade.EnumUpgradeTier.TIER_II.getMeta()),
+                        'z', new ItemStack(ModItems.itemFactoryUpgrade, 1, ItemFactoryUpgrade.EnumUpgradeTier.TIER_III.getMeta()),
+                        'f', ModItems.itemFactoryCasing));
 
         /**
          * Factory Blocks
          */
 
-        /* Gray */
+        // Gray
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_1.ordinal()),
                         "bone", ModItems.itemFactoryCasing));
 
-        /* Red */
+        // Red
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_2.ordinal()),
                         Items.ROTTEN_FLESH, ModItems.itemFactoryCasing));
 
-        /* Green */
+        // Green
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_3.ordinal()),
                         Items.BLAZE_POWDER, ModItems.itemFactoryCasing));
 
-        /* Blue */
+        // Blue
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_4.ordinal()),
                         "enderpearl", ModItems.itemFactoryCasing));
 
-        /* Orange */
+        // Orange
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_5.ordinal()),
@@ -541,7 +551,7 @@ public class ModRecipes {
 
     private static void initRecipesCompat() {
 
-        /* Factory Frame -> Factory Casing */
+        // Factory Frame -> Factory Casing
         GameRegistry.addShapelessRecipe(
                         new ItemStack(ModItems.itemFactoryCasing),
                         ModItems.itemFactoryFrame);

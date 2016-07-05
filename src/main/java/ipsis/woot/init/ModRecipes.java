@@ -252,7 +252,7 @@ public class ModRecipes {
                         'b', "dyeLightBlue",
                         'v', "dyePurple",
                         'w', ModItems.itemFerrocrete,
-                        'f', Items.EMERALD));
+                        'f', ModItems.itemPrismFrame));
     }
 
     private static void initUpgradeRecipes() {
@@ -462,6 +462,7 @@ public class ModRecipes {
         /**
          * Factory Blocks
          */
+       ItemStack casingStack = new ItemStack(ModItems.itemFactoryCasing);
 
         // Gray
         GameRegistry.addRecipe(
@@ -478,20 +479,24 @@ public class ModRecipes {
         // Green
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
-                        new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_3.ordinal()),
-                        Items.BLAZE_POWDER, ModItems.itemFactoryCasing));
+                        new ItemStack(ModBlocks.blockStructure, 4, EnumMobFactoryModule.BLOCK_3.ordinal()),
+                        Items.BLAZE_POWDER,
+                        casingStack, casingStack, casingStack, casingStack));
 
         // Blue
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
-                        new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_4.ordinal()),
-                        "enderpearl", ModItems.itemFactoryCasing));
+                        new ItemStack(ModBlocks.blockStructure, 4, EnumMobFactoryModule.BLOCK_4.ordinal()),
+                        "enderpearl",
+                        casingStack, casingStack, casingStack, casingStack));
 
         // Orange
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
-                        new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_5.ordinal()),
-                        Items.GHAST_TEAR, ModItems.itemFactoryCasing));
+                        new ItemStack(ModBlocks.blockStructure, 8, EnumMobFactoryModule.BLOCK_5.ordinal()),
+                        Items.NETHER_STAR,
+                        casingStack, casingStack, casingStack, casingStack,
+                        casingStack, casingStack, casingStack, casingStack));
 
 
         /**

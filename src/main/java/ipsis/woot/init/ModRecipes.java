@@ -217,7 +217,7 @@ public class ModRecipes {
                         " d ",
                         " o ",
                         'h', ModItems.itemYahHammer,
-                        'i', "ingotIron",
+                        'i', ModItems.itemFerrocrete,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()),
                         'o', Blocks.OBSIDIAN));
     }

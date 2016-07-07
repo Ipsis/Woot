@@ -43,6 +43,8 @@ public class CommandWoot extends CommandBase {
             throw new WrongUsageException("commands.Woot:woot.usage");
         } else if ("dump".equals(args[0])) {
             dumpTable(sender, args);
+        } else if ("flush".equals(args[0])) {
+            flush(sender, args);
         } else if ("give".equals(args[0])) {
             give(server, sender, args);
         } else {
@@ -143,5 +145,28 @@ public class CommandWoot extends CommandBase {
             detail = true;
 
         Woot.LOOT_TABLE_MANAGER.dumpDrops(sender, mobName, enumEnchantKey, detail);
+    }
+
+    private void flush(ICommandSender sender, String[] args) throws CommandException {
+
+        if (args.length < 3)
+            throw new WrongUsageException("commands.Woot:woot.usage.flush");
+
+        String mobName = args[1];
+        String key = args[2];
+
+        EnumEnchantKey enumEnchantKey;
+        if (key.equals(EnumEnchantKey.NO_ENCHANT.toString()))
+            enumEnchantKey = EnumEnchantKey.NO_ENCHANT;
+        else if (key.equals(EnumEnchantKey.LOOTING_I.toString()))
+            enumEnchantKey = EnumEnchantKey.LOOTING_I;
+        else if (key.equals(EnumEnchantKey.LOOTING_II.toString()))
+            enumEnchantKey = EnumEnchantKey.LOOTING_II;
+        else if (key.equals(EnumEnchantKey.LOOTING_III.toString()))
+            enumEnchantKey = EnumEnchantKey.LOOTING_III;
+        else
+            throw new WrongUsageException("commands.Woot:woot.usage.flush");
+
+        Woot.LOOT_TABLE_MANAGER.flushMob(sender, mobName, enumEnchantKey);
     }
 }

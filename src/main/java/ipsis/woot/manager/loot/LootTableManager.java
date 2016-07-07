@@ -87,6 +87,15 @@ public class LootTableManager {
         }
     }
 
+    public void flushMob(ICommandSender sender, String wootName, EnumEnchantKey key) {
+
+        LootTable e = lootMap.get(wootName);
+        if (e != null) {
+            e.flush(key);
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.summary", wootName, key.toString()));
+        }
+    }
+
     /**
      * Loot file handling
      */

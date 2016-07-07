@@ -50,6 +50,11 @@ public class LootTable {
         return pools[key.ordinal()];
     }
 
+    public void flush(EnumEnchantKey key) {
+
+        pools[key.ordinal()] =  new LootPool(key);
+    }
+
     public void update(EnumEnchantKey key, List<EntityItem> drops) {
 
         LootPool pool = getLootPool(key);

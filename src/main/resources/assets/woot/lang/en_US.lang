@@ -171,8 +171,10 @@ chat.Woot:prism.program=Mob %s programmed (%s)
 
 commands.Woot:woot.usage=Use /woot <dump|give>
 commands.Woot:woot.usage.give=Use /woot give <player> <woot mob name> <xp>
+commands.Woot:woot.usage.flush=/woot flush <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III>
 commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|prism|tiers>
 commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III> [detail]
+commands.Woot:woot.flush.summary=Flushed %s %s
 commands.Woot:woot.dump.mobs.summary=Mobs %s
 commands.Woot:woot.dump.table.summary=Drops %s
 commands.Woot:woot.dump.tiers.summary=Mob %s %s

@@ -275,31 +275,11 @@ public class MobRegistry {
 }
 
 /**
- * Vanilla Mobs and default XP - reference only
+ * Vanilla Mobs And Default Remapping
  *
  *
- * Dragon - 12000(?)
- * Wither - 50
- *
- * Blaze - 10
- * Cave Spider - 5
- * Creeper - 5
- * Enderman - 5
- * Endermite - 3
- * Ghast - 5
- * Giant Zombie - 5
- * Guardian - 10
- * Iron Golem - 1
- * Magma Cube - 2
- * Zombie Pigman - 5
- * Shulker - 5
- * Silverfish  - 5
- * Skeleton - 5
- * Slime - 4
- * Spider - 5
- * Witch - 5
- * Wither Skeleton - 5
- * Zombie - 5
+ * Tier I [Bone/Flesh]
+ * ------
  *
  * Bat - 1
  * Chicken - 1
@@ -313,4 +293,39 @@ public class MobRegistry {
  * Squid - 1
  * Villager - 1
  * Wolf - 1
+ * Shulker - 5
+ * Silverfish  - 5
+ * Skeleton - 5
+ * Slime - 4
+ * Spider - 5
+ * Zombie - 5
+ * Cave Spider - 5
+ * Creeper - 5
+ * Endermite - 3
+ * Giant Zombie - 5
+ *
+ * Tier II [Blaze]
+ * -------
+ *
+ * Magma Cube - 2
+ * Witch - 5
+ * Blaze - 10
+ * Ghast - 5
+ * Zombie Pigman - 5
+ *
+ * Tier III [Enderpearl]
+ * --------
+ *
+ * Iron Golem - 1
+ * Enderman - 5
+ * Guardian - 10
+ * Wither Skeleton - 5
+ *
+ * Tier IV [Wither Star]
+ * -------
+ *
+ * Wither - 50
+ * Dragon - 12000(?)
+ *
+ *
  */

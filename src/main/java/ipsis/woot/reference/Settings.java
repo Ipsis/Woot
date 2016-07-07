@@ -25,12 +25,19 @@ public class Settings {
         public static final String[] DEF_TIER_I_MOBS = { };
         public static final String[] DEF_TIER_II_MOBS = {
                 "Woot:none:Blaze",
-                "Woot:Wither:Skeleton"
+                "Woot:none:Witch",
+                "Woot:none:Ghast",
+                "Woot:none:PigZombie",
+                "Woot:none:MagmaCube"
         };
         public static final String[] DEF_TIER_III_MOBS = {
                 "Woot:none:Enderman",
                 "Woot:none:IronGolem",
-                "Woot:none:Ghast"
+                "Woot:none:Guardian",
+                "Woot:Wither:Skeleton"
+        };
+        public static final String[] DEF_TIER_IV_MOBS = {
+                "Woot:none:Wither"
         };
 
     }

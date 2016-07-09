@@ -113,6 +113,7 @@ public class Settings {
     public static String[] tierIMobs = new String[0];
     public static String[] tierIIMobs = new String[0];
     public static String[] tierIIIMobs = new String[0];
+    public static String[] dropBlacklist = new String[0];
 
     /**
      * Upgrade costs per tick

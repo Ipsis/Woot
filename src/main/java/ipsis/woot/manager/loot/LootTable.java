@@ -89,6 +89,9 @@ public class LootTable {
                 if (Item.getItemFromBlock(Blocks.BEDROCK) == d.itemStack.getItem())
                     continue;
 
+                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(d.itemStack))
+                    continue;;
+
                 ItemStack dropStack = ItemStack.copyItemStack(d.itemStack);
                 dropStack.stackSize = d.getWeightedSize();
                 loot.add(dropStack);

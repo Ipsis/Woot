@@ -133,6 +133,8 @@ public class CommandWoot extends CommandBase {
             dumpLootTable(sender, args);
         else if ("mobs".equals(type))
             Woot.LOOT_TABLE_MANAGER.dumpMobs(sender);
+        else if ("blacklist".equals(type))
+            Woot.LOOT_TABLE_MANAGER.dumpBlacklist(sender);
         else if ("tiers".equals(type))
             Woot.tierMapper.cmdDumpTiers(sender);
         else if ("prism".equals(type))

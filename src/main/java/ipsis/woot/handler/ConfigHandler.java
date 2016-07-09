@@ -81,6 +81,11 @@ public class ConfigHandler {
         for (int i = 0; i < Settings.tierIIIMobs.length; i++)
             Woot.tierMapper.addMapping(Settings.tierIIIMobs[i], EnumMobFactoryTier.TIER_THREE);
 
+        Settings.dropBlacklist = configuration.getStringList(Config.General.DROP_BLACKLIST, Configuration.CATEGORY_GENERAL,
+                Settings.dropBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.DROP_BLACKLIST)));
+        for (int i = 0; i < Settings.dropBlacklist.length; i++)
+            Woot.LOOT_TABLE_MANAGER.addToBlacklist(Settings.dropBlacklist[i]);
+
         /**
          * Power
          */

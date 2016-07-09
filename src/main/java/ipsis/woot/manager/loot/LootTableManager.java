@@ -1,9 +1,9 @@
 package ipsis.woot.manager.loot;
 
-import com.google.gson.JsonParseException;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
+import ipsis.woot.util.ItemStackHelper;
 import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
@@ -18,10 +18,33 @@ import java.util.List;
 public class LootTableManager {
 
     private HashMap<String, LootTable> lootMap;
+    private List<ItemStack> blacklist;
 
     public LootTableManager() {
 
         lootMap = new HashMap<String, LootTable>();
+        blacklist = new ArrayList<ItemStack>();
+    }
+
+    public void addToBlacklist(String s) {
+
+        ItemStack itemStack = ItemStackHelper.getItemStackFromName(s);
+        if (itemStack != null) {
+            LogHelper.warn("Loot blacklisted " + s);
+            blacklist.add(itemStack);
+        } else {
+            LogHelper.warn("Unknown Loot in blacklist " + s);
+        }
+    }
+
+    public boolean isBlacklisted(ItemStack itemStack) {
+
+        for (ItemStack cmp : blacklist) {
+            if (ItemStack.areItemsEqualIgnoreDurability(cmp, itemStack))
+                return true;
+        }
+
+        return false;
     }
 
     public void update(String wootName, EnumEnchantKey key, List<EntityItem> mobDropList) {
@@ -78,6 +101,7 @@ public class LootTableManager {
 
     public void dumpMobs(ICommandSender sender, String wootName) { }
 
+
     public void dumpDrops(ICommandSender sender, String wootName, EnumEnchantKey key, boolean detail) {
 
         LootTable e = lootMap.get(wootName);
@@ -94,6 +118,16 @@ public class LootTableManager {
             e.flush(key);
             sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.summary", wootName, key.toString()));
         }
+    }
+
+    public void dumpBlacklist(ICommandSender sender) {
+
+        StringBuilder sb = new StringBuilder();
+        for (ItemStack itemStack : blacklist)
+            sb.append(String.format("%s ", itemStack.getDisplayName()));
+
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", sb.toString()));
+
     }
 
     /**

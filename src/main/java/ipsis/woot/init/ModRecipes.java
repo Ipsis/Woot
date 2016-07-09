@@ -14,6 +14,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -253,6 +254,27 @@ public class ModRecipes {
                         'v', "dyePurple",
                         'w', ModItems.itemFerrocrete,
                         'f', ModItems.itemPrismFrame));
+
+        /**
+         * Reform from shards
+         */
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(Items.QUARTZ),
+                        "sss", "sss", "sss",
+                        's', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.QUARTZ.getMeta())));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(Items.EMERALD),
+                        "sss", "sss", "sss",
+                        's', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.EMERALD.getMeta())));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(Items.DIAMOND),
+                        "sss", "sss", "sss",
+                        's', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.DIAMOND.getMeta())));
     }
 
     private static void initUpgradeRecipes() {

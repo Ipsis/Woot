@@ -374,6 +374,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     void processPower() {
 
         int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
+
+        if (Woot.devMode == true)
+            drawnRf = spawnReq.getRfPerTick();
+
         if (drawnRf == spawnReq.getRfPerTick()) {
             setConsumedRf(consumedRf + drawnRf);
         } else {

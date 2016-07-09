@@ -32,6 +32,7 @@ public class Woot {
     public static Random RANDOM = new Random();
     public static TierMapper tierMapper = new TierMapper();
     public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
+    public static boolean devMode = false;
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

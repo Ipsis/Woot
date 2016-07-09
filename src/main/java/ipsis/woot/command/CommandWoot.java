@@ -11,6 +11,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class CommandWoot extends CommandBase {
     @Override
@@ -47,9 +48,29 @@ public class CommandWoot extends CommandBase {
             flush(sender, args);
         } else if ("give".equals(args[0])) {
             give(server, sender, args);
+        } else if ("dev".equals(args[0])) {
+            dev(server, sender, args);
         } else {
             throw new WrongUsageException("commands.Woot:woot.usage");
         }
+    }
+
+    private void dev(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+
+        if (args.length != 2)
+            throw new WrongUsageException("commands.Woot:woot.usage.dev");
+
+        boolean b = false;
+        String v = args[1];
+        if (v.equalsIgnoreCase("true"))
+            b = true;
+        else if (v.equalsIgnoreCase("false"))
+            b = false;
+        else
+            throw new WrongUsageException("commands.Woot:woot.usage.dev");
+
+        Woot.devMode = b;
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dev.summary", v.toLowerCase()));
     }
 
     private void give(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {

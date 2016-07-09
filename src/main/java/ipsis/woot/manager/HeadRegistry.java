@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -61,8 +62,8 @@ public class HeadRegistry {
         if (headConfig == null)
             return null;
 
-        // TODO this is SO WRONG
-        if (Woot.RANDOM.nextInt(100) + 1 > u.getDecapitateChance())
+        float chance = (float)u.getDecapitateChance() / 100.0F;
+        if (Woot.RANDOM.nextFloat() <= chance)
             return ItemStack.copyItemStack(headConfig.headStack);
 
         return null;

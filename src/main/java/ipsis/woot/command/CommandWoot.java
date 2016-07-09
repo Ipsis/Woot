@@ -139,6 +139,8 @@ public class CommandWoot extends CommandBase {
             Woot.tierMapper.cmdDumpTiers(sender);
         else if ("prism".equals(type))
             Woot.mobRegistry.cmdDumpPrism(sender);
+        else if ("cost".equals(type))
+            Woot.mobRegistry.cmdDumpCosts(sender);
         else
             throw new WrongUsageException("commands.Woot:woot.usage.dump");
     }

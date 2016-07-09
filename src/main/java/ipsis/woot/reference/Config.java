@@ -23,6 +23,7 @@ public class Config {
         public static final String PRISM_WHITELIST = "globalPrismWhitelist";
         public static final String PRISM_USE_WHITELIST = "globalPrismUseWhitelist";
         public static final String DROP_BLACKLIST = "globalDropBlacklist";
+        public static final String SPAWN_COST_LIST = "globalSpawnCostList";
     }
 
     public static class Power {

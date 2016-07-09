@@ -40,6 +40,12 @@ public class Settings {
                 "Woot:none:Wither"
         };
 
+        public static final String[] DEF_SPAWN_COST = {
+                "Woot:none:IronGolem=10",
+                "Woot:Wither:Skeleton=10",
+                "Woot:none:MagmaCube=5"
+        };
+
     }
 
     public static class Power {
@@ -114,6 +120,7 @@ public class Settings {
     public static String[] tierIIMobs = new String[0];
     public static String[] tierIIIMobs = new String[0];
     public static String[] dropBlacklist = new String[0];
+    public static String[] spawnCostList = new String[0];
 
     /**
      * Upgrade costs per tick

@@ -95,6 +95,7 @@ config.Woot:globalTierIIMobList=List of entities that need a Tier II factory
 config.Woot:globalTierIIIMobList=List of entities that need a Tier III factory
 config.Woot:globalDropBlacklist=List of items to never generate from the factory
 config.Woot:globalPrismUseWhitelist=Use the prism whitelist - ignores the blacklist
+config.Woot:globalSpawnCostList=List of mobs and spawn costs
 
 config.Woot:rateI_RFTick=Rate I cost (RF/tick)
 config.Woot:rateII_RFTick=Rate II cost (RF/tick)
@@ -176,7 +177,7 @@ commands.Woot:woot.usage=Use /woot <dump|give|dev>
 commands.Woot:woot.usage.give=Use /woot give <player> <woot mob name> <xp>
 commands.Woot:woot.usage.dev=Use /woot dev <true|false>
 commands.Woot:woot.usage.flush=/woot flush <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III>
-commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|prism|tiers|blacklist>
+commands.Woot:woot.usage.dump=Use /woot dump <table|mobs|prism|tiers|blacklist|cost>
 commands.Woot:woot.usage.dump.table=/woot dump table <mob> <NO_ENCHANT|LOOTING_I|LOOTING_II|LOOTING_III> [detail]
 commands.Woot:woot.flush.summary=Flushed %s %s
 commands.Woot:woot.dev.summary=Set dev mode to %s
@@ -188,6 +189,8 @@ commands.Woot:woot.dump.prism.title=Prism Capture (%d entries)
 commands.Woot:woot.dump.prism.blacklist.summary=Blacklisted: %s
 commands.Woot:woot.dump.prism.whitelist.summary=Whitelisted: %s
 commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
+commands.Woot:woot.dump.blacklist.summary=Blacklisted: %s
+commands.Woot:woot.dump.cost.summary=Mob costs %s
 
 validate.Woot:factory.missing_controller=%s: No mob controller
 validate.Woot:factory.missing_mob=%s: No mob programmed into controller

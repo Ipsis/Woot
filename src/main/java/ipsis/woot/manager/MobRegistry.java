@@ -1,5 +1,6 @@
 package ipsis.woot.manager;
 
+import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
@@ -26,6 +27,8 @@ public class MobRegistry {
     public static final String ENDER_DRAGON = "Woot:none:EnderDragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
 
+    HashMap<String, Integer> mobCostMap = new HashMap<String, Integer>();
+
     public static String getMcName(String wootName) {
 
         // Woot:tag:mcname
@@ -35,6 +38,12 @@ public class MobRegistry {
     public boolean isValidMobName(String mobName) {
 
         return mobName != null && !mobName.equals(INVALID_MOB_NAME) && !mobName.equals("");
+    }
+
+    public void addCosting(String mobName, int cost) {
+
+        if (mobName != null && cost > 0)
+            mobCostMap.put(mobName, cost);
     }
 
     public String createWootName(EntityLiving entityLiving) {
@@ -104,6 +113,15 @@ public class MobRegistry {
             for (int i = 0; i < Settings.prismBlacklist.length; i++)
                 sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
         }
+    }
+
+    public void cmdDumpCosts(ICommandSender sender) {
+
+        StringBuilder sb = new StringBuilder();
+        for (String name : mobCostMap.keySet())
+            sb.append(String.format("%s=%s", name, mobCostMap.get(name)));
+
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.cost.summary", sb.toString()));
     }
 
     public String onEntityLiving(EntityLiving entityLiving) {
@@ -253,6 +271,10 @@ public class MobRegistry {
             this.mcMobName = MobRegistry.getMcName(wootMobName);
             this.displayName = displayName;
             setXp(mobXp);
+
+            Integer cost = Woot.mobRegistry.mobCostMap.get(wootMobName);
+            if (cost != null)
+                this.spawnXp = cost;
         }
 
         public String getMcMobName() { return mcMobName; }

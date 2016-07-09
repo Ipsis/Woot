@@ -86,6 +86,25 @@ public class ConfigHandler {
         for (int i = 0; i < Settings.dropBlacklist.length; i++)
             Woot.LOOT_TABLE_MANAGER.addToBlacklist(Settings.dropBlacklist[i]);
 
+        Settings.spawnCostList = configuration.getStringList(Config.General.SPAWN_COST_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.spawnCostList, StringHelper.localize(Lang.getLangConfigValue(Config.General.SPAWN_COST_LIST)));
+        for (int i = 0; i < Settings.spawnCostList.length; i++) {
+            String mob;
+            int cost;
+            String[] parts = Settings.spawnCostList[i].split("=");
+            if (parts.length == 2) {
+                try {
+                    cost = Integer.parseInt(parts[1]);
+                    Woot.mobRegistry.addCosting(parts[0], cost);
+                    LogHelper.info("Adding mob cost: " + parts[0] + "=" + cost);
+                } catch (NumberFormatException e) {
+                    LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
+                }
+            } else {
+                LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
+            }
+        }
+
         /**
          * Power
          */

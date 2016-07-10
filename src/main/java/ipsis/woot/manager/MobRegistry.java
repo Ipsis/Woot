@@ -105,11 +105,9 @@ public class MobRegistry {
 
         //sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
         if (Settings.usePrismWhitelist) {
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.title", Settings.prismWhitelist.length));
             for (int i = 0; i < Settings.prismWhitelist.length; i++)
                 sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
         } else {
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.title", Settings.prismBlacklist.length));
             for (int i = 0; i < Settings.prismBlacklist.length; i++)
                 sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
         }

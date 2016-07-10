@@ -240,7 +240,7 @@ public class ModRecipes {
     private static void initItemRecipes() {
 
         // UnderIron
-        GameRegistry.addSmelting(ModItems.itemPulverisedFerrocrete, new ItemStack(ModItems.itemFerrocrete), 0.01F);
+        GameRegistry.addSmelting(ModItems.itemPulverisedFerrocrete, new ItemStack(ModItems.itemFerrocrete), 0.5F);
 
         // Prism
         GameRegistry.addRecipe(

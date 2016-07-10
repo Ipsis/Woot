@@ -28,6 +28,7 @@ public class MobFactoryMultiblockLogic {
         EnumMobFactoryTier.TIER_ONE.buildStructureMap();
         EnumMobFactoryTier.TIER_TWO.buildStructureMap();
         EnumMobFactoryTier.TIER_THREE.buildStructureMap();
+        EnumMobFactoryTier.TIER_FOUR.buildStructureMap();
     }
 
     public static class FactorySetup {
@@ -61,6 +62,11 @@ public class MobFactoryMultiblockLogic {
     public static FactorySetup validateFactory(TileEntityMobFactory factory, boolean feedback, EntityPlayer player) {
 
         FactorySetup factorySetup;
+
+        factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_FOUR, feedback, player);
+        if (factorySetup.size != null)
+            return factorySetup;
+
         factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_THREE, feedback, player);
         if (factorySetup.size != null)
             return factorySetup;
@@ -183,9 +189,12 @@ public class MobFactoryMultiblockLogic {
         } else if (size == EnumMobFactoryTier.TIER_TWO) {
             pos = new BlockPos(3, -1, -3);
             module = EnumMobFactoryModule.BLOCK_3;
-        } else {
+        } else if (size == EnumMobFactoryTier.TIER_THREE) {
             pos = new BlockPos(4, -1, -4);
             module = EnumMobFactoryModule.BLOCK_4;
+        } else {
+            pos = new BlockPos(5, -1, -5);
+            module = EnumMobFactoryModule.BLOCK_5;
         }
 
         EnumFacing f = factory.getWorld().getBlockState(factory.getPos()).getValue(BlockMobFactory.FACING);

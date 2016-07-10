@@ -160,6 +160,19 @@ public class ModRecipes {
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
                         'o', Blocks.OBSIDIAN));
 
+        // Emerald Plated Skull
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemSkull, 5, 3),
+                        "hgs",
+                        "sds",
+                        "sos",
+                        's', new ItemStack(ModItems.itemSkull, 1, 2),
+                        'g', "gemEmerald",
+                        'h', ModItems.itemYahHammer,
+                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
+                        'o', Blocks.OBSIDIAN));
+
         // Factory Connector
         GameRegistry.addRecipe(
                 new ShapedOreHammerRecipe(
@@ -542,6 +555,12 @@ public class ModRecipes {
                         "scs", "gig", "sgs",
                         'c', ModItems.itemFactoryCap,
                         's', "stone", 'g', "dustGlowstone", 'i', new ItemStack(ModItems.itemSkull, 1, 2)));
+       GameRegistry.addRecipe(
+               new ShapedOreRecipe(
+                       new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.CAP_IV.ordinal()),
+                       "scs", "gig", "sgs",
+                       'c', ModItems.itemFactoryCap,
+                       's', "stone", 'g', "dustGlowstone", 'i', new ItemStack(ModItems.itemSkull, 1, 3)));
 
         /**
          * Factory Upgrades

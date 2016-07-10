@@ -18,7 +18,7 @@ public class ItemSkull extends ItemWoot {
     public static final String BASENAME = "skull";
 
     public static final String[] VARIANTS = new String[] {
-            "iron", "gold", "diamond"
+            "iron", "gold", "diamond", "emerald"
     };
 
     public ItemSkull() {

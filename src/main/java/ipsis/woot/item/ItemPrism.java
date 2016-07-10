@@ -164,7 +164,7 @@ public class ItemPrism extends ItemWoot {
             tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
 
             EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(getMobName(stack), getXp(stack));
-            tooltip.add(TextFormatting.BLUE + t.getTranslated());
+            tooltip.add(TextFormatting.BLUE + t.getTranslated(Lang.WAILA_FACTORY_TIER));
         }
     }
 

@@ -47,16 +47,18 @@ public class ConfigHandler {
         Settings.tierIRF = getConfigInt(Config.General.TIER_I_RF, Settings.Spawner.DEF_TIER_I_RF);
         Settings.tierIIRF = getConfigInt(Config.General.TIER_II_RF, Settings.Spawner.DEF_TIER_II_RF);
         Settings.tierIIIRF = getConfigInt(Config.General.TIER_III_RF, Settings.Spawner.DEF_TIER_III_RF);
+        Settings.tierIVRF = getConfigInt(Config.General.TIER_IV_RF, Settings.Spawner.DEF_TIER_IV_RF);
         Settings.baseMobCount = getConfigInt(Config.General.BASE_MOB_COUNT, Settings.Spawner.DEF_BASE_MOB_COUNT);
         Settings.baseRateTicks = getConfigInt(Config.General.BASE_RATE_TICKS, Settings.Spawner.DEF_BASE_RATE_TICKS);
         Settings.tierIMobXpCap = getConfigInt(Config.General.TIER_I_MOB_XP_CAP, Settings.Spawner.DEF_TIER_I_MOB_XP_CAP);
         Settings.tierIIMobXpCap = getConfigInt(Config.General.TIER_II_MOB_XP_CAP, Settings.Spawner.DEF_TIER_II_MOB_XP_CAP);
         Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
+        Settings.tierIVMobXpCap = getConfigInt(Config.General.TIER_IV_MOB_XP_CAP, Settings.Spawner.DEF_TIER_IV_MOB_XP_CAP);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
-                Settings.prismBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+                Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
         Settings.prismWhitelist = configuration.getStringList(Config.General.PRISM_WHITELIST, Configuration.CATEGORY_GENERAL,
-                Settings.prismWhitelist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_WHITELIST)));
+                Settings.Progression.DEF_PRISM_WHITELIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_WHITELIST)));
         Settings.usePrismWhitelist = getConfigBool(Config.General.PRISM_USE_WHITELIST, Settings.Spawner.DEF_PRISM_USE_WHITELIST);
 
         if (Settings.usePrismWhitelist) {
@@ -73,6 +75,8 @@ public class ConfigHandler {
                 Settings.Progression.DEF_TIER_II_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_II_MOB_LIST)));
         Settings.tierIIIMobs = configuration.getStringList(Config.General.TIER_III_MOB_LIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_TIER_III_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_III_MOB_LIST)));
+        Settings.tierIVMobs = configuration.getStringList(Config.General.TIER_IV_MOB_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.Progression.DEF_TIER_IV_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_IV_MOB_LIST)));
 
         for (int i = 0; i < Settings.tierIMobs.length; i++)
             Woot.tierMapper.addMapping(Settings.tierIMobs[i], EnumMobFactoryTier.TIER_ONE);
@@ -80,6 +84,8 @@ public class ConfigHandler {
             Woot.tierMapper.addMapping(Settings.tierIIMobs[i], EnumMobFactoryTier.TIER_TWO);
         for (int i = 0; i < Settings.tierIIIMobs.length; i++)
             Woot.tierMapper.addMapping(Settings.tierIIIMobs[i], EnumMobFactoryTier.TIER_THREE);
+        for (int i = 0; i < Settings.tierIVMobs.length; i++)
+            Woot.tierMapper.addMapping(Settings.tierIVMobs[i], EnumMobFactoryTier.TIER_FOUR);
 
         Settings.dropBlacklist = configuration.getStringList(Config.General.DROP_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.dropBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.DROP_BLACKLIST)));
@@ -87,7 +93,7 @@ public class ConfigHandler {
             Woot.LOOT_TABLE_MANAGER.addToBlacklist(Settings.dropBlacklist[i]);
 
         Settings.spawnCostList = configuration.getStringList(Config.General.SPAWN_COST_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.spawnCostList, StringHelper.localize(Lang.getLangConfigValue(Config.General.SPAWN_COST_LIST)));
+                Settings.Progression.DEF_SPAWN_COST, StringHelper.localize(Lang.getLangConfigValue(Config.General.SPAWN_COST_LIST)));
         for (int i = 0; i < Settings.spawnCostList.length; i++) {
             String mob;
             int cost;

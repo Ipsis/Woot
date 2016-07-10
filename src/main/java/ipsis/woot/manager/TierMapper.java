@@ -2,6 +2,7 @@ package ipsis.woot.manager;
 
 import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import net.minecraft.command.ICommandSender;
@@ -9,9 +10,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.HashMap;
 
-import static ipsis.woot.tileentity.multiblock.EnumMobFactoryTier.TIER_ONE;
-import static ipsis.woot.tileentity.multiblock.EnumMobFactoryTier.TIER_THREE;
-import static ipsis.woot.tileentity.multiblock.EnumMobFactoryTier.TIER_TWO;
+import static ipsis.woot.tileentity.multiblock.EnumMobFactoryTier.*;
 
 public class TierMapper {
 
@@ -31,8 +30,10 @@ public class TierMapper {
                tier =  TIER_ONE;
             else if (xp <= Settings.tierIIMobXpCap)
                tier =  EnumMobFactoryTier.TIER_TWO;
+           else if (xp <= Settings.tierIIIMobXpCap)
+               tier =  EnumMobFactoryTier.TIER_THREE;
             else
-               tier = EnumMobFactoryTier.TIER_THREE;
+               tier = EnumMobFactoryTier.TIER_FOUR;
         }
 
         return tier;
@@ -50,7 +51,10 @@ public class TierMapper {
                 valid = (tier == TIER_TWO || tier == TIER_THREE);
                 break;
             case TIER_THREE:
-                valid = (tier == TIER_THREE);
+                valid = (tier == TIER_THREE || tier == TIER_FOUR);
+                break;
+            case TIER_FOUR:
+                valid = (tier == TIER_FOUR);
                 break;
         }
 
@@ -70,7 +74,7 @@ public class TierMapper {
         sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.tiers.title", mapper.keySet().size()));
         for (String mobName : mapper.keySet()) {
             sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.tiers.summary",
-                    mobName, mapper.get(mobName).getTranslated()));
+                    mobName, mapper.get(mobName).getTranslated(Lang.WAILA_CONTROLLER_TIER)));
         }
     }
 }

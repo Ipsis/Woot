@@ -174,12 +174,125 @@ public enum EnumMobFactoryTier {
 
             parsePattern(structureModules, pattern, 1, 4, 4);
         }
+    },
+    TIER_FOUR() {
+        @Override
+        void buildStructureMap() {
+            String pattern[][] = {
+                    {
+                            "eeeeeeeeeee",
+                            "eddddddddde",
+                            "edcccccccde",
+                            "edcababacde",
+                            "edcbababcde",
+                            "edcab-bacde",
+                            "edcbababcde",
+                            "edcababacde",
+                            "edcccccccde",
+                            "eddddddddde",
+                            "eeeeeeeeeee"
+                    },
+                    {
+                            "e---------e",
+                            "-d-------d-",
+                            "--c-----c--",
+                            "-----------",
+                            "-----------",
+                            "-----o-----",
+                            "-----a-----",
+                            "---b---b---",
+                            "--c-c-c-c--",
+                            "-d---d---d-",
+                            "e-e-e-e-e-e",
+                    },
+                    {
+                            "e---------e",
+                            "-d-------d-",
+                            "--c-----c--",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "--c-c-c-c--",
+                            "-d---d---d-",
+                            "e-e-e-e-e-e"
+                    },
+                    {
+                            "e---------e",
+                            "-d-------d-",
+                            "--c-----c--",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "--c-c-c-c--",
+                            "-d---d---d-",
+                            "e-e-e-e-e-e"
+                    },
+                    {
+                            "e---------e",
+                            "-d-------d-",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "--c-----c--",
+                            "-d---d---d-",
+                            "e-e-e-e-e-e",
+                    },
+                    {
+                            "e---------e",
+                            "-d-------d-",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-d---d---d-",
+                            "e-e-1-1-e-e"
+                    },
+                    {
+                            "e---------e",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "e-1-----1-e"
+                    },
+                    {
+                            "1---------1",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "-----------",
+                            "1---------1"
+                    }
+            };
+
+            parsePattern(structureModules, pattern, 1, 5, 5);
+        }
     };
 
-    public String getTranslated() {
+    public String getTranslated(String format) {
 
-        return String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
-                this == TIER_ONE ? "I" : this == TIER_TWO ? "II" : "III");
+        return String.format(StringHelper.localize(format),
+                this == TIER_ONE ? "I" : this == TIER_TWO ? "II" : this == TIER_THREE ? "III" : "IV");
     }
 
     /**
@@ -187,17 +300,17 @@ public enum EnumMobFactoryTier {
      * @return the offset from center of the widest factory tier
      */
     public static int getMaxXZOffset() {
-        return 4;
+        return 5;
     }
 
     /**
      * @return the height of the tallest factory tier
      */
     public static int getMaxYOffset() {
-        return 6;
+        return 8;
     }
 
-    public static final EnumMobFactoryTier[] VALID_TIERS = new EnumMobFactoryTier[] { TIER_ONE, TIER_TWO, TIER_THREE };
+    public static final EnumMobFactoryTier[] VALID_TIERS = new EnumMobFactoryTier[] { TIER_ONE, TIER_TWO, TIER_THREE, TIER_FOUR };
 
     public EnumMobFactoryTier getNext() {
 
@@ -241,6 +354,8 @@ public enum EnumMobFactoryTier {
                         m = EnumMobFactoryModule.CAP_II;
                     else if (c == 'z')
                         m = EnumMobFactoryModule.CAP_III;
+                    else if (c == '1')
+                        m = EnumMobFactoryModule.CAP_IV;
 
                     modules.add(new MobFactoryModule(new BlockPos(dCol, dLayer, dRow), m));
                 }

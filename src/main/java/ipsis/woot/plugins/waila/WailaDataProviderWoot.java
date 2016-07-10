@@ -88,8 +88,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         if (tag.hasKey("displayName") && tag.hasKey("xpCost") && tag.hasKey("tier")) {
             EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
             currenttip.add(TextFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
-            currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
-                            (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+            currenttip.add(TextFormatting.BLUE + String.format(t.getTranslated(Lang.WAILA_CONTROLLER_TIER)));
 
         }
         return currenttip;
@@ -113,8 +112,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
 
             BlockMobFactory.PluginTooltipInfo info = BlockMobFactory.PluginTooltipInfo.fromNBT(tag);
 
-            currenttip.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                    (info.tier == EnumMobFactoryTier.TIER_ONE ? "I" : info.tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+            currenttip.add(TextFormatting.BLUE + String.format(info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
             currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
             currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
             currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));

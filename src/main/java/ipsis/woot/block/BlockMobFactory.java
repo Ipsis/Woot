@@ -81,9 +81,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             if (te.isFormed()) {
 
                 List<String> out = new ArrayList<String>();
-                out.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                        (te.getFactoryTier() == EnumMobFactoryTier.TIER_ONE ? "I" : te.getFactoryTier() == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
-
+                out.add(TextFormatting.BLUE + String.format( te.getFactoryTier().getTranslated(Lang.WAILA_FACTORY_TIER)));
                 out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getMobDisplayName()));
 
 
@@ -140,6 +138,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRF));
         toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRF));
         toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRF));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "IV", Settings.tierIVRF));
     }
 
     public IBlockState getStateFromMeta(int meta)

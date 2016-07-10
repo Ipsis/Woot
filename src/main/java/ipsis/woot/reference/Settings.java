@@ -11,17 +11,20 @@ public class Settings {
         public static final int DEF_TIER_I_RF = 1000;
         public static final int DEF_TIER_II_RF = 2000;
         public static final int DEF_TIER_III_RF = 4000;
+        public static final int DEF_TIER_IV_RF = 4000;
         public static final int DEF_BASE_MOB_COUNT = 1;
         public static final int DEF_BASE_RATE_TICKS = 16 * 20;
         public static final int DEF_TIER_I_MOB_XP_CAP = 5;
         public static final int DEF_TIER_II_MOB_XP_CAP = 20;
-        public static final int DEF_TIER_III_MOB_XP_CAP = 65535;
+        public static final int DEF_TIER_III_MOB_XP_CAP = 49;
+        public static final int DEF_TIER_IV_MOB_XP_CAP = 65535;
         public static final boolean DEF_PRISM_USE_WHITELIST = false;
     }
 
     public static class Progression {
 
         public static final String[] DEF_PRISM_BLACKLIST = { };
+        public static final String[] DEF_PRISM_WHITELIST = { };
         public static final String[] DEF_TIER_I_MOBS = { };
         public static final String[] DEF_TIER_II_MOBS = {
                 "Woot:none:Blaze",
@@ -110,15 +113,18 @@ public class Settings {
     public static int tierIRF;
     public static int tierIIRF;
     public static int tierIIIRF;
+    public static int tierIVRF;
     public static int tierIMobXpCap;
     public static int tierIIMobXpCap;
     public static int tierIIIMobXpCap;
+    public static int tierIVMobXpCap;
     public static String[] prismBlacklist = new String[0];
     public static String[] prismWhitelist = new String[0];
     public static boolean usePrismWhitelist;
     public static String[] tierIMobs = new String[0];
     public static String[] tierIIMobs = new String[0];
     public static String[] tierIIIMobs = new String[0];
+    public static String[] tierIVMobs = new String[0];
     public static String[] dropBlacklist = new String[0];
     public static String[] spawnCostList = new String[0];
 

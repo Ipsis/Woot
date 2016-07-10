@@ -240,7 +240,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             upgradeTier1();
         else if (factoryTier == EnumMobFactoryTier.TIER_TWO)
             upgradeTier2();
-        else if (factoryTier == EnumMobFactoryTier.TIER_THREE)
+        else if (factoryTier == EnumMobFactoryTier.TIER_THREE || factoryTier == EnumMobFactoryTier.TIER_FOUR)
             upgradeTier3();
 
         spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup,

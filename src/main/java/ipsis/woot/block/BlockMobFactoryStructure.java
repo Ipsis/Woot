@@ -110,7 +110,7 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
 
         Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
-        for (int i = 0; i < EnumMobFactoryModule.values().length; i++) {
+        for (int i = 0; i < EnumMobFactoryModule.VALUES.length; i++) {
 
             EnumMobFactoryModule e = EnumMobFactoryModule.VALUES[i];
             ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(

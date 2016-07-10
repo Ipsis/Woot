@@ -88,8 +88,10 @@ public class SpawnerManager {
             baseRF = Settings.tierIRF;
         else if (tier == EnumMobFactoryTier.TIER_TWO)
             baseRF = Settings.tierIIRF;
-        else
+        else if (tier == EnumMobFactoryTier.TIER_THREE)
             baseRF = Settings.tierIIIRF;
+        else
+            baseRF = Settings.tierIVRF;
 
         int mobRf = baseRF * xpLevel;
         int mobCount = upgradeSetup.hasMassUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass() : 1;

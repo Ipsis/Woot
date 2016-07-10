@@ -9,6 +9,7 @@
     "formed=true,module=tier_i_cap": { "model": "woot:structure_tier_i_cap_formed" },
     "formed=true,module=tier_ii_cap": { "model": "woot:structure_tier_ii_cap_formed" },
     "formed=true,module=tier_iii_cap": { "model": "woot:structure_tier_iii_cap_formed" },
+    "formed=true,module=tier_iv_cap": { "model": "woot:structure_tier_iv_cap_formed" },
     "formed=false,module=block_1": { "model": "woot:structure_block_1" },
     "formed=false,module=block_2": { "model": "woot:structure_block_2" },
     "formed=false,module=block_3": { "model": "woot:structure_block_3" },
@@ -16,6 +17,7 @@
     "formed=false,module=block_5": { "model": "woot:structure_block_5" },
     "formed=false,module=tier_i_cap": { "model": "woot:structure_tier_i_cap" },
     "formed=false,module=tier_ii_cap": { "model": "woot:structure_tier_ii_cap" },
-    "formed=false,module=tier_iii_cap": { "model": "woot:structure_tier_iii_cap" }
+    "formed=false,module=tier_iii_cap": { "model": "woot:structure_tier_iii_cap" },
+    "formed=false,module=tier_iv_cap": { "model": "woot:structure_tier_iv_cap" }
   }
 }

@@ -224,6 +224,18 @@ public class ModRecipes {
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
                         'o', Blocks.OBSIDIAN));
 
+        // Netherstar Shard
+        GameRegistry.addRecipe(
+                new ShapedOreHammerRecipe(
+                        new ItemStack(ModItems.itemShard, 9, 3),
+                        "hd ",
+                        " g ",
+                        " o ",
+                        'g', Items.NETHER_STAR,
+                        'h', ModItems.itemYahHammer,
+                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
+                        'o', Blocks.OBSIDIAN));
+
         // Pulverizedd UnderIron
         GameRegistry.addRecipe(
                 new ShapedOreHammerRecipe(
@@ -289,6 +301,12 @@ public class ModRecipes {
                         new ItemStack(Items.DIAMOND),
                         "sss", "sss", "sss",
                         's', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.DIAMOND.getMeta())));
+
+        GameRegistry.addRecipe(
+                new ShapedOreRecipe(
+                        new ItemStack(Items.NETHER_STAR),
+                        "sss", "sss", "sss",
+                        's', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.NETHERSTAR.getMeta())));
     }
 
     private static void initUpgradeRecipes() {
@@ -512,25 +530,25 @@ public class ModRecipes {
                         new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_2.ordinal()),
                         Items.ROTTEN_FLESH, ModItems.itemFactoryCasing));
 
-        // Green
+        // Orange
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 4, EnumMobFactoryModule.BLOCK_3.ordinal()),
                         Items.BLAZE_POWDER,
                         casingStack, casingStack, casingStack, casingStack));
 
-        // Blue
+        // Green
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 4, EnumMobFactoryModule.BLOCK_4.ordinal()),
                         "enderpearl",
                         casingStack, casingStack, casingStack, casingStack));
 
-        // Orange
+        // White
         GameRegistry.addRecipe(
                 new ShapelessOreRecipe(
                         new ItemStack(ModBlocks.blockStructure, 8, EnumMobFactoryModule.BLOCK_5.ordinal()),
-                        Items.NETHER_STAR,
+                        new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.NETHERSTAR.getMeta()),
                         casingStack, casingStack, casingStack, casingStack,
                         casingStack, casingStack, casingStack, casingStack));
 

@@ -21,10 +21,11 @@ public class ItemShard extends ItemWoot {
             EnumShardType.DIAMOND.getName(),
             EnumShardType.EMERALD.getName(),
             EnumShardType.QUARTZ.getName(),
+            EnumShardType.NETHERSTAR.getName()
     };
 
     public enum EnumShardType {
-        DIAMOND("diamond"), EMERALD("emerald"), QUARTZ("quartz");
+        DIAMOND("diamond"), EMERALD("emerald"), QUARTZ("quartz"), NETHERSTAR("netherstar");
 
         public int getMeta() {
             return ordinal();
@@ -72,5 +73,14 @@ public class ItemShard extends ItemWoot {
 
         int idx = stack.getItemDamage() % VARIANTS.length;
         return super.getUnlocalizedName() + "." + VARIANTS[idx];
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+
+        if (stack != null && stack.getItemDamage() == EnumShardType.NETHERSTAR.getMeta())
+            return true;
+
+        return false;
     }
 }

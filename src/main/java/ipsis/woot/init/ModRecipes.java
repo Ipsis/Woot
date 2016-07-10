@@ -6,6 +6,7 @@ import ipsis.woot.init.recipes.ShapedOreHammerRecipe;
 import ipsis.woot.item.ItemDye;
 import ipsis.woot.item.ItemFactoryUpgrade;
 import ipsis.woot.item.ItemShard;
+import ipsis.woot.item.ItemSkull;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.block.Block;
@@ -124,7 +125,7 @@ public class ModRecipes {
         // Iron Plated Skull
         GameRegistry.addRecipe(
                 new ShapedOreHammerRecipe(
-                        new ItemStack(ModItems.itemSkull, 2, 0),
+                        new ItemStack(ModItems.itemSkull, 2, ItemSkull.EnumSkullType.IRON.getMeta()),
                         "hi ",
                         "sds",
                         " o ",
@@ -137,7 +138,7 @@ public class ModRecipes {
         // Gold Plated Skull
         GameRegistry.addRecipe(
                 new ShapedOreHammerRecipe(
-                        new ItemStack(ModItems.itemSkull, 4, 1),
+                        new ItemStack(ModItems.itemSkull, 4, ItemSkull.EnumSkullType.GOLD.getMeta()),
                         "hg ",
                         "sds",
                         "sos",
@@ -150,7 +151,7 @@ public class ModRecipes {
         // Diamond Plated Skull
         GameRegistry.addRecipe(
                 new ShapedOreHammerRecipe(
-                        new ItemStack(ModItems.itemSkull, 5, 2),
+                        new ItemStack(ModItems.itemSkull, 5, ItemSkull.EnumSkullType.DIAMOND.getMeta()),
                         "hgs",
                         "sds",
                         "sos",
@@ -163,7 +164,7 @@ public class ModRecipes {
         // Emerald Plated Skull
         GameRegistry.addRecipe(
                 new ShapedOreHammerRecipe(
-                        new ItemStack(ModItems.itemSkull, 5, 3),
+                        new ItemStack(ModItems.itemSkull, 5, ItemSkull.EnumSkullType.EMERALD.getMeta()),
                         "hgs",
                         "sds",
                         "sos",

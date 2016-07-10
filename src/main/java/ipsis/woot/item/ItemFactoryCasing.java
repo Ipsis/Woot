@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFactoryCasing extends ItemWoot {
 
-    public static final String BASENAME = "factoryCasing";
+    public static final String BASENAME = "factorycasing";
 
     public ItemFactoryCasing() {
 

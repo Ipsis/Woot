@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFactoryCap extends ItemWoot {
 
-    public static final String BASENAME = "factoryCap";
+    public static final String BASENAME = "factorycap";
 
     public ItemFactoryCap() {
 

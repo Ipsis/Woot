@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ItemFactoryUpgrade extends ItemWoot {
 
-    public static final String BASENAME = "factoryUpgrade";
+    public static final String BASENAME = "factoryupgrade";
 
     public static final String[] VARIANTS = new String[] {
             EnumUpgradeTier.TIER_I.getName(), EnumUpgradeTier.TIER_II.getName(), EnumUpgradeTier.TIER_III.getName()

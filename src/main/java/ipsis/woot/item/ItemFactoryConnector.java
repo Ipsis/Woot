@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFactoryConnector extends ItemWoot {
 
-    public static final String BASENAME = "factoryConnector";
+    public static final String BASENAME = "factoryconnector";
 
     public ItemFactoryConnector() {
 

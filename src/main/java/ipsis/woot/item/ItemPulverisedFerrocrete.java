@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPulverisedFerrocrete extends  ItemWoot {
 
-    public static final String BASENAME = "pulverisedFerrocrete";
+    public static final String BASENAME = "pulverisedferrocrete";
 
     public ItemPulverisedFerrocrete() {
 

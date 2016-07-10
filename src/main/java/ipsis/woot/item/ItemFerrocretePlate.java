@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFerrocretePlate extends ItemWoot {
 
-    public static final String BASENAME = "ferrocretePlate";
+    public static final String BASENAME = "ferrocreteplate";
 
     public ItemFerrocretePlate() {
 

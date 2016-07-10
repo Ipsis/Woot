@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ItemYahHammer extends ItemWoot {
 
-    public static final String BASENAME = "yahHammer";
+    public static final String BASENAME = "yahhammer";
 
     public ItemYahHammer() {
 

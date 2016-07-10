@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPrismFrame extends ItemWoot {
 
-    public static final String BASENAME = "prismFrame";
+    public static final String BASENAME = "prismframe";
 
     public ItemPrismFrame() {
 

@@ -41,7 +41,7 @@ public class ModRecipes {
                 new ShapedOreRecipe(
                         new ItemStack(ModItems.itemYahHammer),
                         "fff", " w ", "sws",
-                        'f', ModItems.itemFerrocrete,
+                        'f', Items.NETHERBRICK,
                         'w', "stickWood",
                         's', Items.STRING));
     }
@@ -241,10 +241,11 @@ public class ModRecipes {
                 new ShapedOreHammerRecipe(
                         new ItemStack(ModItems.itemPulverisedFerrocrete, 2),
                         "hi ",
-                        " d ",
+                        "nd ",
                         " o ",
                         'h', ModItems.itemYahHammer,
-                        'i', ModItems.itemFerrocrete,
+                        'i', "ingotIron",
+                        'n', Blocks.NETHER_BRICK,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()),
                         'o', Blocks.OBSIDIAN));
     }

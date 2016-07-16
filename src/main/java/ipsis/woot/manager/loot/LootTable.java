@@ -55,10 +55,11 @@ public class LootTable {
         pools[key.ordinal()] =  new LootPool(key);
     }
 
-    public void update(EnumEnchantKey key, List<EntityItem> drops) {
+    public void update(EnumEnchantKey key, List<EntityItem> drops, boolean updateCount) {
 
         LootPool pool = getLootPool(key);
-        pool.samples++;
+        if (updateCount)
+            pool.samples++;
 
         for (EntityItem entityItem : drops) {
             ItemStack itemStack = entityItem.getEntityItem();

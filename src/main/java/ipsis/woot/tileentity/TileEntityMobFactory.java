@@ -11,10 +11,13 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -32,6 +35,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     boolean nbtLoaded;
     UpgradeSetup upgradeSetup;
     ControllerConfig controllerConfig;
+    AxisAlignedBB bb;
 
     int currLearnTicks;
     int currSpawnTicks;
@@ -337,6 +341,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (!isFormed())
             return;
 
+        tryPickupModItems();
+
         currLearnTicks++;
         if (currLearnTicks >= learnTicksOffset) {
             if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
@@ -356,6 +362,28 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             if (currSpawnTicks >= spawnReq.getSpawnTime()) {
                 onSpawn();
                 setCurrSpawnTicks(0);
+            }
+        }
+    }
+
+    private void tryPickupModItems() {
+
+        EnumEnchantKey key = upgradeSetup.getEnchantKey();
+        String mobName = controllerConfig.getMobName();
+
+        /* If still learning check for any dropped items */
+        if (!Woot.LOOT_TABLE_MANAGER.isFull(mobName, key)) {
+
+            if (bb == null) {
+                int range = 2;
+                bb = new AxisAlignedBB(getPos()).expand(range, range, range);
+            }
+
+            List<EntityItem> itemList = worldObj.getEntitiesWithinAABB(EntityItem.class, bb, EntitySelectors.IS_ALIVE);
+            if (!itemList.isEmpty()) {
+                Woot.LOOT_TABLE_MANAGER.update(mobName, key, itemList, false);
+                for (EntityItem i : itemList)
+                    ((EntityItem) i).setDead();
             }
         }
     }

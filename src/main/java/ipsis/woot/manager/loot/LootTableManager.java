@@ -47,7 +47,7 @@ public class LootTableManager {
         return false;
     }
 
-    public void update(String wootName, EnumEnchantKey key, List<EntityItem> mobDropList) {
+    public void update(String wootName, EnumEnchantKey key, List<EntityItem> mobDropList, boolean updateCount) {
 
         LootTable e = lootMap.get(wootName);
         if (e == null) {
@@ -55,7 +55,7 @@ public class LootTableManager {
             lootMap.put(wootName, e);
         }
 
-        e.update(key, mobDropList);
+        e.update(key, mobDropList, updateCount);
     }
 
     public List<ItemStack> getDrops(String wootName, EnumEnchantKey key) {

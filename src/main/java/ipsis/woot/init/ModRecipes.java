@@ -364,9 +364,9 @@ public class ModRecipes {
 
     private static void initUpgradeRate() {
 
-        ItemStack book1 = new ItemStack(Items.BOOK);
-        ItemStack book2 = new ItemStack(Items.BOOK);
-        ItemStack book3 = new ItemStack(Items.BOOK);
+        ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
         book1.addEnchantment(Enchantments.POWER, 1);
         book2.addEnchantment(Enchantments.POWER, 2);
         book3.addEnchantment(Enchantments.POWER, 3);
@@ -383,9 +383,9 @@ public class ModRecipes {
 
     private static void initUpgradeLooting() {
 
-        ItemStack book1 = new ItemStack(Items.BOOK);
-        ItemStack book2 = new ItemStack(Items.BOOK);
-        ItemStack book3 = new ItemStack(Items.BOOK);
+        ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
         book1.addEnchantment(Enchantments.LOOTING, 1);
         book2.addEnchantment(Enchantments.LOOTING, 2);
         book3.addEnchantment(Enchantments.LOOTING, 3);
@@ -402,9 +402,9 @@ public class ModRecipes {
 
     private static void initUpgradeXp() {
 
-        ItemStack book1 = new ItemStack(Items.BOOK);
-        ItemStack book2 = new ItemStack(Items.BOOK);
-        ItemStack book3 = new ItemStack(Items.BOOK);
+        ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
         book1.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 1);
         book2.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 2);
         book3.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 3);
@@ -420,9 +420,9 @@ public class ModRecipes {
 
     private static void initUpgradeMass() {
 
-        ItemStack book1 = new ItemStack(Items.BOOK);
-        ItemStack book2 = new ItemStack(Items.BOOK);
-        ItemStack book3 = new ItemStack(Items.BOOK);
+        ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
         book1.addEnchantment(Enchantments.FORTUNE, 1);
         book2.addEnchantment(Enchantments.FORTUNE, 2);
         book3.addEnchantment(Enchantments.FORTUNE, 3);
@@ -439,9 +439,9 @@ public class ModRecipes {
 
     private static void initUpgradeDecapitate() {
 
-        ItemStack book1 = new ItemStack(Items.BOOK);
-        ItemStack book2 = new ItemStack(Items.BOOK);
-        ItemStack book3 = new ItemStack(Items.BOOK);
+        ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
         book1.addEnchantment(Enchantments.SHARPNESS, 1);
         book2.addEnchantment(Enchantments.SHARPNESS, 2);
         book3.addEnchantment(Enchantments.SHARPNESS, 3);
@@ -457,9 +457,9 @@ public class ModRecipes {
 
     private static void initUpgradeEfficiency() {
 
-        ItemStack book1 = new ItemStack(Items.BOOK);
-        ItemStack book2 = new ItemStack(Items.BOOK);
-        ItemStack book3 = new ItemStack(Items.BOOK);
+        ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
+        ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
         book1.addEnchantment(Enchantments.EFFICIENCY, 1);
         book2.addEnchantment(Enchantments.EFFICIENCY, 2);
         book3.addEnchantment(Enchantments.EFFICIENCY, 3);

@@ -85,30 +85,33 @@ public class SpawnerManager {
 
         int baseRF;
         if (tier == EnumMobFactoryTier.TIER_ONE)
-            baseRF = Settings.tierIRF;
+            baseRF = Settings.tierIRFtick;
         else if (tier == EnumMobFactoryTier.TIER_TWO)
-            baseRF = Settings.tierIIRF;
+            baseRF = Settings.tierIIRFtick;
         else if (tier == EnumMobFactoryTier.TIER_THREE)
-            baseRF = Settings.tierIIIRF;
+            baseRF = Settings.tierIIIRFtick;
         else
-            baseRF = Settings.tierIVRF;
+            baseRF = Settings.tierIVRFtick;
 
-        int mobRf = baseRF * xpLevel;
+
         int mobCount = upgradeSetup.hasMassUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass() : 1;
         int spawnTime = upgradeSetup.hasRateUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate() : Settings.baseRateTicks;
 
-        int totalRf = mobRf * mobCount;
-        totalRf += (spawnTime * upgradeSetup.getRfPerTickCost());
+        int RFt = baseRF * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFmob = Settings.Power.DEF_XP_RF_TICK * xpLevel * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFupgrade = upgradeSetup.getRfPerTickCost() * Settings.Spawner.DEF_BASE_RATE_TICKS;
+
+        int RFtotal = RFt + (RFmob * mobCount) + RFupgrade;
 
         if (upgradeSetup.hasEfficiencyUpgrade()) {
             int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
-            int saving = (int)((totalRf / 100.0F) * f);
-            totalRf -= saving;
-            if (totalRf < 0)
-                totalRf = 1;
+            int saving = (int)((RFtotal / 100.0F) * f);
+            RFtotal -= saving;
+            if (RFtotal < 0)
+                RFtotal = 1;
         }
 
-        return new SpawnReq(totalRf, spawnTime);
+        return new SpawnReq(RFtotal, spawnTime);
     }
 
     public int getSpawnXp(String mobName, TileEntity te) {

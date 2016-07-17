@@ -83,10 +83,11 @@ config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Minimum number of ticks between fake spawn learning
 config.Woot:globalStrictSpawns=Learn only from mob factory spawning
 config.Woot:globalStrictPower=Must provide full RF/tick or lose progress
-config.Woot:globalTierIRF=Tier I RF cost per mob level
-config.Woot:globalTierIIRF=Tier II RF cost per mob level
-config.Woot:globalTierIIIRF=Tier III RF cost per mob level
-config.Woot:globalTierIVRF=Tier IV RF cost per mob level
+config.Woot:globalTierIRF=Tier I power cost (RF/tick)
+config.Woot:globalTierIIRF=Tier II power cost (RF/tick)
+config.Woot:globalTierIIIRF=Tier III power cost (RF/tick)
+config.Woot:globalTierIVRF=Tier IV power cost (RF/tick)
+config.Woot:globalXpRF=Mob XP cost (RF/tick)
 config.Woot:globalTierIMobXpCap=Tier I max mob XP
 config.Woot:globalTierIIMobXpCap=Tier II max mob XP
 config.Woot:globalTierIIIMobXpCap=Tier III max mob XP
@@ -138,9 +139,9 @@ config.Woot:efficiencyI_percentage=Efficiency I increase in efficiency
 config.Woot:efficiencyII_percentage=Efficiency II increase in efficiency
 config.Woot:efficiencyIII_percentage=Efficiency III increase in efficiency
 
-tooltip.Woot:factory_cost=Tier %s costs %dRF for each mob spawned
+tooltip.Woot:factory_cost=Tier %s %dRF/tick
 
-tooltip.Woot:upgrade_cost=Costs %d RF/tick
+tooltip.Woot:upgrade_cost=%d RF/tick
 
 tooltip.Woot:upgrade_rate_effect=Spawn mobs every %d ticks
 tooltip.Woot:upgrade_lootingI_effect=Applys Looting I enchant to kills

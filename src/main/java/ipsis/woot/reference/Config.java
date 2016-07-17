@@ -12,6 +12,7 @@ public class Config {
         public static final String TIER_II_RF = "globalTierIIRF";
         public static final String TIER_III_RF = "globalTierIIIRF";
         public static final String TIER_IV_RF = "globalTierIVRF";
+        public static final String XP_RF = "globalXpRF";
         public static final String TIER_I_MOB_XP_CAP = "globalTierIMobXpCap";
         public static final String TIER_II_MOB_XP_CAP = "globalTierIIMobXpCap";
         public static final String TIER_III_MOB_XP_CAP = "globalTierIIIMobXpCap";

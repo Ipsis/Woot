@@ -135,10 +135,10 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRF));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRF));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRF));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "IV", Settings.tierIVRF));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRFtick));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRFtick));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRFtick));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "IV", Settings.tierIVRFtick));
     }
 
     public IBlockState getStateFromMeta(int meta)

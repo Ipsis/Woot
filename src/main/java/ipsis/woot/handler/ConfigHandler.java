@@ -44,10 +44,10 @@ public class ConfigHandler {
         Settings.learnTicks = getConfigInt(Config.General.LEARN_TICKS, Settings.Spawner.DEF_LEARN_TICKS);
         Settings.strictFactorySpawns = getConfigBool(Config.General.STRICT_SPAWNS, Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS);
         Settings.strictPower = getConfigBool(Config.General.STRICT_POWER, Settings.Spawner.DEF_STRICT_POWER);
-        Settings.tierIRF = getConfigInt(Config.General.TIER_I_RF, Settings.Spawner.DEF_TIER_I_RF);
-        Settings.tierIIRF = getConfigInt(Config.General.TIER_II_RF, Settings.Spawner.DEF_TIER_II_RF);
-        Settings.tierIIIRF = getConfigInt(Config.General.TIER_III_RF, Settings.Spawner.DEF_TIER_III_RF);
-        Settings.tierIVRF = getConfigInt(Config.General.TIER_IV_RF, Settings.Spawner.DEF_TIER_IV_RF);
+        Settings.tierIRF = getConfigInt(Config.General.TIER_I_RF, Settings.Power.DEF_TIER_I_RF);
+        Settings.tierIIRF = getConfigInt(Config.General.TIER_II_RF, Settings.Power.DEF_TIER_II_RF);
+        Settings.tierIIIRF = getConfigInt(Config.General.TIER_III_RF, Settings.Power.DEF_TIER_III_RF);
+        Settings.tierIVRF = getConfigInt(Config.General.TIER_IV_RF, Settings.Power.DEF_TIER_IV_RF);
         Settings.baseMobCount = getConfigInt(Config.General.BASE_MOB_COUNT, Settings.Spawner.DEF_BASE_MOB_COUNT);
         Settings.baseRateTicks = getConfigInt(Config.General.BASE_RATE_TICKS, Settings.Spawner.DEF_BASE_RATE_TICKS);
         Settings.tierIMobXpCap = getConfigInt(Config.General.TIER_I_MOB_XP_CAP, Settings.Spawner.DEF_TIER_I_MOB_XP_CAP);

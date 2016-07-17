@@ -8,10 +8,6 @@ public class Settings {
         public static final int DEF_LEARN_TICKS = 20;
         public static final boolean DEF_STRICT_FACTORY_SPAWNS = false;
         public static final boolean DEF_STRICT_POWER = false;
-        public static final int DEF_TIER_I_RF = 200;
-        public static final int DEF_TIER_II_RF = 400;
-        public static final int DEF_TIER_III_RF = 800;
-        public static final int DEF_TIER_IV_RF = 1600;
         public static final int DEF_BASE_MOB_COUNT = 1;
         public static final int DEF_BASE_RATE_TICKS = 16 * 20;
         public static final int DEF_TIER_I_MOB_XP_CAP = 5;
@@ -52,6 +48,11 @@ public class Settings {
     }
 
     public static class Power {
+
+        public static final int DEF_TIER_I_RF = 200;
+        public static final int DEF_TIER_II_RF = 400;
+        public static final int DEF_TIER_III_RF = 800;
+        public static final int DEF_TIER_IV_RF = 1600;
 
         public static final int DEF_RATE_I_RF_TICK = 40;
         public static final int DEF_RATE_II_RF_TICK = 80;

@@ -8,10 +8,6 @@ public class Settings {
         public static final int DEF_LEARN_TICKS = 20;
         public static final boolean DEF_STRICT_FACTORY_SPAWNS = false;
         public static final boolean DEF_STRICT_POWER = false;
-        public static final int DEF_TIER_I_RF = 200;
-        public static final int DEF_TIER_II_RF = 400;
-        public static final int DEF_TIER_III_RF = 800;
-        public static final int DEF_TIER_IV_RF = 1600;
         public static final int DEF_BASE_MOB_COUNT = 1;
         public static final int DEF_BASE_RATE_TICKS = 16 * 20;
         public static final int DEF_TIER_I_MOB_XP_CAP = 5;
@@ -53,25 +49,36 @@ public class Settings {
 
     public static class Power {
 
-        public static final int DEF_RATE_I_RF_TICK = 40;
-        public static final int DEF_RATE_II_RF_TICK = 80;
-        public static final int DEF_RATE_III_RF_TICK = 120;
+        public static final int DEF_TIER_I_RF_TICK = 200;
+        public static final int DEF_TIER_II_RF_TICK = 400;
+        public static final int DEF_TIER_III_RF_TICK = 800;
+        public static final int DEF_TIER_IV_RF_TICK = 900;
 
-        public static final int DEF_LOOTING_I_RF_TICK = 40;
-        public static final int DEF_LOOTING_II_RF_TICK = 80;
-        public static final int DEF_LOOTING_III_RF_TICK = 120;
+        public static final int DEF_XP_RF_TICK = 7;
 
-        public static final int DEF_XP_I_RF_TICK = 40;
-        public static final int DEF_XP_II_RF_TICK = 80;
-        public static final int DEF_XP_III_RF_TICK = 120;
+        public static final int DEF_TI_UPGRADE = 20;
+        public static final int DEF_TII_UPGRADE = 40;
+        public static final int DEF_TIII_UPGRADE = 60;
 
-        public static final int DEF_MASS_I_RF_TICK = 40;
-        public static final int DEF_MASS_II_RF_TICK = 80;
-        public static final int DEF_MASS_III_RF_TICK = 120;
+        public static final int DEF_RATE_I_RF_TICK = DEF_TI_UPGRADE;
+        public static final int DEF_RATE_II_RF_TICK = DEF_TII_UPGRADE;
+        public static final int DEF_RATE_III_RF_TICK = DEF_TIII_UPGRADE;
 
-        public static final int DEF_DECAPITATE_I_RF_TICK = 40;
-        public static final int DEF_DECAPITATE_II_RF_TICK = 80;
-        public static final int DEF_DECAPITATE_III_RF_TICK = 120;
+        public static final int DEF_LOOTING_I_RF_TICK = DEF_TI_UPGRADE;
+        public static final int DEF_LOOTING_II_RF_TICK = DEF_TII_UPGRADE;
+        public static final int DEF_LOOTING_III_RF_TICK = DEF_TIII_UPGRADE;
+
+        public static final int DEF_XP_I_RF_TICK = DEF_TI_UPGRADE;
+        public static final int DEF_XP_II_RF_TICK = DEF_TII_UPGRADE;
+        public static final int DEF_XP_III_RF_TICK = DEF_TIII_UPGRADE;
+
+        public static final int DEF_MASS_I_RF_TICK = DEF_TI_UPGRADE;
+        public static final int DEF_MASS_II_RF_TICK = DEF_TII_UPGRADE;
+        public static final int DEF_MASS_III_RF_TICK = DEF_TIII_UPGRADE;
+
+        public static final int DEF_DECAPITATE_I_RF_TICK = DEF_TI_UPGRADE;
+        public static final int DEF_DECAPITATE_II_RF_TICK = DEF_TII_UPGRADE;
+        public static final int DEF_DECAPITATE_III_RF_TICK = DEF_TIII_UPGRADE;
     }
 
     public static class Upgrades {
@@ -110,10 +117,6 @@ public class Settings {
     public static boolean strictPower;
     public static int baseMobCount;
     public static int baseRateTicks;
-    public static int tierIRF;
-    public static int tierIIRF;
-    public static int tierIIIRF;
-    public static int tierIVRF;
     public static int tierIMobXpCap;
     public static int tierIIMobXpCap;
     public static int tierIIIMobXpCap;
@@ -128,9 +131,12 @@ public class Settings {
     public static String[] dropBlacklist = new String[0];
     public static String[] spawnCostList = new String[0];
 
-    /**
-     * Upgrade costs per tick
-     */
+    public static int tierIRFtick;
+    public static int tierIIRFtick;
+    public static int tierIIIRFtick;
+    public static int tierIVRFtick;
+    public static int xpRFtick;
+
     public static int lootingIRfTick;
     public static int lootingIIRfTick;
     public static int lootingIIIRfTick;

@@ -2,22 +2,23 @@ package ipsis.woot.init;
 
 import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.block.BlockMobFactoryUpgradeB;
+import ipsis.woot.init.recipes.ShapedOreEnchBookRecipe;
 import ipsis.woot.init.recipes.ShapedOreHammerRecipe;
 import ipsis.woot.item.ItemDye;
 import ipsis.woot.item.ItemFactoryUpgrade;
 import ipsis.woot.item.ItemShard;
 import ipsis.woot.item.ItemSkull;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -327,7 +328,7 @@ public class ModRecipes {
         Block t3 = Blocks.END_STONE;
 
         GameRegistry.addRecipe(
-                new ShapedOreRecipe(
+                new ShapedOreEnchBookRecipe(
                         out1,
                         "tet", "iui", "tit",
                         't', t1,
@@ -338,7 +339,7 @@ public class ModRecipes {
         );
 
         GameRegistry.addRecipe(
-                new ShapedOreRecipe(
+                new ShapedOreEnchBookRecipe(
                         out2,
                         "tet", "iui", "tft",
                         't', t2,
@@ -350,7 +351,7 @@ public class ModRecipes {
         );
 
         GameRegistry.addRecipe(
-                new ShapedOreRecipe(
+                new ShapedOreEnchBookRecipe(
                         out3,
                         "tet", "gug", "tft",
                         't', t3,
@@ -367,9 +368,9 @@ public class ModRecipes {
         ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
-        book1.addEnchantment(Enchantments.POWER, 1);
-        book2.addEnchantment(Enchantments.POWER, 2);
-        book3.addEnchantment(Enchantments.POWER, 3);
+        Items.ENCHANTED_BOOK.addEnchantment(book1, new EnchantmentData(Enchantments.POWER, 1));
+        Items.ENCHANTED_BOOK.addEnchantment(book2, new EnchantmentData(Enchantments.POWER, 2));
+        Items.ENCHANTED_BOOK.addEnchantment(book3, new EnchantmentData(Enchantments.POWER, 3));
 
         ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.RATE_I));
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.RATE_II));
@@ -386,9 +387,9 @@ public class ModRecipes {
         ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
-        book1.addEnchantment(Enchantments.LOOTING, 1);
-        book2.addEnchantment(Enchantments.LOOTING, 2);
-        book3.addEnchantment(Enchantments.LOOTING, 3);
+        Items.ENCHANTED_BOOK.addEnchantment(book1, new EnchantmentData(Enchantments.LOOTING, 1));
+        Items.ENCHANTED_BOOK.addEnchantment(book2, new EnchantmentData(Enchantments.LOOTING, 2));
+        Items.ENCHANTED_BOOK.addEnchantment(book3, new EnchantmentData(Enchantments.LOOTING, 3));
 
         ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.LOOTING_I));
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.LOOTING_II));
@@ -405,9 +406,9 @@ public class ModRecipes {
         ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
-        book1.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 1);
-        book2.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 2);
-        book3.addEnchantment(Enchantments.LUCK_OF_THE_SEA, 3);
+        Items.ENCHANTED_BOOK.addEnchantment(book1, new EnchantmentData(Enchantments.LUCK_OF_THE_SEA, 1));
+        Items.ENCHANTED_BOOK.addEnchantment(book2, new EnchantmentData(Enchantments.LUCK_OF_THE_SEA, 2));
+        Items.ENCHANTED_BOOK.addEnchantment(book3, new EnchantmentData(Enchantments.LUCK_OF_THE_SEA, 3));
 
         ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.XP_I));
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.XP_II));
@@ -423,9 +424,9 @@ public class ModRecipes {
         ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
-        book1.addEnchantment(Enchantments.FORTUNE, 1);
-        book2.addEnchantment(Enchantments.FORTUNE, 2);
-        book3.addEnchantment(Enchantments.FORTUNE, 3);
+        Items.ENCHANTED_BOOK.addEnchantment(book1, new EnchantmentData(Enchantments.FORTUNE, 1));
+        Items.ENCHANTED_BOOK.addEnchantment(book2, new EnchantmentData(Enchantments.FORTUNE, 2));
+        Items.ENCHANTED_BOOK.addEnchantment(book3, new EnchantmentData(Enchantments.FORTUNE, 3));
 
         ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.MASS_I));
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.MASS_II));
@@ -442,9 +443,9 @@ public class ModRecipes {
         ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
-        book1.addEnchantment(Enchantments.SHARPNESS, 1);
-        book2.addEnchantment(Enchantments.SHARPNESS, 2);
-        book3.addEnchantment(Enchantments.SHARPNESS, 3);
+        Items.ENCHANTED_BOOK.addEnchantment(book1, new EnchantmentData(Enchantments.SHARPNESS, 1));
+        Items.ENCHANTED_BOOK.addEnchantment(book2, new EnchantmentData(Enchantments.SHARPNESS, 2));
+        Items.ENCHANTED_BOOK.addEnchantment(book3, new EnchantmentData(Enchantments.SHARPNESS, 3));
 
         ItemStack out1 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.DECAPITATE_I));
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgrade, 1, BlockMobFactoryUpgrade.getBlockSplitMeta(EnumSpawnerUpgrade.DECAPITATE_II));
@@ -460,9 +461,9 @@ public class ModRecipes {
         ItemStack book1 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book2 = new ItemStack(Items.ENCHANTED_BOOK);
         ItemStack book3 = new ItemStack(Items.ENCHANTED_BOOK);
-        book1.addEnchantment(Enchantments.EFFICIENCY, 1);
-        book2.addEnchantment(Enchantments.EFFICIENCY, 2);
-        book3.addEnchantment(Enchantments.EFFICIENCY, 3);
+        Items.ENCHANTED_BOOK.addEnchantment(book1, new EnchantmentData(Enchantments.EFFICIENCY, 1));
+        Items.ENCHANTED_BOOK.addEnchantment(book2, new EnchantmentData(Enchantments.EFFICIENCY, 2));
+        Items.ENCHANTED_BOOK.addEnchantment(book3, new EnchantmentData(Enchantments.EFFICIENCY, 3));
 
         ItemStack out1 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_I));
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.EFFICIENCY_II));

@@ -48,7 +48,7 @@ public class TierMapper {
                 valid = true;
                 break;
             case TIER_TWO:
-                valid = (tier == TIER_TWO || tier == TIER_THREE);
+                valid = (tier == TIER_TWO || tier == TIER_THREE || tier == TIER_FOUR);
                 break;
             case TIER_THREE:
                 valid = (tier == TIER_THREE || tier == TIER_FOUR);

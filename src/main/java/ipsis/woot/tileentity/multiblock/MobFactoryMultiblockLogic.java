@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity.multiblock;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
@@ -18,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,14 +106,14 @@ public class MobFactoryMultiblockLogic {
         TileEntity te = factory.getWorld().getTileEntity(controllerPos);
         if (!(te instanceof TileEntityMobFactoryController)) {
             if (feedback)
-                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_CONTROLLER), tier));
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_CONTROLLER), tier));
             return factorySetup;
         }
 
         TileEntityMobFactoryController teController = (TileEntityMobFactoryController)te;
         if (teController.getMobName().equals("")) {
             if (feedback && player != null)
-                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_MOB), tier));
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_MOB), tier));
             return factorySetup;
         }
         
@@ -150,7 +150,7 @@ public class MobFactoryMultiblockLogic {
             if (!(block instanceof BlockMobFactoryStructure)) {
                 if (feedback) {
                     String name = UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + s.moduleType + ".name";
-                    validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
+                    validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
                 }
                 return new FactorySetup();
             }
@@ -158,7 +158,7 @@ public class MobFactoryMultiblockLogic {
             if (!(((BlockMobFactoryStructure)block).getModuleTypeFromState(iBlockState) == s.moduleType)) {
                 if (feedback) {
                     String name = UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + s.moduleType + ".name";
-                    validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
+                    validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
                 }
                 return new FactorySetup();
             }
@@ -172,7 +172,7 @@ public class MobFactoryMultiblockLogic {
         boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);
         if (!validMobLevel) {
             if (feedback)
-                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
             return new FactorySetup();
         }
 

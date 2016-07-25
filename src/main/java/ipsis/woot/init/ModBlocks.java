@@ -19,6 +19,7 @@ public class ModBlocks {
         GameRegistry.register(blockStructure);
         GameRegistry.register(blockController);
         GameRegistry.register(blockLayout);
+        GameRegistry.register(blockProxy);
         GameRegistry.register(new ItemBlock(blockFactory).setRegistryName(blockFactory.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgrade(blockUpgrade).setRegistryName(blockUpgrade.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgradeB(blockUpgradeB).setRegistryName(blockUpgradeB.getRegistryName()));
@@ -34,6 +35,7 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, "tile." + BlockMobFactoryController.BASENAME);
         GameRegistry.registerTileEntity(TileEntityLayout.class, "tile." + BlockLayout.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, "tile." + BlockMobFactoryProxy.BASENAME);
     }
 
     public static BlockWoot blockFactory = new BlockMobFactory();
@@ -42,4 +44,5 @@ public class ModBlocks {
     public static BlockWoot blockStructure = new BlockMobFactoryStructure();
     public static BlockWoot blockController = new BlockMobFactoryController();
     public static BlockWoot blockLayout = new BlockLayout();
+    public static BlockWoot blockProxy = new BlockMobFactoryProxy();
 }

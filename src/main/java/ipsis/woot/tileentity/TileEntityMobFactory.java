@@ -1,12 +1,12 @@
 package ipsis.woot.tileentity;
 
-import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -36,6 +36,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     UpgradeSetup upgradeSetup;
     ControllerConfig controllerConfig;
     AxisAlignedBB bb;
+    ProxyManager proxyManager;
 
     int currLearnTicks;
     int currSpawnTicks;
@@ -47,6 +48,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     boolean dirtyStructure;
     boolean dirtyUpgrade;
+    boolean dirtyProxy;
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
 
@@ -81,6 +83,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
     }
 
+    public ProxyManager getProxyManager() {
+        return proxyManager;
+    }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
@@ -93,7 +99,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         compound.setInteger(NBT_STORED_XP, storedXp);
         compound.setBoolean(NBT_RUNNING, running);
 
-        energyStorage.writeToNBT(compound);
+        powerManager.writeToNBT(compound);
         return compound;
     }
 
@@ -112,7 +118,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             nbtLoaded = true;
         }
 
-        energyStorage.readFromNBT(compound);
+        powerManager.readFromNBT(compound);
     }
 
     static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
@@ -126,6 +132,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         this.nbtLoaded = false;
         this.upgradeSetup = new UpgradeSetup();
         this.controllerConfig = new ControllerConfig();
+        this.proxyManager = new ProxyManager(this);
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -218,6 +225,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (factorySetup.getSize() == null) {
             updateStructureBlocks(false);
             updateUpgradeBlocks(false);
+            proxyManager.setMaster(false);
             factoryTier = factorySetup.getSize();
             controllerConfig.clearMobName();
             return;
@@ -233,6 +241,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         updateStructureBlocks(true);
 
         onUpgradeCheck();
+        onProxyCheck();
     }
 
     void onUpgradeCheck() {
@@ -259,6 +268,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
         updateUpgradeBlocks(true);
 
+    }
+
+    void onProxyCheck() {
+
+        proxyManager.setMaster(false);
+        proxyManager.scanProxy();
     }
 
     /**
@@ -327,6 +342,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (dirtyUpgrade && structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS) {
             onUpgradeCheck();
             dirtyUpgrade = false;
+        }
+
+        if (dirtyProxy) {
+            onProxyCheck();
+            dirtyProxy = false;
         }
 
         if (structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS)
@@ -400,10 +420,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         dirtyUpgrade = true;
     }
 
+    public void interruptProxy() {
+
+        dirtyProxy = true;
+    }
+
 
     void processPower() {
 
-        int drawnRf = energyStorage.extractEnergy(spawnReq.getRfPerTick(), false);
+        int drawnRf = powerManager.extractEnergy(spawnReq.getRfPerTick(), false);
 
         if (Woot.devMode == true)
             drawnRf = spawnReq.getRfPerTick();
@@ -418,31 +443,57 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
     }
 
+    private void fillInventories() {
+
+        SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, worldObj.getDifficultyForLocation(getPos()));
+
+        List<IItemHandler> validHandlers = new ArrayList<>();
+
+        // Original position
+        EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
+        if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
+            TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
+                validHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
+        }
+
+        // Proxy
+        validHandlers.addAll(proxyManager.getIItemHandlers());
+
+        LogHelper.info("Loot " + loot.getDropList());
+        for (IItemHandler hdlr : validHandlers) {
+
+            for (ItemStack itemStack : loot.getDropList()) {
+
+                LogHelper.info("Trying to insert " + itemStack.getDisplayName() + " " + itemStack.stackSize);
+                if (itemStack.stackSize <= 0)
+                    continue;
+
+                /**
+                 * We try to insert 1 item and decrease itemStack.stackSize if it is successful
+                 */
+                ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
+                if (result == null) {
+                    itemStack.stackSize--;
+                    LogHelper.info("Inserted");
+                }
+            }
+
+            storedXp += loot.getXp();
+            int c = storedXp / ItemXpShard.XP_VALUE;
+            if (c != 0) {
+                ItemStack xpShards = new ItemStack(ModItems.itemXpShard);
+                ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(xpShards, c), false);
+                storedXp = storedXp - (c * ItemXpShard.XP_VALUE);
+            }
+        }
+    }
+
     void onSpawn() {
 
         if (consumedRf >= spawnReq.getTotalRf()) {
 
-            EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
-            if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
-                TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
-                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
-
-                    IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
-
-                    SpawnerManager.SpawnLoot spawnLoot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, worldObj.getDifficultyForLocation(getPos()));
-                    for (ItemStack itemStack : spawnLoot.getDropList())
-                        ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
-
-                    storedXp += spawnLoot.getXp();
-                    int c = storedXp / ItemXpShard.XP_VALUE;
-                    if (c != 0) {
-                        ItemStack xpShards = new ItemStack(ModItems.itemXpShard);
-                        ItemHandlerHelper.insertItem(capability, ItemHandlerHelper.copyStackWithSize(xpShards, c), false);
-                        storedXp = storedXp - (c * ItemXpShard.XP_VALUE);
-                    }
-                }
-            }
-            /** Everything else is thrown away */
+            fillInventories();
 
             /**
              * Clear the power used - this uses ALL the consumed power
@@ -461,46 +512,48 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         updateStructureBlocks(false);
         updateUpgradeBlocks(false);
+        proxyManager.setMaster(false);
         super.invalidate();
     }
 
     /**
      * RF interface
      */
-    static final int MAX_RF_TICK = 32000;
-    static final int RF_STORED = MAX_RF_TICK * 10;
-    protected EnergyStorage energyStorage = new EnergyStorage(RF_STORED, MAX_RF_TICK);
+    protected PowerManager powerManager = new PowerManager(this);
 
     @Override
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
 
-        if (from == EnumFacing.DOWN && isFormed())
-            return energyStorage.receiveEnergy(maxReceive, simulate);
+        if (!isFormed())
+            return 0;
 
-        return 0;
+        return powerManager.receiveEnergy(from, maxReceive, simulate, true);
     }
 
     @Override
     public int getEnergyStored(EnumFacing from) {
 
-        if (from == EnumFacing.DOWN)
-            return energyStorage.getEnergyStored();
+        if (!isFormed())
+            return 0;
 
-        return 0;
+        return powerManager.getEnergyStored(from, true);
     }
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
 
-        if (from == EnumFacing.DOWN)
-            return energyStorage.getMaxEnergyStored();
+        if (!isFormed())
+            return 0;
 
-        return 0;
+        return powerManager.getMaxEnergyStored(from, true);
     }
 
     @Override
     public boolean canConnectEnergy(EnumFacing from) {
 
-        return from == EnumFacing.DOWN;
+        if (!isFormed())
+            return false;
+
+        return powerManager.canConnectEnergy(from, true);
     }
 }

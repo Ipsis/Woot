@@ -1,7 +1,13 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.util.WorldHelper;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nullable;
 
 public class TileEntityMobFactoryExtender extends TileEntity {
 
@@ -15,10 +21,11 @@ public class TileEntityMobFactoryExtender extends TileEntity {
 
         TileEntityMobFactory tmpMaster = null;
 
-        TileEntity te = getWorld().getTileEntity(pos.offset(EnumFacing.UP, 1));
+        BlockPos blockPos = getPos().up(1);
+        TileEntity te = getWorld().getTileEntity(blockPos);
         while (te != null && te instanceof TileEntityMobFactoryExtender) {
-            pos = pos.up(1);
-            te = getWorld().getTileEntity(pos);
+            blockPos = blockPos.up(1);
+            te = getWorld().getTileEntity(blockPos);
         }
 
         if (te instanceof TileEntityMobFactory)
@@ -44,5 +51,51 @@ public class TileEntityMobFactoryExtender extends TileEntity {
 
     public TileEntityMobFactoryExtender() {
 
+    }
+
+    /**
+     * Client stuff
+     */
+
+    boolean isClientFormed;
+    public boolean isClientFormed() { return isClientFormed; }
+
+    /**
+     * ChunkData packet handling
+     * Currently calls readFromNBT on reception
+     */
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        super.writeToNBT(nbtTagCompound);
+        nbtTagCompound.setBoolean("formed", master != null);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+
+        super.handleUpdateTag(tag);
+        isClientFormed = tag.getBoolean("formed");
+    }
+
+    /**
+     * UpdateTileEntity packet handling
+     */
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        NBTTagCompound nbtTagCompound = getUpdateTag();
+        return new SPacketUpdateTileEntity(this.pos, getBlockMetadata(), nbtTagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+
+        handleUpdateTag(pkt.getNbtCompound());
+        WorldHelper.updateClient(getWorld(), getPos());
     }
 }

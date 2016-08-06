@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/small_cube_all",
+  "parent": "woot:block/cube_all",
   "textures": {
     "all": "woot:blocks/extender",
     "up": "woot:blocks/factory_bottom",

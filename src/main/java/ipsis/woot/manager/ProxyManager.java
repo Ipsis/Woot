@@ -1,5 +1,6 @@
 package ipsis.woot.manager;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryExtender;
 import ipsis.woot.tileentity.TileEntityMobFactoryProxy;
@@ -47,19 +48,21 @@ public class ProxyManager {
         extenderList.clear();
         validProxy = false;
 
-        BlockPos pos = new BlockPos(factory.getPos());
-        TileEntity te = factory.getWorld().getTileEntity(pos.offset(EnumFacing.DOWN, 1));
+        BlockPos blockPos = factory.getPos().down(1);
+        TileEntity te = factory.getWorld().getTileEntity(blockPos);
         while (te != null && te instanceof TileEntityMobFactoryExtender) {
             extenderList.add((TileEntityMobFactoryExtender)te);
-            pos = pos.down(1);
-            te = factory.getWorld().getTileEntity(pos);
+            blockPos = blockPos.down(1);
+            te = factory.getWorld().getTileEntity(blockPos);
         }
 
         if (te != null && te instanceof TileEntityMobFactoryProxy)
             proxy = (TileEntityMobFactoryProxy)te;
 
-        if (proxy != null && extenderList.size() >= 1)
+        if (proxy != null && extenderList.size() >= 1) {
             validProxy = true;
+            setMaster(true);
+        }
     }
 
     public void setMaster(boolean connected) {

@@ -1,5 +1,11 @@
 {
+  "forge_marker": 1,
   "variants": {
-    "normal": { "model": "woot:extender" }
+    "formed=true": {
+      "model": "woot:extender"
+    },
+    "formed=false": {
+      "model": "woot:extender"
+    }
   }
 }

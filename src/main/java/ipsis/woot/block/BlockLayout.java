@@ -2,6 +2,7 @@ package ipsis.woot.block;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.oss.client.ModelHelper;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityLayout;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -62,7 +63,7 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
             if (te != null && te instanceof TileEntityLayout) {
                 ((TileEntityLayout) te).setNextTier();
                 EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();
-                playerIn.addChatComponentMessage(new TextComponentString(String.format("Tier %s", (tier == EnumMobFactoryTier.TIER_ONE ? "I" : tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III"))));
+                playerIn.addChatComponentMessage(new TextComponentString(tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
                 worldIn.notifyBlockUpdate(pos, state, state, 4);
             }
         }

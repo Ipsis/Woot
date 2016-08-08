@@ -174,8 +174,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
                 PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
 
-                probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                        (info.tier == EnumMobFactoryTier.TIER_ONE ? "I" : info.tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+                probeInfo.text(TextFormatting.BLUE + String.format("Tier %s", info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));

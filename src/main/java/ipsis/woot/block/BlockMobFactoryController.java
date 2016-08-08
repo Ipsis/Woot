@@ -124,8 +124,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
 
                 EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(controllerTE.getMobName(), controllerTE.getXpValue());
                 probeInfo.text(TextFormatting.GREEN + String.format("%s : %s XP", controllerTE.getModDisplayName(), controllerTE.getXpValue()));
-                probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
-                        (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+                probeInfo.text(TextFormatting.BLUE + t.getTranslated(Lang.WAILA_FACTORY_TIER));
             }
         }
     }

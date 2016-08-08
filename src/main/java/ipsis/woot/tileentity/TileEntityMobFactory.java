@@ -347,6 +347,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (currLearnTicks >= learnTicksOffset) {
             if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
+                BlockPos spawnPos = new BlockPos(getPos().getX(), 0, getPos().getZ());
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
             }
             currLearnTicks = 0;
@@ -375,8 +376,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (!Woot.LOOT_TABLE_MANAGER.isFull(mobName, key)) {
 
             if (bb == null) {
+                BlockPos checkPos = new BlockPos(getPos().getX(), 0, getPos().getZ());
                 int range = 2;
-                bb = new AxisAlignedBB(getPos()).expand(range, range, range);
+                bb = new AxisAlignedBB(checkPos).expand(range, 0, range);
             }
 
             List<EntityItem> itemList = worldObj.getEntitiesWithinAABB(EntityItem.class, bb, EntitySelectors.IS_ALIVE);

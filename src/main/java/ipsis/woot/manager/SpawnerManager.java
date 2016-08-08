@@ -134,7 +134,7 @@ public class SpawnerManager {
 
         if (entity != null) {
             ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
-            entity.setPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            entity.setPosition(blockPos.getX(), 0, blockPos.getZ());
 
             /**
              * Random loot drop needs a non-zero recentlyHit value

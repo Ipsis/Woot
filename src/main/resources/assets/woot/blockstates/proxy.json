@@ -1,5 +1,11 @@
 {
+  "forge_marker": 1,
   "variants": {
-    "normal": { "model": "woot:proxy" }
+    "formed=true": {
+      "model": "woot:proxy_formed"
+    },
+    "formed=false": {
+      "model": "woot:proxy"
+    }
   }
 }

@@ -67,11 +67,19 @@ public class ProxyManager {
 
     public void setMaster(boolean connected) {
 
-        if (proxy != null)
-            proxy.setMaster(connected ? factory : null);
+        if (proxy != null) {
+            if (connected)
+                proxy.setMaster(factory);
+            else
+                proxy.clearMaster();
+        }
 
-        for (TileEntityMobFactoryExtender te : extenderList)
-            te.setMaster(connected ? factory : null);
+        for (TileEntityMobFactoryExtender te : extenderList) {
+            if (connected)
+                te.setMaster(factory);
+            else
+                te.clearMaster();
+        }
     }
 
     public List<IItemHandler> getIItemHandlers() {

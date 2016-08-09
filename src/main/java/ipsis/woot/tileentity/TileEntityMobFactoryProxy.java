@@ -1,28 +1,51 @@
 package ipsis.woot.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
-import ipsis.woot.block.BlockMobFactoryProxy;
+import ipsis.woot.util.WorldHelper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nullable;
 
 public class TileEntityMobFactoryProxy extends TileEntity implements IEnergyReceiver {
 
     TileEntityMobFactory master = null;
 
     public boolean hasMaster() { return master != null; }
-    public void clearMaster() { master = null; }
 
-    public void setMaster(TileEntityMobFactory master) { this.master = master; }
+    public void clearMaster() {
+
+        if (master != null) {
+            master = null;
+
+            if (this.getWorld() != null)
+                WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+    public void setMaster(TileEntityMobFactory master) {
+
+        if (this.master != master) {
+            this.master = master;
+
+            if (this.getWorld() != null)
+                WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
 
     TileEntityMobFactory findMaster() {
 
         TileEntityMobFactory tmpMaster = null;
 
-        TileEntity te = getWorld().getTileEntity(pos.offset(EnumFacing.UP, 1));
+        BlockPos blockPos = getPos().up(1);
+        TileEntity te = getWorld().getTileEntity(blockPos);
         while (te != null && te instanceof TileEntityMobFactoryExtender) {
-            pos = pos.up(1);
-            te = getWorld().getTileEntity(pos);
+            blockPos = blockPos.up(1);
+            te = getWorld().getTileEntity(blockPos);
         }
 
         if (te instanceof TileEntityMobFactory)
@@ -48,6 +71,53 @@ public class TileEntityMobFactoryProxy extends TileEntity implements IEnergyRece
 
     public TileEntityMobFactoryProxy() {
 
+    }
+
+
+    /**
+     * Client stuff
+     */
+
+    boolean isClientFormed;
+    public boolean isClientFormed() { return isClientFormed; }
+
+    /**
+     * ChunkData packet handling
+     * Currently calls readFromNBT on reception
+     */
+    @Override
+    public NBTTagCompound getUpdateTag() {
+
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        super.writeToNBT(nbtTagCompound);
+        nbtTagCompound.setBoolean("formed", master != null);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+
+        super.handleUpdateTag(tag);
+        isClientFormed = tag.getBoolean("formed");
+    }
+
+    /**
+     * UpdateTileEntity packet handling
+     */
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+
+        NBTTagCompound nbtTagCompound = getUpdateTag();
+        return new SPacketUpdateTileEntity(this.pos, getBlockMetadata(), nbtTagCompound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+
+        handleUpdateTag(pkt.getNbtCompound());
+        WorldHelper.updateClient(getWorld(), getPos());
     }
 
     public boolean canConnectEnergy(EnumFacing from) {

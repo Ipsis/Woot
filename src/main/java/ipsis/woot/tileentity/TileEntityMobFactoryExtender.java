@@ -1,6 +1,7 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.util.WorldHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -15,7 +16,24 @@ public class TileEntityMobFactoryExtender extends TileEntity {
 
     public boolean hasMaster() { return master != null; }
 
-    public void setMaster(TileEntityMobFactory master) { this.master = master; }
+    public void clearMaster() {
+
+        if (master != null) {
+            master = null;
+
+            if (this.getWorld() != null)
+                WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+    public void setMaster(TileEntityMobFactory master) {
+
+        if (this.master != master) {
+            this.master = master;
+
+            if (this.getWorld() != null)
+                WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
 
     TileEntityMobFactory findMaster() {
 

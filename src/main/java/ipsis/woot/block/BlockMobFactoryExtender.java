@@ -11,6 +11,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -79,5 +80,25 @@ public class BlockMobFactoryExtender extends BlockWoot implements ITileEntityPro
     public void initModel() {
 
         ModelHelper.registerBlock(ModBlocks.blockExtender, BASENAME);
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+
+        return false;
+    }
+
+    @Override
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+
+        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryExtender) {
+            TileEntityMobFactoryExtender te = (TileEntityMobFactoryExtender)blockAccess.getTileEntity(pos);
+            boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
+
+            if (validBlock && te != null && !te.isClientFormed())
+                return true;
+        }
+
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
     }
 }

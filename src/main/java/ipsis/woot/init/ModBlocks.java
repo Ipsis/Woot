@@ -19,12 +19,16 @@ public class ModBlocks {
         GameRegistry.register(blockStructure);
         GameRegistry.register(blockController);
         GameRegistry.register(blockLayout);
+        GameRegistry.register(blockProxy);
+        GameRegistry.register(blockExtender);
         GameRegistry.register(new ItemBlock(blockFactory).setRegistryName(blockFactory.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgrade(blockUpgrade).setRegistryName(blockUpgrade.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgradeB(blockUpgradeB).setRegistryName(blockUpgradeB.getRegistryName()));
         GameRegistry.register(new ItemBlockStructure(blockStructure).setRegistryName(blockStructure.getRegistryName()));
         GameRegistry.register(new ItemBlockController(blockController).setRegistryName(blockController.getRegistryName()));
         GameRegistry.register(new ItemBlock(blockLayout).setRegistryName(blockLayout.getRegistryName()));
+        GameRegistry.register(new ItemBlock(blockProxy).setRegistryName(blockProxy.getRegistryName()));
+        GameRegistry.register(new ItemBlock(blockExtender).setRegistryName(blockExtender.getRegistryName()));
     }
 
     public static void registerTileEntities() {
@@ -34,6 +38,8 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, "tile." + BlockMobFactoryController.BASENAME);
         GameRegistry.registerTileEntity(TileEntityLayout.class, "tile." + BlockLayout.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, "tile." + BlockMobFactoryProxy.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, "tile." + BlockMobFactoryExtender.BASENAME);
     }
 
     public static BlockWoot blockFactory = new BlockMobFactory();
@@ -42,4 +48,6 @@ public class ModBlocks {
     public static BlockWoot blockStructure = new BlockMobFactoryStructure();
     public static BlockWoot blockController = new BlockMobFactoryController();
     public static BlockWoot blockLayout = new BlockLayout();
+    public static BlockWoot blockProxy = new BlockMobFactoryProxy();
+    public static BlockWoot blockExtender = new BlockMobFactoryExtender();
 }

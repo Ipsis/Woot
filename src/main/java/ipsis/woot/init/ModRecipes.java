@@ -515,6 +515,23 @@ public class ModRecipes {
                         'z', new ItemStack(ModItems.itemFactoryUpgrade, 1, ItemFactoryUpgrade.EnumUpgradeTier.TIER_III.getMeta()),
                         'f', ModItems.itemFactoryCasing));
 
+       // Extender
+       GameRegistry.addRecipe(
+               new ShapedOreRecipe(
+                       new ItemStack(ModBlocks.blockExtender),
+                       " c ", " f ", " c ",
+                       'c', Items.REPEATER,
+                       'f', ModItems.itemFactoryCasing));
+
+       // Proxy
+       GameRegistry.addRecipe(
+               new ShapedOreRecipe(
+                       new ItemStack(ModBlocks.blockProxy),
+                       " r ", " f ", " h ",
+                       'r', Items.REPEATER,
+                       'h', Blocks.HOPPER,
+                       'f', ModItems.itemFactoryCasing));
+
         /**
          * Factory Blocks
          */

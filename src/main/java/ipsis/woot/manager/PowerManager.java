@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 public class PowerManager {
 
     static final int MAX_RF_TICK = 32000;
-    static final int RF_STORED = MAX_RF_TICK * 10;
+    static final int RF_STORED = 10000000;
 
     protected EnergyStorage energyStorage = new EnergyStorage(RF_STORED, MAX_RF_TICK);
     private TileEntityMobFactory factory;

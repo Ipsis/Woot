@@ -1,6 +1,7 @@
 package ipsis.woot.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,17 +24,22 @@ public class TileEntityMobFactoryProxy extends TileEntity implements IEnergyRece
         if (master != null) {
             master = null;
 
-            if (this.getWorld() != null)
+            if (this.getWorld() != null) {
                 WorldHelper.updateClient(getWorld(), getPos());
+                WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockProxy);
+            }
         }
     }
+
     public void setMaster(TileEntityMobFactory master) {
 
         if (this.master != master) {
             this.master = master;
 
-            if (this.getWorld() != null)
+            if (this.getWorld() != null) {
                 WorldHelper.updateClient(getWorld(), getPos());
+                WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockProxy);
+            }
         }
     }
 

@@ -460,12 +460,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         // Proxy
         validHandlers.addAll(proxyManager.getIItemHandlers());
 
-        LogHelper.info("Loot " + loot.getDropList());
         for (IItemHandler hdlr : validHandlers) {
 
             for (ItemStack itemStack : loot.getDropList()) {
 
-                LogHelper.info("Trying to insert " + itemStack.getDisplayName() + " " + itemStack.stackSize);
                 if (itemStack.stackSize <= 0)
                     continue;
 
@@ -473,10 +471,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                  * We try to insert 1 item and decrease itemStack.stackSize if it is successful
                  */
                 ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
-                if (result == null) {
+                if (result == null)
                     itemStack.stackSize--;
-                    LogHelper.info("Inserted");
-                }
             }
 
             storedXp += loot.getXp();

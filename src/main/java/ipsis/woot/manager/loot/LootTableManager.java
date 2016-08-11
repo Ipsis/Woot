@@ -92,22 +92,20 @@ public class LootTableManager {
     public void dumpMobs(ICommandSender sender) {
 
         StringBuilder sb = new StringBuilder();
-        for (String mobName : lootMap.keySet()) {
-            sb.append("[").append(mobName).append("]");
-        }
+        for (String mobName : lootMap.keySet())
+            sb.append(mobName).append(" ");
 
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.mobs.summary", sb));
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.mobs.summary", sb));
     }
 
-    public void dumpMobs(ICommandSender sender, String wootName) { }
-
-
-    public void dumpDrops(ICommandSender sender, String wootName, EnumEnchantKey key, boolean detail) {
+    public void dumpDrops(ICommandSender sender, String wootName, boolean detail) {
 
         LootTable e = lootMap.get(wootName);
         if (e != null) {
-            String s = e.getDrops(key, detail);
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.table.summary", s));
+            for (EnumEnchantKey key : EnumEnchantKey.values()) {
+                String s = e.getDrops(key, detail);
+                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.loot.summary", wootName, key.getDisplayName(), s));
+            }
         }
     }
 
@@ -116,8 +114,21 @@ public class LootTableManager {
         LootTable e = lootMap.get(wootName);
         if (e != null) {
             e.flush(key);
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.summary", wootName, key.toString()));
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.summary",
+                    wootName, key.getDisplayName()));
         }
+    }
+
+    public void flushAllMobs(ICommandSender sender) {
+
+        for (LootTable table : lootMap.values()) {
+            table.flush(EnumEnchantKey.NO_ENCHANT);
+            table.flush(EnumEnchantKey.LOOTING_I);
+            table.flush(EnumEnchantKey.LOOTING_II);
+            table.flush(EnumEnchantKey.LOOTING_III);
+        }
+
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.all.summary"));
     }
 
     public void dumpBlacklist(ICommandSender sender) {
@@ -126,8 +137,24 @@ public class LootTableManager {
         for (ItemStack itemStack : blacklist)
             sb.append(String.format("%s ", itemStack.getDisplayName()));
 
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", sb.toString()));
+        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.blacklist.summary", sb.toString()));
+    }
 
+    public void dumpStatus(ICommandSender sender) {
+
+        for (String mob : lootMap.keySet()) {
+            StringBuilder sb = new StringBuilder();
+            for (EnumEnchantKey key : EnumEnchantKey.values()) {
+                sb.append(key.getDisplayName());
+                if (lootMap.get(mob).isEmpty(key))
+                    sb.append(":running ");
+                else
+                    sb.append(":stopped ");
+            }
+            sender.addChatMessage(new TextComponentTranslation(
+                    "commands.Woot:woot.status.summary",
+                    mob, sb.toString()));
+        }
     }
 
     /**

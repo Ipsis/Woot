@@ -71,9 +71,8 @@ public class TierMapper {
 
     public void cmdDumpTiers(ICommandSender sender) {
 
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.tiers.title", mapper.keySet().size()));
         for (String mobName : mapper.keySet()) {
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.tiers.summary",
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.tiers.summary",
                     mobName, mapper.get(mobName).getTranslated(Lang.WAILA_CONTROLLER_TIER)));
         }
     }

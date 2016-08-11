@@ -117,9 +117,9 @@ public class MobRegistry {
 
         StringBuilder sb = new StringBuilder();
         for (String name : mobCostMap.keySet())
-            sb.append(String.format("%s=%s", name, mobCostMap.get(name)));
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.cost.summary",
+                    name, mobCostMap.get(name)));
 
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.cost.summary", sb.toString()));
     }
 
     public String onEntityLiving(EntityLiving entityLiving) {

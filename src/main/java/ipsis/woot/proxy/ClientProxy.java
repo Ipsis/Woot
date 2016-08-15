@@ -41,6 +41,7 @@ public class ClientProxy extends CommonProxy {
         ModItems.itemFactoryUpgrade.initModel();
         ModItems.itemFactoryCap.initModel();
         ModItems.itemFactoryConnector.initModel();
+        ModItems.itemManual.initModel();
 
         MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
 

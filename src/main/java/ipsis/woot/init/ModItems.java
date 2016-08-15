@@ -26,6 +26,8 @@ public class ModItems {
 
         GameRegistry.register(itemFactoryCap);
         GameRegistry.register(itemFactoryConnector);
+
+        GameRegistry.register(itemManual);
     }
 
     public static ItemWoot itemPrism = new ItemPrism();
@@ -45,4 +47,6 @@ public class ModItems {
     public static ItemWoot itemPulverisedFerrocrete = new ItemPulverisedFerrocrete();
     public static ItemWoot itemFerrocrete = new ItemFerrocrete();
     public static ItemWoot itemFactoryCap = new ItemFactoryCap();
+
+    public static ItemWoot itemManual = new ItemManual();
 }

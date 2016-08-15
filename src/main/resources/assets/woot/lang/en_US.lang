@@ -182,7 +182,7 @@ tooltip.Woot:prism.1=Use on controller to program
 chat.Woot:prism.invalid=Mob %s cannot be captured (%s)
 chat.Woot:prism.program=Mob %s programmed (%s)
 
-commands.Woot:woot.usage=/woot <status|mobs|blacklist|tiers|prism|cost|flush {all|<mob>}|loot <mob> [detail]|dev {true|false}>
+commands.Woot:woot.usage=/woot <status|mobs|blacklist|tiers|prism|cost|flush {all|<mob>}|loot <mob> [detail]|give <player> <mob> <xp>|dev {true|false}>
 commands.Woot:woot.dev.summary=Dev mode to %s
 commands.Woot:woot.flush.summary=Flushed all loot data for %s/%s
 commands.Woot:woot.flush.all.summary=Flushed all loot data for all mobs

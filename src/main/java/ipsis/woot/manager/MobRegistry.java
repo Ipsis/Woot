@@ -287,7 +287,8 @@ public class MobRegistry {
                 this.spawnXp = MIN_XP_VALUE;
                 this.deathXp = 0;
             } else {
-                this.spawnXp = mobXp;
+                if (this.spawnXp == -1)
+                    this.spawnXp = mobXp;
                 this.deathXp = mobXp;
             }
         }

@@ -161,9 +161,14 @@ public class ItemPrism extends ItemWoot {
             if (!displayName.equals(""))
                 tooltip.add(TextFormatting.GREEN + String.format("Mob: %s", StringHelper.localize(displayName)));
 
-            tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
+            Integer spawnXp = Woot.mobRegistry.getSpawnXp(getMobName(stack));
+            int displayXp = getXp(stack);
+            if (spawnXp != null)
+                displayXp = spawnXp;
 
-            EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(getMobName(stack), getXp(stack));
+            tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", displayXp));
+
+            EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(getMobName(stack), displayXp);
             tooltip.add(TextFormatting.BLUE + t.getTranslated(Lang.WAILA_FACTORY_TIER));
         }
     }

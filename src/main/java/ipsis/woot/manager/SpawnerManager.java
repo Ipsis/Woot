@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.FakePlayerPool;
@@ -49,21 +50,6 @@ public class SpawnerManager {
             return 1;
         }
 
-        static final String NBT_SPAWN_REQ_TOTAL_RF = "reqTotalRf";
-        static final String NBT_SPAWN_REQ_SPAWN_TIME = "reqSpawnTime";
-        public void writeToNBT(NBTTagCompound compound) {
-
-            compound.setInteger(NBT_SPAWN_REQ_TOTAL_RF, totalRf);
-            compound.setInteger(NBT_SPAWN_REQ_SPAWN_TIME, spawnTime);
-        }
-
-        public static SpawnReq readFromNBT(NBTTagCompound compound) {
-
-            int rf = compound.getInteger(NBT_SPAWN_REQ_TOTAL_RF);
-            int time = compound.getInteger(NBT_SPAWN_REQ_SPAWN_TIME);
-            return new SpawnReq(rf, time);
-        }
-
         public int getTotalRf() {
             return totalRf;
         }
@@ -100,8 +86,17 @@ public class SpawnerManager {
         int RFt = baseRF * Settings.Spawner.DEF_BASE_RATE_TICKS;
         int RFmob = Settings.Power.DEF_XP_RF_TICK * xpLevel * Settings.Spawner.DEF_BASE_RATE_TICKS;
         int RFupgrade = upgradeSetup.getRfPerTickCost() * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFcount = (int)((float)RFmob*0.25)* mobCount;
+        int RFtotal = RFt + RFcount + RFupgrade;
 
-        int RFtotal = RFt + (RFmob * mobCount) + RFupgrade;
+        LogHelper.info("Power for " + mobName);
+        LogHelper.info(String.format("Power baseRf:%d DEF_BASE_RATE_TICKS:%d DEF_XP_RF_TICK:%d xpLevel:%d",
+                baseRF, Settings.Spawner.DEF_BASE_RATE_TICKS,
+                Settings.Power.DEF_XP_RF_TICK, xpLevel));
+        LogHelper.info(String.format("Power upgradeRFtick:%d", upgradeSetup.getRfPerTickCost()));
+        LogHelper.info(String.format("Power RFt:%d RFmob:%d RFupgrade:%d RFcount:%d",
+                RFt, RFmob, RFupgrade, RFcount));
+        LogHelper.debug("Power total " + RFtotal);
 
         if (upgradeSetup.hasEfficiencyUpgrade()) {
             int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();

@@ -42,23 +42,24 @@ public class Settings {
         public static final String[] DEF_SPAWN_COST = {
                 "Woot:none:IronGolem=10",
                 "Woot:Wither:Skeleton=10",
-                "Woot:none:MagmaCube=5"
+                "Woot:none:MagmaCube=5",
+                "Woot:none:Enderman=10"
         };
 
     }
 
     public static class Power {
 
-        public static final int DEF_TIER_I_RF_TICK = 200;
-        public static final int DEF_TIER_II_RF_TICK = 400;
-        public static final int DEF_TIER_III_RF_TICK = 800;
-        public static final int DEF_TIER_IV_RF_TICK = 900;
+        public static final int DEF_TIER_I_RF_TICK = 50;
+        public static final int DEF_TIER_II_RF_TICK = 100;
+        public static final int DEF_TIER_III_RF_TICK = 150;
+        public static final int DEF_TIER_IV_RF_TICK = 200;
 
         public static final int DEF_XP_RF_TICK = 7;
 
         public static final int DEF_TI_UPGRADE = 20;
-        public static final int DEF_TII_UPGRADE = 40;
-        public static final int DEF_TIII_UPGRADE = 60;
+        public static final int DEF_TII_UPGRADE = 60;
+        public static final int DEF_TIII_UPGRADE = 80;
 
         public static final int DEF_RATE_I_RF_TICK = DEF_TI_UPGRADE;
         public static final int DEF_RATE_II_RF_TICK = DEF_TII_UPGRADE;

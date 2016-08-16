@@ -36,7 +36,7 @@ public class Settings {
                 "Woot:Wither:Skeleton"
         };
         public static final String[] DEF_TIER_IV_MOBS = {
-                "Woot:none:Wither"
+                "Woot:none:WitherBoss"
         };
 
         public static final String[] DEF_SPAWN_COST = {
@@ -55,7 +55,7 @@ public class Settings {
         public static final int DEF_TIER_III_RF_TICK = 150;
         public static final int DEF_TIER_IV_RF_TICK = 200;
 
-        public static final int DEF_XP_RF_TICK = 7;
+        public static final int DEF_XP_RF_TICK = 20;
 
         public static final int DEF_TI_UPGRADE = 20;
         public static final int DEF_TII_UPGRADE = 60;

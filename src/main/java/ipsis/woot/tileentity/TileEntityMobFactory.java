@@ -256,8 +256,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         else if (factoryTier == EnumMobFactoryTier.TIER_THREE || factoryTier == EnumMobFactoryTier.TIER_FOUR)
             upgradeTier3();
 
-        spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup,
-                Woot.spawnerManager.getSpawnXp(controllerConfig.getMobName(), this), factoryTier);
+        spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup, this, factoryTier);
 
         if (nbtLoaded) {
             /* Preserver on load */

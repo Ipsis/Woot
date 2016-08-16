@@ -85,9 +85,10 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
     public List<String> getWailaBodyController(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 
         NBTTagCompound tag = accessor.getNBTData();
-        if (tag.hasKey("displayName") && tag.hasKey("xpCost") && tag.hasKey("tier")) {
+        if (tag.hasKey("displayName") && tag.hasKey("tier")) {
             EnumMobFactoryTier t = EnumMobFactoryTier.getTier(tag.getByte("tier"));
-            currenttip.add(TextFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
+            //currenttip.add(TextFormatting.GREEN + String.format("%s : %s XP", tag.getString("displayName"), tag.getInteger("xpCost")));
+            currenttip.add(TextFormatting.GREEN + tag.getString("displayName"));
             currenttip.add(TextFormatting.BLUE + String.format(t.getTranslated(Lang.WAILA_CONTROLLER_TIER)));
 
         }
@@ -100,7 +101,7 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
         String displayName = controller.getModDisplayName();
         if (!displayName.equals(""))
             tag.setString("displayName", displayName);
-        tag.setInteger("xpCost", controller.getXpValue());
+//        tag.setInteger("xpCost", controller.getXpValue());
         tag.setByte("tier", (byte)Woot.tierMapper.getTierForEntity(controller.getMobName(), controller.getXpValue()).ordinal());
         return tag;
     }

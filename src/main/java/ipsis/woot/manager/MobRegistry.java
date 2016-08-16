@@ -219,8 +219,12 @@ public class MobRegistry {
 
     public int getSpawnXp(String wootName) {
 
+        Integer cost = Woot.mobRegistry.mobCostMap.get(wootName);
+        if (cost != null)
+            return cost;
+
         if (mobInfoHashMap.containsKey(wootName))
-            return mobInfoHashMap.get(wootName).getSpawnXp();
+            return mobInfoHashMap.get(wootName).getDeathXp();
 
         return 1;
     }
@@ -248,7 +252,6 @@ public class MobRegistry {
         String wootMobName;
         String mcMobName;
         String displayName;
-        int spawnXp;
         int deathXp;
 
         private MobInfo() { }
@@ -269,28 +272,19 @@ public class MobRegistry {
             this.mcMobName = MobRegistry.getMcName(wootMobName);
             this.displayName = displayName;
             setXp(mobXp);
-
-            Integer cost = Woot.mobRegistry.mobCostMap.get(wootMobName);
-            if (cost != null)
-                this.spawnXp = cost;
         }
 
         public String getMcMobName() { return mcMobName; }
         public String getDisplayName() { return displayName; }
-        public int getSpawnXp() { return spawnXp; }
         public int getDeathXp() { return deathXp; }
-        public boolean hasXp() { return spawnXp != -1 && deathXp != -1; }
+        public boolean hasXp() { return deathXp != -1; }
 
         public void setXp(int mobXp) {
 
-            if (mobXp == 0) {
-                this.spawnXp = MIN_XP_VALUE;
-                this.deathXp = 0;
-            } else {
-                if (this.spawnXp == -1)
-                    this.spawnXp = mobXp;
+            if (mobXp == 0)
+                this.deathXp = MIN_XP_VALUE;
+            else
                 this.deathXp = mobXp;
-            }
         }
     }
 }

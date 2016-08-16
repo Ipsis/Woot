@@ -53,9 +53,10 @@ public class ModRecipes {
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
                         out,
-                        "cgc", " i ", "c c",
+                        " g ", "bib", " c ",
                         'c', Blocks.OBSIDIAN,
                         'g', "ingotGold",
+                        'b', Blocks.IRON_BARS,
                         'i', in));
     }
 

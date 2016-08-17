@@ -6,8 +6,10 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.FakePlayerPool;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -123,13 +125,36 @@ public class SpawnerManager {
         return Woot.mobRegistry.getSpawnXp(mobName);
     }
 
+    private void createLootBox(World world, BlockPos originPos) {
+
+        for (int y = 1; y <= 2; y++) {
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
+                    BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);
+                    if (!world.isAirBlock(p))
+                        world.setBlockToAir(p);
+                }
+            }
+        }
+    }
+
     private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {
 
         Entity entity = Woot.mobRegistry.createEntity(mobName, world);
 
         if (entity != null) {
             ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
-            entity.setPosition(blockPos.getX(), 0, blockPos.getZ());
+
+            BlockPos originPos = new BlockPos(blockPos.getX(), 1, blockPos.getZ());
+            entity.setPosition(originPos.getX(), originPos.getY(), originPos.getZ());
+
+            /**
+             * Create a box to hold any of the loot dropped by any mod not using
+             * the LivingEventDrops droplist.
+             *
+             * If not then the loot can be spawned in a block causing it to be accelerated upwards
+             */
+            createLootBox(world, originPos);
 
             /**
              * Random loot drop needs a non-zero recentlyHit value

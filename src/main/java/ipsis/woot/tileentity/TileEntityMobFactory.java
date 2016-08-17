@@ -395,7 +395,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (!Woot.LOOT_TABLE_MANAGER.isFull(mobName, key)) {
 
             if (bb == null) {
-                BlockPos checkPos = new BlockPos(getPos().getX(), 0, getPos().getZ());
+                BlockPos checkPos = new BlockPos(getPos().getX(), 1, getPos().getZ());
                 int range = 2;
                 bb = new AxisAlignedBB(checkPos).expand(range, 0, range);
             }

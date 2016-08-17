@@ -50,16 +50,21 @@ public class Settings {
 
     public static class Power {
 
-        public static final int DEF_TIER_I_RF_TICK = 50;
-        public static final int DEF_TIER_II_RF_TICK = 100;
-        public static final int DEF_TIER_III_RF_TICK = 150;
-        public static final int DEF_TIER_IV_RF_TICK = 200;
+        /**
+         * Defaults are based around an Ender IO full operation Stirling Generator
+         * running @ 80RF/tick
+         */
+        public static final int BASE_RF = 80;
+        public static final int DEF_TIER_I_RF_TICK = BASE_RF;
+        public static final int DEF_TIER_II_RF_TICK = BASE_RF * 2;
+        public static final int DEF_TIER_III_RF_TICK = BASE_RF * 3;
+        public static final int DEF_TIER_IV_RF_TICK = BASE_RF * 4;
 
-        public static final int DEF_XP_RF_TICK = 20;
+        public static final int DEF_XP_RF_TICK = 16; /* 80 / 5 (xp of zombie) */
 
-        public static final int DEF_TI_UPGRADE = 20;
-        public static final int DEF_TII_UPGRADE = 60;
-        public static final int DEF_TIII_UPGRADE = 80;
+        public static final int DEF_TI_UPGRADE = 80;
+        public static final int DEF_TII_UPGRADE = 160;
+        public static final int DEF_TIII_UPGRADE = 240;
 
         public static final int DEF_RATE_I_RF_TICK = DEF_TI_UPGRADE;
         public static final int DEF_RATE_II_RF_TICK = DEF_TII_UPGRADE;

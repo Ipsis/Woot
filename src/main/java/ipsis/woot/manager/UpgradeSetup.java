@@ -1,5 +1,8 @@
 package ipsis.woot.manager;
 
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.reference.Settings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +39,21 @@ public class UpgradeSetup {
         upgradeList.clear();
     }
 
+    private int calcUpgradeCost(int tier, int tICost, int tIICost, int tIIICost) {
+
+        if (tier == 1)
+            return tICost;
+        else if (tier == 2)
+            return tIICost;
+        else
+            return tIIICost;
+    }
+
     public void processUpgrades(List<SpawnerUpgrade> upgradeList) {
 
         clear();
         this.enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
+        rfPerTickCost = 0;
 
         SpawnerUpgrade u;
 
@@ -47,42 +61,53 @@ public class UpgradeSetup {
         if (u != null) {
             massUpgrade = u.getUpgradeType();
             this.upgradeList.add(massUpgrade);
+
+            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.massIRfTick,
+                    Settings.massIIRfTick, Settings.massIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.RATE);
         if (u != null) {
             rateUpgrade = u.getUpgradeType();
             this.upgradeList.add(rateUpgrade);
+
+            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.rateIRfTick,
+                    Settings.rateIIRfTick, Settings.rateIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.DECAPITATE);
         if (u != null) {
             decapitateUpgrade = u.getUpgradeType();
             this.upgradeList.add(decapitateUpgrade);
+
+            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.decapitateIRfTick,
+                    Settings.decapitateIIRfTick, Settings.decapitateIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.LOOTING);
         if (u != null) {
             lootingUpgrade = u.getUpgradeType();
             this.upgradeList.add(lootingUpgrade);
+
+            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.lootingIRfTick,
+                    Settings.lootingIIRfTick, Settings.lootingIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.XP);
         if (u != null) {
             xpUpgrade = u.getUpgradeType();
             this.upgradeList.add(xpUpgrade);
+
+            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.xpIRfTick,
+                    Settings.xpIIRfTick, Settings.xpIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.EFFICIENCY);
         if (u != null) {
             efficiencyUpgrade = u.getUpgradeType();
             this.upgradeList.add(efficiencyUpgrade);
-        }
 
-        rfPerTickCost = 0;
-        // Look at ALL the upgrades passed in
-        for (SpawnerUpgrade spawnerUpgrade : upgradeList) {
-            rfPerTickCost += spawnerUpgrade.getRfCostPerTick();
+            /* No cost for efficiency */
         }
     }
 

@@ -84,7 +84,6 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 out.add(TextFormatting.BLUE + String.format( te.getFactoryTier().getTranslated(Lang.WAILA_FACTORY_TIER)));
                 out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getMobDisplayName()));
 
-
                 int maxMass = Settings.baseMobCount;
                 UpgradeSetup upgradeSetup = te.getUpgradeSetup();
                 if (upgradeSetup != null) {
@@ -174,7 +173,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
                 PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
 
-                probeInfo.text(TextFormatting.BLUE + String.format("Tier %s", info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
+                probeInfo.text(TextFormatting.BLUE + String.format( info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));

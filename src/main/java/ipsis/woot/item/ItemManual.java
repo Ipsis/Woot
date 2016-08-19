@@ -6,21 +6,20 @@ import ipsis.woot.reference.Reference;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemPrismFrame extends ItemWoot {
+public class ItemManual extends ItemWoot {
 
-    public static final String BASENAME = "prismframe";
+    public static final String BASENAME = "manual";
 
-    public ItemPrismFrame() {
+    public ItemManual() {
 
         super(BASENAME);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
-        setMaxStackSize(1);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemPrismFrame, BASENAME.toLowerCase());
+        ModelHelper.registerItem(ModItems.itemManual, BASENAME.toLowerCase());
     }
 }

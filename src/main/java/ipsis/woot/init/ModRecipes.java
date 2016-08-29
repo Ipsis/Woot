@@ -283,6 +283,8 @@ public class ModRecipes {
                         'v', "dyePurple",
                         'w', ModItems.itemFerrocrete,
                         'f', ModItems.itemPrismFrame));
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemPrism), new ItemStack(ModItems.itemPrism));
 
         /**
          * Reform from shards
@@ -571,7 +573,12 @@ public class ModRecipes {
                         new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.NETHERSTAR.getMeta()),
                         casingStack, casingStack, casingStack, casingStack,
                         casingStack, casingStack, casingStack, casingStack));
-
+        
+        for(int i = 0; i < 5; i++) {
+        	GameRegistry.addRecipe(
+        			new ShapedOreHammerRecipe(
+        					new ItemStack(ModItems.itemFactoryCasing), "bh", 'b', new ItemStack(ModBlocks.blockStructure, 1, i), 'h', ModItems.itemYahHammer));
+        }
 
         /**
          * Cap stones

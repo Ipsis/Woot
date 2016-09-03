@@ -7,6 +7,7 @@ public class Lang {
     public static final String TAG_WAILA = "waila." + Reference.MOD_ID + ":";
     public static final String TAG_VALIDATE = "validate." + Reference.MOD_ID + ":";
     public static final String TAG_CHAT = "chat." + Reference.MOD_ID + ":";
+    public static final String TAG_BOOK = "book." + Reference.MOD_ID + ":";
 
     public static String getLangConfigValue(String tag) {
 

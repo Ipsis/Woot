@@ -1,5 +1,6 @@
 package ipsis.woot.proxy;
 
+import ipsis.woot.client.manual.BookManager;
 import ipsis.woot.client.renderer.TESRLayout;
 import ipsis.woot.event.ItemTooltipHandler;
 import ipsis.woot.init.ModBlocks;
@@ -60,5 +61,6 @@ public class ClientProxy extends CommonProxy {
 
         super.postInit();
 
+        BookManager.INSTANCE.load();
     }
 }

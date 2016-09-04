@@ -578,6 +578,11 @@ public class ModRecipes {
                         casingStack, casingStack, casingStack, casingStack,
                         casingStack, casingStack, casingStack, casingStack));
 
+       GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemFactoryCasing), new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_1.ordinal()));
+       GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemFactoryCasing), new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_2.ordinal()));
+       GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemFactoryCasing), new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_3.ordinal()));
+       GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemFactoryCasing), new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_4.ordinal()));
+       GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemFactoryCasing), new ItemStack(ModBlocks.blockStructure, 1, EnumMobFactoryModule.BLOCK_5.ordinal()));
 
         /**
          * Cap stones

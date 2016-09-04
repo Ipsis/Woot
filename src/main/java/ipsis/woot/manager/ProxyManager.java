@@ -82,6 +82,14 @@ public class ProxyManager {
         }
     }
 
+    public boolean isBlockPowered() {
+
+        boolean powered = false;
+        if (validProxy && proxy != null)
+            powered = factory.getWorld().isBlockPowered(proxy.getPos());
+        return powered;
+    }
+
     public List<IItemHandler> getIItemHandlers() {
 
         List<IItemHandler> handlers = new ArrayList<IItemHandler>();

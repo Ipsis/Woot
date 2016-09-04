@@ -324,6 +324,13 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         upgradeTierX(upgradePos, 3);
     }
 
+    private boolean isMachinePowered() {
+
+        boolean controller = worldObj.isBlockPowered(pos);
+        boolean proxy = proxyManager.isBlockPowered();
+        return controller || proxy;
+    }
+
     @Override
     public void update() {
 
@@ -351,7 +358,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         if (structureTicks >= MULTIBLOCK_BACKOFF_SCAN_TICKS)
             structureTicks = 0;
 
-        boolean powered = worldObj.isBlockPowered(pos);
+        boolean powered = isMachinePowered();
         if (running && powered)
             setRunning(false);
         else if (!running && !powered)

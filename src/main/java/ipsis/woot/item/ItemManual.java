@@ -1,11 +1,9 @@
 package ipsis.woot.item;
 
+import ipsis.Woot;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.util.BookHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -22,7 +20,6 @@ public class ItemManual extends ItemWoot {
     public ItemManual() {
 
         super(BASENAME);
-        setMaxStackSize(1);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 
@@ -30,18 +27,16 @@ public class ItemManual extends ItemWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemManual, BASENAME);
+        ModelHelper.registerItem(ModItems.itemManual, BASENAME.toLowerCase());
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
-        if (worldIn.isRemote) {
-            ItemStack bookStack = BookHelper.getNewItemStack();
-            if (bookStack != null)
-                Minecraft.getMinecraft().displayGuiScreen(new GuiScreenBook(playerIn, bookStack, false));
-        }
+        if (worldIn.isRemote)
+            playerIn.openGui(Woot.instance, Reference.GUI_MANUAL, worldIn,
+                    playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
 
-        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+        return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
     }
 }

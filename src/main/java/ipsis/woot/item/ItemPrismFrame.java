@@ -14,6 +14,7 @@ public class ItemPrismFrame extends ItemWoot {
 
         super(BASENAME);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setMaxStackSize(1);
     }
 
     @SideOnly(Side.CLIENT)

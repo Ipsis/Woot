@@ -1,5 +1,6 @@
 package ipsis.woot.proxy;
 
+import ipsis.woot.client.manual.BookManager;
 import ipsis.woot.client.renderer.TESRLayout;
 import ipsis.woot.event.ItemTooltipHandler;
 import ipsis.woot.init.ModBlocks;
@@ -43,6 +44,8 @@ public class ClientProxy extends CommonProxy {
         ModItems.itemFactoryConnector.initModel();
         ModItems.itemManual.initModel();
 
+        ModItems.itemManual.initModel();
+
         MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLayout.class, new TESRLayout());
@@ -59,5 +62,6 @@ public class ClientProxy extends CommonProxy {
 
         super.postInit();
 
+        BookManager.INSTANCE.load();
     }
 }

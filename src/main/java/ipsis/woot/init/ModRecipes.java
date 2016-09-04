@@ -11,6 +11,7 @@ import ipsis.woot.item.ItemSkull;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
+import ipsis.woot.util.BookHelper;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Blocks;
@@ -31,6 +32,9 @@ public class ModRecipes {
         initItemRecipes();
         initBlockRecipes();
         initUpgradeRecipes();
+
+        GameRegistry.addRecipe(
+                new ShapelessOreRecipe(ModItems.itemManual, Items.BOOK, ModOreDictionary.ORE_DICT_SKULL));
 
         initRecipesCompat();
     }

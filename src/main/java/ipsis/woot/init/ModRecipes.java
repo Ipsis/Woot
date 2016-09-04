@@ -288,6 +288,8 @@ public class ModRecipes {
                         'w', ModItems.itemFerrocrete,
                         'f', ModItems.itemPrismFrame));
 
+         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemPrism), new ItemStack(ModItems.itemPrism));
+
         /**
          * Reform from shards
          */

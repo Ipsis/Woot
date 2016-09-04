@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class GuiManual extends GuiScreen {
@@ -80,7 +81,7 @@ public class GuiManual extends GuiScreen {
         if (currPage != null) {
 
             String title = currPage.getSection().getTitle();
-            drawCenteredString(fontRendererObj, title, guiLeft + (xSize / 2), guiTop + 16, 255);
+            drawCenteredString(fontRendererObj, title, guiLeft + (xSize / 2), guiTop + 16, Color.BLUE.getRGB());
             currPage.renderPage(this, guiLeft + 16, guiTop + 16 + fontRendererObj.FONT_HEIGHT + 16, this.xSize - 32);
         }
 
@@ -91,15 +92,14 @@ public class GuiManual extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
 
         if (button.enabled) {
-            if (button.id == 0) {
+            if (button.id == 0)
                 /* prev */
                 currPage = BookManager.INSTANCE.getPrevPage(currPage);
-            } else if (button.id == 1) {
+            else if (button.id == 1)
                 /* next */
                 currPage = BookManager.INSTANCE.getNextPage(currPage);
-            } else if (button.id == 2) {
-                LogHelper.info("Pressed Home");
-            }
+            else if (button.id == 2)
+                currPage = BookManager.INSTANCE.getFirstPage();
         }
 
         this.updateButtons();

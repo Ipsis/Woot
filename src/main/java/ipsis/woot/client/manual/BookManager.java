@@ -17,7 +17,24 @@ public class BookManager {
 
     public void load() {
 
+        addEntry("cover", new BookPageCover("cover.0"));
         addEntry("introduction", new BookPageText("introduction.0"), new BookPageText("introduction.1"));
+        addEntry("crafting", new BookPageText("crafting.0"), new BookPageText("crafting.1"));
+        addEntry("building", new BookPageText("building.0"), new BookPageText("building.1"), new BookPageText("building.2"));
+        addEntry("capturing", new BookPageText("capturing.0"), new BookPageText("capturing.1"));
+        addEntry("operation", new BookPageText("operation.0"), new BookPageText("operation.1"));
+        addEntry("tier1", new BookPageText("tier1.0"), new BookPageText("tier1.1"));
+        addEntry("tier2", new BookPageText("tier2.0"), new BookPageText("tier2.1"));
+        addEntry("tier3", new BookPageText("tier3.0"), new BookPageText("tier3.1"));
+        addEntry("tier4", new BookPageText("tier4.0"), new BookPageText("tier4.1"));
+        addEntry("proxy", new BookPageText("proxy.0"), new BookPageText("proxy.1"));
+        addEntry("upgrades", new BookPageText("upgrades.0"), new BookPageText("upgrades.1"));
+        addEntry("upgrade_looting", new BookPageText("upgrade_looting.0"));
+        addEntry("upgrade_rate", new BookPageText("upgrade_rate.0"));
+        addEntry("upgrade_xp", new BookPageText("upgrade_xp.0"));
+        addEntry("upgrade_mass", new BookPageText("upgrade_mass.0"));
+        addEntry("upgrade_decapitate", new BookPageText("upgrade_decapitate.0"));
+        addEntry("upgrade_efficiency", new BookPageText("upgrade_efficiency.0"));
     }
 
     private void addEntry(String tag, IBookPage... pages) {

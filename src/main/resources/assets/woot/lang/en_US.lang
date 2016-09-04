@@ -202,3 +202,76 @@ validate.Woot:factory.missing_mob=%s: No mob programmed into controller
 validate.Woot:factory.invalid_block=%s: Invalid block at %d, %d, %d not a %s
 validate.Woot:factory.mob_tier=%s: Mob needs higher tier factory
 
+book.Woot:cover.title=
+book.Woot:cover.0=Woot - The Alternative Mob Spawner/Grinder System
+book.Woot:cover.1=How to build, program and run your Mob Factory
+
+book.Woot:introduction.title=Introduction
+book.Woot:introduction.0=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades.
+book.Woot:introduction.1=So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
+
+book.Woot:crafting.title=How To Craft
+book.Woot:crafting.0=You will need two basic item types to start building the components of your factory. A Yah Hammer and some dyes. You use the hammer, some obsidian to hit it against, a dye and some materials to craft. You get the hammer, dye and obsidian back after each craft.
+book.Woot:crafting.1=Create one of each of the seven dyes and they will serve you the lifetime of your factory.
+
+book.Woot:resoures.title=Resources
+book.Woot:resources.0=The basic building material for the factories is UnderIron. It doesn't spawn in the world. You will need to create Pulverised UnderIorn using the Yah Hammer, a Mesh Dye, Iron and Nether Brick. The just smelt it to the UnderIron.
+
+book.Woot:building.title=Building A Factory
+book.Woot:building.0=The factory comes in different tiers. So craft yourself a Layout block and place it one block above the ground. It will then show you which blocks go where in the multiblock. All factories require a number of coloured structure blocks and cap stones for that tier. Right-click the layout block to cycle through the different tiers.
+book.Woot:building.1=Once you have placed all the blocks, break the Layout block and put the Mob Factory block in its place. Then put a Mob Controller above that. Right-click the Mob Controller with a captured mob in a Mob Prism and the factory will form. When you break the Mob Controller the mob will still be programmed, so you can swap Mob Controller to change between mobs you want to spawn.
+book.Woot:building.2=If you factory does not form, then you can right-click the Mob Factory block for information as to what is wrong. The factory will not form if you are trying to use a higher tier mob in a lower tier factory.
+
+book.Woot:capturing.title=Capturing Mobs
+book.Woot:capturing.0=It is not so much capturing mos, more poking them a bit then running away before they get angry. So you need to craft a Mob Prism and quietly approach the mob of your choice. Then gently prod the mob with the prism. You know have a programmed Mob Prism. The prism tooltip will tell you the minimum tier of factory that is required to spawn this mob.
+book.Woot:capturing.1=This would now be a good time to run away from the mob, depending on how it reacts to getting poked. If you have just poked a Wither Boss, I would RUN AWAY VERY FAST.
+
+book.Woot:operation.title=Running A Factory
+book.Woot:operation.0=Once you have your formed factory, you just need two things. The easy one of these is somewhere to put the generated loot. Be default the inventory must be placed in front of the Mob Factory. If you find that messy, then have a look at the Factory Proxy block.
+book.Woot:operation.1=The difficult bit is power. Depending on the mob, the factory tier and the upgrades installed you will need different amounts of power. Power is applied to the bottom of the Mob Factory block. Again you can look at the Factory Proxy as an alternative.
+
+book.Woot:tier1.title=Tier I Factory
+book.Woot:tier1.0=This factory is the most basic factory. It only supports spawning of certain mobs and can only accept two Tier 1 upgrades.  You will need Zombie Flesh and Bone to build this factory.
+book.Woot:tier1.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>2 x Tier I Capstones
+
+book.Woot:tier2.title=Tier II Factory
+book.Woot:tier2.0=This factory allows you to install up to four Tier II upgrades. It will allow you to spawn all Tier I factory mobs along with Blaze. However you will need Blaze Powder to create the Orange Structure blocks required to build this tier.
+book.Woot:tier2.1=The factory requires: 13 x Gray Structure blocks, 14 x Red Structure blocks, 40 x Orange Structure blocks, 4 x Tier II Capstones
+
+book.Woot:tier3.title=Tier III Factory
+book.Woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Endermen. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.
+book.Woot:tier3.1=Ingredient list
+
+book.Woot:tier4.title=Tier IV Factory
+book.Woot:tier4.0=This factory has the same capabilities as the Tier III factory. However this factory supports spawning of bosses, such as the Wither Boss. You will need Wither Stars to create the White Structure blocks required to build this tier.
+book.Woot:tier4.1=Ingredient list
+
+book.Woot:proxy.title=Proxy And Extender
+book.Woot:proxy.0=For those of you that like things neat and tidy, or just want to put more RF into the factory, there is Proxy block. Basically this block allows you to input power and provide more inventories to put items in. It also allows you to hide everything underneath the factory.
+book.Woot:proxy.1=To use the Proxy block, place a column of Extender blocks directly below the Mob Factory block and then put the Proxy block last. It will accept RF or inventories on any side of the Proxy.
+
+book.Woot:upgrades.title=Upgrade Totems
+book.Woot:upgrades.0=There are three tiers of upgrades which allow your factory to work in different ways. The upgrades are connected in the form of a totem, with Tier I upgrade on the bottom, Tier II upgrade in the middle and Tier III on the top. Each upgrade is crafted with enchanted books, depending on the upgrade that you want.
+book.Woot:upgrades.1=The following upgrades are available: Looting, Rate, XP, Mass, Decapitate, Efficiency
+
+book.Woot:upgrade_looting.title=Looting Upgrade
+book.Woot:upgrade_looting.0=This upgrade applies Looting I, Looting II or Looting III to the mob death, influencing the number of items dropped. You will require Looting Enchanted Books to craft the upgrades.
+
+book.Woot:upgrade_rate.title=Rate Upgrade
+book.Woot:upgrade_rate.0=This upgrade reduces the number of ticks between each mob spawn, from the default of 320 ticks. This is an expensive upgrade as the same amount of RF is required, but in a shorter period of time. You will need Power Enchanted Books to craft the upgrades.
+
+book.Woot:upgrade_xp.title=XP Upgrade
+book.Woot:upgrade_xp.0=This upgrade generates XP shards from the mobs, as by default none are generated. You will need Luck Of The Sea Enchanted Books to craft the upgrades.
+
+book.Woot:upgrade_mass.title=Mass Upgrade
+book.Woot:upgrade_mass.0=This upgrade increases the number of mobs per spawn without changing the rate. Each extra mob costs a third of the normal RF cost. You will need Fortune Enchanted Books to craft the upgrades.
+
+book.Woot:upgrade_decapitate.title=Decapitate Upgrade
+book.Woot:upgrade_decapitate.0=This upgrade increases the chance of head drops. You will need Sharpness Enchanted Books to craft the upgrades.
+
+book.Woot:upgrade_efficiency.title=Efficiency Upgrade
+book.Woot:upgrade_efficiency.0=This upgrade reduces the power cost of the factory. You will need Efficiency Enchanted Books to craft the upgrades.
+
+
+
+

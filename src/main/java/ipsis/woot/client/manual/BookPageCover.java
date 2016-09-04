@@ -9,12 +9,12 @@ import net.minecraft.client.gui.GuiScreen;
 import java.awt.*;
 import java.util.List;
 
-public class BookPageText implements IBookPage {
+public class BookPageCover implements IBookPage {
 
     private String tag;
     private Section section;
 
-    public BookPageText(String tag) {
+    public BookPageCover(String tag) {
 
         this.tag = tag;
     }
@@ -27,12 +27,7 @@ public class BookPageText implements IBookPage {
 
     String getTranslatedText() {
 
-        String s = StringHelper.localize(Lang.TAG_BOOK + tag);
-        if (s != null) {
-            s = s.replace("<br>", "\n");
-        }
-
-        return s;
+        return StringHelper.localize(Lang.TAG_BOOK + tag);
     }
 
     @Override
@@ -49,6 +44,6 @@ public class BookPageText implements IBookPage {
         String text = getTranslatedText();
         List<String> l = fontRenderer.listFormattedStringToWidth(text, page_width);
         for (int i = 0; i < l.size(); i++)
-            fontRenderer.drawString(l.get(i), x, y + (i * fontRenderer.FONT_HEIGHT), Color.WHITE.getRGB(), false);
+            fontRenderer.drawString(l.get(i), x, y + 60 + (i * fontRenderer.FONT_HEIGHT), Color.YELLOW.getRGB(), true);
     }
 }

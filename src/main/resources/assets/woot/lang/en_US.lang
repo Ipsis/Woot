@@ -230,21 +230,24 @@ book.Woot:operation.title=Running A Factory
 book.Woot:operation.0=Once you have your formed factory, you just need two things. The easy one of these is somewhere to put the generated loot. Be default the inventory must be placed in front of the Mob Factory. If you find that messy, then have a look at the Factory Proxy block.
 book.Woot:operation.1=The difficult bit is power. Depending on the mob, the factory tier and the upgrades installed you will need different amounts of power. Power is applied to the bottom of the Mob Factory block. Again you can look at the Factory Proxy as an alternative.
 
+book.Woot:power.title=How Much Power?
+book.Woot:power.0=The power required to spawn depends on the following:<br><br>The cost to run the factory Tier<br>How expensive the mob is<br>How many mobs are being spawned<br>How quick the mobs spawning<br>How many upgrade are installed
+
 book.Woot:tier1.title=Tier I Factory
-book.Woot:tier1.0=This factory is the most basic factory. It only supports spawning of certain mobs and can only accept two Tier 1 upgrades.  You will need Zombie Flesh and Bone to build this factory.
+book.Woot:tier1.0=This factory is the most basic factory. It only supports spawning of certain mobs and can only accept two Tier 1 upgrades.  You will need Zombie Flesh and Bone to build this factory.<br>It costs 80RF/tick to run this factory.
 book.Woot:tier1.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>2 x Tier I Capstones
 
 book.Woot:tier2.title=Tier II Factory
-book.Woot:tier2.0=This factory allows you to install up to four Tier II upgrades. It will allow you to spawn all Tier I factory mobs along with Blaze. However you will need Blaze Powder to create the Orange Structure blocks required to build this tier.
-book.Woot:tier2.1=The factory requires: 13 x Gray Structure blocks, 14 x Red Structure blocks, 40 x Orange Structure blocks, 4 x Tier II Capstones
+book.Woot:tier2.0=This factory allows you to install up to four Tier II upgrades. It will allow you to spawn all Tier I factory mobs along with Blaze. However you will need Blaze Powder to create the Orange Structure blocks required to build this tier.<br>It costs 160RF/tick to run this factory.
+book.Woot:tier2.1=The factory requires:<br><br>13 x Gray Structure blocks<br>16 x Red Structure blocks<br>40 x Orange Structure blocks<br>4 x Tier II Capstones
 
 book.Woot:tier3.title=Tier III Factory
-book.Woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Endermen. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.
-book.Woot:tier3.1=Ingredient list
+book.Woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Endermen. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.<br>It costs 240RF/tick to run this factory.
+book.Woot:tier3.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>44 x Orange Structure blocks<br>52 x Green Structure blocks<br>5 x Tier III Capstones
 
 book.Woot:tier4.title=Tier IV Factory
-book.Woot:tier4.0=This factory has the same capabilities as the Tier III factory. However this factory supports spawning of bosses, such as the Wither Boss. You will need Wither Stars to create the White Structure blocks required to build this tier.
-book.Woot:tier4.1=Ingredient list
+book.Woot:tier4.0=This factory has the same capabilities as the Tier III factory. However this factory supports spawning of bosses, such as the Wither Boss. You will need Wither Stars to create the White Structure blocks required to build this tier.<br>It costs 320RF/tick to run this factory.
+book.Woot:tier4.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>44 x Orange Structure blocks<br>57 x Green Structure blocks<br>82 x White Structure Blocks<br>8 x Tier IV Capstones
 
 book.Woot:proxy.title=Proxy And Extender
 book.Woot:proxy.0=For those of you that like things neat and tidy, or just want to put more RF into the factory, there is Proxy block. Basically this block allows you to input power and provide more inventories to put items in. It also allows you to hide everything underneath the factory.
@@ -252,7 +255,7 @@ book.Woot:proxy.1=To use the Proxy block, place a column of Extender blocks dire
 
 book.Woot:upgrades.title=Upgrade Totems
 book.Woot:upgrades.0=There are three tiers of upgrades which allow your factory to work in different ways. The upgrades are connected in the form of a totem, with Tier I upgrade on the bottom, Tier II upgrade in the middle and Tier III on the top. Each upgrade is crafted with enchanted books, depending on the upgrade that you want.
-book.Woot:upgrades.1=The following upgrades are available: Looting, Rate, XP, Mass, Decapitate, Efficiency
+book.Woot:upgrades.1=The following upgrades are available:<br><br>Looting<br>Rate<br>XP<br>Mass<br>Decapitate<br>Efficiency
 
 book.Woot:upgrade_looting.title=Looting Upgrade
 book.Woot:upgrade_looting.0=This upgrade applies Looting I, Looting II or Looting III to the mob death, influencing the number of items dropped. You will require Looting Enchanted Books to craft the upgrades.

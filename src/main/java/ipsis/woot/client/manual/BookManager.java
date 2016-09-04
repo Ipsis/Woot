@@ -23,6 +23,7 @@ public class BookManager {
         addEntry("building", new BookPageText("building.0"), new BookPageText("building.1"), new BookPageText("building.2"));
         addEntry("capturing", new BookPageText("capturing.0"), new BookPageText("capturing.1"));
         addEntry("operation", new BookPageText("operation.0"), new BookPageText("operation.1"));
+        addEntry("power", new BookPageText("power.0"));
         addEntry("tier1", new BookPageText("tier1.0"), new BookPageText("tier1.1"));
         addEntry("tier2", new BookPageText("tier2.0"), new BookPageText("tier2.1"));
         addEntry("tier3", new BookPageText("tier3.0"), new BookPageText("tier3.1"));

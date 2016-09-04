@@ -20,6 +20,7 @@ public class ItemManual extends ItemWoot {
     public ItemManual() {
 
         super(BASENAME);
+        setMaxStackSize(1);
         setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
     }
 

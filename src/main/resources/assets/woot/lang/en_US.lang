@@ -62,7 +62,7 @@ item.Woot:factoryupgrade.tier_i.name=Tier I Upgrade
 item.Woot:factoryupgrade.tier_ii.name=Tier II Upgrade
 item.Woot:factoryupgrade.tier_iii.name=Tier III Upgrade
 
-item.Woot:manual.name=Woot Manual
+item.Woot:manual.name=Woot Manual [WIP]
 
 item.Woot:ferrocreteplate.name=UnderIron Plate
 item.Woot:factorycasing.name=Factory Casing

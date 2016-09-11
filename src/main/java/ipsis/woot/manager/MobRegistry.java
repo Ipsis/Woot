@@ -9,10 +9,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntityMagmaCube;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.SkeletonType;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.monster.*;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -54,6 +52,11 @@ public class MobRegistry {
                 name = "wither:" + name;
             else
                 name = "none:" + name;
+        } else if (entityLiving instanceof EntityCreeper) {
+            if (((EntityCreeper)entityLiving).getPowered() == true)
+                name = "charged:" + name;
+            else
+                name = "none:" + name;
         } else {
             name = "none:" + name;
         }
@@ -72,6 +75,11 @@ public class MobRegistry {
         if (entityLiving instanceof  EntitySkeleton) {
             if (((EntitySkeleton) entityLiving).getSkeletonType() == SkeletonType.WITHER)
                 return StringHelper.localize("entity.Woot:witherskelly.name");
+            else
+                return entityLiving.getName();
+        } else if (entityLiving instanceof EntityCreeper) {
+            if (((EntityCreeper)entityLiving).getPowered() == true)
+                return StringHelper.localize("entity.Woot:chargedcreeper.name");
             else
                 return entityLiving.getName();
         } else {
@@ -154,7 +162,7 @@ public class MobRegistry {
         return mobInfoHashMap.containsKey(wootName);
     }
 
-    void extraEntitySetup(MobInfo mobInfo, Entity entity) {
+    void extraEntitySetup(MobInfo mobInfo, Entity entity, World world) {
 
         if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
             ((EntitySkeleton) entity).setSkeletonType(SkeletonType.WITHER);
@@ -164,6 +172,11 @@ public class MobRegistry {
         } else if (isMagmaCube(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() == 1)
                 setSlimeSize((EntitySlime)entity, 2);
+        } else if (isChargedCreeper(mobInfo.wootMobName, entity)) {
+            entity.onStruckByLightning(new EntityLightningBolt(world,
+                    entity.getPosition().getX(),
+                    entity.getPosition().getY(),
+                    entity.getPosition().getZ(), true));
         }
     }
 
@@ -199,6 +212,11 @@ public class MobRegistry {
         return entity instanceof EntityMagmaCube && wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
     }
 
+    boolean isChargedCreeper(String wootName, Entity entity) {
+
+        return entity instanceof EntityCreeper && wootName.equals(Reference.MOD_ID + ":" + "charged:Creeper");
+    }
+
     public Entity createEntity(String wootName, World world) {
 
         if (!isKnown(wootName))
@@ -206,7 +224,7 @@ public class MobRegistry {
 
         Entity entity = EntityList.createEntityByName(mobInfoHashMap.get(wootName).getMcMobName(), world);
         if (entity != null)
-            extraEntitySetup(mobInfoHashMap.get(wootName), entity);
+            extraEntitySetup(mobInfoHashMap.get(wootName), entity, world);
 
         return entity;
     }

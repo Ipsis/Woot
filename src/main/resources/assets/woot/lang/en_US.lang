@@ -82,6 +82,7 @@ waila.Woot:factory.sneak=Sneak for installed upgrades
 waila.Woot:factory.nullupgrades=No upgrades installed
 
 entity.Woot:witherskelly.name=Wither Skeleton
+entity.Woot:chargedcreeper.name=Charged Creeper
 
 config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Minimum number of ticks between fake spawn learning

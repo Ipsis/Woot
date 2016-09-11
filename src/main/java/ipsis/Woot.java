@@ -8,6 +8,7 @@ import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTable;
 import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
@@ -54,6 +55,7 @@ public class Woot {
         UpgradeManager.loadConfig();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
+        EnderIO.loadRecipes();
 
         ModOreDictionary.preInit();
         Files.init(event);

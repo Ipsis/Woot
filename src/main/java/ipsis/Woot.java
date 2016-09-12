@@ -8,6 +8,7 @@ import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTable;
 import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
@@ -65,6 +66,7 @@ public class Woot {
     public void init(FMLInitializationEvent event) {
 
         proxy.init();
+        BloodMagic.init();
     }
 
     @Mod.EventHandler

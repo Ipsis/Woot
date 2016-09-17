@@ -34,6 +34,9 @@ tile.Woot:upgrade.decapitate_iii.name=Decapitate III Upgrade
 tile.Woot:upgradeb.efficiency_i.name=Efficiency I Upgrade
 tile.Woot:upgradeb.efficiency_ii.name=Efficiency II Upgrade
 tile.Woot:upgradeb.efficiency_iii.name=Efficiency III Upgrade
+tile.Woot:upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
+tile.Woot:upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
+tile.Woot:upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
 
 item.Woot:yahhammer.name=Yah Hammer
 
@@ -124,6 +127,9 @@ config.Woot:massIII_RFTick=Mass III cost (RF/tick)
 config.Woot:decapI_RFTick=Decapitate I cost (RF/tick)
 config.Woot:decapII_RFTick=Decapitate II cost (RF/tick)
 config.Woot:decapIII_RFTick=Decapitate III cost (RF/tick)
+config.Woot:bmI_RFTick=Blood Magic I cost (RF/tick)
+config.Woot:bmII_RFTick=Blood Magic II cost (RF/tick)
+config.Woot:bmIII_RFTick=Blood Magic III cost (RF/tick)
 
 config.Woot:lootingI_enchantLevel=Looting I enchant level
 config.Woot:lootingII_enchantLevel=Looting II enchant level
@@ -143,6 +149,7 @@ config.Woot:xpIII_boost=XP III experience percentage
 config.Woot:efficiencyI_percentage=Efficiency I increase in efficiency
 config.Woot:efficiencyII_percentage=Efficiency II increase in efficiency
 config.Woot:efficiencyIII_percentage=Efficiency III increase in efficiency
+config.Woot:
 
 tooltip.Woot:factory_cost=Tier %s %dRF/tick
 
@@ -157,6 +164,7 @@ tooltip.Woot:upgrade_xp_base_effect=Collect XP
 tooltip.Woot:upgrade_mass_effect=Spawn %d mobs
 tooltip.Woot:upgrade_decap_effect=Increases chance to decapitate to %d%%
 tooltip.Woot:upgrade_efficiency_effect=Reduce factory power cost by %d%%
+tooltip.Woot:upgrade_bloodmagic_effect=Generate Life Essence and apply %d sacrifice runes to each mob
 
 tooltip.Woot:upgrade.rate_i=Spawn Rate I
 tooltip.Woot:upgrade.rate_ii=Spawn Rate II
@@ -176,6 +184,9 @@ tooltip.Woot:upgrade.decapitate_iii=Mob Beheading III
 tooltip.Woot:upgrade.efficiency_i=Efficiency I
 tooltip.Woot:upgrade.efficiency_ii=Efficiency II
 tooltip.Woot:upgrade.efficiency_iii=Efficiency III
+tooltip.Woot:upgrade.bloodmagic_i=Blood Magic I
+tooltip.Woot:upgrade.bloodmagic_ii=Blood Magic II
+tooltip.Woot:upgrade.bloodmagic_iii=Blood Magic III
 
 tooltip.Woot:xpShard.0=Right click to use and gain experience
 tooltip.Woot:xpShard.1=Gives %d experience
@@ -202,6 +213,8 @@ validate.Woot:factory.missing_controller=%s: No mob controller
 validate.Woot:factory.missing_mob=%s: No mob programmed into controller
 validate.Woot:factory.invalid_block=%s: Invalid block at %d, %d, %d not a %s
 validate.Woot:factory.mob_tier=%s: Mob needs higher tier factory
+
+ritual.Woot:ritualInfernalMachine=Ritual Of The Infernal Machine
 
 book.Woot:cover.title=
 book.Woot:cover.0=Woot - The Alternative Mob Spawner/Grinder System

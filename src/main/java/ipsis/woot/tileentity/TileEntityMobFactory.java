@@ -500,6 +500,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             if (out.amount < 0)
                 out.amount = 0;
         }
+
+        bmKeepAlive = false;
     }
 
     private void produceOutput() {

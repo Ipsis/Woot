@@ -487,7 +487,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getSacrificeCount();
         float sacrificeEfficiencyMultiplier = (float)(0.10 * upgradeSacrificeCount);
 
-        int amount = (int)((1 + sacrificeEfficiencyMultiplier) * 20) * mobCount;
+        int amount = ((int)((1 + sacrificeEfficiencyMultiplier) * 20)) * mobCount;
 
         FluidStack out = new FluidStack(BloodMagic.fluidOutput, amount);
         for (IFluidHandler hdlr : validHandlers) {

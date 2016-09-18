@@ -117,9 +117,9 @@ public class Settings {
         public static final int DEF_EFFICIENCY_II_PERCENTAGE = 25;
         public static final int DEF_EFFICIENCY_III_PERCENTAGE = 30;
 
-        public static final int DEF_BM_I_SACRIFICE_COUNT = 4;
-        public static final int DEF_BM_II_SACRIFICE_COUNT = 8;
-        public static final int DEF_BM_III_SACRIFICE_COUNT = 16;
+        public static final int DEF_BM_I_SACRIFICE_COUNT = 10;
+        public static final int DEF_BM_II_SACRIFICE_COUNT = 20;
+        public static final int DEF_BM_III_SACRIFICE_COUNT = 30;
     }
 
     /**

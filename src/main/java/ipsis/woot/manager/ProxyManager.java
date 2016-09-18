@@ -7,6 +7,8 @@ import ipsis.woot.tileentity.TileEntityMobFactoryProxy;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -106,6 +108,28 @@ public class ProxyManager {
                 TileEntity te = factory.getWorld().getTileEntity(pos);
                 if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
                     handlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
+            }
+        }
+
+        return handlers;
+    }
+
+    public List<IFluidHandler> getIFluidHandlers() {
+
+        List<IFluidHandler> handlers = new ArrayList<IFluidHandler>();
+
+        if (validProxy && proxy != null) {
+            for (EnumFacing f : EnumFacing.VALUES) {
+                if (f == EnumFacing.UP)
+                    continue;;
+
+                BlockPos pos = proxy.getPos().offset(f);
+                if (!factory.getWorld().isBlockLoaded(pos))
+                    continue;
+
+                TileEntity te = factory.getWorld().getTileEntity(pos);
+                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
+                    handlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
             }
         }
 

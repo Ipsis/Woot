@@ -135,6 +135,10 @@ public class ConfigHandler {
         Settings.decapitateIIRfTick = getConfigInt(Config.Power.DECAP_II_COST, Settings.Power.DEF_DECAPITATE_II_RF_TICK);
         Settings.decapitateIIIRfTick = getConfigInt(Config.Power.DECAP_III_COST, Settings.Power.DEF_DECAPITATE_III_RF_TICK);
 
+        Settings.bmIRfTick = getConfigInt(Config.Power.BM_I_COST, Settings.Power.DEF_BM_I_RF_TICK);
+        Settings.bmIIRfTick = getConfigInt(Config.Power.BM_II_COST, Settings.Power.DEF_BM_II_RF_TICK);
+        Settings.bmIIIRfTick = getConfigInt(Config.Power.BM_III_COST, Settings.Power.DEF_BM_III_RF_TICK);
+
         /**
          * Upgrades
          */
@@ -161,6 +165,10 @@ public class ConfigHandler {
         Settings.efficiencyI = getConfigInt(Config.Upgrades.EFFICIENCY_I_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_I_PERCENTAGE);
         Settings.efficiencyII = getConfigInt(Config.Upgrades.EFFICIENCY_II_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_II_PERCENTAGE);
         Settings.efficiencyIII = getConfigInt(Config.Upgrades.EFFICIENCY_III_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_III_PERCENTAGE);
+
+        Settings.bmICount = getConfigInt(Config.Upgrades.BM_I_COUNT, Settings.Upgrades.DEF_BM_I_SACRIFICE_COUNT);
+        Settings.bmIICount = getConfigInt(Config.Upgrades.BM_II_COUNT, Settings.Upgrades.DEF_BM_II_SACRIFICE_COUNT);
+        Settings.bmIIICount = getConfigInt(Config.Upgrades.BM_III_COUNT, Settings.Upgrades.DEF_BM_III_SACRIFICE_COUNT);
 
         if (configuration.hasChanged())
             configuration.save();

@@ -8,12 +8,15 @@ import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTable;
 import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -65,6 +68,9 @@ public class Woot {
     public void init(FMLInitializationEvent event) {
 
         proxy.init();
+
+        if (Loader.isModLoaded(BloodMagic.BM_MODID))
+            BloodMagic.init();
     }
 
     @Mod.EventHandler

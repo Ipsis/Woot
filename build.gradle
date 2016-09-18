@@ -33,6 +33,10 @@ repositories {
         name 'tterrag maven'
         url "http://maven.tterrag.com/"
     }
+    maven { // BloodMagic
+        name 'Tehnut Maven'
+        url "http://tehnut.info/maven/"
+    }
 }
 
 // Properties file
@@ -71,6 +75,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
     deobfCompile "mezz.jei:jei_1.10.2:3.8.0.240"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.0.13-26"
+    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:1.9.4-2.1.0-454-ss"
 }
 
 processResources

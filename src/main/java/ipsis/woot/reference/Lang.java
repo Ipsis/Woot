@@ -38,6 +38,7 @@ public class Lang {
     public static final String TOOLTIP_MASS_EFFECT = TAG_TOOLTIP + "upgrade_mass_effect";
     public static final String TOOLTIP_DECAP_EFFECT = TAG_TOOLTIP + "upgrade_decap_effect";
     public static final String TOOLTIP_EFFICIENCY_EFFECT = TAG_TOOLTIP + "upgrade_efficiency_effect";
+    public static final String TOOLTIP_BM_EFFECT = TAG_TOOLTIP + "upgrade_bloodmagic_effect";
 
     public static final String TOOLTIP_UPGRADE = TAG_TOOLTIP + "upgrade.";
 

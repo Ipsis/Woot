@@ -113,6 +113,18 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
             case EFFICIENCY_III:
                 toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_EFFICIENCY_EFFECT), Settings.efficiencyIII));
                 break;
+            case BLOODMAGIC_I:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_BM_EFFECT), Settings.bmICount));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.bmIRfTick));
+                break;
+            case BLOODMAGIC_II:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_BM_EFFECT), Settings.bmIICount));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.bmIIRfTick));
+                break;
+            case BLOODMAGIC_III:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_BM_EFFECT), Settings.bmIIICount));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.bmIIIRfTick));
+                break;
             default:
                 break;
         }

@@ -16,6 +16,7 @@ public class UpgradeSetup {
     EnumSpawnerUpgrade massUpgrade;
     EnumSpawnerUpgrade decapitateUpgrade;
     EnumSpawnerUpgrade efficiencyUpgrade;
+    EnumSpawnerUpgrade bmUpgrade;
 
     List<EnumSpawnerUpgrade> upgradeList;
 
@@ -36,6 +37,7 @@ public class UpgradeSetup {
         massUpgrade = null;
         decapitateUpgrade = null;
         efficiencyUpgrade = null;
+        bmUpgrade = null;
         upgradeList.clear();
     }
 
@@ -102,6 +104,15 @@ public class UpgradeSetup {
                     Settings.xpIIRfTick, Settings.xpIIIRfTick);
         }
 
+        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.BLOOD_MAGIC);
+        if (u != null) {
+            bmUpgrade = u.getUpgradeType();
+            this.upgradeList.add(bmUpgrade);
+
+            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.bmIRfTick,
+                    Settings.bmIIRfTick, Settings.bmIIIRfTick);
+        }
+
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.EFFICIENCY);
         if (u != null) {
             efficiencyUpgrade = u.getUpgradeType();
@@ -111,6 +122,7 @@ public class UpgradeSetup {
         }
     }
 
+    public boolean hasBmUpgrade() { return bmUpgrade != null; }
     public boolean hasMassUpgrade() { return massUpgrade != null; }
     public boolean hasRateUpgrade() { return rateUpgrade != null; }
     public boolean hasDecapitateUpgrade() { return decapitateUpgrade != null; }
@@ -125,5 +137,6 @@ public class UpgradeSetup {
     public EnumSpawnerUpgrade getLootingUpgrade() { return lootingUpgrade; }
     public EnumSpawnerUpgrade getXpUpgrade() { return xpUpgrade; }
     public EnumSpawnerUpgrade getEfficiencyUpgrade() { return efficiencyUpgrade; }
+    public EnumSpawnerUpgrade getBmUpgrade() { return bmUpgrade; }
     public EnumEnchantKey getEnchantKey() { return enchantKey; }
 }

@@ -7,6 +7,7 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -21,6 +22,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -449,7 +453,58 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
     }
 
-    private void fillInventories() {
+    private void bmOutput(UpgradeSetup upgradeSetup) {
+
+        if (!upgradeSetup.hasBmUpgrade())
+            return;
+
+        if (!bmKeepAlive || BloodMagic.fluidOutput == null)
+            return;
+
+        List<IFluidHandler> validHandlers = new ArrayList<>();
+        EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
+        if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
+            TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+            if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
+                validHandlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
+        }
+
+        // Proxy
+        validHandlers.addAll(proxyManager.getIFluidHandlers());
+
+        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        if (upgradeSetup.hasMassUpgrade())
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+
+        /**
+         * sacrificalDaggerCall(20, true) WOSuffering
+         *
+         * (1 + sacrificeEfficiencyMultiplier) * 20
+         * sacrificeEfficiencyMultiplier = 0.10 * sacrifice rune count
+         */
+
+
+        int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getSacrificeCount();
+        float sacrificeEfficiencyMultiplier = (float)(0.10 * upgradeSacrificeCount);
+
+        int amount = ((int)((1 + sacrificeEfficiencyMultiplier) * 20)) * mobCount;
+
+        FluidStack out = new FluidStack(BloodMagic.fluidOutput, amount);
+        for (IFluidHandler hdlr : validHandlers) {
+
+            if (out.amount == 0)
+                break;
+
+            int result = hdlr.fill(out, true);
+            out.amount = out.amount - result;
+            if (out.amount < 0)
+                out.amount = 0;
+        }
+
+        bmKeepAlive = false;
+    }
+
+    private void produceOutput() {
 
         SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, worldObj.getDifficultyForLocation(getPos()));
 
@@ -465,6 +520,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         // Proxy
         validHandlers.addAll(proxyManager.getIItemHandlers());
+
+        bmOutput(upgradeSetup);
 
         for (IItemHandler hdlr : validHandlers) {
 
@@ -495,7 +552,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
         if (consumedRf >= spawnReq.getTotalRf()) {
 
-            fillInventories();
+            produceOutput();
 
             /**
              * Clear the power used - this uses ALL the consumed power
@@ -516,6 +573,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         updateUpgradeBlocks(false);
         proxyManager.setMaster(false);
         super.invalidate();
+    }
+
+    private boolean bmKeepAlive = false;
+    public void bmKeepAlive() {
+
+        bmKeepAlive = true;
     }
 
     /**

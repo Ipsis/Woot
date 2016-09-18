@@ -51,6 +51,10 @@ public class Config {
         public static final String DECAP_I_COST = "decapI_RFTick";
         public static final String DECAP_II_COST = "decapII_RFTick";
         public static final String DECAP_III_COST = "decapIII_RFTick";
+
+        public static final String BM_I_COST = "bmI_RFTick";
+        public static final String BM_II_COST = "bmII_RFTick";
+        public static final String BM_III_COST = "bmIII_RFTick";
     }
 
     public static class Upgrades {
@@ -78,5 +82,9 @@ public class Config {
         public static final String EFFICIENCY_I_PERCENTAGE = "efficiencyI_percentage";
         public static final String EFFICIENCY_II_PERCENTAGE = "efficiencyII_percentage";
         public static final String EFFICIENCY_III_PERCENTAGE = "efficiencyIII_percentage";
+
+        public static final String BM_I_COUNT = "bmI_count";
+        public static final String BM_II_COUNT = "bmII_count";
+        public static final String BM_III_COUNT = "bmIII_count";
     }
 }

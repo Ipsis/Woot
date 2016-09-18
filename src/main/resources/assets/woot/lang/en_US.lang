@@ -269,7 +269,7 @@ book.Woot:proxy.1=To use the Proxy block, place a column of Extender blocks dire
 
 book.Woot:upgrades.title=Upgrade Totems
 book.Woot:upgrades.0=There are three tiers of upgrades which allow your factory to work in different ways. The upgrades are connected in the form of a totem, with Tier I upgrade on the bottom, Tier II upgrade in the middle and Tier III on the top. Each upgrade is crafted with enchanted books, depending on the upgrade that you want.
-book.Woot:upgrades.1=The following upgrades are available:<br><br>Looting<br>Rate<br>XP<br>Mass<br>Decapitate<br>Efficiency
+book.Woot:upgrades.1=The following upgrades are available:<br><br>Looting<br>Rate<br>XP<br>Mass<br>Decapitate<br>Efficiency<br>Blood Magic (if installed)
 
 book.Woot:upgrade_looting.title=Looting Upgrade
 book.Woot:upgrade_looting.0=This upgrade applies Looting I, Looting II or Looting III to the mob death, influencing the number of items dropped. You will require Looting Enchanted Books to craft the upgrades.
@@ -288,6 +288,11 @@ book.Woot:upgrade_decapitate.0=This upgrade increases the chance of head drops. 
 
 book.Woot:upgrade_efficiency.title=Efficiency Upgrade
 book.Woot:upgrade_efficiency.0=This upgrade reduces the power cost of the factory. You will need Efficiency Enchanted Books to craft the upgrades.
+
+book.Woot:upgrade_bloodmagic.title=Blood Magic Upgrade
+book.Woot:upgrade_bloodmagic.0=This upgrade allows the factory to produce Life Essence for each mob spawned in the factory. Each tier of upgrade uses a different number of sacrifice runes on each mob kill:<br><br>Tier I:  10 sacrifice runes<br>Tier II: 20 sacrifice runes<br>Tier III: 30 sacrifice runes
+book.Woot:upgrade_bloodmagic.1=You need to build a Ritual Of The Infernal Machine 6 blocks above the Factory Controller. The factory will output Life Essence into any tank in front of the Factory Controller or connected to the Factory Proxy.
+
 
 
 

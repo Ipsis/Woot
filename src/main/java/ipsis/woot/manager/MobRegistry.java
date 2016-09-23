@@ -53,8 +53,13 @@ public class MobRegistry {
             else
                 name = "none:" + name;
         } else if (entityLiving instanceof EntityCreeper) {
-            if (((EntityCreeper)entityLiving).getPowered() == true)
+            if (((EntityCreeper) entityLiving).getPowered() == true)
                 name = "charged:" + name;
+            else
+                name = "none:" + name;
+        } else if (entityLiving instanceof EntityGuardian) {
+            if (((EntityGuardian)entityLiving).isElder() == true)
+                name = "elder:" + name;
             else
                 name = "none:" + name;
         } else {
@@ -78,8 +83,13 @@ public class MobRegistry {
             else
                 return entityLiving.getName();
         } else if (entityLiving instanceof EntityCreeper) {
-            if (((EntityCreeper)entityLiving).getPowered() == true)
+            if (((EntityCreeper) entityLiving).getPowered() == true)
                 return StringHelper.localize("entity.Woot:chargedcreeper.name");
+            else
+                return entityLiving.getName();
+        } else if (entityLiving instanceof EntityGuardian) {
+            if (((EntityGuardian)entityLiving).isElder() == true)
+                return StringHelper.localize("entity.Woot:elderguardian.name");
             else
                 return entityLiving.getName();
         } else {
@@ -177,6 +187,8 @@ public class MobRegistry {
                     entity.getPosition().getX(),
                     entity.getPosition().getY(),
                     entity.getPosition().getZ(), true));
+        } else if (isElderGuardian(mobInfo.wootMobName, entity)) {
+            ((EntityGuardian)entity).setElder(true);
         }
     }
 
@@ -215,6 +227,11 @@ public class MobRegistry {
     boolean isChargedCreeper(String wootName, Entity entity) {
 
         return entity instanceof EntityCreeper && wootName.equals(Reference.MOD_ID + ":" + "charged:Creeper");
+    }
+
+    boolean isElderGuardian(String wootName, Entity entity) {
+
+        return entity instanceof EntityGuardian && wootName.equals(Reference.MOD_ID + ":" + "elder:Guardian");
     }
 
     public Entity createEntity(String wootName, World world) {

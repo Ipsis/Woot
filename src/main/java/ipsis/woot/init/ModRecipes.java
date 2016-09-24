@@ -514,6 +514,9 @@ public class ModRecipes {
                 )
         );
 
+       GameRegistry.addShapelessRecipe(
+               new ItemStack(ModBlocks.blockController), new ItemStack(ModBlocks.blockController));
+
         // Factory
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(

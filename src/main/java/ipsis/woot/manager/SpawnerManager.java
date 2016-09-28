@@ -130,7 +130,7 @@ public class SpawnerManager {
 
     private void createLootBox(World world, BlockPos originPos) {
 
-        for (int y = 1; y <= 2; y++) {
+        for (int y = 1; y <= 3; y++) {
             for (int x = -1; x <= 1; x++) {
                 for (int z = -1; z <= 1; z++) {
                     BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);

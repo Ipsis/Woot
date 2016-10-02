@@ -3,6 +3,7 @@ package ipsis;
 import ipsis.woot.command.CommandWoot;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.init.ModEnchantments;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTable;
@@ -78,6 +79,7 @@ public class Woot {
 
         proxy.postInit();
         headRegistry.init();
+        ModEnchantments.postInit();
     }
 
     @Mod.EventHandler

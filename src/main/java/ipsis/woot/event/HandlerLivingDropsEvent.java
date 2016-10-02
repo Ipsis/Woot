@@ -1,12 +1,17 @@
 package ipsis.woot.event;
 
 import ipsis.Woot;
+import ipsis.woot.enchantment.EnchantmentDecapitate;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.FakePlayerPool;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -26,7 +31,7 @@ public class HandlerLivingDropsEvent {
             if (damageSource != null) {
 
                 if (FakePlayerPool.isOurFakePlayer(damageSource.getSourceOfDamage())) {
-                    // Cancel the factory kills so we dont spawn any loot in the world
+                    // Cancel the  factory kills so we dont spawn any loot in the world
                     e.setCanceled(true);
                 }
 
@@ -64,6 +69,20 @@ public class HandlerLivingDropsEvent {
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
                 EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
                 Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops(), true);
+            }
+
+            /* handle decapitate */
+            if (damageSource != null && !e.isCanceled()) {
+                if (!(e.getSource().getEntity() instanceof EntityPlayer))
+                    return;
+
+                EntityPlayer player = (EntityPlayer)e.getSource().getEntity();
+                ItemStack equipped = player.getHeldItemMainhand();
+                if (!EnchantmentDecapitate.hasEnchantmentDecapitate(equipped))
+                    return;
+
+                EnchantmentDecapitate.handleLivingDrops(e);
+
             }
         }
     }

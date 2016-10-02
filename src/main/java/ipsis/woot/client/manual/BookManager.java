@@ -39,6 +39,7 @@ public class BookManager {
         addEntry("upgrade_mass", new BookPageText("upgrade_mass.0"));
         addEntry("upgrade_decapitate", new BookPageText("upgrade_decapitate.0"));
         addEntry("upgrade_efficiency", new BookPageText("upgrade_efficiency.0"));
+        addEntry("enchant_decapitate", new BookPageText("enchant_decapitate.0"));
 
         if (Loader.isModLoaded(BloodMagic.BM_MODID))
             addEntry("upgrade_bloodmagic", new BookPageText("upgrade_bloodmagic.0"), new BookPageText("upgrade_bloodmagic.1"));

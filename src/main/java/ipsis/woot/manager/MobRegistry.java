@@ -17,6 +17,8 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class MobRegistry {
@@ -25,7 +27,7 @@ public class MobRegistry {
     public static final String ENDER_DRAGON = "Woot:none:EnderDragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
 
-    HashMap<String, Integer> mobCostMap = new HashMap<String, Integer>();
+    Map<String, Integer> mobCostMap = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
 
     public static String getMcName(String wootName) {
 
@@ -109,7 +111,7 @@ public class MobRegistry {
             mobList = Settings.prismBlacklist;
 
         for (int i = 0; i < mobList.length; i++) {
-            if (mobList[i].equals(wootName)) {
+            if (mobList[i].equalsIgnoreCase(wootName)) {
                 return mobList == Settings.prismWhitelist;
             }
         }

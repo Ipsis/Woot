@@ -9,16 +9,18 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static ipsis.woot.tileentity.multiblock.EnumMobFactoryTier.*;
 
 public class TierMapper {
 
-    HashMap<String, EnumMobFactoryTier> mapper;
+    Map<String, EnumMobFactoryTier> mapper;
 
     public TierMapper() {
 
-        mapper = new HashMap<String, EnumMobFactoryTier>();
+        mapper = new TreeMap<String, EnumMobFactoryTier>(String.CASE_INSENSITIVE_ORDER);
     }
 
     public EnumMobFactoryTier getTierForEntity(String entityName, int xp) {

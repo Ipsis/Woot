@@ -60,10 +60,7 @@ public class EnchantmentDecapitate extends Enchantment {
             return null;
 
         EntityItem entityItem = new EntityItem(world, x, y, z, itemStack);
-        entityItem.motionX = 0;
-        entityItem.motionY = 0;
-        entityItem.motionZ = 0;
-        entityItem.setPickupDelay(0);
+        entityItem.setDefaultPickupDelay();
 
         return entityItem;
     }

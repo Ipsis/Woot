@@ -217,6 +217,8 @@ validate.Woot:factory.mob_tier=%s: Mob needs higher tier factory
 
 ritual.Woot:ritualInfernalMachine=Ritual Of The Infernal Machine
 
+enchantment.woot_decapitate=Decapitation
+
 book.Woot:cover.title=
 book.Woot:cover.0=Woot - The Alternative Mob Spawner/Grinder System
 book.Woot:cover.1=How to build, program and run your Mob Factory
@@ -294,7 +296,8 @@ book.Woot:upgrade_bloodmagic.title=Blood Magic Upgrade
 book.Woot:upgrade_bloodmagic.0=This upgrade allows the factory to produce Life Essence for each mob spawned in the factory. Each tier of upgrade uses a different number of sacrifice runes on each mob kill:<br><br>Tier I:  10 sacrifice runes<br>Tier II: 20 sacrifice runes<br>Tier III: 30 sacrifice runes
 book.Woot:upgrade_bloodmagic.1=You need to build a Ritual Of The Infernal Machine 6 blocks above the Factory Controller. The factory will output Life Essence into any tank in front of the Factory Controller or connected to the Factory Proxy.
 
-
+book.Woot:enchant_decapitate.title=Decapitate Enchant
+book.Woot:enchant_decapitate.0=This enchantment will give you a 20% chance of getting a head drop from a Creeper, Zombie or Skeleton.<br><br>Tragically, due to an error in manufacturing it does NOT work with Wither Skeletons. Sorry, not sorry.
 
 
 

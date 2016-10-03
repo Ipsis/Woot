@@ -21,6 +21,7 @@ public class ModBlocks {
         GameRegistry.register(blockLayout);
         GameRegistry.register(blockProxy);
         GameRegistry.register(blockExtender);
+        GameRegistry.register(blockSkyblockFactory);
         GameRegistry.register(new ItemBlock(blockFactory).setRegistryName(blockFactory.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgrade(blockUpgrade).setRegistryName(blockUpgrade.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgradeB(blockUpgradeB).setRegistryName(blockUpgradeB.getRegistryName()));
@@ -29,6 +30,7 @@ public class ModBlocks {
         GameRegistry.register(new ItemBlock(blockLayout).setRegistryName(blockLayout.getRegistryName()));
         GameRegistry.register(new ItemBlock(blockProxy).setRegistryName(blockProxy.getRegistryName()));
         GameRegistry.register(new ItemBlock(blockExtender).setRegistryName(blockExtender.getRegistryName()));
+        GameRegistry.register(new ItemBlock(blockSkyblockFactory).setRegistryName(blockSkyblockFactory.getRegistryName()));
     }
 
     public static void registerTileEntities() {
@@ -40,6 +42,7 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityLayout.class, "tile." + BlockLayout.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, "tile." + BlockMobFactoryProxy.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, "tile." + BlockMobFactoryExtender.BASENAME);
+        GameRegistry.registerTileEntity(TileEntitySkyblockFactory.class, "tile." + BlockSkyblockFactory.BASENAME);
     }
 
     public static BlockWoot blockFactory = new BlockMobFactory();
@@ -50,4 +53,5 @@ public class ModBlocks {
     public static BlockWoot blockLayout = new BlockLayout();
     public static BlockWoot blockProxy = new BlockMobFactoryProxy();
     public static BlockWoot blockExtender = new BlockMobFactoryExtender();
+    public static BlockWoot blockSkyblockFactory = new BlockSkyblockFactory();
 }

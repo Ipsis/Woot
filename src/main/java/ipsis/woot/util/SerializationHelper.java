@@ -8,7 +8,6 @@ import ipsis.woot.manager.loot.Drop;
 import ipsis.woot.manager.loot.LootPool;
 import ipsis.woot.manager.loot.LootTable;
 import ipsis.woot.oss.LogHelper;
-import ipsis.woot.reference.Files;
 
 import java.io.*;
 import java.lang.reflect.Type;

@@ -1,7 +1,6 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
-import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemPrism;
 import ipsis.woot.manager.EnumEnchantKey;
 import net.minecraft.command.*;

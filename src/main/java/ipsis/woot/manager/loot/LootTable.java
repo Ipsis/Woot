@@ -3,7 +3,6 @@ package ipsis.woot.manager.loot;
 import com.google.gson.*;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;

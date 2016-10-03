@@ -1,17 +1,13 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.FakePlayerPool;
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;

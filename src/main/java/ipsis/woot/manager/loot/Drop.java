@@ -1,24 +1,16 @@
 package ipsis.woot.manager.loot;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import ipsis.Woot;
-import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.ItemStackHelper;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.text.TextComponentString;
-import scala.actors.threadpool.Arrays;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

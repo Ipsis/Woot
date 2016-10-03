@@ -8,7 +8,6 @@ import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 

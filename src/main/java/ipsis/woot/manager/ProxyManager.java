@@ -1,6 +1,5 @@
 package ipsis.woot.manager;
 
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryExtender;
 import ipsis.woot.tileentity.TileEntityMobFactoryProxy;

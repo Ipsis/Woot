@@ -2,7 +2,6 @@ package ipsis.woot.util;
 
 import com.mojang.authlib.GameProfile;
 import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;

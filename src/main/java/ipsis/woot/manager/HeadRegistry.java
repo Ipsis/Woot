@@ -1,7 +1,6 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;

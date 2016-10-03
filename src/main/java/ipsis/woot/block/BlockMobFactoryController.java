@@ -9,7 +9,6 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;

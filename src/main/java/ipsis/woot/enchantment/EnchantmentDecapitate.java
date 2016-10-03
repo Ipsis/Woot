@@ -2,7 +2,6 @@ package ipsis.woot.enchantment;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModEnchantments;
-import ipsis.woot.oss.LogHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;

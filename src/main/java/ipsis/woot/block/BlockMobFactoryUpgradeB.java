@@ -1,13 +1,8 @@
 package ipsis.woot.block;
 
 import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
-import ipsis.woot.util.StringHelper;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -17,12 +12,9 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

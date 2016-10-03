@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity.multiblock;
 
-import ipsis.woot.reference.Lang;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.util.math.BlockPos;
 

@@ -2,7 +2,6 @@ package ipsis.woot.client.gui;
 
 import ipsis.woot.client.manual.BookManager;
 import ipsis.woot.client.manual.IBookPage;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

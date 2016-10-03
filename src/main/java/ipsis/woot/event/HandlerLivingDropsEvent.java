@@ -5,8 +5,6 @@ import ipsis.woot.enchantment.EnchantmentDecapitate;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.util.FakePlayerPool;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySlime;

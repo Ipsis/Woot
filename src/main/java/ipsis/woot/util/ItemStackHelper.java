@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.text.ParseException;
 import java.util.Random;
 
 public class ItemStackHelper {

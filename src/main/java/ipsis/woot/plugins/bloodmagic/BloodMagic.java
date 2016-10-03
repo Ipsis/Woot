@@ -3,7 +3,6 @@ package ipsis.woot.plugins.bloodmagic;
 import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
 import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import WayofTime.bloodmagic.api.ritual.Ritual;
 import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;

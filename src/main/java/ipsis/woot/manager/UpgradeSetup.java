@@ -1,6 +1,5 @@
 package ipsis.woot.manager;
 
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 
 import java.util.ArrayList;

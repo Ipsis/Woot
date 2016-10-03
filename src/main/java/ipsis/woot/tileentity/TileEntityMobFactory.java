@@ -6,7 +6,6 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;

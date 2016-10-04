@@ -1,30 +1,27 @@
 package ipsis.woot.tileentity;
 
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import ipsis.woot.block.BlockSkyblockFactory;
+import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class TileEntitySkyblockFactory extends TileEntity implements ITickable {
 	
 	int remainingTicks = 0;
+	int ticksToLoot;
+	int LOOT_EVERY_TICKS = 300;
+	
+	
 
 	@Override
 	public void update() {
@@ -34,9 +31,35 @@ public class TileEntitySkyblockFactory extends TileEntity implements ITickable {
 				remainingTicks += TileEntityFurnace.getItemBurnTime(itementity.getEntityItem());
 			}
 		}
-		if(remainingTicks > 0) remainingTicks--;
+		if(remainingTicks > 0) {
+			remainingTicks--;
+			if(worldObj.isRemote) return;
+			ticksToLoot++;
+			if(ticksToLoot >= LOOT_EVERY_TICKS) produceLoot();
+		}
 	}
 	
+	private void produceLoot() {
+		ticksToLoot = 0;
+		outputLoot(new ItemStack(Items.ROTTEN_FLESH));
+	}
+
+	private void outputLoot(ItemStack itemStack) {
+		EnumFacing f = worldObj.getBlockState(pos).getValue(BlockSkyblockFactory.FACING);
+		if(worldObj.isBlockLoaded(getPos().offset(f))) {
+			TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+			if(te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
+				IItemHandler h = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
+				ItemStack result = ItemHandlerHelper.insertItem(h, itemStack, false);
+				if(result != null) {
+					ItemStackHelper.spawnInWorld(worldObj, getPos().offset(EnumFacing.UP), result);
+				}
+				return;
+			}
+		}
+		ItemStackHelper.spawnInWorld(worldObj, getPos().offset(EnumFacing.UP), itemStack);
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
@@ -57,7 +80,9 @@ public class TileEntitySkyblockFactory extends TileEntity implements ITickable {
 		if(itemStack.stackSize == 0) {
 			itementity.setDead();
 		}
-		System.out.println(remainingTicks);
+	}
+	public int getRemainingTicks() {
+		return remainingTicks;
 	}
 
 }

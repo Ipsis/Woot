@@ -1,9 +1,12 @@
 package ipsis.woot.tileentity;
 
+import java.util.Map;
+import java.util.Random;
+
 import ipsis.woot.block.BlockSkyblockFactory;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,13 +22,12 @@ public class TileEntitySkyblockFactory extends TileEntity implements ITickable {
 	
 	int remainingTicks = 0;
 	int ticksToLoot;
-	int LOOT_EVERY_TICKS = 300;
+	static final Random rand = new Random();
 	
 	
-
 	@Override
 	public void update() {
-		for(EntityItem itementity : TileEntityHopper.getCaptureItems(worldObj, pos.getX(), pos.getY(), pos.getZ())) {
+		for(EntityItem itementity : TileEntityHopper.getCaptureItems(worldObj, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5)) {
 			if(TileEntityFurnace.isItemFuel(itementity.getEntityItem()) && remainingTicks <= 0) {
 				consumeOneItem(itementity);
 				remainingTicks += TileEntityFurnace.getItemBurnTime(itementity.getEntityItem());
@@ -35,13 +37,13 @@ public class TileEntitySkyblockFactory extends TileEntity implements ITickable {
 			remainingTicks--;
 			if(worldObj.isRemote) return;
 			ticksToLoot++;
-			if(ticksToLoot >= LOOT_EVERY_TICKS) produceLoot();
+			if(ticksToLoot >= Settings.skyblockProductionTime) produceLoot();
 		}
 	}
 	
 	private void produceLoot() {
 		ticksToLoot = 0;
-		outputLoot(new ItemStack(Items.ROTTEN_FLESH));
+		outputLoot(getWeightedRandom(Settings.skyblockLootMap, rand));
 	}
 
 	private void outputLoot(ItemStack itemStack) {
@@ -81,6 +83,22 @@ public class TileEntitySkyblockFactory extends TileEntity implements ITickable {
 			itementity.setDead();
 		}
 	}
+	
+	public static <E> E getWeightedRandom(Map<E, Double> weights, Random random) {
+	    E result = null;
+	    double bestValue = Double.MAX_VALUE;
+
+	    for (E element : weights.keySet()) {
+	        double value = -Math.log(random.nextDouble()) / weights.get(element);
+	        if (value < bestValue) {
+	            bestValue = value;
+	            result = element;
+	        }
+	    }
+
+	    return result;
+	}
+	
 	public int getRemainingTicks() {
 		return remainingTicks;
 	}

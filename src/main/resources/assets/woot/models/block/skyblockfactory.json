@@ -1,9 +1,9 @@
 {
   "parent": "block/orientable",
   "textures": {
-    "up": "woot:blocks/factory_top",
-    "down": "woot:blocks/factory_bottom",
+    "up": "woot:blocks/skyblockfactory_top",
+    "down": "woot:blocks/factory_base",
     "front": "woot:blocks/factory",
-    "side": "woot:blocks/factory_base"
+    "side": "woot:blocks/skyblockfactory_base"
   }
 }

@@ -1,6 +1,6 @@
 itemGroup.Woot=Woot
 
-tile.Woot:factory.name=Mob Factory
+tile.Woot:factory.name=Mob Factory/Spawner/Grinder
 tile.Woot:controller.name=Mob Controller
 tile.Woot:extender.name=Mob Factory Extender
 tile.Woot:proxy.name=Mob Factory Proxy
@@ -216,6 +216,7 @@ validate.Woot:factory.invalid_block=%s: Invalid block at %d, %d, %d not a %s
 validate.Woot:factory.mob_tier=%s: Mob needs higher tier factory
 
 ritual.Woot:ritualInfernalMachine=Ritual Of The Infernal Machine
+ritual.Woot:ritualInfernalMachine.info=Fill adjacent tanks or a nearby Blood Altar with Life Essence
 
 enchantment.woot_decapitate=Decapitation
 
@@ -293,8 +294,10 @@ book.Woot:upgrade_efficiency.title=Efficiency Upgrade
 book.Woot:upgrade_efficiency.0=This upgrade reduces the power cost of the factory. You will need Efficiency Enchanted Books to craft the upgrades.
 
 book.Woot:upgrade_bloodmagic.title=Blood Magic Upgrade
-book.Woot:upgrade_bloodmagic.0=This upgrade allows the factory to produce Life Essence for each mob spawned in the factory. Each tier of upgrade uses a different number of sacrifice runes on each mob kill:<br><br>Tier I:  10 sacrifice runes<br>Tier II: 20 sacrifice runes<br>Tier III: 30 sacrifice runes
-book.Woot:upgrade_bloodmagic.1=You need to build a Ritual Of The Infernal Machine 6 blocks above the Factory Controller. The factory will output Life Essence into any tank in front of the Factory Controller or connected to the Factory Proxy.
+book.Woot:upgrade_bloodmagic.0=This upgrade allows the factory to produce Life Essence for each mob spawned in the factory. That essence will be put into any tanks in front of the Factory Controller or connect to the Factory Proxy. If there are no tanks, then an Blood Magic Altar can be directly filled.
+book.Woot:upgrade_bloodmagic.1=The altar needs to be within a 10x10x10 area centered on the Master Ritual Stone.<br><br>The Factory Controller needs to be within a 10x10x10 area centered on the Master Ritual Stone.
+book.Woot:upgrade_bloodmagic.2=The tier of upgrade when filling tanks will change the number of sacrifice runes on each mob kill: <br><br>  Tier I: 10 sacrifice runes<br> Tier II: 20 sacrifice runes<br>Tier III: 30 sacrifice runes
+book.Woot:upgrade_bloodmagic.3=The tier of upgrade when filling the Altar will change the sacrifice amount per mob: <br><br>  Tier I: 20<br> Tier II: 30<br>Tier III: 40
 
 book.Woot:enchant_decapitate.title=Decapitate Enchant
 book.Woot:enchant_decapitate.0=This enchantment will give you a 20% chance of getting a head drop from a Creeper, Zombie or Skeleton.<br><br>Tragically, due to an error in manufacturing it does NOT work with Wither Skeletons. Sorry, not sorry.

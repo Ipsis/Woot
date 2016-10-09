@@ -1,5 +1,10 @@
 package ipsis.woot.reference;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import net.minecraft.item.ItemStack;
+
 public class Settings {
 
     public static class Spawner {
@@ -15,6 +20,13 @@ public class Settings {
         public static final int DEF_TIER_III_MOB_XP_CAP = 49;
         public static final int DEF_TIER_IV_MOB_XP_CAP = 65535;
         public static final boolean DEF_PRISM_USE_WHITELIST = false;
+        
+        public static final int DEF_SKYBLOCK_PRODUCTION_TIME = 300;
+        public static final String[] DEF_SKYBLOCK_LOOT = {
+        		"minecraft:rotten_flesh/2/0.2",
+        		"minecraft:bone/1/0.2",
+        		"minecraft:string/1/0.2"
+        		};
     }
 
     public static class Progression {
@@ -174,6 +186,9 @@ public class Settings {
     public static int bmIRfTick;
     public static int bmIIRfTick;
     public static int bmIIIRfTick;
+    
+    public static int skyblockProductionTime;
+    public static Map<ItemStack, Double> skyblockLootMap = new HashMap<ItemStack, Double>();
 
     /**
      * Upgrade effect

@@ -28,6 +28,9 @@ public class Config {
         public static final String PRISM_USE_WHITELIST = "globalPrismUseWhitelist";
         public static final String DROP_BLACKLIST = "globalDropBlacklist";
         public static final String SPAWN_COST_LIST = "globalSpawnCostList";
+        
+        public static final String SKYBLOCK_PRODUCTION_TIME = "skyblockProductionTime";
+        public static final String SKYBLOCK_LOOT_LIST = "skyblockLootList";
     }
 
     public static class Power {

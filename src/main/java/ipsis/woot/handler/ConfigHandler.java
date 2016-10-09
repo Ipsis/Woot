@@ -8,11 +8,19 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class ConfigHandler {
 
@@ -170,6 +178,35 @@ public class ConfigHandler {
         Settings.bmIICount = getConfigInt(Config.Upgrades.BM_II_COUNT, Settings.Upgrades.DEF_BM_II_SACRIFICE_COUNT);
         Settings.bmIIICount = getConfigInt(Config.Upgrades.BM_III_COUNT, Settings.Upgrades.DEF_BM_III_SACRIFICE_COUNT);
 
+        Settings.skyblockProductionTime = getConfigInt(Config.General.SKYBLOCK_PRODUCTION_TIME, Settings.Spawner.DEF_SKYBLOCK_PRODUCTION_TIME);
+        if(Settings.skyblockLootMap.size() == 0) {
+        	for(String s : Settings.Spawner.DEF_SKYBLOCK_LOOT) {
+            	String[] stringArray = s.split("/");
+            	Settings.skyblockLootMap.put(
+            			new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(stringArray[0])), Integer.parseInt(stringArray[1])),
+            			Double.valueOf(stringArray[2])
+            			);
+            }
+        }
+        ArrayList<String> stringList = new ArrayList<String>();
+        for(Entry<ItemStack, Double> entry : Settings.skyblockLootMap.entrySet()) {
+        	stringList.add(Item.REGISTRY.getNameForObject(entry.getKey().getItem()) + 
+        			"/" +
+        			entry.getKey().stackSize +
+        			"/" +
+        			entry.getValue()
+        			);
+        }
+        String[] strings = configuration.getStringList(Config.General.SKYBLOCK_LOOT_LIST, Configuration.CATEGORY_GENERAL, stringList.toArray(new String[stringList.size()]), StringHelper.localize(Lang.getLangConfigValue(Config.General.SKYBLOCK_LOOT_LIST)));
+        Settings.skyblockLootMap.clear();
+        for(String s : strings) {
+        	String[] stringArray = s.split("/");
+        	Settings.skyblockLootMap.put(
+        			new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(stringArray[0])), Integer.parseInt(stringArray[1])),
+        			Double.valueOf(stringArray[2])
+        			);
+        }
+        
         if (configuration.hasChanged())
             configuration.save();
     }

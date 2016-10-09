@@ -452,13 +452,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         }
     }
 
-    private void bmOutput(UpgradeSetup upgradeSetup) {
-
-        if (!upgradeSetup.hasBmUpgrade())
-            return;
+    /**
+     * If there is a tank then it takes priority
+     * Else we store the number of mobs for the ritual to pickup
+     * /
+     */
+    private boolean bmUseTanks(int mobCount) {
 
         if (!bmKeepAlive || BloodMagic.fluidOutput == null)
-            return;
+            return false;
 
         List<IFluidHandler> validHandlers = new ArrayList<>();
         EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
@@ -471,9 +473,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         // Proxy
         validHandlers.addAll(proxyManager.getIFluidHandlers());
 
-        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
-        if (upgradeSetup.hasMassUpgrade())
-            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+        if (validHandlers.isEmpty())
+            return false;
 
         /**
          * sacrificalDaggerCall(20, true) WOSuffering
@@ -481,7 +482,6 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
          * (1 + sacrificeEfficiencyMultiplier) * 20
          * sacrificeEfficiencyMultiplier = 0.10 * sacrifice rune count
          */
-
 
         int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getSacrificeCount();
         float sacrificeEfficiencyMultiplier = (float)(0.10 * upgradeSacrificeCount);
@@ -499,6 +499,38 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             if (out.amount < 0)
                 out.amount = 0;
         }
+
+        return true;
+    }
+
+    private void bmUseRitual(int mobCount, int sacrificeAmount) {
+
+        bmKeepAlive = false;
+        bmMobCount = mobCount;
+        bmSacrificeAmount = sacrificeAmount;
+    }
+
+    private void bmOutput(UpgradeSetup upgradeSetup) {
+
+        if (!upgradeSetup.hasBmUpgrade()) {
+            bmClear();
+            return;
+        }
+
+        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        if (upgradeSetup.hasMassUpgrade())
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+
+        // Scale with the upgrades
+        int sacrificeAmount = 20;
+        int tier = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeTier();
+        if (tier == 2)
+            sacrificeAmount = 30;
+        else if (tier == 3)
+            sacrificeAmount = 40;
+
+        if (!bmUseTanks(mobCount))
+            bmUseRitual(mobCount, sacrificeAmount);
 
         bmKeepAlive = false;
     }
@@ -575,9 +607,28 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     }
 
     private boolean bmKeepAlive = false;
+    private int bmMobCount = 0;
+    private int bmSacrificeAmount = 0;
     public void bmKeepAlive() {
 
         bmKeepAlive = true;
+    }
+
+    public int bmGetMobCount() {
+
+        return bmMobCount;
+    }
+
+    public int bmGetSacrificeAmount() {
+
+        return bmSacrificeAmount;
+    }
+
+    public void bmClear() {
+
+        bmMobCount = 0;
+        bmKeepAlive = false;
+        bmSacrificeAmount = 0;
     }
 
     /**

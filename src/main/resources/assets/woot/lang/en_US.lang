@@ -150,7 +150,6 @@ config.Woot:xpIII_boost=XP III experience percentage
 config.Woot:efficiencyI_percentage=Efficiency I increase in efficiency
 config.Woot:efficiencyII_percentage=Efficiency II increase in efficiency
 config.Woot:efficiencyIII_percentage=Efficiency III increase in efficiency
-config.Woot:
 
 tooltip.Woot:factory_cost=Tier %s %dRF/tick
 
@@ -165,7 +164,7 @@ tooltip.Woot:upgrade_xp_base_effect=Collect XP
 tooltip.Woot:upgrade_mass_effect=Spawn %d mobs
 tooltip.Woot:upgrade_decap_effect=Increases chance to decapitate to %d%%
 tooltip.Woot:upgrade_efficiency_effect=Reduce factory power cost by %d%%
-tooltip.Woot:upgrade_bloodmagic_effect=Generate Life Essence and apply %d sacrifice runes to each mob
+tooltip.Woot:upgrade_bloodmagic_effect=Generate Life Essence. When direct to Tank:%d sacrifice runes, when direct to Altar:%d Life Essence
 
 tooltip.Woot:upgrade.rate_i=Spawn Rate I
 tooltip.Woot:upgrade.rate_ii=Spawn Rate II

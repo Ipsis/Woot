@@ -120,6 +120,10 @@ public class Settings {
         public static final int DEF_BM_I_SACRIFICE_COUNT = 10;
         public static final int DEF_BM_II_SACRIFICE_COUNT = 20;
         public static final int DEF_BM_III_SACRIFICE_COUNT = 30;
+
+        public static final int DEF_BM_I_ALTAR_LIFE_ESSENCE = 20;
+        public static final int DEF_BM_II_ALTAR_LIFE_ESSENCE = 30;
+        public static final int DEF_BM_III_ALTAR_LIFE_ESSENCE = 40;
     }
 
     /**
@@ -205,4 +209,7 @@ public class Settings {
     public static int bmICount;
     public static int bmIICount;
     public static int bmIIICount;
+    public static int bmIAltarLifeEssence;
+    public static int bmIIAltarLifeEssence;
+    public static int bmIIIAltarLifeEssence;
 }

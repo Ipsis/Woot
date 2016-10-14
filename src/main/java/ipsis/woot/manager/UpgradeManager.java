@@ -46,9 +46,9 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_II).setRfCostPerTick(0).setEfficiency(Settings.efficiencyII);
         upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_III).setRfCostPerTick(0).setEfficiency(Settings.efficiencyIII);
 
-        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_I).setRfCostPerTick(Settings.bmIRfTick).setSacrificeCount(Settings.bmICount);
-        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_II).setRfCostPerTick(Settings.bmIIRfTick).setSacrificeCount(Settings.bmIICount);
-        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_III).setRfCostPerTick(Settings.bmIIIRfTick).setSacrificeCount(Settings.bmIIICount);
+        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_I).setRfCostPerTick(Settings.bmIRfTick).setSacrificeCount(Settings.bmICount).setAltarLifeEssence(Settings.bmIAltarLifeEssence);
+        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_II).setRfCostPerTick(Settings.bmIIRfTick).setSacrificeCount(Settings.bmIICount).setAltarLifeEssence(Settings.bmIIAltarLifeEssence);
+        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_III).setRfCostPerTick(Settings.bmIIIRfTick).setSacrificeCount(Settings.bmIIICount).setAltarLifeEssence(Settings.bmIIIAltarLifeEssence);
     }
 
     public static EnumEnchantKey getLootingEnchant(List<SpawnerUpgrade> upgradeList) {

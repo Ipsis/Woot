@@ -522,12 +522,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 
         // Scale with the upgrades
-        int sacrificeAmount = 20;
-        int tier = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeTier();
-        if (tier == 2)
-            sacrificeAmount = 30;
-        else if (tier == 3)
-            sacrificeAmount = 40;
+        int sacrificeAmount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getAltarLifeEssence();
 
         if (!bmUseTanks(mobCount))
             bmUseRitual(mobCount, sacrificeAmount);

@@ -5,6 +5,7 @@ public class SpawnerUpgrade {
     EnumSpawnerUpgrade upgradeType;
     int rfCostPerTick;
     int v; /* type specific value */
+    int v2; /* type specific value */
 
     @Override
     public String toString() {
@@ -61,6 +62,17 @@ public class SpawnerUpgrade {
     public int getSacrificeCount() {
 
         return this.v;
+    }
+
+    public SpawnerUpgrade setAltarLifeEssence(int essence) {
+
+        this.v2 = essence;
+        return this;
+    }
+
+    public int getAltarLifeEssence() {
+
+        return this.v2;
     }
 
     public SpawnerUpgrade setDecapitateChance(int decapitateChance) {

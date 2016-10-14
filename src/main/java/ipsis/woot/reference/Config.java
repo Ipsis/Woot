@@ -86,5 +86,9 @@ public class Config {
         public static final String BM_I_COUNT = "bmI_count";
         public static final String BM_II_COUNT = "bmII_count";
         public static final String BM_III_COUNT = "bmIII_count";
+
+        public static final String BM_I_ALTAR_LIFE_ESSENCE = "bmI_altar";
+        public static final String BM_II_ALTAR_LIFE_ESSENCE = "bmII_altar";
+        public static final String BM_III_ALTAR_LIFE_ESSENCE = "bmIII_altar";
     }
 }

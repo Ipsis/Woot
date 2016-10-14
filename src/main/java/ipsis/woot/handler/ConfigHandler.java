@@ -170,6 +170,10 @@ public class ConfigHandler {
         Settings.bmIICount = getConfigInt(Config.Upgrades.BM_II_COUNT, Settings.Upgrades.DEF_BM_II_SACRIFICE_COUNT);
         Settings.bmIIICount = getConfigInt(Config.Upgrades.BM_III_COUNT, Settings.Upgrades.DEF_BM_III_SACRIFICE_COUNT);
 
+        Settings.bmIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_I_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_I_ALTAR_LIFE_ESSENCE);
+        Settings.bmIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_II_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_II_ALTAR_LIFE_ESSENCE);
+        Settings.bmIIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_III_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_III_ALTAR_LIFE_ESSENCE);
+
         if (configuration.hasChanged())
             configuration.save();
     }

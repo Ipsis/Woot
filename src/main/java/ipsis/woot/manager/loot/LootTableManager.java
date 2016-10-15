@@ -68,6 +68,17 @@ public class LootTableManager {
         return drops;
     }
 
+    public List<FullDropInfo> getFullDropInfo(String wootName, EnumEnchantKey key) {
+
+        List<FullDropInfo> drops = null;
+
+        LootTable e = lootMap.get(wootName);
+        if (e != null)
+            drops = e.getFullDropInfo(key);
+
+        return drops;
+    }
+
     public boolean isFull(String wootName, EnumEnchantKey key) {
 
         LootTable e = lootMap.get(wootName);

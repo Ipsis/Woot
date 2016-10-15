@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LootTable {
@@ -120,6 +121,20 @@ public class LootTable {
         }
 
         return sb.toString();
+    }
+
+    public List<FullDropInfo> getFullDropInfo(EnumEnchantKey key) {
+
+        List<FullDropInfo> info = new ArrayList<FullDropInfo>();
+        LootPool pool = getLootPool(key);
+        for (Drop d : pool.drops) {
+
+            float chance = ((float)d.count/(float)pool.samples) * 100.0F;
+            if (d.itemStack != null)
+                info.add(new FullDropInfo(d.itemStack.copy(), chance));
+        }
+
+        return info;
     }
 
     /**

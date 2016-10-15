@@ -81,7 +81,7 @@ waila.Woot:factory.cost=Costs %dRF @ %dRF/tick
 waila.Woot:controller.tier=Requires Tier %s
 waila.Woot:factory.running=Factory is running
 waila.Woot:factory.stopped=Factory is stopped
-waila.Woot:factory.sneak=Sneak for installed upgrades
+waila.Woot:factory.sneak=Sneak for installed upgrades and learned drops
 waila.Woot:factory.nullupgrades=No upgrades installed
 
 entity.Woot:witherskelly.name=Wither Skeleton

@@ -1,9 +1,9 @@
 package ipsis.woot.block;
 
-import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.manager.SpawnerUpgrade;
-import ipsis.woot.manager.UpgradeManager;
-import ipsis.woot.manager.UpgradeSetup;
+import ipsis.Woot;
+import ipsis.woot.manager.*;
+import ipsis.woot.manager.loot.FullDropInfo;
+import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -16,6 +16,7 @@ import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -24,6 +25,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -201,9 +203,40 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
                             probeInfo.text(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + e));
                         }
+
+                        // Show the drop info
+                        EnumEnchantKey key = factoryTE.getUpgradeSetup().getEnchantKey();
+                        List<FullDropInfo> drops = Woot.LOOT_TABLE_MANAGER.getFullDropInfo(factoryTE.getMobName(), key);
+                        if (drops != null) {
+
+                            IProbeInfo vertical = null;
+                            IProbeInfo horizontal = null;
+                            int rows = 0;
+                            int idx = 0;
+                            for (FullDropInfo drop : drops) {
+                                if (idx % 10 == 0) {
+                                    if (vertical == null)
+                                        vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+
+                                    horizontal = vertical.horizontal(new LayoutStyle().spacing(0));
+                                    rows++;
+                                    if (rows > 4)
+                                        break;
+                                }
+
+                                // TOP allows the itemstack to be > 64
+                                // So use that renderer to display the chance of getting a drop.
+                                ItemStack fakeStack = drop.getItemStack().copy();
+                                fakeStack.stackSize = (int)Math.ceil(drop.getDropChance());
+                                horizontal.item(fakeStack);
+                                idx++;
+                            }
+                        }
+
                     } else {
                         probeInfo.text(StringHelper.localize(Lang.WAILA_NO_UPGRADES));
                     }
+
 
                 } else {
                     probeInfo.text(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));

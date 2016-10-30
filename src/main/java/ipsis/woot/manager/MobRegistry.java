@@ -211,7 +211,7 @@ public class MobRegistry {
 
     boolean isCyberware(String wootName) {
 
-        return wootName.equals(Reference.MOD_ID + ":" + "none:cyberware.cyberzombie");
+        return wootName.toLowerCase().contains("cyberware");
     }
 
     boolean isEnderDragon(String wootName) {

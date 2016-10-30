@@ -104,6 +104,9 @@ public class MobRegistry {
         if (isEnderDragon(wootName))
             return false;
 
+        if (isCyberware(wootName))
+            return false;
+
         String[] mobList;
         if (Settings.usePrismWhitelist)
             mobList = Settings.prismWhitelist;
@@ -204,6 +207,11 @@ public class MobRegistry {
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }
+    }
+
+    boolean isCyberware(String wootName) {
+
+        return wootName.equals(Reference.MOD_ID + ":" + "none:cyberware.cyberzombie");
     }
 
     boolean isEnderDragon(String wootName) {

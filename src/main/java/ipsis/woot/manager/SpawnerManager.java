@@ -16,6 +16,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.*;
 
@@ -142,7 +143,9 @@ public class SpawnerManager {
         Entity entity = Woot.mobRegistry.createEntity(mobName, world);
 
         if (entity != null) {
-            ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
+            // Allow custom spawn mechanics from other mods
+            if (!ForgeEventFactory.doSpecialSpawn((EntityLiving)entity, world, blockPos.getX(), blockPos.getY(), blockPos.getZ()))
+                ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
 
             BlockPos originPos = new BlockPos(blockPos.getX(), 1, blockPos.getZ());
             entity.setPosition(originPos.getX(), originPos.getY(), originPos.getZ());

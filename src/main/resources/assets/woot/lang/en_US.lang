@@ -195,6 +195,7 @@ tooltip.Woot:prism.1=Use on controller to program
 
 chat.Woot:prism.invalid=Mob %s cannot be captured (%s)
 chat.Woot:prism.program=Mob %s programmed (%s)
+chat.Woot:mob.invalid=Mob %s is blacklisted (%s)
 
 commands.Woot:woot.usage=/woot <status|mobs|blacklist|tiers|prism|cost|flush {all|<mob>}|loot <mob> [detail]|give <player> <mob> <xp>|dev {true|false}>
 commands.Woot:woot.dev.summary=Dev mode to %s

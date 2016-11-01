@@ -167,6 +167,15 @@ public class MobFactoryMultiblockLogic {
         }
 
         /**
+         * Mob must not be blacklisted
+         */
+        if (!Woot.mobRegistry.isPrismValid(teController.getMobName())) {
+            if (feedback)
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.CHAT_MOB_INVALID), teController.getModDisplayName(), teController.getMobName()));
+            return new FactorySetup();
+        }
+
+        /**
          * Mob cost must not exceed tier
          */
         boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);

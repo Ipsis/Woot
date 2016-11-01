@@ -49,4 +49,5 @@ public class Lang {
 
     public static final String CHAT_PRISM_INVALID = TAG_CHAT + "prism.invalid";
     public static final String CHAT_PRISM_PROGRAM = TAG_CHAT + "prism.program";
+    public static final String CHAT_MOB_INVALID = TAG_CHAT + "mob.invalid";
 }

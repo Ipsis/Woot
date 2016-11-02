@@ -3,6 +3,7 @@ package ipsis.woot.manager.loot;
 import com.google.gson.*;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -95,6 +96,13 @@ public class LootTable {
 
                 ItemStack dropStack = ItemStack.copyItemStack(d.itemStack);
                 dropStack.stackSize = d.getWeightedSize();
+
+                /* Set damage value */
+                if (dropStack.isItemStackDamageable()) {
+                    int dmg = Woot.RANDOM.nextInt(dropStack.getMaxDamage()) + 1;
+                    dropStack.setItemDamage(dmg);
+                }
+
                 loot.add(dropStack);
             }
         }

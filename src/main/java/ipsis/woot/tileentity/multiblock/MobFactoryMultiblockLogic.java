@@ -105,6 +105,7 @@ public class MobFactoryMultiblockLogic {
         BlockPos controllerPos = factory.getPos().up(1);
         TileEntity te = factory.getWorld().getTileEntity(controllerPos);
         if (!(te instanceof TileEntityMobFactoryController)) {
+            /* FAIL - No mob controller */
             if (feedback)
                 validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_CONTROLLER), tier));
             return factorySetup;
@@ -112,11 +113,19 @@ public class MobFactoryMultiblockLogic {
 
         TileEntityMobFactoryController teController = (TileEntityMobFactoryController)te;
         if (teController.getMobName().equals("")) {
+            /* FAIL - No mob programmed */
             if (feedback && player != null)
                 validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_MOB), tier));
             return factorySetup;
         }
-        
+
+        if (!Woot.mobRegistry.isPrismValid(teController.getMobName())) {
+            /* FAIL - Mob blacklisted */
+            if (feedback)
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.CHAT_MOB_INVALID), teController.getModDisplayName(), teController.getMobName()));
+            return new FactorySetup();
+        }
+
         factorySetup.mobName = teController.getMobName();
         factorySetup.displayName = teController.getModDisplayName();
 
@@ -166,11 +175,12 @@ public class MobFactoryMultiblockLogic {
             factorySetup.blockPosList.add(p);
         }
 
-        /**
-         * Mob cost must not exceed tier
-         */
+        /* OK - all structure blocks are present */
+        validateChat(player, TextFormatting.GREEN + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_BLOCKS_OK), tier));
+
         boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);
         if (!validMobLevel) {
+            /* FAIL - invalid tier for mob */
             if (feedback)
                 validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
             return new FactorySetup();

@@ -1,6 +1,8 @@
 package ipsis.woot.init.recipes;
 
 import ipsis.woot.reference.Reference;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -10,6 +12,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ShapedOreEnchBookRecipe extends ShapedOreRecipe {
 
@@ -52,15 +55,24 @@ public class ShapedOreEnchBookRecipe extends ShapedOreRecipe {
                 if (target instanceof ItemStack && ((ItemStack) target).getItem() == Items.ENCHANTED_BOOK &&
                         slot instanceof ItemStack && ((ItemStack)slot).getItem() == Items.ENCHANTED_BOOK)
                 {
-                    // ItemEnchantedBook.addEnchantment adds
-                    //     StoredEnchantments short=id short=lvl
-                    //
-                    //  ItemStack.addEnchantment adds
-                    //      StoredEnchantments short=id short=lvl on books
-                    //      ench short=id short=lvl on other items
 
-                    if (!ItemStack.areItemStacksEqual((ItemStack)target, slot))
+                    Map<Enchantment, Integer> slotEnchantMap = EnchantmentHelper.getEnchantments((ItemStack)slot);
+                    Map<Enchantment, Integer> targetEnchantMap = EnchantmentHelper.getEnchantments((ItemStack)target);
+
+                    /**
+                     * Only allow one enchantment books
+                     */
+                    if (slotEnchantMap.size() != 1)
                         return false;
+
+                    for (Enchantment enchantment : targetEnchantMap.keySet()) {
+                        /* Target will only have one enchant, slot may have more */
+                        int lvl = targetEnchantMap.get(enchantment).intValue();
+                        if (slotEnchantMap.containsKey(enchantment) && slotEnchantMap.get(enchantment).intValue() == lvl)
+                            return true;
+                    }
+
+                    return false;
                 }
                 else if (target instanceof ItemStack)
                 {

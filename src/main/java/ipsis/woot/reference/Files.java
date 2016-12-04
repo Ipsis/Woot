@@ -18,4 +18,14 @@ public class Files {
 
         lootFile = new File(globalDataDirectory, LOOT_FILENAME);
     }
+
+    public static String getWootFileForDisplay() {
+
+        /**
+         * Strip out anything that could be interpreted as an escape in a String format
+         * As that is what FMLLog is using to display this
+         */
+        String raw = lootFile.toString();
+        return raw.replace("%", "%%");
+    }
 }

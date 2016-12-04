@@ -173,7 +173,7 @@ public class LootTableManager {
      */
     public void load() {
 
-        LogHelper.info("LootTableManager: Load loot statistics from " + Files.lootFile.toString());
+        LogHelper.info("LootTableManager: Load loot statistics from " + Files.getWootFileForDisplay());
         lootMap = null;
         try {
             lootMap = SerializationHelper.readHashMapFromFile(Files.lootFile);
@@ -187,7 +187,7 @@ public class LootTableManager {
 
     public void save() {
 
-        LogHelper.info("LootTableManager: Save loot statistics to " + Files.lootFile.toString());
+        LogHelper.info("LootTableManager: Save loot statistics to " + Files.getWootFileForDisplay());
         SerializationHelper.writeHashMapToFile(lootMap, Files.lootFile);
     }
 }

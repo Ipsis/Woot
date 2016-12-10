@@ -6,6 +6,7 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -556,12 +557,18 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                 if (itemStack.stackSize <= 0)
                     continue;
 
-                /**
-                 * We try to insert 1 item and decrease itemStack.stackSize if it is successful
-                 */
-                ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
-                if (result == null)
-                    itemStack.stackSize--;
+                boolean success = true;
+                while (success && itemStack.stackSize > 0) {
+
+                    /**
+                     * We try to insert 1 item and decrease itemStack.stackSize if it is successful
+                     */
+                    ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
+                    if (result == null)
+                        itemStack.stackSize--;
+                    else
+                        success = false;
+                }
             }
 
             storedXp += loot.getXp();

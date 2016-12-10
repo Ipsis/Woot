@@ -23,7 +23,7 @@ public class BookManager {
         addEntry("cover", new BookPageCover("cover.0"));
         addEntry("introduction", new BookPageText("introduction.0"), new BookPageText("introduction.1"));
         addEntry("crafting", new BookPageText("crafting.0"), new BookPageText("crafting.1"));
-        addEntry("building", new BookPageText("building.0"), new BookPageText("building.1"), new BookPageText("building.2"));
+        addEntry("building", new BookPageText("building.0"), new BookPageText("building.1"), new BookPageText("building.2"), new BookPageText("building.3"));
         addEntry("capturing", new BookPageText("capturing.0"), new BookPageText("capturing.1"));
         addEntry("operation", new BookPageText("operation.0"), new BookPageText("operation.1"));
         addEntry("power", new BookPageText("power.0"));

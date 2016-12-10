@@ -47,7 +47,7 @@ public enum EnumMobFactoryModule implements IStringSerializable {
 
     public static EnumMobFactoryModule byMetadata(int metadata) {
 
-        if (metadata < 0 || metadata > VALUES.length)
+        if (metadata < 0 || metadata >= VALUES.length)
             return BLOCK_1;
 
         return VALUES[metadata];

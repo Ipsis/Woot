@@ -17,8 +17,10 @@ public enum EnumEnchantKey {
 
     public static EnumEnchantKey getEnchantKey(int v) {
 
-        if (v < 0 || v >= values().length)
-            v = 0;
+        if (v < 0)
+            return NO_ENCHANT;
+        else if (v >= values().length)
+            return LOOTING_III;
 
         return values()[v];
     }

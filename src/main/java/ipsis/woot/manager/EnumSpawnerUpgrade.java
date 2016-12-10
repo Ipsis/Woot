@@ -35,7 +35,7 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
 
     public static EnumSpawnerUpgrade getFromMetadata(int meta) {
 
-        if (meta < 0 || meta > values().length)
+        if (meta < 0 || meta >= values().length)
             return values()[0];
 
         return values()[meta];

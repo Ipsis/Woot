@@ -18,7 +18,7 @@ public enum EnumVariantUpgradeB implements IStringSerializable {
 
     public static EnumVariantUpgradeB getFromMetadata(int meta) {
 
-        if (meta < 0 || meta > values().length)
+        if (meta < 0 || meta >= values().length)
             return values()[0];
 
         return values()[meta];

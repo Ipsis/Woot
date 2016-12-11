@@ -213,16 +213,13 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                         List<FullDropInfo> drops = Woot.LOOT_TABLE_MANAGER.getFullDropInfo(factoryTE.getMobName(), key);
                         if (drops != null) {
 
-                            IProbeInfo vertical = null;
+                            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
                             IProbeInfo horizontal = null;
                             int rows = 0;
                             int idx = 0;
                             for (FullDropInfo drop : drops) {
                                 if (idx % 10 == 0) {
-                                    if (vertical == null)
-                                        vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
-
-                                    horizontal = vertical.horizontal(new LayoutStyle().spacing(0));
+                                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
                                     rows++;
                                     if (rows > 4)
                                         break;

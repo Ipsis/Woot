@@ -40,7 +40,7 @@ public class ItemStackHelper {
             entityitem.motionX = RANDOM.nextGaussian() * (double) f3;
             entityitem.motionY = RANDOM.nextGaussian() * (double) f3 + 0.20000000298023224D;
             entityitem.motionZ = RANDOM.nextGaussian() * (double) f3;
-            world.spawnEntityInWorld(entityitem);
+            world.spawnEntity(entityitem);
         }
     }
 

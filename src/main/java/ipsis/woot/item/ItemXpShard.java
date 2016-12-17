@@ -52,7 +52,7 @@ public class ItemXpShard extends ItemWoot {
                         SoundCategory.PLAYERS,
                         0.2F, 0.5F * ((itemRand.nextFloat() - itemRand.nextFloat()) * 0.7F + 1.8F));
                 if(playerIn instanceof FakePlayer)
-                	worldIn.spawnEntityInWorld(new EntityXPOrb(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ, XP_VALUE));
+                	worldIn.spawnEntity(new EntityXPOrb(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ, XP_VALUE));
                 else
                 	playerIn.addExperience(XP_VALUE);
 

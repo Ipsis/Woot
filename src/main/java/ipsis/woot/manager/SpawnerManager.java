@@ -45,7 +45,7 @@ public class SpawnerManager {
 
             if (spawnTime > 0) {
                 float rfpertick = (float)totalRf / spawnTime;
-                return MathHelper.ceiling_float_int(rfpertick);
+                return MathHelper.ceil(rfpertick);
             }
             return 1;
         }

@@ -47,7 +47,7 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
 
             connectedTEs.add(currTE);
             for (EnumFacing f : EnumFacing.values()) {
-                TileEntity te = worldObj.getTileEntity(currTE.getPos().offset(f));
+                TileEntity te = world.getTileEntity(currTE.getPos().offset(f));
                 if (te instanceof TileEntityMobFactoryStructure && !connectedTEs.contains(te)) {
                     traversingTEs.add((TileEntityMobFactoryStructure)te);
                 } else if (te instanceof TileEntityMobFactory) {

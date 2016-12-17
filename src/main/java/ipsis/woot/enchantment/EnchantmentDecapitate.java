@@ -113,7 +113,7 @@ public class EnchantmentDecapitate extends Enchantment {
             if (itemStack != null) {
 
                 EntityItem entityItem = createEntityItem(
-                        e.getSource().getEntity().worldObj,
+                        e.getSource().getEntity().getEntityWorld(),
                         itemStack,
                         e.getEntityLiving().getPosition().getX(),
                         e.getEntityLiving().getPosition().getY(),

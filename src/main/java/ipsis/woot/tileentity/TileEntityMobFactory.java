@@ -194,8 +194,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     void updateStructureBlocks(boolean connected) {
 
         for (BlockPos p : structureBlockList) {
-            if (worldObj.isBlockLoaded(p)) {
-                TileEntity te = worldObj.getTileEntity(p);
+            if (world.isBlockLoaded(p)) {
+                TileEntity te = world.getTileEntity(p);
                 if (te instanceof TileEntityMobFactoryStructure) {
                     if (connected)
                         ((TileEntityMobFactoryStructure) te).setMaster(this);
@@ -209,8 +209,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     void updateUpgradeBlocks(boolean connected) {
 
         for (BlockPos p : upgradeBlockList) {
-            if (worldObj.isBlockLoaded(p)) {
-                TileEntity te = worldObj.getTileEntity(p);
+            if (world.isBlockLoaded(p)) {
+                TileEntity te = world.getTileEntity(p);
                 if (te instanceof TileEntityMobFactoryUpgrade) {
                     if (connected)
                         ((TileEntityMobFactoryUpgrade) te).setMaster(this);
@@ -290,12 +290,12 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     void upgradeTierX(BlockPos[] upgradePos, int maxTier) {
 
         List<SpawnerUpgrade> tmpUpgradeList = new ArrayList<SpawnerUpgrade>();
-        EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
+        EnumFacing f = world.getBlockState(pos).getValue(BlockMobFactory.FACING);
         for (BlockPos p : upgradePos) {
 
             BlockPos offset = BlockPosHelper.rotateFromSouth(p, f.getOpposite());
             BlockPos p2 = getPos().add(offset.getX(), offset.getY(), offset.getZ());
-            UpgradeManager.scanUpgradeTotem(worldObj, p2, maxTier, tmpUpgradeList, upgradeBlockList);
+            UpgradeManager.scanUpgradeTotem(world, p2, maxTier, tmpUpgradeList, upgradeBlockList);
         }
 
         upgradeSetup.processUpgrades(tmpUpgradeList);
@@ -330,7 +330,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     private boolean isMachinePowered() {
 
-        boolean controller = worldObj.isBlockPowered(pos);
+        boolean controller = world.isBlockPowered(pos);
         boolean proxy = proxyManager.isBlockPowered();
         return controller || proxy;
     }
@@ -338,7 +338,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     @Override
     public void update() {
 
-        if (worldObj.isRemote)
+        if (world.isRemote)
             return;
 
         structureTicks++;
@@ -378,7 +378,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
                 BlockPos spawnPos = new BlockPos(getPos().getX(), 0, getPos().getZ());
-                Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
+                Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.world, this.getPos());
             }
             currLearnTicks = 0;
         }
@@ -411,7 +411,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
                 bb = new AxisAlignedBB(checkPos).expand(range, 0, range);
             }
 
-            List<EntityItem> itemList = worldObj.getEntitiesWithinAABB(EntityItem.class, bb, EntitySelectors.IS_ALIVE);
+            List<EntityItem> itemList = world.getEntitiesWithinAABB(EntityItem.class, bb, EntitySelectors.IS_ALIVE);
             if (!itemList.isEmpty()) {
                 Woot.LOOT_TABLE_MANAGER.update(mobName, key, itemList, false);
                 for (EntityItem i : itemList)
@@ -464,9 +464,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             return false;
 
         List<IFluidHandler> validHandlers = new ArrayList<>();
-        EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
-        if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
-            TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+        EnumFacing f = world.getBlockState(pos).getValue(BlockMobFactory.FACING);
+        if (world.isBlockLoaded(this.getPos().offset(f))) {
+            TileEntity te = world.getTileEntity(this.getPos().offset(f));
             if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
                 validHandlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
         }
@@ -533,14 +533,14 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     private void produceOutput() {
 
-        SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, worldObj.getDifficultyForLocation(getPos()));
+        SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, world.getDifficultyForLocation(getPos()));
 
         List<IItemHandler> validHandlers = new ArrayList<>();
 
         // Original position
-        EnumFacing f = worldObj.getBlockState(pos).getValue(BlockMobFactory.FACING);
-        if (worldObj.isBlockLoaded(this.getPos().offset(f))) {
-            TileEntity te = worldObj.getTileEntity(this.getPos().offset(f));
+        EnumFacing f = world.getBlockState(pos).getValue(BlockMobFactory.FACING);
+        if (world.isBlockLoaded(this.getPos().offset(f))) {
+            TileEntity te = world.getTileEntity(this.getPos().offset(f));
             if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
                 validHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
         }

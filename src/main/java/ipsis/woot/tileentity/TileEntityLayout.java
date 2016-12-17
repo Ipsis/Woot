@@ -37,7 +37,7 @@ public class TileEntityLayout extends TileEntity {
     public void refreshLayout() {
 
         // The server never needs the block list - it is only used for rendering
-        if (this.worldObj != null && this.worldObj.isRemote) {
+        if (this.world != null && this.world.isRemote) {
             layoutBlockInfoList.clear();
             MobFactoryMultiblockLogic.getFactoryLayout(tier, this.getPos(), facing, layoutBlockInfoList);
         }

@@ -78,7 +78,7 @@ public class TileEntityMobFactoryController extends TileEntity {
 
     void updateMobFarm() {
 
-        TileEntity te = worldObj.getTileEntity(getPos().offset(EnumFacing.DOWN));
+        TileEntity te = world.getTileEntity(getPos().offset(EnumFacing.DOWN));
         if (te instanceof TileEntityMobFactory)
             ((TileEntityMobFactory) te).interruptStructure();
     }

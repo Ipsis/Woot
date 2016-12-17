@@ -48,7 +48,7 @@ public class ItemPrism extends ItemWoot {
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 
-        if (attacker.worldObj.isRemote)
+        if (attacker.getEntityWorld().isRemote)
             return false;
 
         if (!(attacker instanceof EntityPlayer))

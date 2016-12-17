@@ -26,7 +26,7 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
 
             if (this.getWorld() != null) {
                 IBlockState iblockstate = this.getWorld().getBlockState(pos);
-                worldObj.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
+                world.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
             }
         }
     }
@@ -37,7 +37,7 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
 
             if (this.getWorld() != null) {
                 IBlockState iblockstate = this.getWorld().getBlockState(pos);
-                worldObj.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
+                world.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
             }
         }
     }
@@ -56,7 +56,7 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
 
             connectedTEs.add(currTE);
             for (EnumFacing f : EnumFacing.values()) {
-                TileEntity te = worldObj.getTileEntity(currTE.getPos().offset(f));
+                TileEntity te = world.getTileEntity(currTE.getPos().offset(f));
                 if (te instanceof TileEntityMobFactoryUpgrade && !connectedTEs.contains(te)) {
                     traversingTEs.add((TileEntityMobFactoryUpgrade)te);
                 } else if (te instanceof TileEntityMobFactory) {

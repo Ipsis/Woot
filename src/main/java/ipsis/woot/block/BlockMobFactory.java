@@ -229,7 +229,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                                 // TOP allows the itemstack to be > 64
                                 // So use that renderer to display the chance of getting a drop.
                                 ItemStack fakeStack = drop.getItemStack().copy();
-                                fakeStack.stackSize = (int)Math.ceil(drop.getDropChance());
+                                fakeStack.setCount((int)Math.ceil(drop.getDropChance()));
                                 horizontal.item(fakeStack);
                                 idx++;
                             }

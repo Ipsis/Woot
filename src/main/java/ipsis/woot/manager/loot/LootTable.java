@@ -68,7 +68,7 @@ public class LootTable {
             boolean found = false;
             for (Drop d : pool.drops) {
                 if (d.itemStack.isItemEqualIgnoreDurability(itemStack)) {
-                    d.update(itemStack.stackSize);
+                    d.update(itemStack.getCount());
                     found = true;
                     break;
                 }
@@ -76,7 +76,7 @@ public class LootTable {
 
             if (!found) {
                 Drop d = new Drop(itemStack);
-                d.update(itemStack.stackSize);
+                d.update(itemStack.getCount());
                 pool.drops.add(d);
             }
         }
@@ -95,7 +95,7 @@ public class LootTable {
                     continue;;
 
                 ItemStack dropStack = d.itemStack.copy();
-                dropStack.stackSize = d.getWeightedSize();
+                dropStack.setCount(d.getWeightedSize());
 
                 /* Set damage value */
                 if (dropStack.isItemStackDamageable()) {

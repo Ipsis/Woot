@@ -138,9 +138,9 @@ public class CommandWoot extends CommandBase {
             entityplayer.inventoryContainer.detectAndSendChanges();
         }
 
-        if (flag && itemstack.stackSize <= 0)
+        if (flag && itemstack.isEmpty())
         {
-            itemstack.stackSize = 1;
+            itemstack.setCount(1);
             sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1);
             EntityItem entityitem1 = entityplayer.dropItem(itemstack, false);
 
@@ -151,7 +151,7 @@ public class CommandWoot extends CommandBase {
         }
         else
         {
-            sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1 - itemstack.stackSize);
+            sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 1 - itemstack.getCount());
             EntityItem entityitem = entityplayer.dropItem(itemstack, false);
 
             if (entityitem != null)

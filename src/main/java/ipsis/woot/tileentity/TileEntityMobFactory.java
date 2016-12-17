@@ -554,18 +554,18 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
             for (ItemStack itemStack : loot.getDropList()) {
 
-                if (itemStack.stackSize <= 0)
+                if (itemStack.getCount() <= 0)
                     continue;
 
                 boolean success = true;
-                while (success && itemStack.stackSize > 0) {
+                while (success && !itemStack.isEmpty()) {
 
                     /**
                      * We try to insert 1 item and decrease itemStack.stackSize if it is successful
                      */
                     ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
                     if (result == null)
-                        itemStack.stackSize--;
+                        itemStack.shrink(1);
                     else
                         success = false;
                 }

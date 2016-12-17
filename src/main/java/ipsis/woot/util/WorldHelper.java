@@ -19,7 +19,7 @@ public class WorldHelper {
 
         if (world != null) {
             IBlockState iBlockState = world.getBlockState(pos);
-            world.notifyNeighborsOfStateChange(pos, b);
+            world.notifyNeighborsOfStateChange(pos, b, false);
         }
     }
 }

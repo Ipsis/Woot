@@ -14,6 +14,7 @@ import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -42,8 +43,8 @@ public class Woot {
     public static CreativeTabs tabWoot = new CreativeTabs(Reference.MOD_ID) {
         @Override
         @SideOnly(Side.CLIENT)
-        public Item getTabIconItem() {
-            return Item.getItemFromBlock(ModBlocks.blockFactory);
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactory));
         }
     };
 

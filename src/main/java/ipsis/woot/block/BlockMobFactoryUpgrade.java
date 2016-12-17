@@ -71,7 +71,7 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
     @Override
     public void initModel() {
 
-        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
+        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID, BASENAME));
 
         for (int i = 0; i < EnumVariantUpgrade.values().length; i++) {
 

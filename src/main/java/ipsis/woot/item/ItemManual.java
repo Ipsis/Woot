@@ -21,7 +21,7 @@ public class ItemManual extends ItemWoot {
 
         super(BASENAME);
         setMaxStackSize(1);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

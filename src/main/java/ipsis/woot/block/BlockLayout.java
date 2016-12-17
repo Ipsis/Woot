@@ -28,7 +28,7 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
     public BlockLayout() {
 
         super(Material.ROCK, BASENAME);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

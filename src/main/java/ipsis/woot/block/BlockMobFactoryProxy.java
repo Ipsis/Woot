@@ -28,7 +28,7 @@ public class BlockMobFactoryProxy extends BlockWoot implements ITileEntityProvid
 
         super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FORMED, false));
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

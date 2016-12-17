@@ -13,7 +13,7 @@ public class ItemFactoryFrame extends ItemWoot {
     public ItemFactoryFrame() {
 
         super(BASENAME);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

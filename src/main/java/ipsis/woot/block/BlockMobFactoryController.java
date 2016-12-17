@@ -39,7 +39,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     public BlockMobFactoryController() {
 
         super(Material.ROCK, BASENAME);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

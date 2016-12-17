@@ -28,7 +28,7 @@ public class BlockMobFactoryExtender extends BlockWoot implements ITileEntityPro
 
         super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FORMED, false));
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

@@ -49,7 +49,7 @@ public class ItemDye extends ItemWoot {
         super(BASENAME);
         setMaxStackSize(1);
         setHasSubtypes(true);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

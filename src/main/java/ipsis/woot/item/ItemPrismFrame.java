@@ -13,7 +13,7 @@ public class ItemPrismFrame extends ItemWoot {
     public ItemPrismFrame() {
 
         super(BASENAME);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
         setMaxStackSize(1);
     }
 

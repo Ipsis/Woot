@@ -37,7 +37,7 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
 
         super (Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
-        setRegistryName(Reference.MOD_ID_LOWER, BASENAME);
+        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     public EnumMobFactoryModule getModuleTypeFromState(IBlockState state) {
@@ -107,7 +107,7 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     @Override
     public void initModel() {
 
-        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
+        Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID, BASENAME));
 
         for (int i = 0; i < EnumMobFactoryModule.VALUES.length; i++) {
 

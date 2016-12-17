@@ -47,7 +47,7 @@ public class ItemShard extends ItemWoot {
         super(BASENANE);
         setMaxStackSize(64);
         setHasSubtypes(true);
-        setRegistryName(Reference.MOD_ID_LOWER, BASENANE);
+        setRegistryName(Reference.MOD_ID, BASENANE);
     }
 
     @Override

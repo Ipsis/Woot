@@ -32,12 +32,14 @@ public class ItemManual extends ItemWoot {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+
+        ItemStack stack = playerIn.getHeldItem(hand);
 
         if (worldIn.isRemote)
             playerIn.openGui(Woot.instance, Reference.GUI_MANUAL, worldIn,
                     playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
+        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 }

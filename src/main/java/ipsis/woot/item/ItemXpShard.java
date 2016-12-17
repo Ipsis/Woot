@@ -40,10 +40,12 @@ public class ItemXpShard extends ItemWoot {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+
+        ItemStack stack = playerIn.getHeldItem(hand);
 
         if (!worldIn.isRemote) {
-            if (itemStackIn != null) {
+            if (!stack.isEmpty()) {
                 /**
                  * This is the EntityXPOrb playSound call
                  */
@@ -57,13 +59,13 @@ public class ItemXpShard extends ItemWoot {
                 	playerIn.addExperience(XP_VALUE);
 
                 if (!playerIn.capabilities.isCreativeMode)
-                    itemStackIn.stackSize--;
+                    stack.shrink(1);
 
-                return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+                return new ActionResult(EnumActionResult.SUCCESS, stack);
             }
         }
 
-        return new ActionResult(EnumActionResult.FAIL, itemStackIn);
+        return new ActionResult(EnumActionResult.FAIL, stack);
     }
 
     @SideOnly(Side.CLIENT)

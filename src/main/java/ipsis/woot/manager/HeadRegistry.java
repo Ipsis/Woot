@@ -68,7 +68,7 @@ public class HeadRegistry {
 
         float chance = (float)u.getDecapitateChance() / 100.0F;
         if (Woot.RANDOM.nextFloat() <= chance)
-            return ItemStack.copyItemStack(headConfig.headStack);
+            return headConfig.headStack.copy();
 
         return null;
     }

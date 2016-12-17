@@ -94,7 +94,7 @@ public class LootTable {
                 if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(d.itemStack))
                     continue;;
 
-                ItemStack dropStack = ItemStack.copyItemStack(d.itemStack);
+                ItemStack dropStack = d.itemStack.copy();
                 dropStack.stackSize = d.getWeightedSize();
 
                 /* Set damage value */

@@ -30,7 +30,7 @@ public class Drop {
 
     public Drop(ItemStack itemStack) {
 
-        this.itemStack = ItemStack.copyItemStack(itemStack);
+        this.itemStack = itemStack.copy();
         count = 0;
         weights = new ArrayList<DropData>();
     }

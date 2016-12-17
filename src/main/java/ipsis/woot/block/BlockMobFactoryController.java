@@ -129,7 +129,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
         if (!worldIn.isRemote) {
             
@@ -140,7 +140,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
 
             if (isController && isFactory)
                 return worldIn.getBlockState(factoryPos).getBlock().onBlockActivated(worldIn, factoryPos,
-                        worldIn.getBlockState(factoryPos), playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+                        worldIn.getBlockState(factoryPos), playerIn, hand, facing, hitX, hitY, hitZ);
         }
 
         return true;

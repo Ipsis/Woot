@@ -63,7 +63,7 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
             if (te != null && te instanceof TileEntityLayout) {
                 ((TileEntityLayout) te).setNextTier();
                 EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();
-                playerIn.addChatComponentMessage(new TextComponentString(tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
+                playerIn.sendStatusMessage(new TextComponentString(tier.getTranslated(Lang.WAILA_FACTORY_TIER)), false);
                 worldIn.notifyBlockUpdate(pos, state, state, 4);
             }
         }

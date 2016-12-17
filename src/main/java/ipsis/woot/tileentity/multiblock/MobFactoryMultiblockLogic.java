@@ -95,7 +95,7 @@ public class MobFactoryMultiblockLogic {
     static void validateChat(EntityPlayer player, String s) {
 
         if (player != null)
-            player.addChatComponentMessage(new TextComponentString(s));
+            player.sendStatusMessage(new TextComponentString(s), false);
     }
 
     static FactorySetup validateFactory(TileEntityMobFactory factory, EnumMobFactoryTier tier, boolean feedback, EntityPlayer player) {

@@ -118,11 +118,11 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 }
 
                 for (String s : out)
-                    playerIn.addChatComponentMessage(new TextComponentString(s));
+                    playerIn.sendStatusMessage(new TextComponentString(s), false);
             } else {
                 if (!Woot.mobRegistry.isPrismValid(te.getMobName()))
-                    playerIn.addChatComponentMessage(new TextComponentString(String.format(
-                            StringHelper.localize(Lang.CHAT_MOB_INVALID), te.getMobDisplayName(), te.getMobName())));
+                    playerIn.sendStatusMessage(new TextComponentString(String.format(
+                            StringHelper.localize(Lang.CHAT_MOB_INVALID), te.getMobDisplayName(), te.getMobName())), false);
                 else
                     te.manualValidate(playerIn);
             }

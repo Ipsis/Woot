@@ -63,16 +63,16 @@ public class ItemPrism extends ItemWoot {
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
 
         if (!Woot.mobRegistry.isPrismValid(wootName)) {
-            ((EntityPlayer) attacker).addChatComponentMessage(
+            ((EntityPlayer) attacker).sendStatusMessage(
                     new TextComponentString(String.format(
-                            StringHelper.localize(Lang.CHAT_PRISM_INVALID), displayName, wootName)));
+                            StringHelper.localize(Lang.CHAT_PRISM_INVALID), displayName, wootName)), false);
             return false;
         }
 
         setMobName(stack, wootName, displayName, ((EntityLiving) target).experienceValue);
-        ((EntityPlayer)attacker).addChatComponentMessage(
+        ((EntityPlayer)attacker).sendStatusMessage(
                 new TextComponentString(String.format(
-                        StringHelper.localize(Lang.CHAT_PRISM_PROGRAM), displayName, wootName)));
+                        StringHelper.localize(Lang.CHAT_PRISM_PROGRAM), displayName, wootName)), false);
 
         return true;
     }

@@ -78,7 +78,9 @@ public class ItemPrism extends ItemWoot {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+
+        ItemStack stack = player.getHeldItem(hand);
 
         if (worldIn.isRemote)
             return EnumActionResult.SUCCESS;
@@ -90,8 +92,8 @@ public class ItemPrism extends ItemWoot {
         if (te instanceof TileEntityMobFactoryController) {
             if (!Woot.mobRegistry.isValidMobName(((TileEntityMobFactoryController) te).getMobName())) {
                 ((TileEntityMobFactoryController) te).setMobName(getMobName(stack), getDisplayName(stack), getXp(stack));
-                if (!playerIn.capabilities.isCreativeMode)
-                    stack.stackSize--;
+                if (!player.capabilities.isCreativeMode)
+                    stack.shrink(1);
                 return EnumActionResult.SUCCESS;
             }
         }

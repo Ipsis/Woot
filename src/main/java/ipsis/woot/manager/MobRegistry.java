@@ -126,13 +126,13 @@ public class MobRegistry {
 
     public void cmdDumpPrism(ICommandSender sender) {
 
-        //sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
+        //sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
         if (Settings.usePrismWhitelist) {
             for (int i = 0; i < Settings.prismWhitelist.length; i++)
-                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
+                sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
         } else {
             for (int i = 0; i < Settings.prismBlacklist.length; i++)
-                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
+                sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
         }
     }
 
@@ -140,7 +140,7 @@ public class MobRegistry {
 
         StringBuilder sb = new StringBuilder();
         for (String name : mobCostMap.keySet())
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.cost.summary",
+            sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.cost.summary",
                     name, mobCostMap.get(name)));
 
     }

@@ -94,7 +94,7 @@ public class CommandWoot extends CommandBase {
             throw new WrongUsageException("commands.Woot:woot.usage");
 
         Woot.devMode = b;
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dev.summary", v.toLowerCase()));
+        sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dev.summary", v.toLowerCase()));
     }
 
     private void flush(ICommandSender sender, String[] args) throws CommandException {

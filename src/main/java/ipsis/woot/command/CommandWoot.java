@@ -28,13 +28,13 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class CommandWoot extends CommandBase {
     @Override
-    public String getCommandName() {
+    public String getName() {
 
         return "woot";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getUsage(ICommandSender sender) {
         return "commands.woot.usage";
     }
 

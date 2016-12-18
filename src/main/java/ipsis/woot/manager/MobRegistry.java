@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -49,19 +50,9 @@ public class MobRegistry {
     public String createWootName(EntityLiving entityLiving) {
 
         String name = EntityList.getEntityString(entityLiving);
-        if (entityLiving instanceof EntitySkeleton) {
-            if (((EntitySkeleton) entityLiving).getSkeletonType() == SkeletonType.WITHER)
-                name = "wither:" + name;
-            else
-                name = "none:" + name;
-        } else if (entityLiving instanceof EntityCreeper) {
+        if (entityLiving instanceof EntityCreeper) {
             if (((EntityCreeper) entityLiving).getPowered() == true)
                 name = "charged:" + name;
-            else
-                name = "none:" + name;
-        } else if (entityLiving instanceof EntityGuardian) {
-            if (((EntityGuardian)entityLiving).isElder() == true)
-                name = "elder:" + name;
             else
                 name = "none:" + name;
         } else {
@@ -79,19 +70,9 @@ public class MobRegistry {
 
     private String createDisplayName(EntityLiving entityLiving) {
 
-        if (entityLiving instanceof  EntitySkeleton) {
-            if (((EntitySkeleton) entityLiving).getSkeletonType() == SkeletonType.WITHER)
-                return StringHelper.localize("entity.Woot:witherskelly.name");
-            else
-                return entityLiving.getName();
-        } else if (entityLiving instanceof EntityCreeper) {
+        if (entityLiving instanceof EntityCreeper) {
             if (((EntityCreeper) entityLiving).getPowered() == true)
                 return StringHelper.localize("entity.Woot:chargedcreeper.name");
-            else
-                return entityLiving.getName();
-        } else if (entityLiving instanceof EntityGuardian) {
-            if (((EntityGuardian)entityLiving).isElder() == true)
-                return StringHelper.localize("entity.Woot:elderguardian.name");
             else
                 return entityLiving.getName();
         } else {
@@ -179,9 +160,7 @@ public class MobRegistry {
 
     void extraEntitySetup(MobInfo mobInfo, Entity entity, World world) {
 
-        if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
-            ((EntitySkeleton) entity).setSkeletonType(SkeletonType.WITHER);
-        } else if (isSlime(mobInfo.wootMobName, entity)) {
+        if (isSlime(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() != 1)
                 setSlimeSize((EntitySlime)entity, 1);
         } else if (isMagmaCube(mobInfo.wootMobName, entity)) {
@@ -192,8 +171,6 @@ public class MobRegistry {
                     entity.getPosition().getX(),
                     entity.getPosition().getY(),
                     entity.getPosition().getZ(), true));
-        } else if (isElderGuardian(mobInfo.wootMobName, entity)) {
-            ((EntityGuardian)entity).setElder(true);
         }
     }
 
@@ -219,11 +196,6 @@ public class MobRegistry {
         return ENDER_DRAGON.equals(wootName);
     }
 
-    boolean isWitherSkeleton(String wootName, Entity entity) {
-
-        return entity instanceof EntitySkeleton && wootName.equals(Reference.MOD_ID + ":" + "wither:Skeleton");
-    }
-
     boolean isSlime(String wootName, Entity entity) {
 
         return entity instanceof EntitySlime && wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
@@ -239,17 +211,13 @@ public class MobRegistry {
         return entity instanceof EntityCreeper && wootName.equals(Reference.MOD_ID + ":" + "charged:Creeper");
     }
 
-    boolean isElderGuardian(String wootName, Entity entity) {
-
-        return entity instanceof EntityGuardian && wootName.equals(Reference.MOD_ID + ":" + "elder:Guardian");
-    }
-
     public Entity createEntity(String wootName, World world) {
 
         if (!isKnown(wootName))
             addMapping(wootName, -1);
 
-        Entity entity = EntityList.createEntityByName(mobInfoHashMap.get(wootName).getMcMobName(), world);
+        ResourceLocation rl = new ResourceLocation(mobInfoHashMap.get(wootName).getMcMobName());
+        Entity entity = EntityList.createEntityByIDFromName(rl, world);
         if (entity != null)
             extraEntitySetup(mobInfoHashMap.get(wootName), entity, world);
 

@@ -7,10 +7,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.SkeletonType;
+import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -91,26 +88,15 @@ public class EnchantmentDecapitate extends Enchantment {
         if (e.getSource().getEntity() == null)
             return;
 
+        /* Ignore wither skeletons, only for use on other mobs */
+        if (e.getEntityLiving() instanceof EntityWitherSkeleton)
+            return;
+
         if (hasDecapitated() && !containsSkull(e.getDrops())) {
 
             ItemStack itemStack = Woot.headRegistry.getVanillaHead((EntityLiving)e.getEntityLiving());
 
-            if (e.getEntityLiving() instanceof EntityCreeper) {
-                itemStack = new ItemStack(Items.SKULL, 1, 4);
-            } else if (e.getEntityLiving() instanceof EntityZombie) {
-                itemStack = new ItemStack(Items.SKULL, 1, 2);
-            } else if (e.getEntityLiving() instanceof EntitySkeleton) {
-                EntitySkeleton entitySkeleton = (EntitySkeleton)e.getEntityLiving();
-                if (entitySkeleton.getSkeletonType() == SkeletonType.NORMAL) {
-                    itemStack = new ItemStack(Items.SKULL, 1, 0);
-                }
-            }
-
-            // Ignore wither skeleton
-            if (e.getEntityLiving() instanceof EntitySkeleton && ((EntitySkeleton) e.getEntityLiving()).getSkeletonType() == SkeletonType.WITHER)
-                itemStack = null;
-
-            if (itemStack != null) {
+            if (!itemStack.isEmpty()) {
 
                 EntityItem entityItem = createEntityItem(
                         e.getSource().getEntity().getEntityWorld(),

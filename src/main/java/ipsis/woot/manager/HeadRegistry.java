@@ -4,8 +4,8 @@ import ipsis.Woot;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -81,13 +81,13 @@ public class HeadRegistry {
         } else if (entityLiving instanceof EntityZombie) {
             itemStack = new ItemStack(Items.SKULL, 1, 2);
         } else if (entityLiving instanceof EntitySkeleton) {
-            EntitySkeleton entitySkeleton = (EntitySkeleton)entityLiving;
-            if (entitySkeleton.getSkeletonType() == SkeletonType.NORMAL) {
-                itemStack = new ItemStack(Items.SKULL, 1, 0);
-            } else if (entitySkeleton.getSkeletonType() == SkeletonType.WITHER) {
-                itemStack = new ItemStack(Items.SKULL, 1, 1);
-            }
+            itemStack = new ItemStack(Items.SKULL, 1, 0);
+        } else if (entityLiving instanceof EntityWitherSkeleton) {
+            itemStack = new ItemStack(Items.SKULL, 1, 1);
         }
+
+        if (itemStack == null)
+            itemStack = ItemStack.EMPTY;
 
         return itemStack;
     }

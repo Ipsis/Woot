@@ -1,8 +1,8 @@
 package ipsis.woot.plugins.bloodmagic;
 
-import WayofTime.bloodmagic.api.BloodMagicAPI;
+/*import WayofTime.bloodmagic.api.BloodMagicAPI;
 import WayofTime.bloodmagic.api.Constants;
-import WayofTime.bloodmagic.api.registry.RitualRegistry;
+import WayofTime.bloodmagic.api.registry.RitualRegistry; */
 import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
@@ -26,8 +26,8 @@ public class BloodMagic {
     @Optional.Method(modid = BM_MODID)
     public static void init() {
 
-        RitualRegistry.registerRitual(new RitualInfernalMachine());
-        fluidOutput = new FluidStack(BloodMagicAPI.getLifeEssence(), 0);
+/*        RitualRegistry.registerRitual(new RitualInfernalMachine());
+        fluidOutput = new FluidStack(BloodMagicAPI.getLifeEssence(), 0); */
     }
 
     @Optional.Method(modid = BM_MODID)
@@ -37,8 +37,10 @@ public class BloodMagic {
         ItemStack out2 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.BLOODMAGIC_II));
         ItemStack out3 = new ItemStack(ModBlocks.blockUpgradeB, 1, BlockMobFactoryUpgradeB.getBlockSplitMeta(EnumSpawnerUpgrade.BLOODMAGIC_III));
 
+        /*
         Block bloodRune = BloodMagicAPI.getBlock(Constants.BloodMagicBlock.BLOOD_RUNE);
         ItemStack sacrificeRune = new ItemStack(bloodRune, 1, 3);
+
 
         GameRegistry.addRecipe(
                 new ShapedOreRecipe(
@@ -71,5 +73,6 @@ public class BloodMagic {
                         'e', sacrificeRune
                 )
         );
+        */
     }
 }

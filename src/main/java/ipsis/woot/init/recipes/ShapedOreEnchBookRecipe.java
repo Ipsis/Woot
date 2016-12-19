@@ -56,7 +56,7 @@ public class ShapedOreEnchBookRecipe extends ShapedOreRecipe {
                         slot instanceof ItemStack && ((ItemStack)slot).getItem() == Items.ENCHANTED_BOOK)
                 {
 
-                    Map<Enchantment, Integer> slotEnchantMap = EnchantmentHelper.getEnchantments((ItemStack)slot);
+                    Map<Enchantment, Integer> slotEnchantMap = EnchantmentHelper.getEnchantments(slot);
                     Map<Enchantment, Integer> targetEnchantMap = EnchantmentHelper.getEnchantments((ItemStack)target);
 
                     /**
@@ -66,13 +66,13 @@ public class ShapedOreEnchBookRecipe extends ShapedOreRecipe {
                         return false;
 
                     for (Enchantment enchantment : targetEnchantMap.keySet()) {
-                        /* Target will only have one enchant, slot may have more */
                         int lvl = targetEnchantMap.get(enchantment).intValue();
-                        if (slotEnchantMap.containsKey(enchantment) && slotEnchantMap.get(enchantment).intValue() == lvl)
-                            return true;
-                    }
+                        if (!slotEnchantMap.containsKey(enchantment))
+                            return false;
 
-                    return false;
+                        if (slotEnchantMap.get(enchantment).intValue() != lvl)
+                            return false;
+                    }
                 }
                 else if (target instanceof ItemStack)
                 {

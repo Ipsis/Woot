@@ -77,6 +77,7 @@ public class Woot {
         proxy.postInit();
         headRegistry.init();
         ModEnchantments.postInit();
+        LOOT_TABLE_MANAGER.loadInternalBlacklist();
     }
 
     @Mod.EventHandler

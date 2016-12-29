@@ -19,11 +19,31 @@ public class LootTableManager {
 
     private HashMap<String, LootTable> lootMap;
     private List<ItemStack> blacklist;
+    private List<ItemStack> internalBlacklist;
 
     public LootTableManager() {
 
         lootMap = new HashMap<String, LootTable>();
         blacklist = new ArrayList<ItemStack>();
+
+        internalBlacklist = new ArrayList<ItemStack>();
+    }
+
+    public void loadInternalBlacklist() {
+
+        addToInternalBlacklist("eplus:scroll");
+        addToInternalBlacklist("everlastingabilities:abilityTotem");
+    }
+
+    private void addToInternalBlacklist(String s) {
+
+        ItemStack itemStack = ItemStackHelper.getItemStackFromName(s);
+        if (itemStack != null) {
+            LogHelper.warn("Loot blacklisted (Internal) " + s);
+            internalBlacklist.add(itemStack);
+        } else {
+            LogHelper.warn("Unknown Loot in blacklist (Internal) " + s);
+        }
     }
 
     public void addToBlacklist(String s) {
@@ -40,8 +60,18 @@ public class LootTableManager {
     public boolean isBlacklisted(ItemStack itemStack) {
 
         for (ItemStack cmp : blacklist) {
-            if (ItemStack.areItemsEqualIgnoreDurability(cmp, itemStack))
+            if (ItemStack.areItemsEqualIgnoreDurability(cmp, itemStack)) {
                 return true;
+            }
+        }
+
+        /**
+         * Internal blacklist for NBT based drops
+         */
+        for (ItemStack cmp : internalBlacklist) {
+            if (ItemStack.areItemsEqualIgnoreDurability(cmp, itemStack)) {
+                return true;
+            }
         }
 
         return false;

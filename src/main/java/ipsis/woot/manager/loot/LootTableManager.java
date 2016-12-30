@@ -3,6 +3,7 @@ package ipsis.woot.manager.loot;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.util.ItemStackHelper;
 import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
@@ -183,14 +184,16 @@ public class LootTableManager {
 
     public void dumpStatus(ICommandSender sender) {
 
+        /**
+         * If the lootmap for a mob/enchant is full then learning has completed
+         * If the lootmap for a mob/enchant is not full, then learning has not completed, but does not mean it is running
+         *     Learning only happens if a factory for that pair exists in the world
+         */
         for (String mob : lootMap.keySet()) {
             StringBuilder sb = new StringBuilder();
             for (EnumEnchantKey key : EnumEnchantKey.values()) {
-                sb.append(key.getDisplayName());
-                if (lootMap.get(mob).isEmpty(key))
-                    sb.append(":running ");
-                else
-                    sb.append(":stopped ");
+                int samples = lootMap.get(mob).getSamples(key);
+                sb.append(" " + key.ordinal() + ":" + samples + "/" + Settings.sampleSize + " ");
             }
             sender.addChatMessage(new TextComponentTranslation(
                     "commands.Woot:woot.status.summary",

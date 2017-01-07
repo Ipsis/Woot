@@ -72,10 +72,10 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
-    deobfCompile "mezz.jei:jei_1.10.2:3.11.1.270"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-1.1.5-37"
-    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:1.9.4-2.1.0-454-ss"
+    deobfCompile "mcp.mobius.waila:Waila:${config.waila_version}"
+    deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.top_version}"
+    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
 }
 
 processResources

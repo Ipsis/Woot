@@ -60,6 +60,27 @@ public class TESRLayout extends TileEntitySpecialRenderer{
                 GlStateManager.popMatrix();
             }
 
+            /**
+             * Render the factory block and the controller
+             */
+            GlStateManager.pushMatrix();
+            {
+                /**
+                 * Factory block
+                 */
+                GlStateManager.translate(0, 2, 0);
+                GlStateManager.color(0.0F, 1.0F, 1.0F, RENDER_ALPHA);
+                RenderUtils.drawShadedCube(0.4F);
+
+                /**
+                 * Mob controller
+                 */
+                GlStateManager.translate(0, 1, 0);
+                GlStateManager.color(0.0F, 1.0F, 0.0F, RENDER_ALPHA);
+                RenderUtils.drawShadedCube(0.4F);
+            }
+            GlStateManager.popMatrix();
+
             GlStateManager.disableBlend();
             GlStateManager.enableTexture2D();
             GlStateManager.enableLighting();

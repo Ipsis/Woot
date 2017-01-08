@@ -9,6 +9,7 @@ import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.io.FileNotFoundException;
@@ -20,7 +21,8 @@ public class LootTableManager {
 
     private HashMap<String, LootTable> lootMap;
     private List<ItemStack> blacklist;
-    private List<ItemStack> internalBlacklist;
+    private List<ItemStack> internalBlacklist;  // Specific items to block
+    private List<String> internalModBlacklist;  // Complete mod items to block
 
     public LootTableManager() {
 
@@ -28,19 +30,27 @@ public class LootTableManager {
         blacklist = new ArrayList<ItemStack>();
 
         internalBlacklist = new ArrayList<ItemStack>();
+        internalModBlacklist = new ArrayList<String>();
     }
 
     public void loadInternalBlacklist() {
 
-        addToInternalBlacklist("eplus:scroll");
-        addToInternalBlacklist("everlastingabilities:abilityTotem");
+        addToInternalModBlacklist("eplus");
+        addToInternalModBlacklist("everlastingabilities");
+        addToInternalModBlacklist("cyberware");
+    }
+
+    private void addToInternalModBlacklist(String s) {
+
+        internalModBlacklist.add(s);
+        LogHelper.info("Blacklisted (Internal) all items from " + s);
     }
 
     private void addToInternalBlacklist(String s) {
 
         ItemStack itemStack = ItemStackHelper.getItemStackFromName(s);
         if (itemStack != null) {
-            LogHelper.warn("Loot blacklisted (Internal) " + s);
+            LogHelper.warn("Blacklisted (Internal) item " + s);
             internalBlacklist.add(itemStack);
         } else {
             LogHelper.warn("Unknown Loot in blacklist (Internal) " + s);
@@ -51,7 +61,7 @@ public class LootTableManager {
 
         ItemStack itemStack = ItemStackHelper.getItemStackFromName(s);
         if (itemStack != null) {
-            LogHelper.warn("Loot blacklisted " + s);
+            LogHelper.warn("Blacklisted (User) item " + s);
             blacklist.add(itemStack);
         } else {
             LogHelper.warn("Unknown Loot in blacklist " + s);
@@ -59,6 +69,20 @@ public class LootTableManager {
     }
 
     public boolean isBlacklisted(ItemStack itemStack) {
+
+        /**
+         * Mod blacklist
+         */
+        ResourceLocation first = itemStack.getItem().getRegistryName();
+        if (first != null) {
+            String firstMod = first.getResourceDomain();
+            if (firstMod != null) {
+                for (String s : internalModBlacklist) {
+                    if (firstMod.equals(s))
+                        return true;
+                }
+            }
+        }
 
         for (ItemStack cmp : blacklist) {
             if (ItemStack.areItemsEqualIgnoreDurability(cmp, itemStack)) {

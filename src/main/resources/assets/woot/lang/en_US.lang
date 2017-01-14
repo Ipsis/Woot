@@ -238,7 +238,7 @@ book.Woot:resources.0=The basic building material for the factories is UnderIron
 
 book.Woot:building.title=Building A Factory
 book.Woot:building.0=The factory comes in different tiers. So craft yourself a Layout block and place it one block above the ground. It will then show you which blocks go where in the multiblock. All factories require a number of coloured structure blocks and cap stones for that tier. Right-click the layout block to cycle through the different tiers.
-book.Woot:building.1=Once you have placed all the blocks, break the Layout block and put the Mob Factory block in its place. Then put a Mob Controller above that. Right-click the Mob Controller with a captured mob in a Mob Prism and the factory will form. When you break the Mob Controller the mob will still be programmed, so you can swap Mob Controller to change between mobs you want to spawn.
+book.Woot:building.1=Once you have placed all the blocks, put the Mob Factory and Mob Controller in place. Right-click the Mob Controller with a captured mob in a Mob Prism and the factory will form. When you break the Mob Controller the mob will still be programmed, so you can swap Mob Controller to change between mobs you want to spawn.
 book.Woot:building.2=If you factory does not form, then you can right-click the Mob Factory block for information as to what is wrong. The factory will not form if you are trying to use a higher tier mob in a lower tier factory.
 book.Woot:building.3=The factory MUST be built above Y=10, because ...... construction regulations ....
 

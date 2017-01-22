@@ -1,12 +1,10 @@
 package ipsis.woot.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -22,6 +20,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -32,7 +33,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityMobFactory extends TileEntity implements ITickable, IEnergyReceiver {
+public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     EnumMobFactoryTier factoryTier;
     SpawnerManager.SpawnReq spawnReq;
@@ -103,7 +104,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
         compound.setInteger(NBT_STORED_XP, storedXp);
         compound.setBoolean(NBT_RUNNING, running);
 
-        powerManager.writeToNBT(compound);
+        energyManager.writeToNBT(compound);
         return compound;
     }
 
@@ -122,7 +123,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
             nbtLoaded = true;
         }
 
-        powerManager.readFromNBT(compound);
+        energyManager.readFromNBT(compound);
     }
 
     static final int MULTIBLOCK_BACKOFF_SCAN_TICKS = 20;
@@ -438,9 +439,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
 
     void processPower() {
 
-        int drawnRf = powerManager.extractEnergy(spawnReq.getRfPerTick(), false);
+        int drawnRf = energyManager.extractEnergyInternal(spawnReq.getRfPerTick());
 
-        if (Woot.devMode == true)
+        if (Woot.devMode)
             drawnRf = spawnReq.getRfPerTick();
 
         if (drawnRf == spawnReq.getRfPerTick()) {
@@ -634,43 +635,29 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IEner
     }
 
     /**
-     * RF interface
+     * Forge Power Interface
      */
-    protected PowerManager powerManager = new PowerManager(this);
+    protected EnergyManager energyManager = new EnergyManager(EnergyManager.RF_STORED, EnergyManager.MAX_RF_TICK, this);
 
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
+    public EnergyManager getEnergyManager() {
 
-        if (!isFormed())
-            return 0;
-
-        return powerManager.receiveEnergy(from, maxReceive, simulate, true);
+        return this.energyManager;
     }
 
     @Override
-    public int getEnergyStored(EnumFacing from) {
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 
-        if (!isFormed())
-            return 0;
-
-        return powerManager.getEnergyStored(from, true);
+        return capability == CapabilityEnergy.ENERGY;
     }
 
     @Override
-    public int getMaxEnergyStored(EnumFacing from) {
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 
-        if (!isFormed())
-            return 0;
+        if (capability == CapabilityEnergy.ENERGY) {
+            IEnergyStorage energyStorage = energyManager;
+            return (T)energyStorage;
+        }
 
-        return powerManager.getMaxEnergyStored(from, true);
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from) {
-
-        if (!isFormed())
-            return false;
-
-        return powerManager.canConnectEnergy(from, true);
+        return super.getCapability(capability, facing);
     }
 }

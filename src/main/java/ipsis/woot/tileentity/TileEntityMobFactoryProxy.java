@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,10 +8,14 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-public class TileEntityMobFactoryProxy extends TileEntity implements IEnergyReceiver {
+public class TileEntityMobFactoryProxy extends TileEntity  {
 
     TileEntityMobFactory master = null;
 
@@ -125,38 +128,23 @@ public class TileEntityMobFactoryProxy extends TileEntity implements IEnergyRece
         WorldHelper.updateClient(getWorld(), getPos());
     }
 
-    public boolean canConnectEnergy(EnumFacing from) {
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 
-        if (!hasMaster())
-            return false;
-
-        return master.powerManager.canConnectEnergy(from, false);
+        return capability == CapabilityEnergy.ENERGY;
     }
 
     @Override
-    public int getEnergyStored(EnumFacing from) {
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 
-        if (!hasMaster())
-            return 0;
+        if (capability == CapabilityEnergy.ENERGY) {
 
-        return master.powerManager.getEnergyStored(from, false);
-    }
+            if (hasMaster() && master.isFormed()) {
+                IEnergyStorage energyStorage = master.getEnergyManager();
+                return (T) energyStorage;
+            }
+        }
 
-    @Override
-    public int getMaxEnergyStored(EnumFacing from) {
-
-        if (!hasMaster())
-            return 0;
-
-        return master.powerManager.getMaxEnergyStored(from, false);
-    }
-
-    @Override
-    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-
-        if (!hasMaster())
-            return 0;
-
-        return master.powerManager.receiveEnergy(from, maxReceive, simulate, false);
+        return super.getCapability(capability, facing);
     }
 }

@@ -2,12 +2,12 @@ package ipsis.woot.manager;
 
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class EnergyManager extends EnergyStorage {
 
-    public static final int MAX_RF_TICK = 32000;
+    // Allow as much power in and out of the device as needed
+    public static final int MAX_RF_TICK = Integer.MAX_VALUE;
     public static final int RF_STORED = 10000000;
 
     private TileEntityMobFactory factory;

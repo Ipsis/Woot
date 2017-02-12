@@ -40,6 +40,9 @@ public class Lang {
     public static final String TOOLTIP_EFFICIENCY_EFFECT = TAG_TOOLTIP + "upgrade_efficiency_effect";
     public static final String TOOLTIP_BM_EFFECT = TAG_TOOLTIP + "upgrade_bloodmagic_effect";
 
+    public static final String TOOLTIP_EXTENDER = TAG_TOOLTIP + "extender";
+    public static final String TOOLTIP_PROXY = TAG_TOOLTIP + "proxy";
+
     public static final String TOOLTIP_UPGRADE = TAG_TOOLTIP + "upgrade.";
 
     public static final String VALIDATE_FACTORY_MISSING_CONTROLLER = TAG_VALIDATE + "factory.missing_controller";

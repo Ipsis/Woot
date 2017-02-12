@@ -188,6 +188,9 @@ tooltip.Woot:upgrade.bloodmagic_i=Blood Magic I
 tooltip.Woot:upgrade.bloodmagic_ii=Blood Magic II
 tooltip.Woot:upgrade.bloodmagic_iii=Blood Magic III
 
+tooltip.Woot:extender=Use a column underneath your factory to connect a proxy
+tooltip.Woot:proxy=Connect to bottom of extenders to allow power and inventory to each side of the proxy
+
 tooltip.Woot:xpShard.0=Right click to use and gain experience
 tooltip.Woot:xpShard.1=Gives %d experience
 tooltip.Woot:prism.0=Attack to capture mob

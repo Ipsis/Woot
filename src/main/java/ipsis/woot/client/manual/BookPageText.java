@@ -44,7 +44,7 @@ public class BookPageText implements IBookPage {
     @Override
     public void renderPage(GuiScreen gui, int x, int y, int page_width) {
 
-        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
 
         String text = getTranslatedText();
         List<String> l = fontRenderer.listFormattedStringToWidth(text, page_width);

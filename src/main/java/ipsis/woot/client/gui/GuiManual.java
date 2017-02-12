@@ -75,13 +75,13 @@ public class GuiManual extends GuiScreen {
         Minecraft.getMinecraft().getTextureManager().bindTexture(guiResource);
         drawTexturedModalRect(guiLeft, guiTop, 6, 6, xSize, ySize);
 
-        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
 
         if (currPage != null) {
 
             String title = currPage.getSection().getTitle();
-            drawCenteredString(fontRendererObj, title, guiLeft + (xSize / 2), guiTop + 16, Color.BLUE.getRGB());
-            currPage.renderPage(this, guiLeft + 16, guiTop + 16 + fontRendererObj.FONT_HEIGHT + 16, this.xSize - 32);
+            drawCenteredString(fontRenderer, title, guiLeft + (xSize / 2), guiTop + 16, Color.BLUE.getRGB());
+            currPage.renderPage(this, guiLeft + 16, guiTop + 16 + fontRenderer.FONT_HEIGHT + 16, this.xSize - 32);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

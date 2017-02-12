@@ -161,7 +161,7 @@ public class LootTableManager {
         for (String mobName : lootMap.keySet())
             sb.append(mobName).append(" ");
 
-        sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.mobs.summary", sb));
+        sender.sendMessage(new TextComponentTranslation("commands.woot:woot.mobs.summary", sb));
     }
 
     public void dumpDrops(ICommandSender sender, String wootName, boolean detail) {
@@ -170,7 +170,7 @@ public class LootTableManager {
         if (e != null) {
             for (EnumEnchantKey key : EnumEnchantKey.values()) {
                 String s = e.getDrops(key, detail);
-                sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.loot.summary", wootName, key.getDisplayName(), s));
+                sender.sendMessage(new TextComponentTranslation("commands.woot:woot.loot.summary", wootName, key.getDisplayName(), s));
             }
         }
     }
@@ -180,7 +180,7 @@ public class LootTableManager {
         LootTable e = lootMap.get(wootName);
         if (e != null) {
             e.flush(key);
-            sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.flush.summary",
+            sender.sendMessage(new TextComponentTranslation("commands.woot:woot.flush.summary",
                     wootName, key.getDisplayName()));
         }
     }
@@ -194,7 +194,7 @@ public class LootTableManager {
             table.flush(EnumEnchantKey.LOOTING_III);
         }
 
-        sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.flush.all.summary"));
+        sender.sendMessage(new TextComponentTranslation("commands.woot:woot.flush.all.summary"));
     }
 
     public void dumpBlacklist(ICommandSender sender) {
@@ -203,7 +203,7 @@ public class LootTableManager {
         for (ItemStack itemStack : blacklist)
             sb.append(String.format("%s ", itemStack.getDisplayName()));
 
-        sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.blacklist.summary", sb.toString()));
+        sender.sendMessage(new TextComponentTranslation("commands.woot:woot.blacklist.summary", sb.toString()));
     }
 
     public void dumpStatus(ICommandSender sender) {
@@ -220,7 +220,7 @@ public class LootTableManager {
                 sb.append(" " + key.ordinal() + ":" + samples + "/" + Settings.sampleSize + " ");
             }
             sender.sendMessage(new TextComponentTranslation(
-                    "commands.Woot:woot.status.summary",
+                    "commands.woot:woot.status.summary",
                     mob, sb.toString()));
         }
     }

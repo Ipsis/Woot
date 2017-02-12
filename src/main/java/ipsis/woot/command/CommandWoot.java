@@ -54,7 +54,7 @@ public class CommandWoot extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length == 0)
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
         else if ("dev".equals(args[0]))
             dev(server, sender,args);
         else if ("flush".equals(args[0]))
@@ -76,13 +76,13 @@ public class CommandWoot extends CommandBase {
         else if ("cost".equals(args[0]))
             Woot.mobRegistry.cmdDumpCosts(sender);
         else
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
     }
 
     private void dev(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length != 2)
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
 
         boolean b = false;
         String v = args[1];
@@ -91,16 +91,16 @@ public class CommandWoot extends CommandBase {
         else if (v.equalsIgnoreCase("false"))
             b = false;
         else
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
 
         Woot.devMode = b;
-        sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dev.summary", v.toLowerCase()));
+        sender.sendMessage(new TextComponentTranslation("commands.woot:woot.dev.summary", v.toLowerCase()));
     }
 
     private void flush(ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length < 2)
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
 
         String mobName = args[1];
 
@@ -117,7 +117,7 @@ public class CommandWoot extends CommandBase {
     private void give(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length != 4)
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
 
         EntityPlayer entityplayer = getPlayer(server, sender, args[1]);
         String wootName = args[2];
@@ -166,7 +166,7 @@ public class CommandWoot extends CommandBase {
     private void loot(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length < 2)
-            throw new WrongUsageException("commands.Woot:woot.usage");
+            throw new WrongUsageException("commands.woot:woot.usage");
 
         String mobName = args[1];
         boolean detail = false;

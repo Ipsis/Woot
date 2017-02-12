@@ -25,7 +25,7 @@ import java.util.TreeMap;
 public class MobRegistry {
 
     public static final String INVALID_MOB_NAME = "InvalidMob";
-    public static final String ENDER_DRAGON = "Woot:none:EnderDragon";
+    public static final String ENDER_DRAGON = "woot:none:EnderDragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
 
     Map<String, Integer> mobCostMap = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
@@ -72,7 +72,7 @@ public class MobRegistry {
 
         if (entityLiving instanceof EntityCreeper) {
             if (((EntityCreeper) entityLiving).getPowered() == true)
-                return StringHelper.localize("entity.Woot:chargedcreeper.name");
+                return StringHelper.localize("entity.woot:chargedcreeper.name");
             else
                 return entityLiving.getName();
         } else {
@@ -110,10 +110,10 @@ public class MobRegistry {
         //sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
         if (Settings.usePrismWhitelist) {
             for (int i = 0; i < Settings.prismWhitelist.length; i++)
-                sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
+                sender.sendMessage(new TextComponentTranslation("commands.woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
         } else {
             for (int i = 0; i < Settings.prismBlacklist.length; i++)
-                sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
+                sender.sendMessage(new TextComponentTranslation("commands.woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
         }
     }
 
@@ -121,7 +121,7 @@ public class MobRegistry {
 
         StringBuilder sb = new StringBuilder();
         for (String name : mobCostMap.keySet())
-            sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.cost.summary",
+            sender.sendMessage(new TextComponentTranslation("commands.woot:woot.cost.summary",
                     name, mobCostMap.get(name)));
 
     }

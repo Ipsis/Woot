@@ -220,6 +220,9 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                             int rows = 0;
                             int idx = 0;
                             for (FullDropInfo drop : drops) {
+                                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
+                                    continue;
+
                                 if (idx % 10 == 0) {
                                     horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
                                     rows++;

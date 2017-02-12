@@ -2,8 +2,10 @@ package ipsis.woot.block;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.oss.client.ModelHelper;
+import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryExtender;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -18,7 +20,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMobFactoryExtender extends BlockWoot implements ITileEntityProvider {
+import java.util.List;
+
+public class BlockMobFactoryExtender extends BlockWoot implements ITooltipInfo, ITileEntityProvider {
 
     public static final String BASENAME = "extender";
 
@@ -100,5 +104,11 @@ public class BlockMobFactoryExtender extends BlockWoot implements ITileEntityPro
         }
 
         return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
+    @Override
+    public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
+
+        toolTip.add(StringHelper.localize(Lang.TOOLTIP_EXTENDER));
     }
 }

@@ -40,6 +40,12 @@ public class TileEntityLayout extends TileEntity {
         if (this.world != null && this.world.isRemote) {
             layoutBlockInfoList.clear();
             MobFactoryMultiblockLogic.getFactoryLayout(tier, this.getPos(), facing, layoutBlockInfoList);
+
+            /**
+             * Now offset the layout by +2 in Y so the factory display is ABOVE the guide block
+             */
+            for (LayoutBlockInfo p : layoutBlockInfoList)
+                p.blockPos = p.blockPos.offset(EnumFacing.UP, 2);
         }
     }
 

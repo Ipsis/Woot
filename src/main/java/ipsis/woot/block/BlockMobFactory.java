@@ -190,6 +190,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 else
                     probeInfo.text(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
 
+                probeInfo.text(TextFormatting.RED + String.format("%d / %d RF", info.storedRF, info.totalRF));
+
                 if (mode == ProbeMode.EXTENDED) {
 
                     if (factoryTE.getUpgradeSetup() != null) {
@@ -219,6 +221,9 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                             int rows = 0;
                             int idx = 0;
                             for (FullDropInfo drop : drops) {
+                                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
+                                    continue;
+
                                 if (idx % 10 == 0) {
                                     horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
                                     rows++;
@@ -266,8 +271,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             spawnTime = te.getSpawnReq().getSpawnTime();
             spawnTickRF = te.getSpawnReq().getRfPerTick();
             spawnRF = te.getSpawnReq().getTotalRf();
-            storedRF = te.getEnergyStored(EnumFacing.DOWN);
-            totalRF = te.getMaxEnergyStored(EnumFacing.DOWN);
+            storedRF = te.getEnergyManager().getEnergyStored();
+            totalRF = te.getEnergyManager().getMaxEnergyStored();
             isRunning = te.isRunning();
 
             maxMass = Settings.baseMobCount;

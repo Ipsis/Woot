@@ -46,6 +46,12 @@ public class LootTable {
         return pool.samples == 0;
     }
 
+    public int getSamples(EnumEnchantKey key) {
+
+        LootPool pool = getLootPool(key);
+        return pool.samples;
+    }
+
     private LootPool getLootPool(EnumEnchantKey key) {
 
         return pools[key.ordinal()];

@@ -3,7 +3,6 @@ package ipsis.woot.init;
 import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.init.recipes.ShapedOreEnchBookRecipe;
-import ipsis.woot.init.recipes.ShapedOreHammerRecipe;
 import ipsis.woot.item.ItemDye;
 import ipsis.woot.item.ItemFactoryUpgrade;
 import ipsis.woot.item.ItemShard;
@@ -100,7 +99,7 @@ public class ModRecipes {
          */
         // UnderIron Plate
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemFerrocretePlate, 4),
                         "hf ", " d ", " o ",
                         'h', ModItems.itemYahHammer,
@@ -110,7 +109,7 @@ public class ModRecipes {
 
         // Prism Frame
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemPrismFrame),
                         "he ", "fdf", " o ",
                         'h', ModItems.itemYahHammer,
@@ -121,7 +120,7 @@ public class ModRecipes {
 
         // Factory Casing
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemFactoryCasing, 4),
                         "php",
                         " d ",
@@ -133,7 +132,7 @@ public class ModRecipes {
 
         // Iron Plated Skull
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 2, ItemSkull.EnumSkullType.IRON.getMeta()),
                         "hi ",
                         "sds",
@@ -146,7 +145,7 @@ public class ModRecipes {
 
         // Gold Plated Skull
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 4, ItemSkull.EnumSkullType.GOLD.getMeta()),
                         "hg ",
                         "sds",
@@ -159,7 +158,7 @@ public class ModRecipes {
 
         // Diamond Plated Skull
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 5, ItemSkull.EnumSkullType.DIAMOND.getMeta()),
                         "hgs",
                         "sds",
@@ -172,7 +171,7 @@ public class ModRecipes {
 
         // Emerald Plated Skull
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemSkull, 5, ItemSkull.EnumSkullType.EMERALD.getMeta()),
                         "hgs",
                         "sds",
@@ -185,7 +184,7 @@ public class ModRecipes {
 
         // Factory Connector
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemFactoryConnector, 9),
                         "hr ",
                         "ldq",
@@ -199,7 +198,7 @@ public class ModRecipes {
 
         // Diamond Shard
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemShard, 9, 0),
                         "hd ",
                         " g ",
@@ -211,7 +210,7 @@ public class ModRecipes {
 
         // Emerald Shard
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemShard, 9, 1),
                         "hd ",
                         " g ",
@@ -223,7 +222,7 @@ public class ModRecipes {
 
         // Quartz Shard
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemShard, 9, 2),
                         "hd ",
                         " g ",
@@ -235,7 +234,7 @@ public class ModRecipes {
 
         // Netherstar Shard
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemShard, 9, 3),
                         "hd ",
                         " g ",
@@ -247,7 +246,7 @@ public class ModRecipes {
 
         // Pulverizedd UnderIron
         GameRegistry.addRecipe(
-                new ShapedOreHammerRecipe(
+                new ShapedOreRecipe(
                         new ItemStack(ModItems.itemPulverisedFerrocrete, 2),
                         "hi ",
                         "nd ",

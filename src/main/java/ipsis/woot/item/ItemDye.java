@@ -77,4 +77,16 @@ public class ItemDye extends ItemWoot {
         int idx = stack.getItemDamage() % VARIANTS.length;
         return super.getUnlocalizedName() + "." + VARIANTS[idx];
     }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack) {
+
+        return itemStack.copy();
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack) {
+
+        return true;
+    }
 }

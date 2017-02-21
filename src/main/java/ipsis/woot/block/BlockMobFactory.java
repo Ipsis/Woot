@@ -25,7 +25,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -221,6 +223,9 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                             int idx = 0;
                             for (FullDropInfo drop : drops) {
                                 if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
+                                    continue;
+
+                                if (drop.getItemStack().getItem() == Item.getItemFromBlock(Blocks.BEDROCK))
                                     continue;
 
                                 if (idx % 10 == 0) {

@@ -105,7 +105,7 @@ public class ModRecipes {
                         'h', ModItems.itemYahHammer,
                         'f', ModItems.itemFerrocrete,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PLATE.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Prism Frame
         GameRegistry.addRecipe(
@@ -116,7 +116,7 @@ public class ModRecipes {
                         'f', ModItems.itemFerrocrete,
                         'e', Items.ENDER_EYE,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PRISM.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Factory Casing
         GameRegistry.addRecipe(
@@ -128,7 +128,7 @@ public class ModRecipes {
                         'h', ModItems.itemYahHammer,
                         'p', ModItems.itemFerrocretePlate,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CASING.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Iron Plated Skull
         GameRegistry.addRecipe(
@@ -141,7 +141,7 @@ public class ModRecipes {
                         'i', "ingotIron",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Gold Plated Skull
         GameRegistry.addRecipe(
@@ -154,7 +154,7 @@ public class ModRecipes {
                         'g', "ingotGold",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Diamond Plated Skull
         GameRegistry.addRecipe(
@@ -167,7 +167,7 @@ public class ModRecipes {
                         'g', "gemDiamond",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Emerald Plated Skull
         GameRegistry.addRecipe(
@@ -180,7 +180,7 @@ public class ModRecipes {
                         'g', "gemEmerald",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Factory Connector
         GameRegistry.addRecipe(
@@ -194,7 +194,7 @@ public class ModRecipes {
                         'l', Blocks.LAPIS_BLOCK ,
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CONNECTOR.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Diamond Shard
         GameRegistry.addRecipe(
@@ -206,7 +206,7 @@ public class ModRecipes {
                         'g', "gemDiamond",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Emerald Shard
         GameRegistry.addRecipe(
@@ -218,7 +218,7 @@ public class ModRecipes {
                         'g', "gemEmerald",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Quartz Shard
         GameRegistry.addRecipe(
@@ -230,7 +230,7 @@ public class ModRecipes {
                         'g', "gemQuartz",
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Netherstar Shard
         GameRegistry.addRecipe(
@@ -242,7 +242,7 @@ public class ModRecipes {
                         'g', Items.NETHER_STAR,
                         'h', ModItems.itemYahHammer,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
 
         // Pulverizedd UnderIron
         GameRegistry.addRecipe(
@@ -255,7 +255,7 @@ public class ModRecipes {
                         'i', "ingotIron",
                         'n', Blocks.NETHER_BRICK,
                         'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()),
-                        'o', Blocks.OBSIDIAN));
+                        'o', Blocks.COBBLESTONE));
     }
 
     private static void initItemRecipes() {

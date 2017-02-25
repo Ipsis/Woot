@@ -107,6 +107,9 @@ public class MobRegistry {
         if (isCyberware(wootName))
             return false;
 
+        if (isBotania(wootName))
+            return false;
+
         String[] mobList;
         if (Settings.usePrismWhitelist)
             mobList = Settings.prismWhitelist;
@@ -212,6 +215,11 @@ public class MobRegistry {
     boolean isCyberware(String wootName) {
 
         return wootName.toLowerCase().contains("cyberware");
+    }
+
+    boolean isBotania(String wootName) {
+
+        return wootName.toLowerCase().contains("botania");
     }
 
     boolean isEnderDragon(String wootName) {

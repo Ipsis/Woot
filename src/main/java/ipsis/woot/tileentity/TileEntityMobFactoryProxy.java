@@ -131,18 +131,18 @@ public class TileEntityMobFactoryProxy extends TileEntity  {
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 
-        return capability == CapabilityEnergy.ENERGY;
+        if (capability == CapabilityEnergy.ENERGY && hasMaster() && master.isFormed())
+            return true;
+
+        return false;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY) {
-
-            if (hasMaster() && master.isFormed()) {
-                IEnergyStorage energyStorage = master.getEnergyManager();
-                return (T) energyStorage;
-            }
+        if (capability == CapabilityEnergy.ENERGY && hasMaster() && master.isFormed()) {
+            IEnergyStorage energyStorage = master.getEnergyManager();
+            return (T) energyStorage;
         }
 
         return super.getCapability(capability, facing);

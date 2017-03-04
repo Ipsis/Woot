@@ -110,6 +110,9 @@ public class MobRegistry {
         if (isBotania(wootName))
             return false;
 
+        if (isWitherCrumbs(wootName))
+            return false;
+
         String[] mobList;
         if (Settings.usePrismWhitelist)
             mobList = Settings.prismWhitelist;
@@ -220,6 +223,11 @@ public class MobRegistry {
     boolean isBotania(String wootName) {
 
         return wootName.toLowerCase().contains("botania");
+    }
+
+    boolean isWitherCrumbs(String wootName) {
+
+        return wootName.toLowerCase().contains("withercrumbs");
     }
 
     boolean isEnderDragon(String wootName) {

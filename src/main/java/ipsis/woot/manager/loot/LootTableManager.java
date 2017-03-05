@@ -1,6 +1,8 @@
 package ipsis.woot.manager.loot;
 
+import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Settings;
@@ -8,6 +10,8 @@ import ipsis.woot.util.ItemStackHelper;
 import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -115,6 +119,9 @@ public class LootTableManager {
 
     public List<ItemStack> getDrops(String wootName, EnumEnchantKey key) {
 
+        if (MobRegistry.isEnderDragon(wootName))
+            return handleEnderDragonDrops(key);
+
         List<ItemStack> drops = new ArrayList<ItemStack>();
         LootTable e = lootMap.get(wootName);
         if (e != null)
@@ -124,6 +131,9 @@ public class LootTableManager {
     }
 
     public List<FullDropInfo> getFullDropInfo(String wootName, EnumEnchantKey key) {
+
+        if (MobRegistry.isEnderDragon(wootName))
+            return getEnderDragonFullDrops(key);
 
         List<FullDropInfo> drops = null;
 
@@ -136,6 +146,9 @@ public class LootTableManager {
 
     public boolean isFull(String wootName, EnumEnchantKey key) {
 
+        if (MobRegistry.isEnderDragon(wootName))
+            return true;
+
         LootTable e = lootMap.get(wootName);
         if (e == null)
             return false;
@@ -145,11 +158,33 @@ public class LootTableManager {
 
     public boolean isEmpty(String wootName, EnumEnchantKey key) {
 
+        if (MobRegistry.isEnderDragon(wootName))
+            return false;
+
         LootTable e = lootMap.get(wootName);
         if (e == null)
             return true;
 
         return e.isEmpty(key);
+    }
+
+    /**
+     * EnderDragon handling
+     */
+    private List<ItemStack> handleEnderDragonDrops(EnumEnchantKey key) {
+
+        List<ItemStack> drops = new ArrayList<ItemStack>();
+        drops.add(new ItemStack(Blocks.DRAGON_EGG));
+        drops.add(new ItemStack(Items.DRAGON_BREATH, 4));
+        return drops;
+    }
+
+    private List<FullDropInfo> getEnderDragonFullDrops(EnumEnchantKey key) {
+
+        List<FullDropInfo> drops = new ArrayList<FullDropInfo>();
+        drops.add(new FullDropInfo(new ItemStack(Blocks.DRAGON_EGG), 100.0F));
+        drops.add(new FullDropInfo(new ItemStack(Items.DRAGON_BREATH), 100.0F));
+        return drops;
     }
 
     /**

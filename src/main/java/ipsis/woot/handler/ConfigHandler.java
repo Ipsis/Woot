@@ -1,6 +1,7 @@
 package ipsis.woot.handler;
 
 import ipsis.Woot;
+import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
@@ -55,6 +56,7 @@ public class ConfigHandler {
         Settings.tierIIMobXpCap = getConfigInt(Config.General.TIER_II_MOB_XP_CAP, Settings.Spawner.DEF_TIER_II_MOB_XP_CAP);
         Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
         Settings.tierIVMobXpCap = getConfigInt(Config.General.TIER_IV_MOB_XP_CAP, Settings.Spawner.DEF_TIER_IV_MOB_XP_CAP);
+        Settings.allowEnderDragon = getConfigBool(Config.General.ALLOW_ENDER_DRAGON, Settings.Spawner.DEF_ALLOW_ENDER_DRAGON);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
@@ -111,6 +113,13 @@ public class ConfigHandler {
                 LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
             }
         }
+
+        /**
+         * EnderDragon
+         */
+        Woot.mobRegistry.addCosting(MobRegistry.ENDER_DRAGON, 500);
+        Woot.mobRegistry.addMapping(MobRegistry.ENDER_DRAGON, 500);
+        Woot.tierMapper.addMapping(MobRegistry.ENDER_DRAGON, EnumMobFactoryTier.TIER_FOUR);
 
         /**
          * Power

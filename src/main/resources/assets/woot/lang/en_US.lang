@@ -112,6 +112,7 @@ config.Woot:globalTierIVMobList=List of entities that need a Tier IV factory
 config.Woot:globalDropBlacklist=List of items to never generate from the factory
 config.Woot:globalPrismUseWhitelist=Use the prism whitelist - ignores the blacklist
 config.Woot:globalSpawnCostList=List of mobs and spawn costs
+config.Woot:globalAllowEnderDagon=Allow EnderDragon to be spawned in the factory
 
 config.Woot:rateI_RFTick=Rate I cost (RF/tick)
 config.Woot:rateII_RFTick=Rate II cost (RF/tick)

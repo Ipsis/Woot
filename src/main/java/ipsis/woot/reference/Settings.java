@@ -15,6 +15,7 @@ public class Settings {
         public static final int DEF_TIER_III_MOB_XP_CAP = 49;
         public static final int DEF_TIER_IV_MOB_XP_CAP = 65535;
         public static final boolean DEF_PRISM_USE_WHITELIST = false;
+        public static final boolean DEF_ALLOW_ENDER_DRAGON = true;
     }
 
     public static class Progression {
@@ -133,6 +134,7 @@ public class Settings {
     public static int learnTicks;
     public static boolean strictFactorySpawns;
     public static boolean strictPower;
+    public static boolean allowEnderDragon;
     public static int baseMobCount;
     public static int baseRateTicks;
     public static int tierIMobXpCap;

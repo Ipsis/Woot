@@ -17,7 +17,7 @@ import java.util.List;
 public class Drop {
 
     ItemStack itemStack;
-    int count;
+    int count; // how many times this drop has been seen
     List<DropData> weights;
 
     public float getChance(int sampleSize) {
@@ -25,7 +25,13 @@ public class Drop {
         if (sampleSize == 0)
             return 0.0F;
 
-        return ((float)count / (float)sampleSize);
+        /**
+         * Cap count at samplesize
+         */
+        int realcount = count;
+        if (realcount > sampleSize) realcount = sampleSize;
+
+        return ((float)realcount / (float)sampleSize);
     }
 
     public Drop(ItemStack itemStack) {

@@ -16,7 +16,9 @@ import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
 import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
+import mcjty.theoneprobe.config.Config;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -177,21 +179,53 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         if (te instanceof TileEntityMobFactory) {
             TileEntityMobFactory factoryTE = (TileEntityMobFactory)te;
 
+
             if (factoryTE.isFormed()) {
 
                 PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
 
+                /**
+                 * Progress
+                 * Configuration
+                 */
+
+                /**
+                 * Power & Redstone state
+                 */
+                if (Config.getDefaultConfig().getRFMode() == 1) {
+                    probeInfo.progress(info.storedRF, info.totalRF,
+                            probeInfo.defaultProgressStyle().
+                                    suffix("RF").
+                                    filledColor(Config.rfbarFilledColor).
+                                    alternateFilledColor(Config.rfbarAlternateFilledColor).
+                                    borderColor(Config.rfbarBorderColor).
+                                    numberFormat(Config.rfFormat));
+                } else {
+                    probeInfo.text(TextFormatting.RED + "RF: " + ElementProgress.format(info.storedRF, Config.rfFormat, "RF"));
+                }
+
+                probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (info.isRunning ? "On" : "Off"));
+
+                /**
+                 * Progress
+                 */
+                if (info.isRunning) {
+                    int percentage = (int)((100.0F / (float)info.spawnRF) * (float)info.consumedRF);
+                    TextFormatting form = TextFormatting.GREEN;
+                    if (percentage > 100)
+                        form = TextFormatting.RED;
+
+                    percentage = Math.min(percentage, 100);
+                    probeInfo.horizontal().item(new ItemStack(Items.COMPASS), probeInfo.defaultItemStyle().width(14).height(14)).text(form + "Progress: " + percentage + "%");
+                }
+
+                /**
+                 * Recipe
+                 */
                 probeInfo.text(TextFormatting.BLUE + String.format( info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));
-
-                if (info.isRunning)
-                    probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RUNNING)));
-                else
-                    probeInfo.text(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
-
-                probeInfo.text(TextFormatting.RED + String.format("%d / %d RF", info.storedRF, info.totalRF));
 
                 if (mode == ProbeMode.EXTENDED) {
 
@@ -267,6 +301,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         public int totalRF;
         public boolean isRunning;
         public int maxMass;
+        public boolean strict;
+        public int consumedRF;
 
         public PluginTooltipInfo(TileEntityMobFactory te) {
 
@@ -278,6 +314,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             storedRF = te.getEnergyManager().getEnergyStored();
             totalRF = te.getEnergyManager().getMaxEnergyStored();
             isRunning = te.isRunning();
+            consumedRF = te.getConsumedRf();
 
             maxMass = Settings.baseMobCount;
             UpgradeSetup upgradeSetup = te.getUpgradeSetup();
@@ -298,6 +335,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             tag.setInteger("energy", storedRF);
             tag.setInteger("maxEnergy", totalRF);
             tag.setInteger("mobCount", maxMass);
+            tag.setInteger("consumedEnergy", consumedRF);
         }
 
         public static PluginTooltipInfo fromNBT(NBTTagCompound tag) {
@@ -313,6 +351,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             info.storedRF = tag.getInteger("energy");
             info.totalRF = tag.getInteger("maxEnergy");
             info.maxMass = tag.getInteger("mobCount");
+            info.consumedRF = tag.getInteger("consumedEnergy");
             return info;
         }
     }

@@ -52,6 +52,7 @@ public class HandlerLivingDropsEvent {
                  */
                 if (e.getEntity() instanceof EntityMagmaCube) {
 
+
                     if (((EntityMagmaCube) e.getEntity()).isSmallSlime())
                         return;
 

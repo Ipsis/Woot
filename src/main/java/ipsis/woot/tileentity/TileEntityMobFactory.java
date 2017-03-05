@@ -174,6 +174,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         return this.upgradeSetup;
     }
 
+    public int getConsumedRf() {
+
+        return this.consumedRf;
+    }
+
     void setRunning(boolean running) {
 
         if (this.running != running) {

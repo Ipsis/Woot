@@ -33,6 +33,8 @@ public class Config {
 
     public static class Power {
 
+        public static final String MAX_POWER = "globalMaxPower";
+
         public static final String RATE_I_COST = "rateI_RFTick";
         public static final String RATE_II_COST = "rateII_RFTick";
         public static final String RATE_III_COST = "rateIII_RFTick";

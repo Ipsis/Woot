@@ -57,6 +57,7 @@ public class ConfigHandler {
         Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
         Settings.tierIVMobXpCap = getConfigInt(Config.General.TIER_IV_MOB_XP_CAP, Settings.Spawner.DEF_TIER_IV_MOB_XP_CAP);
         Settings.allowEnderDragon = getConfigBool(Config.General.ALLOW_ENDER_DRAGON, Settings.Spawner.DEF_ALLOW_ENDER_DRAGON);
+        Settings.maxPower = getConfigInt(Config.Power.MAX_POWER, Settings.Power.DEF_MAX_POWER);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));

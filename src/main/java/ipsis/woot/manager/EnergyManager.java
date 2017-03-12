@@ -8,7 +8,6 @@ public class EnergyManager extends EnergyStorage {
 
     // Allow as much power in and out of the device as needed
     public static final int MAX_RF_TICK = Integer.MAX_VALUE;
-    public static final int RF_STORED = 10000000;
 
     private TileEntityMobFactory factory;
     private EnergyManager(int capacity, int maxReceive, int maxExtract) {

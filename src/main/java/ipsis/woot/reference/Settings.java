@@ -60,6 +60,7 @@ public class Settings {
         public static final int DEF_TIER_II_RF_TICK = BASE_RF * 2;
         public static final int DEF_TIER_III_RF_TICK = BASE_RF * 3;
         public static final int DEF_TIER_IV_RF_TICK = BASE_RF * 4;
+        public static final int DEF_MAX_POWER = 10000000;
 
         public static final int DEF_XP_RF_TICK = 16; /* 80 / 5 (xp of zombie) */
 
@@ -134,6 +135,7 @@ public class Settings {
     public static int learnTicks;
     public static boolean strictFactorySpawns;
     public static boolean strictPower;
+    public static int maxPower;
     public static boolean allowEnderDragon;
     public static int baseMobCount;
     public static int baseRateTicks;

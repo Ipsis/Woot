@@ -642,7 +642,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     /**
      * Forge Power Interface
      */
-    protected EnergyManager energyManager = new EnergyManager(EnergyManager.RF_STORED, EnergyManager.MAX_RF_TICK, this);
+    protected EnergyManager energyManager = new EnergyManager(Settings.maxPower, EnergyManager.MAX_RF_TICK, this);
 
     public EnergyManager getEnergyManager() {
 

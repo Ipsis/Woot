@@ -1,4 +1,4 @@
-itemGroup.Woot=
+itemGroup.Woot=野性的呼唤
 
 tile.Woot:factory.name=怪物工厂/刷怪笼/磨床
 tile.Woot:controller.name=怪物控制器
@@ -9,17 +9,17 @@ tile.Woot:layout.name=Mob Factory Layout
 tile.Woot:structure.block_1.name=灰色怪物工厂方块
 tile.Woot:structure.block_2.name=红色怪物工厂方块
 tile.Woot:structure.block_3.name=橙色怪物工厂方块
-tile.Woot:structure.block_4.name=Mob Factory Block Green
-tile.Woot:structure.block_5.name=Mob Factory Block White
-tile.Woot:structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
-tile.Woot:structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
-tile.Woot:structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone
-tile.Woot:structure.tier_iv_cap.name=Mob Factory Tier IV Cap Stone
+tile.Woot:structure.block_4.name=绿色怪物工厂方块
+tile.Woot:structure.block_5.name=白色怪物工厂方块
+tile.Woot:structure.tier_i_cap.name=怪物工厂一级拱顶石
+tile.Woot:structure.tier_ii_cap.name=怪物工厂二级拱顶石
+tile.Woot:structure.tier_iii_cap.name=怪物工厂三级拱顶石
+tile.Woot:structure.tier_iv_cap.name=怪物工厂四级拱顶石
 
-tile.Woot:upgrade.xp_i.name=XP I Upgrade
-tile.Woot:upgrade.xp_ii.name=XP II Upgrade
+tile.Woot:upgrade.xp_i.name=经验掉落1升级
+tile.Woot:upgrade.xp_ii.name=经验掉落2升级
 tile.Woot:upgrade.xp_iii.name=XP III Upgrade
-tile.Woot:upgrade.rate_i.name=Rate I Upgrade
+tile.Woot:upgrade.rate_i.name=稀有掉落1升级
 tile.Woot:upgrade.rate_ii.name=Rate II Upgrade
 tile.Woot:upgrade.rate_iii.name=Rate III Upgrade
 tile.Woot:upgrade.looting_i.name=Looting I Upgrade
@@ -84,9 +84,9 @@ waila.Woot:factory.stopped=Factory is stopped
 waila.Woot:factory.sneak=Sneak for installed upgrades and learned drops
 waila.Woot:factory.nullupgrades=No upgrades installed
 
-entity.Woot:witherskelly.name=Wither Skeleton
-entity.Woot:chargedcreeper.name=Charged Creeper
-entity.Woot:elderguardian.name=Elder Guardian
+entity.Woot:witherskelly.name=凋灵骷髅
+entity.Woot:chargedcreeper.name=高压苦力怕
+entity.Woot:elderguardian.name=远古守卫者
 
 config.Woot:globalSampleSize=Maximum number of mobs of each type to learn from
 config.Woot:globalLearnTicks=Minimum number of ticks between fake spawn learning

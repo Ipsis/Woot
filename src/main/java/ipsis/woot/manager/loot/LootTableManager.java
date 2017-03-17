@@ -240,6 +240,12 @@ public class LootTableManager {
              */
             lootMap = new HashMap<String, LootTable>();
         }
+
+        /**
+         * Catch the case where the file exists but is empty and doesn't throw any exceptions
+         */
+        if (lootMap == null)
+            lootMap = new HashMap<String, LootTable>();
     }
 
     public void save() {

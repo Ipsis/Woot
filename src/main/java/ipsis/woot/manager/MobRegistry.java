@@ -116,6 +116,15 @@ public class MobRegistry {
         if (wootName.equalsIgnoreCase("Woot:none:draconicevolution.ChaosGuardian"))
             return true;
 
+        if (wootName.equalsIgnoreCase("Woot:none:abyssalcraft.shadowboss"))
+            return true;
+
+        if (wootName.equalsIgnoreCase("Woot:none:abyssalcraft.Jzahar"))
+            return true;
+
+        if (wootName.equalsIgnoreCase("Woot:none:roots.spriteGuardian"))
+            return true;
+
         return false;
     }
 

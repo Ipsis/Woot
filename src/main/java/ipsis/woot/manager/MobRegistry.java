@@ -99,12 +99,35 @@ public class MobRegistry {
         }
     }
 
+    private boolean isInternallyBlacklisted(String wootName) {
+
+        if (wootName.equalsIgnoreCase("Woot:none:arsmagica2.Dryad"))
+            return true;
+
+        if (wootName.equalsIgnoreCase("Woot:none:abyssalcraft.lesserdreadbeast"))
+            return true;
+
+        if (wootName.equalsIgnoreCase("Woot:none:abyssalcraft.greaterdreadspawn"))
+            return true;
+
+        if (wootName.equalsIgnoreCase("Woot:none:abyssalcraft.chagaroth"))
+            return true;
+
+        if (wootName.equalsIgnoreCase("Woot:none:draconicevolution.ChaosGuardian"))
+            return true;
+
+        return false;
+    }
+
     public boolean isPrismValid(String wootName) {
 
         if (isEnderDragon(wootName))
             return false;
 
         if (isCyberware(wootName))
+            return false;
+
+        if (isInternallyBlacklisted(wootName))
             return false;
 
         String[] mobList;

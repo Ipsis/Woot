@@ -158,9 +158,9 @@ tooltip.Woot:factory_cost=Tier %s %dRF/tick
 tooltip.Woot:upgrade_cost=%d RF/tick
 
 tooltip.Woot:upgrade_rate_effect=Spawn mobs every %d ticks
-tooltip.Woot:upgrade_lootingI_effect=Applys Looting I enchant to kills
-tooltip.Woot:upgrade_lootingII_effect=Applys Looting II enchant to kills
-tooltip.Woot:upgrade_lootingIII_effect=Applys Looting III enchant to kills
+tooltip.Woot:upgrade_lootingI_effect=Applies Looting I enchant to kills
+tooltip.Woot:upgrade_lootingII_effect=Applies Looting II enchant to kills
+tooltip.Woot:upgrade_lootingIII_effect=Applies Looting III enchant to kills
 tooltip.Woot:upgrade_xp_effect=Increases XP collected by %d%%
 tooltip.Woot:upgrade_xp_base_effect=Collect XP
 tooltip.Woot:upgrade_mass_effect=Spawn %d mobs
@@ -231,7 +231,7 @@ book.Woot:cover.0=Woot - The Alternative Mob Spawner/Grinder System
 book.Woot:cover.1=How to build, program and run your Mob Factory
 
 book.Woot:introduction.title=Introduction
-book.Woot:introduction.0=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades.
+book.Woot:introduction.0=Welcome to the user manual for your new Mob Factory, the safe, easy and clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades.
 book.Woot:introduction.1=So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
 
 book.Woot:crafting.title=How To Craft
@@ -248,7 +248,7 @@ book.Woot:building.2=If you factory does not form, then you can right-click the 
 book.Woot:building.3=The factory MUST be built above Y=10, because ...... construction regulations ....
 
 book.Woot:capturing.title=Capturing Mobs
-book.Woot:capturing.0=It is not so much capturing mos, more poking them a bit then running away before they get angry. So you need to craft a Mob Prism and quietly approach the mob of your choice. Then gently prod the mob with the prism. You know have a programmed Mob Prism. The prism tooltip will tell you the minimum tier of factory that is required to spawn this mob.
+book.Woot:capturing.0=It is not so much capturing mobs, more poking them a bit then running away before they get angry. So you need to craft a Mob Prism and quietly approach the mob of your choice. Then gently prod the mob with the prism. You now have a programmed Mob Prism. The prism tooltip will tell you the minimum tier of factory that is required to spawn this mob.
 book.Woot:capturing.1=This would now be a good time to run away from the mob, depending on how it reacts to getting poked. If you have just poked a Wither Boss, I would RUN AWAY VERY FAST.
 
 book.Woot:operation.title=Running A Factory
@@ -267,7 +267,7 @@ book.Woot:tier2.0=This factory allows you to install up to four Tier II upgrades
 book.Woot:tier2.1=The factory requires:<br><br>13 x Gray Structure blocks<br>16 x Red Structure blocks<br>40 x Orange Structure blocks<br>4 x Tier II Capstones
 
 book.Woot:tier3.title=Tier III Factory
-book.Woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Endermen. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.<br>It costs 240RF/tick to run this factory.
+book.Woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Enderman. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.<br>It costs 240RF/tick to run this factory.
 book.Woot:tier3.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>44 x Orange Structure blocks<br>52 x Green Structure blocks<br>5 x Tier III Capstones
 
 book.Woot:tier4.title=Tier IV Factory
@@ -275,7 +275,7 @@ book.Woot:tier4.0=This factory has the same capabilities as the Tier III factory
 book.Woot:tier4.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>44 x Orange Structure blocks<br>57 x Green Structure blocks<br>82 x White Structure Blocks<br>8 x Tier IV Capstones
 
 book.Woot:proxy.title=Proxy And Extender
-book.Woot:proxy.0=For those of you that like things neat and tidy, or just want to put more RF into the factory, there is Proxy block. Basically this block allows you to input power and provide more inventories to put items in. It also allows you to hide everything underneath the factory.
+book.Woot:proxy.0=For those of you that like things neat and tidy, or just want to put more RF into the factory, there is the Proxy block. Basically this block allows you to input power and provide more inventories to put items in. It also allows you to hide everything underneath the factory.
 book.Woot:proxy.1=To use the Proxy block, place a column of Extender blocks directly below the Mob Factory block and then put the Proxy block last. It will accept RF or inventories on any side of the Proxy.
 
 book.Woot:upgrades.title=Upgrade Totems

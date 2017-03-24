@@ -1,5 +1,7 @@
-#Woot
-The alternative spawner/grinder mod.
+# Woot
+
+> The alternative spawner/grinder mod.
+
 Get mod loot drops, without all those messy entities being generated.
 
 See https://github.com/Ipsis/Woot/wiki for how to use this mod

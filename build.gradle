@@ -24,7 +24,8 @@ plugins {
 repositories {
     maven { // The repo from which to get waila
         name "Mobius Repo"
-        url "http://mobiusstrip.eu/maven"
+        url "http://tehnut.info/maven"
+        // url "http://mobiusstrip.eu/maven"
     }
     maven { // JEI
         url "http://dvs1.progwml6.com/files/maven"
@@ -72,7 +73,7 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "mcp.mobius.waila:Waila:${config.waila_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.waila_version}"
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.top_version}"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"

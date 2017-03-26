@@ -104,13 +104,7 @@ public class MobRegistry {
         if (isEnderDragon(wootName) && !Settings.allowEnderDragon)
             return false;
 
-        if (isCyberware(wootName))
-            return false;
-
-        if (isBotania(wootName))
-            return false;
-
-        if (isWitherCrumbs(wootName))
+        if (MobBlacklist.isMobBlacklisted(wootName))
             return false;
 
         String[] mobList;
@@ -213,21 +207,6 @@ public class MobRegistry {
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }
-    }
-
-    boolean isCyberware(String wootName) {
-
-        return wootName.toLowerCase().contains("cyberware");
-    }
-
-    boolean isBotania(String wootName) {
-
-        return wootName.toLowerCase().contains("botania");
-    }
-
-    boolean isWitherCrumbs(String wootName) {
-
-        return wootName.toLowerCase().contains("withercrumbs");
     }
 
     public static boolean isEnderDragon(String wootName) {

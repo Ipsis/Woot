@@ -1,6 +1,5 @@
 package ipsis.woot.manager.loot;
 
-import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.oss.LogHelper;
@@ -27,6 +26,7 @@ public class LootTableManager {
     private List<ItemStack> blacklist;
     private List<ItemStack> internalBlacklist;  // Specific items to block
     private List<String> internalModBlacklist;  // Complete mod items to block
+    private LootEnderDragon lootEnderDragon;
 
     public LootTableManager() {
 
@@ -35,6 +35,8 @@ public class LootTableManager {
 
         internalBlacklist = new ArrayList<ItemStack>();
         internalModBlacklist = new ArrayList<String>();
+
+        lootEnderDragon = new LootEnderDragon();
     }
 
     public void loadInternalBlacklist() {
@@ -120,7 +122,7 @@ public class LootTableManager {
     public List<ItemStack> getDrops(String wootName, EnumEnchantKey key) {
 
         if (MobRegistry.isEnderDragon(wootName))
-            return handleEnderDragonDrops(key);
+            return lootEnderDragon.getDrops();
 
         List<ItemStack> drops = new ArrayList<ItemStack>();
         LootTable e = lootMap.get(wootName);
@@ -133,7 +135,7 @@ public class LootTableManager {
     public List<FullDropInfo> getFullDropInfo(String wootName, EnumEnchantKey key) {
 
         if (MobRegistry.isEnderDragon(wootName))
-            return getEnderDragonFullDrops(key);
+            return lootEnderDragon.getFullDropInfo();
 
         List<FullDropInfo> drops = null;
 
@@ -166,25 +168,6 @@ public class LootTableManager {
             return true;
 
         return e.isEmpty(key);
-    }
-
-    /**
-     * EnderDragon handling
-     */
-    private List<ItemStack> handleEnderDragonDrops(EnumEnchantKey key) {
-
-        List<ItemStack> drops = new ArrayList<ItemStack>();
-        drops.add(new ItemStack(Blocks.DRAGON_EGG));
-        drops.add(new ItemStack(Items.DRAGON_BREATH, 4));
-        return drops;
-    }
-
-    private List<FullDropInfo> getEnderDragonFullDrops(EnumEnchantKey key) {
-
-        List<FullDropInfo> drops = new ArrayList<FullDropInfo>();
-        drops.add(new FullDropInfo(new ItemStack(Blocks.DRAGON_EGG), 100.0F));
-        drops.add(new FullDropInfo(new ItemStack(Items.DRAGON_BREATH), 100.0F));
-        return drops;
     }
 
     /**

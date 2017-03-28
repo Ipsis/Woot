@@ -3,6 +3,7 @@ package ipsis.woot.init;
 import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.block.BlockMobFactoryUpgradeB;
 import ipsis.woot.init.recipes.ShapedOreEnchBookRecipe;
+import ipsis.woot.init.recipes.ShapelessOreDragonPrismRecipe;
 import ipsis.woot.item.ItemDye;
 import ipsis.woot.item.ItemFactoryUpgrade;
 import ipsis.woot.item.ItemShard;
@@ -291,6 +292,10 @@ public class ModRecipes {
                         'f', ModItems.itemPrismFrame));
 
          GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemPrism), new ItemStack(ModItems.itemPrism));
+
+        GameRegistry.addRecipe(
+                new ShapelessOreDragonPrismRecipe(new ItemStack(ModItems.itemPrism), ModItems.itemPrism, Blocks.DRAGON_EGG));
+
 
         /**
          * Reform from shards

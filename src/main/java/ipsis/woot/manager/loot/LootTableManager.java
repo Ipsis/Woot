@@ -46,6 +46,11 @@ public class LootTableManager {
         addToInternalModBlacklist("cyberware");
     }
 
+    public void loadDragonDrops() {
+
+        lootEnderDragon.addDrops();
+    }
+
     private void addToInternalModBlacklist(String s) {
 
         internalModBlacklist.add(s);
@@ -122,7 +127,7 @@ public class LootTableManager {
     public List<ItemStack> getDrops(String wootName, EnumEnchantKey key) {
 
         if (MobRegistry.isEnderDragon(wootName))
-            return lootEnderDragon.getDrops();
+            return lootEnderDragon.getDrops(key);
 
         List<ItemStack> drops = new ArrayList<ItemStack>();
         LootTable e = lootMap.get(wootName);
@@ -135,7 +140,7 @@ public class LootTableManager {
     public List<FullDropInfo> getFullDropInfo(String wootName, EnumEnchantKey key) {
 
         if (MobRegistry.isEnderDragon(wootName))
-            return lootEnderDragon.getFullDropInfo();
+            return lootEnderDragon.getFullDropInfo(key);
 
         List<FullDropInfo> drops = null;
 

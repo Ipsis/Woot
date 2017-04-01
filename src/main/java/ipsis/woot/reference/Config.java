@@ -8,7 +8,6 @@ public class Config {
         public static final String LEARN_TICKS = "globalLearnTicks";
         public static final String STRICT_SPAWNS = "globalStrictSpawns";
         public static final String STRICT_POWER = "globalStrictPower";
-        public static final String ALLOW_ENDER_DRAGON = "globalAllowEnderDragon";
         public static final String TIER_I_RF = "globalTierIRF";
         public static final String TIER_II_RF = "globalTierIIRF";
         public static final String TIER_III_RF = "globalTierIIIRF";
@@ -29,6 +28,10 @@ public class Config {
         public static final String PRISM_USE_WHITELIST = "globalPrismUseWhitelist";
         public static final String DROP_BLACKLIST = "globalDropBlacklist";
         public static final String SPAWN_COST_LIST = "globalSpawnCostList";
+        public static final String ALLOW_ENDER_DRAGON = "globalAllowEnderDragon";
+        public static final String ENDER_DRAGON_SPAWN_COST = "globalSpawnCostEnderDragon";
+        public static final String ENDER_DRAGON_DEATH_COST = "globalDeathCostEnderDragon";
+        public static final String ENDER_DRAGON_DROP_LIST = "globalDropListEnderDragon";
     }
 
     public static class Power {

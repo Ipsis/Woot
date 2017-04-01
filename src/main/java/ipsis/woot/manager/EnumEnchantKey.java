@@ -24,4 +24,18 @@ public enum EnumEnchantKey {
 
         return values()[v];
     }
+
+    public static EnumEnchantKey getFromString(String s) {
+
+        if (s.equalsIgnoreCase("NO_ENCHANT"))
+            return NO_ENCHANT;
+        else if (s.equalsIgnoreCase("LOOTING_I"))
+            return LOOTING_I;
+        else if (s.equalsIgnoreCase("LOOTING_II"))
+            return LOOTING_II;
+        else if (s.equalsIgnoreCase("LOOTING_III"))
+            return LOOTING_III;
+        else
+            return NO_ENCHANT;
+    }
 }

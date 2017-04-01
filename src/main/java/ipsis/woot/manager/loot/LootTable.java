@@ -37,7 +37,7 @@ public class LootTable {
     public boolean isFull(EnumEnchantKey key) {
 
         LootPool pool = getLootPool(key);
-        return pool.samples == Settings.sampleSize;
+        return pool.samples >= Settings.sampleSize;
     }
 
     public boolean isEmpty(EnumEnchantKey key) {

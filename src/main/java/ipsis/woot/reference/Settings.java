@@ -63,6 +63,14 @@ public class Settings {
                 "LOOTING_I,minecraft:dragon_breath,4,80.0",
                 "LOOTING_II,minecraft:dragon_breath,6,80.0",
                 "LOOTING_III,minecraft:dragon_breath,8,80.0",
+                "NO_ENCHANT,draconicevolution:dragon_heart,1,100.0",
+                "LOOTING_I,draconicevolution:dragon_heart,1,100.0",
+                "LOOTING_II,draconicevolution:dragon_heart,1,100.0",
+                "LOOTING_III,draconicevolution:dragon_heart,1,100.0",
+                "NO_ENCHANT,draconicevolution:draconium_dust,30,100.0",
+                "LOOTING_I,draconicevolution:draconium_dust,40,100.0",
+                "LOOTING_II,draconicevolution:draconium_dust,50,100.0",
+                "LOOTING_III,draconicevolution:draconium_dust,60,100.0",
         };
     }
 

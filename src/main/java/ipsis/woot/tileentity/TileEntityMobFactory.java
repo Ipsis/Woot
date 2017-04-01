@@ -5,6 +5,7 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -43,6 +44,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     AxisAlignedBB bb;
     ProxyManager proxyManager;
 
+    public static final int LOOTBOX_Y = 253;
+
     int currLearnTicks;
     int currSpawnTicks;
     int consumedRf;
@@ -54,6 +57,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     boolean dirtyStructure;
     boolean dirtyUpgrade;
     boolean dirtyProxy;
+    boolean hasLootBox;
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
 
@@ -138,6 +142,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.upgradeSetup = new UpgradeSetup();
         this.controllerConfig = new ControllerConfig();
         this.proxyManager = new ProxyManager(this);
+        this.hasLootBox = true; /* Will force one fake check */
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -383,8 +388,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (currLearnTicks >= learnTicksOffset) {
             if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
-                BlockPos spawnPos = new BlockPos(getPos().getX(), 0, getPos().getZ());
+                BlockPos spawnPos = new BlockPos(getPos());
                 Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.worldObj, this.getPos());
+                hasLootBox = true;
+            } else {
+                if (hasLootBox) {
+                    BlockPos spawnPos = new BlockPos(getPos());
+                    Woot.spawnerManager.destroyLootBox(this.getWorld(), spawnPos);
+                    hasLootBox = false;
+                }
             }
             currLearnTicks = 0;
         }
@@ -412,9 +424,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (!Woot.LOOT_TABLE_MANAGER.isFull(mobName, key)) {
 
             if (bb == null) {
-                BlockPos checkPos = new BlockPos(getPos().getX(), 1, getPos().getZ());
+                BlockPos checkPos = new BlockPos(getPos().getX(), LOOTBOX_Y, getPos().getZ());
                 int range = 2;
-                bb = new AxisAlignedBB(checkPos).expand(range, 0, range);
+                bb = new AxisAlignedBB(checkPos).expand(range, LOOTBOX_Y - 1, range);
             }
 
             List<EntityItem> itemList = worldObj.getEntitiesWithinAABB(EntityItem.class, bb, EntitySelectors.IS_ALIVE);

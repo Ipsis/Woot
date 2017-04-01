@@ -1,12 +1,15 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.FakePlayerPool;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -114,7 +117,7 @@ public class SpawnerManager {
     public int getSpawnXp(String mobName, TileEntity te) {
 
         if (!Woot.mobRegistry.hasXp(mobName)) {
-            Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos());
+            Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos(), false);
             if (entity != null) {
                 int xp = ((EntityLiving)entity).experienceValue;
                 Woot.mobRegistry.addMapping(mobName, xp);
@@ -127,18 +130,45 @@ public class SpawnerManager {
 
     private void createLootBox(World world, BlockPos originPos) {
 
-        for (int y = 1; y <= 3; y++) {
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);
-                    if (!world.isAirBlock(p))
-                        world.setBlockToAir(p);
+        /**
+         * Create a 3x3x3 box in the sky to capture the drops while learning
+         * Box is centered on y=253
+         */
+        Block b = Blocks.BARRIER;
+
+        for (int y = 251; y <= 255; y++) {
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+
+                    boolean change = false;
+                    if (y == 255 || y == 251)
+                        change = true;
+                    else if (x == -2 || x == 2 || z == -2 || z == 2)
+                        change = true;
+
+                    if (change) {
+                        BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);
+                        if (world.getBlockState(p).getBlock() != b)
+                            world.setBlockState(p, b.getDefaultState(), 3);
+                    }
                 }
             }
         }
     }
 
-    private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {
+    public void destroyLootBox(World world, BlockPos originPos) {
+
+        for (int y = 255; y >= 251; y--) {
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+                    BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);
+                    world.setBlockToAir(p);
+                }
+            }
+        }
+    }
+
+    private Entity spawnEntity(String mobName, World world, BlockPos blockPos, boolean createLootBox) {
 
         Entity entity = Woot.mobRegistry.createEntity(mobName, world);
 
@@ -147,7 +177,7 @@ public class SpawnerManager {
             if (!ForgeEventFactory.doSpecialSpawn((EntityLiving)entity, world, blockPos.getX(), blockPos.getY(), blockPos.getZ()))
                 ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
 
-            BlockPos originPos = new BlockPos(blockPos.getX(), 1, blockPos.getZ());
+            BlockPos originPos = new BlockPos(blockPos.getX(), TileEntityMobFactory.LOOTBOX_Y, blockPos.getZ());
             entity.setPosition(originPos.getX(), originPos.getY(), originPos.getZ());
 
             /**
@@ -156,7 +186,8 @@ public class SpawnerManager {
              *
              * If not then the loot can be spawned in a block causing it to be accelerated upwards
              */
-            createLootBox(world, originPos);
+            if (createLootBox)
+                createLootBox(world, originPos);
 
             /**
              * Random loot drop needs a non-zero recentlyHit value
@@ -169,7 +200,7 @@ public class SpawnerManager {
 
     public void spawn(String mobName, EnumEnchantKey enchantKey, World world, BlockPos blockPos) {
 
-        Entity entity = spawnEntity(mobName, world, blockPos);
+        Entity entity = spawnEntity(mobName, world, blockPos, true);
         if (entity == null)
             return;
 

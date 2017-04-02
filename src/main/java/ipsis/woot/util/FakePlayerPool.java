@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.reference.Settings;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,7 @@ public class FakePlayerPool {
         ItemStack swordIII = new ItemStack(Items.DIAMOND_SWORD);
 
         swordI.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingILevel);
-        swordII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIIILevel);
+        swordII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIILevel);
         swordIII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIIILevel);
 
         fakePlayer.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
@@ -57,5 +58,19 @@ public class FakePlayerPool {
             init(world);
 
         return fakePlayerHashMap.get(enumEnchantKey);
+    }
+
+    public static boolean isOurFakePlayer(Entity entity) {
+
+        if (!(entity instanceof FakePlayer))
+            return false;
+
+        FakePlayer fakePlayer = (FakePlayer)entity;
+        UUID uuid = fakePlayer.getUniqueID();
+
+        return (WOOT_GAME_PROFILE.getId().equals(uuid) ||
+                WOOT_GAME_PROFILE_I.getId().equals(uuid) ||
+                WOOT_GAME_PROFILE_II.getId().equals(uuid) ||
+                WOOT_GAME_PROFILE_III.getId().equals(uuid));
     }
 }

@@ -1,12 +1,10 @@
 package ipsis.woot.init;
 
+import ipsis.woot.item.ItemShard;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-/**
- * Created by Ipsis on 04/06/2016.
- */
 public class ModOreDictionary {
 
     public static final String ORE_DICT_SKULL = "itemSkull";
@@ -19,5 +17,16 @@ public class ModOreDictionary {
          */
         ItemStack skull = new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE);
         OreDictionary.registerOre(ORE_DICT_SKULL, skull);
+
+        /**
+         * Register the shards under "nuggetX"
+         */
+        ItemStack itemStack = new ItemStack(ModItems.itemShard);
+        itemStack.setItemDamage(ItemShard.EnumShardType.QUARTZ.getMeta());
+        OreDictionary.registerOre("nuggetQuartz", itemStack);
+        itemStack.setItemDamage(ItemShard.EnumShardType.DIAMOND.getMeta());
+        OreDictionary.registerOre("nuggetDiamond", itemStack);
+        itemStack.setItemDamage(ItemShard.EnumShardType.EMERALD.getMeta());
+        OreDictionary.registerOre("nuggetEmerald", itemStack);
     }
 }

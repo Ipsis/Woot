@@ -1,5 +1,6 @@
 package ipsis.woot.manager;
 
+import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
@@ -8,16 +9,16 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntityMagmaCube;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.SkeletonType;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.monster.*;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class MobRegistry {
@@ -25,6 +26,8 @@ public class MobRegistry {
     public static final String INVALID_MOB_NAME = "InvalidMob";
     public static final String ENDER_DRAGON = "Woot:none:EnderDragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
+
+    Map<String, Integer> mobCostMap = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
 
     public static String getMcName(String wootName) {
 
@@ -37,12 +40,28 @@ public class MobRegistry {
         return mobName != null && !mobName.equals(INVALID_MOB_NAME) && !mobName.equals("");
     }
 
+    public void addCosting(String mobName, int cost) {
+
+        if (mobName != null && cost > 0)
+            mobCostMap.put(mobName, cost);
+    }
+
     public String createWootName(EntityLiving entityLiving) {
 
         String name = EntityList.getEntityString(entityLiving);
         if (entityLiving instanceof EntitySkeleton) {
-            if (((EntitySkeleton) entityLiving).func_189771_df() == SkeletonType.WITHER)
+            if (((EntitySkeleton) entityLiving).getSkeletonType() == SkeletonType.WITHER)
                 name = "wither:" + name;
+            else
+                name = "none:" + name;
+        } else if (entityLiving instanceof EntityCreeper) {
+            if (((EntityCreeper) entityLiving).getPowered() == true)
+                name = "charged:" + name;
+            else
+                name = "none:" + name;
+        } else if (entityLiving instanceof EntityGuardian) {
+            if (((EntityGuardian)entityLiving).isElder() == true)
+                name = "elder:" + name;
             else
                 name = "none:" + name;
         } else {
@@ -61,8 +80,18 @@ public class MobRegistry {
     private String createDisplayName(EntityLiving entityLiving) {
 
         if (entityLiving instanceof  EntitySkeleton) {
-            if (((EntitySkeleton) entityLiving).func_189771_df() == SkeletonType.WITHER)
+            if (((EntitySkeleton) entityLiving).getSkeletonType() == SkeletonType.WITHER)
                 return StringHelper.localize("entity.Woot:witherskelly.name");
+            else
+                return entityLiving.getName();
+        } else if (entityLiving instanceof EntityCreeper) {
+            if (((EntityCreeper) entityLiving).getPowered() == true)
+                return StringHelper.localize("entity.Woot:chargedcreeper.name");
+            else
+                return entityLiving.getName();
+        } else if (entityLiving instanceof EntityGuardian) {
+            if (((EntityGuardian)entityLiving).isElder() == true)
+                return StringHelper.localize("entity.Woot:elderguardian.name");
             else
                 return entityLiving.getName();
         } else {
@@ -70,24 +99,50 @@ public class MobRegistry {
         }
     }
 
-    public boolean isBlacklisted(String wootName) {
+    public boolean isPrismValid(String wootName) {
 
-        if (isEnderDragon(wootName))
-            return true;
+        if (isEnderDragon(wootName) && !Settings.allowEnderDragon)
+            return false;
 
-        for (int i = 0; i < Settings.prismBlacklist.length; i++) {
-            if (Settings.prismBlacklist[i].equals(wootName))
-                return true;
+        if (MobBlacklist.isMobBlacklisted(wootName))
+            return false;
+
+        String[] mobList;
+        if (Settings.usePrismWhitelist)
+            mobList = Settings.prismWhitelist;
+        else
+            mobList = Settings.prismBlacklist;
+
+        for (int i = 0; i < mobList.length; i++) {
+            if (mobList[i].equalsIgnoreCase(wootName)) {
+                return mobList == Settings.prismWhitelist;
+            }
         }
 
-        return false;
+        // not on blacklist: valid
+        // not on whitelist: invalid
+        return mobList == Settings.prismBlacklist;
     }
 
-    public void cmdDumpBlacklist(ICommandSender sender) {
+    public void cmdDumpPrism(ICommandSender sender) {
 
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
-        for (int i = 0; i < Settings.prismBlacklist.length; i++)
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", Settings.prismBlacklist[i]));
+        //sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));
+        if (Settings.usePrismWhitelist) {
+            for (int i = 0; i < Settings.prismWhitelist.length; i++)
+                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.whitelist.summary", Settings.prismWhitelist[i]));
+        } else {
+            for (int i = 0; i < Settings.prismBlacklist.length; i++)
+                sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.prism.blacklist.summary", Settings.prismBlacklist[i]));
+        }
+    }
+
+    public void cmdDumpCosts(ICommandSender sender) {
+
+        StringBuilder sb = new StringBuilder();
+        for (String name : mobCostMap.keySet())
+            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.cost.summary",
+                    name, mobCostMap.get(name)));
+
     }
 
     public String onEntityLiving(EntityLiving entityLiving) {
@@ -122,16 +177,23 @@ public class MobRegistry {
         return mobInfoHashMap.containsKey(wootName);
     }
 
-    void extraEntitySetup(MobInfo mobInfo, Entity entity) {
+    void extraEntitySetup(MobInfo mobInfo, Entity entity, World world) {
 
         if (isWitherSkeleton(mobInfo.wootMobName, entity)) {
-            ((EntitySkeleton) entity).func_189768_a(SkeletonType.WITHER);
+            ((EntitySkeleton) entity).setSkeletonType(SkeletonType.WITHER);
         } else if (isSlime(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() != 1)
                 setSlimeSize((EntitySlime)entity, 1);
         } else if (isMagmaCube(mobInfo.wootMobName, entity)) {
             if (((EntitySlime)entity).getSlimeSize() == 1)
                 setSlimeSize((EntitySlime)entity, 2);
+        } else if (isChargedCreeper(mobInfo.wootMobName, entity)) {
+            entity.onStruckByLightning(new EntityLightningBolt(world,
+                    entity.getPosition().getX(),
+                    entity.getPosition().getY(),
+                    entity.getPosition().getZ(), true));
+        } else if (isElderGuardian(mobInfo.wootMobName, entity)) {
+            ((EntityGuardian)entity).setElder(true);
         }
     }
 
@@ -147,7 +209,7 @@ public class MobRegistry {
         }
     }
 
-    boolean isEnderDragon(String wootName) {
+    public static boolean isEnderDragon(String wootName) {
 
         return ENDER_DRAGON.equals(wootName);
     }
@@ -167,6 +229,16 @@ public class MobRegistry {
         return entity instanceof EntityMagmaCube && wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
     }
 
+    boolean isChargedCreeper(String wootName, Entity entity) {
+
+        return entity instanceof EntityCreeper && wootName.equals(Reference.MOD_ID + ":" + "charged:Creeper");
+    }
+
+    boolean isElderGuardian(String wootName, Entity entity) {
+
+        return entity instanceof EntityGuardian && wootName.equals(Reference.MOD_ID + ":" + "elder:Guardian");
+    }
+
     public Entity createEntity(String wootName, World world) {
 
         if (!isKnown(wootName))
@@ -174,7 +246,7 @@ public class MobRegistry {
 
         Entity entity = EntityList.createEntityByName(mobInfoHashMap.get(wootName).getMcMobName(), world);
         if (entity != null)
-            extraEntitySetup(mobInfoHashMap.get(wootName), entity);
+            extraEntitySetup(mobInfoHashMap.get(wootName), entity, world);
 
         return entity;
     }
@@ -187,8 +259,12 @@ public class MobRegistry {
 
     public int getSpawnXp(String wootName) {
 
+        Integer cost = Woot.mobRegistry.mobCostMap.get(wootName);
+        if (cost != null)
+            return cost;
+
         if (mobInfoHashMap.containsKey(wootName))
-            return mobInfoHashMap.get(wootName).getSpawnXp();
+            return mobInfoHashMap.get(wootName).getDeathXp();
 
         return 1;
     }
@@ -216,7 +292,6 @@ public class MobRegistry {
         String wootMobName;
         String mcMobName;
         String displayName;
-        int spawnXp;
         int deathXp;
 
         private MobInfo() { }
@@ -241,31 +316,71 @@ public class MobRegistry {
 
         public String getMcMobName() { return mcMobName; }
         public String getDisplayName() { return displayName; }
-        public int getSpawnXp() { return spawnXp; }
         public int getDeathXp() { return deathXp; }
-        public boolean hasXp() { return spawnXp != -1 && deathXp != -1; }
+        public boolean hasXp() { return deathXp != -1; }
 
         public void setXp(int mobXp) {
 
-            if (mobXp == 0) {
-                this.spawnXp = MIN_XP_VALUE;
-                this.deathXp = 0;
-            } else {
-                this.spawnXp = mobXp;
+            if (mobXp == 0)
+                this.deathXp = MIN_XP_VALUE;
+            else
                 this.deathXp = mobXp;
-            }
         }
     }
 }
 
 /**
- * Reference amounts:
+ * Vanilla Mobs And Default Remapping
  *
- * EntityMob: 5
  *
- * EntityWither: 50
- * EntityBlaze: 10
- * EntityEndermite: 3
- * EntityGhast: 5
- * EntityGuardian: 10
+ * Tier I [Bone/Flesh]
+ * ------
+ *
+ * Bat - 1
+ * Chicken - 1
+ * Cow - 1
+ * Horse - 1
+ * Mooshroom - 1
+ * Ocelot - 1
+ * Pig - 1
+ * Rabbit - 1
+ * Sheep - 1
+ * Squid - 1
+ * Villager - 1
+ * Wolf - 1
+ * Shulker - 5
+ * Silverfish  - 5
+ * Skeleton - 5
+ * Slime - 4
+ * Spider - 5
+ * Zombie - 5
+ * Cave Spider - 5
+ * Creeper - 5
+ * Endermite - 3
+ * Giant Zombie - 5
+ *
+ * Tier II [Blaze]
+ * -------
+ *
+ * Magma Cube - 2
+ * Witch - 5
+ * Blaze - 10
+ * Ghast - 5
+ * Zombie Pigman - 5
+ *
+ * Tier III [Enderpearl]
+ * --------
+ *
+ * Iron Golem - 1
+ * Enderman - 5
+ * Guardian - 10
+ * Wither Skeleton - 5
+ *
+ * Tier IV [Wither Star]
+ * -------
+ *
+ * Wither - 50
+ * Dragon - 12000(?)
+ *
+ *
  */

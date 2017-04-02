@@ -5,6 +5,7 @@ public class SpawnerUpgrade {
     EnumSpawnerUpgrade upgradeType;
     int rfCostPerTick;
     int v; /* type specific value */
+    int v2; /* type specific value */
 
     @Override
     public String toString() {
@@ -50,6 +51,28 @@ public class SpawnerUpgrade {
     public int getMass() {
 
         return this.v;
+    }
+
+    public SpawnerUpgrade setSacrificeCount(int count) {
+
+        this.v = count;
+        return this;
+    }
+
+    public int getSacrificeCount() {
+
+        return this.v;
+    }
+
+    public SpawnerUpgrade setAltarLifeEssence(int essence) {
+
+        this.v2 = essence;
+        return this;
+    }
+
+    public int getAltarLifeEssence() {
+
+        return this.v2;
     }
 
     public SpawnerUpgrade setDecapitateChance(int decapitateChance) {
@@ -144,6 +167,13 @@ public class SpawnerUpgrade {
                 upgradeType == EnumSpawnerUpgrade.EFFICIENCY_III;
     }
 
+    public boolean isBloodMagic() {
+
+        return upgradeType == EnumSpawnerUpgrade.BLOODMAGIC_I ||
+                upgradeType == EnumSpawnerUpgrade.BLOODMAGIC_II ||
+                upgradeType == EnumSpawnerUpgrade.BLOODMAGIC_III;
+    }
+
     public int getUpgradeTier() {
 
         int tier;
@@ -154,6 +184,7 @@ public class SpawnerUpgrade {
             case MASS_I:
             case DECAPITATE_I:
             case EFFICIENCY_I:
+            case BLOODMAGIC_I:
                 tier = 1;
                 break;
             case LOOTING_II:
@@ -162,6 +193,7 @@ public class SpawnerUpgrade {
             case MASS_II:
             case DECAPITATE_II:
             case EFFICIENCY_II:
+            case BLOODMAGIC_II:
                 tier = 2;
                 break;
             case LOOTING_III:
@@ -170,6 +202,7 @@ public class SpawnerUpgrade {
             case MASS_III:
             case DECAPITATE_III:
             case EFFICIENCY_III:
+            case BLOODMAGIC_III:
                 tier = 3;
                 break;
             default:

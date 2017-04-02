@@ -1,6 +1,5 @@
 package ipsis.woot.tileentity.multiblock;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.block.BlockMobFactoryStructure;
@@ -18,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ public class MobFactoryMultiblockLogic {
         EnumMobFactoryTier.TIER_ONE.buildStructureMap();
         EnumMobFactoryTier.TIER_TWO.buildStructureMap();
         EnumMobFactoryTier.TIER_THREE.buildStructureMap();
+        EnumMobFactoryTier.TIER_FOUR.buildStructureMap();
     }
 
     public static class FactorySetup {
@@ -61,6 +62,11 @@ public class MobFactoryMultiblockLogic {
     public static FactorySetup validateFactory(TileEntityMobFactory factory, boolean feedback, EntityPlayer player) {
 
         FactorySetup factorySetup;
+
+        factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_FOUR, feedback, player);
+        if (factorySetup.size != null)
+            return factorySetup;
+
         factorySetup = validateFactory(factory, EnumMobFactoryTier.TIER_THREE, feedback, player);
         if (factorySetup.size != null)
             return factorySetup;
@@ -99,18 +105,27 @@ public class MobFactoryMultiblockLogic {
         BlockPos controllerPos = factory.getPos().up(1);
         TileEntity te = factory.getWorld().getTileEntity(controllerPos);
         if (!(te instanceof TileEntityMobFactoryController)) {
+            /* FAIL - No mob controller */
             if (feedback)
-                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_CONTROLLER), tier));
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_CONTROLLER), tier));
             return factorySetup;
         }
 
         TileEntityMobFactoryController teController = (TileEntityMobFactoryController)te;
         if (teController.getMobName().equals("")) {
+            /* FAIL - No mob programmed */
             if (feedback && player != null)
-                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_MOB), tier));
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MISSING_MOB), tier));
             return factorySetup;
         }
-        
+
+        if (!Woot.mobRegistry.isPrismValid(teController.getMobName())) {
+            /* FAIL - Mob blacklisted */
+            if (feedback)
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.CHAT_MOB_INVALID), teController.getModDisplayName(), teController.getMobName()));
+            return new FactorySetup();
+        }
+
         factorySetup.mobName = teController.getMobName();
         factorySetup.displayName = teController.getModDisplayName();
 
@@ -144,7 +159,7 @@ public class MobFactoryMultiblockLogic {
             if (!(block instanceof BlockMobFactoryStructure)) {
                 if (feedback) {
                     String name = UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + s.moduleType + ".name";
-                    validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
+                    validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
                 }
                 return new FactorySetup();
             }
@@ -152,7 +167,7 @@ public class MobFactoryMultiblockLogic {
             if (!(((BlockMobFactoryStructure)block).getModuleTypeFromState(iBlockState) == s.moduleType)) {
                 if (feedback) {
                     String name = UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + s.moduleType + ".name";
-                    validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
+                    validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_INVALID_BLOCK), tier, p.getX(), p.getY(), p.getZ(),  StringHelper.localize(name)));
                 }
                 return new FactorySetup();
             }
@@ -160,13 +175,14 @@ public class MobFactoryMultiblockLogic {
             factorySetup.blockPosList.add(p);
         }
 
-        /**
-         * Mob cost must not exceed tier
-         */
+        /* OK - all structure blocks are present */
+        validateChat(player, TextFormatting.GREEN + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_BLOCKS_OK), tier));
+
         boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);
         if (!validMobLevel) {
+            /* FAIL - invalid tier for mob */
             if (feedback)
-                validateChat(player, ChatFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
+                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
             return new FactorySetup();
         }
 
@@ -183,9 +199,12 @@ public class MobFactoryMultiblockLogic {
         } else if (size == EnumMobFactoryTier.TIER_TWO) {
             pos = new BlockPos(3, -1, -3);
             module = EnumMobFactoryModule.BLOCK_3;
-        } else {
+        } else if (size == EnumMobFactoryTier.TIER_THREE) {
             pos = new BlockPos(4, -1, -4);
             module = EnumMobFactoryModule.BLOCK_4;
+        } else {
+            pos = new BlockPos(5, -1, -5);
+            module = EnumMobFactoryModule.BLOCK_5;
         }
 
         EnumFacing f = factory.getWorld().getBlockState(factory.getPos()).getValue(BlockMobFactory.FACING);

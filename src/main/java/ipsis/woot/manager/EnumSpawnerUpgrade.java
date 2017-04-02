@@ -23,8 +23,10 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
     DECAPITATE_III,
     EFFICIENCY_I,
     EFFICIENCY_II,
-    EFFICIENCY_III;
-
+    EFFICIENCY_III,
+    BLOODMAGIC_I,
+    BLOODMAGIC_II,
+    BLOODMAGIC_III;
 
     public int getMetadata() {
 
@@ -33,7 +35,7 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
 
     public static EnumSpawnerUpgrade getFromMetadata(int meta) {
 
-        if (meta < 0 || meta > values().length)
+        if (meta < 0 || meta >= values().length)
             return values()[0];
 
         return values()[meta];

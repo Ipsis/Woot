@@ -12,4 +12,6 @@ public class Reference {
     public static final String SERVER_PROXY_CLASS = "ipsis.woot.proxy.CommonProxy";
 
     public static final String GUI_FACTORY_CLASS = "ipsis.woot.client.GuiFactory";
+
+    public static final int GUI_MANUAL = 0;
 }

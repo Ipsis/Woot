@@ -1,0 +1,6 @@
+{
+  "parent": "woot:block/small_cube_all",
+  "textures": {
+    "all": "woot:blocks/structure_tier_iv_cap"
+  }
+}

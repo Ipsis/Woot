@@ -11,18 +11,32 @@ public class Config {
         public static final String TIER_I_RF = "globalTierIRF";
         public static final String TIER_II_RF = "globalTierIIRF";
         public static final String TIER_III_RF = "globalTierIIIRF";
+        public static final String TIER_IV_RF = "globalTierIVRF";
+        public static final String XP_RF = "globalXpRF";
         public static final String TIER_I_MOB_XP_CAP = "globalTierIMobXpCap";
         public static final String TIER_II_MOB_XP_CAP = "globalTierIIMobXpCap";
         public static final String TIER_III_MOB_XP_CAP = "globalTierIIIMobXpCap";
+        public static final String TIER_IV_MOB_XP_CAP = "globalTierIVMobXpCap";
         public static final String TIER_I_MOB_LIST = "globalTierIMobList";
         public static final String TIER_II_MOB_LIST = "globalTierIIMobList";
         public static final String TIER_III_MOB_LIST = "globalTierIIIMobList";
+        public static final String TIER_IV_MOB_LIST = "globalTierIVMobList";
         public static final String BASE_MOB_COUNT = "globalBaseMobCount";
         public static final String BASE_RATE_TICKS = "globalBaseRateTicks";
         public static final String PRISM_BLACKLIST = "globalPrismBlacklist";
+        public static final String PRISM_WHITELIST = "globalPrismWhitelist";
+        public static final String PRISM_USE_WHITELIST = "globalPrismUseWhitelist";
+        public static final String DROP_BLACKLIST = "globalDropBlacklist";
+        public static final String SPAWN_COST_LIST = "globalSpawnCostList";
+        public static final String ALLOW_ENDER_DRAGON = "globalAllowEnderDragon";
+        public static final String ENDER_DRAGON_SPAWN_COST = "globalSpawnCostEnderDragon";
+        public static final String ENDER_DRAGON_DEATH_COST = "globalDeathCostEnderDragon";
+        public static final String ENDER_DRAGON_DROP_LIST = "globalDropListEnderDragon";
     }
 
     public static class Power {
+
+        public static final String MAX_POWER = "globalMaxPower";
 
         public static final String RATE_I_COST = "rateI_RFTick";
         public static final String RATE_II_COST = "rateII_RFTick";
@@ -43,6 +57,10 @@ public class Config {
         public static final String DECAP_I_COST = "decapI_RFTick";
         public static final String DECAP_II_COST = "decapII_RFTick";
         public static final String DECAP_III_COST = "decapIII_RFTick";
+
+        public static final String BM_I_COST = "bmI_RFTick";
+        public static final String BM_II_COST = "bmII_RFTick";
+        public static final String BM_III_COST = "bmIII_RFTick";
     }
 
     public static class Upgrades {
@@ -70,5 +88,13 @@ public class Config {
         public static final String EFFICIENCY_I_PERCENTAGE = "efficiencyI_percentage";
         public static final String EFFICIENCY_II_PERCENTAGE = "efficiencyII_percentage";
         public static final String EFFICIENCY_III_PERCENTAGE = "efficiencyIII_percentage";
+
+        public static final String BM_I_COUNT = "bmI_count";
+        public static final String BM_II_COUNT = "bmII_count";
+        public static final String BM_III_COUNT = "bmIII_count";
+
+        public static final String BM_I_ALTAR_LIFE_ESSENCE = "bmI_altar";
+        public static final String BM_II_ALTAR_LIFE_ESSENCE = "bmII_altar";
+        public static final String BM_III_ALTAR_LIFE_ESSENCE = "bmIII_altar";
     }
 }

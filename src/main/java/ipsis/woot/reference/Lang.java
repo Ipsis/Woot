@@ -7,6 +7,7 @@ public class Lang {
     public static final String TAG_WAILA = "waila." + Reference.MOD_ID + ":";
     public static final String TAG_VALIDATE = "validate." + Reference.MOD_ID + ":";
     public static final String TAG_CHAT = "chat." + Reference.MOD_ID + ":";
+    public static final String TAG_BOOK = "book." + Reference.MOD_ID + ":";
 
     public static String getLangConfigValue(String tag) {
 
@@ -37,6 +38,10 @@ public class Lang {
     public static final String TOOLTIP_MASS_EFFECT = TAG_TOOLTIP + "upgrade_mass_effect";
     public static final String TOOLTIP_DECAP_EFFECT = TAG_TOOLTIP + "upgrade_decap_effect";
     public static final String TOOLTIP_EFFICIENCY_EFFECT = TAG_TOOLTIP + "upgrade_efficiency_effect";
+    public static final String TOOLTIP_BM_EFFECT = TAG_TOOLTIP + "upgrade_bloodmagic_effect";
+
+    public static final String TOOLTIP_EXTENDER = TAG_TOOLTIP + "extender";
+    public static final String TOOLTIP_PROXY = TAG_TOOLTIP + "proxy";
 
     public static final String TOOLTIP_UPGRADE = TAG_TOOLTIP + "upgrade.";
 
@@ -44,7 +49,9 @@ public class Lang {
     public static final String VALIDATE_FACTORY_MISSING_MOB = TAG_VALIDATE + "factory.missing_mob";
     public static final String VALIDATE_FACTORY_INVALID_BLOCK = TAG_VALIDATE + "factory.invalid_block";
     public static final String VALIDATE_FACTORY_MOB_TIER = TAG_VALIDATE + "factory.mob_tier";
+    public static final String VALIDATE_FACTORY_BLOCKS_OK = TAG_VALIDATE + "factory.blocks_ok";
 
-    public static final String CHAT_PRISM_BLACKLIST = TAG_CHAT + "prism.blacklist";
+    public static final String CHAT_PRISM_INVALID = TAG_CHAT + "prism.invalid";
     public static final String CHAT_PRISM_PROGRAM = TAG_CHAT + "prism.program";
+    public static final String CHAT_MOB_INVALID = TAG_CHAT + "mob.invalid";
 }

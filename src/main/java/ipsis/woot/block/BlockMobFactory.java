@@ -1,9 +1,9 @@
 package ipsis.woot.block;
 
-import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.manager.SpawnerUpgrade;
-import ipsis.woot.manager.UpgradeManager;
-import ipsis.woot.manager.UpgradeSetup;
+import ipsis.Woot;
+import ipsis.woot.manager.*;
+import ipsis.woot.manager.loot.FullDropInfo;
+import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -16,6 +16,9 @@ import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
+import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
+import mcjty.theoneprobe.config.Config;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -24,6 +27,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -81,11 +87,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             if (te.isFormed()) {
 
                 List<String> out = new ArrayList<String>();
-                out.add(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                        (te.getFactoryTier() == EnumMobFactoryTier.TIER_ONE ? "I" : te.getFactoryTier() == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
-
+                out.add(TextFormatting.BLUE + String.format( te.getFactoryTier().getTranslated(Lang.WAILA_FACTORY_TIER)));
                 out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), te.getMobDisplayName()));
-
 
                 int maxMass = Settings.baseMobCount;
                 UpgradeSetup upgradeSetup = te.getUpgradeSetup();
@@ -121,7 +124,11 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 for (String s : out)
                     playerIn.addChatComponentMessage(new TextComponentString(s));
             } else {
-                te.manualValidate(playerIn);
+                if (!Woot.mobRegistry.isPrismValid(te.getMobName()))
+                    playerIn.addChatComponentMessage(new TextComponentString(String.format(
+                            StringHelper.localize(Lang.CHAT_MOB_INVALID), te.getMobDisplayName(), te.getMobName())));
+                else
+                    te.manualValidate(playerIn);
             }
         }
         return true;
@@ -137,9 +144,10 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRF));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRF));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRF));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRFtick));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRFtick));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRFtick));
+        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "IV", Settings.tierIVRFtick));
     }
 
     public IBlockState getStateFromMeta(int meta)
@@ -171,20 +179,53 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         if (te instanceof TileEntityMobFactory) {
             TileEntityMobFactory factoryTE = (TileEntityMobFactory)te;
 
+
             if (factoryTE.isFormed()) {
 
                 PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
 
-                probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_FACTORY_TIER),
-                        (info.tier == EnumMobFactoryTier.TIER_ONE ? "I" : info.tier == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+                /**
+                 * Progress
+                 * Configuration
+                 */
+
+                /**
+                 * Power & Redstone state
+                 */
+                if (Config.getDefaultConfig().getRFMode() == 1) {
+                    probeInfo.progress(info.storedRF, info.totalRF,
+                            probeInfo.defaultProgressStyle().
+                                    suffix("RF").
+                                    filledColor(Config.rfbarFilledColor).
+                                    alternateFilledColor(Config.rfbarAlternateFilledColor).
+                                    borderColor(Config.rfbarBorderColor).
+                                    numberFormat(Config.rfFormat));
+                } else {
+                    probeInfo.text(TextFormatting.RED + "RF: " + ElementProgress.format(info.storedRF, Config.rfFormat, "RF"));
+                }
+
+                probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (info.isRunning ? "On" : "Off"));
+
+                /**
+                 * Progress
+                 */
+                if (info.isRunning) {
+                    int percentage = (int)((100.0F / (float)info.spawnRF) * (float)info.consumedRF);
+                    TextFormatting form = TextFormatting.GREEN;
+                    if (percentage > 100)
+                        form = TextFormatting.RED;
+
+                    percentage = Math.min(percentage, 100);
+                    probeInfo.horizontal().item(new ItemStack(Items.COMPASS), probeInfo.defaultItemStyle().width(14).height(14)).text(form + "Progress: " + percentage + "%");
+                }
+
+                /**
+                 * Recipe
+                 */
+                probeInfo.text(TextFormatting.BLUE + String.format( info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
                 probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));
-
-                if (info.isRunning)
-                    probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RUNNING)));
-                else
-                    probeInfo.text(TextFormatting.RED + String.format(StringHelper.localize(Lang.WAILA_FACTORY_STOPPED)));
 
                 if (mode == ProbeMode.EXTENDED) {
 
@@ -204,9 +245,43 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
                             probeInfo.text(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + e));
                         }
+
+                        // Show the drop info
+                        EnumEnchantKey key = factoryTE.getUpgradeSetup().getEnchantKey();
+                        List<FullDropInfo> drops = Woot.LOOT_TABLE_MANAGER.getFullDropInfo(factoryTE.getMobName(), key);
+                        if (drops != null) {
+
+                            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+                            IProbeInfo horizontal = null;
+                            int rows = 0;
+                            int idx = 0;
+                            for (FullDropInfo drop : drops) {
+                                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
+                                    continue;
+
+                                if (drop.getItemStack().getItem() == Item.getItemFromBlock(Blocks.BEDROCK))
+                                    continue;
+
+                                if (idx % 10 == 0) {
+                                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
+                                    rows++;
+                                    if (rows > 4)
+                                        break;
+                                }
+
+                                // TOP allows the itemstack to be > 64
+                                // So use that renderer to display the chance of getting a drop.
+                                ItemStack fakeStack = drop.getItemStack().copy();
+                                fakeStack.stackSize = (int)Math.ceil(drop.getDropChance());
+                                horizontal.item(fakeStack);
+                                idx++;
+                            }
+                        }
+
                     } else {
                         probeInfo.text(StringHelper.localize(Lang.WAILA_NO_UPGRADES));
                     }
+
 
                 } else {
                     probeInfo.text(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
@@ -226,6 +301,8 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         public int totalRF;
         public boolean isRunning;
         public int maxMass;
+        public boolean strict;
+        public int consumedRF;
 
         public PluginTooltipInfo(TileEntityMobFactory te) {
 
@@ -234,9 +311,10 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             spawnTime = te.getSpawnReq().getSpawnTime();
             spawnTickRF = te.getSpawnReq().getRfPerTick();
             spawnRF = te.getSpawnReq().getTotalRf();
-            storedRF = te.getEnergyStored(EnumFacing.DOWN);
-            totalRF = te.getMaxEnergyStored(EnumFacing.DOWN);
+            storedRF = te.getEnergyManager().getEnergyStored();
+            totalRF = te.getEnergyManager().getMaxEnergyStored();
             isRunning = te.isRunning();
+            consumedRF = te.getConsumedRf();
 
             maxMass = Settings.baseMobCount;
             UpgradeSetup upgradeSetup = te.getUpgradeSetup();
@@ -257,6 +335,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             tag.setInteger("energy", storedRF);
             tag.setInteger("maxEnergy", totalRF);
             tag.setInteger("mobCount", maxMass);
+            tag.setInteger("consumedEnergy", consumedRF);
         }
 
         public static PluginTooltipInfo fromNBT(NBTTagCompound tag) {
@@ -272,6 +351,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             info.storedRF = tag.getInteger("energy");
             info.totalRF = tag.getInteger("maxEnergy");
             info.maxMass = tag.getInteger("mobCount");
+            info.consumedRF = tag.getInteger("consumedEnergy");
             return info;
         }
     }

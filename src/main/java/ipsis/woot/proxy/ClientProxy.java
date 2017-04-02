@@ -1,6 +1,8 @@
 package ipsis.woot.proxy;
 
+import ipsis.woot.client.manual.BookManager;
 import ipsis.woot.client.renderer.TESRLayout;
+import ipsis.woot.event.HandlerTextureStitchEvent;
 import ipsis.woot.event.ItemTooltipHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
@@ -21,15 +23,32 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.blockStructure.initModel();
         ModBlocks.blockController.initModel();
         ModBlocks.blockLayout.initModel();
+        ModBlocks.blockProxy.initModel();
+        ModBlocks.blockExtender.initModel();
 
         ModItems.itemPrism.initModel();
         ModItems.itemXpShard.initModel();
         ModItems.itemSkull.initModel();
+        ModItems.itemShard.initModel();
+        ModItems.itemDye.initModel();
         ModItems.itemFactoryFrame.initModel();
-        ModItems.itemFactoryUpgrade.initModel();
+        ModItems.itemPrismFrame.initModel();
 
+        ModItems.itemYahHammer.initModel();
+        ModItems.itemPulverisedFerrocrete.initModel();
+        ModItems.itemFerrocrete.initModel();
+
+        ModItems.itemFerrocretePlate.initModel();
+        ModItems.itemFactoryCasing.initModel();
+        ModItems.itemFactoryUpgrade.initModel();
+        ModItems.itemFactoryCap.initModel();
+        ModItems.itemFactoryConnector.initModel();
+        ModItems.itemManual.initModel();
+
+        ModItems.itemManual.initModel();
 
         MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
+        MinecraftForge.EVENT_BUS.register(new HandlerTextureStitchEvent());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLayout.class, new TESRLayout());
     }
@@ -45,5 +64,6 @@ public class ClientProxy extends CommonProxy {
 
         super.postInit();
 
+        BookManager.INSTANCE.load();
     }
 }

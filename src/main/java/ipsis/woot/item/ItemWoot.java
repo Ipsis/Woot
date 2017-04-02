@@ -1,6 +1,7 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
+import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.util.UnlocalizedName;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,12 @@ public class ItemWoot extends Item {
         super();
         setCreativeTab(Woot.tabWoot);
         setUnlocalizedName(name);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void initModel(Item item, String name) {
+
+        ModelHelper.registerItem(item, name);
     }
 
     @SideOnly(Side.CLIENT)

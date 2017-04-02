@@ -5,6 +5,7 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -49,7 +51,10 @@ public class ItemXpShard extends ItemWoot {
                         SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
                         SoundCategory.PLAYERS,
                         0.2F, 0.5F * ((itemRand.nextFloat() - itemRand.nextFloat()) * 0.7F + 1.8F));
-                playerIn.addExperience(XP_VALUE);
+                if(playerIn instanceof FakePlayer)
+                	worldIn.spawnEntityInWorld(new EntityXPOrb(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ, XP_VALUE));
+                else
+                	playerIn.addExperience(XP_VALUE);
 
                 if (!playerIn.capabilities.isCreativeMode)
                     itemStackIn.stackSize--;

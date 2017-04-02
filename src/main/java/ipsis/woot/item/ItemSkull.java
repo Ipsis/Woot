@@ -18,8 +18,28 @@ public class ItemSkull extends ItemWoot {
     public static final String BASENAME = "skull";
 
     public static final String[] VARIANTS = new String[] {
-            "iron", "gold", "diamond"
+            EnumSkullType.IRON.getName(),
+            EnumSkullType.GOLD.getName(),
+            EnumSkullType.DIAMOND.getName(),
+            EnumSkullType.EMERALD.getName(),
     };
+
+    public enum EnumSkullType {
+        IRON("iron"), GOLD("gold"), DIAMOND("diamond"), EMERALD("emerald");
+
+        public int getMeta() {
+            return ordinal();
+        }
+
+        EnumSkullType(String name) {
+            this.name = name;
+        }
+
+        private String name;
+        public String getName() {
+            return this.name;
+        }
+    }
 
     public ItemSkull() {
 

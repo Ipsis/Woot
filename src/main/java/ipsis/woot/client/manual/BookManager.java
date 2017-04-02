@@ -50,6 +50,7 @@ public class BookManager {
                     new BookPageText("upgrade_bloodmagic.4"));
         
         addEntry("blacklists", new BookPageText("blacklists.0"), new BookPageText("blacklists.1"));
+        addEntry("dragon", new BookPageText("dragon.0"), new BookPageText("dragon.1"), new BookPageText("dragon.2"), new BookPageText("dragon.3"));
     }
 
     private void addEntry(String tag, IBookPage... pages) {

@@ -51,7 +51,7 @@ public class Settings {
 
     public static class EnderDragon {
 
-        public static final int DEF_SPAWN_COST = 500;
+        public static final int DEF_SPAWN_COST = 750;
         public static final int DEF_DEATH_COST = 500;
 
         public static final String[] DEF_DRAGON_DROPS = {
@@ -63,14 +63,14 @@ public class Settings {
                 "LOOTING_I,minecraft:dragon_breath,4,80.0",
                 "LOOTING_II,minecraft:dragon_breath,6,80.0",
                 "LOOTING_III,minecraft:dragon_breath,8,80.0",
-                "NO_ENCHANT,draconicevolution:dragon_heart,1,100.0",
-                "LOOTING_I,draconicevolution:dragon_heart,1,100.0",
-                "LOOTING_II,draconicevolution:dragon_heart,1,100.0",
-                "LOOTING_III,draconicevolution:dragon_heart,1,100.0",
-                "NO_ENCHANT,draconicevolution:draconium_dust,30,100.0",
-                "LOOTING_I,draconicevolution:draconium_dust,40,100.0",
-                "LOOTING_II,draconicevolution:draconium_dust,50,100.0",
-                "LOOTING_III,draconicevolution:draconium_dust,60,100.0",
+                "NO_ENCHANT,draconicevolution:dragon_heart,1,20.0",
+                "LOOTING_I,draconicevolution:dragon_heart,1,40.0",
+                "LOOTING_II,draconicevolution:dragon_heart,1,60.0",
+                "LOOTING_III,draconicevolution:dragon_heart,1,80.0",
+                "NO_ENCHANT,draconicevolution:draconium_dust,30,20.0",
+                "LOOTING_I,draconicevolution:draconium_dust,40,40.0",
+                "LOOTING_II,draconicevolution:draconium_dust,50,60.0",
+                "LOOTING_III,draconicevolution:draconium_dust,60,80.0",
         };
     }
 

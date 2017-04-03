@@ -214,9 +214,9 @@ commands.Woot:woot.mobs.summary=已知生物: %s
 commands.Woot:woot.loot.summary=已学掉落物 %s/%s: %s
 commands.Woot:woot.blacklist.summary=黑名单物品: %s
 commands.Woot:woot.tiers.summary=%s 需要 %s
-commands.Woot:woot.prism.blacklist.summary=Prism blacklisted mobs: %s
-commands.Woot:woot.prism.whitelist.summary=Prism whitelisted mobs: %s
-commands.Woot:woot.cost.summary=Mob %s costs %d xp
+commands.Woot:woot.prism.blacklist.summary=棱镜已黑名单生物: %s
+commands.Woot:woot.prism.whitelist.summary=棱镜已白名单生物: %s
+commands.Woot:woot.cost.summary=%s 消耗 %d 经验值
 
 validate.Woot:factory.missing_controller=%s: 缺少控制器
 validate.Woot:factory.missing_mob=%s: 控制器未编程
@@ -239,10 +239,10 @@ book.Woot:introduction.1=所以坐下来放松一下，仔细阅读这本手册�
 
 book.Woot:crafting.title=如何合成
 book.Woot:crafting.0=你将需要两个基本物品类型来开始构建工厂的组件。 Yah锤子和一些模具。 你使用锤子，一些黑曜石打它，一种模具和一些材料来制作。 合成不会消耗锤子，模具和黑曜石。
-book.Woot:crafting.1=每七种模具只需合成一个，它们将为你的工厂的服务一生。
+book.Woot:crafting.1=每七种模具只需合成一个，它们将为你的工厂服务一生。
 
 book.Woot:resoures.title=资源
-book.Woot:resources.0=工厂的基本建筑材料是铁混凝土。 它不会在世界上生成。 你将需要使用Yah锤子，啮合模具，铁和地狱砖方块来合成铁混凝土粉。 铁混凝土粉可熔炼成铁混凝土锭。
+book.Woot:resources.0=工厂的基本建筑材料是铁混凝土。 它不会在世界上生成。你将需要使用Yah锤子，啮合模具，铁和地狱砖方块来合成铁混凝土粉。 铁混凝土粉可熔炼成铁混凝土锭。
 
 book.Woot:building.title=建立工厂
 book.Woot:building.0=工厂有不同的阶数。 所以要自己制作一个布局方块，把它放在地面上。 然后，它将显示多方块结构。 所有工厂都需要一些彩色结构方块和石盖。 右键单击布局方块以查看各个阶数的多方块结构。

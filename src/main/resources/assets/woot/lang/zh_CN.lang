@@ -1,0 +1,324 @@
+itemGroup.woot=woot
+
+tile.woot:factory.name=生物工厂/生物生成/生物粉碎机
+tile.woot:controller.name=生物控制器
+tile.woot:extender.name=生物工厂延伸器
+tile.woot:proxy.name=生物工厂代理器
+tile.woot:layout.name=生物工厂布局
+
+tile.woot:structure.block_1.name=生物工厂灰色方块
+tile.woot:structure.block_2.name=生物工厂红色方块
+tile.woot:structure.block_3.name=生物工厂橙色方块
+tile.woot:structure.block_4.name=生物工厂绿色方块
+tile.woot:structure.block_5.name=生物工厂白色方块
+tile.woot:structure.tier_i_cap.name=初阶生物工厂石盖
+tile.woot:structure.tier_ii_cap.name=二阶生物工厂石盖
+tile.woot:structure.tier_iii_cap.name=三阶生物工厂石盖
+tile.woot:structure.tier_iv_cap.name=四阶生物工厂石盖
+
+tile.woot:upgrade.xp_i.name=经验升级 I
+tile.woot:upgrade.xp_ii.name=经验升级 II 
+tile.woot:upgrade.xp_iii.name=经验升级 III 
+tile.woot:upgrade.rate_i.name=速度升级 I
+tile.woot:upgrade.rate_ii.name=速度升级 II
+tile.woot:upgrade.rate_iii.name=速度升级 III
+tile.woot:upgrade.looting_i.name=掠夺升级 I
+tile.woot:upgrade.looting_ii.name=掠夺升级 II
+tile.woot:upgrade.looting_iii.name=掠夺升级 III
+tile.woot:upgrade.mass_i.name=数量升级 I
+tile.woot:upgrade.mass_ii.name=数量升级 II
+tile.woot:upgrade.mass_iii.name=数量升级 III
+tile.woot:upgrade.decapitate_i.name=斩首升级 I
+tile.woot:upgrade.decapitate_ii.name=斩首升级 II
+tile.woot:upgrade.decapitate_iii.name=斩首升级 III
+tile.woot:upgradeb.efficiency_i.name=效率升级 I
+tile.woot:upgradeb.efficiency_ii.name=效率升级 II
+tile.woot:upgradeb.efficiency_iii.name=效率升级 III
+tile.woot:upgradeb.bloodmagic_i.name=血魔法升级 I
+tile.woot:upgradeb.bloodmagic_ii.name=血魔法升级 II
+tile.woot:upgradeb.bloodmagic_iii.name=血魔法升级 III
+
+item.woot:yahhammer.name=Yah锤子
+
+item.Woot:pulverisedferrocrete.name=铁混凝土粉
+item.Woot:ferrocrete.name=铁混凝土锭
+
+item.Woot:prism.name=生物棱镜
+item.Woot:prismframe.name=生物棱镜框
+item.Woot:xpShard.name=经验碎片
+item.Woot:skull.iron.name=铁镀颅骨
+item.Woot:skull.gold.name=金镀颅骨
+item.Woot:skull.diamond.name=钻石颅骨
+item.Woot:skull.emerald.name=绿宝石颅骨
+item.Woot:shard.diamond.name=钻石碎片
+item.Woot:shard.emerald.name=绿宝石碎片
+item.Woot:shard.quartz.name=石英碎片
+item.Woot:shard.netherstar.name=地狱之心碎片
+item.Woot:dye.plate.name=图版模具
+item.Woot:dye.casing.name=套管模具
+item.Woot:dye.skull.name=颅骨模具
+item.Woot:dye.connector.name=接口模具
+item.Woot:dye.shard.name=碎片模具
+item.Woot:dye.mesh.name=啮合模具
+item.Woot:dye.prism.name=棱镜模具
+item.Woot:factoryupgrade.tier_i.name=初阶升级
+item.Woot:factoryupgrade.tier_ii.name=二阶升级
+item.Woot:factoryupgrade.tier_iii.name=三阶升级
+
+item.Woot:manual.name=Woot手册[WIP]
+
+item.Woot:ferrocreteplate.name=铁混凝土板
+item.Woot:factorycasing.name=工厂壳
+item.Woot:factorycap.name=石盖模具
+item.Woot:factoryconnector.name=工厂连接器
+
+item.Woot:factoryFrame.name=工厂框 [已弃用]
+
+waila.Woot:factory.tier=第 %s 阶
+waila.Woot:factory.mob=%s 生成中
+waila.Woot:factory.rate=生成 %d 生物/%d ticks
+waila.Woot:factory.cost=消耗 %dRF @ %dRF/ticks
+waila.Woot:controller.tier=需要第 %s 阶
+waila.Woot:factory.running=工厂运行中
+waila.Woot:factory.stopped=工厂停运
+waila.Woot:factory.sneak=潜行查看已安装升级和掉落物
+waila.Woot:factory.nullupgrades=没有任何升级
+
+entity.Woot:witherskelly.name=凋零骷髅
+entity.Woot:chargedcreeper.name=高压苦力怕
+entity.Woot:elderguardian.name=远古深海守卫
+
+config.Woot:globalSampleSize=可探悉生物种类上限的数额
+config.Woot:globalLearnTicks=伪生成探悉的间隔时间最低上限
+config.Woot:globalStrictSpawns=只探悉生物工厂的生成
+config.Woot:globalStrictPower=需提供满 RF/tick 以免进度重置
+config.Woot:globalTierIRF=初阶能源消耗 (RF/tick)
+config.Woot:globalTierIIRF=二阶能源消耗 (RF/tick)
+config.Woot:globalTierIIIRF=三阶能源消耗 (RF/tick)
+config.Woot:globalTierIVRF=四阶能源消耗 (RF/tick)
+config.Woot:globalXpRF=经验值生产消耗 (RF/tick)
+config.Woot:globalTierIMobXpCap=第一阶生物经验值上限
+config.Woot:globalTierIIMobXpCap=第二阶生物经验值上限
+config.Woot:globalTierIIIMobXpCap=第三阶生物经验值上限
+config.Woot:globalTierIVMobXpCap=第四阶生物经验值上限
+config.Woot:globalBaseMobCount=生物生成数量
+config.Woot:globalBaseRateTicks=生物生成间隔时间(tick)
+config.Woot:globalPrismBlacklist=生物生成白名单
+config.Woot:globalPrismWhitelist=生物生成黑名单
+config.Woot:globalTierIMobList=初阶工厂生物生成列表
+config.Woot:globalTierIIMobList=二阶工厂生物生成列表
+config.Woot:globalTierIIIMobList=三阶工厂生物生成列表
+config.Woot:globalTierIVMobList=四阶工厂生物生成列表
+config.Woot:globalDropBlacklist=生物掉落物黑名单
+config.Woot:globalPrismUseWhitelist=使用棱镜白名单 - 无视黑名单
+config.Woot:globalSpawnCostList=生物与生成消耗列表
+config.Woot:globalAllowEnderDagon=允许终界龙在生物工厂生成
+config.Woot:globalMaxPower=生物工厂能源上限
+config.Woot:globalSpawnCostEnderDragon=经验消耗来生成终界龙
+config.Woot:globalSpawnDeathEnderDragon=经验消耗来生产终界龙死亡后的经验
+config.Woot:globalDropListEnderDragon=杀死终界龙的掉落物（附魔,掉落物,组数,机率）
+
+config.Woot:rateI_RFTick=速度升级 I 成本 (RF/tick)
+config.Woot:rateII_RFTick=速度升级 II 成本 (RF/tick)
+config.Woot:rateIII_RFTick=速度升级 III 成本 (RF/tick)
+config.Woot:lootingI_RFTick=掠夺升级 I 成本 (RF/tick)
+config.Woot:lootingII_RFTick=掠夺升级 II 成本 (RF/tick)
+config.Woot:lootingIII_RFTick=掠夺升级 III 成本 (RF/tick)
+config.Woot:xpI_RFTick=经验升级 I 成本 (RF/tick)
+config.Woot:xpII_RFTick=经验升级 II 成本 (RF/tick)
+config.Woot:xpIII_RFTick=经验升级 III 成本 (RF/tick)
+config.Woot:massI_RFTick=数量升级 I 成本 (RF/tick)
+config.Woot:massII_RFTick=数量升级 II 成本 (RF/tick)
+config.Woot:massIII_RFTick=数量升级 III 成本 (RF/tick)
+config.Woot:decapI_RFTick=斩首升级 I 成本 (RF/tick)
+config.Woot:decapII_RFTick=斩首升级 II 成本 (RF/tick)
+config.Woot:decapIII_RFTick=斩首升级 III 成本 (RF/tick)
+config.Woot:bmI_RFTick=血魔法升级 I 成本 (RF/tick)
+config.Woot:bmII_RFTick=血魔法升级 II 成本 (RF/tick)
+config.Woot:bmIII_RFTick=血魔法升级 III 成本 (RF/tick)
+
+config.Woot:lootingI_enchantLevel=掠夺 I 附魔等级
+config.Woot:lootingII_enchantLevel=掠夺 II 附魔等级
+config.Woot:lootingIII_enchantLevel=掠夺 III 附魔等级
+config.Woot:rateI_ticks=速度升级 I 生物生成间隔时间(tick)
+config.Woot:rateII_ticks=速度升级 II 生物生成间隔时间(tick)
+config.Woot:rateIII_ticks=速度升级 III 生物生成间隔时间(tick)
+config.Woot:massI_mobCount=数量升级 I 生物生成数量
+config.Woot:massII_mobCount=数量升级 II 生物生成数量
+config.Woot:massIII_mobCount=数量升级 III 生物生成数量
+config.Woot:decapI_percentage=斩首升级 I 掉头机率
+config.Woot:decapII_percentage=斩首升级 II 掉头机率
+config.Woot:decapIII_percentage=斩首升级 III 掉头机率
+config.Woot:xpI_boost=经验升级 I 经验值概率
+config.Woot:xpII_boost=经验升级 II 经验值概率
+config.Woot:xpIII_boost=经验升级 III 经验值概率
+config.Woot:efficiencyI_percentage=效率升级 I 生物生成机率
+config.Woot:efficiencyII_percentage=效率升级 II 生物生成机率
+config.Woot:efficiencyIII_percentage=效率升级 III 生物生成机率
+
+tooltip.Woot:factory_cost=%s 阶 @ %dRF/tick
+
+tooltip.Woot:upgrade_cost=%d RF/tick
+
+tooltip.Woot:upgrade_rate_effect=每 %d ticks 生成生物
+tooltip.Woot:upgrade_lootingI_effect=附上掠夺 I 附魔进行杀怪
+tooltip.Woot:upgrade_lootingII_effect=附上掠夺 II 附魔进行杀怪
+tooltip.Woot:upgrade_lootingIII_effect=附上掠夺 III 附魔进行杀怪
+tooltip.Woot:upgrade_xp_effect=经验收集增加 %d%%
+tooltip.Woot:upgrade_xp_base_effect=收集经验
+tooltip.Woot:upgrade_mass_effect=生成 %d 生物
+tooltip.Woot:upgrade_decap_effect=增加 %d%% 斩首机率
+tooltip.Woot:upgrade_efficiency_effect=减少 %d%% 能源消耗
+tooltip.Woot:upgrade_bloodmagic_effect=生产生命源质. 储罐链接:%d 献祭符文, 祭坛链接:%d 生命源质
+
+tooltip.Woot:upgrade.rate_i=初阶速度升级
+tooltip.Woot:upgrade.rate_ii=二阶速度升级
+tooltip.Woot:upgrade.rate_iii=三阶速度升级
+tooltip.Woot:upgrade.looting_i=初阶掠夺升级
+tooltip.Woot:upgrade.looting_ii=二阶掠夺升级
+tooltip.Woot:upgrade.looting_iii=三阶掠夺升级
+tooltip.Woot:upgrade.xp_i=初阶经验升级
+tooltip.Woot:upgrade.xp_ii=二阶经验升级
+tooltip.Woot:upgrade.xp_iii=三阶经验升级
+tooltip.Woot:upgrade.mass_i=初阶数量升级
+tooltip.Woot:upgrade.mass_ii=二阶数量升级
+tooltip.Woot:upgrade.mass_iii=三阶数量升级
+tooltip.Woot:upgrade.decapitate_i=初阶斩首升级
+tooltip.Woot:upgrade.decapitate_ii=二阶斩首升级
+tooltip.Woot:upgrade.decapitate_iii=三阶斩首升级
+tooltip.Woot:upgrade.efficiency_i=初阶效率升级
+tooltip.Woot:upgrade.efficiency_ii=二阶效率升级
+tooltip.Woot:upgrade.efficiency_iii=三阶效率升级
+tooltip.Woot:upgrade.bloodmagic_i=初阶血魔法升级
+tooltip.Woot:upgrade.bloodmagic_ii=二阶血魔法升级
+tooltip.Woot:upgrade.bloodmagic_iii=三阶血魔法升级
+
+tooltip.Woot:extender=放置在控制器下方与代理器进行连接
+tooltip.Woot:proxy=放置在代理器下方以便其他五面可以连接电源与物品管线
+
+tooltip.Woot:xpShard.0=点击右键获取经验
+tooltip.Woot:xpShard.1=给予 %d 经验
+tooltip.Woot:prism.0=手持攻击生物进行记录
+tooltip.Woot:prism.1=记录后在控制器编程生物生成
+
+chat.Woot:prism.invalid=%s 不能被记录 (%s)
+chat.Woot:prism.program=%s 已编程 (%s)
+chat.Woot:mob.invalid=%s 已黑名单 (%s)
+
+commands.Woot:woot.usage=/woot <status|mobs|blacklist|tiers|prism|cost|flush {all|<mob>}|loot <mob> [detail]|give <player> <mob> <xp>|dev {true|false}>
+commands.Woot:woot.dev.summary=开发者模式 %s
+commands.Woot:woot.flush.summary=掉落物资料重洗 %s/%s
+commands.Woot:woot.flush.all.summary=生物掉落物已重洗
+commands.Woot:woot.status.summary=%s: %s
+commands.Woot:woot.mobs.summary=已知生物: %s
+commands.Woot:woot.loot.summary=已学掉落物 %s/%s: %s
+commands.Woot:woot.blacklist.summary=黑名单物品: %s
+commands.Woot:woot.tiers.summary=%s 需要 %s
+commands.Woot:woot.prism.blacklist.summary=Prism blacklisted mobs: %s
+commands.Woot:woot.prism.whitelist.summary=Prism whitelisted mobs: %s
+commands.Woot:woot.cost.summary=Mob %s costs %d xp
+
+validate.Woot:factory.missing_controller=%s: 缺少控制器
+validate.Woot:factory.missing_mob=%s: 控制器未编程
+validate.Woot:factory.invalid_block=%s: 无效的方块 %d, %d, %d (%s)
+validate.Woot:factory.mob_tier=%s: 此生物需要更高阶的工厂
+validate.Woot:factory.blocks_ok=%s: 布局有效
+
+ritual.Woot:ritualInfernalMachine=地狱仪器仪式
+ritual.Woot:ritualInfernalMachine.info=填充生命源质在邻近的储罐或附近的血之祭坛
+
+enchantment.woot_decapitate=斩首
+
+book.Woot:cover.title=
+book.Woot:cover.0=Woot - 另类的生物生成/生物粉碎机
+book.Woot:cover.1=如何建立，编程及运行生物工厂
+
+book.Woot:introduction.title=介绍
+book.Woot:introduction.0=欢迎来到新生物工厂的用户手册，一个安全，轻松，干净的方式来谋杀你最喜欢的生物和取得生物的好东西。 你再也不必在等待这些生物生成，杀死和清理。 你还可以通过轻松的升级来扩展你的生物工厂。
+book.Woot:introduction.1=所以坐下来放松一下，仔细阅读这本手册，学习如何建立，编程和安全地操作你的新工厂。
+
+book.Woot:crafting.title=如何合成
+book.Woot:crafting.0=你将需要两个基本物品类型来开始构建工厂的组件。 Yah锤子和一些模具。 你使用锤子，一些黑曜石打它，一种模具和一些材料来制作。 合成不会消耗锤子，模具和黑曜石。
+book.Woot:crafting.1=每七种模具只需合成一个，它们将为你的工厂的服务一生。
+
+book.Woot:resoures.title=资源
+book.Woot:resources.0=工厂的基本建筑材料是铁混凝土。 它不会在世界上生成。 你将需要使用Yah锤子，啮合模具，铁和地狱砖方块来合成铁混凝土粉。 铁混凝土粉可熔炼成铁混凝土锭。
+
+book.Woot:building.title=建立工厂
+book.Woot:building.0=工厂有不同的阶数。 所以要自己制作一个布局方块，把它放在地面上。 然后，它将显示多方块结构。 所有工厂都需要一些彩色结构方块和石盖。 右键单击布局方块以查看各个阶数的多方块结构。
+book.Woot:building.1=放置所有方块后，将生物工厂和控制器放在适当位置。 使用记录过的生物棱镜右键点击控制器便可建立工厂。 当你拆掉控制器时，生物仍将被编程在控制器，所以你可以替换各种已编程的控制器来生成你想要的生物。
+book.Woot:building.2=如果工厂没有形成，那么你可以右键点击生物工厂任意方块以获取有关错误的信息。 如果你想在低阶数工厂使用较高阶数的生物，工厂就不会形成。
+book.Woot:building.3=工厂必须建立在 Y=10, 因为 ...... 施工规定 ....
+
+book.Woot:capturing.title=生物记录
+book.Woot:capturing.0=记录生物不需要复杂程序，只需在他们生气之前就把它们戳了一下，然后逃跑。 所以你需要制作一个生物棱镜，并且安静地接近你所选择的生物。 然后轻轻地用棱镜刺激生物。 然后你将有一个有记录的生物棱镜。 棱镜的提示将告诉你生成这个生物所需的最低工厂阶数。
+book.Woot:capturing.1=依据戳它之后的反应来决定是否是摆脱生物的好时机。 如果你刚刚戳了凋零，我会很快很快的逃跑。
+
+book.Woot:operation.title=工厂运行
+book.Woot:operation.0=一旦你建立了工厂，你只需要做两件事。 其中是一个放置生成的战利品的储物箱。 默认情况下，储物箱必须放在生物工厂的前面。 如果你认为储物箱放置在前面很凌乱，那么请看看代理器方块。
+book.Woot:operation.1=困难的部分是能源。 依据不同的生物，工厂阶数和安装的升级，你将需要不同数额的能源。 能源连接在工厂方块的底部。 再次，你可以查看代理器作为替代。
+
+book.Woot:power.title=消耗多少能源?
+book.Woot:power.0=生成所需能源如下；<br><br>运行工厂能源成本<br>生物生成成本<br>生物生成数量<br>生物生成速度<br>安装的工厂升级
+
+book.Woot:tier1.title=初阶工厂
+book.Woot:tier1.0=这是最基本的工厂。它只支持生成某些生物，只能接受两个一级升级。 你将需要腐肉和骨头来建立这个工厂。<br>运行这个工厂需要80RF / tick。
+book.Woot:tier1.1=建立工厂材料：<br><br>13 x 生物工厂灰色方块<br>14 x 生物工厂红色方块<br>2 x 初阶石盖
+
+book.Woot:tier2.title=二阶工厂
+book.Woot:tier2.0=可安装4个二阶升级。工厂可以生成所有初阶工厂生物与烈焰使者。 然而，你将需要烈焰粉来合成构建此阶所需的生物工厂橙色方块。<br>运行该工厂需要160RF / tick。
+book.Woot:tier2.1=建立工厂材料：<br><br>13 x 生物工厂灰色方块<br>16 x 生物工厂红色方块<br>40 x 生物工厂橙色方块<br>4 x 二阶石盖
+
+book.Woot:tier3.title=三阶工厂
+book.Woot:tier3.0=可安装4个三阶升级。工厂可以生成所有初阶工厂生物与二阶工厂生物和安德。 然而，你将需要终界珍珠来合成构建此阶所需的生物工厂绿色方块。<br>运行该工厂需要240RF/tick。
+book.Woot:tier3.1=建立工厂材料：<br><br>13 x 生物工厂灰色方块<br>14 x 生物工厂红色方块<br>44 x 生物工厂橙色方块<br>52 x 生物工厂绿色方块<br>5 x 三阶石盖
+
+book.Woot:tier4.title=四阶工厂
+book.Woot:tier4.0=可安装4个三阶升级。此阶工厂可生成凋零。你将需要地狱之星来合成构建此阶所需的生物工厂白色方块。<br>运行该工厂需要320RF/tick。
+book.Woot:tier4.1=建立工厂材料：<br><br>13 x 生物工厂灰色方块<br>14 x 生物工厂红色方块<br>44 x 生物工厂橙色方块<br>57 x 生物工厂绿色方块<br>82 x 生物工厂白色方块<br>8 x 四阶石盖
+
+book.Woot:proxy.title=代理器和延伸器
+book.Woot:proxy.0=对于那些喜欢整齐整洁的人，或者只是想把更多的能源连接至工厂，可以使用代理块。 基本上这个放块可以让你输入能源，并提供更多面来放置物品。它还允许你隐藏所有东西在工厂下。
+book.Woot:proxy.1=要使用代理器，请将一列延伸器方块直接放在生物工厂方块下方，然后将代理器放在最后。 它将在代理器的任何一面接受RF或储物箱。
+
+book.Woot:upgrades.title=升级图腾
+book.Woot:upgrades.0=有三阶升级可以让你的工厂以不同的方式工作。 工厂升级是以图腾的形式连接，底层的是初阶升级，中间的二阶升级以及顶层的三阶升级。 每次升级都是用魔法书籍制作的，具体取决于您想要的升级版本。
+book.Woot:upgrades.1=可用的升级图腾：<br><br>掠夺<br>速度<br>经验<br>数量<br>斩首<br>效率<br>血魔法（如有安装）
+
+book.Woot:upgrade_looting.title=掠夺升级
+book.Woot:upgrade_looting.0=这次升级附上掠夺 I，掠夺 II 或掠夺 III 适用于生物死亡，影响掉落物的数量。 你将需要掠夺附魔书来制作升级版本。
+
+book.Woot:upgrade_rate.title=速度升级
+book.Woot:upgrade_rate.0=此升级可以减少每个生物生成之间的ticks，默认设为320ticks。 这是一个昂贵的升级，因为在较短的时间内需要相同数额的能源。 你将需要強力魔法书来制作升级版本。
+
+book.Woot:upgrade_xp.title=经验升级
+book.Woot:upgrade_xp.0=这个升级会生成经验碎片，默认情况下是不会生成。 你将需要海洋的祝福魔法书来制作升级版本。
+
+book.Woot:upgrade_mass.title=数量升级
+book.Woot:upgrade_mass.0=这个升级增加了每个生物生成的数量，而不改变速度。 每个额外的生物的能源成本是正常能源成本的三分之一。 你将需要幸运魔法书来制作升级版本。
+
+book.Woot:upgrade_decapitate.title=斩首升级
+book.Woot:upgrade_decapitate.0=这个升级会增加掉头机率。 你将需要锋利魔法书来制作升级版本。
+
+book.Woot:upgrade_efficiency.title=效率升级
+book.Woot:upgrade_efficiency.0=这个升级降低了工厂的能源成本。 你将需要效率魔法书来制作升级版本。
+
+book.Woot:upgrade_bloodmagic.title=血魔法升级
+book.Woot:upgrade_bloodmagic.0=这个升级使工厂能够生产生命源质。 生命源质将放在工厂控制器前面的任何储罐，或连接到工厂代理。 如果没有储罐，那么可以直接填充至血之祭坛。
+book.Woot:upgrade_bloodmagic.1=地狱仪器的仪式是要求这个升级工作，需要薄暮仪式石，土之仪式石，水之仪式石，风之仪式石和火之仪式石。
+book.Woot:upgrade_bloodmagic.2=血之祭坛需要在主仪式石中心的10x10x10区域内。<br> <br>工厂控制器需要位于主仪式石头中心的10x10x10区域内。
+book.Woot:upgrade_bloodmagic.3=升级阶数将改变献祭符文所需的数量：<br> <br>初阶：10个献祭符文<br>二阶：20个献祭符文<br>三阶：30个献祭符文
+book.Woot:upgrade_bloodmagic.4=填补祭坛时的升级等级将改变每个生物的牺牲量：<br> <br>初阶：20 <br>二阶：30 <br>三阶：40
+
+book.Woot:enchant_decapitate.title=斩首附魔
+book.Woot:enchant_decapitate.0=这个附魔将给你20％从苦力怕，僵尸或骷髅的掉头机率。<br> <br>由于制造过程中的错误，它并不适用于凋零骷髅。 对不起，不好意思
+
+book.Woot:blacklists.title=黑名单
+book.Woot:blacklists.0=各种生物和掉落物不得被工厂使用或生产。 这些可以由伺服器所有者或Woot本身添加。<br> <br> Woot添加它们，因为：<br>基本黑名单是战斗模组<br>掉落物使用NBT
+book.Woot:blacklists.1=以下是内部黑名单用于停止生物记录和掉落物生成：<br> <br> CyberWare <br> Enchanting Plus <br> Everlasting Abilities <br> Botania
+
+book.Woot:dragon.title=终界龙
+book.Woot:dragon.0=终界龙不能用棱镜来记录，只能用棱镜和龙蛋合成来取得。
+book.Woot:dragon.1=无掠夺升级：20%机率获得龙蛋，龙之吐息，龙心，龙尘。初阶掠夺升级：40%机率获得龙蛋，龙之吐息，龙心，龙尘。
+book.Woot:dragon.2=二阶掠夺升级：60%机率获得龙蛋，龙之吐息，龙心，龙尘。三阶掠夺升级：80%机率获得龙蛋，龙之吐息，龙心，龙尘。
+book.Woot:dragon.3=其他掉落物和其机率将取决于其自身的config档案。例如：Draconic Evolution（龙之进化）

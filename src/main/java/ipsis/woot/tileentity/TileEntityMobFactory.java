@@ -426,7 +426,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             if (bb == null) {
                 BlockPos checkPos = new BlockPos(getPos().getX(), LOOTBOX_Y, getPos().getZ());
                 int range = 2;
-                bb = new AxisAlignedBB(checkPos).expand(range, LOOTBOX_Y - 1, range);
+                bb = new AxisAlignedBB(checkPos).expand(range, 0, range);
             }
 
             List<EntityItem> itemList = worldObj.getEntitiesWithinAABB(EntityItem.class, bb, EntitySelectors.IS_ALIVE);

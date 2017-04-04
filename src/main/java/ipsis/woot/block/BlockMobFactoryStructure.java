@@ -15,7 +15,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -110,7 +109,7 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
 
         Item itemBlockVariants = Item.REGISTRY.getObject(new ResourceLocation(Reference.MOD_ID_LOWER, BASENAME));
 
-        for (int i = 0; i < EnumMobFactoryModule.values().length; i++) {
+        for (int i = 0; i < EnumMobFactoryModule.VALUES.length; i++) {
 
             EnumMobFactoryModule e = EnumMobFactoryModule.VALUES[i];
             ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation(

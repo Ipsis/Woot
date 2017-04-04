@@ -1,26 +1,25 @@
 package ipsis.woot.manager;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
+import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.DamageSourceWoot;
 import ipsis.woot.util.FakePlayerPool;
-import ipsis.woot.util.FakePlayerUtil;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.*;
 
@@ -54,21 +53,6 @@ public class SpawnerManager {
             return 1;
         }
 
-        static final String NBT_SPAWN_REQ_TOTAL_RF = "reqTotalRf";
-        static final String NBT_SPAWN_REQ_SPAWN_TIME = "reqSpawnTime";
-        public void writeToNBT(NBTTagCompound compound) {
-
-            compound.setInteger(NBT_SPAWN_REQ_TOTAL_RF, totalRf);
-            compound.setInteger(NBT_SPAWN_REQ_SPAWN_TIME, spawnTime);
-        }
-
-        public static SpawnReq readFromNBT(NBTTagCompound compound) {
-
-            int rf = compound.getInteger(NBT_SPAWN_REQ_TOTAL_RF);
-            int time = compound.getInteger(NBT_SPAWN_REQ_SPAWN_TIME);
-            return new SpawnReq(rf, time);
-        }
-
         public int getTotalRf() {
             return totalRf;
         }
@@ -83,55 +67,57 @@ public class SpawnerManager {
         }
     }
 
-    public SpawnReq getSpawnReq(String mobName, UpgradeSetup upgradeSetup, int xpLevel, EnumMobFactoryTier tier) {
+    public SpawnReq getSpawnReq(String mobName, UpgradeSetup upgradeSetup, TileEntityMobFactory te, EnumMobFactoryTier tier) {
 
         if (!Woot.mobRegistry.isValidMobName(mobName))
             return null;
 
+        int xpLevel = getSpawnXp(mobName, te);
+
         int baseRF;
         if (tier == EnumMobFactoryTier.TIER_ONE)
-            baseRF = Settings.tierIRF;
+            baseRF = Settings.tierIRFtick;
         else if (tier == EnumMobFactoryTier.TIER_TWO)
-            baseRF = Settings.tierIIRF;
+            baseRF = Settings.tierIIRFtick;
+        else if (tier == EnumMobFactoryTier.TIER_THREE)
+            baseRF = Settings.tierIIIRFtick;
         else
-            baseRF = Settings.tierIIIRF;
+            baseRF = Settings.tierIVRFtick;
 
-        int mobRf = baseRF * xpLevel;
+        int xpPerTick = Settings.Power.DEF_XP_RF_TICK;
+
         int mobCount = upgradeSetup.hasMassUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass() : 1;
         int spawnTime = upgradeSetup.hasRateUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate() : Settings.baseRateTicks;
 
-        int totalRf = mobRf * mobCount;
-        totalRf += (spawnTime * upgradeSetup.getRfPerTickCost());
+        int RFt = baseRF * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFmob = xpPerTick * xpLevel * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFupgrade = upgradeSetup.getRfPerTickCost() * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFcount = RFmob + ((int)((float)RFmob * 0.33)* (mobCount - 1));
+        int RFtotal = RFt + RFcount + RFupgrade;
+
+        /*
+        LogHelper.info("Power for " + mobName);
+        LogHelper.info(String.format("Power baseRf:%d DEF_BASE_RATE_TICKS:%d xpPerTick:%d xpLevel:%d",
+                baseRF, Settings.Spawner.DEF_BASE_RATE_TICKS,  xpPerTick, xpLevel));
+        LogHelper.info(String.format("Power upgradeRFtick:%d", upgradeSetup.getRfPerTickCost()));
+        LogHelper.info(String.format("Power RFt:%d RFmob:%d RFupgrade:%d RFcount:%d",  RFt, RFmob, RFupgrade, RFcount));
+        LogHelper.debug("Power total " + RFtotal); */
 
         if (upgradeSetup.hasEfficiencyUpgrade()) {
             int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
-            int saving = (int)((totalRf / 100.0F) * f);
-            totalRf -= saving;
-            if (totalRf < 0)
-                totalRf = 1;
+            int saving = (int)((RFtotal / 100.0F) * f);
+            RFtotal -= saving;
+            if (RFtotal < 0)
+                RFtotal = 1;
         }
 
-        return new SpawnReq(totalRf, spawnTime);
-    }
-
-
-    HashMap<String, SpawnerEntry> spawnerMap = new HashMap<String, SpawnerEntry>();
-
-    SpawnerEntry getSpawnerEntry(String mobName) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e == null) {
-            e = new SpawnerEntry();
-            spawnerMap.put(mobName, e);
-        }
-
-        return e;
+        return new SpawnReq(RFtotal, spawnTime);
     }
 
     public int getSpawnXp(String mobName, TileEntity te) {
 
         if (!Woot.mobRegistry.hasXp(mobName)) {
-            Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos());
+            Entity entity = spawnEntity(mobName, te.getWorld(), te.getPos(), false);
             if (entity != null) {
                 int xp = ((EntityLiving)entity).experienceValue;
                 Woot.mobRegistry.addMapping(mobName, xp);
@@ -142,58 +128,66 @@ public class SpawnerManager {
         return Woot.mobRegistry.getSpawnXp(mobName);
     }
 
-    public boolean isEmpty(String mobName, EnumEnchantKey enchantKey) {
+    private void createLootBox(World world, BlockPos originPos) {
 
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null)
-            return e.dropMap.get(enchantKey).isEmpty();
+        /**
+         * Create a 3x3x3 box in the sky to capture the drops while learning
+         * Box is centered on y=253
+         */
+        Block b = Blocks.BARRIER;
 
-        /* No entry yet so it is empty */
-        return true;
-    }
+        for (int y = 251; y <= 255; y++) {
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
 
-    public boolean isFull(String mobName, EnumEnchantKey enchantKey) {
+                    boolean change = false;
+                    if (y == 255 || y == 251)
+                        change = true;
+                    else if (x == -2 || x == 2 || z == -2 || z == 2)
+                        change = true;
 
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null)
-            return e.dropMap.get(enchantKey).size() == Settings.sampleSize;
-
-        /* No entry yet so it cannot be full */
-        return false;
-    }
-
-
-    public void addDrops(String mobName, EnumEnchantKey enchantKey, List<EntityItem> entityItemList) {
-
-        SpawnerEntry e = getSpawnerEntry(mobName);
-        if (e.isFull(enchantKey))
-            return;
-
-        List<ItemStack> dropList = new ArrayList<ItemStack>();
-        for (EntityItem entityItem : entityItemList) {
-            ItemStack itemStack = entityItem.getEntityItem();
-            dropList.add(ItemStack.copyItemStack(itemStack));
+                    if (change) {
+                        BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);
+                        if (world.getBlockState(p).getBlock() != b)
+                            world.setBlockState(p, b.getDefaultState(), 3);
+                    }
+                }
+            }
         }
-
-        e.addDrops(enchantKey, dropList);
     }
 
-    public List<ItemStack> getDrops(String mobName, EnumEnchantKey enchantKey) {
+    public void destroyLootBox(World world, BlockPos originPos) {
 
-        if (isEmpty(mobName, enchantKey))
-           return new ArrayList<ItemStack>();
-
-        SpawnerEntry e = getSpawnerEntry(mobName);
-        return e.getDrops(enchantKey);
+        for (int y = 255; y >= 251; y--) {
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+                    BlockPos p = new BlockPos(originPos.getX() + x, y, originPos.getZ() + z);
+                    world.setBlockToAir(p);
+                }
+            }
+        }
     }
 
-    private Entity spawnEntity(String mobName, World world, BlockPos blockPos) {
+    private Entity spawnEntity(String mobName, World world, BlockPos blockPos, boolean createLootBox) {
 
         Entity entity = Woot.mobRegistry.createEntity(mobName, world);
 
         if (entity != null) {
-            ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
-            entity.setPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            // Allow custom spawn mechanics from other mods
+            if (!ForgeEventFactory.doSpecialSpawn((EntityLiving)entity, world, blockPos.getX(), blockPos.getY(), blockPos.getZ()))
+                ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(blockPos), null);
+
+            BlockPos originPos = new BlockPos(blockPos.getX(), TileEntityMobFactory.LOOTBOX_Y, blockPos.getZ());
+            entity.setPosition(originPos.getX(), originPos.getY(), originPos.getZ());
+
+            /**
+             * Create a box to hold any of the loot dropped by any mod not using
+             * the LivingEventDrops droplist.
+             *
+             * If not then the loot can be spawned in a block causing it to be accelerated upwards
+             */
+            if (createLootBox)
+                createLootBox(world, originPos);
 
             /**
              * Random loot drop needs a non-zero recentlyHit value
@@ -206,7 +200,7 @@ public class SpawnerManager {
 
     public void spawn(String mobName, EnumEnchantKey enchantKey, World world, BlockPos blockPos) {
 
-        Entity entity = spawnEntity(mobName, world, blockPos);
+        Entity entity = spawnEntity(mobName, world, blockPos, true);
         if (entity == null)
             return;
 
@@ -214,17 +208,12 @@ public class SpawnerManager {
         if (fakePlayer == null)
             return;
 
-        DamageSourceWoot damageSourceWoot = DamageSourceWoot.getDamageSource(enchantKey);
-        if (damageSourceWoot == null)
-            return;
-        EntityDamageSource entityDamageSource = new EntityDamageSource(damageSourceWoot.getDamageType(), fakePlayer);
-
         /**
          * BUG0022 - Need to set the attackingPlayer or the 1.9 loot tables will not
          * give us all the drops, as some are conditional on killed_by_player
          */
         ((EntityLivingBase)entity).attackingPlayer = fakePlayer;
-        ((EntityLivingBase) entity).onDeath(entityDamageSource);
+        ((EntityLivingBase) entity).onDeath(DamageSource.causePlayerDamage(fakePlayer));
     }
 
     int calcDeathXp(String mobName, SpawnerUpgrade upgrade) {
@@ -233,7 +222,7 @@ public class SpawnerManager {
             return 0;
 
         int base = Woot.mobRegistry.getDeathXp(mobName);
-        if (upgrade.getUpgradeType() == EnumSpawnerUpgrade.XP_II)
+        if (upgrade.getUpgradeType() == EnumSpawnerUpgrade.XP_I)
             return base;
 
         float boost = (float)upgrade.getXpBoost();
@@ -249,12 +238,12 @@ public class SpawnerManager {
         float f = difficulty.getClampedAdditionalDifficulty();
 
         boolean allowTreasure = false;
-        EnchantmentHelper.addRandomEnchantment(Woot.random, itemStack, (int)(5.0F + f * (float)Woot.random.nextInt(18)), allowTreasure);
+        EnchantmentHelper.addRandomEnchantment(Woot.RANDOM, itemStack, (int)(5.0F + f * (float)Woot.RANDOM.nextInt(18)), allowTreasure);
     }
 
     boolean shouldEnchant(DifficultyInstance difficulty) {
 
-        return  Woot.random.nextFloat() < (0.25F  * difficulty.getClampedAdditionalDifficulty());
+        return  Woot.RANDOM.nextFloat() < (0.25F  * difficulty.getClampedAdditionalDifficulty());
     }
 
     public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup, DifficultyInstance difficulty) {
@@ -270,7 +259,7 @@ public class SpawnerManager {
 
         for (int i = 0; i < mobCount; i++) {
 
-            List<ItemStack> dropList = getDrops(mobName, upgradeSetup.getEnchantKey());
+            List<ItemStack> dropList = Woot.LOOT_TABLE_MANAGER.getDrops(mobName, upgradeSetup.getEnchantKey());
             if (!dropList.isEmpty()) {
 
                 boolean shouldEnchant = shouldEnchant(difficulty);
@@ -321,49 +310,4 @@ public class SpawnerManager {
         public int getXp() { return this.xp; }
         public List<ItemStack> getDropList() { return this.drops; }
     }
-
-    /**
-     * Command interface
-     */
-    public void cmdDumpTable(ICommandSender sender) {
-
-        for (String mobName : spawnerMap.keySet()) {
-            SpawnerEntry e = spawnerMap.get(mobName);
-
-            for (EnumEnchantKey key : EnumEnchantKey.values())
-                    sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.summary",
-                            mobName, key, e.dropMap.get(key).size()));
-        }
-    }
-
-    public void cmdDumpMobs(ICommandSender sender) {
-
-        for (String mobName : spawnerMap.keySet()) {
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.dump.mobs.summary", mobName));
-        }
-    }
-
-    public void cmdFlushTableEntry(ICommandSender sender, String mobName, EnumEnchantKey key) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null) {
-            int size = e.dropMap.get(key).size();
-            flushTableEntry(mobName, key);
-            sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.type.summary", mobName, key, size));
-        }
-    }
-
-    public void cmdFlushTables(ICommandSender sender) {
-
-        spawnerMap.clear();
-        sender.addChatMessage(new TextComponentTranslation("commands.Woot:woot.flush.all.summary"));
-    }
-
-    public void flushTableEntry(String mobName, EnumEnchantKey key) {
-
-        SpawnerEntry e = spawnerMap.get(mobName);
-        if (e != null)
-            e.dropMap.get(key).clear();
-    }
-
 }

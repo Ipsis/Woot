@@ -49,7 +49,7 @@ public class SpawnerEntry {
 
         ArrayList<ItemStack> dropList = new ArrayList<ItemStack>();
 
-        int pos = Woot.random.nextInt(dropMap.get(enchantKey).size());
+        int pos = Woot.RANDOM.nextInt(dropMap.get(enchantKey).size());
         for (ItemStack i : dropMap.get(enchantKey).get(pos).drops)
             dropList.add(ItemStack.copyItemStack(i));
 

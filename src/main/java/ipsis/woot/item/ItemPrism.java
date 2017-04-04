@@ -1,7 +1,6 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
@@ -9,11 +8,12 @@ import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -64,10 +64,10 @@ public class ItemPrism extends ItemWoot {
             return false;
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
 
-        if (Woot.mobRegistry.isBlacklisted(wootName)) {
+        if (!Woot.mobRegistry.isPrismValid(wootName)) {
             ((EntityPlayer) attacker).addChatComponentMessage(
                     new TextComponentString(String.format(
-                            StringHelper.localize(Lang.CHAT_PRISM_BLACKLIST), displayName, wootName)));
+                            StringHelper.localize(Lang.CHAT_PRISM_INVALID), displayName, wootName)));
             return false;
         }
 
@@ -107,6 +107,12 @@ public class ItemPrism extends ItemWoot {
     static final String NBT_MOBNAME = "mobName";
     static final String NBT_DISPLAYNAME = "displayName";
     static final String NBT_XP_VALUE = "mobXpCost";
+
+    public static void setAsEnderDragon(ItemStack stack) {
+
+        setMobName(stack, MobRegistry.ENDER_DRAGON, "Ender Dragon", Woot.mobRegistry.getSpawnXp(MobRegistry.ENDER_DRAGON));
+    }
+
     public static void setMobName(ItemStack itemStack, String mobName, String displayName, int xp) {
 
         if (xp <= 0)
@@ -163,10 +169,9 @@ public class ItemPrism extends ItemWoot {
             if (!displayName.equals(""))
                 tooltip.add(TextFormatting.GREEN + String.format("Mob: %s", StringHelper.localize(displayName)));
 
-            tooltip.add(TextFormatting.GREEN + String.format("Xp: %d", getXp(stack)));
-
-            EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(getMobName(stack), getXp(stack));
-            tooltip.add(TextFormatting.BLUE + t.getTranslated());
+            int xp = Woot.mobRegistry.getSpawnXp(getMobName(stack));
+            EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(getMobName(stack), xp);
+            tooltip.add(TextFormatting.BLUE + t.getTranslated(Lang.WAILA_FACTORY_TIER));
         }
     }
 
@@ -174,5 +179,29 @@ public class ItemPrism extends ItemWoot {
     public boolean hasEffect(ItemStack stack) {
         
         return hasMobName(stack);
+    }
+
+    public static ItemStack getItemStack(String wootName, int xp) {
+
+        if (!Woot.mobRegistry.isValidMobName(wootName))
+            return null;
+
+        ItemStack itemStack = new ItemStack(ModItems.itemPrism);
+        setMobName(itemStack, wootName, wootName, xp);
+        return itemStack;
+    }
+
+    @Override
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+
+        subItems.add(new ItemStack(itemIn, 1));
+
+        /**
+         * Dragon
+         */
+        ItemStack dragon = new ItemStack(itemIn, 1);
+        setAsEnderDragon(dragon);
+        subItems.add(dragon);
+
     }
 }

@@ -6,12 +6,10 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import ipsis.woot.util.StringHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -112,6 +110,18 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
                 break;
             case EFFICIENCY_III:
                 toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_EFFICIENCY_EFFECT), Settings.efficiencyIII));
+                break;
+            case BLOODMAGIC_I:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_BM_EFFECT), Settings.bmICount, Settings.bmIAltarLifeEssence));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.bmIRfTick));
+                break;
+            case BLOODMAGIC_II:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_BM_EFFECT), Settings.bmIICount, Settings.bmIIAltarLifeEssence));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.bmIIRfTick));
+                break;
+            case BLOODMAGIC_III:
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_BM_EFFECT), Settings.bmIIICount, Settings.bmIIIAltarLifeEssence));
+                toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_UPGRADE_COST), Settings.bmIIIRfTick));
                 break;
             default:
                 break;

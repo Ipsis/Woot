@@ -9,7 +9,6 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -123,9 +122,8 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
             if (!controllerTE.getModDisplayName().equals((""))) {
 
                 EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(controllerTE.getMobName(), controllerTE.getXpValue());
-                probeInfo.text(TextFormatting.GREEN + String.format("%s : %s XP", controllerTE.getModDisplayName(), controllerTE.getXpValue()));
-                probeInfo.text(TextFormatting.BLUE + String.format(StringHelper.localize(Lang.WAILA_CONTROLLER_TIER),
-                        (t == EnumMobFactoryTier.TIER_ONE ? "I" : t == EnumMobFactoryTier.TIER_TWO ? "II" : "III")));
+                probeInfo.text(TextFormatting.GREEN + controllerTE.getModDisplayName());
+                probeInfo.text(TextFormatting.BLUE + String.format(t.getTranslated(Lang.WAILA_CONTROLLER_TIER)));
             }
         }
     }

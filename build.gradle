@@ -24,7 +24,8 @@ plugins {
 repositories {
     maven { // The repo from which to get waila
         name "Mobius Repo"
-        url "http://mobiusstrip.eu/maven"
+        url "http://tehnut.info/maven"
+        // url "http://mobiusstrip.eu/maven"
     }
     maven { // JEI
         url "http://dvs1.progwml6.com/files/maven"
@@ -32,6 +33,10 @@ repositories {
     maven { //TOP
         name 'tterrag maven'
         url "http://maven.tterrag.com/"
+    }
+    maven { // BloodMagic
+        name 'Tehnut Maven'
+        url "http://tehnut.info/maven/"
     }
 }
 
@@ -46,6 +51,9 @@ configFile.withReader {
 version = "${config.minecraft_version}-${config.mod_version}"
 group= "ipsis.woot" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "woot"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 minecraft {
     version = "${config.minecraft_version}-${config.forge_version}"
@@ -65,9 +73,10 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "mcp.mobius.waila:Waila:1.7.0-B3_1.9.4"
-    deobfCompile "mezz.jei:jei_1.9.4:3.4.0.202"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.9.4-1.0.4-14"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.waila_version}"
+    deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.top_version}"
+    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
 }
 
 processResources

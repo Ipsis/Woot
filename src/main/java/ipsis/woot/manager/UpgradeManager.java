@@ -45,6 +45,10 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_I).setRfCostPerTick(0).setEfficiency(Settings.efficiencyI);
         upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_II).setRfCostPerTick(0).setEfficiency(Settings.efficiencyII);
         upgradeMap.get(EnumSpawnerUpgrade.EFFICIENCY_III).setRfCostPerTick(0).setEfficiency(Settings.efficiencyIII);
+
+        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_I).setRfCostPerTick(Settings.bmIRfTick).setSacrificeCount(Settings.bmICount).setAltarLifeEssence(Settings.bmIAltarLifeEssence);
+        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_II).setRfCostPerTick(Settings.bmIIRfTick).setSacrificeCount(Settings.bmIICount).setAltarLifeEssence(Settings.bmIIAltarLifeEssence);
+        upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_III).setRfCostPerTick(Settings.bmIIIRfTick).setSacrificeCount(Settings.bmIIICount).setAltarLifeEssence(Settings.bmIIIAltarLifeEssence);
     }
 
     public static EnumEnchantKey getLootingEnchant(List<SpawnerUpgrade> upgradeList) {
@@ -67,7 +71,8 @@ public class UpgradeManager {
         RATE,
         DECAPITATE,
         XP,
-        EFFICIENCY;
+        EFFICIENCY,
+        BLOOD_MAGIC,
     }
 
     static boolean isUpgradeMatch(SpawnerUpgrade u, EnumUpgradeType type) {
@@ -85,6 +90,8 @@ public class UpgradeManager {
                 return u.isXp();
             case EFFICIENCY:
                 return u.isEfficiency();
+            case BLOOD_MAGIC:
+                return u.isBloodMagic();
             default:
                 return false;
         }
@@ -172,6 +179,8 @@ public class UpgradeManager {
             return u == EnumSpawnerUpgrade.XP_II || u == EnumSpawnerUpgrade.XP_III;
         else if (first == EnumSpawnerUpgrade.EFFICIENCY_I)
             return u == EnumSpawnerUpgrade.EFFICIENCY_II || u == EnumSpawnerUpgrade.EFFICIENCY_III;
+        else if (first == EnumSpawnerUpgrade.BLOODMAGIC_I)
+            return u == EnumSpawnerUpgrade.BLOODMAGIC_II || u == EnumSpawnerUpgrade.BLOODMAGIC_III;
 
 
         return false;

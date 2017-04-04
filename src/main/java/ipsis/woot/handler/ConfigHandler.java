@@ -1,6 +1,8 @@
 package ipsis.woot.handler;
 
 import ipsis.Woot;
+import ipsis.woot.manager.MobRegistry;
+import ipsis.woot.manager.loot.LootEnderDragon;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
@@ -44,27 +46,41 @@ public class ConfigHandler {
         Settings.learnTicks = getConfigInt(Config.General.LEARN_TICKS, Settings.Spawner.DEF_LEARN_TICKS);
         Settings.strictFactorySpawns = getConfigBool(Config.General.STRICT_SPAWNS, Settings.Spawner.DEF_STRICT_FACTORY_SPAWNS);
         Settings.strictPower = getConfigBool(Config.General.STRICT_POWER, Settings.Spawner.DEF_STRICT_POWER);
-        Settings.tierIRF = getConfigInt(Config.General.TIER_I_RF, Settings.Spawner.DEF_TIER_I_RF);
-        Settings.tierIIRF = getConfigInt(Config.General.TIER_II_RF, Settings.Spawner.DEF_TIER_II_RF);
-        Settings.tierIIIRF = getConfigInt(Config.General.TIER_III_RF, Settings.Spawner.DEF_TIER_III_RF);
+        Settings.tierIRFtick = getConfigInt(Config.General.TIER_I_RF, Settings.Power.DEF_TIER_I_RF_TICK);
+        Settings.tierIIRFtick = getConfigInt(Config.General.TIER_II_RF, Settings.Power.DEF_TIER_II_RF_TICK);
+        Settings.tierIIIRFtick = getConfigInt(Config.General.TIER_III_RF, Settings.Power.DEF_TIER_III_RF_TICK);
+        Settings.tierIVRFtick = getConfigInt(Config.General.TIER_IV_RF, Settings.Power.DEF_TIER_IV_RF_TICK);
+        Settings.xpRFtick = getConfigInt(Config.General.XP_RF, Settings.Power.DEF_XP_RF_TICK);
         Settings.baseMobCount = getConfigInt(Config.General.BASE_MOB_COUNT, Settings.Spawner.DEF_BASE_MOB_COUNT);
         Settings.baseRateTicks = getConfigInt(Config.General.BASE_RATE_TICKS, Settings.Spawner.DEF_BASE_RATE_TICKS);
         Settings.tierIMobXpCap = getConfigInt(Config.General.TIER_I_MOB_XP_CAP, Settings.Spawner.DEF_TIER_I_MOB_XP_CAP);
         Settings.tierIIMobXpCap = getConfigInt(Config.General.TIER_II_MOB_XP_CAP, Settings.Spawner.DEF_TIER_II_MOB_XP_CAP);
         Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
+        Settings.tierIVMobXpCap = getConfigInt(Config.General.TIER_IV_MOB_XP_CAP, Settings.Spawner.DEF_TIER_IV_MOB_XP_CAP);
+        Settings.maxPower = getConfigInt(Config.Power.MAX_POWER, Settings.Power.DEF_MAX_POWER);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
-                Settings.prismBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+                Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+        Settings.prismWhitelist = configuration.getStringList(Config.General.PRISM_WHITELIST, Configuration.CATEGORY_GENERAL,
+                Settings.Progression.DEF_PRISM_WHITELIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_WHITELIST)));
+        Settings.usePrismWhitelist = getConfigBool(Config.General.PRISM_USE_WHITELIST, Settings.Spawner.DEF_PRISM_USE_WHITELIST);
 
-        for (int i = 0; i < Settings.prismBlacklist.length; i++)
-            LogHelper.info("Prism Blacklist: " + Settings.prismBlacklist[i]);
+        if (Settings.usePrismWhitelist) {
+            for (int i = 0; i < Settings.prismWhitelist.length; i++)
+                LogHelper.info("Using Prism Whitelist: " + Settings.prismWhitelist[i]);
+        } else {
+            for (int i = 0; i < Settings.prismBlacklist.length; i++)
+                LogHelper.info("Using Prism Blacklist: " + Settings.prismBlacklist[i]);
+        }
 
         Settings.tierIMobs = configuration.getStringList(Config.General.TIER_I_MOB_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_I_MOB_LIST)));
+                Settings.Progression.DEF_TIER_I_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_I_MOB_LIST)));
         Settings.tierIIMobs = configuration.getStringList(Config.General.TIER_II_MOB_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_II_MOB_LIST)));
+                Settings.Progression.DEF_TIER_II_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_II_MOB_LIST)));
         Settings.tierIIIMobs = configuration.getStringList(Config.General.TIER_III_MOB_LIST, Configuration.CATEGORY_GENERAL,
-                Settings.tierIMobs, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_III_MOB_LIST)));
+                Settings.Progression.DEF_TIER_III_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_III_MOB_LIST)));
+        Settings.tierIVMobs = configuration.getStringList(Config.General.TIER_IV_MOB_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.Progression.DEF_TIER_IV_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_IV_MOB_LIST)));
 
         for (int i = 0; i < Settings.tierIMobs.length; i++)
             Woot.tierMapper.addMapping(Settings.tierIMobs[i], EnumMobFactoryTier.TIER_ONE);
@@ -72,6 +88,46 @@ public class ConfigHandler {
             Woot.tierMapper.addMapping(Settings.tierIIMobs[i], EnumMobFactoryTier.TIER_TWO);
         for (int i = 0; i < Settings.tierIIIMobs.length; i++)
             Woot.tierMapper.addMapping(Settings.tierIIIMobs[i], EnumMobFactoryTier.TIER_THREE);
+        for (int i = 0; i < Settings.tierIVMobs.length; i++)
+            Woot.tierMapper.addMapping(Settings.tierIVMobs[i], EnumMobFactoryTier.TIER_FOUR);
+
+        Settings.dropBlacklist = configuration.getStringList(Config.General.DROP_BLACKLIST, Configuration.CATEGORY_GENERAL,
+                Settings.dropBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.DROP_BLACKLIST)));
+        for (int i = 0; i < Settings.dropBlacklist.length; i++)
+            Woot.LOOT_TABLE_MANAGER.addToBlacklist(Settings.dropBlacklist[i]);
+
+        Settings.spawnCostList = configuration.getStringList(Config.General.SPAWN_COST_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.Progression.DEF_SPAWN_COST, StringHelper.localize(Lang.getLangConfigValue(Config.General.SPAWN_COST_LIST)));
+        for (int i = 0; i < Settings.spawnCostList.length; i++) {
+            String mob;
+            int cost;
+            String[] parts = Settings.spawnCostList[i].split("=");
+            if (parts.length == 2) {
+                try {
+                    cost = Integer.parseInt(parts[1]);
+                    Woot.mobRegistry.addCosting(parts[0], cost);
+                    LogHelper.info("Adding mob cost: " + parts[0] + "=" + cost);
+                } catch (NumberFormatException e) {
+                    LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
+                }
+            } else {
+                LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
+            }
+        }
+
+        /**
+         * EnderDragon
+         */
+        Settings.allowEnderDragon = getConfigBool(Config.General.ALLOW_ENDER_DRAGON, Settings.Spawner.DEF_ALLOW_ENDER_DRAGON);
+        Settings.dragonDeathCost = getConfigInt(Config.General.ENDER_DRAGON_DEATH_COST, Settings.EnderDragon.DEF_DEATH_COST);
+        Settings.dragonSpawnCost = getConfigInt(Config.General.ENDER_DRAGON_SPAWN_COST, Settings.EnderDragon.DEF_SPAWN_COST);
+
+        Woot.mobRegistry.addCosting(MobRegistry.ENDER_DRAGON, Settings.dragonSpawnCost);
+        Woot.mobRegistry.addMapping(MobRegistry.ENDER_DRAGON, Settings.dragonDeathCost);
+        Woot.tierMapper.addMapping(MobRegistry.ENDER_DRAGON, EnumMobFactoryTier.TIER_FOUR);
+        Settings.dragonDropList = configuration.getStringList(Config.General.ENDER_DRAGON_DROP_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.EnderDragon.DEF_DRAGON_DROPS, StringHelper.localize(Lang.getLangConfigValue(Config.General.ENDER_DRAGON_DROP_LIST)));
+
 
         /**
          * Power
@@ -95,6 +151,10 @@ public class ConfigHandler {
         Settings.decapitateIRfTick = getConfigInt(Config.Power.DECAP_I_COST, Settings.Power.DEF_DECAPITATE_I_RF_TICK);
         Settings.decapitateIIRfTick = getConfigInt(Config.Power.DECAP_II_COST, Settings.Power.DEF_DECAPITATE_II_RF_TICK);
         Settings.decapitateIIIRfTick = getConfigInt(Config.Power.DECAP_III_COST, Settings.Power.DEF_DECAPITATE_III_RF_TICK);
+
+        Settings.bmIRfTick = getConfigInt(Config.Power.BM_I_COST, Settings.Power.DEF_BM_I_RF_TICK);
+        Settings.bmIIRfTick = getConfigInt(Config.Power.BM_II_COST, Settings.Power.DEF_BM_II_RF_TICK);
+        Settings.bmIIIRfTick = getConfigInt(Config.Power.BM_III_COST, Settings.Power.DEF_BM_III_RF_TICK);
 
         /**
          * Upgrades
@@ -122,6 +182,14 @@ public class ConfigHandler {
         Settings.efficiencyI = getConfigInt(Config.Upgrades.EFFICIENCY_I_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_I_PERCENTAGE);
         Settings.efficiencyII = getConfigInt(Config.Upgrades.EFFICIENCY_II_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_II_PERCENTAGE);
         Settings.efficiencyIII = getConfigInt(Config.Upgrades.EFFICIENCY_III_PERCENTAGE, Settings.Upgrades.DEF_EFFICIENCY_III_PERCENTAGE);
+
+        Settings.bmICount = getConfigInt(Config.Upgrades.BM_I_COUNT, Settings.Upgrades.DEF_BM_I_SACRIFICE_COUNT);
+        Settings.bmIICount = getConfigInt(Config.Upgrades.BM_II_COUNT, Settings.Upgrades.DEF_BM_II_SACRIFICE_COUNT);
+        Settings.bmIIICount = getConfigInt(Config.Upgrades.BM_III_COUNT, Settings.Upgrades.DEF_BM_III_SACRIFICE_COUNT);
+
+        Settings.bmIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_I_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_I_ALTAR_LIFE_ESSENCE);
+        Settings.bmIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_II_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_II_ALTAR_LIFE_ESSENCE);
+        Settings.bmIIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_III_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_III_ALTAR_LIFE_ESSENCE);
 
         if (configuration.hasChanged())
             configuration.save();

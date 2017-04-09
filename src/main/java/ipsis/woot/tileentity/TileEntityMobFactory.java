@@ -517,6 +517,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                 out.amount = 0;
         }
 
+        bmMobCount = 0;
+        bmSacrificeAmount = 0;
         return true;
     }
 

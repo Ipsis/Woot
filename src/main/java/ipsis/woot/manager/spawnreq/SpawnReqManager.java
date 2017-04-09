@@ -52,8 +52,6 @@ public class SpawnReqManager {
 
     public void loadFromJson() {
 
-        fakeSetup();
-        LogHelper.info("SpawnReqManager: Load spawn requirements from " + Files.getWootSpawnReqFileForDisplay());
         try {
             extraSpawnReqList = SerializationHelper.readListFromFile(Files.spawnReqFile);
         } catch (FileNotFoundException e) {

@@ -6,6 +6,7 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.spawnreq.ExtraSpawnReq;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
@@ -344,11 +345,21 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         return controller || proxy;
     }
 
+    private long lastWorldTime = 0;
+
     @Override
     public void update() {
 
         if (worldObj.isRemote)
             return;
+
+        long currWorldTime = worldObj.getWorldTime();
+        if (currWorldTime == lastWorldTime) {
+            /* Bypass any acceleration methods */
+            return;
+        } else {
+            lastWorldTime = currWorldTime;
+        }
 
         structureTicks++;
 

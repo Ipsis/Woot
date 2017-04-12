@@ -1,5 +1,6 @@
 package ipsis.woot.manager.loot;
 
+import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
@@ -55,7 +56,7 @@ public class LootEnderDragon {
                 if (itemStack != null && stackSize > 0 && chance > 0.0F && chance <= 100.0F) {
                     itemStack.stackSize = stackSize;
                     LogHelper.info("Added Ender Dragon drop - " + item + "/" + stackSize + "@" + chance + "%%");
-                    dropMap.get(key).add(new DragonDrop(itemStack, chance));
+                    dropMap.get(key).add(new DragonDrop(itemStack, chance / 100.0F));
                 }
 
             } catch (NumberFormatException e) {
@@ -71,8 +72,11 @@ public class LootEnderDragon {
     public List<ItemStack> getDrops(EnumEnchantKey key) {
 
         List<ItemStack> drops = new ArrayList<ItemStack>();
-        for (DragonDrop i : dropMap.get(key))
-            drops.add(i.itemStack.copy());
+        for (DragonDrop i : dropMap.get(key)) {
+            float chance = Woot.RANDOM.nextFloat();
+            if (chance <= i.chance)
+                drops.add(i.itemStack.copy());
+        }
 
         return drops;
     }

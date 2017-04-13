@@ -1,5 +1,6 @@
 package ipsis.woot.manager.loot;
 
+import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
@@ -71,8 +72,11 @@ public class LootEnderDragon {
     public List<ItemStack> getDrops(EnumEnchantKey key) {
 
         List<ItemStack> drops = new ArrayList<ItemStack>();
-        for (DragonDrop i : dropMap.get(key))
-            drops.add(i.itemStack.copy());
+        for (DragonDrop i : dropMap.get(key)) {
+            float chance = Woot.RANDOM.nextFloat();
+            if (chance <= (i.chance / 100.0F))
+                drops.add(i.itemStack.copy());
+        }
 
         return drops;
     }

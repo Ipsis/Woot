@@ -7,6 +7,7 @@ import ipsis.woot.init.ModEnchantments;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTableManager;
+import ipsis.woot.manager.spawnreq.SpawnReqManager;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
@@ -34,6 +35,7 @@ public class Woot {
     public static Random RANDOM = new Random();
     public static TierMapper tierMapper = new TierMapper();
     public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
+    public static SpawnReqManager SPAWN_REQ_MANAGER = new SpawnReqManager();
     public static boolean devMode = false;
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
@@ -79,6 +81,7 @@ public class Woot {
         ModEnchantments.postInit();
         LOOT_TABLE_MANAGER.loadInternalBlacklist();
         LOOT_TABLE_MANAGER.loadDragonDrops();
+        SPAWN_REQ_MANAGER.loadFromJson();
     }
 
     @Mod.EventHandler

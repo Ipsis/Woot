@@ -4,6 +4,8 @@ import ipsis.Woot;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.FullDropInfo;
 import ipsis.woot.manager.loot.LootTableManager;
+import ipsis.woot.manager.spawnreq.ExtraSpawnReq;
+import ipsis.woot.manager.spawnreq.SpawnReqManager;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -39,6 +41,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -118,6 +121,19 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                                 f = TextFormatting.AQUA;
                             out.add(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + upgrade));
                         }
+                    }
+                }
+
+                EnumEnchantKey key = upgradeSetup == null ? EnumEnchantKey.NO_ENCHANT : upgradeSetup.getEnchantKey();
+                ExtraSpawnReq req = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(te.getMobName(), key);
+                if (req != null) {
+                    if (req.hasItems()) {
+                        for (ItemStack itemStack : req.getItems())
+                            out.add(TextFormatting.GOLD + String.format("%d of %s", itemStack.stackSize, itemStack.getDisplayName()));
+
+                    } else if (req.hasFluids()) {
+                        for (FluidStack fluidStack : req.getFluids())
+                            out.add(TextFormatting.GOLD + String.format("%d mb of %s", fluidStack.amount, fluidStack.getLocalizedName()));
                     }
                 }
 

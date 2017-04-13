@@ -5,6 +5,7 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
+import ipsis.woot.manager.spawnreq.ExtraSpawnReq;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
@@ -27,9 +28,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -346,11 +345,21 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         return controller || proxy;
     }
 
+    private long lastWorldTime = 0;
+
     @Override
     public void update() {
 
         if (worldObj.isRemote)
             return;
+
+        long currWorldTime = worldObj.getWorldTime();
+        if (currWorldTime == lastWorldTime) {
+            /* Bypass any acceleration methods */
+            return;
+        } else {
+            lastWorldTime = currWorldTime;
+        }
 
         structureTicks++;
 
@@ -519,6 +528,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                 out.amount = 0;
         }
 
+        bmMobCount = 0;
+        bmSacrificeAmount = 0;
         return true;
     }
 
@@ -549,7 +560,112 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         bmKeepAlive = false;
     }
 
+    /**
+     * Check that there are at least mount of type itemStack in the inventory
+     */
+    private boolean canRemoveItemStack(IItemHandler itemHandler, ItemStack itemStack, int amount) {
+
+        if (amount <= 0)
+            return true;
+
+        if (itemHandler.getSlots() == 0)
+            return false;
+
+        int found = 0;
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+
+            ItemStack s = itemHandler.getStackInSlot(i);
+            if (s == null)
+                continue;
+
+            if (s.isItemEqual(itemStack))
+                found += s.stackSize;
+
+            if (found >= amount)
+                break;
+        }
+
+        return found >= amount;
+    }
+
+    private void removeItemStack(IItemHandler itemHandler, ItemStack itemStack, int amount) {
+
+        int left = amount;
+
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+
+            ItemStack removeStack = itemHandler.getStackInSlot(i);
+            if (removeStack.isItemEqual(itemStack)) {
+                ItemStack t = itemHandler.extractItem(i, left, false);
+                left -= t.stackSize;
+            }
+
+            if (left == 0)
+                break;
+        }
+    }
+
+    private boolean processExtraSpawnReq(String wootName, UpgradeSetup upgradeSetup) {
+
+        EnumEnchantKey key = upgradeSetup.getEnchantKey();
+
+        ExtraSpawnReq extraSpawnReq = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(wootName, key);
+        if (extraSpawnReq == null)
+            return true;
+
+        if (extraSpawnReq.hasItems()) {
+
+            TileEntity te = worldObj.getTileEntity(this.getPos().offset(EnumFacing.UP, 2));
+            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
+                IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+
+                boolean allItemsPresent = true;
+                for (ItemStack itemStack : extraSpawnReq.getItems()) {
+                    if (!canRemoveItemStack(itemHandler, itemStack, itemStack.stackSize)) {
+                        allItemsPresent = false;
+                        break;
+                    }
+
+                }
+
+                if (allItemsPresent) {
+                    for (ItemStack itemStack : extraSpawnReq.getItems()) {
+                        removeItemStack(itemHandler, itemStack, itemStack.stackSize);
+                    }
+                    return true;
+                }
+
+                return false;
+
+            } else {
+                return false;
+            }
+
+        } else if (extraSpawnReq.hasFluids()) {
+
+            TileEntity te = worldObj.getTileEntity(this.getPos().offset(EnumFacing.UP, 2));
+            if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
+                IFluidHandler iFluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+
+                FluidStack removedFluid = iFluidHandler.drain(extraSpawnReq.getFluids().get(0), false);
+                if (removedFluid != null && removedFluid.amount == extraSpawnReq.getFluids().get(0).amount) {
+                    removedFluid = iFluidHandler.drain(extraSpawnReq.getFluids().get(0), true);
+                    return  true;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private void produceOutput() {
+
+        if (!processExtraSpawnReq(controllerConfig.getMobName(), upgradeSetup)) {
+            return;
+        }
 
         SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, worldObj.getDifficultyForLocation(getPos()));
 

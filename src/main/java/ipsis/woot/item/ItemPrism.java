@@ -23,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -110,7 +111,8 @@ public class ItemPrism extends ItemWoot {
 
     public static void setAsEnderDragon(ItemStack stack) {
 
-        setMobName(stack, MobRegistry.ENDER_DRAGON, "Ender Dragon", Woot.mobRegistry.getSpawnXp(MobRegistry.ENDER_DRAGON));
+        String name = I18n.translateToLocal("entity.EnderDragon.name");
+        setMobName(stack, MobRegistry.ENDER_DRAGON, name, Woot.mobRegistry.getSpawnXp(MobRegistry.ENDER_DRAGON));
     }
 
     public static void setMobName(ItemStack itemStack, String mobName, String displayName, int xp) {

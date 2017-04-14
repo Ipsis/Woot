@@ -607,9 +607,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     private boolean processExtraSpawnReq(String wootName, UpgradeSetup upgradeSetup) {
 
-        EnumEnchantKey key = upgradeSetup.getEnchantKey();
-
-        ExtraSpawnReq extraSpawnReq = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(wootName, key);
+        ExtraSpawnReq extraSpawnReq = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(wootName);
         if (extraSpawnReq == null)
             return true;
 

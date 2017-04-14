@@ -21,14 +21,12 @@ import java.util.List;
 public class ExtraSpawnReq {
 
     protected String wootName;
-    protected EnumEnchantKey enchantKey;
     protected List<ItemStack> items;
     protected List<FluidStack> fluids;
 
     public ExtraSpawnReq() {
 
         wootName = MobRegistry.INVALID_MOB_NAME;
-        enchantKey = EnumEnchantKey.NO_ENCHANT;
         items = new ArrayList<ItemStack>();
         fluids = new ArrayList<FluidStack>();
     }
@@ -42,11 +40,6 @@ public class ExtraSpawnReq {
     }
 
     public String getWootName() { return this.wootName; }
-    public EnumEnchantKey getKey() { return this.enchantKey; }
-
-    public void setKey(EnumEnchantKey enchantKey) {
-        this.enchantKey = enchantKey;
-    }
 
     public void addItemStack(String name, int stackSize) {
 
@@ -114,11 +107,9 @@ public class ExtraSpawnReq {
 
             JsonObject jsonObject = json.getAsJsonObject();
             String name = JsonUtils.getString(jsonObject, "mob");
-            String key = JsonUtils.getString(jsonObject, "enchant");
             JsonArray jsonArray = JsonUtils.getJsonArray(jsonObject, "items");
 
             ExtraSpawnReq req = new ExtraSpawnReq();
-            req.setKey(EnumEnchantKey.getFromString(key));
             req.setWootName(name);
 
             for (int i = 0; i < jsonArray.size(); i++ ) {
@@ -144,7 +135,6 @@ public class ExtraSpawnReq {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("mob", src.getWootName());
-            jsonObject.addProperty("enchant", src.getKey().toString());
             jsonObject.add("items", context.serialize(src.items));
             jsonObject.add("fluids", context.serialize(src.fluids));
 

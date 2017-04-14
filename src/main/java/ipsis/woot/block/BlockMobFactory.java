@@ -124,8 +124,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                     }
                 }
 
-                EnumEnchantKey key = upgradeSetup == null ? EnumEnchantKey.NO_ENCHANT : upgradeSetup.getEnchantKey();
-                ExtraSpawnReq req = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(te.getMobName(), key);
+                ExtraSpawnReq req = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(te.getMobName());
                 if (req != null) {
                     if (req.hasItems()) {
                         for (ItemStack itemStack : req.getItems())

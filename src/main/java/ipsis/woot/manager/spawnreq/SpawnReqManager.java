@@ -22,7 +22,6 @@ public class SpawnReqManager {
 
         ExtraSpawnReq req = new ExtraSpawnReq();
         req.setWootName("Woot:none:Sheep");
-        req.setKey(EnumEnchantKey.NO_ENCHANT);
         req.addItemStack("minecraft:egg", 4);
         req.addItemStack("minecraft:wool:4", 1);
 
@@ -30,20 +29,17 @@ public class SpawnReqManager {
 
         req = new ExtraSpawnReq();
         req.setWootName("Woot:none:Zombie");
-        req.setKey(EnumEnchantKey.NO_ENCHANT);
         req.addItemStack("minecraft:apple", 66);
         req.addItemStack("minecraft:iron_ingot", 4);
         extraSpawnReqList.add(req);
 
         req = new ExtraSpawnReq();
         req.setWootName("Woot:none:Spider");
-        req.setKey(EnumEnchantKey.LOOTING_I);
         req.addFluidStack("water", 1000);
         extraSpawnReqList.add(req);
 
         req = new ExtraSpawnReq();
         req.setWootName("Woot:none:Spider");
-        req.setKey(EnumEnchantKey.NO_ENCHANT);
         req.addFluidStack("liquid_sunshine", 1000);
         extraSpawnReqList.add(req);
         SerializationHelper.writeListToFile(extraSpawnReqList, Files.spawnReqFile);
@@ -62,10 +58,10 @@ public class SpawnReqManager {
             extraSpawnReqList = new ArrayList<ExtraSpawnReq>();
     }
 
-    public ExtraSpawnReq getExtraSpawnReq(String wootName, EnumEnchantKey key) {
+    public ExtraSpawnReq getExtraSpawnReq(String wootName) {
 
         for (ExtraSpawnReq c : extraSpawnReqList) {
-            if (c.getWootName().equalsIgnoreCase(wootName) && c.getKey() == key)
+            if (c.getWootName().equalsIgnoreCase(wootName))
                 return c;
         }
 

@@ -7,19 +7,24 @@ import java.io.File;
 public class Files {
 
     public static File globalDataDirectory;
+    public static File configDirectory;
     public static File lootFile;
     public static File spawnReqFile;
+    public static File configFile;
 
     private static final String LOOT_FILENAME = "loot.json";
-    private static final String SPAWN_REQ_FILENAME = "spawnreq.json";
+    private static final String CONFIG_FILENAME = "woot.cfg";
+    private static final String SPAWN_REQ_FILENAME = "woot_spawnreq.json";
 
     public static void init(FMLPreInitializationEvent event) {
 
         globalDataDirectory = new File(event.getModConfigurationDirectory().getParentFile(),
                 File.separator + Reference.MOD_NAME_LOWER);
+        configDirectory = event.getModConfigurationDirectory();
 
         lootFile = new File(globalDataDirectory, LOOT_FILENAME);
-        spawnReqFile = new File(globalDataDirectory, SPAWN_REQ_FILENAME);
+        spawnReqFile = new File(configDirectory + File.separator + Reference.MOD_ID_LOWER, SPAWN_REQ_FILENAME);
+        configFile = new File(configDirectory + File.separator + Reference.MOD_ID_LOWER, CONFIG_FILENAME);
     }
 
     public static String getWootFileForDisplay() {

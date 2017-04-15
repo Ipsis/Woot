@@ -123,7 +123,7 @@ public class ExtraSpawnReq {
 
             JsonObject jsonObject = json.getAsJsonObject();
             String name = JsonUtils.getString(jsonObject, "mob");
-            boolean eff = JsonUtils.getBoolean(jsonObject, "efficiency");
+            boolean eff = JsonUtils.getBoolean(jsonObject, "efficiency", true);
             JsonArray jsonArray = JsonUtils.getJsonArray(jsonObject, "items");
 
             ExtraSpawnReq req = new ExtraSpawnReq();

@@ -20,15 +20,17 @@ import java.util.List;
  */
 public class ExtraSpawnReq {
 
-    protected String wootName;
-    protected List<ItemStack> items;
-    protected List<FluidStack> fluids;
+    private String wootName;
+    private List<ItemStack> items;
+    private List<FluidStack> fluids;
+    private boolean allowEfficiency;
 
     public ExtraSpawnReq() {
 
         wootName = MobRegistry.INVALID_MOB_NAME;
         items = new ArrayList<ItemStack>();
         fluids = new ArrayList<FluidStack>();
+        allowEfficiency = true;
     }
 
 
@@ -40,6 +42,8 @@ public class ExtraSpawnReq {
     }
 
     public String getWootName() { return this.wootName; }
+    public boolean getAllowEfficiency() { return this.allowEfficiency; }
+    public void setAllowEfficiency(boolean allowEfficiency) { this.allowEfficiency = allowEfficiency; }
 
     public void addItemStack(String name, int stackSize) {
 
@@ -68,12 +72,24 @@ public class ExtraSpawnReq {
         return items;
     }
 
-    public List<FluidStack> getFluids() {
+    private List<FluidStack> getFluids() {
 
         if (!hasItems())
             return fluids;
         else
             return new ArrayList<>();
+    }
+
+    public FluidStack getFluid() {
+
+        if (hasItems() || !hasFluids())
+            return null;
+
+        FluidStack f = fluids.get(0);
+        if (f != null)
+            return f;
+
+        return null;
     }
 
     public static class ItemStackSerializer implements JsonSerializer<ItemStack> {
@@ -107,10 +123,12 @@ public class ExtraSpawnReq {
 
             JsonObject jsonObject = json.getAsJsonObject();
             String name = JsonUtils.getString(jsonObject, "mob");
+            boolean eff = JsonUtils.getBoolean(jsonObject, "efficiency");
             JsonArray jsonArray = JsonUtils.getJsonArray(jsonObject, "items");
 
             ExtraSpawnReq req = new ExtraSpawnReq();
             req.setWootName(name);
+            req.setAllowEfficiency(eff);
 
             for (int i = 0; i < jsonArray.size(); i++ ) {
                 JsonElement jsonElement = jsonArray.get(i);
@@ -135,6 +153,7 @@ public class ExtraSpawnReq {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("mob", src.getWootName());
+            jsonObject.addProperty("efficiency", src.getAllowEfficiency());
             jsonObject.add("items", context.serialize(src.items));
             jsonObject.add("fluids", context.serialize(src.fluids));
 

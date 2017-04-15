@@ -124,16 +124,13 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                     }
                 }
 
-                ExtraSpawnReq req = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(te.getMobName());
-                if (req != null) {
-                    if (req.hasItems()) {
-                        for (ItemStack itemStack : req.getItems())
-                            out.add(TextFormatting.GOLD + String.format("%d of %s", itemStack.stackSize, itemStack.getDisplayName()));
-
-                    } else if (req.hasFluids()) {
-                        for (FluidStack fluidStack : req.getFluids())
-                            out.add(TextFormatting.GOLD + String.format("%d mb of %s", fluidStack.amount, fluidStack.getLocalizedName()));
-                    }
+                List<ItemStack> requiredItems = Woot.SPAWN_REQ_MANAGER.getItems(te.getMobName(), upgradeSetup);
+                FluidStack fluidStack = Woot.SPAWN_REQ_MANAGER.getFluid(te.getMobName(), upgradeSetup);
+                if (!requiredItems.isEmpty()) {
+                    for (ItemStack itemStack : requiredItems)
+                        out.add(TextFormatting.GOLD + String.format("%d of %s", itemStack.stackSize, itemStack.getDisplayName()));
+                } else if (fluidStack != null) {
+                    out.add(TextFormatting.GOLD + String.format("%d mb of %s", fluidStack.amount, fluidStack.getLocalizedName()));
                 }
 
                 for (String s : out)

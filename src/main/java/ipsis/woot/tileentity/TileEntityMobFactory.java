@@ -595,6 +595,9 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         for (int i = 0; i < itemHandler.getSlots(); i++) {
 
             ItemStack removeStack = itemHandler.getStackInSlot(i);
+            if (removeStack == null)
+                continue;
+
             if (removeStack.isItemEqual(itemStack)) {
                 ItemStack t = itemHandler.extractItem(i, left, false);
                 left -= t.stackSize;
@@ -607,18 +610,20 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
     private boolean processExtraSpawnReq(String wootName, UpgradeSetup upgradeSetup) {
 
-        ExtraSpawnReq extraSpawnReq = Woot.SPAWN_REQ_MANAGER.getExtraSpawnReq(wootName);
-        if (extraSpawnReq == null)
+        if (!Woot.SPAWN_REQ_MANAGER.hasExtraSpawnReq(wootName))
             return true;
 
-        if (extraSpawnReq.hasItems()) {
+        List<ItemStack> requiredItems = Woot.SPAWN_REQ_MANAGER.getItems(wootName, upgradeSetup);
+        FluidStack fluidStack = Woot.SPAWN_REQ_MANAGER.getFluid(wootName, upgradeSetup);
+
+        if (!requiredItems.isEmpty()) {
 
             TileEntity te = worldObj.getTileEntity(this.getPos().offset(EnumFacing.UP, 2));
             if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
                 IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
                 boolean allItemsPresent = true;
-                for (ItemStack itemStack : extraSpawnReq.getItems()) {
+                for (ItemStack itemStack : requiredItems) {
                     if (!canRemoveItemStack(itemHandler, itemStack, itemStack.stackSize)) {
                         allItemsPresent = false;
                         break;
@@ -627,9 +632,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                 }
 
                 if (allItemsPresent) {
-                    for (ItemStack itemStack : extraSpawnReq.getItems()) {
+                    for (ItemStack itemStack : requiredItems)
                         removeItemStack(itemHandler, itemStack, itemStack.stackSize);
-                    }
                     return true;
                 }
 
@@ -639,15 +643,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                 return false;
             }
 
-        } else if (extraSpawnReq.hasFluids()) {
+        } else if (fluidStack != null) {
 
             TileEntity te = worldObj.getTileEntity(this.getPos().offset(EnumFacing.UP, 2));
             if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
                 IFluidHandler iFluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
 
-                FluidStack removedFluid = iFluidHandler.drain(extraSpawnReq.getFluids().get(0), false);
-                if (removedFluid != null && removedFluid.amount == extraSpawnReq.getFluids().get(0).amount) {
-                    removedFluid = iFluidHandler.drain(extraSpawnReq.getFluids().get(0), true);
+                FluidStack removedFluid = iFluidHandler.drain(fluidStack, false);
+                if (removedFluid != null && removedFluid.amount == fluidStack.amount) {
+                    iFluidHandler.drain(fluidStack, true);
                     return  true;
                 }
                 return false;

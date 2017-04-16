@@ -77,6 +77,7 @@ dependencies {
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.top_version}"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${config.minecraft_version}-${config.guideapi_version}"
 }
 
 processResources

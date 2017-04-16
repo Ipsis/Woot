@@ -11,6 +11,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -61,10 +62,15 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
         if (!worldIn.isRemote) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te != null && te instanceof TileEntityLayout) {
-                ((TileEntityLayout) te).setNextTier();
-                EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();
-                playerIn.addChatComponentMessage(new TextComponentString(tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
-                worldIn.notifyBlockUpdate(pos, state, state, 4);
+
+                if (playerIn.isCreative() && heldItem != null && heldItem.getItem() == Items.REDSTONE) {
+                    ((TileEntityLayout) te).buildFactory();
+                } else {
+                    ((TileEntityLayout) te).setNextTier();
+                    EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();
+                    playerIn.addChatComponentMessage(new TextComponentString(tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
+                    worldIn.notifyBlockUpdate(pos, state, state, 4);
+                }
             }
         }
 

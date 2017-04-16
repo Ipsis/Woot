@@ -323,5 +323,73 @@ book.Woot:dragon.1=No Looting gives as 20% change of Dragon Egg, Dragon Breath, 
 book.Woot:dragon.2=Looting II gives as 60% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust. Looting III gives as 80% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust
 book.Woot:dragon.3=Other drops and their chance, depend on the configuration file being used eg. Draconic Evolution support
 
+###############
+# GuideAPI Book
+###############
+guide.Woot.title=Woot Guide
+guide.Woot.display=Woot Guide
+guide.Woot.welcome=Running A Mob Factory
+guide.Woot.author=Ipsis
 
+# Categories
+guide.Woot.category.general=General
+guide.Woot.category.upgrades=Upgrades
+
+# General Entries
+guide.Woot.entry.general.intro=Introduction
+guide.Woot.entry.general.why=Why Use A Factory
+guide.Woot.entry.general.started=Getting Started
+guide.Woot.entry.general.capturing=Capturing Mobs
+guide.Woot.entry.general.factory=Your First Factory
+guide.Woot.entry.general.power=Powering Your Factory
+guide.Woot.entry.general.proxy=The Proxy
+guide.Woot.entry.general.tier=Factory Tiers
+guide.Woot.entry.general.extra=Extra Spawn Requirements
+
+# Upgrade Entries
+guide.Woot.entry.upgrades.totems=Upgrade Totems
+guide.Woot.entry.upgrades.rate=Rate Upgrade
+guide.Woot.entry.upgrades.mass=Mass Upgrade
+guide.Woot.entry.upgrades.looting=Looting Upgrade
+guide.Woot.entry.upgrades.xp=XP Production Upgrade
+guide.Woot.entry.upgrades.efficiency=Efficiency Upgrade
+guide.Woot.entry.upgrades.decapitate=Decapitation Upgrade
+guide.Woot.entry.upgrades.bloodmagic=Blood Magic Upgrade
+
+# General Text
+guide.Woot.entry.general.intro.info=Welcome to the user manual for your new Mob Factory, the safe, easy and clean way to murder your favourite mobs. Never again will you have to mess around with spawning, killing and cleaning up after all the mobs. So sit back and relax as you peruse this handy manual to learn how to build and safely operate your new mob factory.
+guide.Woot.entry.general.why.info=Making mob farms using different mods is fun and you should do it. However if you are not careful, they can cause issues, mainly will lots of entities being spawned. So Woot gives you an alternative. A multiblock, that generates to entities in the world and only generates items if there is somewhere to put them.
+guide.Woot.entry.general.started.info.1=To get started you are going to need a few things. A Yah Hammer, some dies and some UnderIron.
+guide.Woot.entry.general.started.info.2=UnderIron
+guide.Woot.entry.general.started.info.3=Yah Hammer
+guide.Woot.entry.general.started.info.4=Dies
+guide.Woot.entry.general.capturing.info.1=So how do you get the mob into a the factory. Simple really. Create a Prism, then hit the mob that you want to program. If the mob has been blacklisted, then you wont be able to store it. If not, the Prism will have that mob's name.
+guide.Woot.entry.general.capturing.info.2=Thinking of programming the Ender Dragon? Going to pop to The End, poke the dragon and run away? Not going to happen. The Prism has to be combined with a Dragon Egg in a crafting table to be programmed with the Ender Dragon.
+guide.Woot.entry.general.factory.info=But the bits together
+
+
+# Upgrade Text
+guide.Woot.entry.upgrades.totems.info.1=What they are
+guide.Woot.entry.upgrades.totems.info.2=Where to put them
+guide.Woot.entry.upgrades.rate.info.1=Rate I
+guide.Woot.entry.upgrades.rate.info.2=Rate II
+guide.Woot.entry.upgrades.rate.info.3=Rate III
+guide.Woot.entry.upgrades.mass.info.1=Mass I
+guide.Woot.entry.upgrades.mass.info.2=Mass II
+guide.Woot.entry.upgrades.mass.info.3=Mass III
+guide.Woot.entry.upgrades.looting.info.1=Looting I
+guide.Woot.entry.upgrades.looting.info.2=Looting II
+guide.Woot.entry.upgrades.looting.info.3=Looting III
+guide.Woot.entry.upgrades.xp.info.1=XP I
+guide.Woot.entry.upgrades.xp.info.2=XP II
+guide.Woot.entry.upgrades.xp.info.3=XP III
+guide.Woot.entry.upgrades.efficiency.info.1=Efficiency I
+guide.Woot.entry.upgrades.efficiency.info.2=Efficiency II
+guide.Woot.entry.upgrades.efficiency.info.3=Efficiency III
+guide.Woot.entry.upgrades.decapitate.info.1=Decapitate I
+guide.Woot.entry.upgrades.decapitate.info.2=Decapitate II
+guide.Woot.entry.upgrades.decapitate.info.3=Decapitate III
+guide.Woot.entry.upgrades.bloodmagic.info.1=Blood Magic I
+guide.Woot.entry.upgrades.bloodmagic.info.2=Blood Magic II
+guide.Woot.entry.upgrades.bloodmagic.info.3=Blood Magic III
 

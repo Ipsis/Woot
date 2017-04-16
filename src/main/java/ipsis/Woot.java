@@ -9,6 +9,7 @@ import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.manager.spawnreq.SpawnReqManager;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
+import ipsis.woot.plugins.guideapi.GuideWoot;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
@@ -24,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:guideapi;")
 public class Woot {
 
     @Mod.Instance(Reference.MOD_ID)
@@ -62,6 +63,7 @@ public class Woot {
         EnderIO.loadRecipes();
 
         ModOreDictionary.preInit();
+        GuideWoot.preinit();
     }
 
     @Mod.EventHandler
@@ -71,6 +73,8 @@ public class Woot {
 
         if (Loader.isModLoaded(BloodMagic.BM_MODID))
             BloodMagic.init();
+
+        GuideWoot.init();
     }
 
     @Mod.EventHandler
@@ -82,6 +86,7 @@ public class Woot {
         LOOT_TABLE_MANAGER.loadInternalBlacklist();
         LOOT_TABLE_MANAGER.loadDragonDrops();
         SPAWN_REQ_MANAGER.loadFromJson();
+        GuideWoot.postInit();
     }
 
     @Mod.EventHandler

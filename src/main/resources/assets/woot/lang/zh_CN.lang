@@ -303,7 +303,7 @@ book.Woot:upgrade_decapitate.0=该升级提高了头颅掉落的几率。你需�
 book.Woot:upgrade_efficiency.title=能效升级
 book.Woot:upgrade_efficiency.0=该升级减少了工厂消耗的能量。你需要效率附魔书来合成该升级。
 
-book.Woot:upgrade_bloodmagic.title=血魔法升级
+book.Woot:upgrade_bloodmagic.title=血魔升级
 book.Woot:upgrade_bloodmagic.0=该升级能够在生成每个生物的同时产生生命源质。生成的源质会输出到生物工厂控制器前方或者与生物工厂代理端口相连的储罐中。如果没有储罐，则可直接填充血之祭坛。
 book.Woot:upgrade_bloodmagic.1=血之祭坛需要在以主仪式石为中心的10x10x10范围内。<br><br>生物工厂控制器需要在以主仪式石为中心的10x10x10范围内。
 book.Woot:upgrade_bloodmagic.2=填充储罐时，升级的等级将改变每个生物的牺牲符文数量：<br><br>1级：10牺牲符文<br>2级：20牺牲符文<br>3级：30牺牲符文

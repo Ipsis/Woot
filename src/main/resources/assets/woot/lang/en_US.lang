@@ -112,10 +112,10 @@ config.Woot:globalTierIVMobList=List of entities that need a Tier IV factory
 config.Woot:globalDropBlacklist=List of items to never generate from the factory
 config.Woot:globalPrismUseWhitelist=Use the prism whitelist - ignores the blacklist
 config.Woot:globalSpawnCostList=List of mobs and spawn costs
-config.Woot:globalAllowEnderDagon=Allow EnderDragon to be spawned in the factory
+config.Woot:globalAllowEnderDragon=Allow EnderDragon to be spawned in the factory
 config.Woot:globalMaxPower=Maximum energy storage of a factory
 config.Woot:globalSpawnCostEnderDragon=XP cost to use for spawning the EnderDragon
-config.Woot:globalSpawnDeathEnderDragon=XP cost to use for generating XP for the EnderDragon
+config.Woot:globalDeathCostEnderDragon=XP cost to use for generating XP for the EnderDragon
 config.Woot:globalDropListEnderDragon=Items to drop when killing the EnderDragon (enchant,item,stacksize,chance)
 
 config.Woot:rateI_RFTick=Rate I cost (RF/tick)

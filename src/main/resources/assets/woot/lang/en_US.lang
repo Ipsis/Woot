@@ -323,5 +323,8 @@ book.Woot:dragon.1=No Looting gives as 20% change of Dragon Egg, Dragon Breath, 
 book.Woot:dragon.2=Looting II gives as 60% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust. Looting III gives as 80% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust
 book.Woot:dragon.3=Other drops and their chance, depend on the configuration file being used eg. Draconic Evolution support
 
-
+book.Woot:extrareq.title=Extra Spawn Requirements
+book.Woot:extrareq.0=If your factory is not producing any output then you need to check to see if someone has enabled extra items or fluids for spawns to take place. So first, right-click on the factory black to see if it tells you what is missing.
+book.Woot:extrareq.1=If extra items are required, then it will tell you how many for your current setup. These items must be placed in a chest above the mob controller. They will be consumed at the point that loot is generated.
+book.Woot:extrareq.2=If extra fluids are required, then it will tell you what and how much. This must be in a tank above your mob controller and will be consumed at the point that loot is generated.
 

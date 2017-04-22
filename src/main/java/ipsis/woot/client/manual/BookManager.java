@@ -32,6 +32,7 @@ public class BookManager {
         addEntry("tier3", new BookPageText("tier3.0"), new BookPageText("tier3.1"));
         addEntry("tier4", new BookPageText("tier4.0"), new BookPageText("tier4.1"));
         addEntry("proxy", new BookPageText("proxy.0"), new BookPageText("proxy.1"));
+        addEntry("extrareq", new BookPageText("extrareq.0"), new BookPageText("extrareq.1"), new BookPageText("extrareq.2"));
         addEntry("upgrades", new BookPageText("upgrades.0"), new BookPageText("upgrades.1"));
         addEntry("upgrade_looting", new BookPageText("upgrade_looting.0"));
         addEntry("upgrade_rate", new BookPageText("upgrade_rate.0"));

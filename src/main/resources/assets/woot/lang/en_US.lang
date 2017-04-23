@@ -226,6 +226,8 @@ validate.Woot:factory.blocks_ok=%s: Valid layout
 
 ritual.Woot:ritualInfernalMachine=Ritual Of The Infernal Machine
 ritual.Woot:ritualInfernalMachine.info=Fill adjacent tanks or a nearby Blood Altar with Life Essence
+ritual.Woot:ritualInfernalMachine.altar.info=(Altar) The range defines the area that the ritual searches for the blood altar.
+ritual.Woot:ritualInfernalMachine.factory.info=(Factory) The range defines the area that the ritual searches for the factory.
 
 enchantment.woot_decapitate=Decapitation
 
@@ -304,11 +306,12 @@ book.Woot:upgrade_efficiency.title=Efficiency Upgrade
 book.Woot:upgrade_efficiency.0=This upgrade reduces the power cost of the factory. You will need Efficiency Enchanted Books to craft the upgrades.
 
 book.Woot:upgrade_bloodmagic.title=Blood Magic Upgrade
-book.Woot:upgrade_bloodmagic.0=This upgrade allows the factory to produce Life Essence for each mob spawned in the factory. That essence will be put into any tanks in front of the Factory Controller or connect to the Factory Proxy. If there are no tanks, then an Blood Magic Altar can be directly filled.
-book.Woot:upgrade_bloodmagic.1=The Ritual Of The Infernal Machine is required to make this upgrade work and needs Dusk, Earth, Water, Air and Fire runes.
-book.Woot:upgrade_bloodmagic.2=The altar needs to be within a 10x10x10 area centered on the Master Ritual Stone.<br><br>The Factory Controller needs to be within a 10x10x10 area centered on the Master Ritual Stone.
-book.Woot:upgrade_bloodmagic.3=The tier of upgrade when filling tanks will change the number of sacrifice runes on each mob kill: <br><br>  Tier I: 10 sacrifice runes<br> Tier II: 20 sacrifice runes<br>Tier III: 30 sacrifice runes
-book.Woot:upgrade_bloodmagic.4=The tier of upgrade when filling the Altar will change the sacrifice amount per mob: <br><br>  Tier I: 20<br> Tier II: 30<br>Tier III: 40
+book.Woot:upgrade_bloodmagic.0=This upgrade allows the factory to produce Life Essence for each mob spawned in the factory. That essence will be put into any tanks in front of the Mob Factory or connected to the Factory Proxy. If there are no tanks, then an Blood Magic Altar can be directly filled.
+book.Woot:upgrade_bloodmagic.1=The Ritual Of The Infernal Machine is required to make this upgrade work and needs Dusk, Earth, Water, Air and Fire runes. The altar is not needed if you are only filling the tanks.
+book.Woot:upgrade_bloodmagic.2=The ritual will look for an altar in a 5 block radius and 10 blocks vertically. The ritual will look for the main Mob Factory block in a 10 block radius, both horizontally and vertically.
+book.Woot:upgrade_bloodmagic.3=If you are filling the Altar remember that it will only fill when the Factory would generate the loot. The Altar also has an internal tank that needs to fill first. So for a Tier I factory with 1 mob every 320 ticks, it will take a while to fill that internal tank.
+book.Woot:upgrade_bloodmagic.4=The tier of upgrade when filling tanks will change the number of sacrifice runes on each mob kill: <br><br>  Tier I: 10 sacrifice runes<br> Tier II: 20 sacrifice runes<br>Tier III: 30 sacrifice runes
+book.Woot:upgrade_bloodmagic.5=The tier of upgrade when filling the Altar will change the sacrifice amount per mob: <br><br>  Tier I: 20<br> Tier II: 30<br>Tier III: 40
 
 book.Woot:enchant_decapitate.title=Decapitate Enchant
 book.Woot:enchant_decapitate.0=This enchantment will give you a 20% chance of getting a head drop from a Creeper, Zombie or Skeleton.<br><br>Tragically, due to an error in manufacturing it does NOT work with Wither Skeletons. Sorry, not sorry.

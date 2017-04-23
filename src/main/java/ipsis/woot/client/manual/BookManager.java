@@ -48,8 +48,9 @@ public class BookManager {
                     new BookPageText("upgrade_bloodmagic.1"),
                     new BookPageText("upgrade_bloodmagic.2"),
                     new BookPageText("upgrade_bloodmagic.3"),
-                    new BookPageText("upgrade_bloodmagic.4"));
-        
+                    new BookPageText("upgrade_bloodmagic.4"),
+                    new BookPageText("upgrade_bloodmagic.5"));
+
         addEntry("blacklists", new BookPageText("blacklists.0"), new BookPageText("blacklists.1"));
         addEntry("dragon", new BookPageText("dragon.0"), new BookPageText("dragon.1"), new BookPageText("dragon.2"), new BookPageText("dragon.3"));
     }

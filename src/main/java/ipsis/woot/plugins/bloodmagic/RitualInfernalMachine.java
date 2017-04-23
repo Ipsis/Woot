@@ -1,6 +1,5 @@
 package ipsis.woot.plugins.bloodmagic;
 
-/*
 import WayofTime.bloodmagic.api.ritual.*;
 import WayofTime.bloodmagic.api.saving.SoulNetwork;
 import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
@@ -11,13 +10,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-*/
 
 /**
  * This is essentially the Well Of Suffering, except
  * the mobs come from the factory, not the surrounding area.
  */
-/*
 public class RitualInfernalMachine extends Ritual {
 
     private static final String RITUAL_INFERNAL_MACHINE = "ritualInfernalMachine";
@@ -170,4 +167,3 @@ public class RitualInfernalMachine extends Ritual {
         return new RitualInfernalMachine();
     }
 }
-*/

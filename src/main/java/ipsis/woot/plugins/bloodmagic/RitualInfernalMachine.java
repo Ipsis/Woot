@@ -31,6 +31,9 @@ public class RitualInfernalMachine extends Ritual {
 
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(FACTORY_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
+
+        setMaximumVolumeAndDistanceOfRange(ALTAR_RANGE, 0, 10, 15);
+        setMaximumVolumeAndDistanceOfRange(FACTORY_RANGE, 0, 15, 15);
     }
 
     public BlockPos altarOffsetPos = new BlockPos(0, 0, 0);

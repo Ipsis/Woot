@@ -49,7 +49,8 @@ public class MobRegistry {
 
     public String createWootName(EntityLiving entityLiving) {
 
-        String name = EntityList.getEntityString(entityLiving);
+        String name = EntityList.getKey(entityLiving).toString();
+
         if (entityLiving instanceof EntityCreeper) {
             if (((EntityCreeper) entityLiving).getPowered() == true)
                 name = "charged:" + name;
@@ -128,7 +129,6 @@ public class MobRegistry {
 
     public String onEntityLiving(EntityLiving entityLiving) {
 
-        String name = EntityList.getEntityString(entityLiving);
         String wootName = createWootName(entityLiving);
         String displayName = createDisplayName(entityLiving);
         if (!mobInfoHashMap.containsKey(wootName)) {

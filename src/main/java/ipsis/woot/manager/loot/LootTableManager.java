@@ -1,6 +1,7 @@
 package ipsis.woot.manager.loot;
 
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Settings;
@@ -8,6 +9,8 @@ import ipsis.woot.util.ItemStackHelper;
 import ipsis.woot.util.SerializationHelper;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -23,6 +26,7 @@ public class LootTableManager {
     private List<ItemStack> blacklist;
     private List<ItemStack> internalBlacklist;  // Specific items to block
     private List<String> internalModBlacklist;  // Complete mod items to block
+    private LootEnderDragon lootEnderDragon;
 
     public LootTableManager() {
 
@@ -31,6 +35,8 @@ public class LootTableManager {
 
         internalBlacklist = new ArrayList<ItemStack>();
         internalModBlacklist = new ArrayList<String>();
+
+        lootEnderDragon = new LootEnderDragon();
     }
 
     public void loadInternalBlacklist() {
@@ -38,6 +44,11 @@ public class LootTableManager {
         addToInternalModBlacklist("eplus");
         addToInternalModBlacklist("everlastingabilities");
         addToInternalModBlacklist("cyberware");
+    }
+
+    public void loadDragonDrops() {
+
+        lootEnderDragon.addDrops();
     }
 
     private void addToInternalModBlacklist(String s) {
@@ -115,6 +126,9 @@ public class LootTableManager {
 
     public List<ItemStack> getDrops(String wootName, EnumEnchantKey key) {
 
+        if (MobRegistry.isEnderDragon(wootName))
+            return lootEnderDragon.getDrops(key);
+
         List<ItemStack> drops = new ArrayList<ItemStack>();
         LootTable e = lootMap.get(wootName);
         if (e != null)
@@ -124,6 +138,9 @@ public class LootTableManager {
     }
 
     public List<FullDropInfo> getFullDropInfo(String wootName, EnumEnchantKey key) {
+
+        if (MobRegistry.isEnderDragon(wootName))
+            return lootEnderDragon.getFullDropInfo(key);
 
         List<FullDropInfo> drops = null;
 
@@ -136,6 +153,9 @@ public class LootTableManager {
 
     public boolean isFull(String wootName, EnumEnchantKey key) {
 
+        if (MobRegistry.isEnderDragon(wootName))
+            return true;
+
         LootTable e = lootMap.get(wootName);
         if (e == null)
             return false;
@@ -144,6 +164,9 @@ public class LootTableManager {
     }
 
     public boolean isEmpty(String wootName, EnumEnchantKey key) {
+
+        if (MobRegistry.isEnderDragon(wootName))
+            return false;
 
         LootTable e = lootMap.get(wootName);
         if (e == null)
@@ -240,6 +263,12 @@ public class LootTableManager {
              */
             lootMap = new HashMap<String, LootTable>();
         }
+
+        /**
+         * Catch the case where the file exists but is empty and doesn't throw any exceptions
+         */
+        if (lootMap == null)
+            lootMap = new HashMap<String, LootTable>();
     }
 
     public void save() {

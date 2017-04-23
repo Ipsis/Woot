@@ -19,7 +19,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class BloodMagic {
 
-    public static final String BM_MODID = "BloodMagic";
+    public static final String BM_MODID = "bloodmagic";
 
     public static FluidStack fluidOutput = null;
 

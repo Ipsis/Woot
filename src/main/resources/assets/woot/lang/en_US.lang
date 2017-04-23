@@ -54,13 +54,13 @@ item.woot:shard.diamond.name=Diamond Shard
 item.woot:shard.emerald.name=Emerald Shard
 item.woot:shard.quartz.name=Quartz Shard
 item.woot:shard.netherstar.name=Nether Star Shard
-item.woot:dye.plate.name=Plate Dye
-item.woot:dye.casing.name=Casing Dye
-item.woot:dye.skull.name=Skull Dye
-item.woot:dye.connector.name=Connector Dye
-item.woot:dye.shard.name=Shard Dye
-item.woot:dye.mesh.name=Mesh Dye
-item.woot:dye.prism.name=Prism Dye
+item.woot:dye.plate.name=Plate Die
+item.woot:dye.casing.name=Casing Die
+item.woot:dye.skull.name=Skull Die
+item.woot:dye.connector.name=Connector Die
+item.woot:dye.shard.name=Shard Die
+item.woot:dye.mesh.name=Mesh Die
+item.woot:dye.prism.name=Prism Die
 item.woot:factoryupgrade.tier_i.name=Tier I Upgrade
 item.woot:factoryupgrade.tier_ii.name=Tier II Upgrade
 item.woot:factoryupgrade.tier_iii.name=Tier III Upgrade
@@ -229,24 +229,24 @@ book.woot:cover.0=woot - The Alternative Mob Spawner/Grinder System
 book.woot:cover.1=How to build, program and run your Mob Factory
 
 book.woot:introduction.title=Introduction
-book.woot:introduction.0=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades.
+book.woot:introduction.0=Welcome to the user manual for your new Mob Factory, the safe, easy and clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades.
 book.woot:introduction.1=So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
 
 book.woot:crafting.title=How To Craft
-book.woot:crafting.0=You will need two basic item types to start building the components of your factory. A Yah Hammer and some dyes. You use the hammer, some obsidian to hit it against, a dye and some materials to craft. You get the hammer, dye and obsidian back after each craft.
-book.woot:crafting.1=Create one of each of the seven dyes and they will serve you the lifetime of your factory.
+book.woot:crafting.0=You will need two basic item types to start building the components of your factory. A Yah Hammer and some dies. You use the hammer, some obsidian to hit it against, a die and some materials to craft. You get the hammer, die and obsidian back after each craft.
+book.woot:crafting.1=Create one of each of the seven dies and they will serve you the lifetime of your factory.
 
 book.woot:resoures.title=Resources
-book.woot:resources.0=The basic building material for the factories is UnderIron. It doesn't spawn in the world. You will need to create Pulverised UnderIorn using the Yah Hammer, a Mesh Dye, Iron and Nether Brick. The just smelt it to the UnderIron.
+book.woot:resources.0=The basic building material for the factories is UnderIron. It doesn't spawn in the world. You will need to create Pulverised UnderIorn using the Yah Hammer, a Mesh Die, Iron and Nether Brick. The just smelt it to the UnderIron.
 
 book.woot:building.title=Building A Factory
 book.woot:building.0=The factory comes in different tiers. So craft yourself a Layout block and place it one block above the ground. It will then show you which blocks go where in the multiblock. All factories require a number of coloured structure blocks and cap stones for that tier. Right-click the layout block to cycle through the different tiers.
 book.woot:building.1=Once you have placed all the blocks, put the Mob Factory and Mob Controller in place. Right-click the Mob Controller with a captured mob in a Mob Prism and the factory will form. When you break the Mob Controller the mob will still be programmed, so you can swap Mob Controller to change between mobs you want to spawn.
 book.woot:building.2=If you factory does not form, then you can right-click the Mob Factory block for information as to what is wrong. The factory will not form if you are trying to use a higher tier mob in a lower tier factory.
-book.woot:building.3=The factory MUST be built above Y=10, because ...... construction regulations ....
+book.woot:building.3=The factory needs a clear space between Y=251 and Y=255 in a 5x5 area centered on the factory.
 
 book.woot:capturing.title=Capturing Mobs
-book.woot:capturing.0=It is not so much capturing mos, more poking them a bit then running away before they get angry. So you need to craft a Mob Prism and quietly approach the mob of your choice. Then gently prod the mob with the prism. You know have a programmed Mob Prism. The prism tooltip will tell you the minimum tier of factory that is required to spawn this mob.
+book.woot:capturing.0=It is not so much capturing mobs, more poking them a bit then running away before they get angry. So you need to craft a Mob Prism and quietly approach the mob of your choice. Then gently prod the mob with the prism. You now have a programmed Mob Prism. The prism tooltip will tell you the minimum tier of factory that is required to spawn this mob.
 book.woot:capturing.1=This would now be a good time to run away from the mob, depending on how it reacts to getting poked. If you have just poked a Wither Boss, I would RUN AWAY VERY FAST.
 
 book.woot:operation.title=Running A Factory
@@ -265,7 +265,7 @@ book.woot:tier2.0=This factory allows you to install up to four Tier II upgrades
 book.woot:tier2.1=The factory requires:<br><br>13 x Gray Structure blocks<br>16 x Red Structure blocks<br>40 x Orange Structure blocks<br>4 x Tier II Capstones
 
 book.woot:tier3.title=Tier III Factory
-book.woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Endermen. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.<br>It costs 240RF/tick to run this factory.
+book.woot:tier3.0=This factory allows you to install up to four Tier III upgrades. It will allow you to spawn Tier I and Tier II factory mobs along with Enderman. However you will need Ender Pearls to create the Green Structure blocks required to build this tier.<br>It costs 240RF/tick to run this factory.
 book.woot:tier3.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>44 x Orange Structure blocks<br>52 x Green Structure blocks<br>5 x Tier III Capstones
 
 book.woot:tier4.title=Tier IV Factory
@@ -273,7 +273,7 @@ book.woot:tier4.0=This factory has the same capabilities as the Tier III factory
 book.woot:tier4.1=The factory requires:<br><br>13 x Gray Structure blocks<br>14 x Red Structure blocks<br>44 x Orange Structure blocks<br>57 x Green Structure blocks<br>82 x White Structure Blocks<br>8 x Tier IV Capstones
 
 book.woot:proxy.title=Proxy And Extender
-book.woot:proxy.0=For those of you that like things neat and tidy, or just want to put more RF into the factory, there is Proxy block. Basically this block allows you to input power and provide more inventories to put items in. It also allows you to hide everything underneath the factory.
+book.woot:proxy.0=For those of you that like things neat and tidy, or just want to put more RF into the factory, there is the Proxy block. Basically this block allows you to input power and provide more inventories to put items in. It also allows you to hide everything underneath the factory.
 book.woot:proxy.1=To use the Proxy block, place a column of Extender blocks directly below the Mob Factory block and then put the Proxy block last. It will accept RF or inventories on any side of the Proxy.
 
 book.woot:upgrades.title=Upgrade Totems
@@ -309,8 +309,17 @@ book.woot:enchant_decapitate.title=Decapitate Enchant
 book.woot:enchant_decapitate.0=This enchantment will give you a 20% chance of getting a head drop from a Creeper, Zombie or Skeleton.<br><br>Tragically, due to an error in manufacturing it does NOT work with Wither Skeletons. Sorry, not sorry.
 
 book.woot:blacklists.title=Blacklists
-book.woot:blacklists.0=Various mobs and items are not allowed to be used or generated by the factory. These can be added by the server owner or by woot itself.<br><br>woot adds them because:<br> The blacklisted mod is combat based<br> The dropped item uses NBT
-book.woot:blacklists.1=The following internal blacklists are used to stop mob capturing and item generation:<br><br> CyberWare<br> Enchanting Plus<br> Everlasting Abilities
+book.woot:blacklists.0=Various mobs and items are not allowed to be used or generated by the factory. These can be added by the server owner or by Woot itself.<br><br>Woot adds them because:<br> The blacklisted mod is combat based<br> The dropped item uses NBT
+book.woot:blacklists.1=The following internal blacklists are used to stop mob capturing and item generation:<br><br> CyberWare<br> Enchanting Plus<br> Everlasting Abilities<br> Botania
 
+book.woot:dragon.title=Ender Dragon
+book.woot:dragon.0=The Ender Dragon cannot be caught in a prism, but you can craft an Ender Dragon prism by combining a Dragon Egg and a prism.
+book.woot:dragon.1=No Looting gives as 20% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust. Looting I gives as 40% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust
+book.woot:dragon.2=Looting II gives as 60% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust. Looting III gives as 80% change of Dragon Egg, Dragon Breath, Dragon Heart, Draconium Dust
+book.woot:dragon.3=Other drops and their chance, depend on the configuration file being used eg. Draconic Evolution support
 
+book.woot:extrareq.title=Extra Spawn Requirements
+book.woot:extrareq.0=If your factory is not producing any output then you need to check to see if someone has enabled extra items or fluids for spawns to take place. So first, right-click on the factory black to see if it tells you what is missing.
+book.woot:extrareq.1=If extra items are required, then it will tell you how many for your current setup. These items must be placed in a chest above the mob controller. They will be consumed at the point that loot is generated.
+book.woot:extrareq.2=If extra fluids are required, then it will tell you what and how much. This must be in a tank above your mob controller and will be consumed at the point that loot is generated.
 

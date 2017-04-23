@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,6 +48,24 @@ public class TileEntityLayout extends TileEntity {
             for (LayoutBlockInfo p : layoutBlockInfoList)
                 p.blockPos = p.blockPos.offset(EnumFacing.UP, 2);
         }
+    }
+
+    public void buildFactory() {
+
+        if (this.getWorld() != null && !this.getWorld().isRemote) {
+            layoutBlockInfoList.clear();
+            MobFactoryMultiblockLogic.getFactoryLayout(tier, this.getPos(), facing, layoutBlockInfoList);
+
+            /**
+             * Now offset the layout by +2 in Y so the factory display is ABOVE the guide block
+             */
+            for (LayoutBlockInfo p : layoutBlockInfoList)
+                p.blockPos = p.blockPos.offset(EnumFacing.UP, 2);
+
+            for (LayoutBlockInfo pos : layoutBlockInfoList)
+                getWorld().setBlockState(pos.blockPos, ModBlocks.blockStructure.getStateFromMeta(pos.module.getMetadata()));
+        }
+
     }
 
     public void setFacing(EnumFacing facing) {

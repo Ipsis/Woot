@@ -15,6 +15,7 @@ public class Settings {
         public static final int DEF_TIER_III_MOB_XP_CAP = 49;
         public static final int DEF_TIER_IV_MOB_XP_CAP = 65535;
         public static final boolean DEF_PRISM_USE_WHITELIST = false;
+        public static final boolean DEF_ALLOW_ENDER_DRAGON = true;
     }
 
     public static class Progression {
@@ -48,6 +49,31 @@ public class Settings {
 
     }
 
+    public static class EnderDragon {
+
+        public static final int DEF_SPAWN_COST = 750;
+        public static final int DEF_DEATH_COST = 500;
+
+        public static final String[] DEF_DRAGON_DROPS = {
+                "NO_ENCHANT,minecraft:dragon_egg,1,20.0",
+                "LOOTING_I,minecraft:dragon_egg,1,40.0",
+                "LOOTING_II,minecraft:dragon_egg,1,60.0",
+                "LOOTING_III,minecraft:dragon_egg,1,80.0",
+                "NO_ENCHANT,minecraft:dragon_breath,2,80.0",
+                "LOOTING_I,minecraft:dragon_breath,4,80.0",
+                "LOOTING_II,minecraft:dragon_breath,6,80.0",
+                "LOOTING_III,minecraft:dragon_breath,8,80.0",
+                "NO_ENCHANT,draconicevolution:dragon_heart,1,20.0",
+                "LOOTING_I,draconicevolution:dragon_heart,1,40.0",
+                "LOOTING_II,draconicevolution:dragon_heart,1,60.0",
+                "LOOTING_III,draconicevolution:dragon_heart,1,80.0",
+                "NO_ENCHANT,draconicevolution:draconium_dust,30,20.0",
+                "LOOTING_I,draconicevolution:draconium_dust,40,40.0",
+                "LOOTING_II,draconicevolution:draconium_dust,50,60.0",
+                "LOOTING_III,draconicevolution:draconium_dust,60,80.0",
+        };
+    }
+
     public static class Power {
 
         /**
@@ -59,6 +85,7 @@ public class Settings {
         public static final int DEF_TIER_II_RF_TICK = BASE_RF * 2;
         public static final int DEF_TIER_III_RF_TICK = BASE_RF * 3;
         public static final int DEF_TIER_IV_RF_TICK = BASE_RF * 4;
+        public static final int DEF_MAX_POWER = 10000000;
 
         public static final int DEF_XP_RF_TICK = 16; /* 80 / 5 (xp of zombie) */
 
@@ -133,6 +160,7 @@ public class Settings {
     public static int learnTicks;
     public static boolean strictFactorySpawns;
     public static boolean strictPower;
+    public static int maxPower;
     public static int baseMobCount;
     public static int baseRateTicks;
     public static int tierIMobXpCap;
@@ -148,6 +176,14 @@ public class Settings {
     public static String[] tierIVMobs = new String[0];
     public static String[] dropBlacklist = new String[0];
     public static String[] spawnCostList = new String[0];
+
+    /**
+     * Ender Dragon
+     */
+    public static boolean allowEnderDragon;
+    public static int dragonSpawnCost;
+    public static int dragonDeathCost;
+    public static String[] dragonDropList = new String[0];
 
     public static int tierIRFtick;
     public static int tierIIRFtick;

@@ -120,6 +120,7 @@ public class RitualInfernalMachine extends Ritual {
             return;
         }
 
+        int effects = 1;
         TileEntityMobFactory teFactory = findFactory(world, masterRitualStone.getBlockPos());
         if (teFactory != null) {
 
@@ -128,12 +129,14 @@ public class RitualInfernalMachine extends Ritual {
 
                 TileAltar teAltar = findAltar(world, masterRitualStone.getBlockPos());
                 if (teAltar != null) {
-                    int effects = fillAltar(teAltar, teFactory.bmGetMobCount(), teFactory.bmGetSacrificeAmount(), maxEffects);
-                    network.syphon(getRefreshCost() * effects);
+                    effects = fillAltar(teAltar, teFactory.bmGetMobCount(), teFactory.bmGetSacrificeAmount(), maxEffects);
                 }
                 teFactory.bmClear();
             }
         }
+
+        /* Syphon network */
+        network.syphon(getRefreshCost() * effects);
     }
 
     @Override

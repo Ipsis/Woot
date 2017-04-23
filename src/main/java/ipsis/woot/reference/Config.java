@@ -28,9 +28,15 @@ public class Config {
         public static final String PRISM_USE_WHITELIST = "globalPrismUseWhitelist";
         public static final String DROP_BLACKLIST = "globalDropBlacklist";
         public static final String SPAWN_COST_LIST = "globalSpawnCostList";
+        public static final String ALLOW_ENDER_DRAGON = "globalAllowEnderDragon";
+        public static final String ENDER_DRAGON_SPAWN_COST = "globalSpawnCostEnderDragon";
+        public static final String ENDER_DRAGON_DEATH_COST = "globalDeathCostEnderDragon";
+        public static final String ENDER_DRAGON_DROP_LIST = "globalDropListEnderDragon";
     }
 
     public static class Power {
+
+        public static final String MAX_POWER = "globalMaxPower";
 
         public static final String RATE_I_COST = "rateI_RFTick";
         public static final String RATE_II_COST = "rateII_RFTick";

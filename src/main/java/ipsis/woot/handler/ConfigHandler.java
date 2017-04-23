@@ -1,6 +1,8 @@
 package ipsis.woot.handler;
 
 import ipsis.Woot;
+import ipsis.woot.manager.MobRegistry;
+import ipsis.woot.manager.loot.LootEnderDragon;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
@@ -55,6 +57,7 @@ public class ConfigHandler {
         Settings.tierIIMobXpCap = getConfigInt(Config.General.TIER_II_MOB_XP_CAP, Settings.Spawner.DEF_TIER_II_MOB_XP_CAP);
         Settings.tierIIIMobXpCap = getConfigInt(Config.General.TIER_III_MOB_XP_CAP, Settings.Spawner.DEF_TIER_III_MOB_XP_CAP);
         Settings.tierIVMobXpCap = getConfigInt(Config.General.TIER_IV_MOB_XP_CAP, Settings.Spawner.DEF_TIER_IV_MOB_XP_CAP);
+        Settings.maxPower = getConfigInt(Config.Power.MAX_POWER, Settings.Power.DEF_MAX_POWER);
 
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
@@ -111,6 +114,20 @@ public class ConfigHandler {
                 LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
             }
         }
+
+        /**
+         * EnderDragon
+         */
+        Settings.allowEnderDragon = getConfigBool(Config.General.ALLOW_ENDER_DRAGON, Settings.Spawner.DEF_ALLOW_ENDER_DRAGON);
+        Settings.dragonDeathCost = getConfigInt(Config.General.ENDER_DRAGON_DEATH_COST, Settings.EnderDragon.DEF_DEATH_COST);
+        Settings.dragonSpawnCost = getConfigInt(Config.General.ENDER_DRAGON_SPAWN_COST, Settings.EnderDragon.DEF_SPAWN_COST);
+
+        Woot.mobRegistry.addCosting(MobRegistry.ENDER_DRAGON, Settings.dragonSpawnCost);
+        Woot.mobRegistry.addMapping(MobRegistry.ENDER_DRAGON, Settings.dragonDeathCost);
+        Woot.tierMapper.addMapping(MobRegistry.ENDER_DRAGON, EnumMobFactoryTier.TIER_FOUR);
+        Settings.dragonDropList = configuration.getStringList(Config.General.ENDER_DRAGON_DROP_LIST, Configuration.CATEGORY_GENERAL,
+                Settings.EnderDragon.DEF_DRAGON_DROPS, StringHelper.localize(Lang.getLangConfigValue(Config.General.ENDER_DRAGON_DROP_LIST)));
+
 
         /**
          * Power

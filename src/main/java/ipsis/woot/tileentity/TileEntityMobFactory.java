@@ -26,9 +26,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +41,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     AxisAlignedBB bb;
     ProxyManager proxyManager;
 
+    public static final int LOOTBOX_Y = 253;
+
     int currLearnTicks;
     int currSpawnTicks;
     int consumedRf;
@@ -54,6 +54,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     boolean dirtyStructure;
     boolean dirtyUpgrade;
     boolean dirtyProxy;
+    boolean hasLootBox;
     List<BlockPos> structureBlockList = new ArrayList<BlockPos>();
     List<BlockPos> upgradeBlockList = new ArrayList<BlockPos>();
 
@@ -138,6 +139,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         this.upgradeSetup = new UpgradeSetup();
         this.controllerConfig = new ControllerConfig();
         this.proxyManager = new ProxyManager(this);
+        this.hasLootBox = true; /* Will force one fake check */
 
         currLearnTicks = 0;
         currSpawnTicks = 0;
@@ -172,6 +174,11 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     public UpgradeSetup getUpgradeSetup() {
 
         return this.upgradeSetup;
+    }
+
+    public int getConsumedRf() {
+
+        return this.consumedRf;
     }
 
     void setRunning(boolean running) {
@@ -336,11 +343,21 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         return controller || proxy;
     }
 
+    private long lastWorldTime = 0;
+
     @Override
     public void update() {
 
         if (world.isRemote)
             return;
+
+        long currWorldTime = getWorld().getWorldTime();
+        if (currWorldTime == lastWorldTime) {
+            /* Bypass any acceleration methods */
+            return;
+        } else {
+            lastWorldTime = currWorldTime;
+        }
 
         structureTicks++;
 
@@ -378,8 +395,15 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (currLearnTicks >= learnTicksOffset) {
             if (!Woot.LOOT_TABLE_MANAGER.isFull(controllerConfig.getMobName(), upgradeSetup.getEnchantKey())) {
                 /* Not full so fake another spawn */
-                BlockPos spawnPos = new BlockPos(getPos().getX(), 0, getPos().getZ());
-                Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.world, this.getPos());
+                BlockPos spawnPos = new BlockPos(getPos());
+                Woot.spawnerManager.spawn(controllerConfig.getMobName(), upgradeSetup.getEnchantKey(), this.getWorld(), this.getPos());
+                hasLootBox = true;
+            } else {
+                if (hasLootBox) {
+                    BlockPos spawnPos = new BlockPos(getPos());
+                    Woot.spawnerManager.destroyLootBox(this.getWorld(), spawnPos);
+                    hasLootBox = false;
+                }
             }
             currLearnTicks = 0;
         }
@@ -407,7 +431,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (!Woot.LOOT_TABLE_MANAGER.isFull(mobName, key)) {
 
             if (bb == null) {
-                BlockPos checkPos = new BlockPos(getPos().getX(), 1, getPos().getZ());
+                BlockPos checkPos = new BlockPos(getPos().getX(), LOOTBOX_Y, getPos().getZ());
                 int range = 2;
                 bb = new AxisAlignedBB(checkPos).expand(range, 0, range);
             }
@@ -502,6 +526,8 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                 out.amount = 0;
         }
 
+        bmMobCount = 0;
+        bmSacrificeAmount = 0;
         return true;
     }
 
@@ -532,9 +558,116 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         bmKeepAlive = false;
     }
 
+    /**
+     * Check that there are at least mount of type itemStack in the inventory
+     */
+    private boolean canRemoveItemStack(IItemHandler itemHandler, ItemStack itemStack, int amount) {
+
+        if (amount <= 0)
+            return true;
+
+        if (itemHandler.getSlots() == 0)
+            return false;
+
+        int found = 0;
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+
+            ItemStack s = itemHandler.getStackInSlot(i);
+            if (s.isEmpty())
+                continue;
+
+            if (s.isItemEqual(itemStack))
+                found += s.getCount();
+
+            if (found >= amount)
+                break;
+        }
+
+        return found >= amount;
+    }
+
+    private void removeItemStack(IItemHandler itemHandler, ItemStack itemStack, int amount) {
+
+        int left = amount;
+
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+
+            ItemStack removeStack = itemHandler.getStackInSlot(i);
+            if (removeStack.isEmpty())
+                continue;
+
+            if (removeStack.isItemEqual(itemStack)) {
+                ItemStack t = itemHandler.extractItem(i, left, false);
+                left -= t.getCount();
+            }
+
+            if (left == 0)
+                break;
+        }
+    }
+
+    private boolean processExtraSpawnReq(String wootName, UpgradeSetup upgradeSetup) {
+
+        if (!Woot.SPAWN_REQ_MANAGER.hasExtraSpawnReq(wootName))
+            return true;
+
+        List<ItemStack> requiredItems = Woot.SPAWN_REQ_MANAGER.getItems(wootName, upgradeSetup);
+        FluidStack fluidStack = Woot.SPAWN_REQ_MANAGER.getFluid(wootName, upgradeSetup);
+
+        if (!requiredItems.isEmpty()) {
+
+            TileEntity te = getWorld().getTileEntity(this.getPos().offset(EnumFacing.UP, 2));
+            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
+                IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
+
+                boolean allItemsPresent = true;
+                for (ItemStack itemStack : requiredItems) {
+                    if (!canRemoveItemStack(itemHandler, itemStack, itemStack.getCount())) {
+                        allItemsPresent = false;
+                        break;
+                    }
+
+                }
+
+                if (allItemsPresent) {
+                    for (ItemStack itemStack : requiredItems)
+                        removeItemStack(itemHandler, itemStack, itemStack.getCount());
+                    return true;
+                }
+
+                return false;
+
+            } else {
+                return false;
+            }
+
+        } else if (fluidStack != null) {
+
+            TileEntity te = getWorld().getTileEntity(this.getPos().offset(EnumFacing.UP, 2));
+            if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
+                IFluidHandler iFluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+
+                FluidStack removedFluid = iFluidHandler.drain(fluidStack, false);
+                if (removedFluid != null && removedFluid.amount == fluidStack.amount) {
+                    iFluidHandler.drain(fluidStack, true);
+                    return  true;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private void produceOutput() {
 
-        SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, world.getDifficultyForLocation(getPos()));
+        if (!processExtraSpawnReq(controllerConfig.getMobName(), upgradeSetup)) {
+            return;
+        }
+
+        SpawnerManager.SpawnLoot loot = Woot.spawnerManager.getSpawnerLoot(controllerConfig.getMobName(), upgradeSetup, getWorld().getDifficultyForLocation(getPos()));
 
         List<IItemHandler> validHandlers = new ArrayList<>();
 
@@ -637,7 +770,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
     /**
      * Forge Power Interface
      */
-    protected EnergyManager energyManager = new EnergyManager(EnergyManager.RF_STORED, EnergyManager.MAX_RF_TICK, this);
+    protected EnergyManager energyManager = new EnergyManager(Settings.maxPower, EnergyManager.MAX_RF_TICK, this);
 
     public EnergyManager getEnergyManager() {
 

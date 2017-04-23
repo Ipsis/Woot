@@ -44,7 +44,7 @@ public class TESRLayout extends TileEntitySpecialRenderer{
 
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                GlStateManager.color(1F, 1F, 1F, 0.6125F);
+                GlStateManager.color(1F, 1F, 1F, 0.9500F);
 
                 for (LayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
 

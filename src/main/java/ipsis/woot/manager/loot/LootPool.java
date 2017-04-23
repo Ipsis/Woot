@@ -12,7 +12,7 @@ import java.util.List;
 public class LootPool {
 
     private EnumEnchantKey key;
-    int samples;
+    int samples; // count of times that we have sampled a kill of this mob
     List<Drop> drops;
 
     public LootPool(EnumEnchantKey key) {

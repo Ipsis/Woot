@@ -32,6 +32,7 @@ public class BookManager {
         addEntry("tier3", new BookPageText("tier3.0"), new BookPageText("tier3.1"));
         addEntry("tier4", new BookPageText("tier4.0"), new BookPageText("tier4.1"));
         addEntry("proxy", new BookPageText("proxy.0"), new BookPageText("proxy.1"));
+        addEntry("extrareq", new BookPageText("extrareq.0"), new BookPageText("extrareq.1"), new BookPageText("extrareq.2"));
         addEntry("upgrades", new BookPageText("upgrades.0"), new BookPageText("upgrades.1"));
         addEntry("upgrade_looting", new BookPageText("upgrade_looting.0"));
         addEntry("upgrade_rate", new BookPageText("upgrade_rate.0"));
@@ -50,6 +51,7 @@ public class BookManager {
                     new BookPageText("upgrade_bloodmagic.4"));
         
         addEntry("blacklists", new BookPageText("blacklists.0"), new BookPageText("blacklists.1"));
+        addEntry("dragon", new BookPageText("dragon.0"), new BookPageText("dragon.1"), new BookPageText("dragon.2"), new BookPageText("dragon.3"));
     }
 
     private void addEntry(String tag, IBookPage... pages) {

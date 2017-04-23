@@ -83,10 +83,10 @@ public class MobRegistry {
 
     public boolean isPrismValid(String wootName) {
 
-        if (isEnderDragon(wootName))
+        if (isEnderDragon(wootName) && !Settings.allowEnderDragon)
             return false;
 
-        if (isCyberware(wootName))
+        if (MobBlacklist.isMobBlacklisted(wootName))
             return false;
 
         String[] mobList;
@@ -186,12 +186,7 @@ public class MobRegistry {
         }
     }
 
-    boolean isCyberware(String wootName) {
-
-        return wootName.toLowerCase().contains("cyberware");
-    }
-
-    boolean isEnderDragon(String wootName) {
+    public static boolean isEnderDragon(String wootName) {
 
         return ENDER_DRAGON.equals(wootName);
     }

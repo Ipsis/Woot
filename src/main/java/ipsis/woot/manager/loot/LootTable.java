@@ -37,7 +37,7 @@ public class LootTable {
     public boolean isFull(EnumEnchantKey key) {
 
         LootPool pool = getLootPool(key);
-        return pool.samples == Settings.sampleSize;
+        return pool.samples >= Settings.sampleSize;
     }
 
     public boolean isEmpty(EnumEnchantKey key) {
@@ -120,7 +120,7 @@ public class LootTable {
         LootPool pool = getLootPool(key);
         sb.append(pool.samples).append(" ");
         for (Drop d : pool.drops) {
-            float chance = ((float)d.count/(float)pool.samples) * 100.0F;
+            float chance = d.getChance(pool.samples) * 100.0F;
             sb.append(String.format("[ %dx%s @ %.2f%%",
                     d.count, d.itemStack.getDisplayName(), chance));
 
@@ -143,7 +143,7 @@ public class LootTable {
         LootPool pool = getLootPool(key);
         for (Drop d : pool.drops) {
 
-            float chance = ((float)d.count/(float)pool.samples) * 100.0F;
+            float chance = d.getChance(pool.samples) * 100.0F;
             if (d.itemStack != null)
                 info.add(new FullDropInfo(d.itemStack.copy(), chance));
         }

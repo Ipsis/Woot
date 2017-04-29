@@ -147,7 +147,7 @@ public class SpawnReqManager {
         FluidStack fluidStack = req.getFluid().copy();
         if (req.getAllowEfficiency() && upgradeSetup.hasEfficiencyUpgrade()) {
 
-            int needed = fluidStack.amount *= mobCount;
+            int needed = fluidStack.amount * mobCount;
             int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
             int saving = (int)((needed / 100.0F) * f);
             fluidStack.amount = needed - saving;

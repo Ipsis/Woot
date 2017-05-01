@@ -19,7 +19,8 @@ public class MobBlacklist {
             "Woot:none:abyssalcraft.chagaroth",
             "Woot:none:abyssalcraft.shadowboss",
             "Woot:none:abyssalcraft.Jzahar",
-            "Woot:none:roots.spriteGuardian"
+            "Woot:none:roots.spriteGuardian",
+            "Woot:none:natura.heatscarspider"
     };
 
     public static boolean isMobBlacklisted(String wootName) {

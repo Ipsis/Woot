@@ -16,6 +16,7 @@ public class Settings {
         public static final int DEF_TIER_IV_MOB_XP_CAP = 65535;
         public static final boolean DEF_PRISM_USE_WHITELIST = false;
         public static final boolean DEF_ALLOW_ENDER_DRAGON = true;
+        public static final boolean DEF_ALLOW_XP_GEN = true;
     }
 
     public static class Progression {
@@ -176,6 +177,7 @@ public class Settings {
     public static String[] tierIVMobs = new String[0];
     public static String[] dropBlacklist = new String[0];
     public static String[] spawnCostList = new String[0];
+    public static boolean allowXPGen;
 
     /**
      * Ender Dragon

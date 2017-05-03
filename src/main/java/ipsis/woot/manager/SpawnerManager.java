@@ -254,7 +254,7 @@ public class SpawnerManager {
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 
         SpawnerUpgrade xpUpgrade = null;
-        if (upgradeSetup.hasXpUpgrade())
+        if (Settings.allowXPGen && upgradeSetup.hasXpUpgrade())
             xpUpgrade = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getXpUpgrade());
 
         for (int i = 0; i < mobCount; i++) {

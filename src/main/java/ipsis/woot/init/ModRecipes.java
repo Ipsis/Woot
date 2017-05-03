@@ -10,6 +10,7 @@ import ipsis.woot.item.ItemShard;
 import ipsis.woot.item.ItemSkull;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
+import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentData;
@@ -329,7 +330,8 @@ public class ModRecipes {
 
         initUpgradeRate();
         initUpgradeLooting();
-        initUpgradeXp();
+        if (Settings.allowXPGen)
+            initUpgradeXp();
         initUpgradeMass();
         initUpgradeDecapitate();
         initUpgradeEfficiency();

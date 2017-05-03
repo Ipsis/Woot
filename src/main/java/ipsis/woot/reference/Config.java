@@ -32,6 +32,7 @@ public class Config {
         public static final String ENDER_DRAGON_SPAWN_COST = "globalSpawnCostEnderDragon";
         public static final String ENDER_DRAGON_DEATH_COST = "globalDeathCostEnderDragon";
         public static final String ENDER_DRAGON_DROP_LIST = "globalDropListEnderDragon";
+        public static final String ALLOW_XP_GEN = "globalAllowXPGen";
     }
 
     public static class Power {

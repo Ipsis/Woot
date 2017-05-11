@@ -22,6 +22,7 @@ public class UpgradeManager {
 
     public static void loadConfig() {
 
+        /*
         upgradeMap.get(EnumSpawnerUpgrade.RATE_I).setRfCostPerTick(Settings.rateIRfTick).setSpawnRate(Settings.rateITicks);
         upgradeMap.get(EnumSpawnerUpgrade.RATE_II).setRfCostPerTick(Settings.rateIIRfTick).setSpawnRate(Settings.rateIITicks);
         upgradeMap.get(EnumSpawnerUpgrade.RATE_III).setRfCostPerTick(Settings.rateIIIRfTick).setSpawnRate(Settings.rateIIITicks);
@@ -49,6 +50,7 @@ public class UpgradeManager {
         upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_I).setRfCostPerTick(Settings.bmIRfTick).setSacrificeCount(Settings.bmICount).setAltarLifeEssence(Settings.bmIAltarLifeEssence);
         upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_II).setRfCostPerTick(Settings.bmIIRfTick).setSacrificeCount(Settings.bmIICount).setAltarLifeEssence(Settings.bmIIAltarLifeEssence);
         upgradeMap.get(EnumSpawnerUpgrade.BLOODMAGIC_III).setRfCostPerTick(Settings.bmIIIRfTick).setSacrificeCount(Settings.bmIIICount).setAltarLifeEssence(Settings.bmIIIAltarLifeEssence);
+        */
     }
 
     public static EnumEnchantKey getLootingEnchant(List<SpawnerUpgrade> upgradeList) {
@@ -56,9 +58,9 @@ public class UpgradeManager {
         int tier = 0;
         EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
         for (SpawnerUpgrade upgrade : upgradeList) {
-            if (upgrade.isLooting() && upgrade.getUpgradeTier() > tier) {
-                enchantKey = upgrade.getEnchantKey();
-                tier = upgrade.getUpgradeTier();
+            if (EnumSpawnerUpgrade.isLootingUpgrade(upgrade.getUpgradeType()) && upgrade.getUpgradeType().getTier() > tier) {
+                enchantKey = EnumSpawnerUpgrade.getEnchantKey(upgrade.getUpgradeType());
+                tier = upgrade.getUpgradeType().getTier();
             }
         }
 
@@ -79,19 +81,19 @@ public class UpgradeManager {
 
         switch (type) {
             case LOOTING:
-                return u.isLooting();
+                return EnumSpawnerUpgrade.isLootingUpgrade(u.getUpgradeType());
             case MASS:
-                return u.isMass();
+                return EnumSpawnerUpgrade.isMassUpgrade(u.getUpgradeType());
             case RATE:
-                return u.isRate();
+                return EnumSpawnerUpgrade.isRateUpgrade(u.getUpgradeType());
             case DECAPITATE:
-                return u.isDecapitate();
+                return EnumSpawnerUpgrade.isDecapitateUpgrade(u.getUpgradeType());
             case XP:
-                return u.isXp();
+                return EnumSpawnerUpgrade.isXpUpgrade(u.getUpgradeType());
             case EFFICIENCY:
-                return u.isEfficiency();
+                return EnumSpawnerUpgrade.isEfficiencyUpgrade(u.getUpgradeType());
             case BLOOD_MAGIC:
-                return u.isBloodMagic();
+                return EnumSpawnerUpgrade.isBloodMagicUpgrade(u.getUpgradeType());
             default:
                 return false;
         }
@@ -102,8 +104,8 @@ public class UpgradeManager {
         SpawnerUpgrade spawnerUpgrade = null;
         int tier = 0;
         for (SpawnerUpgrade upgrade : upgradeList) {
-            if (isUpgradeMatch(upgrade, type) && upgrade.getUpgradeTier() > tier) {
-                tier = upgrade.getUpgradeTier();
+            if (isUpgradeMatch(upgrade, type) && upgrade.getUpgradeType().getTier() > tier) {
+                tier = upgrade.getUpgradeType().getTier();
                 spawnerUpgrade = upgrade;
             }
         }
@@ -154,7 +156,7 @@ public class UpgradeManager {
                 break;
 
             SpawnerUpgrade tmpUpgrade  = upgradeMap.get(u);
-            if (tmpUpgrade.getUpgradeTier() == yOffset + 1) {
+            if (tmpUpgrade.getUpgradeType().getTier() == yOffset + 1) {
                 upgradeList.add(tmpUpgrade);
                 blockPosList.add(new BlockPos(blockPos.add(0, yOffset, 0)));
             } else {

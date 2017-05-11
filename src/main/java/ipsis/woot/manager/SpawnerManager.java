@@ -67,53 +67,6 @@ public class SpawnerManager {
         }
     }
 
-    public SpawnReq getSpawnReq(String mobName, UpgradeSetup upgradeSetup, TileEntityMobFactory te, EnumMobFactoryTier tier) {
-
-        if (!Woot.mobRegistry.isValidMobName(mobName))
-            return null;
-
-        int xpLevel = getSpawnXp(mobName, te);
-
-        int baseRF;
-        if (tier == EnumMobFactoryTier.TIER_ONE)
-            baseRF = Settings.tierIRFtick;
-        else if (tier == EnumMobFactoryTier.TIER_TWO)
-            baseRF = Settings.tierIIRFtick;
-        else if (tier == EnumMobFactoryTier.TIER_THREE)
-            baseRF = Settings.tierIIIRFtick;
-        else
-            baseRF = Settings.tierIVRFtick;
-
-        int xpPerTick = Settings.Power.DEF_XP_RF_TICK;
-
-        int mobCount = upgradeSetup.hasMassUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass() : 1;
-        int spawnTime = upgradeSetup.hasRateUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate() : Settings.baseRateTicks;
-
-        int RFt = baseRF * Settings.Spawner.DEF_BASE_RATE_TICKS;
-        int RFmob = xpPerTick * xpLevel * Settings.Spawner.DEF_BASE_RATE_TICKS;
-        int RFupgrade = upgradeSetup.getRfPerTickCost() * Settings.Spawner.DEF_BASE_RATE_TICKS;
-        int RFcount = RFmob + ((int)((float)RFmob * 0.33)* (mobCount - 1));
-        int RFtotal = RFt + RFcount + RFupgrade;
-
-        /*
-        LogHelper.info("Power for " + mobName);
-        LogHelper.info(String.format("Power baseRf:%d DEF_BASE_RATE_TICKS:%d xpPerTick:%d xpLevel:%d",
-                baseRF, Settings.Spawner.DEF_BASE_RATE_TICKS,  xpPerTick, xpLevel));
-        LogHelper.info(String.format("Power upgradeRFtick:%d", upgradeSetup.getRfPerTickCost()));
-        LogHelper.info(String.format("Power RFt:%d RFmob:%d RFupgrade:%d RFcount:%d",  RFt, RFmob, RFupgrade, RFcount));
-        LogHelper.debug("Power total " + RFtotal); */
-
-        if (upgradeSetup.hasEfficiencyUpgrade()) {
-            int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
-            int saving = (int)((RFtotal / 100.0F) * f);
-            RFtotal -= saving;
-            if (RFtotal < 0)
-                RFtotal = 1;
-        }
-
-        return new SpawnReq(RFtotal, spawnTime);
-    }
-
     public int getSpawnXp(String mobName, TileEntity te) {
 
         if (!Woot.mobRegistry.hasXp(mobName)) {
@@ -225,7 +178,7 @@ public class SpawnerManager {
         if (upgrade.getUpgradeType() == EnumSpawnerUpgrade.XP_I)
             return base;
 
-        float boost = (float)upgrade.getXpBoost();
+        float boost = (float)upgrade.getUpgradeType().getParam();
         int extra = (int)((base / 100.0F) * boost);
         if (extra < 1)
             extra = 1;
@@ -251,7 +204,7 @@ public class SpawnerManager {
         SpawnLoot spawnLoot = new SpawnLoot();
         int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
         if (upgradeSetup.hasMassUpgrade())
-            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
 
         SpawnerUpgrade xpUpgrade = null;
         if (upgradeSetup.hasXpUpgrade())

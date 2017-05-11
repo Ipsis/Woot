@@ -107,7 +107,7 @@ public class SpawnReqManager {
 
         int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
         if (upgradeSetup.hasMassUpgrade())
-            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
 
         for (ItemStack itemStack : req.getItems()) {
 
@@ -115,7 +115,7 @@ public class SpawnReqManager {
             if (req.getAllowEfficiency() && upgradeSetup.hasEfficiencyUpgrade()) {
 
                 int needed = i.getCount() * mobCount;
-                int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
+                int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getUpgradeType().getParam();
                 int saving = (int)((needed / 100.0F) * f);
                 i.setCount(needed - saving);
                 if (i.getCount() <= 0)
@@ -142,13 +142,13 @@ public class SpawnReqManager {
 
         int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
         if (upgradeSetup.hasMassUpgrade())
-            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
 
         FluidStack fluidStack = req.getFluid().copy();
         if (req.getAllowEfficiency() && upgradeSetup.hasEfficiencyUpgrade()) {
 
             int needed = fluidStack.amount * mobCount;
-            int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getEfficiency();
+            int f = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getEfficiencyUpgrade()).getUpgradeType().getParam();
             int saving = (int)((needed / 100.0F) * f);
             fluidStack.amount = needed - saving;
             if (fluidStack.amount <= 0)

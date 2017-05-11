@@ -132,9 +132,9 @@ public class WailaDataProviderWoot implements IWailaDataProvider {
                         EnumSpawnerUpgrade e = EnumSpawnerUpgrade.getFromMetadata(a[i]);
                         SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
                         TextFormatting f;
-                        if (u.getUpgradeTier() == 1)
+                        if (u.getUpgradeType().getTier() == 1)
                             f = TextFormatting.GRAY;
-                        else if (u.getUpgradeTier() == 2)
+                        else if (u.getUpgradeType().getTier() == 2)
                             f = TextFormatting.GOLD;
                         else
                             f = TextFormatting.AQUA;

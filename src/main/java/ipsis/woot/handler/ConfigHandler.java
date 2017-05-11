@@ -1,8 +1,7 @@
 package ipsis.woot.handler;
 
 import ipsis.Woot;
-import ipsis.woot.manager.MobRegistry;
-import ipsis.woot.manager.loot.LootEnderDragon;
+import ipsis.woot.manager.*;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Config;
 import ipsis.woot.reference.Lang;
@@ -10,6 +9,7 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
+import ipsis.woot.util.WootMobName;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,6 +35,65 @@ public class ConfigHandler {
     static boolean getConfigBool(String key, boolean def) {
 
         return configuration.get(Configuration.CATEGORY_GENERAL, key, def, StringHelper.localize(Lang.getLangConfigValue(key))).getBoolean(def);
+    }
+
+    static void loadConfiguration3() {
+
+        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getBooleanKeys())
+            ConfigManager.instance().setBoolean(key, configuration.get(Configuration.CATEGORY_GENERAL,
+                    key.getText(), key.getDefaultBoolean(), key.getTranslated()).getBoolean(key.getDefaultBoolean()));
+
+        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getIntegerKeys())
+            ConfigManager.instance().setInteger(key, configuration.get(Configuration.CATEGORY_GENERAL,
+                    key.getText(), key.getDefaultInteger(), key.getTranslated()).getInt(key.getDefaultInteger()));
+
+        String[] defs = {
+                "Woot:none:IronGolem,SPAWN_XP,10",
+                "Woot:Wither:Skeleton,SPAWN_XP,10",
+                "Woot:none:MagmaCube,SPAWN_XP,5",
+                "Woot:none:Enderman,SPAWN_XP,10",
+                "Woot:none:Enderman,FACTORY_TIER,3",
+                "Woot:none:IronGolem,FACTORY_TIER,3",
+                "Woot:none:Guardian,FACTORY_TIER,3",
+                "Woot:Wither:Skeleton,FACTORY_TIER,3",
+                "Woot:none:Blaze,FACTORY_TIER,2",
+                "Woot:none:Witch,FACTORY_TIER,2",
+                "Woot:none:Ghast,FACTORY_TIER,2",
+                "Woot:none:PigZombie,FACTORY_TIER,2",
+                "Woot:none:MagmaCube,FACTORY_TIER,2",
+                "Woot:none:WitherBoss,FACTORY_TIER,4",
+                "Woot:none:EnderDragon,SPAWN_XP,750",
+                "Woot:none:EnderDragon,DEATH_XP,500"
+        };
+        for (String s : configuration.getStringList("mobConfigList", Configuration.CATEGORY_GENERAL, defs, StringHelper.localize(Lang.TAG_CONFIG + "mobConfigList"))) {
+            LogHelper.info("Override: " + s);
+
+            String[] parts = s.split(",");
+            if (parts.length != 3) {
+                LogHelper.info("mobConfigList: incorrect format " + s);
+            } else {
+
+                int v;
+                try {
+                    v = Integer.parseInt(parts[2]);
+                    MobSpawnerManager.instance().updateMobConfig(parts[0], parts[1], v);
+                } catch (NumberFormatException e) {
+                    LogHelper.info("mobConfigList: incorrect format " + s);
+                }
+            }
+        }
+
+        String[] mobList = configuration.getStringList("mobCaptureList", Configuration.CATEGORY_GENERAL, new String[]{}, StringHelper.localize(Lang.TAG_CONFIG + "mobCaptureList"));
+        Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
+                Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
+        if (ConfigManager.instance().getBoolean(ConfigManager.EnumConfigKey.MOB_WHITELIST)) {
+            for (String s : mobList)
+                MobSpawnerManager.instance().updateMobConfig(s, "CAPTURE", true);
+        } else {
+            for (String s : mobList) {
+                MobSpawnerManager.instance().updateMobConfig(s, "CAPTURE", false);
+            }
+        }
     }
 
     static void loadConfiguration() {
@@ -69,8 +128,10 @@ public class ConfigHandler {
             for (int i = 0; i < Settings.prismWhitelist.length; i++)
                 LogHelper.info("Using Prism Whitelist: " + Settings.prismWhitelist[i]);
         } else {
-            for (int i = 0; i < Settings.prismBlacklist.length; i++)
+            for (int i = 0; i < Settings.prismBlacklist.length; i++) {
+
                 LogHelper.info("Using Prism Blacklist: " + Settings.prismBlacklist[i]);
+            }
         }
 
         Settings.tierIMobs = configuration.getStringList(Config.General.TIER_I_MOB_LIST, Configuration.CATEGORY_GENERAL,
@@ -82,14 +143,22 @@ public class ConfigHandler {
         Settings.tierIVMobs = configuration.getStringList(Config.General.TIER_IV_MOB_LIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_TIER_IV_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_IV_MOB_LIST)));
 
-        for (int i = 0; i < Settings.tierIMobs.length; i++)
+        for (int i = 0; i < Settings.tierIMobs.length; i++) {
             Woot.tierMapper.addMapping(Settings.tierIMobs[i], EnumMobFactoryTier.TIER_ONE);
-        for (int i = 0; i < Settings.tierIIMobs.length; i++)
+        }
+
+        for (int i = 0; i < Settings.tierIIMobs.length; i++) {
             Woot.tierMapper.addMapping(Settings.tierIIMobs[i], EnumMobFactoryTier.TIER_TWO);
-        for (int i = 0; i < Settings.tierIIIMobs.length; i++)
+        }
+
+        for (int i = 0; i < Settings.tierIIIMobs.length; i++) {
             Woot.tierMapper.addMapping(Settings.tierIIIMobs[i], EnumMobFactoryTier.TIER_THREE);
-        for (int i = 0; i < Settings.tierIVMobs.length; i++)
+        }
+
+        for (int i = 0; i < Settings.tierIVMobs.length; i++) {
+
             Woot.tierMapper.addMapping(Settings.tierIVMobs[i], EnumMobFactoryTier.TIER_FOUR);
+        }
 
         Settings.dropBlacklist = configuration.getStringList(Config.General.DROP_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.dropBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.DROP_BLACKLIST)));
@@ -106,6 +175,7 @@ public class ConfigHandler {
                 try {
                     cost = Integer.parseInt(parts[1]);
                     Woot.mobRegistry.addCosting(parts[0], cost);
+
                     LogHelper.info("Adding mob cost: " + parts[0] + "=" + cost);
                 } catch (NumberFormatException e) {
                     LogHelper.error("Invalid mob cost: " + Settings.spawnCostList[i]);
@@ -191,6 +261,7 @@ public class ConfigHandler {
         Settings.bmIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_II_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_II_ALTAR_LIFE_ESSENCE);
         Settings.bmIIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_III_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_III_ALTAR_LIFE_ESSENCE);
 
+        loadConfiguration3();
         if (configuration.hasChanged())
             configuration.save();
     }
@@ -198,7 +269,8 @@ public class ConfigHandler {
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
 
-        if (event.getModID().equalsIgnoreCase(Reference.MOD_ID))
+        if (event.getModID().equalsIgnoreCase(Reference.MOD_ID)) {
             loadConfiguration();
+        }
     }
 }

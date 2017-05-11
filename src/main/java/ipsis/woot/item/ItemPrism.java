@@ -1,6 +1,8 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
+import ipsis.woot.manager.MobSpawnerManager;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.manager.MobRegistry;
@@ -9,6 +11,7 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
+import ipsis.woot.util.WootMobName;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -61,12 +64,21 @@ public class ItemPrism extends ItemWoot {
         if (hasMobName(stack))
             return false;
 
+
+        WootMobName wootMobName = MobSpawnerManager.instance().onEntityLiving((EntityLiving)target);
+        if (wootMobName == null)
+            return false;
+
+        if (!MobSpawnerManager.instance().canCapture(wootMobName)) {
+            LogHelper.info("MobSpawnerManager: says no");
+        }
+
         String wootName = Woot.mobRegistry.onEntityLiving((EntityLiving)target);
         if (!Woot.mobRegistry.isValidMobName(wootName))
             return false;
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
 
-        if (!Woot.mobRegistry.isPrismValid(wootName)) {
+        if (!MobSpawnerManager.instance().canCapture(wootMobName)) {
             ((EntityPlayer) attacker).sendStatusMessage(
                     new TextComponentString(String.format(
                             StringHelper.localize(Lang.CHAT_PRISM_INVALID), displayName, wootName)), false);

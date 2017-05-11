@@ -10,6 +10,8 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
+import ipsis.woot.util.PowerHelper;
+import ipsis.woot.util.WootMobName;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -268,7 +270,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         else if (factoryTier == EnumMobFactoryTier.TIER_THREE || factoryTier == EnumMobFactoryTier.TIER_FOUR)
             upgradeTier3();
 
-        spawnReq = Woot.spawnerManager.getSpawnReq(controllerConfig.getMobName(), upgradeSetup, this, factoryTier);
+        spawnReq = PowerHelper.calculatePower(WootMobName.createFromString(controllerConfig.getMobName()), upgradeSetup, factoryTier);
 
         if (nbtLoaded) {
             /* Preserver on load */
@@ -509,7 +511,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
          * sacrificeEfficiencyMultiplier = 0.10 * sacrifice rune count
          */
 
-        int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getSacrificeCount();
+        int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeType().getParam();
         float sacrificeEfficiencyMultiplier = (float)(0.10 * upgradeSacrificeCount);
 
         int amount = ((int)((1 + sacrificeEfficiencyMultiplier) * 20)) * mobCount;
@@ -547,10 +549,10 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
 
         int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
         if (upgradeSetup.hasMassUpgrade())
-            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
 
         // Scale with the upgrades
-        int sacrificeAmount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getAltarLifeEssence();
+        int sacrificeAmount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeType().getParam();
 
         if (!bmUseTanks(mobCount))
             bmUseRitual(mobCount, sacrificeAmount);

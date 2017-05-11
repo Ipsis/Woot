@@ -98,7 +98,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                 UpgradeSetup upgradeSetup = te.getUpgradeSetup();
                 if (upgradeSetup != null) {
                     if (upgradeSetup.hasMassUpgrade())
-                        maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+                        maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
                 }
                 out.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE),
                         maxMass, te.getSpawnReq().getSpawnTime()));
@@ -114,9 +114,9 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                         for (EnumSpawnerUpgrade upgrade : upgradeList) {
                             SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(upgrade);
                             TextFormatting f;
-                            if (u.getUpgradeTier() == 1)
+                            if (u.getUpgradeType().getTier() == 1)
                                 f = TextFormatting.GRAY;
-                            else if (u.getUpgradeTier() == 2)
+                            else if (u.getUpgradeType().getTier() == 2)
                                 f = TextFormatting.GOLD;
                             else
                                 f = TextFormatting.AQUA;
@@ -249,9 +249,9 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                             TextFormatting f;
                             SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
 
-                            if (u.getUpgradeTier() == 1)
+                            if (u.getUpgradeType().getTier() == 1)
                                 f = TextFormatting.GRAY;
-                            else if (u.getUpgradeTier() == 2)
+                            else if (u.getUpgradeType().getTier() == 2)
                                 f = TextFormatting.GOLD;
                             else
                                 f = TextFormatting.AQUA;
@@ -332,7 +332,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
             maxMass = Settings.baseMobCount;
             UpgradeSetup upgradeSetup = te.getUpgradeSetup();
             if (upgradeSetup != null && upgradeSetup.hasMassUpgrade())
-                maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
+                maxMass = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
         }
 
         private PluginTooltipInfo() { }

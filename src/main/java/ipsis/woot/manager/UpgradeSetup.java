@@ -19,8 +19,6 @@ public class UpgradeSetup {
 
     List<EnumSpawnerUpgrade> upgradeList;
 
-    int rfPerTickCost;
-
     public UpgradeSetup() {
 
         upgradeList = new ArrayList<EnumSpawnerUpgrade>();
@@ -54,7 +52,6 @@ public class UpgradeSetup {
 
         clear();
         this.enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
-        rfPerTickCost = 0;
 
         SpawnerUpgrade u;
 
@@ -62,54 +59,36 @@ public class UpgradeSetup {
         if (u != null) {
             massUpgrade = u.getUpgradeType();
             this.upgradeList.add(massUpgrade);
-
-            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.massIRfTick,
-                    Settings.massIIRfTick, Settings.massIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.RATE);
         if (u != null) {
             rateUpgrade = u.getUpgradeType();
             this.upgradeList.add(rateUpgrade);
-
-            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.rateIRfTick,
-                    Settings.rateIIRfTick, Settings.rateIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.DECAPITATE);
         if (u != null) {
             decapitateUpgrade = u.getUpgradeType();
             this.upgradeList.add(decapitateUpgrade);
-
-            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.decapitateIRfTick,
-                    Settings.decapitateIIRfTick, Settings.decapitateIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.LOOTING);
         if (u != null) {
             lootingUpgrade = u.getUpgradeType();
             this.upgradeList.add(lootingUpgrade);
-
-            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.lootingIRfTick,
-                    Settings.lootingIIRfTick, Settings.lootingIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.XP);
         if (u != null) {
             xpUpgrade = u.getUpgradeType();
             this.upgradeList.add(xpUpgrade);
-
-            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.xpIRfTick,
-                    Settings.xpIIRfTick, Settings.xpIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.BLOOD_MAGIC);
         if (u != null) {
             bmUpgrade = u.getUpgradeType();
             this.upgradeList.add(bmUpgrade);
-
-            rfPerTickCost += calcUpgradeCost(u.getUpgradeTier(), Settings.bmIRfTick,
-                    Settings.bmIIRfTick, Settings.bmIIIRfTick);
         }
 
         u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.EFFICIENCY);
@@ -129,7 +108,6 @@ public class UpgradeSetup {
     public boolean hasXpUpgrade() { return xpUpgrade != null; }
     public boolean hasEfficiencyUpgrade() { return efficiencyUpgrade != null; }
     public List<EnumSpawnerUpgrade> getUpgradeList() { return this.upgradeList; }
-    public int getRfPerTickCost() { return rfPerTickCost; }
     public EnumSpawnerUpgrade getMassUpgrade() { return massUpgrade; }
     public EnumSpawnerUpgrade getRateUpgrade() { return rateUpgrade; }
     public EnumSpawnerUpgrade getDecapitateUpgrade() { return decapitateUpgrade; }

@@ -59,14 +59,14 @@ public class HeadRegistry {
     public ItemStack handleDecap(String wootMobName, EnumSpawnerUpgrade upgrade) {
 
         SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(upgrade);
-        if (!u.isDecapitate())
+        if (!EnumSpawnerUpgrade.isDecapitateUpgrade(upgrade))
             return null;
 
         HeadConfig headConfig = headConfigHashMap.get(wootMobName);
         if (headConfig == null)
             return null;
 
-        float chance = (float)u.getDecapitateChance() / 100.0F;
+        float chance = (float)u.getUpgradeType().getParam() / 100.0F;
         if (Woot.RANDOM.nextFloat() <= chance)
             return headConfig.headStack.copy();
 

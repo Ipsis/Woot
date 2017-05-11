@@ -31,15 +31,15 @@ public class HeadRegistry {
         String key;
 
         // EntitySkeleton.java
-        key = Woot.mobRegistry.createWootName("none:Skeleton");
+        key = Woot.mobRegistry.createWootName("none:minecraft:skeleton");
         headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 0)));
-        key = Woot.mobRegistry.createWootName("wither:Skeleton");
+        key = Woot.mobRegistry.createWootName("none:minecraft:wither_skeleton");
         headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 1)));
         // EntityZombie.java
-        key = Woot.mobRegistry.createWootName("none:Zombie");
+        key = Woot.mobRegistry.createWootName("none:minecraft:zombie");
         headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 2)));
         // EntityCreeper.java
-        key = Woot.mobRegistry.createWootName("none:Creeper");
+        key = Woot.mobRegistry.createWootName("none:minecraft:creeper");
         headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(Items.SKULL, 1, 4)));
     }
 
@@ -50,7 +50,7 @@ public class HeadRegistry {
         // EnderIO Enderman SkullsA
         Item i = Item.getByNameOrId("EnderIO:blockEndermanSkull");
         if (i != null) {
-            key = Woot.mobRegistry.createWootName("none:Enderman");
+            key = Woot.mobRegistry.createWootName("none:minecraft:enderman");
             headConfigHashMap.put(key, new HeadConfig(key, new ItemStack(i)));
         }
 

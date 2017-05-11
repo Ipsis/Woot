@@ -25,7 +25,8 @@ import java.util.TreeMap;
 public class MobRegistry {
 
     public static final String INVALID_MOB_NAME = "InvalidMob";
-    public static final String ENDER_DRAGON = "woot:none:EnderDragon";
+    public static final String OLD_ENDER_DRAGON = "woot:none:EnderDragon";
+    public static final String ENDER_DRAGON = "woot:none:minecraft:ender_dragon";
     HashMap<String, MobInfo> mobInfoHashMap = new HashMap<String, MobInfo>();
 
     Map<String, Integer> mobCostMap = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
@@ -82,6 +83,9 @@ public class MobRegistry {
     }
 
     public boolean isPrismValid(String wootName) {
+
+        if (isOldEnderDragon(wootName))
+            return false;
 
         if (isEnderDragon(wootName) && !Settings.allowEnderDragon)
             return false;
@@ -191,19 +195,24 @@ public class MobRegistry {
         return ENDER_DRAGON.equals(wootName);
     }
 
+    public static boolean isOldEnderDragon(String wootName) {
+
+        return OLD_ENDER_DRAGON.equals(wootName);
+    }
+
     boolean isSlime(String wootName, Entity entity) {
 
-        return entity instanceof EntitySlime && wootName.equals(Reference.MOD_ID + ":" + "none:Slime");
+        return entity instanceof EntitySlime && wootName.equals(Reference.MOD_ID + ":" + "none:mineraft:slime");
     }
 
     boolean isMagmaCube(String wootName, Entity entity) {
 
-        return entity instanceof EntityMagmaCube && wootName.equals(Reference.MOD_ID + ":" + "none:LavaSlime");
+        return entity instanceof EntityMagmaCube && wootName.equals(Reference.MOD_ID + ":" + "none:minecraft:magma_cube");
     }
 
     boolean isChargedCreeper(String wootName, Entity entity) {
 
-        return entity instanceof EntityCreeper && wootName.equals(Reference.MOD_ID + ":" + "charged:Creeper");
+        return entity instanceof EntityCreeper && wootName.equals(Reference.MOD_ID + ":" + "charged:minecraft:creeper");
     }
 
     public Entity createEntity(String wootName, World world) {

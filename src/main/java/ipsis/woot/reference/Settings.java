@@ -24,27 +24,27 @@ public class Settings {
         public static final String[] DEF_PRISM_WHITELIST = { };
         public static final String[] DEF_TIER_I_MOBS = { };
         public static final String[] DEF_TIER_II_MOBS = {
-                "Woot:none:Blaze",
-                "Woot:none:Witch",
-                "Woot:none:Ghast",
-                "Woot:none:PigZombie",
-                "Woot:none:MagmaCube"
+                "Woot:none:minecraft:blaze",
+                "Woot:none:minecraft:witch",
+                "Woot:none:minecraft:ghast",
+                "Woot:none:minecraft:zombie_pigman",
+                "Woot:none:minecraft:magma_cube"
         };
         public static final String[] DEF_TIER_III_MOBS = {
-                "Woot:none:Enderman",
-                "Woot:none:IronGolem",
-                "Woot:none:Guardian",
-                "Woot:Wither:Skeleton"
+                "Woot:none:minecraft:enderman",
+                "Woot:none:minecraft:villager_golem",
+                "Woot:none:minecraft:guardian",
+                "Woot:none:minecraft:wither_skeleton"
         };
         public static final String[] DEF_TIER_IV_MOBS = {
-                "Woot:none:WitherBoss"
+                "Woot:none:minecraft:wither"
         };
 
         public static final String[] DEF_SPAWN_COST = {
-                "Woot:none:IronGolem=10",
-                "Woot:Wither:Skeleton=10",
-                "Woot:none:MagmaCube=5",
-                "Woot:none:Enderman=10"
+                "Woot:none:minecraft:villager_golem=10",
+                "Woot:none:minecraft:wither_skeleton=10",
+                "Woot:none:minecraft:magma_cube=5",
+                "Woot:none:minecraft:enderman=10"
         };
 
     }

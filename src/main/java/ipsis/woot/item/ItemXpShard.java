@@ -51,13 +51,33 @@ public class ItemXpShard extends ItemWoot {
                         SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
                         SoundCategory.PLAYERS,
                         0.2F, 0.5F * ((itemRand.nextFloat() - itemRand.nextFloat()) * 0.7F + 1.8F));
-                if(playerIn instanceof FakePlayer)
-                	worldIn.spawnEntityInWorld(new EntityXPOrb(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ, XP_VALUE));
-                else
-                	playerIn.addExperience(XP_VALUE);
 
-                if (!playerIn.capabilities.isCreativeMode)
-                    itemStackIn.stackSize--;
+                if (playerIn instanceof FakePlayer) {
+                    /**
+                     * Fakeplayer can only use one at a time
+                     */
+                    worldIn.spawnEntityInWorld(new EntityXPOrb(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ, XP_VALUE));
+                    if (!playerIn.capabilities.isCreativeMode)
+                        itemStackIn.stackSize--;
+                } else {
+                    if (playerIn.isSneaking()) {
+                        /**
+                         * Sneak use, consume the whole stack
+                         */
+                        playerIn.addExperience(XP_VALUE * itemStackIn.stackSize);
+                        if (!playerIn.capabilities.isCreativeMode)
+                            itemStackIn.stackSize = 0;
+
+                    } else {
+                        /**
+                         * Normal use, consume one
+                         */
+                        playerIn.addExperience(XP_VALUE);
+                        if (!playerIn.capabilities.isCreativeMode)
+                            itemStackIn.stackSize--;
+                    }
+                }
+
 
                 return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
             }

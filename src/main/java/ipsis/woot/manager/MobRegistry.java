@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MobRegistry {
@@ -34,7 +36,19 @@ public class MobRegistry {
     public static String getMcName(String wootName) {
 
         // Woot:tag:mcname
-        return wootName.substring(wootName.lastIndexOf(':') + 1);
+        Pattern pattern = Pattern.compile("(\\w*):(\\w*):(.*)");
+        Matcher matcher = pattern.matcher(wootName);
+
+        if (!matcher.find())
+            return "";
+
+        if (matcher.groupCount() != 3)
+            return "";
+
+        if (!matcher.group(1).equalsIgnoreCase(Reference.MOD_ID))
+            return "";
+
+        return matcher.group(3);
     }
 
     public boolean isValidMobName(String mobName) {

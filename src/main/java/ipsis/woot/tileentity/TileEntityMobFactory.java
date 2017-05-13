@@ -354,7 +354,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         if (worldObj.isRemote)
             return;
 
-        long currWorldTime = worldObj.getWorldTime();
+        long currWorldTime = worldObj.getTotalWorldTime();
         if (currWorldTime == lastWorldTime) {
             /* Bypass any acceleration methods */
             return;

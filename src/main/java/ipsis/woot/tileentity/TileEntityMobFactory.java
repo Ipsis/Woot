@@ -12,6 +12,7 @@ import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.util.BlockPosHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -547,7 +548,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
             return;
         }
 
-        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        int mobCount = Settings.baseMobCount;
         if (upgradeSetup.hasMassUpgrade())
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 

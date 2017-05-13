@@ -84,14 +84,14 @@ public class SpawnerManager {
         else
             baseRF = Settings.tierIVRFtick;
 
-        int xpPerTick = Settings.Power.DEF_XP_RF_TICK;
+        int xpPerTick = Settings.xpRFtick;
 
         int mobCount = upgradeSetup.hasMassUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass() : 1;
         int spawnTime = upgradeSetup.hasRateUpgrade() ? UpgradeManager.getSpawnerUpgrade(upgradeSetup.getRateUpgrade()).getSpawnRate() : Settings.baseRateTicks;
 
-        int RFt = baseRF * Settings.Spawner.DEF_BASE_RATE_TICKS;
-        int RFmob = xpPerTick * xpLevel * Settings.Spawner.DEF_BASE_RATE_TICKS;
-        int RFupgrade = upgradeSetup.getRfPerTickCost() * Settings.Spawner.DEF_BASE_RATE_TICKS;
+        int RFt = baseRF * Settings.baseRateTicks;
+        int RFmob = xpPerTick * xpLevel * Settings.baseRateTicks;
+        int RFupgrade = upgradeSetup.getRfPerTickCost() * Settings.baseRateTicks;
         int RFcount = RFmob + ((int)((float)RFmob * 0.33)* (mobCount - 1));
         int RFtotal = RFt + RFcount + RFupgrade;
 
@@ -249,7 +249,7 @@ public class SpawnerManager {
     public SpawnLoot getSpawnerLoot(String mobName, UpgradeSetup upgradeSetup, DifficultyInstance difficulty) {
 
         SpawnLoot spawnLoot = new SpawnLoot();
-        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        int mobCount = Settings.baseMobCount;
         if (upgradeSetup.hasMassUpgrade())
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 

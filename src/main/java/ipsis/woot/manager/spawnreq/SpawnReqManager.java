@@ -105,7 +105,7 @@ public class SpawnReqManager {
             return itemStackList;
 
 
-        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        int mobCount = Settings.baseMobCount;
         if (upgradeSetup.hasMassUpgrade())
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 
@@ -140,7 +140,7 @@ public class SpawnReqManager {
             return null;
 
 
-        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+        int mobCount = Settings.baseMobCount;
         if (upgradeSetup.hasMassUpgrade())
             mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getMass();
 

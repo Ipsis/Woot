@@ -4,19 +4,28 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.util.PrismMobInfo;
+import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobName;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import scala.Int;
 
 import java.util.List;
 
@@ -34,24 +43,99 @@ public class ItemPrism2 extends ItemWoot {
     @SideOnly(Side.CLIENT)
     @Override
     public void initModel() {
-        ModelHelper.registerItem(ModItems.itemPrism2, BASENAME);
+        ModelResourceLocation emptyModel = new ModelResourceLocation(getRegistryName() + "_empty", "inventory");
+        ModelResourceLocation fullModel = new ModelResourceLocation(getRegistryName(), "inventory");
+
+        ModelBakery.registerItemVariants(this, emptyModel, fullModel);
+        ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+                if (isProgrammed(stack))
+                    return fullModel;
+                return emptyModel;
+            }
+        });
     }
 
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 
+        if (attacker.getEntityWorld().isRemote || !(attacker instanceof EntityPlayer))
+            return false;
+
+        if (isProgrammed(stack))
+            return false;
+
         LogHelper.info("hitEntity: " + EntityList.getKey(target));
         LogHelper.info("hitEntity: " + EntityList.getEntityString(target));
         LogHelper.info("hitEntity: " + target.getName());
 
-        PrismMobInfo prismMobInfo = PrismMobInfo.createFromEntity((EntityLiving)target);
 
-        return super.hitEntity(stack, target, attacker);
+        if (!WootMob.canCapture(target)) {
+            LogHelper.info("Unable to capture " + target.getName());
+            return false;
+        }
+
+        WootMob wootMob = WootMob.createFromEntity(target);
+        if (wootMob == null)
+            return false;
+
+        NBTTagCompound nbtTagCompound = wootMob.writeToNBT(stack.getTagCompound());
+        stack.setTagCompound(nbtTagCompound);
+        return true;
+    }
+
+    public static boolean isPrism(ItemStack itemStack) {
+
+        return itemStack.getItem() == ModItems.itemPrism2;
     }
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+
+        if (worldIn.isRemote)
+            return EnumActionResult.SUCCESS;
+
+        ItemStack itemStack = player.getHeldItem(hand);
+        if (!isProgrammed(itemStack) || !isFull(itemStack))
+            return EnumActionResult.FAIL;
+
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryController) {
+            TileEntityMobFactoryController controller = (TileEntityMobFactoryController)te;
+
+            if (controller.program(itemStack)) {
+                if (!player.capabilities.isCreativeMode)
+                    itemStack.shrink(1);
+                return  EnumActionResult.SUCCESS;
+            }
+        }
+
+        return EnumActionResult.FAIL;
+    }
+
+    public static boolean isProgrammed(ItemStack itemStack) {
+
+        if (!isPrism(itemStack))
+            return false;
+
+        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        if (wootMob == null)
+            return false;
+
+        return true;
+    }
+
+    public static boolean isFull(ItemStack itemStack) {
+
+        if (!isPrism(itemStack))
+            return false;
+
+        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        if (wootMob == null)
+            return false;
+
+        return wootMob.getDeathCount() == 1;
     }
 
     /**
@@ -61,12 +145,59 @@ public class ItemPrism2 extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
-        PrismMobInfo prismMobInfo = PrismMobInfo.createFromNbt(stack.getTagCompound());
-        if (prismMobInfo != null) {
-            tooltip.add(prismMobInfo.getEntityKey());
-            tooltip.add(prismMobInfo.getEntityName());
+        if (!isPrism(stack))
+            return;
+
+        if (!isProgrammed(stack)) {
+            tooltip.add("Unprogrammed");
         } else {
-            tooltip.add("Empty");
+            WootMob wootMob = WootMob.createFromNBT(stack.getTagCompound());
+            if (wootMob != null) {
+                tooltip.add(wootMob.getDisplayName());
+                tooltip.add("Killed: " + wootMob.getDeathCount() + "/1");
+                if (advanced)
+                    tooltip.add(wootMob.getWootMobName().toString());
+            }
         }
+    }
+
+    public static void incrementDeaths(ItemStack itemStack, int count) {
+
+        if (!isPrism(itemStack))
+            return;
+
+        if (!isProgrammed(itemStack))
+            return;
+
+        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        if (wootMob == null)
+            return;
+
+        wootMob.incrementDeathCount(count);
+        wootMob.writeToNBT(itemStack.getTagCompound());
+    }
+
+    public static boolean isMob(ItemStack itemStack, WootMobName wootMobName) {
+
+        if (!isPrism(itemStack))
+            return false;
+
+        if (!isProgrammed(itemStack))
+            return false;
+
+        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        if (wootMob == null)
+            return false;
+
+        if (!wootMob.getWootMobName().equals(wootMobName))
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+
+        return isProgrammed(stack) && isFull(stack);
     }
 }

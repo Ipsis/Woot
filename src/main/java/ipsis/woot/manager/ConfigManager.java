@@ -2,6 +2,7 @@ package ipsis.woot.manager;
 
 import ipsis.woot.reference.Lang;
 import ipsis.woot.util.StringHelper;
+import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobName;
 
 import java.util.ArrayList;
@@ -18,8 +19,6 @@ public class ConfigManager {
 
     private Map<EnumConfigKey, Integer> integerMap = new HashMap<>();
     private Map<EnumConfigKey, Boolean> booleanMap = new HashMap<>();
-    private List<String> modBlacklist = new ArrayList<>();
-    private List<String> mobBlacklist = new ArrayList<>();
 
     public void setInteger(EnumConfigKey key, int v) {
         if (key.getClazz() == Integer.class)
@@ -47,19 +46,6 @@ public class ConfigManager {
         return false;
     }
 
-    public boolean isMobBlacklisted(String name) {
-
-        for (String s : modBlacklist)
-            if (name.toLowerCase().contains(s.toLowerCase()))
-                return true;
-
-        for (String s : mobBlacklist)
-            if (name.equalsIgnoreCase(s))
-                return true;
-
-        return false;
-    }
-
     public void loadDefaults() {
 
         List<EnumConfigKey> keys = EnumConfigKey.getBooleanKeys();
@@ -70,18 +56,18 @@ public class ConfigManager {
         for (EnumConfigKey k : keys)
             integerMap.put(k, k.getDefaultInteger());
 
-        modBlacklist.add("cyberware");
-        modBlacklist.add("botania");
-        modBlacklist.add("withercrumbs");
-        modBlacklist.add("draconicevolution");
+        WootMob.addToInternalModBlacklist("cyberware");
+        WootMob.addToInternalModBlacklist("botania");
+        WootMob.addToInternalModBlacklist("withercrumbs");
+        WootMob.addToInternalModBlacklist("draconicevolution");
 
-        mobBlacklist.add("arsmagica2.Dryad");
-        mobBlacklist.add("abyssalcraft.lesserdreadbeast");
-        mobBlacklist.add("abyssalcraft.greaterdreadspawn");
-        mobBlacklist.add("abyssalcraft.chagaroth");
-        mobBlacklist.add("abyssalcraft.shadowboss");
-        mobBlacklist.add("abyssalcraft.Jzahar");
-        mobBlacklist.add("roots.spriteGuardian");
+        WootMob.addToInternalMobBlacklist("arsmagica2.Dryad");
+        WootMob.addToInternalMobBlacklist("abyssalcraft.lesserdreadbeast");
+        WootMob.addToInternalMobBlacklist("abyssalcraft.greaterdreadspawn");
+        WootMob.addToInternalMobBlacklist("abyssalcraft.chagaroth");
+        WootMob.addToInternalMobBlacklist("abyssalcraft.shadowboss");
+        WootMob.addToInternalMobBlacklist("abyssalcraft.Jzahar");
+        WootMob.addToInternalMobBlacklist("roots.spriteGuardian");
     }
 
 

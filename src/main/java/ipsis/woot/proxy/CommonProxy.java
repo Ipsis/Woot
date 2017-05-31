@@ -2,6 +2,7 @@ package ipsis.woot.proxy;
 
 import ipsis.Woot;
 import ipsis.woot.client.gui.GuiProxy;
+import ipsis.woot.event.HandlerLivingDeathEvent;
 import ipsis.woot.event.HandlerLivingDropsEvent;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
@@ -21,6 +22,7 @@ public class CommonProxy {
         ModBlocks.registerTileEntities();
 
         MinecraftForge.EVENT_BUS.register(new HandlerLivingDropsEvent());
+        MinecraftForge.EVENT_BUS.register(new HandlerLivingDeathEvent());
         MinecraftForge.EVENT_BUS.register(new ConfigHandler());
 
         if (Loader.isModLoaded("theoneprobe"))

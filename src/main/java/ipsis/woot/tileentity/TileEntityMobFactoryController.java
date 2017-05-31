@@ -2,6 +2,10 @@ package ipsis.woot.tileentity;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.item.ItemPrism2;
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobName;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +18,8 @@ public class TileEntityMobFactoryController extends TileEntity {
     String displayName;
     int xpValue;
 
+    WootMob wootMob;
+
     static final String NBT_MOB_NAME = "mobName";
     public static final String NBT_DISPLAY_NAME = "displayName";
     static final String NBT_XP_VALUE = "mobXpCost";
@@ -23,6 +29,7 @@ public class TileEntityMobFactoryController extends TileEntity {
         mobName = "";
         displayName = "";
         xpValue = 1;
+        wootMob = null;
     }
 
     @Override
@@ -34,6 +41,8 @@ public class TileEntityMobFactoryController extends TileEntity {
 
     public void writeControllerToNBT(NBTTagCompound compound) {
 
+        if (wootMob != null)
+            wootMob.writeToNBT(compound);
         compound.setString(NBT_MOB_NAME, mobName);
         compound.setString(NBT_DISPLAY_NAME, displayName);
         compound.setInteger(NBT_XP_VALUE, xpValue);
@@ -44,6 +53,10 @@ public class TileEntityMobFactoryController extends TileEntity {
         mobName = compound.getString(NBT_MOB_NAME);
         displayName = compound.getString(NBT_DISPLAY_NAME);
         xpValue = compound.getInteger(NBT_XP_VALUE);
+        if (compound.hasKey(WootMob.NBT_NAME))
+            wootMob = WootMob.createFromNBT(compound);
+        else
+            wootMob = null;
     }
 
     @Override
@@ -61,14 +74,30 @@ public class TileEntityMobFactoryController extends TileEntity {
         updateMobFarm();
     }
 
+    public boolean isProgrammed() {
+
+        return wootMob != null;
+    }
+
+    public WootMob getWootMob() {
+
+        return wootMob;
+    }
+
     public String getMobName() {
 
-        return mobName;
+        if (wootMob != null)
+            return wootMob.getDisplayName();
+        else
+            return "";
     }
 
     public String getModDisplayName() {
 
-        return displayName;
+        if (wootMob != null)
+            return wootMob.getDisplayName();
+        else
+            return "";
     }
 
     public int getXpValue() {
@@ -76,7 +105,7 @@ public class TileEntityMobFactoryController extends TileEntity {
         return xpValue;
     }
 
-    void updateMobFarm() {
+    private void updateMobFarm() {
 
         TileEntity te = world.getTileEntity(getPos().offset(EnumFacing.DOWN));
         if (te instanceof TileEntityMobFactory)
@@ -104,5 +133,30 @@ public class TileEntityMobFactoryController extends TileEntity {
         }
 
         return itemStack;
+    }
+
+    public boolean program(ItemStack itemStack) {
+
+        if (itemStack.isEmpty())
+            return false;
+
+        if (!ItemPrism2.isPrism(itemStack))
+            return false;
+
+        if (isProgrammed())
+            return false;
+
+        wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        if (wootMob == null)
+            return false;
+
+        if (!WootMob.canCapture(wootMob.getWootMobName())) {
+            LogHelper.info("Unable to program " + wootMob.getDisplayName());
+            return false;
+        }
+
+        markDirty();
+        updateMobFarm();
+        return true;
     }
 }

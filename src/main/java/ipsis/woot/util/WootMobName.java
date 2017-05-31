@@ -3,6 +3,7 @@ package ipsis.woot.util;
 import ipsis.woot.reference.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
@@ -22,32 +23,11 @@ public class WootMobName {
 
     private WootMobName() { tag = "none"; mcName = "minecraft:pig"; };
 
-    public static WootMobName createFromNbt(NBTTagCompound nbtTagCompound) {
+    public static WootMobName createFromEntity(EntityLivingBase entityLivingBase) {
 
         WootMobName c = new WootMobName();
 
-        if (nbtTagCompound.hasKey("mcName") && nbtTagCompound.hasKey("tag")) {
-            c.mcName = nbtTagCompound.getString("mcName");
-            c.tag = nbtTagCompound.getString("tag");
-
-            if (EntityList.isRegistered(c.getResourceLocation()))
-                return c;
-        }
-
-        return null;
-    }
-
-    public void writeToNbt(NBTTagCompound nbtTagCompound) {
-
-        nbtTagCompound.setString("mcName", mcName);
-        nbtTagCompound.setString("tag", tag);
-    }
-
-    public static WootMobName createFromEntity(Entity entity) {
-
-        WootMobName c = new WootMobName();
-
-        ResourceLocation resourceLocation = EntityList.getKey(entity);
+        ResourceLocation resourceLocation = EntityList.getKey(entityLivingBase);
         if (resourceLocation == null)
             c = null;
         else
@@ -108,4 +88,7 @@ public class WootMobName {
 
         return Objects.hash(tag, mcName);
     }
+
+    public String getTag() { return tag; }
+    public String getKey() { return mcName; }
 }

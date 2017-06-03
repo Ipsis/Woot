@@ -9,6 +9,7 @@ import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
 import ipsis.woot.util.BlockPosHelper;
 import ipsis.woot.util.PowerHelper;
 import ipsis.woot.util.WootMobName;
@@ -33,7 +34,7 @@ import net.minecraftforge.items.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityMobFactory extends TileEntity implements ITickable {
+public class TileEntityMobFactory extends TileEntity implements ITickable, IFarmBlockMaster {
 
     EnumMobFactoryTier factoryTier;
     SpawnerManager.SpawnReq spawnReq;
@@ -794,5 +795,31 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
         }
 
         return super.getCapability(capability, facing);
+    }
+
+    /**
+     * IFarmBlockMaster
+     */
+    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
+
+        if (isFormed())
+            return energyManager;
+
+        return null;
+    }
+
+    public void interruptFarmStructure() {
+
+        dirtyStructure = true;
+    }
+
+    public void interruptFarmUpgrade() {
+
+        dirtyUpgrade = true;
+    }
+
+    public void interruptFarmProxy() {
+
+        dirtyProxy = true;
     }
 }

@@ -1,82 +1,47 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockStructure;
+import ipsis.woot.tileentity.ng.farmblocks.StructureMasterLocator;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class TileEntityMobFactoryStructure extends TileEntity  {
+public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBlockConnection, IFarmBlockStructure {
 
-    TileEntityMobFactory master = null;
+    private IFarmBlockMaster farmBlockMaster = null;
 
-    public boolean hasMaster() { return master != null; }
-    public void clearMaster() {
+    private boolean hasMaster() {
 
-        if (master != null) {
-            master = null;
-            WorldHelper.updateClient(getWorld(), getPos());
-        }
-    }
-
-    public void setMaster(TileEntityMobFactory master) {
-
-        if (this.master != master) {
-            this.master = master;
-            WorldHelper.updateClient(getWorld(), getPos());
-        }
-    }
-
-    TileEntityMobFactory findMaster() {
-
-        List<TileEntityMobFactoryStructure> connectedTEs = new ArrayList<TileEntityMobFactoryStructure>();
-        Stack<TileEntityMobFactoryStructure> traversingTEs = new Stack<TileEntityMobFactoryStructure>();
-
-        TileEntityMobFactory tmpMaster = null;
-        boolean masterFound = false;
-
-        traversingTEs.add(this);
-        while (!masterFound && !traversingTEs.isEmpty()) {
-            TileEntityMobFactoryStructure currTE = traversingTEs.pop();
-
-            connectedTEs.add(currTE);
-            for (EnumFacing f : EnumFacing.values()) {
-                TileEntity te = world.getTileEntity(currTE.getPos().offset(f));
-                if (te instanceof TileEntityMobFactoryStructure && !connectedTEs.contains(te)) {
-                    traversingTEs.add((TileEntityMobFactoryStructure)te);
-                } else if (te instanceof TileEntityMobFactory) {
-                    masterFound = true;
-                    tmpMaster = (TileEntityMobFactory)te;
-                }
-            }
-        }
-
-        return tmpMaster;
+        return farmBlockMaster != null;
     }
 
     public void blockAdded() {
 
-        TileEntityMobFactory tmpMaster = findMaster();
+        IFarmBlockMaster tmpMaster = new StructureMasterLocator().findMaster(getWorld(), getPos(), this);
         if (tmpMaster != null)
-            tmpMaster.interruptStructure();
+            tmpMaster.interruptFarmStructure();
     }
 
     @Override
     public void invalidate() {
 
         // Master will be set by the farm when it finds the block
-        if (hasMaster()) {
-            master.interruptStructure();
-        }
+        if (hasMaster())
+            farmBlockMaster.interruptFarmStructure();
     }
 
-    boolean isClientFormed;
+    private boolean isClientFormed;
     public boolean isClientFormed() { return isClientFormed; }
 
     /**
@@ -88,7 +53,7 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", master != null);
+        nbtTagCompound.setBoolean("formed", farmBlockMaster != null);
         return nbtTagCompound;
     }
 
@@ -118,5 +83,31 @@ public class TileEntityMobFactoryStructure extends TileEntity  {
         WorldHelper.updateClient(getWorld(), getPos());
     }
 
+    /**
+     * IFarmBlockConnection
+     */
+    public void clearMaster() {
+
+        if (farmBlockMaster != null) {
+            farmBlockMaster = null;
+            WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+
+    public void setMaster(IFarmBlockMaster master) {
+
+        if (farmBlockMaster != master) {
+            farmBlockMaster = master;
+            WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+
+    public BlockPos getStructurePos() {
+        return getPos();
+    }
+
+    /**
+     * IFarmBlockStructure
+     */
 
 }

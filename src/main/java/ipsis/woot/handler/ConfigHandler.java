@@ -8,6 +8,7 @@ import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.ng.WootMobNameBuilder;
 import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMobName;
 import net.minecraftforge.common.config.Configuration;
@@ -39,13 +40,22 @@ public class ConfigHandler {
 
     static void loadConfiguration3() {
 
-        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getBooleanKeys())
+        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getBooleanKeys()) {
             ConfigManager.instance().setBoolean(key, configuration.get(Configuration.CATEGORY_GENERAL,
                     key.getText(), key.getDefaultBoolean(), key.getTranslated()).getBoolean(key.getDefaultBoolean()));
 
-        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getIntegerKeys())
+            Woot.wootConfiguration.setBoolean(key, configuration.get(Configuration.CATEGORY_GENERAL,
+                    key.getText(), key.getDefaultBoolean(), key.getTranslated()).getBoolean(key.getDefaultBoolean()));
+        }
+
+        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getIntegerKeys()) {
             ConfigManager.instance().setInteger(key, configuration.get(Configuration.CATEGORY_GENERAL,
                     key.getText(), key.getDefaultInteger(), key.getTranslated()).getInt(key.getDefaultInteger()));
+
+            Woot.wootConfiguration.setInteger(key, configuration.get(Configuration.CATEGORY_GENERAL,
+                    key.getText(), key.getDefaultInteger(), key.getTranslated()).getInt(key.getDefaultInteger()));
+
+        }
 
         String[] defs = {
                 "Woot:none:IronGolem,SPAWN_XP,10",
@@ -77,6 +87,7 @@ public class ConfigHandler {
                 try {
                     v = Integer.parseInt(parts[2]);
                     MobSpawnerManager.instance().updateMobConfig(parts[0], parts[1], v);
+                    Woot.wootConfiguration.setInteger(WootMobNameBuilder.create(parts[0]), parts[1], v);
                 } catch (NumberFormatException e) {
                     LogHelper.info("mobConfigList: incorrect format " + s);
                 }

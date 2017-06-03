@@ -14,6 +14,10 @@ import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.tileentity.ng.IWootConfiguration;
+import ipsis.woot.tileentity.ng.WootConfiguration;
+import ipsis.woot.tileentity.ng.loot.*;
+import ipsis.woot.tileentity.ng.loot.schools.SkyBoxSchool;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -40,6 +44,10 @@ public class Woot {
     public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
     public static SpawnReqManager SPAWN_REQ_MANAGER = new SpawnReqManager();
     public static boolean devMode = false;
+    public static IWootConfiguration wootConfiguration = new WootConfiguration();
+    public static ILootGeneration lootGeneration = new LootGeneration();
+    public static ILootLearner lootLearner = new SkyBoxSchool();
+    public static ILootRepository lootRepository = new LootRepository();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

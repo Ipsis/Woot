@@ -1,6 +1,10 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockProxy;
+import ipsis.woot.tileentity.ng.farmblocks.ProxyMasterLocator;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -10,63 +14,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-public class TileEntityMobFactoryProxy extends TileEntity  {
+public class TileEntityMobFactoryProxy extends TileEntity implements IFarmBlockConnection, IFarmBlockProxy {
 
-    TileEntityMobFactory master = null;
+    private IFarmBlockMaster farmBlockMaster = null;
 
-    public boolean hasMaster() { return master != null; }
-
-    public void clearMaster() {
-
-        if (master != null) {
-            master = null;
-
-            if (this.getWorld() != null) {
-                WorldHelper.updateClient(getWorld(), getPos());
-                WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockProxy);
-            }
-        }
-    }
-
-    public void setMaster(TileEntityMobFactory master) {
-
-        if (this.master != master) {
-            this.master = master;
-
-            if (this.getWorld() != null) {
-                WorldHelper.updateClient(getWorld(), getPos());
-                WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockProxy);
-            }
-        }
-    }
-
-    TileEntityMobFactory findMaster() {
-
-        TileEntityMobFactory tmpMaster = null;
-
-        BlockPos blockPos = getPos().up(1);
-        TileEntity te = getWorld().getTileEntity(blockPos);
-        while (te != null && te instanceof TileEntityMobFactoryExtender) {
-            blockPos = blockPos.up(1);
-            te = getWorld().getTileEntity(blockPos);
-        }
-
-        if (te instanceof TileEntityMobFactory)
-            tmpMaster = (TileEntityMobFactory)te;
-
-        return tmpMaster;
-    }
+    public boolean hasMaster() { return farmBlockMaster != null; }
 
     public void blockAdded() {
 
-        TileEntityMobFactory tmpMaster = findMaster();
+        IFarmBlockMaster tmpMaster = new ProxyMasterLocator().findMaster(getWorld(), getPos(), this);
         if (tmpMaster != null)
-            tmpMaster.interruptProxy();
+            tmpMaster.interruptFarmProxy();
     }
 
     @Override
@@ -74,13 +36,8 @@ public class TileEntityMobFactoryProxy extends TileEntity  {
 
         // Master will be set by the farm when it finds the block
         if (hasMaster())
-            master.interruptProxy();
+            farmBlockMaster.interruptFarmProxy();
     }
-
-    public TileEntityMobFactoryProxy() {
-
-    }
-
 
     /**
      * Client stuff
@@ -98,7 +55,7 @@ public class TileEntityMobFactoryProxy extends TileEntity  {
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", master != null);
+        nbtTagCompound.setBoolean("formed", farmBlockMaster != null);
         return nbtTagCompound;
     }
 
@@ -131,8 +88,8 @@ public class TileEntityMobFactoryProxy extends TileEntity  {
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY && hasMaster() && master.isFormed())
-            return true;
+        if (hasMaster())
+            return farmBlockMaster.hasCapability(capability, facing);
 
         return false;
     }
@@ -140,11 +97,51 @@ public class TileEntityMobFactoryProxy extends TileEntity  {
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY && hasMaster() && master.isFormed()) {
-            IEnergyStorage energyStorage = master.getEnergyManager();
+        if (capability == CapabilityEnergy.ENERGY && hasMaster()) {
+            IEnergyStorage energyStorage = farmBlockMaster.getEnergyStorage(facing);
             return (T) energyStorage;
         }
 
         return super.getCapability(capability, facing);
+    }
+
+    /**
+     * IFarmBlockConnection
+     */
+    public void clearMaster() {
+
+        if (farmBlockMaster != null) {
+            farmBlockMaster = null;
+
+            WorldHelper.updateClient(getWorld(), getPos());
+            WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockProxy);
+        }
+    }
+
+    public void setMaster(IFarmBlockMaster master) {
+
+        if (farmBlockMaster != master) {
+            farmBlockMaster = master;
+
+            WorldHelper.updateClient(getWorld(), getPos());
+            WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockProxy);
+        }
+    }
+
+    public BlockPos getStructurePos() {
+        return getPos();
+    }
+
+    /**
+     * IFarmBlockProxy
+     */
+    public boolean isProxy() {
+
+        return true;
+    }
+
+    public boolean isExtender() {
+
+        return false;
     }
 }

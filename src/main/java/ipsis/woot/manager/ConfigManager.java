@@ -81,6 +81,9 @@ public class ConfigManager {
         SPAWN_TICKS("spawnTicks", Integer.class, 16 * 20),
         NUM_MOBS("numMobs", Integer.class, 1),
         KILL_COUNT("killCount", Integer.class, 1),
+        SPAWN_XP("spawnXp", Integer.class, 1),
+        DEATH_XP("deathXp", Integer.class, 1),
+        FACTORY_TIER("factoryTier", Integer.class, -1), // calculated but can override
         T1_XP_MAX("t1XpMax", Integer.class, 5),
         T2_XP_MAX("t2XpMax", Integer.class, 20),
         T3_XP_MAX("t3XpMax", Integer.class, 49),

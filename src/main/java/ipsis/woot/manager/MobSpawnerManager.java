@@ -1,6 +1,7 @@
 package ipsis.woot.manager;
 
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.entity.EntityLiving;
 
@@ -23,10 +24,10 @@ public class MobSpawnerManager {
         /**
          * Initialise from the ConfigRegistry
          */
-        spawnerMob.setSpawnTicks(ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.SPAWN_TICKS));
-        spawnerMob.setXpPowerTick(ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.XP_POWER_TICK));
+        spawnerMob.setSpawnTicks(ConfigManager.instance().getInteger(EnumConfigKey.SPAWN_TICKS));
+        spawnerMob.setXpPowerTick(ConfigManager.instance().getInteger(EnumConfigKey.XP_POWER_TICK));
 
-        if (ConfigManager.instance().getBoolean(ConfigManager.EnumConfigKey.MOB_WHITELIST))
+        if (ConfigManager.instance().getBoolean(EnumConfigKey.MOB_WHITELIST))
             spawnerMob.setCanCapture(false);
 
         mobMap.put(name, spawnerMob);
@@ -68,13 +69,13 @@ public class MobSpawnerManager {
     public int getSpawnTicks(WootMobName wootMobName) {
         if (mobMap.containsKey(wootMobName))
             return mobMap.get(wootMobName).getSpawnTicks();
-        return ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.SPAWN_TICKS);
+        return ConfigManager.instance().getInteger(EnumConfigKey.SPAWN_TICKS);
     }
 
     public int getXpPowerTick(WootMobName wootMobName) {
         if (mobMap.containsKey(wootMobName))
             return mobMap.get(wootMobName).getXpPowerTick();
-        return ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.XP_POWER_TICK);
+        return ConfigManager.instance().getInteger(EnumConfigKey.XP_POWER_TICK);
     }
 
     public EnumMobFactoryTier getFactoryTier(WootMobName wootMobName) {

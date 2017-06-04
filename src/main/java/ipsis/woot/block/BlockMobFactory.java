@@ -13,6 +13,7 @@ import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFactory;
+import ipsis.woot.tileentity.TileEntityMobFarm;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
@@ -63,7 +64,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        return new TileEntityMobFactory();
+        return new TileEntityMobFarm();
     }
 
     @Override

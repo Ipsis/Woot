@@ -1,6 +1,7 @@
 package ipsis.woot.block;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -9,6 +10,7 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -73,8 +75,8 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileEntityMobFactoryController && stack != null && stack.hasTagCompound())
-            ((TileEntityMobFactoryController)te).readControllerFromNBT(stack.getTagCompound());
+        if (te instanceof IFarmBlockController && stack != null && stack.hasTagCompound())
+            LogHelper.info("TODO onBlockPlacedBy: program from the block??");
     }
 
     @Override

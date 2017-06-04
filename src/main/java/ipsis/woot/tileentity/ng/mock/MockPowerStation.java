@@ -5,8 +5,8 @@ import ipsis.woot.tileentity.ng.IPowerStation;
 public class MockPowerStation implements IPowerStation {
 
     @Override
-    public boolean consume(int power) {
+    public int consume(int power) {
 
-        return true;
+        return power;
     }
 }

@@ -4,8 +4,7 @@ import net.minecraft.world.World;
 
 public interface ITickTracker {
 
-    void setWorld(World world);
-    void tick();
+    void tick(World world);
     boolean hasLearnTickExpired();
     boolean hasStructureTickExpired();
     void setLearnTickCount(int ticks);

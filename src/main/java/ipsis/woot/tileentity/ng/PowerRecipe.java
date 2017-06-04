@@ -23,6 +23,14 @@ public class PowerRecipe {
         return perTick;
     }
 
+    public PowerRecipe(int ticks, int totalPower) {
+
+        this.ticks = ticks;
+        this.totalPower = totalPower;
+    }
+
+    private PowerRecipe() { }
+
     @Override
     public String toString() {
         return "total:" + totalPower + " ticks:" + ticks + " perTick:" + getPowerPerTick();

@@ -1,6 +1,7 @@
 package ipsis.woot.item;
 
-import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.tileentity.ng.WootMob;
+import ipsis.woot.tileentity.ng.WootMobBuilder;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,9 +24,9 @@ public class ItemBlockController extends ItemBlock {
 
         if (stack != null && stack.hasTagCompound()) {
 
-            String displayName = stack.getTagCompound().getString(TileEntityMobFactoryController.NBT_DISPLAY_NAME);
-            if (!displayName.equals(""))
-                tooltip.add(String.format("Mob: %s", StringHelper.localize(displayName)));
+            WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
+            if (wootMob.isValid())
+                tooltip.add(String.format("Mob: %s", StringHelper.localize(wootMob.getDisplayName())));
         }
 
         super.addInformation(stack, playerIn, tooltip, advanced);

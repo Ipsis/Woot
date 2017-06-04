@@ -2,6 +2,7 @@ package ipsis.woot.util;
 
 import ipsis.woot.manager.*;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import net.minecraft.util.math.MathHelper;
 
 public class PowerHelper {
@@ -9,13 +10,13 @@ public class PowerHelper {
     public static int tierToPower(EnumMobFactoryTier factoryTier) {
 
         if (factoryTier == EnumMobFactoryTier.TIER_ONE)
-            return ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.T1_POWER_TICK);
+            return ConfigManager.instance().getInteger(EnumConfigKey.T1_POWER_TICK);
         else if (factoryTier == EnumMobFactoryTier.TIER_TWO)
-            return ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.T2_POWER_TICK);
+            return ConfigManager.instance().getInteger(EnumConfigKey.T2_POWER_TICK);
         else if (factoryTier == EnumMobFactoryTier.TIER_THREE)
-            return ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.T3_POWER_TICK);
+            return ConfigManager.instance().getInteger(EnumConfigKey.T3_POWER_TICK);
         else
-            return ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.T4_POWER_TICK);
+            return ConfigManager.instance().getInteger(EnumConfigKey.T4_POWER_TICK);
     }
 
     private static int calculateUpgradePower(WootMobName wootMobName, UpgradeSetup upgradeSetup) {
@@ -53,7 +54,7 @@ public class PowerHelper {
         int tierPowerPerTick = tierToPower(factoryTier);
         int xpPowerPerTick = MobSpawnerManager.instance().getXpPowerTick(wootMobName);
 
-        int mobCount = ConfigManager.instance().getInteger(ConfigManager.EnumConfigKey.NUM_MOBS);
+        int mobCount = ConfigManager.instance().getInteger(EnumConfigKey.NUM_MOBS);
         if (upgradeSetup.hasMassUpgrade())
             mobCount = MobSpawnerManager.instance().getUpgradeParameter(wootMobName, upgradeSetup.getMassUpgrade());
 

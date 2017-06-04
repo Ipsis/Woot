@@ -9,8 +9,9 @@ import ipsis.woot.reference.Reference;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.ng.WootMobNameBuilder;
+import ipsis.woot.tileentity.ng.configuration.ConfigurationLoader;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import ipsis.woot.util.StringHelper;
-import ipsis.woot.util.WootMobName;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,15 +41,19 @@ public class ConfigHandler {
 
     static void loadConfiguration3() {
 
-        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getBooleanKeys()) {
-            ConfigManager.instance().setBoolean(key, configuration.get(Configuration.CATEGORY_GENERAL,
-                    key.getText(), key.getDefaultBoolean(), key.getTranslated()).getBoolean(key.getDefaultBoolean()));
+        for (EnumConfigKey key : EnumConfigKey.getBooleanKeys()) {
+            ConfigManager.instance().setBoolean(
+                    key,
+                    configuration.get(Configuration.CATEGORY_GENERAL,
+                                        key.getText(),
+                                        key.getDefaultBoolean(),
+                                        key.getTranslated()).getBoolean(key.getDefaultBoolean()));
 
             Woot.wootConfiguration.setBoolean(key, configuration.get(Configuration.CATEGORY_GENERAL,
                     key.getText(), key.getDefaultBoolean(), key.getTranslated()).getBoolean(key.getDefaultBoolean()));
         }
 
-        for (ConfigManager.EnumConfigKey key : ConfigManager.EnumConfigKey.getIntegerKeys()) {
+        for (EnumConfigKey key : EnumConfigKey.getIntegerKeys()) {
             ConfigManager.instance().setInteger(key, configuration.get(Configuration.CATEGORY_GENERAL,
                     key.getText(), key.getDefaultInteger(), key.getTranslated()).getInt(key.getDefaultInteger()));
 
@@ -87,7 +92,6 @@ public class ConfigHandler {
                 try {
                     v = Integer.parseInt(parts[2]);
                     MobSpawnerManager.instance().updateMobConfig(parts[0], parts[1], v);
-                    Woot.wootConfiguration.setInteger(WootMobNameBuilder.create(parts[0]), parts[1], v);
                 } catch (NumberFormatException e) {
                     LogHelper.info("mobConfigList: incorrect format " + s);
                 }
@@ -97,7 +101,7 @@ public class ConfigHandler {
         String[] mobList = configuration.getStringList("mobCaptureList", Configuration.CATEGORY_GENERAL, new String[]{}, StringHelper.localize(Lang.TAG_CONFIG + "mobCaptureList"));
         Settings.prismBlacklist = configuration.getStringList(Config.General.PRISM_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_PRISM_BLACKLIST, StringHelper.localize(Lang.getLangConfigValue(Config.General.PRISM_BLACKLIST)));
-        if (ConfigManager.instance().getBoolean(ConfigManager.EnumConfigKey.MOB_WHITELIST)) {
+        if (ConfigManager.instance().getBoolean(EnumConfigKey.MOB_WHITELIST)) {
             for (String s : mobList)
                 MobSpawnerManager.instance().updateMobConfig(s, "CAPTURE", true);
         } else {
@@ -272,7 +276,8 @@ public class ConfigHandler {
         Settings.bmIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_II_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_II_ALTAR_LIFE_ESSENCE);
         Settings.bmIIIAltarLifeEssence = getConfigInt(Config.Upgrades.BM_III_ALTAR_LIFE_ESSENCE, Settings.Upgrades.DEF_BM_III_ALTAR_LIFE_ESSENCE);
 
-        loadConfiguration3();
+        //loadConfiguration3();
+        ConfigurationLoader.load(configuration, Woot.wootConfiguration);
         if (configuration.hasChanged())
             configuration.save();
     }

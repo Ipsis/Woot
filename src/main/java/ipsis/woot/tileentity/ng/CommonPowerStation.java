@@ -13,8 +13,8 @@ public class CommonPowerStation extends EnergyStorage implements  IPowerStation 
     }
 
     @Override
-    public boolean consume(int power) {
+    public int consume(int power) {
 
-        return true;
+        return power;
     }
 }

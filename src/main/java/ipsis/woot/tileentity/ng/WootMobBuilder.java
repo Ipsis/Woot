@@ -19,7 +19,6 @@ public class WootMobBuilder {
         return new WootMob(wootMobName, entityLiving.getName());
     }
 
-    private final static String NBT_WOOT_MOB_NAME = "wootMobName";
     private final static String NBT_WOOT_MOB_DISPLAY_NAME = "wootMobDisplayName";
     public static void writeToNBT(WootMob wootMob, NBTTagCompound tagCompound) {
 
@@ -29,17 +28,16 @@ public class WootMobBuilder {
         if (tagCompound == null)
             tagCompound = new NBTTagCompound();
 
-        tagCompound.setString(NBT_WOOT_MOB_NAME, wootMob.getWootMobName().getName());
         tagCompound.setString(NBT_WOOT_MOB_DISPLAY_NAME, wootMob.getDisplayName());
+        WootMobNameBuilder.writeToNBT(wootMob.getWootMobName(), tagCompound);
     }
 
     public static @Nonnull WootMob create(NBTTagCompound tagCompound) {
 
         if (tagCompound == null ||
-            !tagCompound.hasKey(NBT_WOOT_MOB_NAME) ||
             !tagCompound.hasKey(NBT_WOOT_MOB_DISPLAY_NAME))
             return new WootMob();
 
-        return create(tagCompound.getString(NBT_WOOT_MOB_NAME), tagCompound.getString(NBT_WOOT_MOB_DISPLAY_NAME));
+        return new WootMob(WootMobNameBuilder.create(tagCompound), tagCompound.getString(NBT_WOOT_MOB_DISPLAY_NAME));
     }
 }

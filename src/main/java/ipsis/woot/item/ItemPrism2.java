@@ -1,12 +1,13 @@
 package ipsis.woot.item;
 
+import ipsis.Woot;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.oss.LogHelper;
-import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.util.WootMob;
-import ipsis.woot.util.WootMobName;
+import ipsis.woot.tileentity.ng.WootMob;
+import ipsis.woot.tileentity.ng.WootMobBuilder;
+import ipsis.woot.tileentity.ng.WootMobName;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -25,7 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import scala.Int;
 
 import java.util.List;
 
@@ -70,17 +70,20 @@ public class ItemPrism2 extends ItemWoot {
         LogHelper.info("hitEntity: " + EntityList.getEntityString(target));
         LogHelper.info("hitEntity: " + target.getName());
 
+        WootMob wootMob = WootMobBuilder.create((EntityLiving)target);
+        if (!wootMob.isValid())
+            return false;
 
-        if (!WootMob.canCapture(target)) {
-            LogHelper.info("Unable to capture " + target.getName());
+        if (!Woot.wootConfiguration.canCapture(wootMob.getWootMobName())) {
+            LogHelper.info("hitEntity: cannot capture " + wootMob.getDisplayName());
             return false;
         }
 
-        WootMob wootMob = WootMob.createFromEntity(target);
-        if (wootMob == null)
-            return false;
+        NBTTagCompound nbtTagCompound = stack.getTagCompound();
+        if (nbtTagCompound == null)
+            nbtTagCompound = new NBTTagCompound();
 
-        NBTTagCompound nbtTagCompound = wootMob.writeToNBT(stack.getTagCompound());
+        WootMobBuilder.writeToNBT(wootMob, nbtTagCompound);
         stack.setTagCompound(nbtTagCompound);
         return true;
     }
@@ -101,8 +104,8 @@ public class ItemPrism2 extends ItemWoot {
             return EnumActionResult.FAIL;
 
         TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileEntityMobFactoryController) {
-            TileEntityMobFactoryController controller = (TileEntityMobFactoryController)te;
+        if (te instanceof IFarmBlockController) {
+            IFarmBlockController controller = (IFarmBlockController)te;
 
             if (controller.program(itemStack)) {
                 if (!player.capabilities.isCreativeMode)
@@ -119,8 +122,8 @@ public class ItemPrism2 extends ItemWoot {
         if (!isPrism(itemStack))
             return false;
 
-        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
-        if (wootMob == null)
+        WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
+        if (!wootMob.isValid())
             return false;
 
         return true;
@@ -131,11 +134,12 @@ public class ItemPrism2 extends ItemWoot {
         if (!isPrism(itemStack))
             return false;
 
-        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
-        if (wootMob == null)
+        WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
+        if (!wootMob.isValid())
             return false;
 
-        return wootMob.getDeathCount() == 1;
+        //TODO return wootMob.getDeathCount() == 1;
+        return true;
     }
 
     /**
@@ -151,12 +155,12 @@ public class ItemPrism2 extends ItemWoot {
         if (!isProgrammed(stack)) {
             tooltip.add("Unprogrammed");
         } else {
-            WootMob wootMob = WootMob.createFromNBT(stack.getTagCompound());
-            if (wootMob != null) {
+            WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
+            if (wootMob.isValid()) {
                 tooltip.add(wootMob.getDisplayName());
-                tooltip.add("Killed: " + wootMob.getDeathCount() + "/1");
+                // TODO tooltip.add("Killed: " + wootMob.getDeathCount() + "/1");
                 if (advanced)
-                    tooltip.add(wootMob.getWootMobName().toString());
+                    tooltip.add(wootMob.getWootMobName().getName());
             }
         }
     }
@@ -169,12 +173,12 @@ public class ItemPrism2 extends ItemWoot {
         if (!isProgrammed(itemStack))
             return;
 
-        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
         if (wootMob == null)
             return;
 
-        wootMob.incrementDeathCount(count);
-        wootMob.writeToNBT(itemStack.getTagCompound());
+        // TODO wootMob.incrementDeathCount(count);
+        WootMobBuilder.writeToNBT(wootMob, itemStack.getTagCompound());
     }
 
     public static boolean isMob(ItemStack itemStack, WootMobName wootMobName) {
@@ -185,7 +189,7 @@ public class ItemPrism2 extends ItemWoot {
         if (!isProgrammed(itemStack))
             return false;
 
-        WootMob wootMob = WootMob.createFromNBT(itemStack.getTagCompound());
+        WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
         if (wootMob == null)
             return false;
 

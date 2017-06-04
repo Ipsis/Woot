@@ -28,6 +28,12 @@ public class WootMobName {
         this.name = Reference.MOD_ID + ":" + this.tag + ":" + this.entityKey;
     }
 
+    @Override
+    public String toString() {
+
+        return this.name;
+    }
+
     public WootMobName(String entityKey, String tag) {
 
         this.entityKey = entityKey;

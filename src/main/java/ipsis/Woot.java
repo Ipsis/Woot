@@ -8,17 +8,18 @@ import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.manager.spawnreq.SpawnReqManager;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.tileentity.ng.IWootConfiguration;
-import ipsis.woot.tileentity.ng.WootConfiguration;
+import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.tileentity.ng.configuration.IMobCost;
+import ipsis.woot.tileentity.ng.configuration.IWootConfiguration;
+import ipsis.woot.tileentity.ng.configuration.MobXPManager;
+import ipsis.woot.tileentity.ng.configuration.WootConfigurationManager;
 import ipsis.woot.tileentity.ng.loot.*;
 import ipsis.woot.tileentity.ng.loot.schools.SkyBoxSchool;
-import ipsis.woot.util.WootMobName;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -44,10 +45,14 @@ public class Woot {
     public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
     public static SpawnReqManager SPAWN_REQ_MANAGER = new SpawnReqManager();
     public static boolean devMode = false;
-    public static IWootConfiguration wootConfiguration = new WootConfiguration();
+    public static IWootConfiguration wootConfiguration = new WootConfigurationManager();
     public static ILootGeneration lootGeneration = new LootGeneration();
     public static ILootLearner lootLearner = new SkyBoxSchool();
     public static ILootRepository lootRepository = new LootRepository();
+    public static IMobCost mobCosting = new MobXPManager();
+
+    // TODO fix this nonsense
+    public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

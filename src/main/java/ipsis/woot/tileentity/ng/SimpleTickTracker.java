@@ -4,7 +4,6 @@ import net.minecraft.world.World;
 
 public class SimpleTickTracker implements ITickTracker {
 
-    private World world;
     private long lastWorldTime = -1;
     private int structureTicksTimeout;
     private int learnTicksTimeout;
@@ -20,18 +19,13 @@ public class SimpleTickTracker implements ITickTracker {
         currLearnTicks = 0;
     }
 
-    public void setWorld(World world) {
-
-        this.world = world;
-    }
-
     @Override
-    public void tick() {
+    public void tick(World world) {
 
         long currWorldTime = world.getTotalWorldTime();
         if (lastWorldTime != currWorldTime) {
             // Time has passed and this is not a world acceleration call
-            currWorldTime = lastWorldTime;
+            lastWorldTime = currWorldTime;
 
             if (structureTicksTimeout > 0)
                 currStructureTicks++;

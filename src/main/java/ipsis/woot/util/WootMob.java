@@ -2,6 +2,7 @@ package ipsis.woot.util;
 
 import ipsis.woot.manager.ConfigManager;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
@@ -123,7 +124,7 @@ public class WootMob {
             if (wootMobName.toString().toLowerCase().equals(s))
                 return false;
 
-        if (ConfigManager.instance().getBoolean(ConfigManager.EnumConfigKey.MOB_WHITELIST)) {
+        if (ConfigManager.instance().getBoolean(EnumConfigKey.MOB_WHITELIST)) {
 
             // Is it on the mob whitelist
             for (String s : mobList) {

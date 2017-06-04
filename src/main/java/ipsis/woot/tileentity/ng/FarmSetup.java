@@ -1,8 +1,8 @@
 package ipsis.woot.tileentity.ng;
 
 import ipsis.Woot;
-import ipsis.woot.manager.ConfigManager;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -40,16 +40,16 @@ public class FarmSetup implements IFarmSetup {
         int massLevel = getUpgradeLevel(EnumFarmUpgrade.MASS);
         switch (massLevel) {
             case 1:
-                numMobs = Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), ConfigManager.EnumConfigKey.MASS_1_PARAM);
+                numMobs = Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.MASS_1_PARAM);
                 break;
             case 2:
-                numMobs =  Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), ConfigManager.EnumConfigKey.MASS_2_PARAM);
+                numMobs =  Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.MASS_2_PARAM);
                 break;
             case 3:
-                numMobs = Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), ConfigManager.EnumConfigKey.MASS_3_PARAM);
+                numMobs = Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.MASS_3_PARAM);
                 break;
             default:
-                numMobs = Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), ConfigManager.EnumConfigKey.NUM_MOBS);
+                numMobs = Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.NUM_MOBS);
                 break;
         }
 

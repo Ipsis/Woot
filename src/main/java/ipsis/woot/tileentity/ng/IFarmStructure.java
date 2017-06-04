@@ -13,7 +13,8 @@ public interface IFarmStructure {
     void setStructureDirty();
     void setUpgradeDirty();
     void setProxyDirty();
-    IFarmStructure setWorld(World world);
+
+    IFarmStructure setWorld(@Nonnull World world);
     IFarmStructure setPosition(BlockPos origin);
 
     void tick(ITickTracker tickTracker);

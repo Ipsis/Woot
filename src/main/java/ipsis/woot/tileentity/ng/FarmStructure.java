@@ -57,7 +57,7 @@ public class FarmStructure implements IFarmStructure {
     }
 
     @Override
-    public IFarmStructure setWorld(World world) {
+    public IFarmStructure setWorld(@Nonnull World world) {
 
         this.world = world;
         return this;
@@ -72,7 +72,7 @@ public class FarmStructure implements IFarmStructure {
     @Override
     public void tick(ITickTracker tickTracker) {
 
-        if (tickTracker.hasStructureTickExpired()) {
+        if (tickTracker.hasStructureTickExpired() && structureDirty) {
 
             scannedFarm = new FarmStructureBlocks();
             scanFarm(scannedFarm);
@@ -93,6 +93,8 @@ public class FarmStructure implements IFarmStructure {
             }
 
             scannedFarm = null;
+            structureDirty = false;
+            tickTracker.resetStructureTickCount();
         }
     }
 
@@ -175,16 +177,16 @@ public class FarmStructure implements IFarmStructure {
 
     private void scanFarm(FarmStructureBlocks scannedFarm) {
 
-        scannedFarm = null;
-
         if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_FOUR))
             scannedFarm.farmTier = EnumMobFactoryTier.TIER_FOUR;
         else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_THREE))
             scannedFarm.farmTier = EnumMobFactoryTier.TIER_THREE;
         else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_TWO))
             scannedFarm.farmTier = EnumMobFactoryTier.TIER_TWO;
-        else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_TWO))
+        else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_ONE))
             scannedFarm.farmTier = EnumMobFactoryTier.TIER_ONE;
+        else
+            scannedFarm.farmTier = null;
     }
 
     private void scanController(FarmStructureBlocks scannedFarm) {
@@ -219,6 +221,7 @@ public class FarmStructure implements IFarmStructure {
             scannedFarmBlocks.add(p);
         }
 
+        LogHelper.info("scanFarmTier: farm is correct for " + tier);
         return true;
     }
 

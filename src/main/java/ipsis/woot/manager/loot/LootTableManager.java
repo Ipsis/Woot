@@ -44,6 +44,7 @@ public class LootTableManager {
         addToInternalModBlacklist("eplus");
         addToInternalModBlacklist("everlastingabilities");
         addToInternalModBlacklist("cyberware");
+        addToInternalBlacklist("bloodmagic:itemmonstersoul");
     }
 
     public void loadDragonDrops() {

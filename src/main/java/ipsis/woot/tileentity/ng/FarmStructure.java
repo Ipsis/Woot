@@ -6,7 +6,7 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryModule;
 import ipsis.woot.tileentity.ng.farmblocks.*;
-import ipsis.woot.tileentity.ng.upgrades.*;
+import ipsis.woot.tileentity.ng.farmstructure.*;
 import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -69,32 +69,79 @@ public class FarmStructure implements IFarmStructure {
         return this;
     }
 
+    /**
+     * A factory is valid if it has a valid structure AND a programmed controller
+     * A farm setup depends on the tier, controller and upgrades and if any of these
+     * change the the structure is deemed to have changed. This in turn will mean that a
+     * new setup should be request by the caller
+     *
+     * if the structure is dirty then
+     * - scan the farm structure
+     * - scan the controller
+     * - scan the upgrades
+     * - scan the proxy
+     *
+     * if the upgrade is dirty then
+     * - scan the upgrades
+     *
+     * if the proxy is dirty then
+     * - scan the proxy
+     *
+     *
+     */
+    private void handleDirtyStructure() {
+
+        scannedFarm = new FarmStructureBlocks();
+        scanFarm(scannedFarm);
+        scanController(scannedFarm);
+        scanUpgrades(scannedFarm);
+        scanProxy(scannedFarm);
+
+        if (scannedFarm.isValid()) {
+            if (currFarm.areFarmBlocksEqual(scannedFarm)) {
+                LogHelper.info("handleDirtyStructure: same farm");
+
+            } else {
+                LogHelper.info("handleDirtyStructure: new farm");
+                disconnectPartialFarm(currFarm, scannedFarm);
+                connectFarmBlocks(scannedFarm.farmBlocks);
+                currFarm = scannedFarm;
+                changed = true;
+            }
+        } else {
+            // disconnect all the blocks in the current farm
+            disconnectFullFarm(currFarm);
+            currFarm = new FarmStructureBlocks();
+            LogHelper.info("handleDirtyStructure: invalid farm");
+        }
+
+        scannedFarm = null;
+        structureDirty = false;
+    }
+
+    private void handleDirtyUpgrade() {
+
+    }
+
+    private void handleDirtyProxy() {
+
+
+    }
+
     @Override
     public void tick(ITickTracker tickTracker) {
 
-        if (tickTracker.hasStructureTickExpired() && structureDirty) {
-
-            scannedFarm = new FarmStructureBlocks();
-            scanFarm(scannedFarm);
-            scanController(scannedFarm);
-            if (scannedFarm.farmTier == null && scannedFarm.controllerBlock == null) {
-                // no more farm or unprogrammed controller
-                invalidateFullFarm(currFarm);
-                currFarm = new FarmStructureBlocks();
-                LogHelper.info("FarmStructure:tick invalid farm");
-            } else {
-                if (!currFarm.areFarmsEqual(scannedFarm)) {
-                    // tier or upgrade has changed
-                    invalidatePartialFarm(currFarm, scannedFarm);
-                    currFarm = scannedFarm;
-                    changed = true;
-                    LogHelper.info("FarmStructure:tick new farm");
-                }
+        if (tickTracker.hasStructureTickExpired()) {
+            if (structureDirty) {
+                handleDirtyStructure();
+                tickTracker.resetStructureTickCount();
+            } else if (upgradeDirty) {
+                handleDirtyUpgrade();
+                tickTracker.resetStructureTickCount();
+            } else if (proxyDirty) {
+                handleDirtyProxy();
+                tickTracker.resetStructureTickCount();
             }
-
-            scannedFarm = null;
-            structureDirty = false;
-            tickTracker.resetStructureTickCount();
         }
     }
 
@@ -135,17 +182,17 @@ public class FarmStructure implements IFarmStructure {
         return chestList;
     }
 
-    private void scanUpgrades() {
+    private void scanUpgrades(FarmStructureBlocks farm) {
 
         BlockPos[] positions;
         Class upgradeClass;
 
-        if (currFarm.farmTier == EnumMobFactoryTier.TIER_ONE) {
+        if (farm.farmTier == EnumMobFactoryTier.TIER_ONE) {
             positions = new BlockPos[]{
                     new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0)
             };
             upgradeClass = UpgradeTotemTierOne.class;
-        } else if (currFarm.farmTier == EnumMobFactoryTier.TIER_TWO) {
+        } else if (farm.farmTier == EnumMobFactoryTier.TIER_TWO) {
             positions = new BlockPos[]{
                     new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0),
                     new BlockPos(2, 0, 0), new BlockPos(-2, 0, 0)};
@@ -171,30 +218,30 @@ public class FarmStructure implements IFarmStructure {
 
     }
 
-    private void scanProxy() {
+    private void scanProxy(FarmStructureBlocks farm) {
 
     }
 
-    private void scanFarm(FarmStructureBlocks scannedFarm) {
+    private void scanFarm(FarmStructureBlocks farm) {
 
-        if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_FOUR))
-            scannedFarm.farmTier = EnumMobFactoryTier.TIER_FOUR;
-        else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_THREE))
-            scannedFarm.farmTier = EnumMobFactoryTier.TIER_THREE;
-        else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_TWO))
-            scannedFarm.farmTier = EnumMobFactoryTier.TIER_TWO;
-        else if (scanFarmTier(scannedFarm.farmBlocks, EnumMobFactoryTier.TIER_ONE))
-            scannedFarm.farmTier = EnumMobFactoryTier.TIER_ONE;
+        if (scanFarmTier(farm.farmBlocks, EnumMobFactoryTier.TIER_FOUR))
+            farm.farmTier = EnumMobFactoryTier.TIER_FOUR;
+        else if (scanFarmTier(farm.farmBlocks, EnumMobFactoryTier.TIER_THREE))
+            farm.farmTier = EnumMobFactoryTier.TIER_THREE;
+        else if (scanFarmTier(farm.farmBlocks, EnumMobFactoryTier.TIER_TWO))
+            farm.farmTier = EnumMobFactoryTier.TIER_TWO;
+        else if (scanFarmTier(farm.farmBlocks, EnumMobFactoryTier.TIER_ONE))
+            farm.farmTier = EnumMobFactoryTier.TIER_ONE;
         else
-            scannedFarm.farmTier = null;
+            farm.farmTier = null;
     }
 
-    private void scanController(FarmStructureBlocks scannedFarm) {
+    private void scanController(FarmStructureBlocks farmStructureBlocks) {
 
         BlockPos pos = origin.up();
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof IFarmBlockController && ((IFarmBlockController) te).isProgrammed())
-            scannedFarm.controllerBlock = pos;
+            farmStructureBlocks.controllerBlock = pos;
     }
 
     private boolean scanFarmTier(List<BlockPos> scannedFarmBlocks, EnumMobFactoryTier tier) {
@@ -225,7 +272,18 @@ public class FarmStructure implements IFarmStructure {
         return true;
     }
 
-    private void invalidateFullFarm(FarmStructureBlocks farm) {
+    private void connectFarmBlocks(List<BlockPos> farmBlocks) {
+
+        IFarmBlockMaster master = (IFarmBlockMaster)world.getTileEntity(origin);
+
+        for (BlockPos p : farmBlocks) {
+            TileEntity te = world.getTileEntity(p);
+            if (te instanceof  IFarmBlockConnection)
+                ((IFarmBlockConnection)te).setMaster(master);
+        }
+    }
+
+    private void disconnectFullFarm(FarmStructureBlocks farm) {
 
         List<BlockPos> blocks = new ArrayList<>();
         blocks.addAll(farm.farmBlocks);
@@ -241,7 +299,7 @@ public class FarmStructure implements IFarmStructure {
         }
     }
 
-    private void invalidatePartialFarm(FarmStructureBlocks curr, FarmStructureBlocks scan) {
+    private void disconnectPartialFarm(FarmStructureBlocks curr, FarmStructureBlocks scan) {
 
         List<BlockPos> currBlocks = new ArrayList<>();
         currBlocks.addAll(curr.farmBlocks);
@@ -264,15 +322,43 @@ public class FarmStructure implements IFarmStructure {
 
     private class FarmStructureBlocks {
 
+        // These are VALID blocks in the structure
         List<BlockPos> farmBlocks = new ArrayList<>();
         List<BlockPos> upgradeBlocks = new ArrayList<>();
         List<BlockPos> proxyBlocks = new ArrayList<>();
         BlockPos controllerBlock = null;
         EnumMobFactoryTier farmTier = null;
 
-        boolean areFarmsEqual(FarmStructureBlocks b) {
+        boolean areFarmBlocksEqual(FarmStructureBlocks b) {
+
+            if (this.farmTier != b.farmTier)
+                return false;
+
+            if (!this.controllerBlock.equals(b.controllerBlock))
+                return false;
+
+            if (!this.farmBlocks.containsAll(b.farmBlocks))
+                return false;
+
+            if (!b.farmBlocks.containsAll(this.farmBlocks))
+                return false;
+
+            if (!this.upgradeBlocks.containsAll(b.upgradeBlocks))
+                return false;
+
+            if (!b.upgradeBlocks.containsAll(this.upgradeBlocks))
+                return false;
+
+            /**
+             * Proxy blocks do not count as they do not contribute to the farm setup
+             */
 
             return true;
+        }
+
+        boolean isValid() {
+
+            return farmTier != null && controllerBlock != null;
         }
     }
 }

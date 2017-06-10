@@ -11,6 +11,6 @@ public interface IFarmBlockMaster {
     void interruptFarmStructure();
     void interruptFarmUpgrade();
     void interruptFarmProxy();
-    @Nullable  IEnergyStorage getEnergyStorage(EnumFacing facing);
     boolean hasCapability(Capability<?> capability, EnumFacing facing);
+    <T> T getCapability(Capability<T> capability, EnumFacing facing);
 }

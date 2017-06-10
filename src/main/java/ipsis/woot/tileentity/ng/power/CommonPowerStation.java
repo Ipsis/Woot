@@ -1,17 +1,25 @@
-package ipsis.woot.tileentity.ng.mock;
+package ipsis.woot.tileentity.ng.power;
 
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.ng.power.IPowerStation;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 
-public class MockPowerStation implements IPowerStation {
+/**
+ * Only one area of power storage shared among all the tiers
+ */
+public class CommonPowerStation extends EnergyStorage implements IPowerStation {
+
+    public CommonPowerStation() {
+
+        super(50000, 10, 0);
+    }
 
     @Override
     public void setTier(EnumMobFactoryTier tier) {
 
+        /* Don't care */
     }
 
     @Override
@@ -24,6 +32,6 @@ public class MockPowerStation implements IPowerStation {
     @Override
     public IEnergyStorage getEnergyStorage() {
 
-        return new EnergyStorage(10000000, Integer.MAX_VALUE);
+        return this;
     }
 }

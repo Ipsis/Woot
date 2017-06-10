@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng.upgrades;
+package ipsis.woot.tileentity.ng.farmstructure;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

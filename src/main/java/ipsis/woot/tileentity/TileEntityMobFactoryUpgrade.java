@@ -1,45 +1,36 @@
 package ipsis.woot.tileentity;
 
+import ipsis.woot.block.BlockMobFactoryUpgrade;
+import ipsis.woot.block.BlockMobFactoryUpgradeB;
+import ipsis.woot.manager.EnumSpawnerUpgrade;
+import ipsis.woot.tileentity.ng.farmblocks.*;
 import ipsis.woot.util.WorldHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class TileEntityMobFactoryUpgrade extends TileEntity {
+public class TileEntityMobFactoryUpgrade extends TileEntity implements IFarmBlockConnection, IFarmBlockUpgrade{
 
-    TileEntityMobFactory master = null;
+    IFarmBlockMaster farmBlockMaster = null;
 
 
-    public boolean hasMaster() { return master != null; }
-    public void clearMaster() {
+    public boolean hasMaster() { return farmBlockMaster != null; }
 
-        if (master != null) {
-            master = null;
 
-            if (this.getWorld() != null) {
-                IBlockState iblockstate = this.getWorld().getBlockState(pos);
-                world.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
-            }
-        }
-    }
-    public void setMaster(TileEntityMobFactory master) {
+    @Override
+    public BlockPos getStructurePos() {
 
-        if (this.master != master) {
-            this.master = master;
-
-            if (this.getWorld() != null) {
-                IBlockState iblockstate = this.getWorld().getBlockState(pos);
-                world.notifyBlockUpdate(pos, iblockstate, iblockstate, 4);
-            }
-        }
+        return getPos();
     }
 
     TileEntityMobFactory findMaster() {
@@ -71,18 +62,17 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
 
     public void blockAdded() {
 
-        TileEntityMobFactory tmpMaster = findMaster();
+        IFarmBlockMaster tmpMaster = new UpgradeMasterLocator().findMaster(getWorld(), getPos(), this);
         if (tmpMaster != null)
-            tmpMaster.interruptUpgrade();
+            tmpMaster.interruptFarmStructure();
     }
 
     @Override
     public void invalidate() {
 
         // Master will be set by the farm when it finds the block
-        if (hasMaster()) {
-            master.interruptUpgrade();
-        }
+        if (hasMaster())
+            farmBlockMaster.interruptFarmStructure();
     }
 
     boolean isClientFormed;
@@ -97,7 +87,7 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", master != null);
+        nbtTagCompound.setBoolean("formed", farmBlockMaster != null);
         return nbtTagCompound;
     }
 
@@ -124,6 +114,44 @@ public class TileEntityMobFactoryUpgrade extends TileEntity {
 
         handleUpdateTag(pkt.getNbtCompound());
         WorldHelper.updateClient(getWorld(), getPos());
+    }
+
+    /**
+     * IFarmBlockConnection
+     */
+    public void clearMaster() {
+
+        if (farmBlockMaster != null) {
+            farmBlockMaster = null;
+            WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+
+    @Override
+    public void setMaster(IFarmBlockMaster master) {
+
+        if (farmBlockMaster != master) {
+            farmBlockMaster = master;
+            WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+
+    /**
+     * IFarmBlockUpgrade
+     */
+    @Override
+    @Nullable
+    public EnumSpawnerUpgrade getUpgrade() {
+
+        IBlockState blockState = getWorld().getBlockState(getPos());
+        Block block = blockState.getBlock();
+
+        if (block instanceof BlockMobFactoryUpgrade)
+            return EnumSpawnerUpgrade.getFromVariant(blockState.getValue(BlockMobFactoryUpgrade.VARIANT));
+        else if (block instanceof BlockMobFactoryUpgradeB)
+            return EnumSpawnerUpgrade.getFromVariant(blockState.getValue(BlockMobFactoryUpgradeB.VARIANT));
+        else
+            return null;
     }
 
 }

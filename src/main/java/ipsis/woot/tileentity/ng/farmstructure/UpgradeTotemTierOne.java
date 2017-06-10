@@ -1,7 +1,8 @@
-package ipsis.woot.tileentity.ng.upgrades;
+package ipsis.woot.tileentity.ng.farmstructure;
 
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockUpgrade;
+import ipsis.woot.tileentity.ng.farmstructure.AbstractUpgradeTotem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,7 +22,7 @@ public class UpgradeTotemTierOne extends AbstractUpgradeTotem {
 
         if (te instanceof IFarmBlockUpgrade) {
             EnumSpawnerUpgrade upgrade = ((IFarmBlockUpgrade) te).getUpgrade();
-            if (upgrade.getTier() == 1) {
+            if (upgrade != null && upgrade.getTier() == 1) {
                 spawnerUpgrade = upgrade;
                 spawnerUpgradeLevel = 1;
                 blockPosList.add(new BlockPos(origin));

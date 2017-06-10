@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng.upgrades;
+package ipsis.woot.tileentity.ng.farmstructure;
 
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import net.minecraft.util.math.BlockPos;
@@ -6,13 +6,15 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractUpgradeTotem {
 
     EnumSpawnerUpgrade spawnerUpgrade;
     int spawnerUpgradeLevel;
-    List<BlockPos> blockPosList;
+    Set<BlockPos> blockPosList;
     BlockPos origin;
     World world;
 
@@ -25,7 +27,7 @@ public abstract class AbstractUpgradeTotem {
 
         spawnerUpgrade = null;
         spawnerUpgradeLevel = 0;
-        blockPosList = new ArrayList<>();
+        blockPosList = new HashSet<>();
         this.world = world;
         this.origin = origin;
     }

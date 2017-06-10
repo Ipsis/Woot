@@ -1,5 +1,7 @@
 package ipsis.woot.tileentity.ng;
 
+import ipsis.woot.tileentity.ng.power.IPowerStation;
+
 public interface IRecipeProgressTracker {
 
     void tick();

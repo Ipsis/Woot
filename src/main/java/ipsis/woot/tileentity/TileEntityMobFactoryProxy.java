@@ -97,10 +97,8 @@ public class TileEntityMobFactoryProxy extends TileEntity implements IFarmBlockC
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY && hasMaster()) {
-            IEnergyStorage energyStorage = farmBlockMaster.getEnergyStorage(facing);
-            return (T) energyStorage;
-        }
+        if (hasMaster())
+            return farmBlockMaster.getCapability(capability, facing);
 
         return super.getCapability(capability, facing);
     }

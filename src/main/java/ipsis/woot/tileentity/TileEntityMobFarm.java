@@ -4,13 +4,18 @@ import ipsis.Woot;
 import ipsis.woot.tileentity.ng.*;
 import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
+import ipsis.woot.tileentity.ng.farmstructure.FarmBuilder;
+import ipsis.woot.tileentity.ng.farmstructure.IFarmStructure;
 import ipsis.woot.tileentity.ng.mock.MockPowerCalculator;
 import ipsis.woot.tileentity.ng.mock.MockPowerStation;
 import ipsis.woot.tileentity.ng.mock.MockSpawnRecipeConsumer;
+import ipsis.woot.tileentity.ng.mock.MockSpawnRecipeRepository;
+import ipsis.woot.tileentity.ng.power.IPowerStation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
@@ -40,6 +45,14 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
         spawnRecipe = new SpawnRecipe();
         powerCalculator = new MockPowerCalculator();
         recipeProgressTracker = new SimpleRecipeProgressTracker();
+        spawnRecipeRepository = new MockSpawnRecipeRepository();
+    }
+
+    @Override
+    public void invalidate() {
+
+        // TODO invalidate the complete farm
+        super.invalidate();
     }
 
     @Override
@@ -50,7 +63,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
 
         // Cannot set this on create as the world may not be set
         if (farmStructure == null)
-            farmStructure = new FarmStructure().setWorld(getWorld()).setPosition(getPos());
+            farmStructure = new FarmBuilder().setWorld(getWorld()).setPosition(getPos());
 
         tickTracker.tick(world);
         farmStructure.tick(tickTracker);
@@ -59,7 +72,8 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
             if (farmStructure.hasChanged()) {
                 farmSetup = farmStructure.createSetup();
                 powerRecipe = powerCalculator.calculate(farmSetup);
-                spawnRecipe = spawnRecipeRepository.get(farmSetup.getWootMob().getWootMobName());
+                spawnRecipe = spawnRecipeRepository.get(farmSetup.getWootMobName());
+                powerStation.setTier(farmSetup.getFarmTier());
                 recipeProgressTracker.setPowerStation(powerStation);
                 recipeProgressTracker.setPowerRecipe(powerRecipe);
                 farmStructure.clearChanged();
@@ -72,7 +86,6 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
                 recipeProgressTracker.reset();
             }
         }
-
     }
 
     /**
@@ -96,9 +109,22 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
         farmStructure.setProxyDirty();
     }
 
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+
+        if (farmStructure != null && farmStructure.isFormed())
+            return capability == CapabilityEnergy.ENERGY;
+
+        return false;
+    }
+
     @Nullable
     @Override
-    public IEnergyStorage getEnergyStorage(EnumFacing facing) {
-        return null;
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+
+        if (capability == CapabilityEnergy.ENERGY && farmStructure != null && farmStructure.isFormed())
+            return (T)powerStation.getEnergyStorage();
+
+        return super.getCapability(capability, facing);
     }
 }

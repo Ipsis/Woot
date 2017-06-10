@@ -2,6 +2,7 @@ package ipsis.woot.tileentity.ng;
 
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 
 import javax.annotation.Nonnull;
@@ -13,6 +14,7 @@ public class FarmSetup implements IFarmSetup {
     private Map<EnumFarmUpgrade, Integer> upgradeMap = new HashMap<>();
     private WootMob wootMob;
     private EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
+    private EnumMobFactoryTier tier = EnumMobFactoryTier.TIER_ONE;
 
     public FarmSetup(WootMob wootMob) {
 
@@ -27,11 +29,6 @@ public class FarmSetup implements IFarmSetup {
     public @Nonnull WootMobName getWootMobName() {
 
         return wootMob.getWootMobName();
-    }
-
-    public EnumEnchantKey getEnchantKey() {
-
-        return enchantKey;
     }
 
     public int getNumMobs() {
@@ -70,9 +67,33 @@ public class FarmSetup implements IFarmSetup {
         upgradeMap.put(upgrade, level);
     }
 
+    @Override
+    public void setFarmTier(EnumMobFactoryTier tier) {
+
+        this.tier = tier;
+    }
+
+    @Override
+    public void setEnchantKey(EnumEnchantKey key) {
+
+        this.enchantKey = key;
+    }
+
     public boolean hasUpgrade(EnumFarmUpgrade upgrade) {
 
         return getUpgradeLevel(upgrade) != 0;
+    }
+
+    @Nonnull
+    @Override
+    public EnumEnchantKey getEnchantKey() {
+        return enchantKey;
+    }
+
+    @Nonnull
+    @Override
+    public EnumMobFactoryTier getFarmTier() {
+        return tier;
     }
 
 

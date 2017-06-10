@@ -2,6 +2,7 @@ package ipsis.woot.manager;
 
 import ipsis.woot.block.EnumVariantUpgrade;
 import ipsis.woot.block.EnumVariantUpgradeB;
+import ipsis.woot.tileentity.ng.EnumFarmUpgrade;
 import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import net.minecraft.util.IStringSerializable;
 

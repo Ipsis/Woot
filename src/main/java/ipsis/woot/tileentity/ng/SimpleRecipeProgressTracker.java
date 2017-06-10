@@ -1,5 +1,8 @@
 package ipsis.woot.tileentity.ng;
 
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.tileentity.ng.power.IPowerStation;
+
 public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
 
     private IPowerStation powerStation;
@@ -13,7 +16,6 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
 
         int consumed = powerStation.consume(powerRecipe.getPowerPerTick());
         consumedPower += consumed;
-
     }
 
     public boolean isComplete() {

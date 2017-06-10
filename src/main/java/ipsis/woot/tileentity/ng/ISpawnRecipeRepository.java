@@ -1,6 +1,8 @@
 package ipsis.woot.tileentity.ng;
 
+import javax.annotation.Nullable;
+
 public interface ISpawnRecipeRepository {
 
-    SpawnRecipe get(WootMobName wootMobName);
+    @Nullable SpawnRecipe get(WootMobName wootMobName);
 }

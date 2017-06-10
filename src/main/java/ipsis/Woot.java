@@ -20,6 +20,7 @@ import ipsis.woot.tileentity.ng.configuration.MobXPManager;
 import ipsis.woot.tileentity.ng.configuration.WootConfigurationManager;
 import ipsis.woot.tileentity.ng.loot.*;
 import ipsis.woot.tileentity.ng.loot.schools.SkyBoxSchool;
+import ipsis.woot.tileentity.ng.spawning.EntitySpawner;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -50,6 +51,7 @@ public class Woot {
     public static ILootLearner lootLearner = new SkyBoxSchool();
     public static ILootRepository lootRepository = new LootRepository();
     public static IMobCost mobCosting = new MobXPManager();
+    public static EntitySpawner entitySpawner = new EntitySpawner();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();

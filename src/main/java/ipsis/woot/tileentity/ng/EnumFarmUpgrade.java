@@ -7,5 +7,6 @@ public enum EnumFarmUpgrade {
     LOOTING,
     MASS,
     RATE,
-    XP;
+    XP,
+    LIFE_ESSENCE;
 }

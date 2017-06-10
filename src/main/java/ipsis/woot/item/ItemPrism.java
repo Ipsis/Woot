@@ -66,7 +66,7 @@ public class ItemPrism extends ItemWoot {
             return false;
         String displayName = Woot.mobRegistry.getDisplayName(wootName);
 
-        if (!Woot.mobRegistry.isPrismValid(wootName)) {
+        if (!Woot.mobRegistry.isPrismValid(wootName) || MobRegistry.isEnderDragon(wootName)) {
             ((EntityPlayer) attacker).sendStatusMessage(
                     new TextComponentString(String.format(
                             StringHelper.localize(Lang.CHAT_PRISM_INVALID), displayName, wootName)), false);

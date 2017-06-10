@@ -38,8 +38,10 @@ public class HandlerLivingDropsEvent {
                  *  We only store the drop information.
                  */
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
-                EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-                Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops(), true);
+                if (Woot.mobRegistry.isValidMobName(mobID)) {
+                    EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
+                    Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops(), true);
+                }
 
 
             } else if (!Settings.strictFactorySpawns) {
@@ -66,8 +68,10 @@ public class HandlerLivingDropsEvent {
                  * Convert the non-spawner kill into a damage source if possible
                  */
                 String mobID = Woot.mobRegistry.createWootName((EntityLiving) e.getEntity());
-                EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-                Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops(), true);
+                if (Woot.mobRegistry.isValidMobName(mobID)) {
+                    EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
+                    Woot.LOOT_TABLE_MANAGER.update(mobID, key, e.getDrops(), true);
+                }
             }
 
             /* handle decapitate */

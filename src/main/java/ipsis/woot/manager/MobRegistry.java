@@ -64,7 +64,13 @@ public class MobRegistry {
 
     public String createWootName(EntityLiving entityLiving) {
 
-        String name = EntityList.getKey(entityLiving).toString();
+        ResourceLocation resourceLocation = EntityList.getKey(entityLiving);
+        if (resourceLocation == null) {
+            // Mod has not registered its entities correctly
+            return INVALID_MOB_NAME;
+        }
+
+        String name = resourceLocation.toString();
 
         if (entityLiving instanceof EntityCreeper) {
             if (((EntityCreeper) entityLiving).getPowered() == true)
@@ -148,14 +154,16 @@ public class MobRegistry {
     public String onEntityLiving(EntityLiving entityLiving) {
 
         String wootName = createWootName(entityLiving);
-        String displayName = createDisplayName(entityLiving);
-        if (!mobInfoHashMap.containsKey(wootName)) {
-            MobInfo info = new MobInfo(wootName, displayName);
-            mobInfoHashMap.put(wootName, info);
-        } else {
-            MobInfo mobInfo = mobInfoHashMap.get(wootName);
-            if (mobInfo.displayName.equals(INVALID_MOB_NAME))
-                mobInfo.displayName = displayName;
+        if (Woot.mobRegistry.isValidMobName(wootName)) {
+            String displayName = createDisplayName(entityLiving);
+            if (!mobInfoHashMap.containsKey(wootName)) {
+                MobInfo info = new MobInfo(wootName, displayName);
+                mobInfoHashMap.put(wootName, info);
+            } else {
+                MobInfo mobInfo = mobInfoHashMap.get(wootName);
+                if (mobInfo.displayName.equals(INVALID_MOB_NAME))
+                    mobInfo.displayName = displayName;
+            }
         }
 
         return wootName;

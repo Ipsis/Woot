@@ -10,12 +10,13 @@ public enum EnumMobFactoryModule implements IStringSerializable {
     BLOCK_3("block_3", WootColor.ORANGE),
     BLOCK_4("block_4", WootColor.GREEN),
     BLOCK_5("block_5", WootColor.WHITE),
+    BLOCK_UPGRADE("block_upgrade", WootColor.PURPLE),
     CAP_I("tier_i_cap", WootColor.LIGHTGRAY),
     CAP_II("tier_ii_cap", WootColor.YELLOW),
     CAP_III("tier_iii_cap", WootColor.CYAN),
     CAP_IV("tier_iv_cap", WootColor.LIME);
 
-    public static EnumMobFactoryModule[] VALUES = { BLOCK_1, BLOCK_2, BLOCK_3, BLOCK_4, BLOCK_5, CAP_I, CAP_II, CAP_III, CAP_IV };
+    public static EnumMobFactoryModule[] VALUES = { BLOCK_1, BLOCK_2, BLOCK_3, BLOCK_4, BLOCK_5, BLOCK_UPGRADE, CAP_I, CAP_II, CAP_III, CAP_IV };
 
 
     String name;

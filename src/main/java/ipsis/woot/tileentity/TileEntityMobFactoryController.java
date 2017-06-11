@@ -135,7 +135,6 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
 
         if (farmBlockMaster != master) {
             farmBlockMaster = master;
-            LogHelper.info("Set Master");
 
             //WorldHelper.updateClient(getWorld(), getPos());
         }

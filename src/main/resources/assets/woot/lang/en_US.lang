@@ -11,6 +11,7 @@ tile.woot:structure.block_2.name=Mob Factory Block Red
 tile.woot:structure.block_3.name=Mob Factory Block Orange
 tile.woot:structure.block_4.name=Mob Factory Block Green
 tile.woot:structure.block_5.name=Mob Factory Block White
+tile.woot:structure.block_upgrade.name=Mob Factory Block Upgrade Base
 tile.woot:structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
 tile.woot:structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
 tile.woot:structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone

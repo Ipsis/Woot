@@ -19,28 +19,27 @@ public enum EnumMobFactoryTier {
 
             String pattern[][] = {
                     {
-                            "ababa",
-                            "babab",
-                            "ab-ba",
-                            "babab",
-                            "ababa"
+                            "-rgr-",
+                            "rgrgr",
+                            "gr-rg",
+                            "rgrgr",
+                            "-rgr-"
                     },
                     {
                             "-----",
                             "-----",
-                            "--o--",
-                            "--a--",
-                            "b---b"
+                            "--x--",
+                            "-pgp-",
+                            "-rgr-"
                     },
                     {
                             "-----",
                             "-----",
                             "-----",
                             "-----",
-                            "x---x"
+                            "-1-1-"
                     }
             };
-
             parsePattern(structureModules, pattern, 1, 2, 2);
         }
     },
@@ -50,40 +49,31 @@ public enum EnumMobFactoryTier {
 
             String pattern[][] = {
                     {
-                            "ccccccc",
-                            "cababac",
-                            "cbababc",
-                            "cab-bac",
-                            "cbababc",
-                            "cababac",
-                            "ccccccc"
+                            "--ooo--",
+                            "-orgro-",
+                            "orgrgro",
+                            "ogr-rgo",
+                            "orgrgro",
+                            "-orgro-",
+                            "--ooo--"
                     },
                     {
-                            "c-----c",
                             "-------",
                             "-------",
-                            "---o---",
-                            "---a---",
-                            "-b---b-",
-                            "c-c-c-c"
+                            "-------",
+                            "o--x--o",
+                            "oppgppo",
+                            "-orgro-",
+                            "--ooo--",
                     },
                     {
-                            "c-----c",
                             "-------",
                             "-------",
                             "-------",
                             "-------",
-                            "-b---b-",
-                            "c-c-c-c"
-                    },
-                    {
-                            "c-----c",
-                            "-------",
-                            "-------",
-                            "-------",
-                            "-------",
-                            "-------",
-                            "c-y-y-c"
+                            "o-----o",
+                            "-o1-1o-",
+                            "--o-o--",
                     },
                     {
                             "-------",
@@ -91,86 +81,94 @@ public enum EnumMobFactoryTier {
                             "-------",
                             "-------",
                             "-------",
+                            "-o---o-",
+                            "--o-o--",
+                    },
+                    {
                             "-------",
-                            "y-----y"
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-------",
+                            "-2---2-",
+                            "--2-2--",
                     }
             };
-
             parsePattern(structureModules, pattern, 1, 3, 3);
         }
     },
     TIER_THREE() {
         @Override
         void buildStructureMap() {
+
             String pattern[][] = {
                     {
-                            "ddddddddd",
-                            "dcccccccd",
-                            "dcababacd",
-                            "dcbababcd",
-                            "dcab-bacd",
-                            "dcbababcd",
-                            "dcababacd",
-                            "dcccccccd",
-                            "ddddddddd"
+                            "---hhh---",
+                            "--hoooh--",
+                            "-horgroh-",
+                            "horgrgroh",
+                            "hogr-rgoh",
+                            "horgrgroh",
+                            "-horgroh-",
+                            "--hoooh--",
+                            "---hhh---",
                     },
                     {
-                            "d-------d",
-                            "-c-----c-",
                             "---------",
                             "---------",
-                            "----o----",
-                            "----a----",
-                            "--b---b--",
-                            "-c-c-c-c-",
-                            "d---d---d"
+                            "---------",
+                            "h-------h",
+                            "ho--x--oh",
+                            "hoppgppoh",
+                            "-horgroh-",
+                            "--hoooh--",
+                            "---hhh---"
                     },
                     {
-                            "d-------d",
-                            "-c-----c-",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
-                            "---------",
-                            "-c-c-c-c-",
-                            "d---d---d"
+                            "h-------h",
+                            "ho-----oh",
+                            "-ho1-1oh-",
+                            "--ho-oh--",
+                            "---hhh---",
                     },
                     {
-                            "d-------d",
-                            "-c-----c-",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
-                            "-c-c-c-c-",
-                            "d---d---d"
+                            "h-------h",
+                            "-ho---oh-",
+                            "--ho-oh--",
+                            "---hhh---",
                     },
                     {
-                            "d-------d",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
-                            "-c-----c-",
-                            "d---d---d"
+                            "-h2---2h-",
+                            "--h2-2h--",
+                            "---hhh---",
                     },
                     {
-                            "z-------z",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
                             "---------",
-                            "---------",
-                            "z---z---z"
+                            "-3-----3-",
+                            "--3---3--",
+                            "----3----"
                     }
             };
-
             parsePattern(structureModules, pattern, 1, 4, 4);
         }
     },
@@ -179,108 +177,95 @@ public enum EnumMobFactoryTier {
         void buildStructureMap() {
             String pattern[][] = {
                     {
-                            "eeeeeeeeeee",
-                            "eddddddddde",
-                            "edcccccccde",
-                            "edcababacde",
-                            "edcbababcde",
-                            "edcab-bacde",
-                            "edcbababcde",
-                            "edcababacde",
-                            "edcccccccde",
-                            "eddddddddde",
-                            "eeeeeeeeeee"
+                            "----www----",
+                            "---whhhw---",
+                            "--whooohw--",
+                            "-whorgrohw-",
+                            "whorgrgrohw",
+                            "whogr-rgohw",
+                            "whorgrgrohw",
+                            "-whorgrohw-",
+                            "--whooohw--",
+                            "---whhhw---",
+                            "----www----"
                     },
                     {
-                            "e---------e",
-                            "-d-------d-",
-                            "--c-----c--",
                             "-----------",
                             "-----------",
-                            "-----o-----",
-                            "-----a-----",
-                            "---b---b---",
-                            "--c-c-c-c--",
-                            "-d---d---d-",
-                            "e-e-e-e-e-e",
+                            "--w-----w--",
+                            "-w-------w-",
+                            "wh-------hw",
+                            "who--x--ohw",
+                            "whoppgppohw",
+                            "-whorgrohw-",
+                            "--whooohw--",
+                            "---whhhw---",
+                            "----www----"
                     },
                     {
-                            "e---------e",
-                            "-d-------d-",
-                            "--c-----c--",
                             "-----------",
                             "-----------",
                             "-----------",
-                            "-----------",
-                            "-----------",
-                            "--c-c-c-c--",
-                            "-d---d---d-",
-                            "e-e-e-e-e-e"
+                            "-w-------w-",
+                            "w---------w",
+                            "wh-------hw",
+                            "who-----ohw",
+                            "-who1-1ohw-",
+                            "--who-ohw--",
+                            "---whhhw---",
+                            "----www----"
                     },
                     {
-                            "e---------e",
-                            "-d-------d-",
-                            "--c-----c--",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
-                            "-----------",
-                            "--c-c-c-c--",
-                            "-d---d---d-",
-                            "e-e-e-e-e-e"
+                            "w---------w",
+                            "w---------w",
+                            "wh-------hw",
+                            "-who---ohw-",
+                            "--who-ohw--",
+                            "---whhhw---",
+                            "----www----"
                     },
                     {
-                            "e---------e",
-                            "-d-------d-",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
-                            "-----------",
-                            "--c-----c--",
-                            "-d---d---d-",
-                            "e-e-e-e-e-e",
+                            "w---------w",
+                            "w---------w",
+                            "-wh2---2hw-",
+                            "--wh2-2hw--",
+                            "---whhhw---",
+                            "----www----"
                     },
                     {
-                            "e---------e",
-                            "-d-------d-",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
-                            "-----------",
-                            "-d---d---d-",
-                            "e-e-1-1-e-e"
+                            "w---------w",
+                            "-w3-----3w-",
+                            "---3---3---",
+                            "---w-3-w---",
+                            "-----w-----"
                     },
                     {
-                            "e---------e",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
                             "-----------",
+                            "4---------4",
+                            "-4-------4-",
                             "-----------",
-                            "-----------",
-                            "-----------",
-                            "e-1-----1-e"
-                    },
-                    {
-                            "1---------1",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "-----------",
-                            "1---------1"
+                            "---4---4---",
+                            "-----4-----"
                     }
             };
 
@@ -333,29 +318,10 @@ public enum EnumMobFactoryTier {
                     int dCol = (originColumn - currCol) * -1;
 
                     // - = anything, o = origin marker
-                    if (c == '-' || c == 'o')
+                    if (c == '-' || c == 'x')
                         continue;
 
-                    EnumMobFactoryModule m = EnumMobFactoryModule.BLOCK_1;
-                    if (c == 'a')
-                        m = EnumMobFactoryModule.BLOCK_1;
-                    else if (c == 'b')
-                        m = EnumMobFactoryModule.BLOCK_2;
-                    else if (c == 'c')
-                        m = EnumMobFactoryModule.BLOCK_3;
-                    else if (c == 'd')
-                        m = EnumMobFactoryModule.BLOCK_4;
-                    else if (c == 'e')
-                        m = EnumMobFactoryModule.BLOCK_5;
-                    else if (c == 'x')
-                        m = EnumMobFactoryModule.CAP_I;
-                    else if (c == 'y')
-                        m = EnumMobFactoryModule.CAP_II;
-                    else if (c == 'z')
-                        m = EnumMobFactoryModule.CAP_III;
-                    else if (c == '1')
-                        m = EnumMobFactoryModule.CAP_IV;
-
+                    EnumMobFactoryModule m = EnumMobFactoryModule.byChar(c);
                     modules.add(new MobFactoryModule(new BlockPos(dCol, dLayer, dRow), m));
                 }
             }

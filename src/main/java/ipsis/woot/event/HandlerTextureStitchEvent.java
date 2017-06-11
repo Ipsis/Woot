@@ -16,6 +16,7 @@ public class HandlerTextureStitchEvent {
     public static TextureAtlasSprite block3;
     public static TextureAtlasSprite block4;
     public static TextureAtlasSprite block5;
+    public static TextureAtlasSprite blockupgrade;
     public static TextureAtlasSprite tiericap;
     public static TextureAtlasSprite tieriicap;
     public static TextureAtlasSprite tieriiicap;
@@ -31,6 +32,7 @@ public class HandlerTextureStitchEvent {
         block3 = forName(event.getMap(), "structure_block_3", "blocks");
         block4 = forName(event.getMap(), "structure_block_4", "blocks");
         block5 = forName(event.getMap(), "structure_block_5", "blocks");
+        blockupgrade = forName(event.getMap(), "structure_block_upgrade", "blocks");
         tiericap = forName(event.getMap(), "structure_tier_i_cap", "blocks");
         tieriicap = forName(event.getMap(), "structure_tier_ii_cap", "blocks");
         tieriiicap = forName(event.getMap(), "structure_tier_iii_cap", "blocks");

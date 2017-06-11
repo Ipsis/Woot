@@ -13,13 +13,13 @@ public class ControllerMasterLocator implements IFarmBlockMasterLocator {
     @Override
     public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
 
-        IFarmBlockMaster tmpMaster = null;
+        StructureMasterLocator structureMasterLocator = new StructureMasterLocator();
 
         BlockPos blockPos = origin.down(1);
         TileEntity te = world.getTileEntity(blockPos);
-        if (te instanceof IFarmBlockMaster)
-            tmpMaster = (IFarmBlockMaster)te;
+        if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection)
+            return structureMasterLocator.findMaster(world, blockPos, (IFarmBlockConnection) te);
 
-        return tmpMaster;
+        return null;
     }
 }

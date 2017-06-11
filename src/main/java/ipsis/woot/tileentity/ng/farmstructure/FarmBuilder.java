@@ -107,7 +107,7 @@ public class FarmBuilder implements IFarmStructure {
         if (!scannedFarm.base.isValid())
             return null;
 
-        scannedFarm.controller = farmScanner.scanFarmController(world, origin);
+        scannedFarm.controller = farmScanner.scanFarmController(world, origin, facing);
         // Is the controller programmed
         if (!scannedFarm.controller.isValid())
             return null;

@@ -65,8 +65,8 @@ public class FarmScanner implements IFarmScanner {
 
         ScannedFarmBase base = new ScannedFarmBase();
 
-        for (EnumMobFactoryTier tier : EnumMobFactoryTier.values()) {
-            scanFarmBaseTier(world, origin, facing, base, tier);
+        for (int i = EnumMobFactoryTier.values().length - 1; i >= 0; i--) {
+            scanFarmBaseTier(world, origin, facing, base, EnumMobFactoryTier.values()[i]);
             if (base.isValid())
                 break;
         }
@@ -84,11 +84,11 @@ public class FarmScanner implements IFarmScanner {
 
     @Nonnull
     @Override
-    public ScannedFarmController scanFarmController(World world, BlockPos origin) {
+    public ScannedFarmController scanFarmController(World world, BlockPos origin, EnumFacing facing) {
 
         ScannedFarmController controller = new ScannedFarmController();
 
-        BlockPos pos = origin.up();
+        BlockPos pos = origin.up().offset(facing, -1);
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof IFarmBlockController && ((IFarmBlockController)te).isProgrammed()) {
             controller.setBlocks(pos);

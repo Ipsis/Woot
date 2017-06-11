@@ -76,6 +76,9 @@ public class TESRLayout extends TileEntitySpecialRenderer{
                             case BLOCK_5:
                                 texture = HandlerTextureStitchEvent.block5;
                                 break;
+                            case BLOCK_UPGRADE:
+                                texture = HandlerTextureStitchEvent.blockupgrade;
+                                break;
                             case CAP_I:
                                 texture = HandlerTextureStitchEvent.tiericap;
                                 break;
@@ -104,7 +107,8 @@ public class TESRLayout extends TileEntitySpecialRenderer{
                 /**
                  * Mob controller
                  */
-                GlStateManager.translate(0, 1, 0);
+                // TODO this needs fixed for each orientation
+                GlStateManager.translate(1, 1, 0);
                 RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.controller, 0.4F);
 
                 GlStateManager.disableBlend();

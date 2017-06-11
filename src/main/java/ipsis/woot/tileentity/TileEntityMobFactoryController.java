@@ -2,8 +2,11 @@ package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.item.ItemPrism2;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.ng.WootMob;
 import ipsis.woot.tileentity.ng.WootMobBuilder;
+import ipsis.woot.tileentity.ng.farmblocks.ControllerMasterLocator;
+import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
 import net.minecraft.item.Item;
@@ -11,10 +14,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 
-public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController {
+public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController, IFarmBlockConnection {
 
-    WootMob wootMob = new WootMob();
+    private WootMob wootMob = new WootMob();
+    private IFarmBlockMaster farmBlockMaster = null;
+
+    private boolean hasMaster() { return farmBlockMaster != null; }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -65,22 +72,19 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         return wootMob.getXpValue();
     }
 
-    private void updateMobFarm() {
-
-        TileEntity te = world.getTileEntity(getPos().offset(EnumFacing.DOWN));
-        if (te instanceof IFarmBlockMaster)
-            ((IFarmBlockMaster) te).interruptFarmStructure();
-    }
-
     public void blockAdded() {
 
-        updateMobFarm();
+        IFarmBlockMaster tmpMaster = new ControllerMasterLocator().findMaster(getWorld(), getPos(), this);
+        if (tmpMaster != null)
+            tmpMaster.interruptFarmStructure();
     }
 
     @Override
     public void invalidate() {
 
-        updateMobFarm();
+        // Master will be set by the farm when it finds the block
+        if (hasMaster())
+            farmBlockMaster.interruptFarmStructure();
     }
 
     public ItemStack getDroppedItemStack() {
@@ -114,7 +118,41 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         wootMob = tmpWootMob;
 
         markDirty();
-        updateMobFarm();
+
+        IFarmBlockMaster tmpMaster = new ControllerMasterLocator().findMaster(getWorld(), getPos(), this);
+        if (tmpMaster != null)
+            tmpMaster.interruptFarmStructure();
+
         return true;
+    }
+
+    /**
+     * IFarmBlockConnection
+     */
+
+    @Override
+    public void setMaster(IFarmBlockMaster master) {
+
+        if (farmBlockMaster != master) {
+            farmBlockMaster = master;
+            LogHelper.info("Set Master");
+
+            //WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+
+    @Override
+    public void clearMaster() {
+
+        if (farmBlockMaster != null) {
+            farmBlockMaster = null;
+            //WorldHelper.updateClient(getWorld(), getPos());
+        }
+    }
+
+    @Override
+    public BlockPos getStructurePos() {
+
+        return getPos();
     }
 }

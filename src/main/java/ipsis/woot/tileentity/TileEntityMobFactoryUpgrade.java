@@ -33,33 +33,6 @@ public class TileEntityMobFactoryUpgrade extends TileEntity implements IFarmBloc
         return getPos();
     }
 
-    TileEntityMobFactory findMaster() {
-
-        List<TileEntityMobFactoryUpgrade> connectedTEs = new ArrayList<TileEntityMobFactoryUpgrade>();
-        Stack<TileEntityMobFactoryUpgrade> traversingTEs = new Stack<TileEntityMobFactoryUpgrade>();
-
-        TileEntityMobFactory tmpMaster = null;
-        boolean masterFound = false;
-
-        traversingTEs.add(this);
-        while (!masterFound && !traversingTEs.isEmpty()) {
-            TileEntityMobFactoryUpgrade currTE = traversingTEs.pop();
-
-            connectedTEs.add(currTE);
-            for (EnumFacing f : EnumFacing.values()) {
-                TileEntity te = world.getTileEntity(currTE.getPos().offset(f));
-                if (te instanceof TileEntityMobFactoryUpgrade && !connectedTEs.contains(te)) {
-                    traversingTEs.add((TileEntityMobFactoryUpgrade)te);
-                } else if (te instanceof TileEntityMobFactory) {
-                    masterFound = true;
-                    tmpMaster = (TileEntityMobFactory)te;
-                }
-            }
-        }
-
-        return tmpMaster;
-    }
-
     public void blockAdded() {
 
         IFarmBlockMaster tmpMaster = new UpgradeMasterLocator().findMaster(getWorld(), getPos(), this);

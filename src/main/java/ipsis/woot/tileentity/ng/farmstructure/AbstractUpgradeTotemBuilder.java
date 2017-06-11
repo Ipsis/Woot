@@ -12,7 +12,7 @@ public class AbstractUpgradeTotemBuilder {
 
         if (clazz == UpgradeTotemTierOne.class)
             return new UpgradeTotemTierOne(world, pos);
-        else if (clazz == UpgradeTotemTierOne.class)
+        else if (clazz == UpgradeTotemTierTwo.class)
             return new UpgradeTotemTierTwo(world, pos);
         else if (clazz == UpgradeTotemTierThree.class)
             return new UpgradeTotemTierTwo(world, pos);

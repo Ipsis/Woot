@@ -22,7 +22,7 @@ public class UpgradeTotemTierOne extends AbstractUpgradeTotem {
 
         if (te instanceof IFarmBlockUpgrade) {
             EnumSpawnerUpgrade upgrade = ((IFarmBlockUpgrade) te).getUpgrade();
-            if (upgrade != null && upgrade.getTier() == 1) {
+            if (upgrade.getTier() == 1) {
                 spawnerUpgrade = upgrade;
                 spawnerUpgradeLevel = 1;
                 blockPosList.add(new BlockPos(origin));

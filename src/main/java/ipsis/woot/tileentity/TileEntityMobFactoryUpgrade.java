@@ -140,7 +140,6 @@ public class TileEntityMobFactoryUpgrade extends TileEntity implements IFarmBloc
      * IFarmBlockUpgrade
      */
     @Override
-    @Nullable
     public EnumSpawnerUpgrade getUpgrade() {
 
         IBlockState blockState = getWorld().getBlockState(getPos());
@@ -151,7 +150,7 @@ public class TileEntityMobFactoryUpgrade extends TileEntity implements IFarmBloc
         else if (block instanceof BlockMobFactoryUpgradeB)
             return EnumSpawnerUpgrade.getFromVariant(blockState.getValue(BlockMobFactoryUpgradeB.VARIANT));
         else
-            return null;
+            return EnumSpawnerUpgrade.XP_I; // Should never happen
     }
 
 }

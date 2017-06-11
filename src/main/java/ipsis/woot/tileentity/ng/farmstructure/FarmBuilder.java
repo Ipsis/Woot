@@ -108,12 +108,17 @@ public class FarmBuilder implements IFarmStructure {
             return null;
 
         scannedFarm.controller = farmScanner.scanFarmController(world, origin);
-        // TODO validate controller
+        // Is the controller programmed
         if (!scannedFarm.controller.isValid())
             return null;
 
         scannedFarm.upgrades = farmScanner.scanFarmUpgrades(world, origin, facing, scannedFarm.base.tier);
         scannedFarm.proxy = farmScanner.scanFarmProxy(world, origin);
+
+        farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
+        // Is the programmed controller valid for this factory
+        if (!scannedFarm.controller.isValid())
+            return null;
 
         return scannedFarm;
     }
@@ -124,7 +129,7 @@ public class FarmBuilder implements IFarmStructure {
 
         if (currFarm == null && scannedFarm == null) {
 
-            LogHelper.info("handleDirtyFarm: do thing");
+            LogHelper.info("handleDirtyFarm: do nothing");
         } else if (currFarm == null && scannedFarm != null) {
 
             LogHelper.info("handleDirtyFarm: fresh farm");

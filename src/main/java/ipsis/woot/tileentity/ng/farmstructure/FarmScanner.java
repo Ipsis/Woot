@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity.ng.farmstructure;
 
+import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.manager.EnumSpawnerUpgrade;
 import ipsis.woot.oss.LogHelper;
@@ -108,19 +109,19 @@ public class FarmScanner implements IFarmScanner {
 
         if (tier == EnumMobFactoryTier.TIER_ONE) {
             positions = new BlockPos[]{
-                    new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0)
+                    new BlockPos(1, 1, 1), new BlockPos(-1, 1, 1)
             };
             upgradeClass = UpgradeTotemTierOne.class;
         } else if (tier == EnumMobFactoryTier.TIER_TWO) {
             positions = new BlockPos[]{
-                    new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0),
-                    new BlockPos(2, 0, 0), new BlockPos(-2, 0, 0)};
+                    new BlockPos(1, 1, 1), new BlockPos(-1, 1, 1),
+                    new BlockPos(2, 1, 1), new BlockPos(-2, 1, 1)};
             upgradeClass = UpgradeTotemTierTwo.class;
         } else {
             positions = new BlockPos[]{
-                    new BlockPos(1, 0, 0), new BlockPos(-1, 0, 0),
-                    new BlockPos(2, 0, 0), new BlockPos(-2, 0, 0),
-                    new BlockPos(3, 0, 0), new BlockPos(-3, 0, 0)};
+                    new BlockPos(1, 1, 1), new BlockPos(-1, 1, 1),
+                    new BlockPos(2, 1, 1), new BlockPos(-2, 1, 1),
+                    new BlockPos(3, 1, 1), new BlockPos(-3, 1, 1)};
             upgradeClass = UpgradeTotemTierThree.class;
         }
 
@@ -138,27 +139,28 @@ public class FarmScanner implements IFarmScanner {
                     ScannedFarmUpgrade.Upgrade upgrade = new ScannedFarmUpgrade.Upgrade();
                     upgrade.upgradeTier = upgradeTotem.spawnerUpgradeLevel;
                     upgrade.blocks.addAll(upgradeTotem.blockPosList);
-
-                    if (EnumSpawnerUpgrade.isRateUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.RATE;
-                    else if (EnumSpawnerUpgrade.isMassUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.MASS;
-                    else if (EnumSpawnerUpgrade.isLootingUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.LOOTING;
-                    else if (EnumSpawnerUpgrade.isXpUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.XP;
-                    else if (EnumSpawnerUpgrade.isDecapitateUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.DECAPITATE;
-                    else if (EnumSpawnerUpgrade.isEfficiencyUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.EFFICIENCY;
-                    else if (EnumSpawnerUpgrade.isBloodMagicUpgrade(upgradeTotem.spawnerUpgrade))
-                        upgrade.upgrade = EnumFarmUpgrade.LIFE_ESSENCE;
-
+                    upgrade.upgrade = EnumFarmUpgrade.getFromEnumSpawnerUpgrade(upgradeTotem.spawnerUpgrade);
                     upgrades.addUpgrade(upgrade);
                 }
             }
         }
 
         return upgrades;
+    }
+
+    @Override
+    public void applyConfiguration(World world, @Nonnull ScannedFarmController farmController, @Nonnull ScannedFarmUpgrade farmUpgrade, EnumMobFactoryTier tier) {
+
+        EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, farmController.wootMob.getWootMobName());
+
+        // TODO fix using the ordinal to order the tier enum
+        if (mobTier.ordinal() > tier.ordinal()) {
+            LogHelper.info("TODO Factory tier not good enough for mob");
+        }
+
+        for (ScannedFarmUpgrade.Upgrade upgrade : farmUpgrade.getUpgrades()) {
+
+            LogHelper.info("TODO validate upgrade against mob");
+        }
     }
 }

@@ -19,13 +19,13 @@ public class HandlerLivingDeathEvent {
         World world = event.getEntity().getEntityWorld();
 
         // Only player kills
-        if (world.isRemote || !(event.getSource().getEntity() instanceof EntityPlayer))
+        if (world.isRemote || !(event.getSource().getTrueSource() instanceof EntityPlayer))
             return;
 
         if (!(event.getEntityLiving() instanceof EntityLivingBase))
             return;
 
-        EntityPlayer entityPlayer = (EntityPlayer)event.getSource().getEntity();
+        EntityPlayer entityPlayer = (EntityPlayer)event.getSource().getTrueSource();
         EntityLivingBase entityLivingBase = event.getEntityLiving();
 
         WootMobName wootMobName = WootMobNameBuilder.create((EntityLiving)entityLivingBase);

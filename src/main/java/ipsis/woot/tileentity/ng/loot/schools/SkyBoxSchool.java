@@ -147,7 +147,7 @@ public class SkyBoxSchool implements ILootLearner {
         if (damageSource == null)
             return;
 
-        if (!FakePlayerPool.isOurFakePlayer(damageSource.getSourceOfDamage()))
+        if (!FakePlayerPool.isOurFakePlayer(damageSource.getTrueSource()))
             return;
 
         // Cancel our fake spawns

@@ -12,6 +12,7 @@ import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMobName;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemPrism extends ItemWoot {
@@ -177,7 +179,7 @@ public class ItemPrism extends ItemWoot {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
         tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".0"));
         tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".1"));
@@ -208,17 +210,17 @@ public class ItemPrism extends ItemWoot {
         return itemStack;
     }
 
-    @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-
-        subItems.add(new ItemStack(itemIn, 1));
-
-        /**
-         * Dragon
-         */
-        ItemStack dragon = new ItemStack(itemIn, 1);
-        setAsEnderDragon(dragon);
-        subItems.add(dragon);
-
-    }
+//    @Override
+//    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+//
+//        subItems.add(new ItemStack(itemIn, 1));
+//
+//        /**
+//         * Dragon
+//         */
+//        ItemStack dragon = new ItemStack(itemIn, 1);
+//        setAsEnderDragon(dragon);
+//        subItems.add(dragon);
+//
+//    }
 }

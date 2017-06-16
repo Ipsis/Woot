@@ -72,10 +72,10 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 
         for (EnumMobFactoryModule m : EnumMobFactoryModule.values())
-            list.add(new ItemStack(itemIn, 1, m.getMetadata()));
+            items.add(new ItemStack(this, 1, m.getMetadata()));
     }
 
     @Override

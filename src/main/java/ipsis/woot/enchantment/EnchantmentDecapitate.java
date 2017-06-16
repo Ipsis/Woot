@@ -68,7 +68,7 @@ public class EnchantmentDecapitate extends Enchantment {
 
         boolean found = false;
         for (EntityItem i : drops) {
-            if (i != null && i.getEntityItem().getItem() == Items.SKULL) {
+            if (i != null && i.getItem().getItem() == Items.SKULL) {
                 found = true;
                 break;
             }
@@ -85,7 +85,7 @@ public class EnchantmentDecapitate extends Enchantment {
 
     public static void handleLivingDrops(LivingDropsEvent e) {
 
-        if (e.getSource().getEntity() == null)
+        if (e.getSource().getTrueSource() == null)
             return;
 
         /* Ignore wither skeletons, only for use on other mobs */
@@ -99,7 +99,7 @@ public class EnchantmentDecapitate extends Enchantment {
             if (!itemStack.isEmpty()) {
 
                 EntityItem entityItem = createEntityItem(
-                        e.getSource().getEntity().getEntityWorld(),
+                        e.getSource().getTrueSource().getEntityWorld(),
                         itemStack,
                         e.getEntityLiving().getPosition().getX(),
                         e.getEntityLiving().getPosition().getY(),

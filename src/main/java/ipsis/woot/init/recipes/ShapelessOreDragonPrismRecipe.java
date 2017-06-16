@@ -12,33 +12,33 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ShapelessOreDragonPrismRecipe extends ShapelessOreRecipe {
-
-    static {
-        RecipeSorter.register(Reference.MOD_ID + ":prism", ShapelessOreDragonPrismRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-    }
-
-    public ShapelessOreDragonPrismRecipe(ItemStack result, Object... recipe) {
-        super(result, recipe);
-    }
-
-    @Override
-    public ItemStack getCraftingResult(InventoryCrafting var1) {
-
-        ItemStack prism = output.copy();
-
-        ArrayList<Object> required = new ArrayList<Object>(input);
-        Iterator<Object> req = required.iterator();
-        while (req.hasNext()) {
-
-            Object next = req.next();
-            if (next instanceof ItemStack) {
-                if (((ItemStack) next).getItem() == Item.getItemFromBlock(Blocks.DRAGON_EGG)) {
-                    ItemPrism.setAsEnderDragon(prism);
-                }
-            }
-        }
-
-        return prism;
-    }
-}
+//public class ShapelessOreDragonPrismRecipe extends ShapelessOreRecipe {
+//
+//    static {
+//        RecipeSorter.register(Reference.MOD_ID + ":prism", ShapelessOreDragonPrismRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
+//    }
+//
+//    public ShapelessOreDragonPrismRecipe(ItemStack result, Object... recipe) {
+//        super(result, recipe);
+//    }
+//
+//    @Override
+//    public ItemStack getCraftingResult(InventoryCrafting var1) {
+//
+//        ItemStack prism = output.copy();
+//
+//        ArrayList<Object> required = new ArrayList<Object>(input);
+//        Iterator<Object> req = required.iterator();
+//        while (req.hasNext()) {
+//
+//            Object next = req.next();
+//            if (next instanceof ItemStack) {
+//                if (((ItemStack) next).getItem() == Item.getItemFromBlock(Blocks.DRAGON_EGG)) {
+//                    ItemPrism.setAsEnderDragon(prism);
+//                }
+//            }
+//        }
+//
+//        return prism;
+//    }
+//}

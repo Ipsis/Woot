@@ -69,7 +69,7 @@ public class LootTable {
             pool.samples++;
 
         for (EntityItem entityItem : drops) {
-            ItemStack itemStack = entityItem.getEntityItem();
+            ItemStack itemStack = entityItem.getItem();
 
             boolean found = false;
             for (Drop d : pool.drops) {

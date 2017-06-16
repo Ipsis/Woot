@@ -1,6 +1,6 @@
 package ipsis.woot.client.manual;
 
-import ipsis.woot.plugins.bloodmagic.BloodMagic;
+//import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import net.minecraftforge.fml.common.Loader;
 
 import java.util.ArrayList;
@@ -42,13 +42,13 @@ public class BookManager {
         addEntry("upgrade_efficiency", new BookPageText("upgrade_efficiency.0"));
         addEntry("enchant_decapitate", new BookPageText("enchant_decapitate.0"));
 
-        if (Loader.isModLoaded(BloodMagic.BM_MODID))
-            addEntry("upgrade_bloodmagic",
-                    new BookPageText("upgrade_bloodmagic.0"),
-                    new BookPageText("upgrade_bloodmagic.1"),
-                    new BookPageText("upgrade_bloodmagic.2"),
-                    new BookPageText("upgrade_bloodmagic.3"),
-                    new BookPageText("upgrade_bloodmagic.4"));
+//        if (Loader.isModLoaded(BloodMagic.BM_MODID))
+ //           addEntry("upgrade_bloodmagic",
+  //                  new BookPageText("upgrade_bloodmagic.0"),
+   //                 new BookPageText("upgrade_bloodmagic.1"),
+    //                new BookPageText("upgrade_bloodmagic.2"),
+     //               new BookPageText("upgrade_bloodmagic.3"),
+      //              new BookPageText("upgrade_bloodmagic.4"));
         
         addEntry("blacklists", new BookPageText("blacklists.0"), new BookPageText("blacklists.1"));
         addEntry("dragon", new BookPageText("dragon.0"), new BookPageText("dragon.1"), new BookPageText("dragon.2"), new BookPageText("dragon.3"));

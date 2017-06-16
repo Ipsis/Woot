@@ -49,10 +49,10 @@ public class BlockMobFactoryUpgradeB extends BlockMobFactoryUpgradeBase implemen
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 
         for (EnumVariantUpgradeB u : EnumVariantUpgradeB.values())
-            list.add(new ItemStack(itemIn, 1, u.getMetadata()));
+            items.add(new ItemStack(this, 1, u.getMetadata()));
     }
 
     @Override

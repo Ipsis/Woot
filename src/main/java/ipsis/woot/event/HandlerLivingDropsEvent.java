@@ -28,7 +28,7 @@ public class HandlerLivingDropsEvent {
             DamageSource damageSource = e.getSource();
             if (damageSource != null) {
 
-                if (FakePlayerPool.isOurFakePlayer(damageSource.getSourceOfDamage())) {
+                if (FakePlayerPool.isOurFakePlayer(damageSource.getTrueSource())) {
                     // Cancel the  factory kills so we dont spawn any loot in the world
                     e.setCanceled(true);
                 }
@@ -72,10 +72,10 @@ public class HandlerLivingDropsEvent {
 
             /* handle decapitate */
             if (damageSource != null && !e.isCanceled()) {
-                if (!(e.getSource().getEntity() instanceof EntityPlayer))
+                if (!(e.getSource().getTrueSource() instanceof EntityPlayer))
                     return;
 
-                EntityPlayer player = (EntityPlayer)e.getSource().getEntity();
+                EntityPlayer player = (EntityPlayer)e.getSource().getTrueSource();
                 ItemStack equipped = player.getHeldItemMainhand();
                 if (!EnchantmentDecapitate.hasEnchantmentDecapitate(equipped))
                     return;

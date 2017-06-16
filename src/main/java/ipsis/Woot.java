@@ -8,7 +8,7 @@ import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
 import ipsis.woot.manager.loot.LootTableManager;
 import ipsis.woot.manager.spawnreq.SpawnReqManager;
-import ipsis.woot.plugins.bloodmagic.BloodMagic;
+//import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
@@ -87,8 +87,8 @@ public class Woot {
 
         proxy.init();
 
-        if (Loader.isModLoaded(BloodMagic.BM_MODID))
-            BloodMagic.init();
+//        if (Loader.isModLoaded(BloodMagic.BM_MODID))
+//            BloodMagic.init();
     }
 
     @Mod.EventHandler

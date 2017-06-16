@@ -5,6 +5,7 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -18,6 +19,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemXpShard extends ItemWoot {
@@ -70,7 +72,7 @@ public class ItemXpShard extends ItemWoot {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
         tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".0"));
         tooltip.add(String.format(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".1"), XP_VALUE));

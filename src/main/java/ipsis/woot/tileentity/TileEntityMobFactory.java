@@ -5,7 +5,7 @@ import ipsis.woot.block.BlockMobFactory;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemXpShard;
 import ipsis.woot.manager.*;
-import ipsis.woot.plugins.bloodmagic.BloodMagic;
+//import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
@@ -486,80 +486,80 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IFarm
      * Else we store the number of mobs for the ritual to pickup
      * /
      */
-    private boolean bmUseTanks(int mobCount) {
-
-        if (!bmKeepAlive || BloodMagic.fluidOutput == null)
-            return false;
-
-        List<IFluidHandler> validHandlers = new ArrayList<>();
-        EnumFacing f = world.getBlockState(pos).getValue(BlockMobFactory.FACING);
-        if (world.isBlockLoaded(this.getPos().offset(f))) {
-            TileEntity te = world.getTileEntity(this.getPos().offset(f));
-            if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
-                validHandlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
-        }
-
-        // Proxy
-        validHandlers.addAll(proxyManager.getIFluidHandlers());
-
-        if (validHandlers.isEmpty())
-            return false;
-
-        /**
-         * sacrificalDaggerCall(20, true) WOSuffering
-         *
-         * (1 + sacrificeEfficiencyMultiplier) * 20
-         * sacrificeEfficiencyMultiplier = 0.10 * sacrifice rune count
-         */
-
-        int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeType().getParam();
-        float sacrificeEfficiencyMultiplier = (float)(0.10 * upgradeSacrificeCount);
-
-        int amount = ((int)((1 + sacrificeEfficiencyMultiplier) * 20)) * mobCount;
-
-        FluidStack out = new FluidStack(BloodMagic.fluidOutput, amount);
-        for (IFluidHandler hdlr : validHandlers) {
-
-            if (out.amount == 0)
-                break;
-
-            int result = hdlr.fill(out, true);
-            out.amount = out.amount - result;
-            if (out.amount < 0)
-                out.amount = 0;
-        }
-
-        bmMobCount = 0;
-        bmSacrificeAmount = 0;
-        return true;
-    }
-
-    private void bmUseRitual(int mobCount, int sacrificeAmount) {
-
-        bmKeepAlive = false;
-        bmMobCount = mobCount;
-        bmSacrificeAmount = sacrificeAmount;
-    }
-
-    private void bmOutput(UpgradeSetup upgradeSetup) {
-
-        if (!upgradeSetup.hasBmUpgrade()) {
-            bmClear();
-            return;
-        }
-
-        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
-        if (upgradeSetup.hasMassUpgrade())
-            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
-
-        // Scale with the upgrades
-        int sacrificeAmount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeType().getParam();
-
-        if (!bmUseTanks(mobCount))
-            bmUseRitual(mobCount, sacrificeAmount);
-
-        bmKeepAlive = false;
-    }
+//    private boolean bmUseTanks(int mobCount) {
+//
+//        if (!bmKeepAlive || BloodMagic.fluidOutput == null)
+//            return false;
+//
+//        List<IFluidHandler> validHandlers = new ArrayList<>();
+//        EnumFacing f = world.getBlockState(pos).getValue(BlockMobFactory.FACING);
+//        if (world.isBlockLoaded(this.getPos().offset(f))) {
+//            TileEntity te = world.getTileEntity(this.getPos().offset(f));
+//            if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
+//                validHandlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
+//        }
+//
+//        // Proxy
+//        validHandlers.addAll(proxyManager.getIFluidHandlers());
+//
+//        if (validHandlers.isEmpty())
+//            return false;
+//
+//        /**
+//         * sacrificalDaggerCall(20, true) WOSuffering
+//         *
+//         * (1 + sacrificeEfficiencyMultiplier) * 20
+//         * sacrificeEfficiencyMultiplier = 0.10 * sacrifice rune count
+//         */
+//
+//        int upgradeSacrificeCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeType().getParam();
+//        float sacrificeEfficiencyMultiplier = (float)(0.10 * upgradeSacrificeCount);
+//
+//        int amount = ((int)((1 + sacrificeEfficiencyMultiplier) * 20)) * mobCount;
+//
+//        FluidStack out = new FluidStack(BloodMagic.fluidOutput, amount);
+//        for (IFluidHandler hdlr : validHandlers) {
+//
+//            if (out.amount == 0)
+//                break;
+//
+//            int result = hdlr.fill(out, true);
+//            out.amount = out.amount - result;
+//            if (out.amount < 0)
+//                out.amount = 0;
+//        }
+//
+//        bmMobCount = 0;
+//        bmSacrificeAmount = 0;
+//        return true;
+//    }
+//
+//    private void bmUseRitual(int mobCount, int sacrificeAmount) {
+//
+//        bmKeepAlive = false;
+//        bmMobCount = mobCount;
+//        bmSacrificeAmount = sacrificeAmount;
+//    }
+//
+//    private void bmOutput(UpgradeSetup upgradeSetup) {
+//
+//        if (!upgradeSetup.hasBmUpgrade()) {
+//            bmClear();
+//            return;
+//        }
+//
+//        int mobCount = Settings.Spawner.DEF_BASE_MOB_COUNT;
+//        if (upgradeSetup.hasMassUpgrade())
+//            mobCount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getMassUpgrade()).getUpgradeType().getParam();
+//
+//        // Scale with the upgrades
+//        int sacrificeAmount = UpgradeManager.getSpawnerUpgrade(upgradeSetup.getBmUpgrade()).getUpgradeType().getParam();
+//
+//        if (!bmUseTanks(mobCount))
+//            bmUseRitual(mobCount, sacrificeAmount);
+//
+//        bmKeepAlive = false;
+//    }
 
     /**
      * Check that there are at least mount of type itemStack in the inventory
@@ -685,7 +685,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable, IFarm
         // Proxy
         validHandlers.addAll(proxyManager.getIItemHandlers());
 
-        bmOutput(upgradeSetup);
+        //bmOutput(upgradeSetup);
 
         for (IItemHandler hdlr : validHandlers) {
 

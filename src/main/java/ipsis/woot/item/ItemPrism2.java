@@ -11,6 +11,7 @@ import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,6 +28,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemPrism2 extends ItemWoot {
@@ -147,7 +149,7 @@ public class ItemPrism2 extends ItemWoot {
      */
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
         if (!isPrism(stack))
             return;
@@ -159,7 +161,7 @@ public class ItemPrism2 extends ItemWoot {
             if (wootMob.isValid()) {
                 tooltip.add(wootMob.getDisplayName());
                 // TODO tooltip.add("Killed: " + wootMob.getDeathCount() + "/1");
-                if (advanced)
+                if (flagIn.isAdvanced())
                     tooltip.add(wootMob.getWootMobName().getName());
             }
         }

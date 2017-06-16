@@ -27,7 +27,7 @@ public class ItemTooltipHandler {
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
             detail = true;
 
-        ((ITooltipInfo)block).getTooltip(event.getToolTip(), event.isShowAdvancedItemTooltips(), meta, detail);
+        ((ITooltipInfo)block).getTooltip(event.getToolTip(), event.getFlags().isAdvanced(), meta, detail);
     }
 
 }

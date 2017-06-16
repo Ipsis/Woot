@@ -9,7 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -72,10 +72,10 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "mcp.mobius.waila:Hwyla:${config.waila_version}"
+    //deobfCompile "mcp.mobius.waila:Hwyla:${config.waila_version}"
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.top_version}"
-    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
+    //deobfCompile "mcjty.theoneprobe:TheOneProbe:${config.top_version}"
+    //deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
 }
 
 processResources

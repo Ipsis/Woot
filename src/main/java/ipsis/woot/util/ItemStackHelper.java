@@ -34,7 +34,7 @@ public class ItemStackHelper {
                     new ItemStack(itemStack.getItem(), i, itemStack.getMetadata()));
 
             if (itemStack.hasTagCompound())
-                entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
+                entityitem.getItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
 
             float f3 = 0.05F;
             entityitem.motionX = RANDOM.nextGaussian() * (double) f3;

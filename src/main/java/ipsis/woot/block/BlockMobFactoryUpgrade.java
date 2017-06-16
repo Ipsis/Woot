@@ -50,10 +50,10 @@ public class BlockMobFactoryUpgrade extends BlockMobFactoryUpgradeBase implement
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 
         for (EnumVariantUpgrade u : EnumVariantUpgrade.values())
-            list.add(new ItemStack(itemIn, 1, u.getMetadata()));
+            items.add(new ItemStack(this, 1, u.getMetadata()));
     }
 
     @Override

@@ -12,23 +12,20 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
 
-public class TESRLayout extends TileEntitySpecialRenderer{
+public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
     @Override
-    public boolean isGlobalRenderer(TileEntity te) {
+    public boolean isGlobalRenderer(TileEntityLayout te) {
 
         // Force the render even when the chunk is out of view
         return true;
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void renderTileEntityAt(TileEntityLayout te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
-        if (!(te instanceof TileEntityLayout))
-            return;
-
-        if (((TileEntityLayout) te).getLayoutBlockInfoList().isEmpty())
-            ((TileEntityLayout) te).refreshLayout();
+        if ( te.getLayoutBlockInfoList().isEmpty())
+            te.refreshLayout();
 
         TileEntityLayout tileEntityLayout = (TileEntityLayout)te;
 

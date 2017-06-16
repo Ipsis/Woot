@@ -7,8 +7,8 @@ import ipsis.woot.event.HandlerLivingDropsEvent;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
-import ipsis.woot.init.ModRecipes;
-import ipsis.woot.plugins.top.TOPCompat;
+//import ipsis.woot.init.ModRecipes;
+//import ipsis.woot.plugins.top.TOPCompat;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -25,13 +25,13 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(new HandlerLivingDeathEvent());
         MinecraftForge.EVENT_BUS.register(new ConfigHandler());
 
-        if (Loader.isModLoaded("theoneprobe"))
-            TOPCompat.register();
+//        if (Loader.isModLoaded("theoneprobe"))
+//            TOPCompat.register();
     }
 
     public void init() {
 
-        ModRecipes.init();
+//        ModRecipes.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(Woot.instance, new GuiProxy());
     }
 

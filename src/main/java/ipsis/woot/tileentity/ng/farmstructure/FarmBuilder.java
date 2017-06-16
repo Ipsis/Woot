@@ -15,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -264,6 +265,15 @@ public class FarmBuilder implements IFarmStructure {
     public List<IItemHandler> getConnectedChests() {
 
         List<IItemHandler> chests = new ArrayList<>();
+
+        // In front of farm
+        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactory.FACING);
+        if (world.isBlockLoaded(origin.offset(facing))) {
+            TileEntity te = world.getTileEntity(origin.offset(facing));
+            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))
+                chests.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
+        }
+
         return chests;
     }
 }

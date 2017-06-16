@@ -7,6 +7,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LootRepository implements ILootRepository {
@@ -23,9 +24,13 @@ public class LootRepository implements ILootRepository {
     }
 
     @Nonnull
-    public List<ItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key) {
+    public List<ItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key, int numMobs) {
 
-        return Woot.LOOT_TABLE_MANAGER.getDrops(wootMobName.getName(), key);
+        List<ItemStack> drops = new ArrayList<>();
+        for (int c = 0; c <= numMobs; c++)
+            drops.addAll(Woot.LOOT_TABLE_MANAGER.getDrops(wootMobName.getName(), key));
+
+        return drops;
     }
 
     public void insert(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops) {

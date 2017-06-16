@@ -12,6 +12,6 @@ public interface ILootRepository {
 
     boolean isEmpty(WootMobName wootMobName, EnumEnchantKey key);
     boolean isFull(WootMobName wootMobName, EnumEnchantKey key);
-    @Nonnull List<ItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key);
+    @Nonnull List<ItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key, int numMobs);
     void insert(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops);
 }

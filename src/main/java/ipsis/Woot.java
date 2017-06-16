@@ -100,6 +100,7 @@ public class Woot {
         LOOT_TABLE_MANAGER.loadInternalBlacklist();
         LOOT_TABLE_MANAGER.loadDragonDrops();
         SPAWN_REQ_MANAGER.loadFromJson();
+        lootGeneration.initialise();;
     }
 
     @Mod.EventHandler

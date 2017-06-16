@@ -24,7 +24,6 @@ public class LootGeneration implements ILootGeneration {
         generatorList.add(new BloodMagicWillGenerator());
     }
 
-
     public void generate(List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, IFarmSetup farmSetup) {
 
         for (ILootGenerator lootGenerator : generatorList)

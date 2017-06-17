@@ -11,9 +11,9 @@ import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
-//import mcjty.theoneprobe.api.IProbeHitData;
-//import mcjty.theoneprobe.api.IProbeInfo;
-//import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -114,21 +114,21 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
         return false;
     }
 
-//    @Override
-//    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-//
-//        TileEntity te = world.getTileEntity(data.getPos());
-//        if (te instanceof TileEntityMobFactoryController) {
-//            TileEntityMobFactoryController controllerTE = (TileEntityMobFactoryController)te;
-//
-//            if (!controllerTE.getModDisplayName().equals((""))) {
-//
-//                EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(controllerTE.getMobName(), controllerTE.getXpValue());
-//                probeInfo.text(TextFormatting.GREEN + controllerTE.getModDisplayName());
-//                probeInfo.text(TextFormatting.BLUE + String.format(t.getTranslated(Lang.WAILA_CONTROLLER_TIER)));
-//            }
-//        }
-//    }
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+
+        TileEntity te = world.getTileEntity(data.getPos());
+        if (te instanceof TileEntityMobFactoryController) {
+            TileEntityMobFactoryController controllerTE = (TileEntityMobFactoryController)te;
+
+            if (!controllerTE.getModDisplayName().equals((""))) {
+
+                EnumMobFactoryTier t = Woot.tierMapper.getTierForEntity(controllerTE.getMobName(), controllerTE.getXpValue());
+                probeInfo.text(TextFormatting.GREEN + controllerTE.getModDisplayName());
+                probeInfo.text(TextFormatting.BLUE + String.format(t.getTranslated(Lang.WAILA_CONTROLLER_TIER)));
+            }
+        }
+    }
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

@@ -16,12 +16,12 @@ import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFarm;
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;
-//import mcjty.theoneprobe.api.IProbeHitData;
-//import mcjty.theoneprobe.api.IProbeInfo;
-//import mcjty.theoneprobe.api.ProbeMode;
-//import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
-//import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
-//import mcjty.theoneprobe.config.Config;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
+import mcjty.theoneprobe.apiimpl.styles.LayoutStyle;
+import mcjty.theoneprobe.config.Config;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -186,123 +186,123 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
 
-//    @Override
-//    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-//
-//        TileEntity te = world.getTileEntity(data.getPos());
-//        if (te instanceof TileEntityMobFactory) {
-//            TileEntityMobFactory factoryTE = (TileEntityMobFactory)te;
-//
-//
-//            if (factoryTE.isFormed()) {
-//
-//                PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
-//
-//                /**
-//                 * Progress
-//                 * Configuration
-//                 */
-//
-//                /**
-//                 * Power & Redstone state
-//                 */
-//                if (Config.getDefaultConfig().getRFMode() == 1) {
-//                    probeInfo.progress(info.storedRF, info.totalRF,
-//                            probeInfo.defaultProgressStyle().
-//                                    suffix("RF").
-//                                    filledColor(Config.rfbarFilledColor).
-//                                    alternateFilledColor(Config.rfbarAlternateFilledColor).
-//                                    borderColor(Config.rfbarBorderColor).
-//                                    numberFormat(Config.rfFormat));
-//                } else {
-//                    probeInfo.text(TextFormatting.RED + "RF: " + ElementProgress.format(info.storedRF, Config.rfFormat, "RF"));
-//                }
-//
-//                probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (info.isRunning ? "On" : "Off"));
-//
-//                /**
-//                 * Progress
-//                 */
-//                if (info.isRunning) {
-//                    int percentage = (int)((100.0F / (float)info.spawnRF) * (float)info.consumedRF);
-//                    TextFormatting form = TextFormatting.GREEN;
-//                    if (percentage > 100)
-//                        form = TextFormatting.RED;
-//
-//                    percentage = Math.min(percentage, 100);
-//                    probeInfo.horizontal().item(new ItemStack(Items.COMPASS), probeInfo.defaultItemStyle().width(14).height(14)).text(form + "Progress: " + percentage + "%");
-//                }
-//
-//                /**
-//                 * Recipe
-//                 */
-//                probeInfo.text(TextFormatting.BLUE + String.format( info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
-//                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
-//                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
-//                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));
-//
-//                if (mode == ProbeMode.EXTENDED) {
-//
-//                    if (factoryTE.getUpgradeSetup() != null) {
-//
-//                        for (EnumSpawnerUpgrade e : factoryTE.getUpgradeSetup().getUpgradeList()) {
-//
-//                            TextFormatting f;
-//                            SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
-//
-//                            if (u.getUpgradeType().getTier() == 1)
-//                                f = TextFormatting.GRAY;
-//                            else if (u.getUpgradeType().getTier() == 2)
-//                                f = TextFormatting.GOLD;
-//                            else
-//                                f = TextFormatting.AQUA;
-//
-//                            probeInfo.text(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + e));
-//                        }
-//
-//                        // Show the drop info
-//                        EnumEnchantKey key = factoryTE.getUpgradeSetup().getEnchantKey();
-//                        List<FullDropInfo> drops = Woot.LOOT_TABLE_MANAGER.getFullDropInfo(factoryTE.getMobName(), key);
-//                        if (drops != null) {
-//
-//                            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
-//                            IProbeInfo horizontal = null;
-//                            int rows = 0;
-//                            int idx = 0;
-//                            for (FullDropInfo drop : drops) {
-//                                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
-//                                    continue;
-//
-//                                if (drop.getItemStack().getItem() == Item.getItemFromBlock(Blocks.BEDROCK))
-//                                    continue;
-//
-//                                if (idx % 10 == 0) {
-//                                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
-//                                    rows++;
-//                                    if (rows > 4)
-//                                        break;
-//                                }
-//
-//                                // TOP allows the itemstack to be > 64
-//                                // So use that renderer to display the chance of getting a drop.
-//                                ItemStack fakeStack = drop.getItemStack().copy();
-//                                fakeStack.setCount((int)Math.ceil(drop.getDropChance()));
-//                                horizontal.item(fakeStack);
-//                                idx++;
-//                            }
-//                        }
-//
-//                    } else {
-//                        probeInfo.text(StringHelper.localize(Lang.WAILA_NO_UPGRADES));
-//                    }
-//
-//
-//                } else {
-//                    probeInfo.text(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
-//                }
-//            }
-//        }
-//    }
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+
+        TileEntity te = world.getTileEntity(data.getPos());
+        if (te instanceof TileEntityMobFactory) {
+            TileEntityMobFactory factoryTE = (TileEntityMobFactory)te;
+
+
+            if (factoryTE.isFormed()) {
+
+                PluginTooltipInfo info = new PluginTooltipInfo(factoryTE);
+
+                /**
+                 * Progress
+                 * Configuration
+                 */
+
+                /**
+                 * Power & Redstone state
+                 */
+                if (Config.getDefaultConfig().getRFMode() == 1) {
+                    probeInfo.progress(info.storedRF, info.totalRF,
+                            probeInfo.defaultProgressStyle().
+                                    suffix("RF").
+                                    filledColor(Config.rfbarFilledColor).
+                                    alternateFilledColor(Config.rfbarAlternateFilledColor).
+                                    borderColor(Config.rfbarBorderColor).
+                                    numberFormat(Config.rfFormat));
+                } else {
+                    probeInfo.text(TextFormatting.RED + "RF: " + ElementProgress.format(info.storedRF, Config.rfFormat, "RF"));
+                }
+
+                probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (info.isRunning ? "On" : "Off"));
+
+                /**
+                 * Progress
+                 */
+                if (info.isRunning) {
+                    int percentage = (int)((100.0F / (float)info.spawnRF) * (float)info.consumedRF);
+                    TextFormatting form = TextFormatting.GREEN;
+                    if (percentage > 100)
+                        form = TextFormatting.RED;
+
+                    percentage = Math.min(percentage, 100);
+                    probeInfo.horizontal().item(new ItemStack(Items.COMPASS), probeInfo.defaultItemStyle().width(14).height(14)).text(form + "Progress: " + percentage + "%");
+                }
+
+                /**
+                 * Recipe
+                 */
+                probeInfo.text(TextFormatting.BLUE + String.format( info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
+                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
+                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_RATE), info.maxMass, info.spawnTime));
+                probeInfo.text(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_COST), info.spawnRF, info.spawnTickRF));
+
+                if (mode == ProbeMode.EXTENDED) {
+
+                    if (factoryTE.getUpgradeSetup() != null) {
+
+                        for (EnumSpawnerUpgrade e : factoryTE.getUpgradeSetup().getUpgradeList()) {
+
+                            TextFormatting f;
+                            SpawnerUpgrade u = UpgradeManager.getSpawnerUpgrade(e);
+
+                            if (u.getUpgradeType().getTier() == 1)
+                                f = TextFormatting.GRAY;
+                            else if (u.getUpgradeType().getTier() == 2)
+                                f = TextFormatting.GOLD;
+                            else
+                                f = TextFormatting.AQUA;
+
+                            probeInfo.text(f + StringHelper.localize(Lang.TOOLTIP_UPGRADE + e));
+                        }
+
+                        // Show the drop info
+                        EnumEnchantKey key = factoryTE.getUpgradeSetup().getEnchantKey();
+                        List<FullDropInfo> drops = Woot.LOOT_TABLE_MANAGER.getFullDropInfo(factoryTE.getMobName(), key);
+                        if (drops != null) {
+
+                            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+                            IProbeInfo horizontal = null;
+                            int rows = 0;
+                            int idx = 0;
+                            for (FullDropInfo drop : drops) {
+                                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
+                                    continue;
+
+                                if (drop.getItemStack().getItem() == Item.getItemFromBlock(Blocks.BEDROCK))
+                                    continue;
+
+                                if (idx % 10 == 0) {
+                                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
+                                    rows++;
+                                    if (rows > 4)
+                                        break;
+                                }
+
+                                // TOP allows the itemstack to be > 64
+                                // So use that renderer to display the chance of getting a drop.
+                                ItemStack fakeStack = drop.getItemStack().copy();
+                                fakeStack.setCount((int)Math.ceil(drop.getDropChance()));
+                                horizontal.item(fakeStack);
+                                idx++;
+                            }
+                        }
+
+                    } else {
+                        probeInfo.text(StringHelper.localize(Lang.WAILA_NO_UPGRADES));
+                    }
+
+
+                } else {
+                    probeInfo.text(StringHelper.localize(Lang.WAILA_EXTRA_UPGRADE));
+                }
+            }
+        }
+    }
 
     public static class PluginTooltipInfo {
 

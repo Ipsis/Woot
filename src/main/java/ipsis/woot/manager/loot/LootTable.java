@@ -5,6 +5,7 @@ import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Settings;
+import mezz.jei.util.MathUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -60,6 +61,34 @@ public class LootTable {
     public void flush(EnumEnchantKey key) {
 
         pools[key.ordinal()] =  new LootPool(key);
+    }
+
+    public void insertStatic(EnumEnchantKey key, ItemStack itemStack, int dropChance) {
+
+        dropChance = MathUtil.clamp(dropChance, 1, 100);
+
+        LootPool pool = getLootPool(key);
+        pool.setSamples(100);
+
+        /**
+         * Pretend we saw it dropChance times in 100 samples
+         */
+        for (int i = 0; i < dropChance; i++) {
+            boolean found = false;
+            for (Drop d : pool.getDrops()) {
+                if (d.itemStack.isItemEqualIgnoreDurability(itemStack)) {
+                    d.update(itemStack.getCount());
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                Drop d = new Drop(itemStack);
+                d.update(itemStack.getCount());
+                pool.addToDrops(d);
+            }
+        }
     }
 
     public void update(EnumEnchantKey key, List<EntityItem> drops, boolean updateCount) {

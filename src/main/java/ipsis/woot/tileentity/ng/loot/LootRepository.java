@@ -56,6 +56,15 @@ public class LootRepository implements ILootRepository {
             }
         }
 
+        e = staticLootTableHashMap.get(wootMobName.getName());
+        if (e != null) {
+            for (int c = 0; c <= numMobs; c++) {
+                List<ItemStack> tmpDrops = new ArrayList<>();
+                e.getDrops(key, tmpDrops);
+                drops.addAll(tmpDrops);
+            }
+        }
+
         return drops;
     }
 
@@ -72,9 +81,15 @@ public class LootRepository implements ILootRepository {
     }
 
     @Override
-    public void insertStatic(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops) {
+    public void insertStatic(WootMobName wootMobName, EnumEnchantKey key, ItemStack itemStack, int dropChance) {
 
+        LootTable e = staticLootTableHashMap.get(wootMobName.getName());
+        if (e == null) {
+            e = new LootTable(wootMobName.getName());
+            staticLootTableHashMap.put(wootMobName.getName(), e);
+        }
 
+        e.insertStatic(key, itemStack, dropChance);
     }
 
     @Override

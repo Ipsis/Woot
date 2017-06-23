@@ -158,6 +158,7 @@ public class ConfigHandler {
         Settings.tierIVMobs = configuration.getStringList(Config.General.TIER_IV_MOB_LIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_TIER_IV_MOBS, StringHelper.localize(Lang.getLangConfigValue(Config.General.TIER_IV_MOB_LIST)));
 
+        /*
         for (int i = 0; i < Settings.tierIMobs.length; i++) {
             Woot.tierMapper.addMapping(Settings.tierIMobs[i], EnumMobFactoryTier.TIER_ONE);
         }
@@ -173,12 +174,12 @@ public class ConfigHandler {
         for (int i = 0; i < Settings.tierIVMobs.length; i++) {
 
             Woot.tierMapper.addMapping(Settings.tierIVMobs[i], EnumMobFactoryTier.TIER_FOUR);
-        }
+        } */
 
         Settings.dropBlacklist = configuration.getStringList(Config.General.DROP_BLACKLIST, Configuration.CATEGORY_GENERAL,
                 Settings.dropBlacklist, StringHelper.localize(Lang.getLangConfigValue(Config.General.DROP_BLACKLIST)));
-        for (int i = 0; i < Settings.dropBlacklist.length; i++)
-            Woot.LOOT_TABLE_MANAGER.addToBlacklist(Settings.dropBlacklist[i]);
+//        for (int i = 0; i < Settings.dropBlacklist.length; i++)
+//            Woot.LOOT_TABLE_MANAGER.addToBlacklist(Settings.dropBlacklist[i]);
 
         Settings.spawnCostList = configuration.getStringList(Config.General.SPAWN_COST_LIST, Configuration.CATEGORY_GENERAL,
                 Settings.Progression.DEF_SPAWN_COST, StringHelper.localize(Lang.getLangConfigValue(Config.General.SPAWN_COST_LIST)));
@@ -209,7 +210,7 @@ public class ConfigHandler {
 
         Woot.mobRegistry.addCosting(MobRegistry.ENDER_DRAGON, Settings.dragonSpawnCost);
         Woot.mobRegistry.addMapping(MobRegistry.ENDER_DRAGON, Settings.dragonDeathCost);
-        Woot.tierMapper.addMapping(MobRegistry.ENDER_DRAGON, EnumMobFactoryTier.TIER_FOUR);
+        //Woot.tierMapper.addMapping(MobRegistry.ENDER_DRAGON, EnumMobFactoryTier.TIER_FOUR);
         Settings.dragonDropList = configuration.getStringList(Config.General.ENDER_DRAGON_DROP_LIST, Configuration.CATEGORY_GENERAL,
                 Settings.EnderDragon.DEF_DRAGON_DROPS, StringHelper.localize(Lang.getLangConfigValue(Config.General.ENDER_DRAGON_DROP_LIST)));
 

@@ -1,16 +1,16 @@
 package ipsis.woot.init.recipes;
 
-import ipsis.woot.item.ItemPrism;
-import ipsis.woot.reference.Reference;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+//import ipsis.woot.item.ItemPrism;
+//import ipsis.woot.reference.Reference;
+//import net.minecraft.init.Blocks;
+//import net.minecraft.inventory.InventoryCrafting;
+//import net.minecraft.item.Item;
+//import net.minecraft.item.ItemStack;
+//import net.minecraftforge.oredict.RecipeSorter;
+//import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.ArrayList;
+//import java.util.Iterator;
 
 //public class ShapelessOreDragonPrismRecipe extends ShapelessOreRecipe {
 //

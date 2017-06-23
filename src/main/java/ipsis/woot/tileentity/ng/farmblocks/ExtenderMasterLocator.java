@@ -6,9 +6,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ProxyMasterLocator implements IFarmBlockMasterLocator {
+public class ExtenderMasterLocator implements IFarmBlockMasterLocator {
 
     @Nullable
+    @Override
     public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
 
         IFarmBlockMaster tmpMaster = null;
@@ -21,7 +22,7 @@ public class ProxyMasterLocator implements IFarmBlockMasterLocator {
         }
 
         if (te instanceof IFarmBlockMaster)
-            tmpMaster = (IFarmBlockMaster)te;
+            tmpMaster = (IFarmBlockMaster) te;
 
         return tmpMaster;
     }

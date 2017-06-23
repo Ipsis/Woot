@@ -37,19 +37,19 @@ public class LootTable {
     public boolean isFull(EnumEnchantKey key) {
 
         LootPool pool = getLootPool(key);
-        return pool.samples >= Settings.sampleSize;
+        return pool.getSamples() >= Settings.sampleSize;
     }
 
     public boolean isEmpty(EnumEnchantKey key) {
 
         LootPool pool = getLootPool(key);
-        return pool.samples == 0;
+        return pool.getSamples() == 0;
     }
 
     public int getSamples(EnumEnchantKey key) {
 
         LootPool pool = getLootPool(key);
-        return pool.samples;
+        return pool.getSamples();
     }
 
     private LootPool getLootPool(EnumEnchantKey key) {
@@ -66,13 +66,13 @@ public class LootTable {
 
         LootPool pool = getLootPool(key);
         if (updateCount)
-            pool.samples++;
+            pool.incSamples();
 
         for (EntityItem entityItem : drops) {
             ItemStack itemStack = entityItem.getItem();
 
             boolean found = false;
-            for (Drop d : pool.drops) {
+            for (Drop d : pool.getDrops()) {
                 if (d.itemStack.isItemEqualIgnoreDurability(itemStack)) {
                     d.update(itemStack.getCount());
                     found = true;
@@ -83,7 +83,7 @@ public class LootTable {
             if (!found) {
                 Drop d = new Drop(itemStack);
                 d.update(itemStack.getCount());
-                pool.drops.add(d);
+                pool.addToDrops(d);
             }
         }
     }
@@ -91,14 +91,11 @@ public class LootTable {
     public void getDrops(EnumEnchantKey key, List<ItemStack> loot) {
 
         LootPool pool = getLootPool(key);
-        for (Drop d : pool.drops) {
+        for (Drop d : pool.getDrops()) {
             float chance = Woot.RANDOM.nextFloat();
-            if (chance <= d.getChance(pool.samples)) {
+            if (chance <= d.getChance(pool.getSamples())) {
                 if (Item.getItemFromBlock(Blocks.BEDROCK) == d.itemStack.getItem())
                     continue;
-
-                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(d.itemStack))
-                    continue;;
 
                 ItemStack dropStack = d.itemStack.copy();
                 dropStack.setCount(d.getWeightedSize());
@@ -118,9 +115,9 @@ public class LootTable {
 
         StringBuilder sb = new StringBuilder();
         LootPool pool = getLootPool(key);
-        sb.append(pool.samples).append(" ");
-        for (Drop d : pool.drops) {
-            float chance = d.getChance(pool.samples) * 100.0F;
+        sb.append(pool.getSamples()).append(" ");
+        for (Drop d : pool.getDrops()) {
+            float chance = d.getChance(pool.getSamples()) * 100.0F;
             sb.append(String.format("[ %dx%s @ %.2f%%",
                     d.count, d.itemStack.getDisplayName(), chance));
 
@@ -141,9 +138,9 @@ public class LootTable {
 
         List<FullDropInfo> info = new ArrayList<FullDropInfo>();
         LootPool pool = getLootPool(key);
-        for (Drop d : pool.drops) {
+        for (Drop d : pool.getDrops()) {
 
-            float chance = d.getChance(pool.samples) * 100.0F;
+            float chance = d.getChance(pool.getSamples()) * 100.0F;
             if (d.itemStack != null)
                 info.add(new FullDropInfo(d.itemStack.copy(), chance));
         }

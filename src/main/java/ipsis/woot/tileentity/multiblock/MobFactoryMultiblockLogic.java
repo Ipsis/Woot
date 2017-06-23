@@ -178,14 +178,6 @@ public class MobFactoryMultiblockLogic {
         /* OK - all structure blocks are present */
         validateChat(player, TextFormatting.GREEN + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_BLOCKS_OK), tier));
 
-        boolean validMobLevel = Woot.tierMapper.isTierValid(teController.getMobName(), teController.getXpValue(), factorySetup.size);
-        if (!validMobLevel) {
-            /* FAIL - invalid tier for mob */
-            if (feedback)
-                validateChat(player, TextFormatting.RED + String.format(StringHelper.localize(Lang.VALIDATE_FACTORY_MOB_TIER), tier));
-            return new FactorySetup();
-        }
-
         return factorySetup;
     }
 

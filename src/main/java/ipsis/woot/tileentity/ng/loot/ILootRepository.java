@@ -6,6 +6,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 import java.util.List;
 
 public interface ILootRepository {
@@ -13,5 +14,9 @@ public interface ILootRepository {
     boolean isEmpty(WootMobName wootMobName, EnumEnchantKey key);
     boolean isFull(WootMobName wootMobName, EnumEnchantKey key);
     @Nonnull List<ItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key, int numMobs);
-    void insert(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops);
+    void insert(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount);
+    void insertStatic(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops);
+
+    void loadFromFile(File file);
+    void saveToFile(File file);
 }

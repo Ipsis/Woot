@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntitySpawner {
+public class EntitySpawner implements IEntitySpawner {
 
     private List<AbstractMobEntity> mobEntityList = new ArrayList<>();
 

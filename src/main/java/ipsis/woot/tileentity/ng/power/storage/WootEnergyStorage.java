@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng.power;
+package ipsis.woot.tileentity.ng.power.storage;
 
 import net.minecraftforge.energy.EnergyStorage;
 

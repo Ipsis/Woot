@@ -6,11 +6,12 @@ import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
 import ipsis.woot.tileentity.ng.farmstructure.FarmBuilder;
 import ipsis.woot.tileentity.ng.farmstructure.IFarmStructure;
-import ipsis.woot.tileentity.ng.mock.MockPowerCalculator;
 import ipsis.woot.tileentity.ng.mock.MockPowerStation;
 import ipsis.woot.tileentity.ng.mock.MockSpawnRecipeConsumer;
 import ipsis.woot.tileentity.ng.mock.MockSpawnRecipeRepository;
-import ipsis.woot.tileentity.ng.power.IPowerStation;
+import ipsis.woot.tileentity.ng.power.calculation.Calculator;
+import ipsis.woot.tileentity.ng.power.calculation.IPowerCalculator;
+import ipsis.woot.tileentity.ng.power.storage.IPowerStation;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -37,13 +38,14 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
 
         // NOTE: this is called without a world on startup
         tickTracker = new SimpleTickTracker();
-        tickTracker.setLearnTickCount(Woot.wootConfiguration.getInteger(EnumConfigKey.LEARN_TICKS));
+        tickTracker.setLearnTickCount(
+                Woot.wootConfiguration.getInteger(EnumConfigKey.LEARN_TICKS) + Woot.RANDOM.nextInt(11));
         tickTracker.setStructureTickCount(20);
 
         powerStation = new MockPowerStation();
         spawnRecipeConsumer = new MockSpawnRecipeConsumer();
         spawnRecipe = new SpawnRecipe();
-        powerCalculator = new MockPowerCalculator();
+        powerCalculator = new Calculator();
         recipeProgressTracker = new SimpleRecipeProgressTracker();
         spawnRecipeRepository = new MockSpawnRecipeRepository();
     }

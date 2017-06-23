@@ -270,8 +270,6 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
                             int rows = 0;
                             int idx = 0;
                             for (FullDropInfo drop : drops) {
-                                if (Woot.LOOT_TABLE_MANAGER.isBlacklisted(drop.getItemStack()))
-                                    continue;
 
                                 if (drop.getItemStack().getItem() == Item.getItemFromBlock(Blocks.BEDROCK))
                                     continue;

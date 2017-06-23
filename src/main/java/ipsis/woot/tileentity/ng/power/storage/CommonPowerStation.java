@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng.power;
+package ipsis.woot.tileentity.ng.power.storage;
 
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import net.minecraftforge.energy.EnergyStorage;

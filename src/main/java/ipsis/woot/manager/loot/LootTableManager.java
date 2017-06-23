@@ -248,32 +248,4 @@ public class LootTableManager {
         }
     }
 
-    /**
-     * Loot file handling
-     */
-    public void load() {
-
-        LogHelper.info("LootTableManager: Load loot statistics from " + Files.getWootFileForDisplay());
-        lootMap = null;
-        try {
-            lootMap = SerializationHelper.readHashMapFromFile(Files.lootFile);
-        } catch (FileNotFoundException e) {
-            /**
-             * If it is no there then we start empty
-             */
-            lootMap = new HashMap<String, LootTable>();
-        }
-
-        /**
-         * Catch the case where the file exists but is empty and doesn't throw any exceptions
-         */
-        if (lootMap == null)
-            lootMap = new HashMap<String, LootTable>();
-    }
-
-    public void save() {
-
-        LogHelper.info("LootTableManager: Save loot statistics to " + Files.getWootFileForDisplay());
-        SerializationHelper.writeHashMapToFile(lootMap, Files.lootFile);
-    }
 }

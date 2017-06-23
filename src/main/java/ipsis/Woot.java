@@ -1,6 +1,7 @@
 package ipsis;
 
 import ipsis.woot.command.CommandWoot;
+import ipsis.woot.command.WootCommand;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModEnchantments;
@@ -21,6 +22,8 @@ import ipsis.woot.tileentity.ng.configuration.WootConfigurationManager;
 import ipsis.woot.tileentity.ng.loot.*;
 import ipsis.woot.tileentity.ng.loot.schools.SkyBoxSchool;
 import ipsis.woot.tileentity.ng.spawning.EntitySpawner;
+import ipsis.woot.tileentity.ng.spawning.IEntitySpawner;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,7 +45,6 @@ public class Woot {
     public static MobRegistry mobRegistry = new MobRegistry();
     public static HeadRegistry headRegistry = new HeadRegistry();
     public static Random RANDOM = new Random();
-    public static TierMapper tierMapper = new TierMapper();
     public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
     public static SpawnReqManager SPAWN_REQ_MANAGER = new SpawnReqManager();
     public static boolean devMode = false;
@@ -51,7 +53,8 @@ public class Woot {
     public static ILootLearner lootLearner = new SkyBoxSchool();
     public static ILootRepository lootRepository = new LootRepository();
     public static IMobCost mobCosting = new MobXPManager();
-    public static EntitySpawner entitySpawner = new EntitySpawner();
+    public static IEntitySpawner entitySpawner = new EntitySpawner();
+    public static DebugSetup debugSetup = new DebugSetup();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();
@@ -97,8 +100,6 @@ public class Woot {
         proxy.postInit();
         headRegistry.init();
         ModEnchantments.postInit();
-        LOOT_TABLE_MANAGER.loadInternalBlacklist();
-        LOOT_TABLE_MANAGER.loadDragonDrops();
         SPAWN_REQ_MANAGER.loadFromJson();
         lootGeneration.initialise();;
     }
@@ -106,13 +107,14 @@ public class Woot {
     @Mod.EventHandler
     public void serverStart(FMLServerStartingEvent event) {
 
-        LOOT_TABLE_MANAGER.load();
+        lootRepository.loadFromFile(Files.getLootFile());
         event.registerServerCommand(new CommandWoot());
+        event.registerServerCommand(new WootCommand());
     }
 
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
 
-        LOOT_TABLE_MANAGER.save();
+        lootRepository.saveToFile(Files.getLootFile());
     }
 }

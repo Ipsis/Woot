@@ -3,6 +3,7 @@ package ipsis.woot.command;
 import ipsis.Woot;
 import ipsis.woot.item.ItemPrism;
 import ipsis.woot.manager.EnumEnchantKey;
+import ipsis.woot.reference.Reference;
 import net.minecraft.command.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +31,7 @@ public class CommandWoot extends CommandBase {
     @Override
     public String getName() {
 
-        return "woot";
+        return Reference.MOD_NAME_LOWER + "_old";
     }
 
     @Override
@@ -69,8 +70,6 @@ public class CommandWoot extends CommandBase {
             loot(server, sender, args);
         else if ("blacklist".equals(args[0]))
             Woot.LOOT_TABLE_MANAGER.dumpBlacklist(sender);
-        else if ("tiers".equals(args[0]))
-            Woot.tierMapper.cmdDumpTiers(sender);
         else if ("prism".equals(args[0]))
             Woot.mobRegistry.cmdDumpPrism(sender);
         else if ("cost".equals(args[0]))

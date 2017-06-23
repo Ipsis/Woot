@@ -1,7 +1,7 @@
 package ipsis.woot.tileentity.ng.mock;
 
 import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.ng.power.IPowerStation;
+import ipsis.woot.tileentity.ng.power.storage.IPowerStation;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 

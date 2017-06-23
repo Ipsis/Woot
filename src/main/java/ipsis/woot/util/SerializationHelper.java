@@ -77,7 +77,7 @@ public class SerializationHelper {
         return list;
     }
 
-    private static String readJsonFile(File file) throws FileNotFoundException {
+    public static String readJsonFile(File file) throws FileNotFoundException {
 
         StringBuilder sb = new StringBuilder();
         if (file != null) {
@@ -97,7 +97,7 @@ public class SerializationHelper {
         return sb.toString();
     }
 
-    private static void writeJsonFile(File file, String data) {
+    public static void writeJsonFile(File file, String data) {
 
         if (file == null)
             return;

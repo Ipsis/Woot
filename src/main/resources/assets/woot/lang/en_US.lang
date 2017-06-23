@@ -389,3 +389,10 @@ book.woot:extrareq.0=If your factory is not producing any output then you need t
 book.woot:extrareq.1=If extra items are required, then it will tell you how many for your current setup. These items must be placed in a chest above the mob controller. They will be consumed at the point that loot is generated.
 book.woot:extrareq.2=If extra fluids are required, then it will tell you what and how much. This must be in a tank above your mob controller and will be consumed at the point that loot is generated.
 
+########## NEW STUFF ##########
+commands.woot.usage=Use /woot <subcommand>.
+commands.woot.dev.usage=Use /woot dev <subcommand>.
+commands.woot.dev.debug.usage=Use /woot dev debug {[!]event|show}.
+commands.woot.dev.power.usage=Use /woot dev power <bool>.
+commands.woot.dev.debug.power.disabled=Farms do not need power.
+commands.woot.dev.debug.trace_loot_event.enabled=Tracing loot drop event.

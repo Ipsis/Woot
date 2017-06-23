@@ -10,6 +10,9 @@ import java.util.List;
 
 public class DecapitationGenerator implements ILootGenerator {
 
+    /**
+     * ILootGenerator
+     */
     public void generate(@Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup) {
 
         LogHelper.info("Generating mob skulls into chest");

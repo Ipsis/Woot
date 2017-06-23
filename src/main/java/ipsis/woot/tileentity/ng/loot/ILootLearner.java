@@ -9,5 +9,5 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 public interface ILootLearner {
 
     void tick(ITickTracker tickTracker, World world, BlockPos origin, IFarmSetup farmSetup);
-    void onivingDropsEvent(LivingDropsEvent e);
+    void onLivingDropsEvent(LivingDropsEvent e);
 }

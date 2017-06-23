@@ -12,8 +12,8 @@ import java.util.List;
 public class LootPool {
 
     private EnumEnchantKey key;
-    int samples; // count of times that we have sampled a kill of this mob
-    List<Drop> drops;
+    private int samples; // count of times that we have sampled a kill of this mob
+    private List<Drop> drops;
 
     public LootPool(EnumEnchantKey key) {
         this(key, 0, new ArrayList<Drop>());
@@ -23,6 +23,26 @@ public class LootPool {
         this.key = key;
         this.samples = samples;
         this.drops = drops;
+    }
+
+    public void setSamples(int samples) {
+        this.samples = samples;
+    }
+
+    public int getSamples() {
+        return this.samples;
+    }
+
+    public void incSamples() {
+        this.samples++;
+    }
+
+    public void addToDrops(Drop d) {
+        this.drops.add(d);
+    }
+
+    public List<Drop> getDrops() {
+        return this.drops;
     }
 
     /**

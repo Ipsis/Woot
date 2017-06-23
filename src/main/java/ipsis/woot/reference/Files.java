@@ -6,9 +6,9 @@ import java.io.File;
 
 public class Files {
 
-    public static File globalDataDirectory;
-    public static File configDirectory;
-    public static File lootFile;
+    private static File globalDataDirectory;
+    private static File configDirectory;
+    private static File lootFile;
     public static File spawnReqFile;
     public static File configFile;
 
@@ -25,6 +25,16 @@ public class Files {
         lootFile = new File(globalDataDirectory, LOOT_FILENAME);
         spawnReqFile = new File(configDirectory + File.separator + Reference.MOD_ID, SPAWN_REQ_FILENAME);
         configFile = new File(configDirectory + File.separator + Reference.MOD_ID, CONFIG_FILENAME);
+    }
+
+    public static File getLootFile() {
+
+        return lootFile;
+    }
+
+    public static File getConfigFile() {
+
+        return configFile;
     }
 
     public static String getWootFileForDisplay() {

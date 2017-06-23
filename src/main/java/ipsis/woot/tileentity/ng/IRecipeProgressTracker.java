@@ -1,6 +1,6 @@
 package ipsis.woot.tileentity.ng;
 
-import ipsis.woot.tileentity.ng.power.IPowerStation;
+import ipsis.woot.tileentity.ng.power.storage.IPowerStation;
 
 public interface IRecipeProgressTracker {
 

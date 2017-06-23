@@ -1,9 +1,7 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
-import ipsis.woot.item.ItemPrism;
 import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.reference.Reference;
 import net.minecraft.command.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +29,7 @@ public class CommandWoot extends CommandBase {
     @Override
     public String getName() {
 
-        return Reference.MOD_NAME_LOWER + "_old";
+        return "woot";
     }
 
     @Override
@@ -122,7 +120,8 @@ public class CommandWoot extends CommandBase {
         String wootName = args[2];
         int xp = parseInt(args[3]);
 
-        ItemStack itemstack = ItemPrism.getItemStack(wootName, xp);
+        ItemStack itemstack = null;
+
         if (itemstack == null)
             return;
 

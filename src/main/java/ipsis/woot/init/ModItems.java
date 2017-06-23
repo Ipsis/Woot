@@ -7,7 +7,6 @@ public class ModItems {
 
     public static void preInit() {
 
-        GameRegistry.register(itemPrism);
         GameRegistry.register(itemPrism2);
         GameRegistry.register(itemXpShard);
         GameRegistry.register(itemSkull);
@@ -31,7 +30,6 @@ public class ModItems {
         GameRegistry.register(itemManual);
     }
 
-    public static ItemWoot itemPrism = new ItemPrism();
     public static ItemWoot itemPrism2 = new ItemPrism2();
     public static ItemWoot itemXpShard = new ItemXpShard();
     public static ItemWoot itemSkull = new ItemSkull();

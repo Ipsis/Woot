@@ -26,7 +26,6 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.blockProxy.initModel();
         ModBlocks.blockExtender.initModel();
 
-        ModItems.itemPrism.initModel();
         ModItems.itemPrism2.initModel();
         ModItems.itemXpShard.initModel();
         ModItems.itemSkull.initModel();

@@ -1,15 +1,11 @@
 package ipsis.woot.block;
 
-import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
-import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.tileentity.TileEntityMobFactory;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
 import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -24,13 +20,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +124,8 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
+        LogHelper.info("Controller: onBlockActivated ???");
+        /*
         if (!worldIn.isRemote) {
             
             BlockPos factoryPos = pos.offset(EnumFacing.DOWN, 1);
@@ -140,7 +136,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
             if (isController && isFactory)
                 return worldIn.getBlockState(factoryPos).getBlock().onBlockActivated(worldIn, factoryPos,
                         worldIn.getBlockState(factoryPos), playerIn, hand, facing, hitX, hitY, hitZ);
-        }
+        } */
 
         return true;
     }

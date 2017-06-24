@@ -38,68 +38,6 @@ public class UpgradeSetup {
         upgradeList.clear();
     }
 
-    private int calcUpgradeCost(int tier, int tICost, int tIICost, int tIIICost) {
-
-        if (tier == 1)
-            return tICost;
-        else if (tier == 2)
-            return tIICost;
-        else
-            return tIIICost;
-    }
-
-    public void processUpgrades(List<SpawnerUpgrade> upgradeList) {
-
-        clear();
-        this.enchantKey = UpgradeManager.getLootingEnchant(upgradeList);
-
-        SpawnerUpgrade u;
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.MASS);
-        if (u != null) {
-            massUpgrade = u.getUpgradeType();
-            this.upgradeList.add(massUpgrade);
-        }
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.RATE);
-        if (u != null) {
-            rateUpgrade = u.getUpgradeType();
-            this.upgradeList.add(rateUpgrade);
-        }
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.DECAPITATE);
-        if (u != null) {
-            decapitateUpgrade = u.getUpgradeType();
-            this.upgradeList.add(decapitateUpgrade);
-        }
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.LOOTING);
-        if (u != null) {
-            lootingUpgrade = u.getUpgradeType();
-            this.upgradeList.add(lootingUpgrade);
-        }
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.XP);
-        if (u != null) {
-            xpUpgrade = u.getUpgradeType();
-            this.upgradeList.add(xpUpgrade);
-        }
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.BLOOD_MAGIC);
-        if (u != null) {
-            bmUpgrade = u.getUpgradeType();
-            this.upgradeList.add(bmUpgrade);
-        }
-
-        u = UpgradeManager.getUpgrade(upgradeList, UpgradeManager.EnumUpgradeType.EFFICIENCY);
-        if (u != null) {
-            efficiencyUpgrade = u.getUpgradeType();
-            this.upgradeList.add(efficiencyUpgrade);
-
-            /* No cost for efficiency */
-        }
-    }
-
     public boolean hasBmUpgrade() { return bmUpgrade != null; }
     public boolean hasMassUpgrade() { return massUpgrade != null; }
     public boolean hasRateUpgrade() { return rateUpgrade != null; }

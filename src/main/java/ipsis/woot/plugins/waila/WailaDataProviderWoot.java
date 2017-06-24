@@ -1,33 +1,10 @@
 package ipsis.woot.plugins.waila;
 
-import ipsis.Woot;
-import ipsis.woot.block.BlockMobFactory;
-import ipsis.woot.init.ModBlocks;
-import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.manager.SpawnerUpgrade;
-import ipsis.woot.manager.UpgradeManager;
-import ipsis.woot.reference.Lang;
-import ipsis.woot.tileentity.TileEntityMobFactory;
-import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
-import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.StringHelper;
 //import mcp.mobius.waila.api.IWailaConfigHandler;
 //import mcp.mobius.waila.api.IWailaDataAccessor;
 //import mcp.mobius.waila.api.IWailaDataProvider;
 //import mcp.mobius.waila.api.IWailaRegistrar;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagByteArray;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 
-import java.util.List;
 
 //public class WailaDataProviderWoot implements IWailaDataProvider {
 //    private static WailaDataProviderWoot INSTANCE = new WailaDataProviderWoot();

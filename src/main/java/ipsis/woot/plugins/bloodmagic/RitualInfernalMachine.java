@@ -4,12 +4,7 @@ package ipsis.woot.plugins.bloodmagic;
 //import WayofTime.bloodmagic.api.saving.SoulNetwork;
 //import WayofTime.bloodmagic.api.util.helper.NetworkHelper;
 //import WayofTime.bloodmagic.tile.TileAltar;
-import ipsis.woot.tileentity.TileEntityMobFactory;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-import java.util.ArrayList;
 
 /**
  * This is essentially the Well Of Suffering, except

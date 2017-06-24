@@ -94,6 +94,7 @@ public class EnchantmentDecapitate extends Enchantment {
 
         if (hasDecapitated() && !containsSkull(e.getDrops())) {
 
+            /*
             ItemStack itemStack = Woot.headRegistry.getVanillaHead((EntityLiving)e.getEntityLiving());
 
             if (!itemStack.isEmpty()) {
@@ -107,7 +108,7 @@ public class EnchantmentDecapitate extends Enchantment {
 
                 if (entityItem != null)
                     e.getDrops().add(entityItem);
-            }
+            } */
         }
     }
 

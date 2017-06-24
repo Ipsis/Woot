@@ -1,10 +1,8 @@
 package ipsis.woot.manager;
 
 import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
-import ipsis.woot.util.WootMob;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ConfigManager {
@@ -12,7 +10,7 @@ public class ConfigManager {
     private static final ConfigManager INSTANCE = new ConfigManager();
     public static ConfigManager instance() { return INSTANCE; }
 
-    private ConfigManager() { loadDefaults(); }
+    private ConfigManager() { }
 
     private Map<EnumConfigKey, Integer> integerMap = new HashMap<>();
     private Map<EnumConfigKey, Boolean> booleanMap = new HashMap<>();
@@ -41,30 +39,6 @@ public class ConfigManager {
             return booleanMap.get(key);
 
         return false;
-    }
-
-    public void loadDefaults() {
-
-        List<EnumConfigKey> keys = EnumConfigKey.getBooleanKeys();
-        for (EnumConfigKey k : keys)
-            booleanMap.put(k, k.getDefaultBoolean());
-
-        keys = EnumConfigKey.getIntegerKeys();
-        for (EnumConfigKey k : keys)
-            integerMap.put(k, k.getDefaultInteger());
-
-        WootMob.addToInternalModBlacklist("cyberware");
-        WootMob.addToInternalModBlacklist("botania");
-        WootMob.addToInternalModBlacklist("withercrumbs");
-        WootMob.addToInternalModBlacklist("draconicevolution");
-
-        WootMob.addToInternalMobBlacklist("arsmagica2.Dryad");
-        WootMob.addToInternalMobBlacklist("abyssalcraft.lesserdreadbeast");
-        WootMob.addToInternalMobBlacklist("abyssalcraft.greaterdreadspawn");
-        WootMob.addToInternalMobBlacklist("abyssalcraft.chagaroth");
-        WootMob.addToInternalMobBlacklist("abyssalcraft.shadowboss");
-        WootMob.addToInternalMobBlacklist("abyssalcraft.Jzahar");
-        WootMob.addToInternalMobBlacklist("roots.spriteGuardian");
     }
 
 

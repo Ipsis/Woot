@@ -81,31 +81,6 @@ public class MobRegistry {
         }
     }
 
-    public boolean isPrismValid(String wootName) {
-
-        if (isEnderDragon(wootName) && !Settings.allowEnderDragon)
-            return false;
-
-        if (MobBlacklist.isMobBlacklisted(wootName))
-            return false;
-
-        String[] mobList;
-        if (Settings.usePrismWhitelist)
-            mobList = Settings.prismWhitelist;
-        else
-            mobList = Settings.prismBlacklist;
-
-        for (int i = 0; i < mobList.length; i++) {
-            if (mobList[i].equalsIgnoreCase(wootName)) {
-                return mobList == Settings.prismWhitelist;
-            }
-        }
-
-        // not on blacklist: valid
-        // not on whitelist: invalid
-        return mobList == Settings.prismBlacklist;
-    }
-
     public void cmdDumpPrism(ICommandSender sender) {
 
         //sender.sendMessage(new TextComponentTranslation("commands.Woot:woot.dump.blacklist.summary", ENDER_DRAGON));

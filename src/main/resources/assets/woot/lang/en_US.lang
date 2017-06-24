@@ -39,42 +39,36 @@ tile.woot:upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
 tile.woot:upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
 tile.woot:upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
 
-item.woot:yahhammer.name=Yah Hammer
-
-item.woot:pulverisedferrocrete.name=Pulverised UnderIron
-item.woot:ferrocrete.name=UnderIron
-
-item.woot:prism.name=Mob Prism
-item.woot:prism2.name=Mob Prism
-item.woot:prismframe.name=Mob Prism Frame
-item.woot:xpShard.name=Xp Shard
-item.woot:skull.iron.name=Iron Plated Skull
-item.woot:skull.gold.name=Gold Plated Skull
-item.woot:skull.diamond.name=Diamond Encrusted Skull
-item.woot:skull.emerald.name=Emerald Encrusted Skull
-item.woot:shard.diamond.name=Diamond Shard
-item.woot:shard.emerald.name=Emerald Shard
-item.woot:shard.quartz.name=Quartz Shard
-item.woot:shard.netherstar.name=Nether Star Shard
-item.woot:dye.plate.name=Plate Die
-item.woot:dye.casing.name=Casing Die
-item.woot:dye.skull.name=Skull Die
-item.woot:dye.connector.name=Connector Die
-item.woot:dye.shard.name=Shard Die
-item.woot:dye.mesh.name=Mesh Die
-item.woot:dye.prism.name=Prism Die
-item.woot:factoryupgrade.tier_i.name=Tier I Upgrade
-item.woot:factoryupgrade.tier_ii.name=Tier II Upgrade
-item.woot:factoryupgrade.tier_iii.name=Tier III Upgrade
-
-item.woot:manual.name=woot Manual [WIP]
-
-item.woot:ferrocreteplate.name=UnderIron Plate
-item.woot:factorycasing.name=Factory Casing
-item.woot:factorycap.name=Factory Cap
-item.woot:factoryconnector.name=Factory Connector
-
-item.woot:factoryFrame.name=Factory Frame [Deprecated]
+item.woot.yahhammer.name=Yah Hammer
+item.woot.pulverisedferrocrete.name=Pulverised UnderIron
+item.woot.ferrocrete.name=UnderIron
+item.woot.prism2.name=Mob Prism
+item.woot.prismframe.name=Mob Prism Frame
+item.woot.xpShard.name=Xp Shard
+item.woot.skull.iron.name=Iron Plated Skull
+item.woot.skull.gold.name=Gold Plated Skull
+item.woot.skull.diamond.name=Diamond Encrusted Skull
+item.woot.skull.emerald.name=Emerald Encrusted Skull
+item.woot.shard.diamond.name=Diamond Shard
+item.woot.shard.emerald.name=Emerald Shard
+item.woot.shard.quartz.name=Quartz Shard
+item.woot.shard.netherstar.name=Nether Star Shard
+item.woot.dye.plate.name=Plate Die
+item.woot.dye.casing.name=Casing Die
+item.woot.dye.skull.name=Skull Die
+item.woot.dye.connector.name=Connector Die
+item.woot.dye.shard.name=Shard Die
+item.woot.dye.mesh.name=Mesh Die
+item.woot.dye.prism.name=Prism Die
+item.woot.factoryupgrade.tier_i.name=Tier I Upgrade
+item.woot.factoryupgrade.tier_ii.name=Tier II Upgrade
+item.woot.factoryupgrade.tier_iii.name=Tier III Upgrade
+item.woot.manual.name=woot Manual [WIP]
+item.woot.ferrocreteplate.name=UnderIron Plate
+item.woot.factorycasing.name=Factory Casing
+item.woot.factorycap.name=Factory Cap
+item.woot.factoryconnector.name=Factory Connector
+item.woot.factoryFrame.name=Factory Frame [Deprecated]
 
 waila.woot:factory.tier=Tier %s
 waila.woot:factory.mob=Spawning %s

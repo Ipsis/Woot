@@ -13,7 +13,6 @@ public class ItemWoot extends Item {
     public ItemWoot(String name) {
         super();
         setCreativeTab(Woot.tabWoot);
-        setUnlocalizedName(name);
     }
 
     @SideOnly(Side.CLIENT)
@@ -25,15 +24,5 @@ public class ItemWoot extends Item {
     @SideOnly(Side.CLIENT)
     public void initModel() {
 
-    }
-
-    @Override
-    public String getUnlocalizedName() {
-        return UnlocalizedName.getUnlocalizedNameItem(super.getUnlocalizedName());
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack itemStack) {
-        return this.getUnlocalizedName();
     }
 }

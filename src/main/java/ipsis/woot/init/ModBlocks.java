@@ -6,21 +6,17 @@ import ipsis.woot.item.ItemBlockStructure;
 import ipsis.woot.item.ItemBlockUpgrade;
 import ipsis.woot.item.ItemBlockUpgradeB;
 import ipsis.woot.tileentity.*;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModBlocks {
 
     public static void preInit() {
 
-        GameRegistry.register(blockFactory);
-        GameRegistry.register(blockUpgrade);
-        GameRegistry.register(blockUpgradeB);
-        GameRegistry.register(blockStructure);
-        GameRegistry.register(blockController);
-        GameRegistry.register(blockLayout);
-        GameRegistry.register(blockProxy);
-        GameRegistry.register(blockExtender);
         GameRegistry.register(new ItemBlock(blockFactory).setRegistryName(blockFactory.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgrade(blockUpgrade).setRegistryName(blockUpgrade.getRegistryName()));
         GameRegistry.register(new ItemBlockUpgradeB(blockUpgradeB).setRegistryName(blockUpgradeB.getRegistryName()));

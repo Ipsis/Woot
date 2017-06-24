@@ -2,6 +2,7 @@ package ipsis;
 
 import ipsis.woot.command.CommandWoot;
 import ipsis.woot.command.WootCommand;
+import ipsis.woot.event.HandlerRegistryEvent;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModEnchantments;
@@ -23,9 +24,11 @@ import ipsis.woot.tileentity.ng.loot.schools.SkyBoxSchool;
 import ipsis.woot.tileentity.ng.spawning.EntitySpawner;
 import ipsis.woot.tileentity.ng.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -64,6 +67,11 @@ public class Woot {
             return new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactory));
         }
     };
+
+    public Woot() {
+
+        MinecraftForge.EVENT_BUS.register(new HandlerRegistryEvent());
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {

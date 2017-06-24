@@ -1,10 +1,10 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.tileentity.ng.farmblocks.ExtenderMasterLocator;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockProxy;
+import ipsis.woot.farmblocks.ExtenderMasterLocator;
+import ipsis.woot.farmblocks.IFarmBlockConnection;
+import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.farmblocks.IFarmBlockProxy;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

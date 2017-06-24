@@ -1,94 +1,82 @@
 package ipsis.woot.util;
 
 import ipsis.woot.reference.Reference;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
-import javax.annotation.Nullable;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-/**
- * This is the key that most of the mod uses.
- * woot:extra:mcname
- */
 public class WootMobName {
 
-    private String mcName;
-    private String tag;
-
-    private WootMobName() { tag = "none"; mcName = "minecraft:pig"; };
-
-    public static WootMobName createFromEntity(EntityLivingBase entityLivingBase) {
-
-        WootMobName c = new WootMobName();
-
-        ResourceLocation resourceLocation = EntityList.getKey(entityLivingBase);
-        if (resourceLocation == null)
-            c = null;
-        else
-            c.mcName = resourceLocation.toString();
-
-        return c;
+    public String getEntityKey() {
+        return entityKey;
     }
 
-    @Nullable
-    public static WootMobName createFromString(String name) {
+    private String entityKey = "INVALID";
 
-        WootMobName c = new WootMobName();
-
-        Pattern pattern = Pattern.compile("(\\w*):(\\w*):(.*)");
-        Matcher matcher = pattern.matcher(name);
-
-        if (!matcher.find())
-            return null;
-
-        if (matcher.groupCount() != 3)
-            return null;
-
-        if (!matcher.group(1).equalsIgnoreCase(Reference.MOD_ID))
-            return null;
-
-        c.tag = matcher.group(2);
-        c.mcName = matcher.group(3);
-        return c;
+    public String getTag() {
+        return tag;
     }
 
-    public ResourceLocation getResourceLocation() {
+    private String tag = "none";
 
-        return new ResourceLocation(mcName);
+    public String getName() {
+        return name;
+    }
+
+    private String name;
+
+    public WootMobName() {
+
+        this.name = Reference.MOD_ID + ":" + this.tag + ":" + this.entityKey;
     }
 
     @Override
     public String toString() {
 
-        return Reference.MOD_ID + ":" + tag + ":" + mcName;
+        return this.name;
+    }
+
+    public WootMobName(String entityKey, String tag) {
+
+        this.entityKey = entityKey;
+        this.tag = tag;
+        this.name = Reference.MOD_ID + ":" + this.tag + ":" + this.entityKey;
+    }
+
+    public boolean isValid() {
+
+        return !this.entityKey.equals("INVALID");
+    }
+
+    public ResourceLocation getResourceLocation() {
+
+        return new ResourceLocation(entityKey);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object o) {
 
-        if (obj == this)
+        if (this == o)
             return true;
 
-        if (!(obj instanceof WootMobName))
+        if (o == null || getClass() != o.getClass())
             return false;
 
-        WootMobName wootMobName = (WootMobName)obj;
+        WootMobName that = (WootMobName)o;
 
-        return wootMobName.tag.equalsIgnoreCase(this.tag) && wootMobName.mcName.equalsIgnoreCase(this.mcName);
+        if (!entityKey.equalsIgnoreCase(that.entityKey))
+            return false;
+
+        if (!tag.equalsIgnoreCase(that.tag))
+            return false;
+
+        return name.equalsIgnoreCase(that.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(tag, mcName);
+        int result = entityKey.hashCode();
+        result = 31 * result + tag.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
     }
-
-    public String getTag() { return tag; }
-    public String getKey() { return mcName; }
 }

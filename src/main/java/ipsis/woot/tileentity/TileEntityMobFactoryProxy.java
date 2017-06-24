@@ -1,10 +1,10 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockProxy;
-import ipsis.woot.tileentity.ng.farmblocks.ProxyMasterLocator;
+import ipsis.woot.farmblocks.IFarmBlockConnection;
+import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.farmblocks.IFarmBlockProxy;
+import ipsis.woot.farmblocks.ProxyMasterLocator;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -13,8 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 

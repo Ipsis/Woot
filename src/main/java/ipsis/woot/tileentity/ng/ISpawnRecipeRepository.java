@@ -1,5 +1,7 @@
 package ipsis.woot.tileentity.ng;
 
+import ipsis.woot.util.WootMobName;
+
 import javax.annotation.Nullable;
 
 public interface ISpawnRecipeRepository {

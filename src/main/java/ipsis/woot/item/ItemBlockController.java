@@ -1,11 +1,10 @@
 package ipsis.woot.item;
 
-import ipsis.woot.tileentity.ng.WootMob;
-import ipsis.woot.tileentity.ng.WootMobBuilder;
+import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

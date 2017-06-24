@@ -1,6 +1,6 @@
 package ipsis.woot.tileentity;
 
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
+import ipsis.woot.multiblock.EnumMobFactoryModule;
 import net.minecraft.util.math.BlockPos;
 
 public class LayoutBlockInfo {

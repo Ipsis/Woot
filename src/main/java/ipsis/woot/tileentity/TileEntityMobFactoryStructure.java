@@ -1,21 +1,17 @@
 package ipsis.woot.tileentity;
 
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockStructure;
-import ipsis.woot.tileentity.ng.farmblocks.StructureMasterLocator;
+import ipsis.woot.farmblocks.IFarmBlockConnection;
+import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.farmblocks.IFarmBlockStructure;
+import ipsis.woot.farmblocks.StructureMasterLocator;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBlockConnection, IFarmBlockStructure {
 

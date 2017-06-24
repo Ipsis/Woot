@@ -1,9 +1,12 @@
 package ipsis.woot.tileentity.ng;
 
 import ipsis.Woot;
-import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
+import ipsis.woot.util.EnumEnchantKey;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.util.EnumFarmUpgrade;
+import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobName;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -26,7 +29,8 @@ public class FarmSetup implements IFarmSetup {
         return wootMob;
     }
 
-    public @Nonnull WootMobName getWootMobName() {
+    public @Nonnull
+    WootMobName getWootMobName() {
 
         return wootMob.getWootMobName();
     }

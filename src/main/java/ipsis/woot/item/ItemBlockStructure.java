@@ -1,7 +1,7 @@
 package ipsis.woot.item;
 
 import ipsis.woot.block.BlockMobFactoryStructure;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryModule;
+import ipsis.woot.multiblock.EnumMobFactoryModule;
 import ipsis.woot.util.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;

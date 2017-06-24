@@ -1,5 +1,6 @@
 package ipsis.woot.tileentity.ng;
 
+import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;
 
 public class BlacklistComparator {

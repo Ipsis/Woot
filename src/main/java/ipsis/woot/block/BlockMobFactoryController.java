@@ -6,7 +6,7 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
+import ipsis.woot.farmblocks.IFarmBlockController;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;

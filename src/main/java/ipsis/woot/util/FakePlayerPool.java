@@ -2,8 +2,7 @@ package ipsis.woot.util;
 
 import com.mojang.authlib.GameProfile;
 import ipsis.Woot;
-import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
+import ipsis.woot.configuration.EnumConfigKey;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;

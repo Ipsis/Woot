@@ -5,7 +5,7 @@ import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityLayout;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

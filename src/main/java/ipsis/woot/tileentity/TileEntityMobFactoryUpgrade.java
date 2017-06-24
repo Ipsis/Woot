@@ -2,8 +2,11 @@ package ipsis.woot.tileentity;
 
 import ipsis.woot.block.BlockMobFactoryUpgrade;
 import ipsis.woot.block.BlockMobFactoryUpgradeB;
-import ipsis.woot.manager.EnumSpawnerUpgrade;
-import ipsis.woot.tileentity.ng.farmblocks.*;
+import ipsis.woot.farmblocks.IFarmBlockConnection;
+import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.farmblocks.IFarmBlockUpgrade;
+import ipsis.woot.farmblocks.UpgradeMasterLocator;
+import ipsis.woot.util.EnumSpawnerUpgrade;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
-public class TileEntityMobFactoryUpgrade extends TileEntity implements IFarmBlockConnection, IFarmBlockUpgrade{
+public class TileEntityMobFactoryUpgrade extends TileEntity implements IFarmBlockConnection, IFarmBlockUpgrade {
 
     private IFarmBlockMaster farmBlockMaster = null;
 

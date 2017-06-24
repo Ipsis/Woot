@@ -1,8 +1,8 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.tileentity.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.multiblock.MobFactoryMultiblockLogic;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;

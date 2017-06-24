@@ -2,18 +2,16 @@ package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.item.ItemPrism2;
-import ipsis.woot.oss.LogHelper;
-import ipsis.woot.tileentity.ng.WootMob;
-import ipsis.woot.tileentity.ng.WootMobBuilder;
-import ipsis.woot.tileentity.ng.farmblocks.ControllerMasterLocator;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockConnection;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockController;
-import ipsis.woot.tileentity.ng.farmblocks.IFarmBlockMaster;
+import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobBuilder;
+import ipsis.woot.farmblocks.ControllerMasterLocator;
+import ipsis.woot.farmblocks.IFarmBlockConnection;
+import ipsis.woot.farmblocks.IFarmBlockController;
+import ipsis.woot.farmblocks.IFarmBlockMaster;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController, IFarmBlockConnection {

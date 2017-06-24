@@ -1,8 +1,8 @@
 package ipsis.woot.event;
 
 import ipsis.woot.item.ItemPrism2;
-import ipsis.woot.tileentity.ng.WootMobName;
-import ipsis.woot.tileentity.ng.WootMobNameBuilder;
+import ipsis.woot.util.WootMobName;
+import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,10 +49,10 @@ public class HandlerLivingDeathEvent {
             ItemStack itemStack = entityPlayer.inventory.getStackInSlot(i);
 
             if (itemStack.isEmpty())
-                continue;;
+                continue;
 
             if (!ItemPrism2.isMob(itemStack, wootMobName))
-                continue;;
+                continue;
 
             foundStack = itemStack;
             break;

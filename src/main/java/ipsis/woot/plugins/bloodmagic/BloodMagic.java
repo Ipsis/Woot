@@ -3,19 +3,6 @@ package ipsis.woot.plugins.bloodmagic;
 //import WayofTime.bloodmagic.api.BloodMagicAPI;
 //import WayofTime.bloodmagic.api.Constants;
 //import WayofTime.bloodmagic.api.registry.RitualRegistry;
-import ipsis.woot.block.BlockMobFactoryUpgradeB;
-import ipsis.woot.init.ModBlocks;
-import ipsis.woot.init.ModItems;
-import ipsis.woot.item.ItemFactoryUpgrade;
-import ipsis.woot.manager.EnumSpawnerUpgrade;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 //public class BloodMagic {
 //

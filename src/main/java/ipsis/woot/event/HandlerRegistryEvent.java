@@ -1,11 +1,13 @@
 package ipsis.woot.event;
 
 import ipsis.woot.block.*;
+import ipsis.woot.enchantment.EnchantmentDecapitate;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.*;
 import ipsis.woot.reference.Reference;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
@@ -64,5 +66,12 @@ public class HandlerRegistryEvent {
                 new ItemBlockUpgrade(ModBlocks.blockUpgrade).setRegistryName(ModBlocks.blockUpgrade.getRegistryName()),
                 new ItemBlockUpgradeB(ModBlocks.blockUpgradeB).setRegistryName(ModBlocks.blockUpgradeB.getRegistryName())
         );
+    }
+
+    @SubscribeEvent
+    public void onRegisterEnchantments(RegistryEvent.Register<Enchantment> event) {
+
+        event.getRegistry().register(new EnchantmentDecapitate());
+
     }
 }

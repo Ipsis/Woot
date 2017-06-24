@@ -42,14 +42,6 @@ public class EnchantmentDecapitate extends Enchantment {
         return 60;
     }
 
-    public static boolean hasEnchantmentDecapitate(ItemStack itemStack) {
-
-        if (ModEnchantments.DECAPITATE != null)
-            return EnchantmentHelper.getEnchantmentLevel(ModEnchantments.DECAPITATE, itemStack) > 0;
-
-        return false;
-    }
-
     private static EntityItem createEntityItem(World world, ItemStack itemStack, double x, double y, double z) {
 
         if (world == null || itemStack == null)

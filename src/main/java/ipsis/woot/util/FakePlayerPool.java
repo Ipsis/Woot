@@ -1,8 +1,9 @@
 package ipsis.woot.util;
 
 import com.mojang.authlib.GameProfile;
+import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.reference.Settings;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
@@ -37,9 +38,9 @@ public class FakePlayerPool {
         ItemStack swordII = new ItemStack(Items.DIAMOND_SWORD);
         ItemStack swordIII = new ItemStack(Items.DIAMOND_SWORD);
 
-        swordI.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingILevel);
-        swordII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIILevel);
-        swordIII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Settings.lootingIIILevel);
+        swordI.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_1_PARAM));
+        swordII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_2_PARAM));
+        swordIII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_3_PARAM));
 
         fakePlayer.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
         fakePlayerI.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, swordI);

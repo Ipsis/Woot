@@ -1,8 +1,6 @@
 package ipsis.woot.manager.spawnreq;
 
 import com.google.gson.*;
-import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.manager.MobRegistry;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -27,7 +25,7 @@ public class ExtraSpawnReq {
 
     public ExtraSpawnReq() {
 
-        wootName = MobRegistry.INVALID_MOB_NAME;
+        wootName = "InvalidMob";
         items = new ArrayList<ItemStack>();
         fluids = new ArrayList<FluidStack>();
         allowEfficiency = true;

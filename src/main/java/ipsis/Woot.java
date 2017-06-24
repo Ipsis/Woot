@@ -1,6 +1,5 @@
 package ipsis;
 
-import ipsis.woot.command.CommandWoot;
 import ipsis.woot.command.WootCommand;
 import ipsis.woot.event.HandlerRegistryEvent;
 import ipsis.woot.handler.ConfigHandler;
@@ -8,7 +7,6 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModEnchantments;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.manager.*;
-import ipsis.woot.manager.loot.LootTableManager;
 //import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
@@ -24,7 +22,6 @@ import ipsis.woot.tileentity.ng.loot.schools.SkyBoxSchool;
 import ipsis.woot.tileentity.ng.spawning.EntitySpawner;
 import ipsis.woot.tileentity.ng.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,10 +39,7 @@ public class Woot {
 
     @Mod.Instance(Reference.MOD_ID)
     public static Woot instance;
-    public static MobRegistry mobRegistry = new MobRegistry();
     public static Random RANDOM = new Random();
-    public static LootTableManager LOOT_TABLE_MANAGER = new LootTableManager();
-    public static boolean devMode = false;
     public static IWootConfiguration wootConfiguration = new WootConfigurationManager();
     public static ILootGeneration lootGeneration = new LootGeneration();
     public static ILootLearner lootLearner = new SkyBoxSchool();
@@ -108,7 +102,6 @@ public class Woot {
     public void serverStart(FMLServerStartingEvent event) {
 
         lootRepository.loadFromFile(Files.getLootFile());
-        event.registerServerCommand(new CommandWoot());
         event.registerServerCommand(new WootCommand());
     }
 

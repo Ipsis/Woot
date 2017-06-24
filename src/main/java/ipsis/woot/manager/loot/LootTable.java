@@ -3,8 +3,7 @@ package ipsis.woot.manager.loot;
 import com.google.gson.*;
 import ipsis.Woot;
 import ipsis.woot.manager.EnumEnchantKey;
-import ipsis.woot.oss.LogHelper;
-import ipsis.woot.reference.Settings;
+import ipsis.woot.tileentity.ng.configuration.EnumConfigKey;
 import mezz.jei.util.MathUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -38,7 +37,7 @@ public class LootTable {
     public boolean isFull(EnumEnchantKey key) {
 
         LootPool pool = getLootPool(key);
-        return pool.getSamples() >= Settings.sampleSize;
+        return pool.getSamples() >= Woot.wootConfiguration.getInteger(EnumConfigKey.SAMPLE_SIZE);
     }
 
     public boolean isEmpty(EnumEnchantKey key) {

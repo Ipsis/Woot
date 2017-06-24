@@ -3,11 +3,8 @@ package ipsis.woot.block;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
-import ipsis.woot.reference.Lang;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.reference.Settings;
 import ipsis.woot.tileentity.TileEntityMobFarm;
-import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -66,10 +63,6 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
 
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "I", Settings.tierIRFtick));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "II", Settings.tierIIRFtick));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "III", Settings.tierIIIRFtick));
-        toolTip.add(String.format(StringHelper.localize(Lang.TOOLTIP_FACTORY_COST), "IV", Settings.tierIVRFtick));
     }
 
     public IBlockState getStateFromMeta(int meta)

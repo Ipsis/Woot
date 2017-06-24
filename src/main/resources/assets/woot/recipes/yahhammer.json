@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "woot:yahhammer"
+  },
+  "pattern": [
+    "FFF",
+    " w ",
+    "SwS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "F": {
+      "item": "minecraft:netherbrick"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    }
+  }
+}

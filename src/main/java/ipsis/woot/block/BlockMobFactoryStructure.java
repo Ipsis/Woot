@@ -36,7 +36,6 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
 
         super (Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(MODULE, EnumMobFactoryModule.BLOCK_1).withProperty(FORMED, false));
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     public EnumMobFactoryModule getModuleTypeFromState(IBlockState state) {

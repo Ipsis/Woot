@@ -35,7 +35,6 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
 
         super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

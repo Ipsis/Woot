@@ -32,7 +32,6 @@ public class BlockMobFactoryProxy extends BlockWoot implements ITooltipInfo, ITi
 
         super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FORMED, false));
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

@@ -39,7 +39,6 @@ public class ItemPrism2 extends ItemWoot {
 
         super(BASENAME);
         setMaxStackSize(1);
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

@@ -20,7 +20,6 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
 
     public BlockMobFactoryUpgradeBase(String basename) {
         super(Material.ROCK, basename);
-        setRegistryName(Reference.MOD_ID, basename);
     }
 
     @Override

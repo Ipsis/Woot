@@ -45,7 +45,6 @@ public class ItemFactoryUpgrade extends ItemWoot {
         super(BASENAME);
         setMaxStackSize(64);
         setHasSubtypes(true);
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

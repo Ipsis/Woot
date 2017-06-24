@@ -9,6 +9,7 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 //import ipsis.woot.init.ModRecipes;
 //import ipsis.woot.plugins.top.TOPCompat;
+import ipsis.woot.oss.LogHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.network.NetworkRegistry;

@@ -32,7 +32,6 @@ public class BlockMobFactoryExtender extends BlockWoot implements ITooltipInfo, 
 
         super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FORMED, false));
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @Override

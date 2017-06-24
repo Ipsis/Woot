@@ -9,22 +9,50 @@ import ipsis.woot.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModBlocks {
 
+    public static BlockWoot blockFactory;
+    public static BlockWoot blockUpgrade;
+    public static BlockWoot blockUpgradeB;
+    public static BlockWoot blockStructure;
+    public static BlockWoot blockController;
+    public static BlockWoot blockLayout;
+    public static BlockWoot blockProxy;
+    public static BlockWoot blockExtender;
+
     public static void preInit() {
 
-        GameRegistry.register(new ItemBlock(blockFactory).setRegistryName(blockFactory.getRegistryName()));
-        GameRegistry.register(new ItemBlockUpgrade(blockUpgrade).setRegistryName(blockUpgrade.getRegistryName()));
-        GameRegistry.register(new ItemBlockUpgradeB(blockUpgradeB).setRegistryName(blockUpgradeB.getRegistryName()));
-        GameRegistry.register(new ItemBlockStructure(blockStructure).setRegistryName(blockStructure.getRegistryName()));
-        GameRegistry.register(new ItemBlockController(blockController).setRegistryName(blockController.getRegistryName()));
-        GameRegistry.register(new ItemBlock(blockLayout).setRegistryName(blockLayout.getRegistryName()));
-        GameRegistry.register(new ItemBlock(blockProxy).setRegistryName(blockProxy.getRegistryName()));
-        GameRegistry.register(new ItemBlock(blockExtender).setRegistryName(blockExtender.getRegistryName()));
+    }
+
+    public static void init() {
+
+        blockFactory = new BlockMobFactory();
+        blockUpgrade = new BlockMobFactoryUpgrade();
+        blockUpgradeB = new BlockMobFactoryUpgradeB();
+        blockStructure = new BlockMobFactoryStructure();
+        blockController = new BlockMobFactoryController();
+        blockLayout = new BlockLayout();
+        blockProxy = new BlockMobFactoryProxy();
+        blockExtender = new BlockMobFactoryExtender();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void initClient() {
+
+        ModBlocks.blockFactory.initModel();
+        ModBlocks.blockUpgrade.initModel();
+        ModBlocks.blockUpgradeB.initModel();
+        ModBlocks.blockStructure.initModel();
+        ModBlocks.blockController.initModel();
+        ModBlocks.blockLayout.initModel();
+        ModBlocks.blockProxy.initModel();
+        ModBlocks.blockExtender.initModel();
     }
 
     public static void registerTileEntities() {
@@ -38,12 +66,4 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, "tile." + BlockMobFactoryExtender.BASENAME);
     }
 
-    public static BlockWoot blockFactory = new BlockMobFactory();
-    public static BlockWoot blockUpgrade = new BlockMobFactoryUpgrade();
-    public static BlockWoot blockUpgradeB = new BlockMobFactoryUpgradeB();
-    public static BlockWoot blockStructure = new BlockMobFactoryStructure();
-    public static BlockWoot blockController = new BlockMobFactoryController();
-    public static BlockWoot blockLayout = new BlockLayout();
-    public static BlockWoot blockProxy = new BlockMobFactoryProxy();
-    public static BlockWoot blockExtender = new BlockMobFactoryExtender();
 }

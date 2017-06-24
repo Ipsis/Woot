@@ -17,6 +17,6 @@ public class ModEnchantments {
     public static void postInit() {
 
         DECAPITATE = new EnchantmentDecapitate();
-        GameRegistry.register(DECAPITATE);
+        // TODO GameRegistry.register(DECAPITATE);
     }
 }

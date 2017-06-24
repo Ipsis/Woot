@@ -14,7 +14,6 @@ public class ItemFerrocrete extends ItemWoot {
 
         super(BASENAME);
         setMaxStackSize(64);
-        setRegistryName(Reference.MOD_ID, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

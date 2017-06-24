@@ -7,8 +7,10 @@ import ipsis.woot.event.ItemTooltipHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.tileentity.TileEntityLayout;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy {
 
@@ -17,35 +19,7 @@ public class ClientProxy extends CommonProxy {
 
         super.preInit();
 
-        ModBlocks.blockFactory.initModel();
-        ModBlocks.blockUpgrade.initModel();
-        ModBlocks.blockUpgradeB.initModel();
-        ModBlocks.blockStructure.initModel();
-        ModBlocks.blockController.initModel();
-        ModBlocks.blockLayout.initModel();
-        ModBlocks.blockProxy.initModel();
-        ModBlocks.blockExtender.initModel();
-
-        ModItems.itemPrism2.initModel();
-        ModItems.itemXpShard.initModel();
-        ModItems.itemSkull.initModel();
-        ModItems.itemShard.initModel();
-        ModItems.itemDye.initModel();
-        ModItems.itemFactoryFrame.initModel();
-        ModItems.itemPrismFrame.initModel();
-
-        ModItems.itemYahHammer.initModel();
-        ModItems.itemPulverisedFerrocrete.initModel();
-        ModItems.itemFerrocrete.initModel();
-
-        ModItems.itemFerrocretePlate.initModel();
-        ModItems.itemFactoryCasing.initModel();
-        ModItems.itemFactoryUpgrade.initModel();
-        ModItems.itemFactoryCap.initModel();
-        ModItems.itemFactoryConnector.initModel();
-        ModItems.itemManual.initModel();
-
-        ModItems.itemManual.initModel();
+        MinecraftForge.EVENT_BUS.register(this);
 
         MinecraftForge.EVENT_BUS.register(new ItemTooltipHandler());
         MinecraftForge.EVENT_BUS.register(new HandlerTextureStitchEvent());
@@ -65,5 +39,12 @@ public class ClientProxy extends CommonProxy {
         super.postInit();
 
         BookManager.INSTANCE.load();
+    }
+
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event) {
+
+        ModItems.initClient();
+        ModBlocks.initClient();
     }
 }

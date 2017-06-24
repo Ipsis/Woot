@@ -22,7 +22,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityLayout te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(TileEntityLayout te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
         if ( te.getLayoutBlockInfoList().isEmpty())
             te.refreshLayout();

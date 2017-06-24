@@ -14,16 +14,10 @@ public abstract class BlockWoot extends Block {
         super(m);
         setCreativeTab(Woot.tabWoot);
         setHardness(1.5F);
-        setUnlocalizedName(name);
     }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
 
-    }
-
-    @Override
-    public String getUnlocalizedName() {
-        return UnlocalizedName.getUnlocalizedNameBlock(super.getUnlocalizedName());
     }
 }

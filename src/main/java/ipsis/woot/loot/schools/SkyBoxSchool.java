@@ -136,7 +136,7 @@ public class SkyBoxSchool implements ILootLearner {
      */
     public void onLivingDropsEvent(LivingDropsEvent e) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this.getClass().toString() + ":onLivingDropsEvent");
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this, "onLivingDropsEvent", e);
 
         if (!(e.getEntity() instanceof EntityLiving))
             return;
@@ -157,9 +157,9 @@ public class SkyBoxSchool implements ILootLearner {
             EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
             Woot.lootRepository.insert(wootMobName, key, e.getDrops(), true);
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this.getClass().toString() + ":onLivingDropsEvent " + wootMobName + " " + key + " " + e.getDrops());
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this, "onLivingDropsEvent", wootMobName + " " + key + " " + e.getDrops());
         } else {
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this.getClass().toString() + ":onLivingDropsEvent invalid mob " + e.getEntity());
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this, "onLivingDropsEvent", "invalid mob " + e.getEntity());
         }
     }
 }

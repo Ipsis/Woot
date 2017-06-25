@@ -11,6 +11,8 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.server.command.CommandTreeBase;
 
+import java.util.HashMap;
+
 public class CommandDev extends CommandTreeBase {
 
     public CommandDev() {
@@ -46,18 +48,36 @@ public class CommandDev extends CommandTreeBase {
             return Localization.TAG_COMMAND + "dev.debug.usage";
         }
 
+        // This needs to be in sync with getUsage so people know what they can type in!
+        private static final HashMap<String, DebugSetup.EnumDebugType> devTags = new HashMap<>();
+        static {
+            devTags.put("event", DebugSetup.EnumDebugType.LOOT_EVENTS);
+            devTags.put("cfgaccess", DebugSetup.EnumDebugType.CONFIG_ACCESS);
+        };
+
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
             if (args.length < 1)
                 throw new WrongUsageException(getUsage(sender));
 
-            if (args[0].equalsIgnoreCase("event"))
-                Woot.debugSetup.setDebug(DebugSetup.EnumDebugType.LOOT_EVENTS);
-            else if (args[0].equalsIgnoreCase("!event"))
-                Woot.debugSetup.clearDebug(DebugSetup.EnumDebugType.LOOT_EVENTS);
-            else if (args[0].equalsIgnoreCase("show")) {
+            if (args[0].equalsIgnoreCase("show")) {
                 CommandHelper.display(sender, Woot.debugSetup.toString());
+            } else {
+
+                boolean d = true;
+                if (args[0].startsWith("!")) {
+                    d = false;
+                    args[0] = args[0].substring(1);
+                }
+
+                String key = args[0].toLowerCase();
+                if (devTags.containsKey(key)) {
+                    if (d)
+                        Woot.debugSetup.setDebug(devTags.get(key));
+                    else
+                        Woot.debugSetup.clearDebug(devTags.get(key));
+                }
             }
         }
     }

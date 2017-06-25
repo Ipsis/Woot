@@ -1,6 +1,7 @@
 package ipsis.woot.configuration;
 
 import ipsis.Woot;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.BlacklistComparator;
@@ -41,12 +42,15 @@ public class WootConfigurationManager implements IWootConfiguration {
      */
     @Override
     public boolean getBoolean(EnumConfigKey key) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getBoolean", key);
         return booleanMap.get(key);
     }
 
     @Override
     public boolean getBoolean(WootMobName wootMobName, EnumConfigKey key) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getBoolean", wootMobName + " " + key);
         String k = makeKey(wootMobName, key);
         if (booleanMobMap.containsKey(k))
             return booleanMobMap.get(k);
@@ -56,12 +60,15 @@ public class WootConfigurationManager implements IWootConfiguration {
 
     @Override
     public int getInteger(EnumConfigKey key) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getInteger", key);
         return integerMap.get(key);
     }
 
     @Override
     public int getInteger(WootMobName wootMobName, EnumConfigKey key) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getInteger", wootMobName + " " + key);
         String k = makeKey(wootMobName, key);
         if (integerMobMap.containsKey(k))
             return integerMobMap.get(k);
@@ -71,12 +78,15 @@ public class WootConfigurationManager implements IWootConfiguration {
 
     @Override
     public void setBoolean(EnumConfigKey key, boolean v) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setBoolean",  key + " " + v);
         booleanMap.put(key, v);
     }
 
     @Override
     public void setBoolean(WootMobName wootMobName, EnumConfigKey key, boolean v) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setBoolean", wootMobName + " " + key + " " + v);
         if (key.canMobOverride()) {
             String k = makeKey(wootMobName, key);
             booleanMobMap.put(k, v);
@@ -85,12 +95,15 @@ public class WootConfigurationManager implements IWootConfiguration {
 
     @Override
     public void setInteger(EnumConfigKey key, int v) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setInteger", key + " " + v);
         integerMap.put(key, v);
     }
 
     @Override
     public void setInteger(WootMobName wootMobName, EnumConfigKey key, int v) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setInteger", wootMobName + " " + key + " " + v);
         if (key.canMobOverride()) {
             String k = makeKey(wootMobName, key);
             integerMobMap.put(k, v);
@@ -100,16 +113,19 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public void addToMobList(WootMobName wootMobName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToMobList", wootMobName);
     }
 
     @Override
     public void addToItemList(String itemName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToItemList", itemName);
     }
 
     @Override
     public void addToModItemList(String modName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToModItemList", modName);
     }
 
     @Override
@@ -120,24 +136,28 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public void addToInternalModBlacklist(String modName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalModBlacklist", modName);
         internalMobCaptureBlacklist.add(modName);
     }
 
     @Override
     public void addToInternalModItemBlacklist(String modName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalModItemBlacklist", modName);
         internalModItemBlacklist.add(modName);
     }
 
     @Override
     public void addToInternalMobBlacklist(String mobName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalMobBlacklist", mobName);
         internalModCaptureBlacklist.add(mobName);
     }
 
     @Override
     public void addToInternalItemBlacklist(String itemName) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalItemBlacklist", itemName);
         internalItemBlacklist.add(itemName);
     }
 

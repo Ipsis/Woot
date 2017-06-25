@@ -1,9 +1,9 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Localization;
 import ipsis.woot.util.CommandHelper;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -53,14 +53,11 @@ public class CommandDev extends CommandTreeBase {
                 throw new WrongUsageException(getUsage(sender));
 
             if (args[0].equalsIgnoreCase("event"))
-                Woot.debugSetup.setTraceLootEvents(true);
+                Woot.debugSetup.setDebug(DebugSetup.EnumDebugType.LOOT_EVENTS);
             else if (args[0].equalsIgnoreCase("!event"))
-                Woot.debugSetup.setTraceLootEvents(false);
+                Woot.debugSetup.clearDebug(DebugSetup.EnumDebugType.LOOT_EVENTS);
             else if (args[0].equalsIgnoreCase("show")) {
-                if (Woot.debugSetup.getTraceLootEvents())
-                    CommandHelper.display(sender, Localization.DEBUG_TRACE_LOOT_EVENT);
-                if (!Woot.debugSetup.getNeedPower())
-                    CommandHelper.display(sender, Localization.DEBUG_POWER_DISABLED);
+                CommandHelper.display(sender, Woot.debugSetup.toString());
             }
         }
     }
@@ -86,9 +83,9 @@ public class CommandDev extends CommandTreeBase {
                 throw new WrongUsageException(getUsage(sender));
 
             if (args[0].equalsIgnoreCase("true"))
-                Woot.debugSetup.setNeedPower(true);
+                Woot.debugSetup.setDebug(DebugSetup.EnumDebugType.POWER);
             else if (args[0].equalsIgnoreCase("false"))
-                Woot.debugSetup.setNeedPower(false);
+                Woot.debugSetup.clearDebug(DebugSetup.EnumDebugType.POWER);
 
         }
     }

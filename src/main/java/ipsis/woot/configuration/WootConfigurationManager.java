@@ -3,7 +3,7 @@ package ipsis.woot.configuration;
 import ipsis.Woot;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.tileentity.ng.BlacklistComparator;
+import ipsis.woot.util.BlacklistComparator;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

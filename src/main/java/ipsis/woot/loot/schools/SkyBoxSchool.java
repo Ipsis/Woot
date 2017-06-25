@@ -1,14 +1,11 @@
 package ipsis.woot.loot.schools;
 
 import ipsis.Woot;
-import ipsis.woot.util.EnumEnchantKey;
+import ipsis.woot.util.*;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.ng.IFarmSetup;
 import ipsis.woot.tileentity.ng.ITickTracker;
-import ipsis.woot.util.WootMobName;
-import ipsis.woot.util.WootMobNameBuilder;
 import ipsis.woot.loot.ILootLearner;
-import ipsis.woot.util.FakePlayerPool;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -139,9 +136,7 @@ public class SkyBoxSchool implements ILootLearner {
      */
     public void onLivingDropsEvent(LivingDropsEvent e) {
 
-        if (Woot.debugSetup.getTraceLootEvents()) {
-            LogHelper.info(this.getClass().toString() + ":onLivingDropsEvent");
-        }
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this.getClass().toString() + ":onLivingDropsEvent");
 
         if (!(e.getEntity() instanceof EntityLiving))
             return;
@@ -162,11 +157,9 @@ public class SkyBoxSchool implements ILootLearner {
             EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
             Woot.lootRepository.insert(wootMobName, key, e.getDrops(), true);
 
-            if (Woot.debugSetup.getTraceLootEvents())
-                LogHelper.info(this.getClass().toString() + ":onLivingDropsEvent " + wootMobName + " " + key + " " + e.getDrops());
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this.getClass().toString() + ":onLivingDropsEvent " + wootMobName + " " + key + " " + e.getDrops());
         } else {
-            if (Woot.debugSetup.getTraceLootEvents())
-                LogHelper.info(this.getClass().toString() + ":onLivingDropsEvent invalid mob");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this.getClass().toString() + ":onLivingDropsEvent invalid mob " + e.getEntity());
         }
     }
 }

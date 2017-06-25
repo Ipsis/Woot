@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng;
+package ipsis.woot.util;
 
 import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;

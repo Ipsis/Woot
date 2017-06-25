@@ -2,28 +2,40 @@ package ipsis.woot.util;
 
 import ipsis.woot.oss.LogHelper;
 
+import java.util.EnumSet;
+
 public class DebugSetup {
 
-    private boolean traceLootEvents = false;
-    private boolean needPower = true;
+    private EnumSet<EnumDebugType> debugFlags = EnumSet.noneOf(EnumDebugType.class);
 
-    public void setTraceLootEvents(boolean b) {
 
-        if (this.traceLootEvents != b) {
-            this.traceLootEvents = b;
-            LogHelper.info("Tracing loot events: " + b);
-        }
+    public void setDebug(EnumDebugType t) {
+
+        debugFlags.add(t);
     }
 
-    public boolean getTraceLootEvents() { return traceLootEvents; }
+    public void clearDebug(EnumDebugType t) {
 
-    public void setNeedPower(boolean b) {
-
-        if (this.needPower != b) {
-            this.needPower = b;
-            LogHelper.info("Need power: " + b);
-        }
+        debugFlags.remove(t);
     }
 
-    public boolean getNeedPower() { return needPower; }
+    public void trace(EnumDebugType t, Object object) {
+
+        if (debugFlags.contains(t))
+            LogHelper.info(object);
+    }
+
+    @Override
+    public String toString() {
+
+        return " " + debugFlags.toString();
+    }
+
+    public enum EnumDebugType {
+        POWER,
+        LOOT_EVENTS,
+        CONFIG_LOAD;
+
+        public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);
+    }
 }

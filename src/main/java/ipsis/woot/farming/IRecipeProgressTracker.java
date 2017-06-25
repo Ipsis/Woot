@@ -9,4 +9,5 @@ public interface IRecipeProgressTracker {
     void reset();
     void setPowerRecipe(PowerRecipe powerRecipe);
     void setPowerStation(IPowerStation powerStation);
+    int getConsumedPower();
 }

@@ -3,8 +3,10 @@ package ipsis.woot.block;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
-import ipsis.woot.reference.Reference;
+import ipsis.woot.plugins.top.TOPUIInfoConvertors;
+import ipsis.woot.tileentity.IMobFarm;
 import ipsis.woot.tileentity.TileEntityMobFarm;
+import ipsis.woot.tileentity.ui.FarmUIInfo;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -89,6 +91,13 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
+        TileEntity te = world.getTileEntity(data.getPos());
+        if (te instanceof IMobFarm) {
+            FarmUIInfo info = new FarmUIInfo();
+            ((IMobFarm) te).getUIInfo(info);
+            if (info.isValid)
+                TOPUIInfoConvertors.farmConvertor(info, mode, probeInfo, player, world, blockState, data);
+        }
     }
 
     public static class PluginTooltipInfo {

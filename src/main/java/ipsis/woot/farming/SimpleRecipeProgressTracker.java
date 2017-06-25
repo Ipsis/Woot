@@ -37,4 +37,12 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
 
         this.powerStation = powerStation;
     }
+
+    @Override
+    public int getConsumedPower() {
+
+        return consumedPower;
+    }
+
+
 }

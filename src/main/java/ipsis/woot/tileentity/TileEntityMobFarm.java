@@ -13,6 +13,7 @@ import ipsis.woot.mock.MockSpawnRecipeRepository;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.power.storage.IPowerStation;
+import ipsis.woot.tileentity.ui.FarmUIInfo;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -21,7 +22,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
-public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlockMaster {
+public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
 
     private ITickTracker tickTracker;
     private IFarmStructure farmStructure;
@@ -129,5 +130,21 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
             return (T)powerStation.getEnergyStorage();
 
         return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void getUIInfo(FarmUIInfo info) {
+
+        if (!farmStructure.isFormed())
+            return;
+
+        info.wootMob = farmSetup.getWootMob();
+        info.isRunning = true;
+        info.recipeTotalPower = powerRecipe.getTotalPower();
+        info.recipeTotalTime = powerRecipe.getTicks();
+        info.recipePowerPerTick = powerRecipe.getPowerPerTick();
+        info.consumedPower = recipeProgressTracker.getConsumedPower();
+        info.tier = farmSetup.getFarmTier();
+        info.setValid();
     }
 }

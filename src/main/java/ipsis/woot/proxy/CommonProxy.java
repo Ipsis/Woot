@@ -10,6 +10,7 @@ import ipsis.woot.init.ModItems;
 //import ipsis.woot.init.ModRecipes;
 //import ipsis.woot.plugins.top.TOPCompat;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.top.TOPCompat;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -26,8 +27,8 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(new HandlerLivingDeathEvent());
         MinecraftForge.EVENT_BUS.register(new ConfigHandler());
 
-//        if (Loader.isModLoaded("theoneprobe"))
-//            TOPCompat.register();
+        if (Loader.isModLoaded("theoneprobe"))
+            TOPCompat.register();
     }
 
     public void init() {

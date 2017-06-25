@@ -1,7 +1,6 @@
 package ipsis.woot.farmstructure;
 
-import ipsis.woot.tileentity.ng.IFarmSetup;
-import ipsis.woot.tileentity.ng.ITickTracker;
+import ipsis.woot.farming.ITickTracker;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;

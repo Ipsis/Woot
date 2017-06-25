@@ -1,7 +1,7 @@
 package ipsis.woot.mock;
 
-import ipsis.woot.tileentity.ng.ISpawnRecipe;
-import ipsis.woot.tileentity.ng.ISpawnRecipeConsumer;
+import ipsis.woot.farming.ISpawnRecipe;
+import ipsis.woot.farming.ISpawnRecipeConsumer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

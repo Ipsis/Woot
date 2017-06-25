@@ -1,7 +1,8 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
-import ipsis.woot.tileentity.ng.*;
+import ipsis.woot.farming.*;
+import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.farmstructure.FarmBuilder;

@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng;
+package ipsis.woot.farming;
 
 import net.minecraft.world.World;
 

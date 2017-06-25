@@ -1,7 +1,7 @@
 package ipsis.woot.mock;
 
-import ipsis.woot.tileentity.ng.ISpawnRecipeRepository;
-import ipsis.woot.tileentity.ng.SpawnRecipe;
+import ipsis.woot.farming.ISpawnRecipeRepository;
+import ipsis.woot.farming.SpawnRecipe;
 import ipsis.woot.util.WootMobName;
 
 import javax.annotation.Nullable;

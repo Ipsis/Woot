@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng;
+package ipsis.woot.farmstructure;
 
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;

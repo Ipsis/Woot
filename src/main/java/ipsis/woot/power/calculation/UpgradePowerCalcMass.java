@@ -1,6 +1,6 @@
 package ipsis.woot.power.calculation;
 
-import ipsis.woot.tileentity.ng.IFarmSetup;
+import ipsis.woot.farmstructure.IFarmSetup;
 
 public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
 

@@ -1,4 +1,4 @@
-package ipsis.woot.tileentity.ng;
+package ipsis.woot.farming;
 
 public class StrictRecipeProgressTracker {
 }

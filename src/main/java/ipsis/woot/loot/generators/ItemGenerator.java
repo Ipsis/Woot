@@ -1,7 +1,7 @@
 package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
-import ipsis.woot.tileentity.ng.IFarmSetup;
+import ipsis.woot.farmstructure.IFarmSetup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;

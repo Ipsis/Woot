@@ -14,12 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nullable;
+
 public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController, IFarmBlockConnection {
 
     private WootMob wootMob = new WootMob();
     private IFarmBlockMaster farmBlockMaster = null;
 
-    private boolean hasMaster() { return farmBlockMaster != null; }
+    public boolean hasMaster() { return farmBlockMaster != null; }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {

@@ -6,5 +6,6 @@ public interface IFarmBlockConnection {
 
     void setMaster(IFarmBlockMaster master);
     void clearMaster();
+    boolean hasMaster();
     BlockPos getStructurePos();
 }

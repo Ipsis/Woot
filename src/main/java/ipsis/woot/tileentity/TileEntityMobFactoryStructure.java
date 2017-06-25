@@ -17,7 +17,8 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
 
     private IFarmBlockMaster farmBlockMaster = null;
 
-    private boolean hasMaster() {
+    @Override
+    public boolean hasMaster() {
 
         return farmBlockMaster != null;
     }

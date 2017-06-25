@@ -112,11 +112,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
 
         TileEntity te = world.getTileEntity(data.getPos());
         if (te instanceof TileEntityMobFactoryController) {
-            TileEntityMobFactoryController controllerTE = (TileEntityMobFactoryController)te;
 
-            if (!controllerTE.getModDisplayName().equals((""))) {
-
-            }
         }
     }
 

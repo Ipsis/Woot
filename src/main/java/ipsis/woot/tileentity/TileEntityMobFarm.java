@@ -14,6 +14,7 @@ import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -53,6 +54,28 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
     }
 
     @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+       super.writeToNBT(compound);
+
+       if (farmStructure.isFormed()) {
+
+           compound.setInteger("wootConsumedPower", recipeProgressTracker.getConsumedPower());
+       }
+
+       return compound;
+    }
+
+    private int nbtConsumedPower = 0;
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+
+        if (compound.hasKey("wootConsumedPower")) {
+            nbtConsumedPower = compound.getInteger("wootConsumedPower");
+        }
+    }
+
+    @Override
     public void invalidate() {
 
         // TODO invalidate the complete farm
@@ -66,8 +89,10 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
             return;
 
         // Cannot set this on create as the world may not be set
-        if (farmStructure == null)
+        if (farmStructure == null) {
             farmStructure = new FarmBuilder().setWorld(getWorld()).setPosition(getPos());
+            farmStructure.setStructureDirty();
+        }
 
         tickTracker.tick(world);
         farmStructure.tick(tickTracker);
@@ -81,6 +106,11 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
                 recipeProgressTracker.setPowerStation(powerStation);
                 recipeProgressTracker.setPowerRecipe(powerRecipe);
                 farmStructure.clearChanged();
+
+                if (nbtConsumedPower != 0) {
+                    recipeProgressTracker.setConsumedPower(nbtConsumedPower);
+                    nbtConsumedPower = 0;
+                }
             }
 
             Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);

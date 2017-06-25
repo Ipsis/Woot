@@ -1,5 +1,6 @@
 package ipsis.woot.farming;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.storage.IPowerStation;
 
 public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
@@ -42,6 +43,12 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
     public int getConsumedPower() {
 
         return consumedPower;
+    }
+
+    @Override
+    public void setConsumedPower(int power) {
+
+        this.consumedPower = power;
     }
 
 

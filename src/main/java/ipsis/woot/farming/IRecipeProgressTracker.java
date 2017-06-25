@@ -10,4 +10,7 @@ public interface IRecipeProgressTracker {
     void setPowerRecipe(PowerRecipe powerRecipe);
     void setPowerStation(IPowerStation powerStation);
     int getConsumedPower();
+
+    // For restore on load only
+    void setConsumedPower(int power);
 }

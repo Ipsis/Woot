@@ -62,11 +62,11 @@ public class ItemXpShard extends ItemWoot {
                 if (!playerIn.capabilities.isCreativeMode)
                     stack.shrink(1);
 
-                return new ActionResult(EnumActionResult.SUCCESS, stack);
+                return new ActionResult<>(EnumActionResult.SUCCESS, stack);
             }
         }
 
-        return new ActionResult(EnumActionResult.FAIL, stack);
+        return new ActionResult<>(EnumActionResult.FAIL, stack);
     }
 
     @SideOnly(Side.CLIENT)

@@ -93,6 +93,27 @@ public class LootRepository implements ILootRepository {
     }
 
     @Override
+    public void flushAll() {
+
+        lootTableHashMap = new HashMap<>();
+    }
+
+    @Override
+    public void flushMob(WootMobName wootMobName) {
+
+        lootTableHashMap.remove(wootMobName.getName());
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getAllMobs() {
+
+        List<String> mobs = new ArrayList<>();
+        mobs.addAll(lootTableHashMap.keySet());
+        return mobs;
+    }
+
+    @Override
     public void loadFromFile(File file) {
 
         LogHelper.info("LootRepository: Read loot from " + FMLLogHelper.stripString(file.toString()));

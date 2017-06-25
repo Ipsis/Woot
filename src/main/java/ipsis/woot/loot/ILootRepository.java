@@ -16,6 +16,9 @@ public interface ILootRepository {
     @Nonnull List<ItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key, int numMobs);
     void insert(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount);
     void insertStatic(WootMobName wootMobName, EnumEnchantKey key, ItemStack itemStack, int dropChance);
+    void flushAll();
+    void flushMob(WootMobName wootMobName);
+    @Nonnull List<String> getAllMobs();
 
     void loadFromFile(File file);
     void saveToFile(File file);

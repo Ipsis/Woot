@@ -10,6 +10,7 @@ import ipsis.woot.farmstructure.IFarmStructure;
 import ipsis.woot.mock.MockPowerStation;
 import ipsis.woot.mock.MockSpawnRecipeConsumer;
 import ipsis.woot.mock.MockSpawnRecipeRepository;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.power.storage.IPowerStation;
@@ -57,10 +58,8 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
        super.writeToNBT(compound);
 
-       if (farmStructure.isFormed()) {
-
+       if (farmStructure.isFormed())
            compound.setInteger("wootConsumedPower", recipeProgressTracker.getConsumedPower());
-       }
 
        return compound;
     }
@@ -70,15 +69,14 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
-        if (compound.hasKey("wootConsumedPower")) {
+        if (compound.hasKey("wootConsumedPower"))
             nbtConsumedPower = compound.getInteger("wootConsumedPower");
-        }
     }
 
     @Override
     public void invalidate() {
 
-        // TODO invalidate the complete farm
+        // TODO disconnect all the farm blocks!
         super.invalidate();
     }
 

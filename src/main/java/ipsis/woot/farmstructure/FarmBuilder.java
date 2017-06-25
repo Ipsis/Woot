@@ -167,7 +167,6 @@ public class FarmBuilder implements IFarmStructure {
     @Override
     public void setStructureDirty() {
 
-        LogHelper.info("setStructureDirty");
         farmDirty = true;
     }
 

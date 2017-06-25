@@ -20,10 +20,8 @@ public class MobEntityMagmaCube extends AbstractMobEntity {
         if (!(entity instanceof EntitySlime))
             return;
 
-        String[] methodNames = new String[]{ "func_70799_a", "setSlimeSize" };
-
         try {
-            Method m = ReflectionHelper.findMethod(EntitySlime.class, null, methodNames, int.class);
+            Method m = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class);
             m.invoke(entity, 2);
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");

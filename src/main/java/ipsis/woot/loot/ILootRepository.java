@@ -20,6 +20,9 @@ public interface ILootRepository {
     void flushMob(WootMobName wootMobName);
     @Nonnull List<String> getAllMobs();
 
+    // Drop info for this combination, where the stacksize is the drop chance
+    @Nonnull List<ItemStack> getDropInfo(WootMobName wootMobName, EnumEnchantKey key);
+
     void loadFromFile(File file);
     void saveToFile(File file);
 }

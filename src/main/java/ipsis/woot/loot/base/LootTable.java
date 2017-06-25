@@ -52,6 +52,20 @@ public class LootTable {
         return pool.getSamples();
     }
 
+    public List<ItemStack> getDropInfo(EnumEnchantKey key) {
+
+        List<ItemStack> drops = new ArrayList<>();
+        LootPool pool = getLootPool(key);
+        for (Drop d : pool.getDrops()) {
+            ItemStack addStack = d.itemStack.copy();
+            float chance = d.getChance(pool.getSamples()) * 100.0F;
+            addStack.setCount((int)chance);
+            drops.add(addStack);
+        }
+
+        return drops;
+    }
+
     private LootPool getLootPool(EnumEnchantKey key) {
 
         return pools[key.ordinal()];

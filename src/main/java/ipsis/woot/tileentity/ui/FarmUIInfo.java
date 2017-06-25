@@ -2,6 +2,10 @@ package ipsis.woot.tileentity.ui;
 
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.WootMob;
+import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FarmUIInfo {
 
@@ -13,6 +17,11 @@ public class FarmUIInfo {
     public int recipePowerPerTick;
     public int consumedPower;
     public boolean isValid = false;
+    public int powerStored;
+    public int powerCapacity;
+
+    // Filtered list of drops with the stackSize == drop chance
+    public List<ItemStack> drops = new ArrayList<>();
 
     public void setValid() {
 

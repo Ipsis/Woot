@@ -1,5 +1,6 @@
 package ipsis.woot.loot;
 
+import ipsis.woot.loot.base.LootPool;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.loot.base.LootTable;
 import ipsis.woot.oss.LogHelper;
@@ -111,6 +112,19 @@ public class LootRepository implements ILootRepository {
         List<String> mobs = new ArrayList<>();
         mobs.addAll(lootTableHashMap.keySet());
         return mobs;
+    }
+
+    @Nonnull
+    @Override
+    public List<ItemStack> getDropInfo(WootMobName wootMobName, EnumEnchantKey key) {
+
+        List<ItemStack> drops = new ArrayList<>();
+
+        LootTable e = lootTableHashMap.get(wootMobName.getName());
+        if (e != null)
+            drops.addAll(e.getDropInfo(key));
+
+        return drops;
     }
 
     @Override

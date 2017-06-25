@@ -15,6 +15,8 @@ import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -173,6 +175,12 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
         info.recipePowerPerTick = powerRecipe.getPowerPerTick();
         info.consumedPower = recipeProgressTracker.getConsumedPower();
         info.tier = farmSetup.getFarmTier();
+        info.powerCapacity = 10000;
+        info.powerStored = 500;
+
+        info.drops.addAll(Woot.lootRepository.getDropInfo(farmSetup.getWootMobName(), farmSetup.getEnchantKey()));
+
+        // Say everything is okay
         info.setValid();
     }
 }

@@ -3,7 +3,10 @@ package ipsis.woot.plugins.top;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.NumberFormat;
 import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
+import mcjty.theoneprobe.config.Config;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -21,7 +24,10 @@ public class TOPUIInfoConvertors {
         /**
          * Power & Redstone state
          */
-        //probeInfo.text(TextFormatting.RED + "FP: " + ElementProgress.format(info.storedRF, Config.rfFormat, "FP"));
+
+        // TODO this will be handled when the ForgeCaps are exposed
+        probeInfo.progress(farm.powerStored, farm.powerCapacity,
+                probeInfo.defaultProgressStyle().suffix("FP").numberFormat(Config.rfFormat));
 
         probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (farm.isRunning ? "On" : "Off"));
 
@@ -41,6 +47,28 @@ public class TOPUIInfoConvertors {
          */
         probeInfo.text(TextFormatting.GREEN + "Mob: " + farm.wootMob.getDisplayName());
         probeInfo.text(TextFormatting.GREEN + "Recipe: " + farm.recipeTotalPower + " " + farm.recipeTotalTime + " " + farm.recipePowerPerTick);
+
+        /**
+         * Drops
+         */
+        if (mode == ProbeMode.EXTENDED) {
+
+            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+            IProbeInfo horizontal = null;
+            int rows = 0;
+            int idx = 0;
+            for (ItemStack itemStack : farm.drops) {
+                if (idx % 10 == 0) {
+                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
+                    rows++;
+                    if (rows > 4)
+                        break;
+                }
+
+                horizontal.item(itemStack);
+                idx++;
+            }
+        }
 
     }
 }

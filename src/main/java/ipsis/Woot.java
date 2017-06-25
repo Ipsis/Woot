@@ -77,13 +77,13 @@ public class Woot {
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
         EnderIO.loadRecipes();
 
-        ModOreDictionary.preInit();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
         proxy.init();
+        ModOreDictionary.init();
 
 //        if (Loader.isModLoaded(BloodMagic.BM_MODID))
 //            BloodMagic.init();

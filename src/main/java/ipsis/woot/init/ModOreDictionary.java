@@ -9,7 +9,7 @@ public class ModOreDictionary {
 
     public static final String ORE_DICT_SKULL = "itemSkull";
 
-    public static void preInit() {
+    public static void init() {
 
         /**
          * Register the skulls under "itemSkull" which matches up with EnderIO and will pickup

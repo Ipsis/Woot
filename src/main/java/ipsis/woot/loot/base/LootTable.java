@@ -176,20 +176,6 @@ public class LootTable {
         return sb.toString();
     }
 
-    public List<FullDropInfo> getFullDropInfo(EnumEnchantKey key) {
-
-        List<FullDropInfo> info = new ArrayList<FullDropInfo>();
-        LootPool pool = getLootPool(key);
-        for (Drop d : pool.getDrops()) {
-
-            float chance = d.getChance(pool.getSamples()) * 100.0F;
-            if (d.itemStack != null)
-                info.add(new FullDropInfo(d.itemStack.copy(), chance));
-        }
-
-        return info;
-    }
-
     /**
      * Serialization
      */

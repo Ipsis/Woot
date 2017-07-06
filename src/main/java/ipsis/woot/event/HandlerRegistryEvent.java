@@ -21,6 +21,7 @@ public class HandlerRegistryEvent {
         ModBlocks.init();
 
         event.getRegistry().registerAll(
+                ModBlocks.blockAnvil.setUnlocalizedName(Reference.MOD_ID + "." + BlockWootAnvil.BASENAME).setRegistryName(Reference.MOD_ID, BlockWootAnvil.BASENAME),
                 ModBlocks.blockLayout.setUnlocalizedName(Reference.MOD_ID + "." + BlockLayout.BASENAME).setRegistryName(Reference.MOD_ID, BlockLayout.BASENAME),
                 ModBlocks.blockFactory.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactory.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactory.BASENAME),
                 ModBlocks.blockController.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryController.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryController.BASENAME),
@@ -57,6 +58,7 @@ public class HandlerRegistryEvent {
         );
 
         event.getRegistry().registerAll(
+                new ItemBlock(ModBlocks.blockAnvil).setRegistryName(ModBlocks.blockAnvil.getRegistryName()),
                 new ItemBlock(ModBlocks.blockLayout).setRegistryName(ModBlocks.blockLayout.getRegistryName()),
                 new ItemBlock(ModBlocks.blockFactory).setRegistryName(ModBlocks.blockFactory.getRegistryName()),
                 new ItemBlockController(ModBlocks.blockController).setRegistryName(ModBlocks.blockController.getRegistryName()),

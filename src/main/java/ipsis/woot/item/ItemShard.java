@@ -19,11 +19,13 @@ public class ItemShard extends ItemWoot {
             EnumShardType.DIAMOND.getName(),
             EnumShardType.EMERALD.getName(),
             EnumShardType.QUARTZ.getName(),
-            EnumShardType.NETHERSTAR.getName()
+            EnumShardType.NETHERSTAR.getName(),
+            EnumShardType.ENDER.getName()
     };
 
     public enum EnumShardType {
-        DIAMOND("diamond"), EMERALD("emerald"), QUARTZ("quartz"), NETHERSTAR("netherstar");
+        DIAMOND("diamond"), EMERALD("emerald"), QUARTZ("quartz"), NETHERSTAR("netherstar"),
+        ENDER("ender");
 
         public int getMeta() {
             return ordinal();
@@ -61,8 +63,10 @@ public class ItemShard extends ItemWoot {
     @SuppressWarnings("unchecked")
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-        for (int i = 0; i < VARIANTS.length; i++)
-            items.add(new ItemStack(this, 1, i));
+        if (isInCreativeTab(tab)) {
+            for (int i = 0; i < VARIANTS.length; i++)
+                items.add(new ItemStack(this, 1, i));
+        }
     }
 
     @Override

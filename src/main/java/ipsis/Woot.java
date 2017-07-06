@@ -1,6 +1,9 @@
 package ipsis;
 
 import ipsis.woot.command.WootCommand;
+import ipsis.woot.crafting.AnvilManager;
+import ipsis.woot.crafting.AnvilManagerLoader;
+import ipsis.woot.crafting.IAnvilManager;
 import ipsis.woot.event.HandlerRegistryEvent;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
@@ -46,6 +49,7 @@ public class Woot {
     public static IMobCost mobCosting = new MobXPManager();
     public static IEntitySpawner entitySpawner = new EntitySpawner();
     public static DebugSetup debugSetup = new DebugSetup();
+    public static IAnvilManager anvilManager = new AnvilManager();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();
@@ -94,7 +98,8 @@ public class Woot {
 
         proxy.postInit();
         ModEnchantments.postInit();
-        lootGeneration.initialise();;
+        lootGeneration.initialise();
+        AnvilManagerLoader.load();
     }
 
     @Mod.EventHandler

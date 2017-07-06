@@ -1,22 +1,14 @@
 package ipsis.woot.init;
 
 import ipsis.woot.block.*;
-import ipsis.woot.item.ItemBlockController;
-import ipsis.woot.item.ItemBlockStructure;
-import ipsis.woot.item.ItemBlockUpgrade;
-import ipsis.woot.item.ItemBlockUpgradeB;
 import ipsis.woot.tileentity.*;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ModBlocks {
 
+    public static BlockWoot blockAnvil;
     public static BlockWoot blockFactory;
     public static BlockWoot blockUpgrade;
     public static BlockWoot blockUpgradeB;
@@ -32,6 +24,7 @@ public class ModBlocks {
 
     public static void init() {
 
+        blockAnvil = new BlockWootAnvil();
         blockFactory = new BlockMobFactory();
         blockUpgrade = new BlockMobFactoryUpgrade();
         blockUpgradeB = new BlockMobFactoryUpgradeB();
@@ -45,6 +38,7 @@ public class ModBlocks {
     @SideOnly(Side.CLIENT)
     public static void initClient() {
 
+        ModBlocks.blockAnvil.initModel();
         ModBlocks.blockFactory.initModel();
         ModBlocks.blockUpgrade.initModel();
         ModBlocks.blockUpgradeB.initModel();
@@ -58,6 +52,7 @@ public class ModBlocks {
     public static void registerTileEntities() {
 
         GameRegistry.registerTileEntity(TileEntityMobFarm.class, "tile." + BlockMobFactory.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityAnvil.class, "tile." + BlockWootAnvil.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryStructure.class, "tile." + BlockMobFactoryStructure.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, "tile." + BlockMobFactoryController.BASENAME);

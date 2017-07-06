@@ -67,8 +67,10 @@ public class ItemDye extends ItemWoot {
     @SuppressWarnings("unchecked")
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 
-        for (int i = 0; i < VARIANTS.length; i++)
-            items.add(new ItemStack(this, 1, i));
+        if (isInCreativeTab(tab)) {
+            for (int i = 0; i < VARIANTS.length; i++)
+                items.add(new ItemStack(this, 1, i));
+        }
     }
 
     @Override

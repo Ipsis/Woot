@@ -3,21 +3,20 @@
     "item": "woot:yahhammer"
   },
   "pattern": [
-    "FFF",
-    " w ",
-    "SwS"
+    " BZ",
+    "SBB",
+    "BS "
   ],
   "type": "forge:ore_shaped",
   "key": {
-    "F": {
-      "item": "minecraft:netherbrick"
+    "B": {
+      "item": "minecraft:bone"
     },
     "S": {
       "item": "minecraft:string"
     },
-    "w": {
-      "type": "forge:ore_dict",
-      "ore": "stickWood"
+    "Z": {
+      "item": "minecraft:zombie_flesh"
     }
   }
 }

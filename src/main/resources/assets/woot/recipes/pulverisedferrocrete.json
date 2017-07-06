@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "woot:pulverisedferrocrete"
+  },
+  "pattern": [
+    "GnG",
+    "n n",
+    "GnG"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "G": {
+      "item": "minecraft:gravel"
+    },
+    "n": {
+      "type": "forge:ore_dict",
+      "ore": "dustNetherrack"
+    }
+  }
+}

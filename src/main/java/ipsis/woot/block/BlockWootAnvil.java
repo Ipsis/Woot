@@ -1,8 +1,13 @@
 package ipsis.woot.block;
 
+import ipsis.Woot;
+import ipsis.woot.crafting.IAnvilRecipe;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.init.ModItems;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.tileentity.TileEntityAnvil;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -125,22 +130,28 @@ public class BlockWootAnvil extends BlockWoot implements ITileEntityProvider {
         if (!worldIn.isRemote) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TileEntityAnvil) {
-                if (((TileEntityAnvil) te).getBaseItem().isEmpty()) {
-                    if (!playerIn.getHeldItem(hand).isEmpty()) {
+                TileEntityAnvil anvil = (TileEntityAnvil)te;
+                ItemStack playerItem = playerIn.getHeldItem(hand);
+                if (anvil.getBaseItem().isEmpty()) {
+                    if (Woot.anvilManager.isValidBaseItem(playerItem)) {
                         // From player hand to empty anvil
-                        ((TileEntityAnvil) te).setBaseItem(playerIn.getHeldItem(hand));
+                        anvil.setBaseItem(playerItem);
                         playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, ItemStack.EMPTY);
                         playerIn.openContainer.detectAndSendChanges();
                     }
                 } else {
-                    // From anvil to player
-                    ItemStack itemStack = ((TileEntityAnvil) te).getBaseItem();
-                    ((TileEntityAnvil) te).setBaseItem(ItemStack.EMPTY);
-                    if (!playerIn.inventory.addItemStackToInventory(itemStack)) {
-                        EntityItem entityItem = new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), itemStack);
-                        worldIn.spawnEntity(entityItem);
+                    if (playerItem.getItem() == ModItems.itemYahHammer) {
+                        anvil.tryCraft();
                     } else {
-                        playerIn.openContainer.detectAndSendChanges();
+                        // From anvil to player
+                        ItemStack baseItem = anvil.getBaseItem();
+                        anvil.setBaseItem(ItemStack.EMPTY);
+                        if (!playerIn.inventory.addItemStackToInventory(baseItem)) {
+                            EntityItem entityItem = new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), baseItem);
+                            worldIn.spawnEntity(entityItem);
+                        } else {
+                            playerIn.openContainer.detectAndSendChanges();
+                        }
                     }
                 }
             }

@@ -7,9 +7,9 @@ import java.util.List;
 
 public class AnvilRecipeMatcher {
 
-    public static boolean isMatch(AnvilRecipe recipe, @Nonnull ItemStack baseItem, @Nonnull List<ItemStack> items) {
+    public static boolean isMatch(IAnvilRecipe recipe, @Nonnull ItemStack baseItem, @Nonnull List<ItemStack> items) {
 
-        if (!recipe.isBaseItem(baseItem))
+        if (!recipe.isMatchingBase(baseItem))
             return false;
 
         int recipeSize = recipe.getRecipeSize();
@@ -17,7 +17,7 @@ public class AnvilRecipeMatcher {
             return false;
 
         for (ItemStack itemStack : items) {
-            if (recipe.isValidInput(itemStack))
+            if (recipe.isIngredient(itemStack))
                 recipeSize--;
         }
 

@@ -9,23 +9,71 @@ import java.util.List;
 
 public class AnvilManager implements IAnvilManager {
 
-    private List<AnvilRecipe> recipes = new ArrayList<>();
+    private List<ItemStack> validBaseItems = new ArrayList<>();
+    private List<IAnvilRecipe> recipes = new ArrayList<>();
 
+    private void addToBaseItems(ItemStack base) {
 
-    public void addRecipe(@Nonnull AnvilRecipe recipe) {
+        boolean found = false;
+        for (ItemStack itemStack : validBaseItems) {
+
+            if (itemStack.isItemEqual(base)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+            validBaseItems.add(base);
+    }
+
+    @Override
+    public void addRecipe(ItemStack output, ItemStack base, boolean preserveBase, Object ... ingredients) {
+
+        if (ingredients.length == 0)
+            return;
+
+        addToBaseItems(base);
+
+        IAnvilRecipe recipe = new AnvilRecipe(output, base, preserveBase);
+        for (Object o : ingredients) {
+            if (o instanceof ItemStack)
+                recipe.addIngredient((ItemStack)o);
+        }
 
         recipes.add(recipe);
     }
 
     @Nullable
-    public List<ItemStack> craft(ItemStack baseItem, @Nonnull List<ItemStack> items) {
+    @Override
+    public IAnvilRecipe tryCraft(ItemStack baseItem, @Nonnull List<ItemStack> items) {
 
-        for (AnvilRecipe recipe : recipes) {
+        if (!isValidBaseItem(baseItem))
+            return null;
+
+        for (IAnvilRecipe recipe : recipes) {
             if (AnvilRecipeMatcher.isMatch(recipe, baseItem, items)) {
-                return recipe.getOutputs();
+                items.clear();
+                // TODO only remove the matching items
+                return recipe;
             }
         }
 
         return null;
+    }
+
+    @Override
+    public boolean isValidBaseItem(ItemStack itemStack) {
+
+        boolean found = false;
+
+        for (ItemStack c : validBaseItems) {
+            if (c.isItemEqual(itemStack)) {
+                found = true;
+                break;
+            }
+        }
+
+        return found;
     }
 }

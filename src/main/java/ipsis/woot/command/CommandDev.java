@@ -53,6 +53,7 @@ public class CommandDev extends CommandTreeBase {
         static {
             devTags.put("event", DebugSetup.EnumDebugType.LOOT_EVENTS);
             devTags.put("cfgaccess", DebugSetup.EnumDebugType.CONFIG_ACCESS);
+            devTags.put("anvilcrafting", DebugSetup.EnumDebugType.ANVIL_CRAFTING);
         };
 
         @Override
@@ -63,6 +64,8 @@ public class CommandDev extends CommandTreeBase {
 
             if (args[0].equalsIgnoreCase("show")) {
                 CommandHelper.display(sender, Woot.debugSetup.toString());
+            } else if (args[0].equalsIgnoreCase("list")) {
+                    CommandHelper.display(sender, devTags.keySet().toString());
             } else {
 
                 boolean d = true;

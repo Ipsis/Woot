@@ -3,7 +3,7 @@
   "textures": {
     "base": "blocks/obsidian",
     "body": "woot:blocks/anvil",
-    "top": "woot:blocks/factory"
+    "top": "woot:blocks/anvil"
   },
   "display": {
     "fixed": {

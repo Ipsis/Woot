@@ -7,8 +7,8 @@ public class ConfigurationLoaderDefaults {
             "minecraft:wither_skeleton,SPAWN_XP,10",
             "minecraft:magma_cube,SPAWN_XP,5",
             "minecraft:enderman,SPAWN_XP,10",
-            "minecraft:enderdragon,SPAWN_XP,750",
-            "minecraft:enderdragon,DEATH_XP,500",
+            "minecraft:ender_dragon,SPAWN_XP,750",
+            "minecraft:ender_dragon,DEATH_XP,500",
 
             "minecraft:wither,FACTORY_TIER,4",
 

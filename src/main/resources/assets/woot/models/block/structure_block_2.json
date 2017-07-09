@@ -1,6 +1,6 @@
 {
   "parent": "woot:block/small_cube_all",
   "textures": {
-    "all": "woot:blocks/structure_block_2"
+    "all": "woot:blocks/structure_block_2_formed"
   }
 }

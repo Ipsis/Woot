@@ -1,7 +1,7 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.item.ItemPrism2;
+import ipsis.woot.item.ItemPrism;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.farmblocks.ControllerMasterLocator;
@@ -13,8 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-
-import javax.annotation.Nullable;
 
 public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController, IFarmBlockConnection {
 
@@ -104,7 +102,7 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         if (itemStack.isEmpty())
             return false;
 
-        if (!ItemPrism2.isPrism(itemStack))
+        if (!ItemPrism.isPrism(itemStack))
             return false;
 
         if (isProgrammed())

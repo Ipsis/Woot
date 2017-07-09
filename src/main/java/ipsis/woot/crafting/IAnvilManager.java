@@ -8,7 +8,22 @@ import java.util.List;
 
 public interface IAnvilManager {
 
-    void addRecipe(@Nonnull AnvilRecipe recipe);
-    @Nullable
-    List<ItemStack> craft(ItemStack baseItem, @Nonnull List<ItemStack> items);
+    /**
+     *
+     * @param output - what will the craft product
+     * @param base - what item should be on the anvil
+     * @param preserveBase - leave item on anvil after craft
+     * @param ingredients - items needed to craft
+     */
+    void addRecipe(ItemStack output, ItemStack base, boolean preserveBase, Object ... ingredients);
+
+    /**
+     *
+     * @param baseItem
+     * @param ingredients - will have the used items removed
+     * @return matching recipe
+     */
+    @Nullable IAnvilRecipe tryCraft(ItemStack baseItem, @Nonnull List<ItemStack> ingredients);
+
+    boolean isValidBaseItem(ItemStack itemStack);
 }

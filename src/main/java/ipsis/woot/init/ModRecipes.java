@@ -4,7 +4,7 @@
 //import ipsis.woot.block.BlockMobFactoryUpgradeB;
 //import ipsis.woot.init.recipes.ShapedOreEnchBookRecipe;
 //import ipsis.woot.init.recipes.ShapelessOreDragonPrismRecipe;
-//import ipsis.woot.item.ItemDye;
+//import ipsis.woot.item.ItemDie;
 //import ipsis.woot.item.ItemFactoryUpgrade;
 //import ipsis.woot.item.ItemShard;
 //import ipsis.woot.item.ItemSkull;
@@ -75,25 +75,25 @@
 //
 //        initDyeRecipe(
 //                "stone",
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CASING.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CASING.getMeta()));
 //        initDyeRecipe(
 //                "dustRedstone",
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CONNECTOR.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CONNECTOR.getMeta()));
 //        initDyeRecipe(
 //                "slabWood",
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PLATE.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PLATE.getMeta()));
 //        initDyeRecipe(
 //                Items.FLINT,
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()));
 //        initDyeRecipe(
 //                ModOreDictionary.ORE_DICT_SKULL,
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SKULL.getMeta()));
 //        initDyeRecipe(
 //                Blocks.IRON_BARS,
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()));
 //        initDyeRecipe(
 //                "enderpearl",
-//                new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PRISM.getMeta()));
+//                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PRISM.getMeta()));
 //
 //        /**
 //         * Hammered Outputs
@@ -104,8 +104,8 @@
 //                        new ItemStack(ModItems.itemFerrocretePlate, 4),
 //                        "hf ", " d ", " o ",
 //                        'h', ModItems.itemYahHammer,
-//                        'f', ModItems.itemFerrocrete,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PLATE.getMeta()),
+//                        'f', ModItems.itemFerrocreteIngot,
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PLATE.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Prism Frame
@@ -114,9 +114,9 @@
 //                        new ItemStack(ModItems.itemPrismFrame),
 //                        "he ", "fdf", " o ",
 //                        'h', ModItems.itemYahHammer,
-//                        'f', ModItems.itemFerrocrete,
+//                        'f', ModItems.itemFerrocreteIngot,
 //                        'e', Items.ENDER_EYE,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.PRISM.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PRISM.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Factory Casing
@@ -128,7 +128,7 @@
 //                        "pop",
 //                        'h', ModItems.itemYahHammer,
 //                        'p', ModItems.itemFerrocretePlate,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CASING.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CASING.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Iron Plated Skull
@@ -141,7 +141,7 @@
 //                        's', ModOreDictionary.ORE_DICT_SKULL,
 //                        'i', "ingotIron",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SKULL.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Gold Plated Skull
@@ -154,7 +154,7 @@
 //                        's', new ItemStack(ModItems.itemSkull, 1, 0),
 //                        'g', "ingotGold",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SKULL.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Diamond Plated Skull
@@ -167,7 +167,7 @@
 //                        's', new ItemStack(ModItems.itemSkull, 1, 1),
 //                        'g', "gemDiamond",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SKULL.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Emerald Plated Skull
@@ -180,7 +180,7 @@
 //                        's', new ItemStack(ModItems.itemSkull, 1, 2),
 //                        'g', "gemEmerald",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SKULL.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SKULL.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Factory Connector
@@ -194,7 +194,7 @@
 //                        'q', Items.QUARTZ,
 //                        'l', Blocks.LAPIS_BLOCK ,
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.CONNECTOR.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CONNECTOR.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Diamond Shard
@@ -206,7 +206,7 @@
 //                        " o ",
 //                        'g', "gemDiamond",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Emerald Shard
@@ -218,7 +218,7 @@
 //                        " o ",
 //                        'g', "gemEmerald",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Quartz Shard
@@ -230,7 +230,7 @@
 //                        " o ",
 //                        'g', "gemQuartz",
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Netherstar Shard
@@ -242,27 +242,27 @@
 //                        " o ",
 //                        'g', Items.NETHER_STAR,
 //                        'h', ModItems.itemYahHammer,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.SHARD.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //
 //        // Pulverizedd UnderIron
 //        GameRegistry.addRecipe(
 //                new ShapedOreRecipe(
-//                        new ItemStack(ModItems.itemPulverisedFerrocrete, 2),
+//                        new ItemStack(ModItems.itemFerrocreteDust, 2),
 //                        "hi ",
 //                        "nd ",
 //                        " o ",
 //                        'h', ModItems.itemYahHammer,
 //                        'i', "ingotIron",
 //                        'n', Blocks.NETHER_BRICK,
-//                        'd', new ItemStack(ModItems.itemDye, 1, ItemDye.EnumDyeType.MESH.getMeta()),
+//                        'd', new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()),
 //                        'o', Blocks.COBBLESTONE));
 //    }
 //
 //    private static void initItemRecipes() {
 //
 //        // UnderIron
-//        GameRegistry.addSmelting(ModItems.itemPulverisedFerrocrete, new ItemStack(ModItems.itemFerrocrete), 0.5F);
+//        GameRegistry.addSmelting(ModItems.itemFerrocreteDust, new ItemStack(ModItems.itemFerrocreteIngot), 0.5F);
 //
 //        // Prism
 //        GameRegistry.addRecipe(
@@ -275,7 +275,7 @@
 //                        'g', "dyeGreen",
 //                        'b', "dyeBlue",
 //                        'v', "dyePurple",
-//                        'w', ModItems.itemFerrocrete,
+//                        'w', ModItems.itemFerrocreteIngot,
 //                        'f', ModItems.itemPrismFrame));
 //
 //        GameRegistry.addRecipe(
@@ -288,7 +288,7 @@
 //                        'g', "dyeGreen",
 //                        'b', "dyeLightBlue",
 //                        'v', "dyePurple",
-//                        'w', ModItems.itemFerrocrete,
+//                        'w', ModItems.itemFerrocreteIngot,
 //                        'f', ModItems.itemPrismFrame));
 //
 //         GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemPrism), new ItemStack(ModItems.itemPrism));
@@ -633,7 +633,7 @@
 //                        "iii", "ici", "ooo",
 //                        'i', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.QUARTZ.getMeta()),
 //                        'c', ModItems.itemFactoryCasing,
-//                        'o', ModItems.itemFerrocrete));
+//                        'o', ModItems.itemFerrocreteIngot));
 //
 //        // Tier II upgrade
 //        GameRegistry.addRecipe(
@@ -642,7 +642,7 @@
 //                        "iii", "ici", "ooo",
 //                        'i', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.EMERALD.getMeta()),
 //                        'c', ModItems.itemFactoryCasing,
-//                        'o', ModItems.itemFerrocrete));
+//                        'o', ModItems.itemFerrocreteIngot));
 //
 //        // Tier III upgrade
 //        GameRegistry.addRecipe(
@@ -651,7 +651,7 @@
 //                        "iii", "ici", "ooo",
 //                        'i', new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.DIAMOND.getMeta()),
 //                        'c', ModItems.itemFactoryCasing,
-//                        'o', ModItems.itemFerrocrete));
+//                        'o', ModItems.itemFerrocreteIngot));
 //
 //    }
 //

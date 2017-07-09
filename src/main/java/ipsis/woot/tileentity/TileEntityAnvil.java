@@ -1,14 +1,24 @@
 package ipsis.woot.tileentity;
 
+import ipsis.Woot;
+import ipsis.woot.crafting.AnvilHelper;
+import ipsis.woot.crafting.IAnvilRecipe;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.SoundCategory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityAnvil extends TileEntity {
 
@@ -72,5 +82,49 @@ public class TileEntityAnvil extends TileEntity {
         }
 
         return compound;
+    }
+
+    public void tryCraft() {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", itemStack);
+
+        if (!AnvilHelper.isAnvilHot(getWorld(), getPos())) {
+            // TODO tell user not hot
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Anvil not hot " + getPos());
+            return;
+        }
+
+        List<EntityItem> entityItemList = AnvilHelper.getItems(getWorld(), getPos());
+        List<ItemStack> ingredients = new ArrayList<>();
+        for (EntityItem e : entityItemList)
+            ingredients.add(e.getItem());
+
+        IAnvilRecipe recipe = Woot.anvilManager.tryCraft(itemStack, ingredients);
+        if (recipe != null) {
+            for (EntityItem e : entityItemList)
+                e.setDead();
+
+            if (!recipe.shouldPreserveBase())
+                setBaseItem(ItemStack.EMPTY);
+
+            ItemStack output = recipe.getCopyOutput();
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Output " + output);
+
+            world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            EntityItem out = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
+            world.spawnEntity(out);
+
+            if (!ingredients.isEmpty()) {
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Leftovers " + ingredients);
+            }
+
+
+        }  else {
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "No matching recipe " + itemStack + " " + ingredients);
+
+            // TODO failed clang!
+            world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
     }
 }

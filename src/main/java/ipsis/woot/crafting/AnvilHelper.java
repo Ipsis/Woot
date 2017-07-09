@@ -16,15 +16,10 @@ import java.util.List;
 
 public class AnvilHelper {
 
-    public static ItemStack getBaseItem(World world, BlockPos pos) {
-
-        return ItemStack.EMPTY.copy();
-    }
-
     public static @Nonnull
-    List<ItemStack> getItems(World world, BlockPos pos) {
+    List<EntityItem> getItems(World world, BlockPos pos) {
 
-        List<ItemStack> items = new ArrayList<>();
+        List<EntityItem> items = new ArrayList<>();
         List<EntityItem> entityItemList = world.getEntitiesWithinAABB(EntityItem.class,
                 new AxisAlignedBB(pos, pos.add(2,2, 2)));
 
@@ -33,7 +28,7 @@ public class AnvilHelper {
             if (itemStack.isEmpty() || entityItem.isDead)
                 continue;
 
-            items.add(itemStack);
+            items.add(entityItem);
         }
 
         LogHelper.info(items);

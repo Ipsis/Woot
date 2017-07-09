@@ -1,6 +1,6 @@
 {
   "parent": "woot:block/small_cube_all",
   "textures": {
-    "all": "woot:blocks/upgrade_mass_iii"
+    "all": "woot:blocks/upgrade_mass_iii_active"
   }
 }

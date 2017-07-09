@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "woot:netherrackdust"
+  },
+  "pattern": [
+    " HN",
+    "   ",
+    "   "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "N": {
+      "item": "minecraft:netherrack"
+    }
+  }
+}

@@ -2,74 +2,65 @@ package ipsis.woot.crafting;
 
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnvilRecipe {
+public class AnvilRecipe implements IAnvilRecipe {
 
-    private ItemStack baseItem = ItemStack.EMPTY.copy();
-    private List<ItemStack> items = new ArrayList<>();
-    private List<String> oreDictItems = new ArrayList<>();
-    private List<ItemStack> outputs = new ArrayList<>();
+    private ItemStack base;
+    private ItemStack output;
+    private List<ItemStack> ingredients = new ArrayList<>();
+    private boolean preserveBase;
 
-    public AnvilRecipe setBaseItem(ItemStack baseItem) {
+    public AnvilRecipe(ItemStack output, ItemStack base, boolean preserveBase) {
 
-        this.baseItem = baseItem;
-        return this;
+        this.base = base;
+        this.output = output;
+        this.preserveBase = preserveBase;
     }
 
-    public AnvilRecipe addItem(ItemStack itemStack) {
+    @Override
+    public void addIngredient(ItemStack itemStack) {
 
-        items.add(itemStack);
-        return this;
+        ingredients.add(itemStack);
     }
 
-    public AnvilRecipe addOutput(ItemStack itemStack) {
+    @Override
+    public boolean shouldPreserveBase() {
 
-        outputs.add(itemStack);
-        return this;
+        return this.preserveBase;
     }
 
-    public AnvilRecipe addOreDictItem(String name) {
+    @Override
+    public ItemStack getCopyOutput() {
 
-        oreDictItems.add(name);
-        return  this;
+        return output.copy();
     }
 
-    public List<ItemStack> getOutputs() {
+    @Override
+    public boolean isMatchingBase(ItemStack itemStack) {
 
-        List<ItemStack> out = new ArrayList<>();
-        for (ItemStack o : outputs)
-            out.add(o.copy());
-        return out;
-    }
-
-    public int getRecipeSize() {
-
-        return items.size() + oreDictItems.size();
-    }
-
-    public boolean isBaseItem(@Nonnull ItemStack itemStack) {
-
-        if (baseItem.isEmpty())
-            return true;
-
-        // there is a base item but none passed in
         if (itemStack.isEmpty())
             return false;
 
-        return AnvilRecipeMatcher.isItemStackMatch(baseItem, itemStack);
+        return base.isItemEqual(itemStack);
     }
 
-    public boolean isValidInput(@Nonnull ItemStack itemStack) {
+    @Override
+    public int getRecipeSize() {
 
-        for (ItemStack c : items) {
-            if (AnvilRecipeMatcher.isItemStackMatch(c, itemStack))
+        return ingredients.size();
+    }
+
+    @Override
+    public boolean isIngredient(ItemStack itemStack) {
+
+        if (itemStack.isEmpty())
+            return false;
+
+        for (ItemStack r : ingredients)
+            if (r.isItemEqual(itemStack))
                 return true;
-        }
-
-        // TODO oreDict
 
         return false;
     }

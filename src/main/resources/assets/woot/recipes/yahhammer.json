@@ -16,7 +16,7 @@
       "item": "minecraft:string"
     },
     "Z": {
-      "item": "minecraft:zombie_flesh"
+      "item": "minecraft:rotten_flesh"
     }
   }
 }

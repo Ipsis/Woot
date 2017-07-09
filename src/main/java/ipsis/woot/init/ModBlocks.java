@@ -10,6 +10,7 @@ public class ModBlocks {
 
     public static BlockWoot blockAnvil;
     public static BlockWoot blockFactory;
+    public static BlockWoot blockFerrocreteBlock;
     public static BlockWoot blockUpgrade;
     public static BlockWoot blockUpgradeB;
     public static BlockWoot blockStructure;
@@ -26,6 +27,7 @@ public class ModBlocks {
 
         blockAnvil = new BlockWootAnvil();
         blockFactory = new BlockMobFactory();
+        blockFerrocreteBlock = new BlockFerrocreteBlock();
         blockUpgrade = new BlockMobFactoryUpgrade();
         blockUpgradeB = new BlockMobFactoryUpgradeB();
         blockStructure = new BlockMobFactoryStructure();
@@ -40,6 +42,7 @@ public class ModBlocks {
 
         ModBlocks.blockAnvil.initModel();
         ModBlocks.blockFactory.initModel();
+        ModBlocks.blockFerrocreteBlock.initModel();
         ModBlocks.blockUpgrade.initModel();
         ModBlocks.blockUpgradeB.initModel();
         ModBlocks.blockStructure.initModel();

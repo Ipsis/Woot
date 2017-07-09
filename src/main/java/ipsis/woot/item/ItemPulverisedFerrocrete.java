@@ -2,7 +2,6 @@ package ipsis.woot.item;
 
 import ipsis.woot.init.ModItems;
 import ipsis.woot.oss.client.ModelHelper;
-import ipsis.woot.reference.Reference;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -20,6 +19,6 @@ public class ItemPulverisedFerrocrete extends  ItemWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemPulverisedFerrocrete, BASENAME.toLowerCase());
+        ModelHelper.registerItem(ModItems.itemFerrocreteDust, BASENAME.toLowerCase());
     }
 }

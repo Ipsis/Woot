@@ -40,7 +40,7 @@ public class AnvilManagerLoader {
 
         // Shards
         Woot.anvilManager.addRecipe(
-                new ItemStack(ModItems.itemShard, 3, ItemShard.EnumShardType.ENDER.getMeta()),
+                new ItemStack(ModItems.itemPrism, 3),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
                 true,
                 new ItemStack(Items.ENDER_EYE));

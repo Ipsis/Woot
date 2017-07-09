@@ -1,8 +1,6 @@
 package ipsis.woot.item;
 
-import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.multiblock.EnumMobFactoryModule;
-import ipsis.woot.util.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -26,6 +24,6 @@ public class ItemBlockStructure extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return UnlocalizedName.getUnlocalizedNameBlock(BlockMobFactoryStructure.BASENAME) + "." + EnumMobFactoryModule.byMetadata(stack.getMetadata());
+        return super.getUnlocalizedName(stack) + "." + EnumMobFactoryModule.byMetadata(stack.getMetadata());
     }
 }

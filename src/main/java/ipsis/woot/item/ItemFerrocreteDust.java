@@ -2,15 +2,14 @@ package ipsis.woot.item;
 
 import ipsis.woot.init.ModItems;
 import ipsis.woot.oss.client.ModelHelper;
-import ipsis.woot.reference.Reference;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFactoryCasing extends ItemWoot {
+public class ItemFerrocreteDust extends  ItemWoot {
 
-    public static final String BASENAME = "factorycasing";
+    public static final String BASENAME = "ferrocretedust";
 
-    public ItemFactoryCasing() {
+    public ItemFerrocreteDust() {
 
         super(BASENAME);
         setMaxStackSize(64);
@@ -20,6 +19,6 @@ public class ItemFactoryCasing extends ItemWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemFactoryCasing, BASENAME.toLowerCase());
+        ModelHelper.registerItem(ModItems.itemFerrocreteDust, BASENAME.toLowerCase());
     }
 }

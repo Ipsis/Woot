@@ -1,74 +1,108 @@
 itemGroup.woot=woot
 
-tile.woot:factory.name=Mob Factory/Spawner/Grinder
-tile.woot:controller.name=Mob Controller
-tile.woot:extender.name=Mob Factory Extender
-tile.woot:proxy.name=Mob Factory Proxy
-tile.woot:layout.name=Mob Factory Layout
-
-tile.woot:structure.block_1.name=Mob Factory Block Gray
-tile.woot:structure.block_2.name=Mob Factory Block Red
-tile.woot:structure.block_3.name=Mob Factory Block Orange
-tile.woot:structure.block_4.name=Mob Factory Block Green
-tile.woot:structure.block_5.name=Mob Factory Block White
-tile.woot:structure.block_upgrade.name=Mob Factory Block Upgrade Base
-tile.woot:structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
-tile.woot:structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
-tile.woot:structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone
-tile.woot:structure.tier_iv_cap.name=Mob Factory Tier IV Cap Stone
-
-tile.woot:upgrade.xp_i.name=XP I Upgrade
-tile.woot:upgrade.xp_ii.name=XP II Upgrade
-tile.woot:upgrade.xp_iii.name=XP III Upgrade
-tile.woot:upgrade.rate_i.name=Rate I Upgrade
-tile.woot:upgrade.rate_ii.name=Rate II Upgrade
-tile.woot:upgrade.rate_iii.name=Rate III Upgrade
-tile.woot:upgrade.looting_i.name=Looting I Upgrade
-tile.woot:upgrade.looting_ii.name=Looting II Upgrade
-tile.woot:upgrade.looting_iii.name=Looting III Upgrade
-tile.woot:upgrade.mass_i.name=Mass I Upgrade
-tile.woot:upgrade.mass_ii.name=Mass II Upgrade
-tile.woot:upgrade.mass_iii.name=Mass III Upgrade
-tile.woot:upgrade.decapitate_i.name=Decapitate I Upgrade
-tile.woot:upgrade.decapitate_ii.name=Decapitate II Upgrade
-tile.woot:upgrade.decapitate_iii.name=Decapitate III Upgrade
-tile.woot:upgradeb.efficiency_i.name=Efficiency I Upgrade
-tile.woot:upgradeb.efficiency_ii.name=Efficiency II Upgrade
-tile.woot:upgradeb.efficiency_iii.name=Efficiency III Upgrade
-tile.woot:upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
-tile.woot:upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
-tile.woot:upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
-
 item.woot.yahhammer.name=Yah Hammer
-item.woot.pulverisedferrocrete.name=Pulverised UnderIron
-item.woot.ferrocrete.name=UnderIron
-item.woot.prism2.name=Mob Prism
-item.woot.prismframe.name=Mob Prism Frame
-item.woot.xpShard.name=Xp Shard
-item.woot.skull.iron.name=Iron Plated Skull
+item.woot.manual.name=Woot Manual [WIP]
+
+# Dies
+item.woot.die.mesh.name=Mesh Die
+item.woot.die.plate.name=Plate Die
+item.woot.die.core.name=Core Die
+item.woot.die.shard.name=Shard Die
+
+# Factory Cores
+item.woot.factorycore.heart.name=Factory Heart Core
+item.woot.factorycore.controller.name=Factory Controller Core
+item.woot.factorycore.t1_upgrade.name=Factory Tier I Upgrade Core
+item.woot.factorycore.t2_upgrade.name=Factory Tier II Upgrade Core
+item.woot.factorycore.t3_upgrade.name=Factory Tier III Upgrade Core
+
+# Ferrocrete
+item.woot.ferrocreteingot.name=UnderIron Ingot
+item.woot.ferrocreteplate.name=UnderIron Plate
+tile.woot.ferrocreteblock.name=UnderIron Block
+item.woot.pulverisedferrocrete.name=UnderIron Dust
+
+item.woot.netherrackdust.name=Netherrack Dust
+
+tile.woot.anvil.name=UnderIron Anvil
+
+item.woot.prism2.name=Ender Shard
+
+# Skulls
+item.woot.skull.quartz.name=Quartz Skull
 item.woot.skull.gold.name=Gold Plated Skull
 item.woot.skull.diamond.name=Diamond Encrusted Skull
 item.woot.skull.emerald.name=Emerald Encrusted Skull
+
+# Shards
+item.woot.xpShard.name=Xp Shard
+
 item.woot.shard.diamond.name=Diamond Shard
 item.woot.shard.emerald.name=Emerald Shard
 item.woot.shard.quartz.name=Quartz Shard
 item.woot.shard.netherstar.name=Nether Star Shard
-item.woot.dye.plate.name=Plate Die
-item.woot.dye.casing.name=Casing Die
-item.woot.dye.skull.name=Skull Die
-item.woot.dye.connector.name=Connector Die
-item.woot.dye.shard.name=Shard Die
-item.woot.dye.mesh.name=Mesh Die
-item.woot.dye.prism.name=Prism Die
-item.woot.factoryupgrade.tier_i.name=Tier I Upgrade
-item.woot.factoryupgrade.tier_ii.name=Tier II Upgrade
-item.woot.factoryupgrade.tier_iii.name=Tier III Upgrade
-item.woot.manual.name=woot Manual [WIP]
-item.woot.ferrocreteplate.name=UnderIron Plate
-item.woot.factorycasing.name=Factory Casing
-item.woot.factorycap.name=Factory Cap
-item.woot.factoryconnector.name=Factory Connector
-item.woot.factoryFrame.name=Factory Frame [Deprecated]
+
+
+# Factory Blocks
+tile.woot.layout.name=Mob Factory Layout
+tile.woot.factory.name=Mob Factory/Farm/Spawner/Grinder
+tile.woot.controller.name=Mob Controller
+tile.woot.extender.name=Mob Factory Extender
+tile.woot.proxy.name=Mob Factory Proxy
+
+tile.woot.structure.block_1.name=Mob Factory Block Gray
+tile.woot.structure.block_2.name=Mob Factory Block Red
+tile.woot.structure.block_3.name=Mob Factory Block Orange
+tile.woot.structure.block_4.name=Mob Factory Block Green
+tile.woot.structure.block_5.name=Mob Factory Block White
+
+tile.woot.structure.block_upgrade.name=Mob Factory Block Upgrade Base
+
+tile.woot.structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
+tile.woot.structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
+tile.woot.structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone
+tile.woot.structure.tier_iv_cap.name=Mob Factory Tier IV Cap Stone
+
+tile.woot.upgrade.xp_i.name=XP I Upgrade
+tile.woot.upgrade.xp_ii.name=XP II Upgrade
+tile.woot.upgrade.xp_iii.name=XP III Upgrade
+tile.woot.upgrade.rate_i.name=Rate I Upgrade
+tile.woot.upgrade.rate_ii.name=Rate II Upgrade
+tile.woot.upgrade.rate_iii.name=Rate III Upgrade
+tile.woot.upgrade.looting_i.name=Looting I Upgrade
+tile.woot.upgrade.looting_ii.name=Looting II Upgrade
+tile.woot.upgrade.looting_iii.name=Looting III Upgrade
+tile.woot.upgrade.mass_i.name=Mass I Upgrade
+tile.woot.upgrade.mass_ii.name=Mass II Upgrade
+tile.woot.upgrade.mass_iii.name=Mass III Upgrade
+tile.woot.upgrade.decapitate_i.name=Decapitate I Upgrade
+tile.woot.upgrade.decapitate_ii.name=Decapitate II Upgrade
+tile.woot.upgrade.decapitate_iii.name=Decapitate III Upgrade
+tile.woot.upgradeb.efficiency_i.name=Efficiency I Upgrade
+tile.woot.upgradeb.efficiency_ii.name=Efficiency II Upgrade
+tile.woot.upgradeb.efficiency_iii.name=Efficiency III Upgrade
+tile.woot.upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
+tile.woot.upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
+tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
+
+#item.woot.pulverisedferrocrete.name=Pulverised UnderIron
+#item.woot.ferrocrete.name=UnderIron
+#item.woot.prismframe.name=Mob Prism Frame
+#item.woot.dye.plate.name=Plate Die
+#item.woot.dye.casing.name=Casing Die
+#item.woot.dye.skull.name=Skull Die
+#item.woot.dye.connector.name=Connector Die
+#item.woot.dye.shard.name=Shard Die
+#item.woot.dye.mesh.name=Mesh Die
+#item.woot.dye.prism.name=Prism Die
+#item.woot.factoryupgrade.tier_i.name=Tier I Upgrade
+#item.woot.factoryupgrade.tier_ii.name=Tier II Upgrade
+#item.woot.factoryupgrade.tier_iii.name=Tier III Upgrade
+#item.woot.ferrocreteplate.name=UnderIron Plate
+#item.woot.factorycasing.name=Factory Casing
+#item.woot.factorycap.name=Factory Cap
+#item.woot.factoryconnector.name=Factory Connector
+#item.woot.factoryFrame.name=Factory Frame [Deprecated]
 
 waila.woot:factory.tier=Tier %s
 waila.woot:factory.mob=Spawning %s

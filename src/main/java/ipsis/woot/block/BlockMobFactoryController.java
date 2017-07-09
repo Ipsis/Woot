@@ -4,7 +4,6 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
-import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.farmblocks.IFarmBlockController;
 import mcjty.theoneprobe.api.IProbeHitData;
@@ -46,7 +45,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     @Override
     public void initModel() {
 
-        ModelHelper.registerBlock(ModBlocks.blockController, BASENAME);
+        ModelHelper.registerBlock(ModBlocks.blockFactoryController, BASENAME);
     }
 
     @Override

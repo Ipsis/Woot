@@ -23,9 +23,9 @@ public class HandlerRegistryEvent {
         event.getRegistry().registerAll(
                 ModBlocks.blockAnvil.setUnlocalizedName(Reference.MOD_ID + "." + BlockWootAnvil.BASENAME).setRegistryName(Reference.MOD_ID, BlockWootAnvil.BASENAME),
                 ModBlocks.blockLayout.setUnlocalizedName(Reference.MOD_ID + "." + BlockLayout.BASENAME).setRegistryName(Reference.MOD_ID, BlockLayout.BASENAME),
-                ModBlocks.blockFactory.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactory.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactory.BASENAME),
+                ModBlocks.blockFactoryHeart.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryHeart.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryHeart.BASENAME),
                 ModBlocks.blockFerrocreteBlock.setUnlocalizedName(Reference.MOD_ID + "." + BlockFerrocreteBlock.BASENAME).setRegistryName(Reference.MOD_ID, BlockFerrocreteBlock.BASENAME),
-                ModBlocks.blockController.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryController.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryController.BASENAME),
+                ModBlocks.blockFactoryController.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryController.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryController.BASENAME),
                 ModBlocks.blockExtender.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryExtender.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryExtender.BASENAME),
                 ModBlocks.blockProxy.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryProxy.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryProxy.BASENAME),
                 ModBlocks.blockStructure.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryStructure.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryStructure.BASENAME),
@@ -63,9 +63,9 @@ public class HandlerRegistryEvent {
         event.getRegistry().registerAll(
                 new ItemBlock(ModBlocks.blockAnvil).setRegistryName(ModBlocks.blockAnvil.getRegistryName()),
                 new ItemBlock(ModBlocks.blockLayout).setRegistryName(ModBlocks.blockLayout.getRegistryName()),
-                new ItemBlock(ModBlocks.blockFactory).setRegistryName(ModBlocks.blockFactory.getRegistryName()),
+                new ItemBlock(ModBlocks.blockFactoryHeart).setRegistryName(ModBlocks.blockFactoryHeart.getRegistryName()),
                 new ItemBlock(ModBlocks.blockFerrocreteBlock).setRegistryName(ModBlocks.blockFerrocreteBlock.getRegistryName()),
-                new ItemBlockController(ModBlocks.blockController).setRegistryName(ModBlocks.blockController.getRegistryName()),
+                new ItemBlockController(ModBlocks.blockFactoryController).setRegistryName(ModBlocks.blockFactoryController.getRegistryName()),
                 new ItemBlock(ModBlocks.blockExtender).setRegistryName(ModBlocks.blockExtender.getRegistryName()),
                 new ItemBlock(ModBlocks.blockProxy).setRegistryName(ModBlocks.blockProxy.getRegistryName()),
                 new ItemBlockStructure(ModBlocks.blockStructure).setRegistryName(ModBlocks.blockStructure.getRegistryName()),

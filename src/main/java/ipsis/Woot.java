@@ -61,7 +61,7 @@ public class Woot {
         @Override
         @SideOnly(Side.CLIENT)
         public ItemStack getTabIconItem() {
-            return new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactory));
+            return new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactoryHeart));
         }
     };
 

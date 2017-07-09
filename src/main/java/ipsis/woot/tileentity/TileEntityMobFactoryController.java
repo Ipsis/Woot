@@ -87,7 +87,7 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
 
     public ItemStack getDroppedItemStack() {
 
-        ItemStack itemStack = new ItemStack(Item.getItemFromBlock(ModBlocks.blockController), 1);
+        ItemStack itemStack = new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactoryController), 1);
         if (wootMob.isValid()) {
             NBTTagCompound tag = new NBTTagCompound();
             WootMobBuilder.writeToNBT(wootMob, tag);

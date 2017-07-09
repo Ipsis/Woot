@@ -18,12 +18,12 @@ public class ItemDie extends ItemWoot {
     public static final String[] VARIANTS = new String[] {
             EnumDyeType.MESH.getName(),
             EnumDyeType.PLATE.getName(),
-            EnumDyeType.SKULL.getName(),
+            EnumDyeType.CORE.getName(),
             EnumDyeType.SHARD.getName()
     };
 
     public enum EnumDyeType {
-        MESH("mesh"), PLATE("plate"), SKULL("skull"), SHARD("shard");
+        MESH("mesh"), PLATE("plate"), CORE("core"), SHARD("shard");
 
         public int getMeta() {
             return ordinal();

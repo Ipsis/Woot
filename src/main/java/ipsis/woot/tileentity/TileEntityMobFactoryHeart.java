@@ -26,7 +26,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
-public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
+public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
 
     private ITickTracker tickTracker;
     private IFarmStructure farmStructure;
@@ -40,7 +40,7 @@ public class TileEntityMobFarm extends TileEntity implements ITickable, IFarmBlo
 
     ISpawnRecipeRepository spawnRecipeRepository;
 
-    public TileEntityMobFarm() {
+    public TileEntityMobFactoryHeart() {
 
         // NOTE: this is called without a world on startup
         tickTracker = new SimpleTickTracker();

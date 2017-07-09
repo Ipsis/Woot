@@ -134,7 +134,7 @@
 //        // Iron Plated Skull
 //        GameRegistry.addRecipe(
 //                new ShapedOreRecipe(
-//                        new ItemStack(ModItems.itemSkull, 2, ItemSkull.EnumSkullType.IRON.getMeta()),
+//                        new ItemStack(ModItems.itemSkull, 2, ItemSkull.EnumSkullType.QUARTZ.getMeta()),
 //                        "hi ",
 //                        "sds",
 //                        " o ",
@@ -509,7 +509,7 @@
 //        // Controller
 //        GameRegistry.addRecipe(
 //                new ShapedOreRecipe(
-//                        new ItemStack(ModBlocks.blockController),
+//                        new ItemStack(ModBlocks.blockFactoryController),
 //                        "sgs", "gfg", "scs",
 //                        's', ModOreDictionary.ORE_DICT_SKULL,
 //                        'g', "blockGlass",
@@ -519,12 +519,12 @@
 //        );
 //
 //       GameRegistry.addShapelessRecipe(
-//               new ItemStack(ModBlocks.blockController), new ItemStack(ModBlocks.blockController));
+//               new ItemStack(ModBlocks.blockFactoryController), new ItemStack(ModBlocks.blockFactoryController));
 //
 //        // Factory
 //        GameRegistry.addRecipe(
 //                new ShapedOreRecipe(
-//                        new ItemStack(ModBlocks.blockFactory),
+//                        new ItemStack(ModBlocks.blockFactoryHeart),
 //                        "cxc", "yfz", "c c",
 //                        'c', ModItems.itemFactoryConnector,
 //                        'x', new ItemStack(ModItems.itemFactoryUpgrade, 1, ItemFactoryUpgrade.EnumUpgradeTier.TIER_I.getMeta()),

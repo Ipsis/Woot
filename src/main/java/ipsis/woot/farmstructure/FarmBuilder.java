@@ -1,6 +1,6 @@
 package ipsis.woot.farmstructure;
 
-import ipsis.woot.block.BlockMobFactory;
+import ipsis.woot.block.BlockMobFactoryHeart;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.EnumFarmUpgrade;
@@ -98,7 +98,7 @@ public class FarmBuilder implements IFarmStructure {
 
     private @Nullable ScannedFarm scanFullFarm() {
 
-        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactory.FACING);
+        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING);
         ScannedFarm scannedFarm = new ScannedFarm();
         IFarmScanner farmScanner = new FarmScanner();
 
@@ -264,7 +264,7 @@ public class FarmBuilder implements IFarmStructure {
         List<IItemHandler> chests = new ArrayList<>();
 
         // In front of farm
-        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactory.FACING);
+        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING);
         if (world.isBlockLoaded(origin.offset(facing))) {
             TileEntity te = world.getTileEntity(origin.offset(facing));
             if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))

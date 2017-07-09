@@ -5,7 +5,7 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
 import ipsis.woot.plugins.top.TOPUIInfoConvertors;
 import ipsis.woot.tileentity.IMobFarm;
-import ipsis.woot.tileentity.TileEntityMobFarm;
+import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -28,12 +28,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEntityProvider, ITOPInfoProvider {
+public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITileEntityProvider, ITOPInfoProvider {
 
     public static final String BASENAME = "factory";
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-    public BlockMobFactory() {
+    public BlockMobFactoryHeart() {
 
         super(Material.ROCK, BASENAME);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
@@ -42,7 +42,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
-        return new TileEntityMobFarm();
+        return new TileEntityMobFactoryHeart();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BlockMobFactory extends BlockWoot implements ITooltipInfo, ITileEnt
     @Override
     public void initModel() {
 
-        ModelHelper.registerBlock(ModBlocks.blockFactory, BASENAME);
+        ModelHelper.registerBlock(ModBlocks.blockFactoryHeart, BASENAME);
     }
 
     @Override

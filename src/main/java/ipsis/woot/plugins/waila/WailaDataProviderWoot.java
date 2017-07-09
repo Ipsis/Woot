@@ -88,7 +88,7 @@ package ipsis.woot.plugins.waila;
 //        NBTTagCompound tag = accessor.getNBTData();
 //        if (tag.hasKey("displayName")) {
 //
-//            BlockMobFactory.PluginTooltipInfo info = BlockMobFactory.PluginTooltipInfo.fromNBT(tag);
+//            BlockMobFactoryHeart.PluginTooltipInfo info = BlockMobFactoryHeart.PluginTooltipInfo.fromNBT(tag);
 //
 //            currenttip.add(TextFormatting.BLUE + String.format(info.tier.getTranslated(Lang.WAILA_FACTORY_TIER)));
 //            currenttip.add(TextFormatting.GREEN + String.format(StringHelper.localize(Lang.WAILA_FACTORY_MOB), info.displayName));
@@ -131,7 +131,7 @@ package ipsis.woot.plugins.waila;
 //
 //        TileEntityMobFactory tile = (TileEntityMobFactory)te;
 //        if (tile.isFormed()) {
-//            BlockMobFactory.PluginTooltipInfo info = new BlockMobFactory.PluginTooltipInfo(tile);
+//            BlockMobFactoryHeart.PluginTooltipInfo info = new BlockMobFactoryHeart.PluginTooltipInfo(tile);
 //            info.toNBT(tag);
 //
 //            if (tile.getUpgradeSetup() != null) {

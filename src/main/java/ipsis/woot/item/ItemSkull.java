@@ -5,28 +5,25 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Reference;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 public class ItemSkull extends ItemWoot {
 
     public static final String BASENAME = "skull";
 
     public static final String[] VARIANTS = new String[] {
-            EnumSkullType.IRON.getName(),
+            EnumSkullType.QUARTZ.getName(),
             EnumSkullType.GOLD.getName(),
             EnumSkullType.DIAMOND.getName(),
             EnumSkullType.EMERALD.getName(),
     };
 
     public enum EnumSkullType {
-        IRON("iron"), GOLD("gold"), DIAMOND("diamond"), EMERALD("emerald");
+        QUARTZ("quartz"), GOLD("gold"), DIAMOND("diamond"), EMERALD("emerald");
 
         public int getMeta() {
             return ordinal();

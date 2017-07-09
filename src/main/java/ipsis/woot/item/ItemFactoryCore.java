@@ -16,7 +16,7 @@ public class ItemFactoryCore extends ItemWoot {
     public static final String BASENAME = "factorycore";
 
     public static final String[] VARIANTS = new String[] {
-            EnumCoreType.MAIN.getName(),
+            EnumCoreType.HEART.getName(),
             EnumCoreType.CONTROLLER.getName(),
             EnumCoreType.T1_UPGRADE.getName(),
             EnumCoreType.T2_UPGRADE.getName(),
@@ -24,7 +24,7 @@ public class ItemFactoryCore extends ItemWoot {
     };
 
     public enum EnumCoreType {
-        MAIN("main"), CONTROLLER("controller"), T1_UPGRADE("t1_upgrade"), T2_UPGRADE("t2_upgrade"), T3_UPGRADE("t3_upgrade");
+        HEART("heart"), CONTROLLER("controller"), T1_UPGRADE("t1_upgrade"), T2_UPGRADE("t2_upgrade"), T3_UPGRADE("t3_upgrade");
 
         public int getMeta() { return ordinal(); }
         EnumCoreType(String name) { this.name = name; }

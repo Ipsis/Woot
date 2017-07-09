@@ -9,12 +9,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModBlocks {
 
     public static BlockWoot blockAnvil;
-    public static BlockWoot blockFactory;
+    public static BlockWoot blockFactoryHeart;
     public static BlockWoot blockFerrocreteBlock;
     public static BlockWoot blockUpgrade;
     public static BlockWoot blockUpgradeB;
     public static BlockWoot blockStructure;
-    public static BlockWoot blockController;
+    public static BlockWoot blockFactoryController;
     public static BlockWoot blockLayout;
     public static BlockWoot blockProxy;
     public static BlockWoot blockExtender;
@@ -26,12 +26,12 @@ public class ModBlocks {
     public static void init() {
 
         blockAnvil = new BlockWootAnvil();
-        blockFactory = new BlockMobFactory();
+        blockFactoryHeart = new BlockMobFactoryHeart();
         blockFerrocreteBlock = new BlockFerrocreteBlock();
         blockUpgrade = new BlockMobFactoryUpgrade();
         blockUpgradeB = new BlockMobFactoryUpgradeB();
         blockStructure = new BlockMobFactoryStructure();
-        blockController = new BlockMobFactoryController();
+        blockFactoryController = new BlockMobFactoryController();
         blockLayout = new BlockLayout();
         blockProxy = new BlockMobFactoryProxy();
         blockExtender = new BlockMobFactoryExtender();
@@ -41,12 +41,12 @@ public class ModBlocks {
     public static void initClient() {
 
         ModBlocks.blockAnvil.initModel();
-        ModBlocks.blockFactory.initModel();
+        ModBlocks.blockFactoryHeart.initModel();
         ModBlocks.blockFerrocreteBlock.initModel();
         ModBlocks.blockUpgrade.initModel();
         ModBlocks.blockUpgradeB.initModel();
         ModBlocks.blockStructure.initModel();
-        ModBlocks.blockController.initModel();
+        ModBlocks.blockFactoryController.initModel();
         ModBlocks.blockLayout.initModel();
         ModBlocks.blockProxy.initModel();
         ModBlocks.blockExtender.initModel();
@@ -54,7 +54,7 @@ public class ModBlocks {
 
     public static void registerTileEntities() {
 
-        GameRegistry.registerTileEntity(TileEntityMobFarm.class, "tile." + BlockMobFactory.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryHeart.class, "tile." + BlockMobFactoryHeart.BASENAME);
         GameRegistry.registerTileEntity(TileEntityAnvil.class, "tile." + BlockWootAnvil.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryStructure.class, "tile." + BlockMobFactoryStructure.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);

@@ -18,15 +18,7 @@ public class ModOreDictionary {
         ItemStack skull = new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE);
         OreDictionary.registerOre(ORE_DICT_SKULL, skull);
 
-        /**
-         * Register the shards under "nuggetX"
-         */
-        ItemStack itemStack = new ItemStack(ModItems.itemShard);
-        itemStack.setItemDamage(ItemShard.EnumShardType.QUARTZ.getMeta());
-        OreDictionary.registerOre("nuggetQuartz", itemStack);
-        itemStack.setItemDamage(ItemShard.EnumShardType.DIAMOND.getMeta());
-        OreDictionary.registerOre("nuggetDiamond", itemStack);
-        itemStack.setItemDamage(ItemShard.EnumShardType.EMERALD.getMeta());
-        OreDictionary.registerOre("nuggetEmerald", itemStack);
+        ItemStack itemStack = new ItemStack(ModItems.itemNetherrackDust);
+        OreDictionary.registerOre("dustNetherrack", itemStack);
     }
 }

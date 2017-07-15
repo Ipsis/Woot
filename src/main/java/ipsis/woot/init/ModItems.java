@@ -9,9 +9,9 @@ public class ModItems {
     public static ItemWoot itemDie;
     // public static ItemWoot itemFactoryBase;
     public static ItemWoot itemFactoryCore;
-    public static ItemWoot itemFerrocreteDust;
-    public static ItemWoot itemFerrocreteIngot;
-    public static ItemWoot itemFerrocretePlate;
+    public static ItemWoot itemStygianIronDust;
+    public static ItemWoot itemStygianIronIngot;
+    public static ItemWoot itemStygianIronPlate;
     public static ItemWoot itemManual;
     public static ItemWoot itemNetherrackDust;
     public static ItemWoot itemPrism;
@@ -33,10 +33,10 @@ public class ModItems {
         itemShard = new ItemShard();
         itemDie = new ItemDie();
         itemNetherrackDust = new ItemNetherrackDust();
-        itemFerrocretePlate = new ItemFerrocretePlate();
+        itemStygianIronPlate = new ItemStygianIronPlate();
         itemYahHammer = new ItemYahHammer();
-        itemFerrocreteDust = new ItemFerrocreteDust();
-        itemFerrocreteIngot = new ItemFerrocreteIngot();
+        itemStygianIronDust = new ItemStygianIronDust();
+        itemStygianIronIngot = new ItemStygianIronIngot();
         itemManual = new ItemManual();
         itemFactoryCore = new ItemFactoryCore();
     }
@@ -50,9 +50,9 @@ public class ModItems {
         ModItems.itemShard.initModel();
         ModItems.itemDie.initModel();
         ModItems.itemYahHammer.initModel();
-        ModItems.itemFerrocreteDust.initModel();
-        ModItems.itemFerrocreteIngot.initModel();
-        ModItems.itemFerrocretePlate.initModel();
+        ModItems.itemStygianIronDust.initModel();
+        ModItems.itemStygianIronIngot.initModel();
+        ModItems.itemStygianIronPlate.initModel();
         ModItems.itemManual.initModel();
         ModItems.itemNetherrackDust.initModel();
         ModItems.itemFactoryCore.initModel();

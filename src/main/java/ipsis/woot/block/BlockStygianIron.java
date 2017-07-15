@@ -6,11 +6,11 @@ import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFerrocreteBlock extends BlockWoot {
+public class BlockStygianIron extends BlockWoot {
 
-    public static final String BASENAME = "ferrocreteblock";
+    public static final String BASENAME = "stygianiron";
 
-    public BlockFerrocreteBlock() {
+    public BlockStygianIron() {
 
         super(Material.ROCK, BASENAME);
     }
@@ -19,6 +19,6 @@ public class BlockFerrocreteBlock extends BlockWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerBlock(ModBlocks.blockFerrocreteBlock, BASENAME);
+        ModelHelper.registerBlock(ModBlocks.blockStygianIron, BASENAME);
     }
 }

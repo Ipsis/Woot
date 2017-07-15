@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/ferrocreteblock",
+  "parent": "woot:block/stygianiron",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

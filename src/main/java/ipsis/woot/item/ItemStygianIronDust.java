@@ -5,11 +5,11 @@ import ipsis.woot.oss.client.ModelHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFerrocreteIngot extends ItemWoot {
+public class ItemStygianIronDust extends  ItemWoot {
 
-    public static final String BASENAME = "ferrocreteingot";
+    public static final String BASENAME = "stygianirondust";
 
-    public ItemFerrocreteIngot() {
+    public ItemStygianIronDust() {
 
         super(BASENAME);
         setMaxStackSize(64);
@@ -19,6 +19,6 @@ public class ItemFerrocreteIngot extends ItemWoot {
     @Override
     public void initModel() {
 
-        ModelHelper.registerItem(ModItems.itemFerrocreteIngot, BASENAME.toLowerCase());
+        ModelHelper.registerItem(ModItems.itemStygianIronDust, BASENAME.toLowerCase());
     }
 }

@@ -16,17 +16,17 @@ item.woot.factorycore.t1_upgrade.name=Factory Tier I Upgrade Core
 item.woot.factorycore.t2_upgrade.name=Factory Tier II Upgrade Core
 item.woot.factorycore.t3_upgrade.name=Factory Tier III Upgrade Core
 
-# Ferrocrete
-item.woot.ferrocreteingot.name=UnderIron Ingot
-item.woot.ferrocreteplate.name=UnderIron Plate
-tile.woot.ferrocreteblock.name=UnderIron Block
-item.woot.pulverisedferrocrete.name=UnderIron Dust
+# Stygian Iron
+item.woot.stygianironingot.name=Stygian Iron Ingot
+item.woot.stygianironplate.name=Stygian Iron Plate
+tile.woot.stygianiron.name=Stygian Iron Block
+item.woot.stygianirondust.name=Stygian Iron Dust
 
 item.woot.netherrackdust.name=Netherrack Dust
 
-tile.woot.anvil.name=UnderIron Anvil
+tile.woot.anvil.name=Stygian Iron Anvil
 
-item.woot.prism2.name=Ender Shard
+item.woot.endershard.name=Ender Shard
 
 # Skulls
 item.woot.skull.quartz.name=Quartz Skull
@@ -85,24 +85,9 @@ tile.woot.upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
 tile.woot.upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
 tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
 
-#item.woot.pulverisedferrocrete.name=Pulverised UnderIron
-#item.woot.ferrocrete.name=UnderIron
-#item.woot.prismframe.name=Mob Prism Frame
-#item.woot.dye.plate.name=Plate Die
-#item.woot.dye.casing.name=Casing Die
-#item.woot.dye.skull.name=Skull Die
-#item.woot.dye.connector.name=Connector Die
-#item.woot.dye.shard.name=Shard Die
-#item.woot.dye.mesh.name=Mesh Die
-#item.woot.dye.prism.name=Prism Die
-#item.woot.factoryupgrade.tier_i.name=Tier I Upgrade
-#item.woot.factoryupgrade.tier_ii.name=Tier II Upgrade
-#item.woot.factoryupgrade.tier_iii.name=Tier III Upgrade
-#item.woot.ferrocreteplate.name=UnderIron Plate
-#item.woot.factorycasing.name=Factory Casing
-#item.woot.factorycap.name=Factory Cap
-#item.woot.factoryconnector.name=Factory Connector
-#item.woot.factoryFrame.name=Factory Frame [Deprecated]
+#################
+### Waila
+#################
 
 waila.woot:factory.tier=Tier %s
 waila.woot:factory.mob=Spawning %s

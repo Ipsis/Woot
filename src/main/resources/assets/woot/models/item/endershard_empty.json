@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "woot:items/prism2"
+    "layer0": "woot:items/endershard_empty"
   }
 }

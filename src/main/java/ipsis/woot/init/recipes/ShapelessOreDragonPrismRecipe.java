@@ -1,6 +1,6 @@
 package ipsis.woot.init.recipes;
 
-//import ipsis.woot.item.ItemPrism;
+//import ipsis.woot.item.ItemEnderShard;
 //import ipsis.woot.reference.Reference;
 //import net.minecraft.init.Blocks;
 //import net.minecraft.inventory.InventoryCrafting;
@@ -34,7 +34,7 @@ package ipsis.woot.init.recipes;
 //            Object next = req.next();
 //            if (next instanceof ItemStack) {
 //                if (((ItemStack) next).getItem() == Item.getItemFromBlock(Blocks.DRAGON_EGG)) {
-//                    ItemPrism.setAsEnderDragon(prism);
+//                    ItemEnderShard.setAsEnderDragon(prism);
 //                }
 //            }
 //        }

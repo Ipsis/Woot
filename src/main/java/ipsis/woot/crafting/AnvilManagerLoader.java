@@ -3,7 +3,6 @@ package ipsis.woot.crafting;
 import ipsis.Woot;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemDie;
-import ipsis.woot.item.ItemShard;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -40,7 +39,7 @@ public class AnvilManagerLoader {
 
         // Shards
         Woot.anvilManager.addRecipe(
-                new ItemStack(ModItems.itemPrism, 3),
+                new ItemStack(ModItems.itemEnderShard, 3),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
                 true,
                 new ItemStack(Items.ENDER_EYE));

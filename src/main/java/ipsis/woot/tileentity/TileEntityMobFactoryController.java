@@ -1,7 +1,7 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.item.ItemPrism;
+import ipsis.woot.item.ItemEnderShard;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.farmblocks.ControllerMasterLocator;
@@ -102,7 +102,7 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         if (itemStack.isEmpty())
             return false;
 
-        if (!ItemPrism.isPrism(itemStack))
+        if (!ItemEnderShard.isEnderShard(itemStack))
             return false;
 
         if (isProgrammed())

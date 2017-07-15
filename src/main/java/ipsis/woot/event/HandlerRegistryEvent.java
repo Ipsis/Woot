@@ -46,7 +46,7 @@ public class HandlerRegistryEvent {
                 ModItems.itemStygianIronPlate.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronPlate.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronPlate.BASENAME),
                 ModItems.itemManual.setUnlocalizedName(Reference.MOD_ID + "." + ItemManual.BASENAME).setRegistryName(Reference.MOD_ID, ItemManual.BASENAME),
                 ModItems.itemNetherrackDust.setUnlocalizedName(Reference.MOD_ID + "." + ItemNetherrackDust.BASENAME).setRegistryName(Reference.MOD_ID, ItemNetherrackDust.BASENAME),
-                ModItems.itemPrism.setUnlocalizedName(Reference.MOD_ID + "." + ItemPrism.BASENAME).setRegistryName(Reference.MOD_ID, ItemPrism.BASENAME),
+                ModItems.itemEnderShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemEnderShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemEnderShard.BASENAME),
                 ModItems.itemStygianIronDust.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronDust.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronDust.BASENAME),
                 ModItems.itemShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemShard.BASENAME),
                 ModItems.itemSkull.setUnlocalizedName(Reference.MOD_ID + "." + ItemSkull.BASENAME).setRegistryName(Reference.MOD_ID, ItemSkull.BASENAME),

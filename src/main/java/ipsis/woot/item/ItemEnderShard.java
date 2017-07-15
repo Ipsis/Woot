@@ -30,11 +30,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemPrism extends ItemWoot {
+public class ItemEnderShard extends ItemWoot {
 
-    public static final String BASENAME = "prism2";
+    public static final String BASENAME = "endershard";
 
-    public ItemPrism() {
+    public ItemEnderShard() {
 
         super(BASENAME);
         setMaxStackSize(1);
@@ -88,9 +88,9 @@ public class ItemPrism extends ItemWoot {
         return true;
     }
 
-    public static boolean isPrism(ItemStack itemStack) {
+    public static boolean isEnderShard(ItemStack itemStack) {
 
-        return itemStack.getItem() == ModItems.itemPrism;
+        return itemStack.getItem() == ModItems.itemEnderShard;
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ItemPrism extends ItemWoot {
 
     public static boolean isProgrammed(ItemStack itemStack) {
 
-        if (!isPrism(itemStack))
+        if (!isEnderShard(itemStack))
             return false;
 
         WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
@@ -131,7 +131,7 @@ public class ItemPrism extends ItemWoot {
 
     public static boolean isFull(ItemStack itemStack) {
 
-        if (!isPrism(itemStack))
+        if (!isEnderShard(itemStack))
             return false;
 
         WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
@@ -149,7 +149,7 @@ public class ItemPrism extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
-        if (!isPrism(stack))
+        if (!isEnderShard(stack))
             return;
 
         if (!isProgrammed(stack)) {
@@ -167,7 +167,7 @@ public class ItemPrism extends ItemWoot {
 
     public static void incrementDeaths(ItemStack itemStack, int count) {
 
-        if (!isPrism(itemStack))
+        if (!isEnderShard(itemStack))
             return;
 
         if (!isProgrammed(itemStack))
@@ -183,7 +183,7 @@ public class ItemPrism extends ItemWoot {
 
     public static boolean isMob(ItemStack itemStack, WootMobName wootMobName) {
 
-        if (!isPrism(itemStack))
+        if (!isEnderShard(itemStack))
             return false;
 
         if (!isProgrammed(itemStack))

@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "woot:structure",
+    "data": 0
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "woot:anvil"
+  },
+  "pattern": [
+    "III",
+    " O ",
+    "OOO"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "item": "woot:stygianiron"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  }
+}

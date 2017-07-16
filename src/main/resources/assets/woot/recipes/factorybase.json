@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "woot:factorybase"
+  },
+  "pattern": [
+    "sss",
+    "sIs",
+    "sss"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "I": {
+      "item": "woot:stygianironplate"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stone"
+    }
+  }
+}

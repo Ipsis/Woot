@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModItems {
 
     public static ItemWoot itemDie;
-    // public static ItemWoot itemFactoryBase;
+    public static ItemWoot itemFactoryBase;
     public static ItemWoot itemFactoryCore;
     public static ItemWoot itemStygianIronDust;
     public static ItemWoot itemStygianIronIngot;
@@ -28,6 +28,7 @@ public class ModItems {
     public static void init() {
 
         itemEnderShard = new ItemEnderShard();
+        itemFactoryBase = new ItemFactoryBase();
         itemXpShard = new ItemXpShard();
         itemSkull = new ItemSkull();
         itemShard = new ItemShard();
@@ -45,6 +46,7 @@ public class ModItems {
     public static void initClient() {
 
         ModItems.itemEnderShard.initModel();
+        ModItems.itemFactoryBase.initModel();
         ModItems.itemXpShard.initModel();
         ModItems.itemSkull.initModel();
         ModItems.itemShard.initModel();

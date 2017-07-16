@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "woot:stygianironplate"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:stygianironingot",
+      "count": 2
+    },
+    {
+      "item": "woot:yahhammer"
+    }
+  ]
+}

@@ -42,6 +42,7 @@ public class HandlerRegistryEvent {
         event.getRegistry().registerAll(
                 ModItems.itemDie.setUnlocalizedName(Reference.MOD_ID + "." + ItemDie.BASENAME).setRegistryName(Reference.MOD_ID, ItemDie.BASENAME),
                 ModItems.itemFactoryCore.setUnlocalizedName(Reference.MOD_ID + "." + ItemFactoryCore.BASENAME).setRegistryName(Reference.MOD_ID, ItemFactoryCore.BASENAME),
+                ModItems.itemFactoryBase.setUnlocalizedName(Reference.MOD_ID + "." + ItemFactoryBase.BASENAME).setRegistryName(Reference.MOD_ID, ItemFactoryBase.BASENAME),
                 ModItems.itemStygianIronIngot.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronIngot.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronIngot.BASENAME),
                 ModItems.itemStygianIronPlate.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronPlate.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronPlate.BASENAME),
                 ModItems.itemManual.setUnlocalizedName(Reference.MOD_ID + "." + ItemManual.BASENAME).setRegistryName(Reference.MOD_ID, ItemManual.BASENAME),

@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "woot:factory"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "woot:factorycore",
+      "data": 0
+    }
+  ]
+}

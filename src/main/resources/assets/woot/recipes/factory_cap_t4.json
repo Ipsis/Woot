@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "woot:structure",
+    "data": 9
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "minecraft:skull",
+      "data": 4
+    },
+    {
+      "item": "minecraft:emerald"
+    }
+  ]
+}

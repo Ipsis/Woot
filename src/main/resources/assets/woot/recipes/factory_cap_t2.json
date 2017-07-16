@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "woot:structure",
+    "data": 7
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "minecraft:skull",
+      "data": 1
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "result": {
+    "item": "woot:structure",
+    "data": 4
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "minecraft:nether_star"
+    }
+  ]
+}

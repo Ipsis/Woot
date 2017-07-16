@@ -1,16 +1,17 @@
 {
   "result": {
-    "item": "woot:pulverisedferrocrete"
+    "item": "woot:stygianirondust",
+    "count": 8
   },
   "pattern": [
-    "GnG",
-    "n n",
-    "GnG"
+    "nnn",
+    "nSn",
+    "nnn"
   ],
   "type": "forge:ore_shaped",
   "key": {
-    "G": {
-      "item": "minecraft:gravel"
+    "S": {
+      "item": "minecraft:soul_sand"
     },
     "n": {
       "type": "forge:ore_dict",

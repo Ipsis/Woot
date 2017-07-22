@@ -19,11 +19,11 @@ public enum EnumMobFactoryTier {
 
             String pattern[][] = {
                     {
-                            "-rgr-",
-                            "rgrgr",
-                            "gr-rg",
-                            "rgrgr",
-                            "-rgr-"
+                            "-rrr-",
+                            "rgggr",
+                            "rg-gr",
+                            "rgggr",
+                            "-rrr-"
                     },
                     {
                             "-----",
@@ -50,11 +50,11 @@ public enum EnumMobFactoryTier {
             String pattern[][] = {
                     {
                             "--ooo--",
-                            "-orgro-",
-                            "orgrgro",
-                            "ogr-rgo",
-                            "orgrgro",
-                            "-orgro-",
+                            "-orrro-",
+                            "orgggro",
+                            "org-gro",
+                            "orgggro",
+                            "-orrro-",
                             "--ooo--"
                     },
                     {
@@ -105,11 +105,11 @@ public enum EnumMobFactoryTier {
                     {
                             "---hhh---",
                             "--hoooh--",
-                            "-horgroh-",
-                            "horgrgroh",
-                            "hogr-rgoh",
-                            "horgrgroh",
-                            "-horgroh-",
+                            "-horrroh-",
+                            "horgggroh",
+                            "horg-groh",
+                            "horgggroh",
+                            "-horrroh-",
                             "--hoooh--",
                             "---hhh---",
                     },
@@ -180,11 +180,11 @@ public enum EnumMobFactoryTier {
                             "----www----",
                             "---whhhw---",
                             "--whooohw--",
-                            "-whorgrohw-",
-                            "whorgrgrohw",
-                            "whogr-rgohw",
-                            "whorgrgrohw",
-                            "-whorgrohw-",
+                            "-whorrrohw-",
+                            "whorgggrohw",
+                            "whorg-grohw",
+                            "whorgggrohw",
+                            "-whorrrohw-",
                             "--whooohw--",
                             "---whhhw---",
                             "----www----"

@@ -68,7 +68,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof IFarmBlockController && stack != null && stack.hasTagCompound())
-            LogHelper.info("TODO onBlockPlacedBy: program from the block??");
+            te.readFromNBT(stack.getTagCompound());
     }
 
     @Override

@@ -79,6 +79,13 @@ public class AnvilManagerLoader {
                 new ItemStack(Items.NETHER_STAR));
 
         // Programmed Controller
+        Woot.anvilManager.addRecipe(
+                new ItemStack(ModBlocks.blockFactoryController),
+                new ItemStack(ModItems.itemEnderShard),
+                false,
+                new ItemStack(ModItems.itemFactoryBase),
+                new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.CONTROLLER.getMeta())
+        );
 
         // Cores
         Woot.anvilManager.addRecipe(

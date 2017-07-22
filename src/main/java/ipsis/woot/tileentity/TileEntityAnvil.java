@@ -3,7 +3,10 @@ package ipsis.woot.tileentity;
 import ipsis.Woot;
 import ipsis.woot.crafting.AnvilHelper;
 import ipsis.woot.crafting.IAnvilRecipe;
+import ipsis.woot.item.ItemEnderShard;
 import ipsis.woot.util.DebugSetup;
+import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobBuilder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -99,16 +102,33 @@ public class TileEntityAnvil extends TileEntity {
         for (EntityItem e : entityItemList)
             ingredients.add(e.getItem());
 
+        if (ItemEnderShard.isEnderShard(itemStack) && !ItemEnderShard.isFull(itemStack)) {
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Unprogrammed ender shard");
+
+            // TODO failed clang!
+            world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            return;
+        }
+
         IAnvilRecipe recipe = Woot.anvilManager.tryCraft(itemStack, ingredients);
         if (recipe != null) {
+
             for (EntityItem e : entityItemList)
                 e.setDead();
 
-            if (!recipe.shouldPreserveBase())
-                setBaseItem(ItemStack.EMPTY);
-
             ItemStack output = recipe.getCopyOutput();
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Output " + output);
+
+            if (ItemEnderShard.isFull(itemStack)) {
+                WootMob tmpWootMob = WootMobBuilder.create(itemStack.getTagCompound());
+                NBTTagCompound tag = new NBTTagCompound();
+                WootMobBuilder.writeToNBT(tmpWootMob, tag);
+                output.setTagCompound(tag);
+            }
+
+            if (!recipe.shouldPreserveBase())
+                setBaseItem(ItemStack.EMPTY);
 
             world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             EntityItem out = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);

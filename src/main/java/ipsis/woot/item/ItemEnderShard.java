@@ -131,11 +131,7 @@ public class ItemEnderShard extends ItemWoot {
 
     public static boolean isFull(ItemStack itemStack) {
 
-        if (!isEnderShard(itemStack))
-            return false;
-
-        WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
-        if (!wootMob.isValid())
+        if (!isProgrammed(itemStack))
             return false;
 
         //TODO return wootMob.getDeathCount() == 1;

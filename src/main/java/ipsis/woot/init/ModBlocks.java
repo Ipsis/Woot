@@ -1,6 +1,7 @@
 package ipsis.woot.init;
 
 import ipsis.woot.block.*;
+import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -54,14 +55,16 @@ public class ModBlocks {
 
     public static void registerTileEntities() {
 
-        GameRegistry.registerTileEntity(TileEntityMobFactoryHeart.class, "tile." + BlockMobFactoryHeart.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityAnvil.class, "tile." + BlockWootAnvil.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryStructure.class, "tile." + BlockMobFactoryStructure.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, "tile." + BlockMobFactoryUpgrade.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, "tile." + BlockMobFactoryController.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityLayout.class, "tile." + BlockLayout.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, "tile." + BlockMobFactoryProxy.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, "tile." + BlockMobFactoryExtender.BASENAME);
+        String modkey = "tile." + Reference.MOD_ID + "_";
+
+        GameRegistry.registerTileEntity(TileEntityMobFactoryHeart.class, modkey + BlockMobFactoryHeart.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityAnvil.class, modkey + BlockWootAnvil.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryStructure.class, modkey + BlockMobFactoryStructure.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, modkey + BlockMobFactoryUpgrade.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, modkey + BlockMobFactoryController.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityLayout.class, modkey + BlockLayout.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, modkey + BlockMobFactoryProxy.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, modkey + BlockMobFactoryExtender.BASENAME);
     }
 
 }

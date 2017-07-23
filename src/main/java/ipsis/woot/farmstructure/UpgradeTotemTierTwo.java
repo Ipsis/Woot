@@ -1,9 +1,7 @@
 package ipsis.woot.farmstructure;
 
-import ipsis.woot.util.EnumSpawnerUpgrade;
 import ipsis.woot.util.EnumFarmUpgrade;
-import ipsis.woot.farmblocks.IFarmBlockUpgrade;
-import net.minecraft.tileentity.TileEntity;
+import ipsis.woot.util.EnumSpawnerUpgrade;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -15,33 +13,26 @@ public class UpgradeTotemTierTwo extends AbstractUpgradeTotem {
         if (!world.isBlockLoaded(origin))
             return;
 
-        // Tier 1 upgrade
-        TileEntity te = world.getTileEntity(origin);
-        if (!(te instanceof IFarmBlockUpgrade))
+        EnumSpawnerUpgrade baseUpgrade = TotemHelper.getUpgrade(world, origin, 1);
+        if (baseUpgrade == null)
             return;
 
-        EnumSpawnerUpgrade firstUpgrade = ((IFarmBlockUpgrade) te).getUpgrade();
-        if (firstUpgrade.getTier() != 1)
+        if (TotemHelper.getTier(world, origin, 1) != 1)
             return;
 
-        spawnerUpgrade = firstUpgrade;
+        spawnerUpgrade = baseUpgrade;
         spawnerUpgradeLevel = 1;
         blockPosList.add(new BlockPos(origin));
 
-        // Tier 2 upgrade
-        te = world.getTileEntity(new BlockPos(origin.getX(), origin.getY() + 1, origin.getZ()));
-        if (!(te instanceof IFarmBlockUpgrade))
-            return;
-
-        EnumSpawnerUpgrade upgrade = ((IFarmBlockUpgrade) te).getUpgrade();
-        if (upgrade.getTier() != 2)
-            return;
-
-        if (EnumFarmUpgrade.getFromEnumSpawnerUpgrade(firstUpgrade) != EnumFarmUpgrade.getFromEnumSpawnerUpgrade(upgrade))
+        // Tier 2
+        EnumSpawnerUpgrade t2 = TotemHelper.getUpgrade(world, origin, 2);
+        if (t2 == null ||
+                (EnumFarmUpgrade.getFromEnumSpawnerUpgrade(t2) != EnumFarmUpgrade.getFromEnumSpawnerUpgrade(spawnerUpgrade)) ||
+                (TotemHelper.getTier(world, origin, 2) != 2))
             return;
 
         spawnerUpgradeLevel = 2;
-        blockPosList.add(new BlockPos(origin.getX(), origin.getY() + 1, origin.getZ()));
+        blockPosList.add(new BlockPos(origin).up(1));
     }
 
     public UpgradeTotemTierTwo(World world, BlockPos pos) {

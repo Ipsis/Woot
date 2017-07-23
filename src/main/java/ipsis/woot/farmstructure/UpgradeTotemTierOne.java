@@ -17,16 +17,16 @@ public class UpgradeTotemTierOne extends AbstractUpgradeTotem {
         if (!world.isBlockLoaded(origin))
             return;
 
-        TileEntity te = world.getTileEntity(origin);
+        EnumSpawnerUpgrade baseUpgrade = TotemHelper.getUpgrade(world, origin, 1);
+        if (baseUpgrade == null)
+            return;
 
-        if (te instanceof IFarmBlockUpgrade) {
-            EnumSpawnerUpgrade upgrade = ((IFarmBlockUpgrade) te).getUpgrade();
-            if (upgrade.getTier() == 1) {
-                spawnerUpgrade = upgrade;
-                spawnerUpgradeLevel = 1;
-                blockPosList.add(new BlockPos(origin));
-            }
-        }
+        if (TotemHelper.getTier(world, origin, 1) != 1)
+            return;
+
+        spawnerUpgrade = baseUpgrade;
+        spawnerUpgradeLevel = 1;
+        blockPosList.add(new BlockPos(origin));
     }
 
     public UpgradeTotemTierOne(World world, BlockPos pos) {

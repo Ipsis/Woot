@@ -27,16 +27,16 @@ public class HandlerTextureStitchEvent {
 
         factory = forName(event.getMap(), "factory", "blocks");
         controller = forName(event.getMap(), "controller", "blocks");
-        block1 = forName(event.getMap(), "structure_block_1", "blocks");
-        block2 = forName(event.getMap(), "structure_block_2", "blocks");
-        block3 = forName(event.getMap(), "structure_block_3", "blocks");
-        block4 = forName(event.getMap(), "structure_block_4", "blocks");
-        block5 = forName(event.getMap(), "structure_block_5", "blocks");
-        blockupgrade = forName(event.getMap(), "structure_block_upgrade", "blocks");
-        tiericap = forName(event.getMap(), "structure_tier_i_cap", "blocks");
-        tieriicap = forName(event.getMap(), "structure_tier_ii_cap", "blocks");
-        tieriiicap = forName(event.getMap(), "structure_tier_iii_cap", "blocks");
-        tierivcap = forName(event.getMap(), "structure_tier_iv_cap", "blocks");
+        block1 = forName(event.getMap(), "structure_block_1_formed", "blocks");
+        block2 = forName(event.getMap(), "structure_block_2_formed", "blocks");
+        block3 = forName(event.getMap(), "structure_block_3_formed", "blocks");
+        block4 = forName(event.getMap(), "structure_block_4_formed", "blocks");
+        block5 = forName(event.getMap(), "structure_block_5_formed", "blocks");
+        blockupgrade = forName(event.getMap(), "structure_block_upgrade_formed", "blocks");
+        tiericap = forName(event.getMap(), "structure_tier_i_cap_formed", "blocks");
+        tieriicap = forName(event.getMap(), "structure_tier_ii_cap_formed", "blocks");
+        tieriiicap = forName(event.getMap(), "structure_tier_iii_cap_formed", "blocks");
+        tierivcap = forName(event.getMap(), "structure_tier_iv_cap_formed", "blocks");
     }
 
     private static TextureAtlasSprite forName(TextureMap textureMap, String name, String dir) {

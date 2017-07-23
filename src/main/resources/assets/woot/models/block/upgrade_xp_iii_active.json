@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube_all",
+  "parent": "woot:block/upgrade_t3_active",
   "textures": {
     "all": "woot:blocks/upgrade_xp_iii_active"
   }

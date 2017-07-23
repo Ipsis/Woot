@@ -16,6 +16,8 @@ item.woot.factorycore.t1_upgrade.name=Factory Tier I Upgrade Core
 item.woot.factorycore.t2_upgrade.name=Factory Tier II Upgrade Core
 item.woot.factorycore.t3_upgrade.name=Factory Tier III Upgrade Core
 
+item.woot.factorybase.name=Factory Base
+
 # Stygian Iron
 item.woot.stygianironingot.name=Stygian Iron Ingot
 item.woot.stygianironplate.name=Stygian Iron Plate

@@ -156,21 +156,27 @@ public class FarmBuilder implements IFarmStructure {
         IFarmScanner farmScanner = new FarmScanner();
 
         scannedFarm.base = farmScanner.scanFarmStructure(world, origin, facing);
-        if (!scannedFarm.base.isValid())
+        if (!scannedFarm.base.isValid()) {
+            LogHelper.info("scanFullFarm: invalid base");
             return null;
+        }
 
         scannedFarm.controller = farmScanner.scanFarmController(world, origin, facing);
         // Is the controller programmed
-        if (!scannedFarm.controller.isValid())
+        if (!scannedFarm.controller.isValid()) {
+            LogHelper.info("scanFullFarm: invalid controller");
             return null;
+        }
 
         scannedFarm.upgrades = farmScanner.scanFarmUpgrades(world, origin, facing, scannedFarm.base.tier);
         scannedFarm.proxy = farmScanner.scanFarmProxy(world, origin);
 
         farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
         // Is the programmed controller valid for this factory
-        if (!scannedFarm.controller.isValid())
+        if (!scannedFarm.controller.isValid()) {
+            LogHelper.info("scanFullFarm: invalid controller for upgrades");
             return null;
+        }
 
         return scannedFarm;
     }

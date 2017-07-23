@@ -41,4 +41,10 @@ public class WootMob {
 
         return wootMobName.isValid();
     }
+
+    @Override
+    public String toString() {
+
+        return displayName + ":" + xpValue + ":" + wootMobName;
+    }
 }

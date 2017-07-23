@@ -93,30 +93,6 @@ public class ItemEnderShard extends ItemWoot {
         return itemStack.getItem() == ModItems.itemEnderShard;
     }
 
-    @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-
-        if (worldIn.isRemote)
-            return EnumActionResult.SUCCESS;
-
-        ItemStack itemStack = player.getHeldItem(hand);
-        if (!isProgrammed(itemStack) || !isFull(itemStack))
-            return EnumActionResult.FAIL;
-
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof IFarmBlockController) {
-            IFarmBlockController controller = (IFarmBlockController)te;
-
-            if (controller.program(itemStack)) {
-                if (!player.capabilities.isCreativeMode)
-                    itemStack.shrink(1);
-                return  EnumActionResult.SUCCESS;
-            }
-        }
-
-        return EnumActionResult.FAIL;
-    }
-
     public static boolean isProgrammed(ItemStack itemStack) {
 
         if (!isEnderShard(itemStack))

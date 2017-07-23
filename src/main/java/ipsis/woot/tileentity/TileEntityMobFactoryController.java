@@ -2,6 +2,7 @@ package ipsis.woot.tileentity;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.item.ItemEnderShard;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.farmblocks.ControllerMasterLocator;
@@ -23,20 +24,28 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+
         super.writeToNBT(compound);
-        WootMobBuilder.writeToNBT(wootMob, compound);
+        writeControllerToNBT(compound);
         return compound;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
+
         super.readFromNBT(compound);
+        readControllerFromNBT(compound);
+    }
+
+    @Override
+    public void readControllerFromNBT(NBTTagCompound compound) {
+
         wootMob = WootMobBuilder.create(compound);
     }
 
-    public void setMobName(String mobName, String displayName, int xp) {
+    public void writeControllerToNBT(NBTTagCompound compound) {
 
-        // ItemPrism1 only
+        WootMobBuilder.writeToNBT(wootMob, compound);
     }
 
     public boolean isProgrammed() {
@@ -47,27 +56,6 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
     public WootMob getWootMob() {
 
         return wootMob;
-    }
-
-    public String getMobName() {
-
-        if (wootMob != null)
-            return wootMob.getDisplayName();
-        else
-            return "";
-    }
-
-    public String getModDisplayName() {
-
-        if (wootMob != null)
-            return wootMob.getDisplayName();
-        else
-            return "";
-    }
-
-    public int getXpValue() {
-
-        return wootMob.getXpValue();
     }
 
     public void blockAdded() {
@@ -90,38 +78,11 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         ItemStack itemStack = new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactoryController), 1);
         if (wootMob.isValid()) {
             NBTTagCompound tag = new NBTTagCompound();
-            WootMobBuilder.writeToNBT(wootMob, tag);
+            writeControllerToNBT(tag);
             itemStack.setTagCompound(tag);
         }
 
         return itemStack;
-    }
-
-    public boolean program(ItemStack itemStack) {
-
-        if (itemStack.isEmpty())
-            return false;
-
-        if (!ItemEnderShard.isEnderShard(itemStack))
-            return false;
-
-        if (isProgrammed())
-            return false;
-
-        WootMob tmpWootMob = WootMobBuilder.create(itemStack.getTagCompound());
-        if (!tmpWootMob.isValid())
-            return false;
-
-        // TODO check for capturing
-        wootMob = tmpWootMob;
-
-        markDirty();
-
-        IFarmBlockMaster tmpMaster = new ControllerMasterLocator().findMaster(getWorld(), getPos(), this);
-        if (tmpMaster != null)
-            tmpMaster.interruptFarmStructure();
-
-        return true;
     }
 
     /**

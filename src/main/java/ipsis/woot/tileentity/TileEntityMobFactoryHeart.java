@@ -60,7 +60,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
        super.writeToNBT(compound);
 
-       if (farmStructure.isFormed())
+       if (farmStructure != null && farmStructure.isFormed())
            compound.setInteger("wootConsumedPower", recipeProgressTracker.getConsumedPower());
 
        return compound;

@@ -27,8 +27,7 @@ public class ScannedFarm {
         if (!ScannedFarmUpgrade.isEqual(a.upgrades, b.upgrades))
             return false;
 
-
-        return false;
+        return true;
     }
 
     /**

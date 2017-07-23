@@ -36,7 +36,9 @@ public class DebugSetup {
         LOOT_EVENTS,
         CONFIG_LOAD, // User cannot set this but I can during development!
         CONFIG_ACCESS,
-        ANVIL_CRAFTING
+        ANVIL_CRAFTING,
+        FARM_SCAN,
+        FARM_CLIENT_SYNC,
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

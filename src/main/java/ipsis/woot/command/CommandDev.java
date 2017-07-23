@@ -54,6 +54,8 @@ public class CommandDev extends CommandTreeBase {
             devTags.put("event", DebugSetup.EnumDebugType.LOOT_EVENTS);
             devTags.put("cfgaccess", DebugSetup.EnumDebugType.CONFIG_ACCESS);
             devTags.put("anvilcrafting", DebugSetup.EnumDebugType.ANVIL_CRAFTING);
+            devTags.put("farmscan", DebugSetup.EnumDebugType.FARM_SCAN);
+            devTags.put("farmclientsync", DebugSetup.EnumDebugType.FARM_CLIENT_SYNC);
         };
 
         @Override
@@ -80,6 +82,8 @@ public class CommandDev extends CommandTreeBase {
                         Woot.debugSetup.setDebug(devTags.get(key));
                     else
                         Woot.debugSetup.clearDebug(devTags.get(key));
+
+                    CommandHelper.display(sender, Woot.debugSetup.toString());
                 }
             }
         }

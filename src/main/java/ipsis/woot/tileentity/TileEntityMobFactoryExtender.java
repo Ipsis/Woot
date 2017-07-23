@@ -113,11 +113,11 @@ public class TileEntityMobFactoryExtender extends TileEntity implements IFarmBlo
      */
     public boolean isProxy() {
 
-        return true;
+        return false;
     }
 
     public boolean isExtender() {
 
-        return false;
+        return true;
     }
 }

@@ -1,6 +1,8 @@
 package ipsis.woot.farmstructure;
 
+import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryHeart;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.EnumFarmUpgrade;
@@ -37,6 +39,53 @@ public class FarmBuilder implements IFarmStructure {
 
     }
 
+    private void disconnectOldProxy(@Nullable ScannedFarm oldFarm, ScannedFarm newFarm) {
+
+        if (oldFarm == null)
+            return;
+
+        Set<BlockPos> oldBlocks = new HashSet<>();
+        oldBlocks.addAll(oldFarm.proxy.getBlocks());
+
+        Set<BlockPos> newBlocks = new HashSet<>();
+        if (newFarm != null)
+            newBlocks.addAll(newFarm.proxy.getBlocks());
+
+        oldBlocks.removeAll(newBlocks);
+        for (BlockPos pos : oldBlocks) {
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof IFarmBlockConnection) {
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "clearMaster", pos);
+                    ((IFarmBlockConnection) te).clearMaster();
+                }
+            }
+        }
+    }
+
+    private void connectNewProxy(ScannedFarm oldFarm, ScannedFarm newFarm) {
+
+        IFarmBlockMaster master = (IFarmBlockMaster)world.getTileEntity(origin);
+        Set<BlockPos> oldBlocks = new HashSet<>();
+
+        if (oldFarm != null)
+            oldBlocks.addAll(oldFarm.proxy.getBlocks());
+
+        Set<BlockPos> newBlocks = new HashSet<>();
+        newBlocks.addAll(newFarm.proxy.getBlocks());
+
+        newBlocks.removeAll(oldBlocks);
+        for (BlockPos pos : newBlocks) {
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof IFarmBlockConnection) {
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "setMaster", pos);
+                    ((IFarmBlockConnection) te).setMaster(master);
+                }
+            }
+        }
+    }
+
     private void disconnectOldFarm(@Nullable ScannedFarm oldFarm, ScannedFarm newFarm) {
 
         if (oldFarm == null)
@@ -53,15 +102,17 @@ public class FarmBuilder implements IFarmStructure {
             newBlocks.addAll(newFarm.base.getBlocks());
             newBlocks.add(newFarm.controller.getBlocks());
             newBlocks.addAll(newFarm.upgrades.getBlocks());
-            newBlocks.addAll(oldFarm.proxy.getBlocks());
+            newBlocks.addAll(newFarm.proxy.getBlocks());
         }
 
         oldBlocks.removeAll(newBlocks);
         for (BlockPos pos : oldBlocks) {
             if (world.isBlockLoaded(pos)) {
                 TileEntity te = world.getTileEntity(pos);
-                if (te instanceof IFarmBlockConnection)
-                    ((IFarmBlockConnection)te).clearMaster();
+                if (te instanceof IFarmBlockConnection) {
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "clearMaster", pos);
+                    ((IFarmBlockConnection) te).clearMaster();
+                }
             }
         }
     }
@@ -90,8 +141,10 @@ public class FarmBuilder implements IFarmStructure {
                 TileEntity te = world.getTileEntity(pos);
                 if (te instanceof IFarmBlockUpgrade)
                     LogHelper.info("Connecting upgrade");
-                if (te instanceof IFarmBlockConnection)
-                    ((IFarmBlockConnection)te).setMaster(master);
+                if (te instanceof IFarmBlockConnection) {
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "setMaster", pos);
+                    ((IFarmBlockConnection) te).setMaster(master);
+                }
             }
         }
     }
@@ -151,6 +204,8 @@ public class FarmBuilder implements IFarmStructure {
             } else if (!ScannedFarm.areFarmsEqualProxy(currFarm, scannedFarm)) {
 
                 LogHelper.info("handleDirtyFarm: changed proxy");
+                disconnectOldProxy(currFarm, scannedFarm);
+                connectNewProxy(currFarm, scannedFarm);
                 currFarm = scannedFarm;
             }
         }
@@ -158,6 +213,7 @@ public class FarmBuilder implements IFarmStructure {
 
     private void handleDirtyProxy() {
 
+        handleDirtyFarm();
     }
 
     /**

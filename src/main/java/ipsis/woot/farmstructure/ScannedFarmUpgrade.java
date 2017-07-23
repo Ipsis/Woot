@@ -47,7 +47,16 @@ public class ScannedFarmUpgrade {
         if (a.upgradeList.size() != b.upgradeList.size())
             return false;
 
-        // TODO upgrade equality
+        int matches = 0;
+        for (Upgrade upgrade : a.getUpgrades()) {
+            for (Upgrade upgrade1 : b.getUpgrades()) {
+                if (upgrade.upgrade == upgrade1.upgrade && upgrade.upgradeTier == upgrade1.upgradeTier)
+                    matches++;
+            }
+        }
+
+        if (matches == a.upgradeList.size())
+            return true;
 
         return false;
     }

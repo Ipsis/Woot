@@ -38,6 +38,18 @@ public class AnvilRecipe implements IAnvilRecipe {
     }
 
     @Override
+    public ItemStack getBaseItem() {
+
+        return base;
+    }
+
+    @Override
+    public List<ItemStack> getInputs() {
+
+        return ingredients;
+    }
+
+    @Override
     public boolean isMatchingBase(ItemStack itemStack) {
 
         if (itemStack.isEmpty())

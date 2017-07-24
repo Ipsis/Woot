@@ -76,4 +76,10 @@ public class AnvilManager implements IAnvilManager {
 
         return found;
     }
+
+    @Override
+    public List<IAnvilRecipe> getRecipes() {
+
+        return recipes;
+    }
 }

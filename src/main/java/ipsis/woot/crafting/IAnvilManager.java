@@ -26,4 +26,6 @@ public interface IAnvilManager {
     @Nullable IAnvilRecipe tryCraft(ItemStack baseItem, @Nonnull List<ItemStack> ingredients);
 
     boolean isValidBaseItem(ItemStack itemStack);
+
+    List<IAnvilRecipe> getRecipes();
 }

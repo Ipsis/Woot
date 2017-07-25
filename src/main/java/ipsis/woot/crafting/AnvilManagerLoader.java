@@ -33,6 +33,12 @@ public class AnvilManagerLoader {
                 false,
                 new ItemStack(Items.GOLD_INGOT));
 
+        Woot.anvilManager.addRecipe(
+                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
+                new ItemStack(Items.REDSTONE),
+                false,
+                new ItemStack(Items.GOLD_INGOT));
+
         // Plate
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemStygianIronPlate, 1),

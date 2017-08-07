@@ -8,13 +8,14 @@ public class Files {
 
     private static File globalDataDirectory;
     private static File configDirectory;
-    private static File lootFile;
-    public static File spawnReqFile;
+    public static File lootFile;
     public static File configFile;
 
-    private static final String LOOT_FILENAME = "loot.json";
+    public static final String LOOT_FILENAME = "loot.json";
+    public static final String CUSTOM_LOOT_FILENAME = "custom_drops.json";
+    public static final String FACTORY_ING_FILENAME = "factory_ingredients.json";
+    public static final String FACTORY_CFG_FILENAME = "factory_config.json";
     private static final String CONFIG_FILENAME = "woot.cfg";
-    private static final String SPAWN_REQ_FILENAME = "woot_spawnreq.json";
 
     public static void init(FMLPreInitializationEvent event) {
 
@@ -23,33 +24,11 @@ public class Files {
         configDirectory = event.getModConfigurationDirectory();
 
         lootFile = new File(globalDataDirectory, LOOT_FILENAME);
-        spawnReqFile = new File(configDirectory + File.separator + Reference.MOD_ID, SPAWN_REQ_FILENAME);
         configFile = new File(configDirectory + File.separator + Reference.MOD_ID, CONFIG_FILENAME);
     }
 
-    public static File getLootFile() {
+    public static File getConfigDirectory() {
 
-        return lootFile;
-    }
-
-    public static File getConfigFile() {
-
-        return configFile;
-    }
-
-    public static String getWootFileForDisplay() {
-
-        /**
-         * Strip out anything that could be interpreted as an escape in a String format
-         * As that is what FMLLog is using to display this
-         */
-        String raw = lootFile.toString();
-        return raw.replace("%", "%%");
-    }
-
-    public static String getWootSpawnReqFileForDisplay() {
-
-        String raw = spawnReqFile.toString();
-        return raw.replace("%", "%%");
+        return new File(configDirectory, Reference.MOD_ID);
     }
 }

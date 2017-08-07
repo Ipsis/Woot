@@ -140,7 +140,7 @@ public enum EnumConfigKey {
     public static EnumConfigKey get(String name) {
 
         for (EnumConfigKey k : values())
-            if (k.toString().equals(name))
+            if (k.toString().equalsIgnoreCase(name))
                 return k;
 
         return null;

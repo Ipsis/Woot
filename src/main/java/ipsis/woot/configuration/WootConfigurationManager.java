@@ -123,6 +123,12 @@ public class WootConfigurationManager implements IWootConfiguration {
     }
 
     @Override
+    public void addToItemList(ItemStack itemStack) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToItemList", itemStack);
+    }
+
+    @Override
     public void addToModItemList(String modName) {
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToModItemList", modName);

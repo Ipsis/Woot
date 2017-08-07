@@ -1,6 +1,11 @@
 package ipsis;
 
 import ipsis.woot.command.WootCommand;
+import ipsis.woot.configuration.*;
+import ipsis.woot.configuration.loaders.CustomDropsLoader;
+import ipsis.woot.configuration.loaders.FactoryConfigLoader;
+import ipsis.woot.configuration.loaders.FactoryIngredientsLoader;
+import ipsis.woot.configuration.loaders.FactoryLootLoader;
 import ipsis.woot.crafting.AnvilManager;
 import ipsis.woot.crafting.AnvilManagerLoader;
 import ipsis.woot.crafting.IAnvilManager;
@@ -11,15 +16,12 @@ import ipsis.woot.init.ModEnchantments;
 import ipsis.woot.init.ModOreDictionary;
 //import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.loot.*;
+import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.multiblock.MobFactoryMultiblockLogic;
-import ipsis.woot.configuration.IMobCost;
-import ipsis.woot.configuration.IWootConfiguration;
-import ipsis.woot.configuration.MobXPManager;
-import ipsis.woot.configuration.WootConfigurationManager;
 import ipsis.woot.loot.schools.SkyBoxSchool;
 import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
@@ -45,7 +47,7 @@ public class Woot {
     public static IWootConfiguration wootConfiguration = new WootConfigurationManager();
     public static ILootGeneration lootGeneration = new LootGeneration();
     public static ILootLearner lootLearner = new SkyBoxSchool();
-    public static ILootRepository lootRepository = new LootRepository();
+    public static LootRepository lootRepository = new LootRepository();
     public static IMobCost mobCosting = new MobXPManager();
     public static IEntitySpawner entitySpawner = new EntitySpawner();
     public static DebugSetup debugSetup = new DebugSetup();
@@ -100,18 +102,21 @@ public class Woot {
         ModEnchantments.postInit();
         lootGeneration.initialise();
         AnvilManagerLoader.load();
+        new FactoryConfigLoader().loadConfig(wootConfiguration);
+        new FactoryIngredientsLoader().loadConfig();
+        new CustomDropsLoader().loadConfig();
     }
 
     @Mod.EventHandler
     public void serverStart(FMLServerStartingEvent event) {
 
-        lootRepository.loadFromFile(Files.getLootFile());
+        new FactoryLootLoader().loadConfig(lootRepository);
         event.registerServerCommand(new WootCommand());
     }
 
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
 
-        lootRepository.saveToFile(Files.getLootFile());
+        lootRepository.writeToJsonFile(Files.lootFile);
     }
 }

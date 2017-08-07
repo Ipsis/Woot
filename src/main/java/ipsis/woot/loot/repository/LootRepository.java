@@ -1,0 +1,349 @@
+package ipsis.woot.loot.repository;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.EnumEnchantKey;
+import ipsis.woot.util.JsonHelper;
+import ipsis.woot.util.SerializationHelper;
+import ipsis.woot.util.WootMobName;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.*;
+
+public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn, ILootRepositoryLookup, ILootRepositoryWriter {
+
+    public static final int VERSION = 1;
+
+    private Map<WootMobName, Integer[]> samples = new HashMap<>();
+    private List<LootDrop> drops = new ArrayList<>();
+
+    private LootDrop getLootDrop(ItemStack itemStack) {
+
+        if (itemStack.isEmpty())
+            return null;
+
+        for (LootDrop curr : drops) {
+
+            if (ItemStack.areItemsEqualIgnoreDurability(curr.getItemStack(), itemStack) &&
+                    ItemStack.areItemStackTagsEqual(curr.getItemStack(), itemStack))
+                return curr;
+        }
+
+        return null;
+    }
+
+    private @Nullable LootDrop.LootMob getLootMob(LootDrop lootDrop, WootMobName wootMobName) {
+
+        if (!wootMobName.isValid())
+            return null;
+
+        for (LootDrop.LootMob lootMob : lootDrop.getMobs()) {
+            if (lootMob.getWootMobName().equals(wootMobName))
+                return lootMob;
+        }
+
+        return null;
+    }
+
+    private Integer[] getMobSamples(WootMobName wootMobName) {
+
+        return samples.get(wootMobName);
+    }
+
+    private int getSampleCount(WootMobName wootMobName, EnumEnchantKey key) {
+
+        Integer[] s = samples.get(wootMobName);
+        if (s != null)
+            return s[key.ordinal()];
+
+        return 0;
+    }
+
+    private void incMobSample(WootMobName wootMobName, EnumEnchantKey key) {
+
+        Integer[] mobSamples = getMobSamples(wootMobName);
+        if (mobSamples == null) {
+            mobSamples = new Integer[]{0, 0, 0, 0};
+            samples.put(wootMobName, mobSamples);
+        }
+
+        mobSamples[key.ordinal()]++;
+    }
+
+    private List<ItemStack> convertDrops(List<EntityItem> drops) {
+
+        List<ItemStack> items = new ArrayList<>();
+        for (EntityItem entityItem : drops) {
+            ItemStack itemStack = entityItem.getItem();
+            itemStack.setCount(1);
+            // TODO entityitem size?
+
+            boolean updated = false;
+            for (ItemStack i2 : items) {
+                if (ItemStack.areItemsEqual(i2, itemStack)) {
+                    i2.setCount(i2.getCount() + 1);
+                    updated = true;
+                }
+            }
+
+            if (!updated) {
+                items.add(itemStack);
+            }
+        }
+
+        return items;
+    }
+
+    /**
+     * ILootRepositoryLoad
+     */
+    @Override
+    public void loadMobSample(WootMobName wootMobName, int l0, int l1, int l2, int l3) {
+
+        if (samples.containsKey(wootMobName)) {
+            LogHelper.error("loadMobSample: duplicate mob sample found " + wootMobName);
+        } else {
+            samples.put(wootMobName, new Integer[]{l0, l1, l2, l3});
+        }
+    }
+
+    @Override
+    public void loadItem(ItemStack itemStack) {
+
+        LootDrop lootDrop = getLootDrop(itemStack);
+        if (lootDrop != null) {
+            LogHelper.error("loadItem: duplicate item found " + itemStack);
+            return;
+        }
+
+        drops.add(new LootDrop(itemStack));
+    }
+
+    @Override
+    public void loadMobDrop(WootMobName wootMobName, EnumEnchantKey key, ItemStack itemStack, int stackSize, int drops) {
+
+        LootDrop lootDrop = getLootDrop(itemStack);
+        if (lootDrop == null) {
+            LogHelper.error("loadMobDrop: no matching itemstack found");
+            return;
+        }
+
+        LootDrop.LootMob lootMob = getLootMob(lootDrop, wootMobName);
+        if (lootMob == null) {
+            lootMob = new LootDrop.LootMob(wootMobName);
+            lootDrop.getMobs().add(lootMob);
+        }
+
+        HashMap<Integer, Integer> map = lootMob.getLooting(key);
+        map.put(stackSize, drops);
+    }
+
+    /**
+     * ILootRepositoryLearn
+     */
+    @Override
+    public boolean isEmpty(WootMobName wootMobName, EnumEnchantKey key) {
+
+        int sampleCount = getSampleCount(wootMobName, key);
+        if (sampleCount == 0)
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public boolean isFull(WootMobName wootMobName, EnumEnchantKey key) {
+
+        int sampleCount = getSampleCount(wootMobName, key);
+        return sampleCount >= Woot.wootConfiguration.getInteger(EnumConfigKey.SAMPLE_SIZE);
+    }
+
+    @Override
+    public void learn(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount) {
+
+        if (updateSampleCount)
+            incMobSample(wootMobName, key);
+
+        List<ItemStack> flattenedDrops = convertDrops(drops);
+
+        for (ItemStack itemStack : flattenedDrops) {
+
+            LootDrop lootDrop = getLootDrop(itemStack);
+            if (lootDrop == null) {
+                lootDrop = new LootDrop(itemStack);
+                this.drops.add(lootDrop);
+            }
+
+            LootDrop.LootMob lootMob = getLootMob(lootDrop, wootMobName);
+            if (lootMob == null) {
+                lootMob = new LootDrop.LootMob(wootMobName);
+                lootDrop.getMobs().add(lootMob);
+            }
+
+            HashMap<Integer, Integer> map = lootMob.getLooting(key);
+
+            int count = 0;
+            Integer c = map.get(itemStack.getCount());
+            if (c != null)
+                count = c;
+
+            count++;
+            map.put(itemStack.getCount(), count);
+        }
+    }
+
+    /**
+     * ILootRepositoryLookup
+     */
+    @Override
+    public List<ILootRepositoryLookup.LootItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key) {
+
+        List<ILootRepositoryLookup.LootItemStack> lootDrops = new ArrayList<>();
+
+        int sampleCount = getSampleCount(wootMobName, key);
+        if (sampleCount > 0) {
+            for (LootDrop curr : drops) {
+                LootDrop.LootMob lootMob = getLootMob(curr, wootMobName);
+                if (lootMob != null) {
+
+                    HashMap<Integer, Integer> looting = lootMob.getLooting(key);
+                    if (looting.isEmpty())
+                        continue;
+
+                    ILootRepositoryLookup.LootItemStack lootItemStack = new ILootRepositoryLookup.LootItemStack(curr.getItemStack());
+
+                    int maxChance = 0;
+                    for (Integer s : looting.keySet()) {
+                        Integer d = looting.get(s);
+                        if (d > 0) {
+                            int chance = Math.round(((float)d/(float)sampleCount) * 100.0F);
+                            if (chance > 100)
+                                chance = 100;
+
+                            lootItemStack.sizes.put(s, chance);
+                            if (chance > maxChance)
+                                maxChance = chance;
+                        }
+                    }
+
+                    if (!lootItemStack.sizes.isEmpty()) {
+                        lootItemStack.dropChance = maxChance;
+                        lootDrops.add(lootItemStack);
+                    }
+                }
+            }
+        }
+
+        return lootDrops;
+    }
+
+    @Override
+    public List<String> getAllMobs() {
+
+        List<String> mobs = new ArrayList<>();
+        return mobs;
+    }
+
+    /**
+     * ILootRepositoryWriter
+     */
+    @Override
+    public void writeToJsonFile(File file) {
+
+        JsonObject obj = new JsonObject();
+        obj.addProperty("version", VERSION);
+
+        JsonArray mobsArray = new JsonArray();
+        {
+            for (WootMobName wootMobName : samples.keySet()) {
+                JsonObject obj2 = new JsonObject();
+                obj2.addProperty("mobName", wootMobName.toString());
+                JsonArray sampleArray = new JsonArray();
+                for (Integer i : samples.get(wootMobName))
+                    sampleArray.add(i);
+                obj2.add("samples", sampleArray);
+                mobsArray.add(obj2);
+            }
+        }
+        obj.add("mobs", mobsArray);
+
+        JsonArray dropsArray = new JsonArray();
+        {
+            for (LootDrop lootDrop : drops) {
+                if (lootDrop.getMobs().isEmpty())
+                    continue;
+
+                JsonObject jsonObject = new JsonObject();
+                JsonObject itemStackObject = JsonHelper.toJsonObject(lootDrop.getItemStack());
+                jsonObject.add("drop", itemStackObject);
+
+                mobsArray = new JsonArray();
+                for (LootDrop.LootMob lootMob : lootDrop.getMobs()) {
+
+                    JsonObject mobObject = new JsonObject();
+                    mobObject.addProperty("mobName", lootMob.getWootMobName().toString());
+                    JsonArray sizesArray = new JsonArray();
+                    for (EnumEnchantKey key : EnumEnchantKey.values()) {
+                        HashMap<Integer, Integer> map = lootMob.getLooting(key);
+                        if (map.isEmpty())
+                            continue;
+
+                        for (Integer c : map.keySet()) {
+                            JsonObject sizeObject = new JsonObject();
+                            sizeObject.addProperty("count", c);
+                            sizeObject.addProperty("looting", key.ordinal());
+                            sizeObject.addProperty("samples", map.get(c));
+                            sizesArray.add(sizeObject);
+                        }
+                    }
+                    mobObject.add("sizes", sizesArray);
+                    mobsArray.add(mobObject);
+                }
+                jsonObject.add("mobs", mobsArray);
+                dropsArray.add(jsonObject);
+            }
+        }
+        obj.add("drops", dropsArray);
+
+        // TODO disable pretty printing
+        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        String t = GSON.toJson(obj);
+        SerializationHelper.writeJsonFile(file, t);
+    }
+
+    /**
+     * ILootRepositoryControl
+     */
+    public void flushAll() {
+
+        samples.clear();
+        drops.clear();
+    }
+
+    public void flushMob(WootMobName wootMobName) {
+
+        samples.remove(wootMobName);
+
+        for (LootDrop lootDrop : drops) {
+            if (lootDrop.getMobs().isEmpty())
+                continue;
+
+           Iterator<LootDrop.LootMob> iter = lootDrop.getMobs().listIterator();
+           while (iter.hasNext()) {
+               LootDrop.LootMob lootMob = iter.next();
+               if (lootMob.getWootMobName().equals(wootMobName))
+                   iter.remove();
+           }
+        }
+    }
+
+}

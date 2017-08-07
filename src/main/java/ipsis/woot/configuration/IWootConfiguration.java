@@ -24,6 +24,7 @@ public interface IWootConfiguration {
 
     void addToMobList(WootMobName wootMobName);
     void addToItemList(String itemName);
+    void addToItemList(ItemStack itemStack);
     void addToModItemList(String modName);
 
     void addToDragonDrops(EnumEnchantKey enchantKey, String itemName, int stackSize, float chance);

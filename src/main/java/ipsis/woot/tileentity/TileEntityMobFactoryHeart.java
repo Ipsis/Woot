@@ -7,6 +7,7 @@ import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.farmstructure.FarmBuilder;
 import ipsis.woot.farmstructure.IFarmStructure;
+import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.mock.MockPowerStation;
 import ipsis.woot.mock.MockSpawnRecipeConsumer;
 import ipsis.woot.mock.MockSpawnRecipeRepository;
@@ -25,6 +26,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
 
@@ -178,7 +180,12 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.powerCapacity = 10000;
         info.powerStored = 500;
 
-        info.drops.addAll(Woot.lootRepository.getDropInfo(farmSetup.getWootMobName(), farmSetup.getEnchantKey()));
+        List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
+        for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {
+            ItemStack itemStack = lootItemStack.itemStack.copy();
+            itemStack.setCount(lootItemStack.dropChance);
+            info.drops.add(itemStack);
+        }
 
         // Say everything is okay
         info.setValid();

@@ -2,7 +2,7 @@ package ipsis.woot.handler;
 
 import ipsis.Woot;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.configuration.ConfigurationLoader;
+import ipsis.woot.configuration.loaders.ConfigurationLoader;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

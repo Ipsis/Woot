@@ -2,6 +2,7 @@ package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
+import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -17,10 +18,12 @@ public class ItemGenerator implements ILootGenerator {
         if (itemHandlerList.size() == 0)
             return;
 
-        List<ItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey(), farmSetup.getNumMobs());
+        List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
+        // TODO handle more than one mob spawned
 
         for (IItemHandler hdlr : itemHandlerList) {
-            for (ItemStack itemStack : loot) {
+            for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {
+                ItemStack itemStack = lootItemStack.itemStack;
 
                 if (itemStack.isEmpty())
                     continue;

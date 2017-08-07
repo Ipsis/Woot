@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "ingredients": [
+    {
+      "mobName": "minecraft:zombie",
+      "efficiency": true,
+      "items": [
+        {
+          "item": "minecraft:feather",
+          "count": 1
+        },
+        {
+          "item": "minecraft:wool",
+          "data": 4,
+          "count": 2
+        },
+        {
+          "item": "woot:test",
+          "data": 4,
+          "nbt": { },
+          "count": 1
+        }
+
+      ],
+      "fluids": [
+
+      ]
+    }
+
+  ]
+}

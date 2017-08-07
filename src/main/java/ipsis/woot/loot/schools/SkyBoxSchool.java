@@ -92,7 +92,7 @@ public class SkyBoxSchool implements ILootLearner {
 
             if (!items.isEmpty()) {
                 LogHelper.info("checkSkybox: learn for " + wootMobName + " - " + items);
-                Woot.lootRepository.insert(wootMobName, key, items, false);
+                Woot.lootRepository.learn(wootMobName, key, items, false);
                 for (EntityItem i : items)
                     ((EntityItem)i).setDead();
             }
@@ -155,7 +155,7 @@ public class SkyBoxSchool implements ILootLearner {
         if (wootMobName.isValid()) {
 
             EnumEnchantKey key = EnumEnchantKey.getEnchantKey(e.getLootingLevel());
-            Woot.lootRepository.insert(wootMobName, key, e.getDrops(), true);
+            Woot.lootRepository.learn(wootMobName, key, e.getDrops(), true);
 
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, this, "onLivingDropsEvent", wootMobName + " " + key + " " + e.getDrops());
         } else {

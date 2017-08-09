@@ -15,7 +15,7 @@ public class WootMobName {
         return tag;
     }
 
-    private String tag = "none";
+    private String tag = "";
 
     public String getName() {
         return name;
@@ -23,9 +23,18 @@ public class WootMobName {
 
     private String name;
 
+    private void createName() {
+
+        if (tag.equals(""))
+            this.name = this.entityKey;
+        else
+            this.name = this.entityKey + "," + this.tag;
+
+    }
+
     public WootMobName() {
 
-        this.name = Reference.MOD_ID + ":" + this.tag + ":" + this.entityKey;
+        createName();
     }
 
     @Override
@@ -38,7 +47,14 @@ public class WootMobName {
 
         this.entityKey = entityKey;
         this.tag = tag;
-        this.name = Reference.MOD_ID + ":" + this.tag + ":" + this.entityKey;
+        createName();
+    }
+
+    public WootMobName(String entityKey) {
+
+        this.entityKey = entityKey;
+        this.tag = "";
+        createName();
     }
 
     public boolean isValid() {
@@ -65,7 +81,7 @@ public class WootMobName {
         if (!entityKey.equalsIgnoreCase(that.entityKey))
             return false;
 
-        if (!tag.equalsIgnoreCase(that.tag))
+        if (!tag.equals("") && !tag.equalsIgnoreCase(that.tag))
             return false;
 
         return name.equalsIgnoreCase(that.name);

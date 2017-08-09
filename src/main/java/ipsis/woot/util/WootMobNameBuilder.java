@@ -1,14 +1,11 @@
 package ipsis.woot.util;
 
-import ipsis.woot.reference.Reference;
-import ipsis.woot.util.WootMobName;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WootMobNameBuilder {
@@ -20,7 +17,7 @@ public class WootMobNameBuilder {
 
         ResourceLocation resourceLocation = EntityList.getKey(entityLiving);
         if (resourceLocation != null)
-            wootMobName = new WootMobName(resourceLocation.toString(), "none");
+            wootMobName = new WootMobName(resourceLocation.toString());
 
         return wootMobName;
     }
@@ -29,11 +26,14 @@ public class WootMobNameBuilder {
 
         WootMobName wootMobName = new WootMobName();
 
-        Pattern pattern = Pattern.compile("(\\w*):(\\w*):(.*)");
-        Matcher matcher = pattern.matcher(name);
-
-        if (matcher.find() && matcher.groupCount() == 3 && matcher.group(1).equalsIgnoreCase(Reference.MOD_ID))
-            wootMobName = new WootMobName(matcher.group(3), matcher.group(2));
+        String[] parts = name.split(Pattern.quote(","));
+        if (parts.length == 1) {
+            // Format is entity
+            wootMobName = new WootMobName(parts[0]);
+        } else if (parts.length == 2) {
+            // Format is entity,tag
+            wootMobName = new WootMobName(parts[0], parts[1]);
+        }
 
         return wootMobName;
     }
@@ -43,7 +43,7 @@ public class WootMobNameBuilder {
         WootMobName wootMobName = create(name);
         if (!wootMobName.isValid()) {
             if (EntityList.isRegistered(new ResourceLocation(name)))
-                wootMobName = new WootMobName(name, "none");
+                wootMobName = new WootMobName(name);
         }
 
         return wootMobName;

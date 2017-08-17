@@ -9,6 +9,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemGenerator implements ILootGenerator {
@@ -18,8 +19,11 @@ public class ItemGenerator implements ILootGenerator {
         if (itemHandlerList.size() == 0)
             return;
 
-        List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
-        // TODO handle more than one mob spawned
+        List<ILootRepositoryLookup.LootItemStack> loot = new ArrayList<>();
+        for (int i = 0; i < farmSetup.getNumMobs(); i++) {
+            List<ILootRepositoryLookup.LootItemStack> loot2 = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
+            loot.addAll(loot2);
+        }
 
         for (IItemHandler hdlr : itemHandlerList) {
             for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {

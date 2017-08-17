@@ -129,7 +129,7 @@ public class FarmScanner implements IFarmScanner {
 
             BlockPos p = origin.down(step + 1);
             TileEntity te = world.getTileEntity(p);
-            if (te instanceof TileEntityMobFactoryCell && !powerFound) {
+            if (te instanceof TileEntityMobFactoryCell && !powerFound && ((TileEntityMobFactoryCell) te).getPowerStation() != null) {
                 powerFound = true;
                 remote.setPowerPos(p);
             } else if (te instanceof TileEntityMobFactoryExporter && !exportFound) {

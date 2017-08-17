@@ -2,6 +2,8 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryHeart;
+import ipsis.woot.power.storage.IPowerStation;
+import ipsis.woot.tileentity.TileEntityMobFactoryCell;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
@@ -284,10 +286,13 @@ public class FarmBuilder implements IFarmStructure {
         }
     }
 
+    /**
+     * This should only ever be called when the farm is formed
+     */
     @Override
     public IFarmSetup createSetup() {
 
-        IFarmSetup farmSetup = new FarmSetup(currFarm.controller.wootMob);
+        IFarmSetup farmSetup = new FarmSetup(world, currFarm.controller.wootMob);
         farmSetup.setFarmTier(currFarm.base.tier);
         for (ScannedFarmUpgrade.Upgrade u : currFarm.upgrades.getUpgrades())
             farmSetup.setUpgradeLevel(u.upgrade, u.upgradeTier);
@@ -299,6 +304,12 @@ public class FarmBuilder implements IFarmStructure {
             farmSetup.setEnchantKey(EnumEnchantKey.LOOTING_II);
         else if (level == 3)
             farmSetup.setEnchantKey(EnumEnchantKey.LOOTING_III);
+
+        farmSetup.setFacing(world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING));
+
+        farmSetup.setPowerCellBlockPos(currFarm.remote.getPowerPos());
+        farmSetup.setExportBlockPos(currFarm.remote.getExportPos());
+        farmSetup.setImportBlockPos(currFarm.remote.getImportPos());
 
         return farmSetup;
     }
@@ -319,32 +330,5 @@ public class FarmBuilder implements IFarmStructure {
     public void clearChanged() {
 
         this.changed = false;
-    }
-
-    @Nonnull
-    @Override
-    public List<IFluidHandler> getConnectedTanks() {
-
-        List<IFluidHandler> tanks = new ArrayList<>();
-        return tanks;
-    }
-
-    @Nonnull
-    @Override
-    public List<IItemHandler> getConnectedChests() {
-
-        List<IItemHandler> chests = new ArrayList<>();
-
-        // TODO update to use the exporter block
-
-        // In front of farm
-        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING);
-        if (world.isBlockLoaded(origin.offset(facing))) {
-            TileEntity te = world.getTileEntity(origin.offset(facing));
-            if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))
-                chests.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
-        }
-
-        return chests;
     }
 }

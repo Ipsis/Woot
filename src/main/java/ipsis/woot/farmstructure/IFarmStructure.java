@@ -1,6 +1,7 @@
 package ipsis.woot.farmstructure;
 
 import ipsis.woot.farming.ITickTracker;
+import ipsis.woot.power.storage.IPowerStation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -25,7 +26,5 @@ public interface IFarmStructure {
     boolean hasChanged();
     void clearChanged();
 
-    @Nonnull List<IFluidHandler> getConnectedTanks();
-    @Nonnull List<IItemHandler> getConnectedChests();
 
 }

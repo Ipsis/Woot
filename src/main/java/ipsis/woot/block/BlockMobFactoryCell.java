@@ -27,6 +27,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
+/**
+ * The cell stores power, however it can only be used as part of the formed farm
+ */
 public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvider {
 
     public static final String BASENAME = "cell";

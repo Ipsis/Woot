@@ -38,7 +38,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     private IPowerCalculator powerCalculator;
     private IRecipeProgressTracker recipeProgressTracker;
     private ISpawnRecipeConsumer spawnRecipeConsumer;
-    private IPowerStation powerStation;
 
     ISpawnRecipeRepository spawnRecipeRepository;
 
@@ -50,7 +49,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 Woot.wootConfiguration.getInteger(EnumConfigKey.LEARN_TICKS) + Woot.RANDOM.nextInt(11));
         tickTracker.setStructureTickCount(20);
 
-        powerStation = new MockPowerStation();
         spawnRecipeConsumer = new MockSpawnRecipeConsumer();
         spawnRecipe = new SpawnRecipe();
         powerCalculator = new Calculator();
@@ -104,8 +102,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 farmSetup = farmStructure.createSetup();
                 powerRecipe = powerCalculator.calculate(farmSetup);
                 spawnRecipe = spawnRecipeRepository.get(farmSetup.getWootMobName());
-                powerStation.setTier(farmSetup.getFarmTier());
-                recipeProgressTracker.setPowerStation(powerStation);
+                recipeProgressTracker.setPowerStation(farmSetup.getPowerStation());
                 recipeProgressTracker.setPowerRecipe(powerRecipe);
                 farmStructure.clearChanged();
 
@@ -118,7 +115,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
             recipeProgressTracker.tick();
             if (recipeProgressTracker.isComplete() && spawnRecipeConsumer.consume(getWorld(), getPos(), spawnRecipe, farmSetup.getNumMobs())) {
-                Woot.lootGeneration.generate(farmStructure.getConnectedTanks(), farmStructure.getConnectedChests(), farmSetup);
+                Woot.lootGeneration.generate(farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup);
                 recipeProgressTracker.reset();
             }
         }
@@ -159,7 +156,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 
         if (capability == CapabilityEnergy.ENERGY && farmStructure != null && farmStructure.isFormed())
-            return (T)powerStation.getEnergyStorage();
+            return (T)farmSetup.getPowerStation().getEnergyStorage();
 
         return super.getCapability(capability, facing);
     }
@@ -177,8 +174,8 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.recipePowerPerTick = powerRecipe.getPowerPerTick();
         info.consumedPower = recipeProgressTracker.getConsumedPower();
         info.tier = farmSetup.getFarmTier();
-        info.powerCapacity = 10000;
-        info.powerStored = 500;
+        info.powerCapacity = farmSetup.getPowerStation().getEnergyStorage().getMaxEnergyStored();
+        info.powerCapacity = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
 
         List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {

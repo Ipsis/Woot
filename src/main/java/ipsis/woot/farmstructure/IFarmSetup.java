@@ -1,12 +1,19 @@
 package ipsis.woot.farmstructure;
 
+import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobName;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public interface IFarmSetup {
 
@@ -22,4 +29,16 @@ public interface IFarmSetup {
     void setUpgradeLevel(EnumFarmUpgrade upgrade, int level);
     void setFarmTier(EnumMobFactoryTier tier);
     void setEnchantKey(EnumEnchantKey key);
+
+    void setPowerCellBlockPos(BlockPos blockPos);
+    void setExportBlockPos(BlockPos blockPos);
+    void setImportBlockPos(BlockPos blockPos);
+    void setFacing(EnumFacing facing);
+    EnumFacing getFacing();
+
+    @Nonnull List<IFluidHandler> getConnectedImportTanks();
+    @Nonnull List<IFluidHandler> getConnectedExportTanks();
+    @Nonnull List<IItemHandler> getConnectedImportChests();
+    @Nonnull List<IItemHandler> getConnectedExportChests();
+    IPowerStation getPowerStation();
 }

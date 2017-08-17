@@ -5,18 +5,24 @@ import ipsis.woot.farmblocks.IFarmBlockConnection;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.farmblocks.SimpleMasterLocator;
 import ipsis.woot.init.ModBlocks;
+import ipsis.woot.power.storage.IPowerStation;
+import ipsis.woot.power.storage.SinglePowerStation;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
 public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockConnection {
 
     private IFarmBlockMaster farmBlockMaster = null;
+    private IPowerStation powerStation;
 
     public boolean hasMaster() { return farmBlockMaster != null; }
 
@@ -29,6 +35,11 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
 
     public TileEntityMobFactoryCell(BlockMobFactoryCell.EnumCellTier tier) {
 
+        powerStation = new SinglePowerStation(tier);
+    }
+
+    public IPowerStation getPowerStation() {
+        return powerStation;
     }
 
     @Override
@@ -113,4 +124,29 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
         return getPos();
     }
 
+    /**
+     * Power connections
+     */
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+
+        if (capability == CapabilityEnergy.ENERGY && hasMaster()) {
+            if (hasMaster())
+                return true;
+            else
+                return false;
+        }
+
+        return super.hasCapability(capability, facing);
+    }
+
+    @Nullable
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+
+        if (capability == CapabilityEnergy.ENERGY && hasMaster())
+            return farmBlockMaster.getCapability(capability, facing);
+
+        return super.getCapability(capability, facing);
+    }
 }

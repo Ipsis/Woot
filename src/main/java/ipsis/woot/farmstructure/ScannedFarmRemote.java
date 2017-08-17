@@ -73,14 +73,29 @@ public class ScannedFarmRemote {
         this.powerPos = pos;
     }
 
+    public BlockPos getPowerPos() {
+
+        return this.powerPos;
+    }
+
     public void setExportPos(BlockPos pos) {
 
         this.exportPos = pos;
     }
 
+    public BlockPos getExportPos() {
+
+        return this.exportPos;
+    }
+
     public void setImportPos(BlockPos pos) {
 
         this.importPos = pos;
+    }
+
+    public BlockPos getImportPos() {
+
+        return this.importPos;
     }
 
     public List<BlockPos> getBlocks() {

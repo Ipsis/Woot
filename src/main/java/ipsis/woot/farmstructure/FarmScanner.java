@@ -6,6 +6,9 @@ import ipsis.woot.farmblocks.IFarmBlockProxy;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.multiblock.MobFactoryModule;
+import ipsis.woot.tileentity.TileEntityMobFactoryCell;
+import ipsis.woot.tileentity.TileEntityMobFactoryExporter;
+import ipsis.woot.tileentity.TileEntityMobFactoryImporter;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.farmblocks.IFarmBlockController;
 import ipsis.woot.util.BlockPosHelper;
@@ -111,6 +114,37 @@ public class FarmScanner implements IFarmScanner {
         }
 
         return controller;
+    }
+
+    @Nonnull
+    @Override
+    public ScannedFarmRemote scanFarmRemote(World world, BlockPos origin) {
+
+        ScannedFarmRemote remote = new ScannedFarmRemote();
+
+        boolean powerFound = false;
+        boolean exportFound = false;
+        boolean importFound = false;
+        for (int step = 0; step < 10; step++) {
+
+            BlockPos p = origin.down(step + 1);
+            TileEntity te = world.getTileEntity(p);
+            if (te instanceof TileEntityMobFactoryCell && !powerFound) {
+                powerFound = true;
+                remote.setPowerPos(p);
+            } else if (te instanceof TileEntityMobFactoryExporter && !exportFound) {
+                exportFound = true;
+                remote.setExportPos(p);
+            } else if (te instanceof TileEntityMobFactoryImporter && !importFound) {
+                importFound = true;
+                remote.setImportPos(p);
+            }
+
+            if (powerFound && exportFound && importFound)
+                break;
+        }
+
+        return remote;
     }
 
     @Nonnull

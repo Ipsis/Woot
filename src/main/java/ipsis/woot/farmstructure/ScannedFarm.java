@@ -9,6 +9,7 @@ public class ScannedFarm {
     ScannedFarmProxy proxy;
     ScannedFarmController controller;
     ScannedFarmUpgrade upgrades;
+    ScannedFarmRemote remote;
 
     /**
      * Returns true if the farms are identical but ignoring the proxy
@@ -25,6 +26,9 @@ public class ScannedFarm {
             return false;
 
         if (!ScannedFarmUpgrade.isEqual(a.upgrades, b.upgrades))
+            return false;
+
+        if (!ScannedFarmRemote.isEqual(a.remote, b.remote))
             return false;
 
         return true;

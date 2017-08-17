@@ -17,6 +17,10 @@ public class ModBlocks {
     public static BlockWoot blockStructure;
     public static BlockWoot blockFactoryController;
     public static BlockWoot blockLayout;
+    public static BlockWoot blockImporter;
+    public static BlockWoot blockExporter;
+    public static BlockWoot blockCell;
+
     public static BlockWoot blockProxy;
     public static BlockWoot blockExtender;
 
@@ -34,6 +38,10 @@ public class ModBlocks {
         blockStructure = new BlockMobFactoryStructure();
         blockFactoryController = new BlockMobFactoryController();
         blockLayout = new BlockLayout();
+        blockImporter = new BlockMobFactoryImporter();
+        blockExporter = new BlockMobFactoryExporter();
+        blockCell = new BlockMobFactoryCell();
+
         blockProxy = new BlockMobFactoryProxy();
         blockExtender = new BlockMobFactoryExtender();
     }
@@ -49,6 +57,10 @@ public class ModBlocks {
         ModBlocks.blockStructure.initModel();
         ModBlocks.blockFactoryController.initModel();
         ModBlocks.blockLayout.initModel();
+        ModBlocks.blockImporter.initModel();
+        ModBlocks.blockExporter.initModel();
+        ModBlocks.blockCell.initModel();
+
         ModBlocks.blockProxy.initModel();
         ModBlocks.blockExtender.initModel();
     }
@@ -63,6 +75,9 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityMobFactoryUpgrade.class, modkey + BlockMobFactoryUpgrade.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryController.class, modkey + BlockMobFactoryController.BASENAME);
         GameRegistry.registerTileEntity(TileEntityLayout.class, modkey + BlockLayout.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryImporter.class, modkey + BlockMobFactoryImporter.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryExporter.class, modkey + BlockMobFactoryExporter.BASENAME);
+        GameRegistry.registerTileEntity(TileEntityMobFactoryCell.class, modkey + BlockMobFactoryCell.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, modkey + BlockMobFactoryProxy.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, modkey + BlockMobFactoryExtender.BASENAME);
     }

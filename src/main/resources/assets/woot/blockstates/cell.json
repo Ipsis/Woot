@@ -1,0 +1,11 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "formed=true,tier=tier_i": { "model": "woot:cell_tier_i_formed" },
+    "formed=true,tier=tier_ii": { "model": "woot:cell_tier_ii_formed" },
+    "formed=true,tier=tier_iii": { "model": "woot:cell_tier_iii_formed" },
+    "formed=false,tier=tier_i": { "model": "woot:cell_tier_i" },
+    "formed=false,tier=tier_ii": { "model": "woot:cell_tier_ii" },
+    "formed=false,tier=tier_iii": { "model": "woot:cell_tier_iii" }
+  }
+}

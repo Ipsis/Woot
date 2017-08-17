@@ -1,0 +1,6 @@
+{
+  "parent": "woot:block/small_cube_all",
+  "textures": {
+    "all": "woot:blocks/cell_tier_iii"
+  }
+}

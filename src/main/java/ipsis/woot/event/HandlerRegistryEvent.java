@@ -26,7 +26,10 @@ public class HandlerRegistryEvent {
                 ModBlocks.blockFactoryHeart.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryHeart.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryHeart.BASENAME),
                 ModBlocks.blockStygianIron.setUnlocalizedName(Reference.MOD_ID + "." + BlockStygianIron.BASENAME).setRegistryName(Reference.MOD_ID, BlockStygianIron.BASENAME),
                 ModBlocks.blockFactoryController.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryController.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryController.BASENAME),
+                ModBlocks.blockImporter.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryImporter.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryImporter.BASENAME),
+                ModBlocks.blockExporter.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryExporter.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryExporter.BASENAME),
                 ModBlocks.blockExtender.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryExtender.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryExtender.BASENAME),
+                ModBlocks.blockCell.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryCell.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryCell.BASENAME),
                 ModBlocks.blockProxy.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryProxy.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryProxy.BASENAME),
                 ModBlocks.blockStructure.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryStructure.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryStructure.BASENAME),
                 ModBlocks.blockUpgrade.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryUpgrade.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryUpgrade.BASENAME),
@@ -61,9 +64,12 @@ public class HandlerRegistryEvent {
                 new ItemBlock(ModBlocks.blockFactoryHeart).setRegistryName(ModBlocks.blockFactoryHeart.getRegistryName()),
                 new ItemBlock(ModBlocks.blockStygianIron).setRegistryName(ModBlocks.blockStygianIron.getRegistryName()),
                 new ItemBlockController(ModBlocks.blockFactoryController).setRegistryName(ModBlocks.blockFactoryController.getRegistryName()),
+                new ItemBlock(ModBlocks.blockImporter).setRegistryName(ModBlocks.blockImporter.getRegistryName()),
+                new ItemBlock(ModBlocks.blockExporter).setRegistryName(ModBlocks.blockExporter.getRegistryName()),
                 new ItemBlock(ModBlocks.blockExtender).setRegistryName(ModBlocks.blockExtender.getRegistryName()),
                 new ItemBlock(ModBlocks.blockProxy).setRegistryName(ModBlocks.blockProxy.getRegistryName()),
                 new ItemBlockStructure(ModBlocks.blockStructure).setRegistryName(ModBlocks.blockStructure.getRegistryName()),
+                new ItemBlockCell(ModBlocks.blockCell).setRegistryName(ModBlocks.blockCell.getRegistryName()),
                 new ItemBlockUpgrade(ModBlocks.blockUpgrade).setRegistryName(ModBlocks.blockUpgrade.getRegistryName()),
                 new ItemBlockUpgradeB(ModBlocks.blockUpgradeB).setRegistryName(ModBlocks.blockUpgradeB.getRegistryName())
         );

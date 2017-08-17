@@ -96,6 +96,7 @@ public class FarmBuilder implements IFarmStructure {
         oldBlocks.add(oldFarm.controller.getBlocks());
         oldBlocks.addAll(oldFarm.upgrades.getBlocks());
         oldBlocks.addAll(oldFarm.proxy.getBlocks());
+        oldBlocks.addAll(oldFarm.remote.getBlocks());
 
         Set<BlockPos> newBlocks = new HashSet<>();
         if (newFarm != null) {
@@ -103,6 +104,7 @@ public class FarmBuilder implements IFarmStructure {
             newBlocks.add(newFarm.controller.getBlocks());
             newBlocks.addAll(newFarm.upgrades.getBlocks());
             newBlocks.addAll(newFarm.proxy.getBlocks());
+            newBlocks.addAll(newFarm.remote.getBlocks());
         }
 
         oldBlocks.removeAll(newBlocks);
@@ -127,6 +129,7 @@ public class FarmBuilder implements IFarmStructure {
             oldBlocks.add(oldFarm.controller.getBlocks());
             oldBlocks.addAll(oldFarm.upgrades.getBlocks());
             oldBlocks.addAll(oldFarm.proxy.getBlocks());
+            oldBlocks.addAll(oldFarm.remote.getBlocks());
         }
 
         Set<BlockPos> newBlocks = new HashSet<>();
@@ -134,6 +137,7 @@ public class FarmBuilder implements IFarmStructure {
         newBlocks.add(newFarm.controller.getBlocks());
         newBlocks.addAll(newFarm.upgrades.getBlocks());
         newBlocks.addAll(newFarm.proxy.getBlocks());
+        newBlocks.addAll(newFarm.remote.getBlocks());
 
         newBlocks.removeAll(oldBlocks);
         for (BlockPos pos : newBlocks) {
@@ -165,6 +169,12 @@ public class FarmBuilder implements IFarmStructure {
         // Is the controller programmed
         if (!scannedFarm.controller.isValid()) {
             LogHelper.info("scanFullFarm: invalid controller");
+            return null;
+        }
+
+        scannedFarm.remote = farmScanner.scanFarmRemote(world, origin);
+        if (!scannedFarm.remote.isValid()) {
+            LogHelper.info("scanFullFarm: invalid remote");
             return null;
         }
 
@@ -324,6 +334,8 @@ public class FarmBuilder implements IFarmStructure {
     public List<IItemHandler> getConnectedChests() {
 
         List<IItemHandler> chests = new ArrayList<>();
+
+        // TODO update to use the exporter block
 
         // In front of farm
         EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING);

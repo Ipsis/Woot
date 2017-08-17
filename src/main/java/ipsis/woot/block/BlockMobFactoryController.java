@@ -114,24 +114,4 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
 
         }
     }
-
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-
-        LogHelper.info("Controller: onBlockActivated ???");
-        /*
-        if (!worldIn.isRemote) {
-            
-            BlockPos factoryPos = pos.offset(EnumFacing.DOWN, 1);
-
-            boolean isController = worldIn.getTileEntity(pos) instanceof TileEntityMobFactoryController;
-            boolean isFactory = worldIn.getTileEntity(factoryPos) instanceof TileEntityMobFactory;
-
-            if (isController && isFactory)
-                return worldIn.getBlockState(factoryPos).getBlock().onBlockActivated(worldIn, factoryPos,
-                        worldIn.getBlockState(factoryPos), playerIn, hand, facing, hitX, hitY, hitZ);
-        } */
-
-        return true;
-    }
 }

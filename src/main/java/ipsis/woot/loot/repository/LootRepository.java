@@ -219,7 +219,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
                     if (looting.isEmpty())
                         continue;
 
-                    ILootRepositoryLookup.LootItemStack lootItemStack = new ILootRepositoryLookup.LootItemStack(curr.getItemStack());
+                    ILootRepositoryLookup.LootItemStack lootItemStack = new ILootRepositoryLookup.LootItemStack(curr.getItemStack().copy());
 
                     int maxChance = 0;
                     for (Integer s : looting.keySet()) {

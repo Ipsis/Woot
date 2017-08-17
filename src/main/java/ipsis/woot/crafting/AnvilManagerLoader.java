@@ -19,25 +19,25 @@ public class AnvilManagerLoader {
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()),
                 new ItemStack(Blocks.IRON_BARS),
                 false,
-                new ItemStack(Items.GOLD_INGOT));
+                new ItemStack(ModItems.itemStygianIronPlate, 4));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PLATE.getMeta()),
                 new ItemStack(Items.BRICK),
                 false,
-                new ItemStack(Items.GOLD_INGOT));
+                new ItemStack(ModItems.itemStygianIronPlate, 4));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()),
                 new ItemStack(Items.QUARTZ),
                 false,
-                new ItemStack(Items.GOLD_INGOT));
+                new ItemStack(ModItems.itemStygianIronPlate, 4));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
                 new ItemStack(Items.REDSTONE),
                 false,
-                new ItemStack(Items.GOLD_INGOT));
+                new ItemStack(ModItems.itemStygianIronPlate, 4));
 
         // Plate
         Woot.anvilManager.addRecipe(

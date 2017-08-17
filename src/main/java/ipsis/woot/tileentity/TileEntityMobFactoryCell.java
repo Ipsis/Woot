@@ -26,16 +26,21 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
 
     public boolean hasMaster() { return farmBlockMaster != null; }
 
+    public TileEntityMobFactoryCell() {
+
+        powerStation = new SinglePowerStation();
+    }
+
+    public void setTier(BlockMobFactoryCell.EnumCellTier tier) {
+
+        powerStation.setTier(tier);
+    }
+
     public void blockAdded() {
 
         IFarmBlockMaster tmpMaster = new SimpleMasterLocator().findMaster(getWorld(), getPos(), this);
         if (tmpMaster != null)
             tmpMaster.interruptFarmStructure();
-    }
-
-    public TileEntityMobFactoryCell(BlockMobFactoryCell.EnumCellTier tier) {
-
-        powerStation = new SinglePowerStation(tier);
     }
 
     public IPowerStation getPowerStation() {
@@ -56,6 +61,21 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
 
     boolean isClientFormed;
     public boolean isClientFormed() { return isClientFormed; }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+
+        powerStation.readFromNBT(compound);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
+
+        powerStation.writeToNBT(compound);
+        return compound;
+    }
 
     /**
      * ChunkData packet handling
@@ -130,7 +150,7 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY && hasMaster()) {
+        if (capability == CapabilityEnergy.ENERGY) {
             if (hasMaster())
                 return true;
             else
@@ -145,7 +165,7 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 
         if (capability == CapabilityEnergy.ENERGY && hasMaster())
-            return farmBlockMaster.getCapability(capability, facing);
+            return (T)powerStation.getEnergyStorage();
 
         return super.getCapability(capability, facing);
     }

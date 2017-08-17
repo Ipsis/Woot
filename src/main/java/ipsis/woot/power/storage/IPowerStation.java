@@ -1,13 +1,17 @@
 package ipsis.woot.power.storage;
 
+import ipsis.woot.block.BlockMobFactoryCell;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 
 public interface IPowerStation {
 
-    void setTier(EnumMobFactoryTier tier);
+    void setTier(BlockMobFactoryCell.EnumCellTier tier);
     int consume(int power);
     @Nonnull IEnergyStorage getEnergyStorage();
+    void readFromNBT(NBTTagCompound compound);
+    void writeToNBT(NBTTagCompound compound);
 }

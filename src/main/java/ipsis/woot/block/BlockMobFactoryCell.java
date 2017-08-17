@@ -46,7 +46,10 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityMobFactoryCell(EnumCellTier.byMetadata(meta));
+
+        TileEntityMobFactoryCell te =  new TileEntityMobFactoryCell();
+        te.setTier(EnumCellTier.byMetadata(meta));
+        return te;
     }
 
     @Override

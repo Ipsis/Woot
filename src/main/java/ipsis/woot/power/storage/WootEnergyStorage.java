@@ -1,5 +1,6 @@
 package ipsis.woot.power.storage;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class WootEnergyStorage extends EnergyStorage {
@@ -18,5 +19,15 @@ public class WootEnergyStorage extends EnergyStorage {
         if (!simulate)
             energy -= energyExtracted;
         return energyExtracted;
+    }
+
+    public void readFromNBT(NBTTagCompound compound) {
+
+        this.energy = compound.getInteger("Energy");
+    }
+
+    public void writeToNBT(NBTTagCompound compound) {
+
+        compound.setInteger("Energy", this.energy);
     }
 }

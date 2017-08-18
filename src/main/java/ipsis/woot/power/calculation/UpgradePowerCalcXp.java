@@ -8,13 +8,14 @@ import ipsis.woot.util.EnumFarmUpgrade;
 public class UpgradePowerCalcXp extends AbstractUpgradePowerCalc {
 
     @Override
-    public int calculate(IFarmSetup farmSetup) {
+    public void calculate(IFarmSetup farmSetup, Calculator.PowerValues powerValues, int spawnTicks) {
 
         if (!farmSetup.hasUpgrade(EnumFarmUpgrade.XP))
-            return 0;
+            return;
 
-        return Woot.wootConfiguration.getInteger(
-                farmSetup.getWootMobName(),
-                ConfigKeyHelper.getMassPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
+        powerValues.upgradeCost +=
+                spawnTicks * Woot.wootConfiguration.getInteger(
+                        farmSetup.getWootMobName(),
+                        ConfigKeyHelper.getXpPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
     }
 }

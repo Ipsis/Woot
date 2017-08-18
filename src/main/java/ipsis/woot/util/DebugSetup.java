@@ -39,6 +39,7 @@ public class DebugSetup {
         ANVIL_CRAFTING,
         FARM_SCAN,
         FARM_CLIENT_SYNC,
+        POWER_CALC
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

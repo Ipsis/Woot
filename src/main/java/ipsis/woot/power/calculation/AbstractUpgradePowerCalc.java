@@ -7,5 +7,5 @@ public abstract class AbstractUpgradePowerCalc {
     /**
      * Calculate how much power per tick this upgrade requires
      */
-    abstract public int calculate(IFarmSetup farmSetup);
+    abstract public void calculate(IFarmSetup farmSetup, Calculator.PowerValues powerValues, int spawnTicks);
 }

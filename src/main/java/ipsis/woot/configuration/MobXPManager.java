@@ -39,6 +39,6 @@ public class MobXPManager implements IMobCost {
                 }
             }
         }
-        return 0;
+        return cost;
     }
 }

@@ -9,6 +9,7 @@ import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.WootMobName;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Calculator implements IPowerCalculator {
      * IPowerCalculator
      */
     @Override
-    public PowerRecipe calculate(IFarmSetup farmSetup) {
+    public PowerRecipe calculate(World world, IFarmSetup farmSetup) {
 
         WootMobName wootMobName = farmSetup.getWootMobName();
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate", wootMobName);
@@ -40,7 +41,7 @@ public class Calculator implements IPowerCalculator {
 
         int tierPowerPerTick = Woot.wootConfiguration.getInteger(wootMobName, ConfigKeyHelper.getPowerPerTick(farmSetup.getFarmTier()));
         int spawnTicks = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.SPAWN_TICKS);
-        int spawnXp = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.SPAWN_XP);
+        int spawnXp = Woot.wootConfiguration.getSpawnCost(world, wootMobName);
         int powerPerXp = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.POWER_PER_XP);
 
 

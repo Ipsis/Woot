@@ -96,7 +96,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         if (farmStructure.isFormed()) {
             if (farmStructure.hasChanged()) {
                 farmSetup = farmStructure.createSetup();
-                powerRecipe = powerCalculator.calculate(farmSetup);
+                powerRecipe = powerCalculator.calculate(world, farmSetup);
                 spawnRecipe = spawnRecipeRepository.get(farmSetup.getWootMobName());
                 recipeProgressTracker.setPowerStation(farmSetup.getPowerStation());
                 recipeProgressTracker.setPowerRecipe(powerRecipe);

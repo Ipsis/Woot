@@ -1,6 +1,8 @@
 package ipsis.woot.power.storage;
 
+import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryCell;
+import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -22,11 +24,11 @@ public class SinglePowerStation implements IPowerStation {
 
         this.tier = tier;
         if (tier == BlockMobFactoryCell.EnumCellTier.TIER_I)
-            energyStorage = new WootEnergyStorage(10000, 20);
+            energyStorage = new WootEnergyStorage(Woot.wootConfiguration.getInteger(EnumConfigKey.T1_POWER_MAX), Woot.wootConfiguration.getInteger(EnumConfigKey.T1_POWER_RX_TICK));
         else if (tier == BlockMobFactoryCell.EnumCellTier.TIER_II)
-            energyStorage = new WootEnergyStorage(100000, 50);
+            energyStorage = new WootEnergyStorage(Woot.wootConfiguration.getInteger(EnumConfigKey.T2_POWER_MAX), Woot.wootConfiguration.getInteger(EnumConfigKey.T2_POWER_RX_TICK));
         else if (tier == BlockMobFactoryCell.EnumCellTier.TIER_III)
-            energyStorage = new WootEnergyStorage(1000000, 100);
+            energyStorage = new WootEnergyStorage(Woot.wootConfiguration.getInteger(EnumConfigKey.T3_POWER_MAX), Woot.wootConfiguration.getInteger(EnumConfigKey.T3_POWER_RX_TICK));
     }
 
     @Override

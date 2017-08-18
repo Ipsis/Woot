@@ -21,9 +21,6 @@ public class ModBlocks {
     public static BlockWoot blockExporter;
     public static BlockWoot blockCell;
 
-    public static BlockWoot blockProxy;
-    public static BlockWoot blockExtender;
-
     public static void preInit() {
 
     }
@@ -41,9 +38,6 @@ public class ModBlocks {
         blockImporter = new BlockMobFactoryImporter();
         blockExporter = new BlockMobFactoryExporter();
         blockCell = new BlockMobFactoryCell();
-
-        blockProxy = new BlockMobFactoryProxy();
-        blockExtender = new BlockMobFactoryExtender();
     }
 
     @SideOnly(Side.CLIENT)
@@ -60,9 +54,6 @@ public class ModBlocks {
         ModBlocks.blockImporter.initModel();
         ModBlocks.blockExporter.initModel();
         ModBlocks.blockCell.initModel();
-
-        ModBlocks.blockProxy.initModel();
-        ModBlocks.blockExtender.initModel();
     }
 
     public static void registerTileEntities() {
@@ -78,8 +69,6 @@ public class ModBlocks {
         GameRegistry.registerTileEntity(TileEntityMobFactoryImporter.class, modkey + BlockMobFactoryImporter.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryExporter.class, modkey + BlockMobFactoryExporter.BASENAME);
         GameRegistry.registerTileEntity(TileEntityMobFactoryCell.class, modkey + BlockMobFactoryCell.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryProxy.class, modkey + BlockMobFactoryProxy.BASENAME);
-        GameRegistry.registerTileEntity(TileEntityMobFactoryExtender.class, modkey + BlockMobFactoryExtender.BASENAME);
     }
 
 }

@@ -23,7 +23,7 @@ public class ControllerMasterLocator implements IFarmBlockMasterLocator {
         TileEntity te = world.getTileEntity(blockPos);
         if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection) {
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "IFarmBlockProxy(Structure)", blockPos);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "IFarmBlockStructre(Controller)", blockPos);
             return structureMasterLocator.findMaster(world, blockPos, (IFarmBlockConnection) te);
         }
 

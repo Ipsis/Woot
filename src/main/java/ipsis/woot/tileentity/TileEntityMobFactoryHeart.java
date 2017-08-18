@@ -133,12 +133,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     }
 
     @Override
-    public void interruptFarmProxy() {
-
-        farmStructure.setProxyDirty();
-    }
-
-    @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 
         if (farmStructure != null && farmStructure.isFormed())

@@ -2,7 +2,6 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryStructure;
-import ipsis.woot.farmblocks.IFarmBlockProxy;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.multiblock.MobFactoryModule;
@@ -75,29 +74,6 @@ public class FarmScanner implements IFarmScanner {
         }
 
         return base;
-    }
-
-    @Nonnull
-    @Override
-    public ScannedFarmProxy scanFarmProxy(World world, BlockPos origin) {
-
-        ScannedFarmProxy proxy = new ScannedFarmProxy();
-
-        BlockPos pos = origin.down();
-        TileEntity te = world.getTileEntity(pos);
-        while (te instanceof IFarmBlockProxy && ((IFarmBlockProxy) te).isExtender()) {
-
-            proxy.addBlock(new BlockPos(pos));
-            pos = pos.down();
-            te = world.getTileEntity(pos);
-        }
-
-        if (te instanceof IFarmBlockProxy && ((IFarmBlockProxy) te).isProxy())
-            proxy.addBlock(new BlockPos(pos));
-        else
-            proxy.getBlocks().clear();
-
-        return proxy;
     }
 
     @Nonnull

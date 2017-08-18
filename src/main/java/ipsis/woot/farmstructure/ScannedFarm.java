@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 public class ScannedFarm {
 
     ScannedFarmBase base;
-    ScannedFarmProxy proxy;
     ScannedFarmController controller;
     ScannedFarmUpgrade upgrades;
     ScannedFarmRemote remote;
@@ -32,17 +31,5 @@ public class ScannedFarm {
             return false;
 
         return true;
-    }
-
-    /**
-     * Returns true if the farms are identical including the proxy
-     */
-    public static boolean areFarmsEqualProxy(@Nullable ScannedFarm a, @Nullable ScannedFarm b) {
-
-        if (areFarmsEqual(a, b)) {
-            return ScannedFarmProxy.isEqual(a.proxy, b.proxy);
-        }
-
-        return false;
     }
 }

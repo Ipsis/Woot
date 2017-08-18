@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 public interface IFarmScanner {
 
     @Nonnull ScannedFarmBase scanFarmStructure(World world, BlockPos origin, EnumFacing facing);
-    @Nonnull ScannedFarmProxy scanFarmProxy(World world, BlockPos origin);
     @Nonnull ScannedFarmRemote scanFarmRemote(World world, BlockPos origin);
     @Nonnull ScannedFarmController scanFarmController(World world, BlockPos origin, EnumFacing facing);
     @Nonnull ScannedFarmUpgrade scanFarmUpgrades(World world, BlockPos origin, EnumFacing facing, EnumMobFactoryTier tier);

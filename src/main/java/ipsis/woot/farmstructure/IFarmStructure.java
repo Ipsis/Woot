@@ -14,7 +14,6 @@ public interface IFarmStructure {
 
     void setStructureDirty();
     void setUpgradeDirty();
-    void setProxyDirty();
 
     IFarmStructure setWorld(@Nonnull World world);
     IFarmStructure setPosition(BlockPos origin);

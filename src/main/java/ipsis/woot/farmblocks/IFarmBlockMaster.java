@@ -10,7 +10,6 @@ public interface IFarmBlockMaster {
 
     void interruptFarmStructure();
     void interruptFarmUpgrade();
-    void interruptFarmProxy();
     boolean hasCapability(Capability<?> capability, EnumFacing facing);
     <T> T getCapability(Capability<T> capability, EnumFacing facing);
 }

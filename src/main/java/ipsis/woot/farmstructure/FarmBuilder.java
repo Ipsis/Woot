@@ -41,53 +41,6 @@ public class FarmBuilder implements IFarmStructure {
 
     }
 
-    private void disconnectOldProxy(@Nullable ScannedFarm oldFarm, ScannedFarm newFarm) {
-
-        if (oldFarm == null)
-            return;
-
-        Set<BlockPos> oldBlocks = new HashSet<>();
-        oldBlocks.addAll(oldFarm.proxy.getBlocks());
-
-        Set<BlockPos> newBlocks = new HashSet<>();
-        if (newFarm != null)
-            newBlocks.addAll(newFarm.proxy.getBlocks());
-
-        oldBlocks.removeAll(newBlocks);
-        for (BlockPos pos : oldBlocks) {
-            if (world.isBlockLoaded(pos)) {
-                TileEntity te = world.getTileEntity(pos);
-                if (te instanceof IFarmBlockConnection) {
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "clearMaster", pos);
-                    ((IFarmBlockConnection) te).clearMaster();
-                }
-            }
-        }
-    }
-
-    private void connectNewProxy(ScannedFarm oldFarm, ScannedFarm newFarm) {
-
-        IFarmBlockMaster master = (IFarmBlockMaster)world.getTileEntity(origin);
-        Set<BlockPos> oldBlocks = new HashSet<>();
-
-        if (oldFarm != null)
-            oldBlocks.addAll(oldFarm.proxy.getBlocks());
-
-        Set<BlockPos> newBlocks = new HashSet<>();
-        newBlocks.addAll(newFarm.proxy.getBlocks());
-
-        newBlocks.removeAll(oldBlocks);
-        for (BlockPos pos : newBlocks) {
-            if (world.isBlockLoaded(pos)) {
-                TileEntity te = world.getTileEntity(pos);
-                if (te instanceof IFarmBlockConnection) {
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "setMaster", pos);
-                    ((IFarmBlockConnection) te).setMaster(master);
-                }
-            }
-        }
-    }
-
     private void disconnectOldFarm(@Nullable ScannedFarm oldFarm, ScannedFarm newFarm) {
 
         if (oldFarm == null)
@@ -97,7 +50,6 @@ public class FarmBuilder implements IFarmStructure {
         oldBlocks.addAll(oldFarm.base.getBlocks());
         oldBlocks.add(oldFarm.controller.getBlocks());
         oldBlocks.addAll(oldFarm.upgrades.getBlocks());
-        oldBlocks.addAll(oldFarm.proxy.getBlocks());
         oldBlocks.addAll(oldFarm.remote.getBlocks());
 
         Set<BlockPos> newBlocks = new HashSet<>();
@@ -105,7 +57,6 @@ public class FarmBuilder implements IFarmStructure {
             newBlocks.addAll(newFarm.base.getBlocks());
             newBlocks.add(newFarm.controller.getBlocks());
             newBlocks.addAll(newFarm.upgrades.getBlocks());
-            newBlocks.addAll(newFarm.proxy.getBlocks());
             newBlocks.addAll(newFarm.remote.getBlocks());
         }
 
@@ -130,7 +81,6 @@ public class FarmBuilder implements IFarmStructure {
             oldBlocks.addAll(oldFarm.base.getBlocks());
             oldBlocks.add(oldFarm.controller.getBlocks());
             oldBlocks.addAll(oldFarm.upgrades.getBlocks());
-            oldBlocks.addAll(oldFarm.proxy.getBlocks());
             oldBlocks.addAll(oldFarm.remote.getBlocks());
         }
 
@@ -138,7 +88,6 @@ public class FarmBuilder implements IFarmStructure {
         newBlocks.addAll(newFarm.base.getBlocks());
         newBlocks.add(newFarm.controller.getBlocks());
         newBlocks.addAll(newFarm.upgrades.getBlocks());
-        newBlocks.addAll(newFarm.proxy.getBlocks());
         newBlocks.addAll(newFarm.remote.getBlocks());
 
         newBlocks.removeAll(oldBlocks);
@@ -181,7 +130,6 @@ public class FarmBuilder implements IFarmStructure {
         }
 
         scannedFarm.upgrades = farmScanner.scanFarmUpgrades(world, origin, facing, scannedFarm.base.tier);
-        scannedFarm.proxy = farmScanner.scanFarmProxy(world, origin);
 
         farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
         // Is the programmed controller valid for this factory
@@ -219,12 +167,6 @@ public class FarmBuilder implements IFarmStructure {
                 connectNewFarm(currFarm, scannedFarm);
                 currFarm = scannedFarm;
                 changed = true;
-            } else if (!ScannedFarm.areFarmsEqualProxy(currFarm, scannedFarm)) {
-
-                LogHelper.info("handleDirtyFarm: changed proxy");
-                disconnectOldProxy(currFarm, scannedFarm);
-                connectNewProxy(currFarm, scannedFarm);
-                currFarm = scannedFarm;
             }
         }
     }
@@ -248,12 +190,6 @@ public class FarmBuilder implements IFarmStructure {
     public void setUpgradeDirty() {
 
         setStructureDirty();
-    }
-
-    @Override
-    public void setProxyDirty() {
-
-        proxyDirty = true;
     }
 
     @Override

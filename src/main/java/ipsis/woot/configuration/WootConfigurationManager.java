@@ -18,14 +18,6 @@ import java.util.Map;
 public class WootConfigurationManager implements IWootConfiguration {
 
     /**
-     * Internal Configuration
-     */
-    private List<String> internalModCaptureBlacklist = new ArrayList<>();
-    private List<String> internalMobCaptureBlacklist = new ArrayList<>();
-    private List<String> internalModItemBlacklist = new ArrayList<>();
-    private List<String> internalItemBlacklist = new ArrayList<>();
-
-    /**
      * Main Configuration
      */
     private Map<EnumConfigKey, Integer> integerMap = new HashMap<>();
@@ -111,104 +103,8 @@ public class WootConfigurationManager implements IWootConfiguration {
     }
 
     @Override
-    public void addToMobList(WootMobName wootMobName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToMobList", wootMobName);
-    }
-
-    @Override
-    public void addToItemList(String itemName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToItemList", itemName);
-    }
-
-    @Override
-    public void addToItemList(ItemStack itemStack) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToItemList", itemStack);
-    }
-
-    @Override
-    public void addToModItemList(String modName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToModItemList", modName);
-    }
-
-    @Override
     public void addToDragonDrops(EnumEnchantKey enchantKey, String itemName, int stackSize, float chance) {
 
-    }
-
-    @Override
-    public void addToInternalModBlacklist(String modName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalModBlacklist", modName);
-        internalMobCaptureBlacklist.add(modName);
-    }
-
-    @Override
-    public void addToInternalModItemBlacklist(String modName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalModItemBlacklist", modName);
-        internalModItemBlacklist.add(modName);
-    }
-
-    @Override
-    public void addToInternalMobBlacklist(String mobName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalMobBlacklist", mobName);
-        internalModCaptureBlacklist.add(mobName);
-    }
-
-    @Override
-    public void addToInternalItemBlacklist(String itemName) {
-
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "addToInternalItemBlacklist", itemName);
-        internalItemBlacklist.add(itemName);
-    }
-
-    @Override
-    public boolean canCapture(WootMobName wootMobName) {
-
-        // Internal mod blacklist
-        for (String modName : internalModCaptureBlacklist)
-            if (BlacklistComparator.isSameMod(wootMobName, modName))
-                return false;
-
-        // Internal mob blacklist
-        for (String mobName : internalMobCaptureBlacklist)
-            if (BlacklistComparator.isSameMob(wootMobName, mobName))
-                return false;
-
-        // TODO user config
-        if (getBoolean(EnumConfigKey.MOB_WHITELIST)) {
-
-        } else {
-
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean canGenerate(WootMobName wootMobName, ItemStack itemStack) {
-
-        String name = itemStack.getUnlocalizedName();
-
-        // Internal mod blacklist
-        for (String modName : internalModItemBlacklist)
-            if (BlacklistComparator.isSameMod(itemStack, modName))
-                return false;
-
-        // Internal item blacklist
-        for (String itemName : internalItemBlacklist)
-            if (BlacklistComparator.isSameItem(itemStack, itemName))
-            if (name.equalsIgnoreCase(itemName))
-                return false;
-
-        // TODO user config
-
-        return false;
     }
 
     @Nonnull

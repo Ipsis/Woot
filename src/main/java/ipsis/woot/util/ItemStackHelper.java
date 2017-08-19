@@ -85,17 +85,17 @@ public class ItemStackHelper {
     public static ItemStack getItemStackFromName(String name) {
 
         if (name == null)
-            return null;
+            return ItemStack.EMPTY;
 
         String[] parts = name.split(":");
         if (parts.length != 2 && parts.length != 3)
-            return null;
+            return ItemStack.EMPTY;
 
         String itemName = String.format("%s:%s", parts[0], parts[1]);
         Item item = Item.getByNameOrId(itemName);
 
         if (item == null)
-            return null;
+            return ItemStack.EMPTY;
 
         int meta = 0;
         if (parts.length == 3) {
@@ -103,10 +103,10 @@ public class ItemStackHelper {
                 meta = Integer.parseInt(parts[2]);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                return null;
+                return ItemStack.EMPTY;
             }
             if (meta < 0 || meta > OreDictionary.WILDCARD_VALUE)
-                return null;
+                return ItemStack.EMPTY;
         }
 
         return new ItemStack(item, 1, meta);

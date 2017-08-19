@@ -74,7 +74,7 @@ public class ItemEnderShard extends ItemWoot {
         if (!wootMob.isValid())
             return false;
 
-        if (!Woot.wootConfiguration.canCapture(wootMob.getWootMobName())) {
+        if (!Woot.policyRepository.canCapture(wootMob.getWootMobName())) {
             LogHelper.info("hitEntity: cannot capture " + wootMob.getDisplayName());
             return false;
         }

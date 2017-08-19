@@ -1,6 +1,5 @@
 package ipsis.woot.util;
 
-import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;
 
 public class BlacklistComparator {
@@ -20,8 +19,8 @@ public class BlacklistComparator {
         return itemStack.getItem().getRegistryName().getResourceDomain().equalsIgnoreCase(mod);
     }
 
-    public static boolean isSameItem(ItemStack itemStack, String item) {
+    public static boolean isSameItem(ItemStack itemStackA, ItemStack itemStackB) {
 
-        return false;
+        return ItemStack.areItemsEqualIgnoreDurability(itemStackA, itemStackB);
     }
 }

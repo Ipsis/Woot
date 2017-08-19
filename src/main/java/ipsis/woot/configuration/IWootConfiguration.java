@@ -22,19 +22,8 @@ public interface IWootConfiguration {
     void setInteger(EnumConfigKey key, int v);
     void setInteger(WootMobName wootMobName, EnumConfigKey key, int v);
 
-    void addToMobList(WootMobName wootMobName);
-    void addToItemList(String itemName);
-    void addToItemList(ItemStack itemStack);
-    void addToModItemList(String modName);
-
     void addToDragonDrops(EnumEnchantKey enchantKey, String itemName, int stackSize, float chance);
-    void addToInternalModBlacklist(String modName);
-    void addToInternalModItemBlacklist(String modName);
-    void addToInternalMobBlacklist(String mobName);
-    void addToInternalItemBlacklist(String itemName);
 
-    boolean canCapture(WootMobName wootMobName);
-    boolean canGenerate(WootMobName wootMobName, ItemStack itemStack);
     @Nonnull EnumMobFactoryTier getFactoryTier(World world, WootMobName wootMobName);
     int getSpawnCost(World world, WootMobName wootMobName);
     int getDeathCost(World world, WootMobName wootMobName);

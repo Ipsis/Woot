@@ -1,6 +1,7 @@
 package ipsis.woot.configuration.loaders;
 
 import com.google.gson.*;
+import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.configuration.IWootConfiguration;
 import ipsis.woot.oss.FileUtils;
@@ -54,7 +55,7 @@ public class FactoryConfigLoader {
         for (int i = 0; i < mobs.length; i++) {
             WootMobName wootMobName = WootMobNameBuilder.createFromConfigString(mobs[i]);
             if (wootMobName.isValid())
-                wootConfiguration.addToMobList(wootMobName);
+                Woot.policyRepository.addEntityToEntityList(wootMobName, false);
             else
                 LogHelper.warn("Invalid mob name " + mobs[i]);
         }
@@ -65,7 +66,7 @@ public class FactoryConfigLoader {
 
         String mods[] = GSON.fromJson(ele, String[].class);
         for (int i = 0; i < mods.length; i++) {
-            wootConfiguration.addToModItemList(mods[i]);
+            Woot.policyRepository.addModToDropList(mods[i], false);
         }
 
         for (JsonElement ele2 : JsonUtils.getJsonArray(json, "itemblacklist")) {
@@ -79,7 +80,7 @@ public class FactoryConfigLoader {
                 continue;
             }
 
-            wootConfiguration.addToItemList(itemStack);
+            Woot.policyRepository.addIteStackToDropList(itemStack, false);
         }
     }
 

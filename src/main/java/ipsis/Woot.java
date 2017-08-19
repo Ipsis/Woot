@@ -18,6 +18,9 @@ import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.loot.*;
 import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.plugins.imc.EnderIO;
+import ipsis.woot.policy.IPolicy;
+import ipsis.woot.policy.InternalPolicyLoader;
+import ipsis.woot.policy.PolicyRepository;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
@@ -52,6 +55,7 @@ public class Woot {
     public static IEntitySpawner entitySpawner = new EntitySpawner();
     public static DebugSetup debugSetup = new DebugSetup();
     public static IAnvilManager anvilManager = new AnvilManager();
+    public static IPolicy policyRepository = new PolicyRepository();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();
@@ -102,6 +106,7 @@ public class Woot {
         ModEnchantments.postInit();
         lootGeneration.initialise();
         AnvilManagerLoader.load();
+        new InternalPolicyLoader().load(policyRepository);
         new FactoryConfigLoader().loadConfig(wootConfiguration);
         new FactoryIngredientsLoader().loadConfig();
         new CustomDropsLoader().loadConfig();

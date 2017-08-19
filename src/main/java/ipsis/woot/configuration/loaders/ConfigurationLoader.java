@@ -13,8 +13,6 @@ public class ConfigurationLoader {
 
     public static void load(Configuration config, IWootConfiguration wootConfiguration) {
 
-        loadDefaults(wootConfiguration);
-
         // Boolean keys
         for (EnumConfigKey key : EnumConfigKey.getBooleanKeys()) {
 
@@ -36,21 +34,5 @@ public class ConfigurationLoader {
                             key.getDefaultInteger(),
                             key.getTranslated()).getInt(key.getDefaultInteger()));
         }
-    }
-
-    private static void loadDefaults(IWootConfiguration wootConfiguration) {
-
-        for (String modName : ConfigurationLoaderDefaults.internalModBlacklist)
-            wootConfiguration.addToInternalModBlacklist(modName);
-
-        for (String mobName : ConfigurationLoaderDefaults.internalMobBlacklist)
-            wootConfiguration.addToInternalMobBlacklist(mobName);
-
-        for (String modName : ConfigurationLoaderDefaults.internalModItemBlacklist)
-            wootConfiguration.addToInternalModItemBlacklist(modName);
-
-        for (String itemName : ConfigurationLoaderDefaults.internalItemBlacklist)
-            wootConfiguration.addToInternalItemBlacklist(itemName);
-
     }
 }

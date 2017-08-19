@@ -29,6 +29,9 @@ public interface IFarmSetup {
     void setUpgradeLevel(EnumFarmUpgrade upgrade, int level);
     void setFarmTier(EnumMobFactoryTier tier);
     void setEnchantKey(EnumEnchantKey key);
+    void setStoredXp(int xp);
+    int getStoredXp();
+
 
     void setPowerCellBlockPos(BlockPos blockPos);
     void setExportBlockPos(BlockPos blockPos);

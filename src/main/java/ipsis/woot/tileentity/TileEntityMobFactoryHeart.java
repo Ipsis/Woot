@@ -13,7 +13,6 @@ import ipsis.woot.mock.MockSpawnRecipeRepository;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
-import ipsis.woot.util.EnumFarmUpgrade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -35,6 +34,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     private IPowerCalculator powerCalculator;
     private IRecipeProgressTracker recipeProgressTracker;
     private ISpawnRecipeConsumer spawnRecipeConsumer;
+    private int storedXp = 0;
 
     ISpawnRecipeRepository spawnRecipeRepository;
 
@@ -60,6 +60,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
        if (farmStructure != null && farmStructure.isFormed())
            compound.setInteger("wootConsumedPower", recipeProgressTracker.getConsumedPower());
 
+       compound.setInteger("storedXp", storedXp);
        return compound;
     }
 
@@ -70,6 +71,8 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         if (compound.hasKey("wootConsumedPower"))
             nbtConsumedPower = compound.getInteger("wootConsumedPower");
+
+        storedXp = compound.getInteger("storedXp");
     }
 
     @Override
@@ -102,6 +105,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 recipeProgressTracker.setPowerStation(farmSetup.getPowerStation());
                 recipeProgressTracker.setPowerRecipe(powerRecipe);
                 farmStructure.clearChanged();
+                farmSetup.setStoredXp(storedXp);
 
                 if (nbtConsumedPower != 0) {
                     recipeProgressTracker.setConsumedPower(nbtConsumedPower);
@@ -112,7 +116,8 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
             recipeProgressTracker.tick();
             if (recipeProgressTracker.isComplete() && spawnRecipeConsumer.consume(getWorld(), getPos(), spawnRecipe, farmSetup.getNumMobs())) {
-                Woot.lootGeneration.generate(farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup);
+                Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup);
+                storedXp = farmSetup.getStoredXp();
                 recipeProgressTracker.reset();
             }
         }

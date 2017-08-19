@@ -22,7 +22,7 @@ public class DebugSetup {
     public void trace(EnumDebugType t, Object src, String f, Object object) {
 
         if (debugFlags.contains(t))
-            LogHelper.info(src.getClass().toString() + ":" + f + ": " + object);
+            LogHelper.info(src.getClass().getSimpleName() + ":" + f + ": " + object);
     }
 
     @Override
@@ -39,7 +39,9 @@ public class DebugSetup {
         ANVIL_CRAFTING,
         FARM_SCAN,
         FARM_CLIENT_SYNC,
-        POWER_CALC
+        POWER_CALC,
+        GEN_XP,
+        GEN_ITEMS
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

@@ -2,6 +2,7 @@ package ipsis.woot.loot.generators;
 
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.farmstructure.IFarmSetup;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -13,7 +14,7 @@ public class DecapitationGenerator implements ILootGenerator {
     /**
      * ILootGenerator
      */
-    public void generate(@Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup) {
+    public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup) {
 
         LogHelper.info("Generating mob skulls into chest");
     }

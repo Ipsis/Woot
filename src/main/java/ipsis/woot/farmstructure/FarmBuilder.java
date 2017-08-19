@@ -132,7 +132,7 @@ public class FarmBuilder implements IFarmStructure {
         scannedFarm.upgrades = farmScanner.scanFarmUpgrades(world, origin, facing, scannedFarm.base.tier);
 
         farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
-        // Is the programmed controller valid for this factory
+        // Is the programmed controller valid for this factory tier
         if (!scannedFarm.controller.isValid()) {
             LogHelper.info("scanFullFarm: invalid controller for upgrades");
             return null;

@@ -35,11 +35,22 @@ public class FarmSetup implements IFarmSetup {
     private BlockPos importBlockPos;
     private IPowerStation powerStation;
     private World world;
+    private int storedXp = 0;
 
     public FarmSetup(World world, WootMob wootMob) {
 
         this.wootMob = wootMob;
         this.world = world;
+    }
+
+    @Override
+    public void setStoredXp(int storedXp) {
+        this.storedXp = storedXp;
+    }
+
+    @Override
+    public int getStoredXp() {
+        return storedXp;
     }
 
     @Override

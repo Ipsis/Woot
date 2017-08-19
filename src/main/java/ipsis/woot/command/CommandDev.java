@@ -57,6 +57,8 @@ public class CommandDev extends CommandTreeBase {
             devTags.put("farmscan", DebugSetup.EnumDebugType.FARM_SCAN);
             devTags.put("farmclientsync", DebugSetup.EnumDebugType.FARM_CLIENT_SYNC);
             devTags.put("powercalc", DebugSetup.EnumDebugType.POWER_CALC);
+            devTags.put("genxp", DebugSetup.EnumDebugType.GEN_XP);
+            devTags.put("genitems", DebugSetup.EnumDebugType.GEN_ITEMS);
         };
 
         @Override

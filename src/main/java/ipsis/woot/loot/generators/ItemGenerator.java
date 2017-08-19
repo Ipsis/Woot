@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ItemGenerator implements ILootGenerator {
 
-    public void generate(@Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup) {
+    public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup) {
 
         if (itemHandlerList.size() == 0)
             return;

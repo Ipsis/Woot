@@ -89,11 +89,11 @@ public class TileEntityAnvil extends TileEntity {
 
     public void tryCraft() {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", itemStack);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", itemStack);
 
         if (!AnvilHelper.isAnvilHot(getWorld(), getPos())) {
             // TODO tell user not hot
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Anvil not hot " + getPos());
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Anvil not hot " + getPos());
             return;
         }
 
@@ -104,7 +104,7 @@ public class TileEntityAnvil extends TileEntity {
 
         if (ItemEnderShard.isEnderShard(itemStack) && !ItemEnderShard.isFull(itemStack)) {
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Unprogrammed ender shard");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Unprogrammed ender shard");
 
             // TODO failed clang!
             world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -118,7 +118,7 @@ public class TileEntityAnvil extends TileEntity {
                 e.setDead();
 
             ItemStack output = recipe.getCopyOutput();
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Output " + output);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Output " + output);
 
             if (ItemEnderShard.isFull(itemStack)) {
                 WootMob tmpWootMob = WootMobBuilder.create(itemStack.getTagCompound());
@@ -135,13 +135,13 @@ public class TileEntityAnvil extends TileEntity {
             world.spawnEntity(out);
 
             if (!ingredients.isEmpty()) {
-                Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "Leftovers " + ingredients);
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Leftovers " + ingredients);
             }
 
 
         }  else {
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, this, "tryCraft", "No matching recipe " + itemStack + " " + ingredients);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "No matching recipe " + itemStack + " " + ingredients);
 
             // TODO failed clang!
             world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);

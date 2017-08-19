@@ -1,6 +1,7 @@
 package ipsis.woot.crafting;
 
-import ipsis.woot.oss.LogHelper;
+import ipsis.Woot;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -12,6 +13,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AnvilHelper {
@@ -31,7 +33,7 @@ public class AnvilHelper {
             items.add(entityItem);
         }
 
-        LogHelper.info(items);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "getItems", Arrays.toString(items.toArray()));
         return items;
     }
 

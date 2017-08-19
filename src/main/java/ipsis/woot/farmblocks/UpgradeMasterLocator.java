@@ -19,7 +19,7 @@ public class UpgradeMasterLocator implements IFarmBlockMasterLocator {
     @Override
     public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "findMaster(Upgrade)", origin);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "findMaster(Upgrade)", origin);
 
         List<IFarmBlockConnection> connected= new ArrayList<IFarmBlockConnection>();
         Stack<IFarmBlockConnection> traversing= new Stack<IFarmBlockConnection>();
@@ -39,7 +39,7 @@ public class UpgradeMasterLocator implements IFarmBlockMasterLocator {
                 } else if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection && !connected.contains(te)) {
                     traversing.add((IFarmBlockConnection) te);
                 } else if (te instanceof IFarmBlockMaster) {
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "IFarmMaster", curr.getStructurePos().offset(f));
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "IFarmMaster", curr.getStructurePos().offset(f));
                     masterFound = true;
                     tmpMaster = (IFarmBlockMaster) te;
                 }

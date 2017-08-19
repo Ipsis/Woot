@@ -4,10 +4,8 @@ import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.farming.PowerRecipe;
-import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
-import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.world.World;
 
@@ -35,7 +33,7 @@ public class Calculator implements IPowerCalculator {
     public PowerRecipe calculate(World world, IFarmSetup farmSetup) {
 
         WootMobName wootMobName = farmSetup.getWootMobName();
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate", wootMobName);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", wootMobName);
 
         PowerValues powerValues = new PowerValues();
 
@@ -68,20 +66,20 @@ public class Calculator implements IPowerCalculator {
                 powerValues.upgradeCost +
                 powerValues.mobCost;
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate",
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                     "tierPowerPerTick:" + tierPowerPerTick + " spawnXp:" + spawnXp +
                             " powerPerXp:" + powerPerXp + " spawnTicks:" + spawnTicks);
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate",
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "PowerValues " + powerValues);
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate",
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "totalPower:" + totalPower);
 
         totalPower = (int)((totalPower / 100.0F) * powerValues.efficiency);
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate",
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "efficiency:" + powerValues.efficiency + "->totalPower:" + totalPower);
 
         int finalSpawnTicks = (int)((spawnTicks / 100.0F) * powerValues.rate);
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, this, "calculate",
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "rate:" + powerValues.rate + "->spawnTicks:" + finalSpawnTicks);
 
         return new PowerRecipe(finalSpawnTicks, totalPower);

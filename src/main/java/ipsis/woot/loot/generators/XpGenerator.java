@@ -34,7 +34,7 @@ public class XpGenerator implements ILootGenerator {
 
         int generate = totalXp / XP_CHUNKS;
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_XP, this, "generate",
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_XP, "generate",
                 "storedXp:" + storedXp + " deathXp:" + deathXp + " totalXp:" + totalXp + " generate:" + generate);
 
         if (generate != 0) {
@@ -54,7 +54,7 @@ public class XpGenerator implements ILootGenerator {
                     ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
                     if (result.isEmpty()) {
                         itemStack.shrink(1);
-                        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_XP, this, "generate", "placed xp in itemhandler with slots " + hdlr.getSlots());
+                        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_XP, "generate", "placed xp in itemhandler with slots " + hdlr.getSlots());
                     } else {
                         success = false;
                     }

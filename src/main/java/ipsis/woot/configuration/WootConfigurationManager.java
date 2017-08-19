@@ -4,15 +4,11 @@ import ipsis.Woot;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.BlacklistComparator;
 import ipsis.woot.util.WootMobName;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class WootConfigurationManager implements IWootConfiguration {
@@ -35,14 +31,14 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public boolean getBoolean(EnumConfigKey key) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getBoolean", key);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, "getBoolean", key);
         return booleanMap.get(key);
     }
 
     @Override
     public boolean getBoolean(WootMobName wootMobName, EnumConfigKey key) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getBoolean", wootMobName + " " + key);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, "getBoolean", wootMobName + " " + key);
         String k = makeKey(wootMobName, key);
         if (booleanMobMap.containsKey(k))
             return booleanMobMap.get(k);
@@ -53,14 +49,14 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public int getInteger(EnumConfigKey key) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getInteger", key);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, "getInteger", key);
         return integerMap.get(key);
     }
 
     @Override
     public int getInteger(WootMobName wootMobName, EnumConfigKey key) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, this, "getInteger", wootMobName + " " + key);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_ACCESS, "getInteger", wootMobName + " " + key);
         String k = makeKey(wootMobName, key);
         if (integerMobMap.containsKey(k))
             return integerMobMap.get(k);
@@ -71,14 +67,14 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public void setBoolean(EnumConfigKey key, boolean v) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setBoolean",  key + " " + v);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, "setBoolean",  key + " " + v);
         booleanMap.put(key, v);
     }
 
     @Override
     public void setBoolean(WootMobName wootMobName, EnumConfigKey key, boolean v) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setBoolean", wootMobName + " " + key + " " + v);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, "setBoolean", wootMobName + " " + key + " " + v);
         if (key.canMobOverride()) {
             String k = makeKey(wootMobName, key);
             booleanMobMap.put(k, v);
@@ -88,14 +84,14 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public void setInteger(EnumConfigKey key, int v) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setInteger", key + " " + v);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, "setInteger", key + " " + v);
         integerMap.put(key, v);
     }
 
     @Override
     public void setInteger(WootMobName wootMobName, EnumConfigKey key, int v) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, this, "setInteger", wootMobName + " " + key + " " + v);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.CONFIG_LOAD, "setInteger", wootMobName + " " + key + " " + v);
         if (key.canMobOverride()) {
             String k = makeKey(wootMobName, key);
             integerMobMap.put(k, v);

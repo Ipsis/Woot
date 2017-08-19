@@ -19,10 +19,10 @@ public class DebugSetup {
         debugFlags.remove(t);
     }
 
-    public void trace(EnumDebugType t, Object src, String f, Object object) {
+    public void trace(EnumDebugType t, String f, Object object) {
 
         if (debugFlags.contains(t))
-            LogHelper.info(src.getClass().getSimpleName() + ":" + f + ": " + object);
+            LogHelper.info(f + ": " + object);
     }
 
     @Override

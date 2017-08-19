@@ -17,7 +17,7 @@ public class SimpleMasterLocator implements IFarmBlockMasterLocator {
     @Override
     public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "findMaster(Proxy)", origin);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "findMaster(Proxy)", origin);
 
         IFarmBlockMaster tmpMaster = null;
 
@@ -26,7 +26,7 @@ public class SimpleMasterLocator implements IFarmBlockMasterLocator {
             BlockPos blockPos = origin.up(step + 1);
             TileEntity te = world.getTileEntity(blockPos);
             if (te instanceof IFarmBlockMaster) {
-                Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "IFarmMaster", blockPos);
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "IFarmMaster", blockPos);
                 tmpMaster = (IFarmBlockMaster) te;
             }
         }

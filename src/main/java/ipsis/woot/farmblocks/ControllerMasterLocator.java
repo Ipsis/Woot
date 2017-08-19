@@ -15,7 +15,7 @@ public class ControllerMasterLocator implements IFarmBlockMasterLocator {
     @Override
     public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "findMaster(Controller)", origin);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "findMaster(Controller)", origin);
 
         StructureMasterLocator structureMasterLocator = new StructureMasterLocator();
 
@@ -23,7 +23,7 @@ public class ControllerMasterLocator implements IFarmBlockMasterLocator {
         TileEntity te = world.getTileEntity(blockPos);
         if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection) {
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, this, "IFarmBlockStructre(Controller)", blockPos);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "IFarmBlockStructre(Controller)", blockPos);
             return structureMasterLocator.findMaster(world, blockPos, (IFarmBlockConnection) te);
         }
 

@@ -2,8 +2,6 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryHeart;
-import ipsis.woot.power.storage.IPowerStation;
-import ipsis.woot.tileentity.TileEntityMobFactoryCell;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
@@ -16,15 +14,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class FarmBuilder implements IFarmStructure {
@@ -65,7 +58,7 @@ public class FarmBuilder implements IFarmStructure {
             if (world.isBlockLoaded(pos)) {
                 TileEntity te = world.getTileEntity(pos);
                 if (te instanceof IFarmBlockConnection) {
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "clearMaster", pos);
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "clearMaster", pos);
                     ((IFarmBlockConnection) te).clearMaster();
                 }
             }
@@ -97,7 +90,7 @@ public class FarmBuilder implements IFarmStructure {
                 if (te instanceof IFarmBlockUpgrade)
                     LogHelper.info("Connecting upgrade");
                 if (te instanceof IFarmBlockConnection) {
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, this, "setMaster", pos);
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "setMaster", pos);
                     ((IFarmBlockConnection) te).setMaster(master);
                 }
             }

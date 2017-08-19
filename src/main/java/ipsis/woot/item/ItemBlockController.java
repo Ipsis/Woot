@@ -1,5 +1,6 @@
 package ipsis.woot.item;
 
+import ipsis.Woot;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.util.StringHelper;
@@ -27,8 +28,10 @@ public class ItemBlockController extends ItemBlock {
         if (stack != null && stack.hasTagCompound()) {
 
             WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
-            if (wootMob.isValid())
+            if (wootMob.isValid()) {
                 tooltip.add(String.format("Mob: %s", StringHelper.localize(wootMob.getDisplayName())));
+                tooltip.add(String.format("Tier: %s", Woot.wootConfiguration.getFactoryTier(worldIn, wootMob.getWootMobName())));
+            }
         }
 
         super.addInformation(stack, worldIn, tooltip, flagIn);

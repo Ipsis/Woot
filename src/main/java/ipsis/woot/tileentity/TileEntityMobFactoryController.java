@@ -1,8 +1,10 @@
 package ipsis.woot.tileentity;
 
+import ipsis.Woot;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.item.ItemEnderShard;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.tileentity.ui.ControllerUIInfo;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.farmblocks.ControllerMasterLocator;
@@ -112,5 +114,14 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
     public BlockPos getStructurePos() {
 
         return getPos();
+    }
+
+    public void getUIInfo(ControllerUIInfo info) {
+
+        if (isProgrammed()) {
+            info.isValid = true;
+            info.wootMob = wootMob;
+            info.requiredTier = Woot.wootConfiguration.getFactoryTier(world, wootMob.getWootMobName());
+        }
     }
 }

@@ -1,11 +1,12 @@
 package ipsis.woot.block;
 
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
+import ipsis.woot.plugins.top.TOPUIInfoConvertors;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.farmblocks.IFarmBlockController;
+import ipsis.woot.tileentity.ui.ControllerUIInfo;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -16,8 +17,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -112,6 +111,10 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
         TileEntity te = world.getTileEntity(data.getPos());
         if (te instanceof TileEntityMobFactoryController) {
 
+            ControllerUIInfo info = new ControllerUIInfo();
+            ((TileEntityMobFactoryController) te).getUIInfo(info);
+            if (info.isValid)
+                TOPUIInfoConvertors.controllerConvertor(info, mode, probeInfo, player, world, blockState, data);
         }
     }
 }

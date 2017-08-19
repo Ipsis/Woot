@@ -1,6 +1,7 @@
 package ipsis.woot.tileentity.ui;
 
 import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.WootMob;
 import net.minecraft.item.ItemStack;
 
@@ -19,6 +20,7 @@ public class FarmUIInfo {
     public boolean isValid = false;
     public int powerStored;
     public int powerCapacity;
+    public int mobCount;
 
     // Filtered list of drops with the stackSize == drop chance
     public List<ItemStack> drops = new ArrayList<>();

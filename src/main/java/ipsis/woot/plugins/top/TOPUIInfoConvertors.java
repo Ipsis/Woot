@@ -1,6 +1,8 @@
 package ipsis.woot.plugins.top;
 
+import ipsis.woot.tileentity.ui.ControllerUIInfo;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.NumberFormat;
@@ -17,24 +19,23 @@ import net.minecraft.world.World;
 
 public class TOPUIInfoConvertors {
 
-    public static void farmConvertor(FarmUIInfo farm, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+    public static void controllerConvertor(ControllerUIInfo controller, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
-        probeInfo.text(TextFormatting.BLUE + "Tier: " + farm.tier.toString());
+        probeInfo.text(TextFormatting.GREEN + "Mob: " + StringHelper.localize(controller.wootMob.getDisplayName()));
+        probeInfo.text(TextFormatting.BLUE + "Tier: " + controller.requiredTier.toString());
+    }
+
+    public static void farmConvertor(FarmUIInfo farm, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
         /**
          * Power & Redstone state
          */
-
-        // TODO this will be handled when the ForgeCaps are exposed
-        probeInfo.progress(farm.powerStored, farm.powerCapacity,
-                probeInfo.defaultProgressStyle().suffix("FP").numberFormat(Config.rfFormat));
 
         probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (farm.isRunning ? "On" : "Off"));
 
         /**
          * Progress
          */
-
         if (farm.isRunning) {
             int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
             p = MathHelper.clamp(p, 0, 100);
@@ -45,8 +46,8 @@ public class TOPUIInfoConvertors {
         /**
          * Recipe
          */
-        probeInfo.text(TextFormatting.GREEN + "Mob: " + farm.wootMob.getDisplayName());
-        probeInfo.text(TextFormatting.GREEN + "Recipe: " + farm.recipeTotalPower + " " + farm.recipeTotalTime + " " + farm.recipePowerPerTick);
+        probeInfo.text(TextFormatting.GREEN + "Mob: " + farm.wootMob.getDisplayName() + " * " + farm.mobCount);
+        probeInfo.text(TextFormatting.GREEN + "Recipe: " + farm.recipeTotalPower + "RF for " + farm.recipeTotalTime + " ticks @ " + farm.recipePowerPerTick + "RF/tick");
 
         /**
          * Drops

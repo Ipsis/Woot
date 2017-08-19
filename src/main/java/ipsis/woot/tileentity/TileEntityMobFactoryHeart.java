@@ -13,6 +13,7 @@ import ipsis.woot.mock.MockSpawnRecipeRepository;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import ipsis.woot.util.EnumFarmUpgrade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -165,7 +166,8 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.consumedPower = recipeProgressTracker.getConsumedPower();
         info.tier = farmSetup.getFarmTier();
         info.powerCapacity = farmSetup.getPowerStation().getEnergyStorage().getMaxEnergyStored();
-        info.powerCapacity = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
+        info.powerStored = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
+        info.mobCount = farmSetup.getNumMobs();
 
         List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {

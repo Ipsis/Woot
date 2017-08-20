@@ -81,6 +81,7 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
     //deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
     deobfCompile "cofh:RedstoneFlux:${config.rf_version}"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${config.minecraft_version}-${config.guideapi_version}"
 }
 
 processResources

@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/upgradeb_bloodmagic_i",
+  "parent": "woot:block/upgradeb_bloodmagic_i_active",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

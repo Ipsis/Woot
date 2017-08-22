@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/upgradeb_efficiency_i",
+  "parent": "woot:block/upgradeb_efficiency_i_active",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

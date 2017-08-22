@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/upgrade_xp_iii",
+  "parent": "woot:block/upgrade_xp_iii_active",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

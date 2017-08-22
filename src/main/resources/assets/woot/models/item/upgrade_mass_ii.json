@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/upgrade_mass_ii",
+  "parent": "woot:block/upgrade_mass_ii_active",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

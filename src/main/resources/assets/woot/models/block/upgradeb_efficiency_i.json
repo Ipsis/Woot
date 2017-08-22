@@ -1,6 +1,6 @@
 {
-  "parent": "woot:block/small_cube_all",
+  "parent": "woot:block/small_cube_wrapped_i",
   "textures": {
-    "all": "woot:blocks/upgrade_efficiency_i_active"
+    "all": "woot:blocks/upgrade_efficiency"
   }
 }

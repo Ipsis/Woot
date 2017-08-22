@@ -1,6 +1,6 @@
 {
   "parent": "woot:block/upgrade_t1_active",
   "textures": {
-    "all": "woot:blocks/upgrade_rate_i_active"
+    "faces": "woot:blocks/upgrade_rate"
   }
 }

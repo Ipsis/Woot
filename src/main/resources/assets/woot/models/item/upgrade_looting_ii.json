@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/upgrade_looting_ii",
+  "parent": "woot:block/upgrade_looting_ii_active",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

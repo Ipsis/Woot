@@ -1,17 +1,47 @@
 {
   "parent": "block/block",
+  "textures": {
+    "base": "blocks/iron_block",
+    "faces": "blocks/obsidian"
+  },
   "elements": [
     {
-      "from": [ 1, 0, 1 ],
-      "to": [ 15, 16, 15 ],
-      "particle": "#all",
+      "__comment": "Layer0",
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 1, 16 ],
       "faces": {
-        "down": {"uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "down" },
-        "up":   {"uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "up" },
-        "north":{"uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "north" },
-        "south":{"uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "south" },
-        "west": {"uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "west" },
-        "east": {"uv": [ 0, 0, 16, 16 ], "texture": "#all", "cullface": "east" }
+        "down": { "texture": "#base" },
+        "up": { "texture": "#base" },
+        "north": { "texture": "#base" },
+        "south": { "texture": "#base" },
+        "east": { "texture": "#base" },
+        "west": { "texture": "#base" }
+      }
+    },
+    {
+      "__comment": "Layer1",
+      "from": [ 1, 1, 1 ],
+      "to": [ 15, 2, 15 ],
+      "faces": {
+        "down": { "texture": "#base" },
+        "up": { "texture": "#base" },
+        "north": { "texture": "#base" },
+        "south": { "texture": "#base" },
+        "east": { "texture": "#base" },
+        "west": { "texture": "#base" }
+      }
+    },
+    {
+      "__comment": "Main",
+      "from": [ 1, 2, 1 ],
+      "to": [ 15, 16, 15 ],
+      "faces": {
+        "down": { "texture": "#faces" },
+        "up": { "texture": "#faces" },
+        "north": { "texture": "#faces" },
+        "south": { "texture": "#faces" },
+        "east": { "texture": "#faces" },
+        "west": { "texture": "#faces" }
       }
     }
   ]

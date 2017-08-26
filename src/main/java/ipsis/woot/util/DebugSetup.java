@@ -25,6 +25,11 @@ public class DebugSetup {
             LogHelper.info(f + ": " + object);
     }
 
+    public boolean areTracing(EnumDebugType t) {
+
+        return debugFlags.contains(t);
+    }
+
     @Override
     public String toString() {
 
@@ -41,7 +46,9 @@ public class DebugSetup {
         FARM_CLIENT_SYNC,
         POWER_CALC,
         GEN_XP,
-        GEN_ITEMS
+        GEN_ITEMS,
+        SPAWN,
+        LEARN
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

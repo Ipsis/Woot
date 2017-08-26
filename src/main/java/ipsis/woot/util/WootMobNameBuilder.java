@@ -22,6 +22,9 @@ public class WootMobNameBuilder {
         return wootMobName;
     }
 
+    /**
+     * Format of name must be valid, but the entity may not exist
+     */
     public static @Nonnull WootMobName create(String name) {
 
         WootMobName wootMobName = new WootMobName();
@@ -38,6 +41,9 @@ public class WootMobNameBuilder {
         return wootMobName;
     }
 
+    /**
+     * Format of name must be valid and the entity must exist
+     */
     public static @Nonnull WootMobName createFromConfigString(String name) {
 
         WootMobName wootMobName = create(name);

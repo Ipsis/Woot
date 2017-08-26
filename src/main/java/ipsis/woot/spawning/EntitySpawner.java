@@ -1,20 +1,27 @@
 package ipsis.woot.spawning;
 
+import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.FakePlayerPool;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EntitySpawner implements IEntitySpawner {
@@ -48,6 +55,8 @@ public class EntitySpawner implements IEntitySpawner {
 
         Entity entity = createEntity(wootMobName, world);
         if (entity != null) {
+                if (!ForgeEventFactory.doSpecialSpawn((EntityLiving)entity, world, pos.getX(), pos.getY(), pos.getZ()))
+                    ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(pos), null);
 
             /**
              * Random loot drop needs a non-zero recentlyHit value
@@ -69,6 +78,14 @@ public class EntitySpawner implements IEntitySpawner {
         FakePlayer fakePlayer = FakePlayerPool.getFakePlayer((WorldServer)world, key);
         if (fakePlayer == null)
             return;
+
+        if (Woot.debugSetup.areTracing(DebugSetup.EnumDebugType.SPAWN)) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.SPAWN, "spawn entity:", entity.getName());
+            for (ItemStack itemStack : entity.getArmorInventoryList())
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.SPAWN, "spawn armour:", itemStack);
+            for (ItemStack itemStack : entity.getHeldEquipment())
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.SPAWN, "spawn equipment", itemStack);
+        }
 
         /**
          * BUG0022 - Need to set the attackingPlayer or the 1.9 loot tables will not

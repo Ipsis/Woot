@@ -2,6 +2,7 @@ package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
+import ipsis.woot.loot.repository.ILootRepositoryLoad;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -50,35 +51,60 @@ public class ItemGenerator implements ILootGenerator {
         itemStack.setItemDamage(dmg);
     }
 
+    private List<ItemStack> calculateDrops(List<ILootRepositoryLookup.LootItemStack> loot, DifficultyInstance difficulty) {
+
+        boolean shouldEnchant = shouldEnchant(difficulty);
+        List<ItemStack> drops = new ArrayList<>();
+
+        for (ILootRepositoryLookup.LootItemStack drop : loot) {
+
+            if (drop.itemStack.isEmpty())
+                continue;
+
+            int chance = Woot.RANDOM.nextInt(101);
+            int stackSize = 0;
+            for (int s : drop.sizes.keySet()) {
+                if (chance <= drop.sizes.get(s) && s > stackSize)
+                    stackSize = s;
+            }
+
+            if (stackSize == 0)
+                continue;;
+
+            ItemStack itemStack = drop.itemStack.copy();
+            itemStack.setCount(stackSize);
+            if (itemStack.isItemStackDamageable())
+                damageItem(itemStack);
+
+            // Cycle existing enchantment otherwise add a random enchant to an un-enchanted item
+            if (itemStack.isItemEnchanted()) {
+                shouldEnchant = false;
+                stripEnchant(itemStack);
+                addEnchant(itemStack, difficulty);
+            } else if (itemStack.isItemEnchantable() && shouldEnchant) {
+                addEnchant(itemStack, difficulty);
+            }
+
+            drops.add(itemStack);
+        }
+
+        return drops;
+    }
+
     public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup, DifficultyInstance difficulty) {
 
         if (itemHandlerList.size() == 0)
             return;
 
-        List<ILootRepositoryLookup.LootItemStack> loot = new ArrayList<>();
+        List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (int i = 0; i < farmSetup.getNumMobs(); i++) {
-            loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
-
-            boolean shouldEnchant = shouldEnchant(difficulty);
+            List<ItemStack> mobLoot = calculateDrops(loot, difficulty);
 
             for (IItemHandler hdlr : itemHandlerList) {
-                for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {
-                    ItemStack itemStack = lootItemStack.itemStack;
+                for (ItemStack itemStack : mobLoot) {
 
                     if (itemStack.isEmpty())
                         continue;
-
-                    if (itemStack.isItemStackDamageable())
-                        damageItem(itemStack);
-
-                    // Cycle existing enchantment otherwise add a random enchant to an un-enchanted item
-                    if (itemStack.isItemEnchanted()) {
-                        shouldEnchant = false;
-                        stripEnchant(itemStack);
-                        addEnchant(itemStack, difficulty);
-                    } else if (itemStack.isItemEnchantable() && shouldEnchant) {
-                        addEnchant(itemStack, difficulty);
-                    }
 
                     boolean success = true;
                     while (success && !itemStack.isEmpty()) {

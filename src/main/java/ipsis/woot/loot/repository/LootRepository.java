@@ -6,13 +6,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.oss.ItemHelper;
 import ipsis.woot.oss.LogHelper;
-import ipsis.woot.util.EnumEnchantKey;
-import ipsis.woot.util.JsonHelper;
-import ipsis.woot.util.SerializationHelper;
-import ipsis.woot.util.WootMobName;
+import ipsis.woot.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,6 +25,22 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
     private Map<WootMobName, Integer[]> samples = new HashMap<>();
     private List<LootDrop> drops = new ArrayList<>();
 
+    private boolean equalDrops(ItemStack a, ItemStack b) {
+
+        // Same item and NBT
+        if (!ItemHelper.itemsEqualWithoutMetadata(a, b, true))
+            return false;
+
+        if (a.getHasSubtypes()) {
+            // Same subtype
+            if (ItemHelper.getItemDamage(a) != ItemHelper.getItemDamage(b))
+                return false;
+        }
+
+        // We dont care about damage
+        return true;
+    }
+
     private LootDrop getLootDrop(ItemStack itemStack) {
 
         if (itemStack.isEmpty())
@@ -33,8 +48,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
         for (LootDrop curr : drops) {
 
-            if (ItemStack.areItemsEqualIgnoreDurability(curr.getItemStack(), itemStack) &&
-                    ItemStack.areItemStackTagsEqual(curr.getItemStack(), itemStack))
+            if (equalDrops(curr.getItemStack(), itemStack))
                 return curr;
         }
 
@@ -84,12 +98,11 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
         List<ItemStack> items = new ArrayList<>();
         for (EntityItem entityItem : drops) {
             ItemStack itemStack = entityItem.getItem();
-            itemStack.setCount(1);
-            // TODO entityitem size?
 
             boolean updated = false;
             for (ItemStack i2 : items) {
-                if (ItemStack.areItemsEqual(i2, itemStack)) {
+
+                if (equalDrops(i2, itemStack)) {
                     i2.setCount(i2.getCount() + 1);
                     updated = true;
                 }
@@ -175,8 +188,16 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
         List<ItemStack> flattenedDrops = convertDrops(drops);
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LEARN, "learn", wootMobName + " with items " + flattenedDrops.size());
+
         for (ItemStack itemStack : flattenedDrops) {
 
+            if (!Woot.policyRepository.canLearnDrop(itemStack)) {
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.LEARN, "learn", "policy removed " + itemStack);
+                continue;
+            }
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LEARN, "learn", "learning " + itemStack);
             LootDrop lootDrop = getLootDrop(itemStack);
             if (lootDrop == null) {
                 lootDrop = new LootDrop(itemStack);
@@ -226,8 +247,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
                         Integer d = looting.get(s);
                         if (d > 0) {
                             int chance = Math.round(((float)d/(float)sampleCount) * 100.0F);
-                            if (chance > 100)
-                                chance = 100;
+                            chance = MathHelper.clamp(chance, 1, 100);
 
                             lootItemStack.sizes.put(s, chance);
                             if (chance > maxChance)

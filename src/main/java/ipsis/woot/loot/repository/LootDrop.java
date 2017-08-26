@@ -16,6 +16,8 @@ public class LootDrop {
     public LootDrop(ItemStack itemStack) {
 
         this.itemStack = itemStack;
+        if (this.itemStack.isItemStackDamageable())
+            this.itemStack.setItemDamage(0);
     }
 
     public ItemStack getItemStack() {

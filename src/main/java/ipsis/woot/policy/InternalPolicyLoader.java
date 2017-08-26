@@ -17,13 +17,13 @@ public class InternalPolicyLoader {
 
     // Entities that don't work well with Woot
     private static final String[] BLACKLIST_ENTITIES = {
-            "arsmagicsa2.Dryad",
-            "abyssalcraft.lesserdreadbeast",
-            "abyssalcraft.greaterdreadspawn",
-            "abyssalcraft.chagaroth",
-            "abyssalcraft.shadowboss",
-            "abyssalcraft.Jzahar",
-            "roots.spriteGuardian"
+            "arsmagicsa2:Dryad",
+            "abyssalcraft:lesserdreadbeast",
+            "abyssalcraft:greaterdreadspawn",
+            "abyssalcraft:chagaroth",
+            "abyssalcraft:shadowboss",
+            "abyssalcraft:Jzahar",
+            "roots:spriteGuardian"
     };
 
     // MODS where the drops don't work well with Woot

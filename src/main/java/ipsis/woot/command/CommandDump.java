@@ -10,10 +10,14 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.EntityList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.server.command.CommandTreeBase;
 
 import java.util.List;
+
+import static net.minecraft.entity.EntityList.getEntityNameList;
 
 public class CommandDump extends CommandTreeBase {
 
@@ -56,6 +60,9 @@ public class CommandDump extends CommandTreeBase {
             List<String> mobs = Woot.lootRepository.getAllMobs();
             for (String mob : mobs)
                 CommandHelper.display(sender, mob);
+
+            for (ResourceLocation rl : EntityList.getEntityNameList())
+                CommandHelper.display(sender, rl.toString());
         }
     }
 

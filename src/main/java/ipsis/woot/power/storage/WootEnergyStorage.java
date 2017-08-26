@@ -30,4 +30,9 @@ public class WootEnergyStorage extends EnergyStorage {
 
         compound.setInteger("Energy", this.energy);
     }
+
+    public void setStored(int stored) {
+
+        this.energy = stored;
+    }
 }

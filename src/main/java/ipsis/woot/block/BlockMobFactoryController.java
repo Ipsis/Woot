@@ -1,5 +1,6 @@
 package ipsis.woot.block;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -88,20 +89,12 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 
-        IBlockState iBlockState = world.getBlockState(pos);
-        this.onBlockDestroyedByPlayer(world, pos, iBlockState);
-        if (willHarvest) {
-            // TODO need to check harvesting of blocks
-            ItemStack itemstack1 = player.getHeldItemMainhand();
-            ItemStack itemstack2 = itemstack1 == null ? null : itemstack1.copy();
-            this.harvestBlock(world, player, pos, iBlockState, world.getTileEntity(pos), itemstack2);
-        }
+        // From TinkersConstruct to allow the TE exist while processing the getDrops
+        this.onBlockDestroyedByPlayer(world, pos, state);
+        if (willHarvest)
+            this.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
 
         world.setBlockToAir(pos);
-        /**
-         * BONI: Return false to prevent the above called functions to be called again
-         * side effect of this is that no xp will be dropped, but it shouldn't anyway.
-         */
         return false;
     }
 

@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 public interface IPowerStation {
 
     void setTier(BlockMobFactoryCell.EnumCellTier tier);
+    BlockMobFactoryCell.EnumCellTier getTier();
     int consume(int power);
     @Nonnull IEnergyStorage getEnergyStorage();
     void readFromNBT(NBTTagCompound compound);

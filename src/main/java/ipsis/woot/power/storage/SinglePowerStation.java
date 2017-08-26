@@ -32,6 +32,11 @@ public class SinglePowerStation implements IPowerStation {
     }
 
     @Override
+    public BlockMobFactoryCell.EnumCellTier getTier() {
+        return tier;
+    }
+
+    @Override
     public int consume(int power) {
 
         int consumed = energyStorage.extractEnergyInternal(power, true);

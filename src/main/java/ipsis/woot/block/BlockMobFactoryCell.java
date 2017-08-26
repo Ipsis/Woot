@@ -1,5 +1,10 @@
 package ipsis.woot.block;
 
+import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.init.ModBlocks;
+import ipsis.woot.init.ModItems;
+import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryCell;
 import net.minecraft.block.ITileEntityProvider;
@@ -10,9 +15,13 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -26,6 +35,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The cell stores power, however it can only be used as part of the formed farm
@@ -114,6 +125,66 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
         return state.getValue(TIER).getMetadata();
     }
 
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
+
+        if (stack.hasTagCompound()) {
+            EnumCellTier tier = EnumCellTier.byMetadata(stack.getMetadata());
+            tooltip.add("Energy: " + stack.getTagCompound().getInteger("Energy") + "/" + EnumCellTier.getMaxPower(tier));
+            tooltip.add("Tier: " + tier.getName() + " " + stack.getMetadata());
+
+        }
+    }
+
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryCell) {
+            List<ItemStack> drops = super.getDrops(world, pos, state, fortune);
+            IPowerStation powerStation = ((TileEntityMobFactoryCell) te).getPowerStation();
+            if (powerStation != null) {
+                if (!drops.isEmpty()) {
+                    NBTTagCompound compound = drops.get(0).getTagCompound();
+                    if (compound == null) {
+                        compound = new NBTTagCompound();
+                        drops.get(0).setTagCompound(compound);
+                    }
+
+                    powerStation.writeToNBT(compound);
+                }
+            }
+            return drops;
+
+        }
+
+        return super.getDrops(world, pos, state, fortune);
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        if (stack.hasTagCompound() && !worldIn.isRemote) {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TileEntityMobFactoryCell) {
+                ((TileEntityMobFactoryCell) te).getPowerStation().readFromNBT(stack.getTagCompound());
+            }
+        }
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+
+        // From TinkersConstruct to allow the TE exist while processing the getDrops
+        this.onBlockDestroyedByPlayer(world, pos, state);
+        if (willHarvest)
+            this.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
+
+        world.setBlockToAir(pos);
+        return false;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void initModel() {
@@ -159,6 +230,16 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
                 return TIER_I;
 
             return VALUES[metadata];
+        }
+
+        public static int getMaxPower(EnumCellTier tier) {
+
+            if (tier == TIER_I)
+                return Woot.wootConfiguration.getInteger(EnumConfigKey.T1_POWER_MAX);
+            else if (tier == TIER_II)
+                return Woot.wootConfiguration.getInteger(EnumConfigKey.T2_POWER_MAX);
+
+            return Woot.wootConfiguration.getInteger(EnumConfigKey.T3_POWER_MAX);
         }
     }
 }

@@ -12,6 +12,7 @@ public class WootCommand extends CommandTreeBase {
         addSubcommand(new CommandFlush());
         addSubcommand(new CommandDev());
         addSubcommand(new CommandDump());
+        addSubcommand(new CommandGive());
     }
 
     @Override

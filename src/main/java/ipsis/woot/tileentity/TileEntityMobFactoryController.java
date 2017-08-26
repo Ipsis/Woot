@@ -11,6 +11,7 @@ import ipsis.woot.farmblocks.ControllerMasterLocator;
 import ipsis.woot.farmblocks.IFarmBlockConnection;
 import ipsis.woot.farmblocks.IFarmBlockController;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.util.WootMobName;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -81,6 +82,18 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         if (wootMob.isValid()) {
             NBTTagCompound tag = new NBTTagCompound();
             writeControllerToNBT(tag);
+            itemStack.setTagCompound(tag);
+        }
+
+        return itemStack;
+    }
+
+    public static ItemStack getProgrammedStack(WootMob wootMob) {
+
+        ItemStack itemStack = new ItemStack(Item.getItemFromBlock(ModBlocks.blockFactoryController), 1);
+        if (wootMob.isValid()) {
+            NBTTagCompound tag = new NBTTagCompound();
+            WootMobBuilder.writeToNBT(wootMob, tag);
             itemStack.setTagCompound(tag);
         }
 

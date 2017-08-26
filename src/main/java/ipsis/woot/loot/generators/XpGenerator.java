@@ -6,6 +6,7 @@ import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.farmstructure.IFarmSetup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -18,7 +19,7 @@ public class XpGenerator implements ILootGenerator {
 
     private static final int XP_CHUNKS = 16;
 
-    public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup) {
+    public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup, DifficultyInstance difficulty) {
 
         if (itemHandlerList.size() == 0)
             return;

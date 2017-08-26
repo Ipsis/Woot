@@ -2,6 +2,7 @@ package ipsis.woot.loot;
 
 import ipsis.woot.loot.generators.*;
 import ipsis.woot.farmstructure.IFarmSetup;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -25,9 +26,9 @@ public class LootGeneration implements ILootGeneration {
         generatorList.add(new BloodMagicWillGenerator());
     }
 
-    public void generate(World world, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, IFarmSetup farmSetup) {
+    public void generate(World world, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, IFarmSetup farmSetup, DifficultyInstance difficulty) {
 
         for (ILootGenerator lootGenerator : generatorList)
-            lootGenerator.generate(world, fluidHandlerList, itemHandlerList, farmSetup);
+            lootGenerator.generate(world, fluidHandlerList, itemHandlerList, farmSetup, difficulty);
     }
 }

@@ -116,7 +116,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
             recipeProgressTracker.tick();
             if (recipeProgressTracker.isComplete() && spawnRecipeConsumer.consume(getWorld(), getPos(), spawnRecipe, farmSetup.getNumMobs())) {
-                Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup);
+                Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
                 storedXp = farmSetup.getStoredXp();
                 recipeProgressTracker.reset();
             }

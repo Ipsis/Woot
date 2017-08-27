@@ -24,6 +24,9 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -69,16 +72,13 @@ public class ItemEnderShard extends ItemWoot {
         if (isProgrammed(stack))
             return false;
 
-        LogHelper.info("hitEntity: " + EntityList.getKey(target));
-        LogHelper.info("hitEntity: " + EntityList.getEntityString(target));
-        LogHelper.info("hitEntity: " + target.getName());
-
         WootMob wootMob = WootMobBuilder.create((EntityLiving)target);
         if (!wootMob.isValid())
             return false;
 
         if (!Woot.policyRepository.canCapture(wootMob.getWootMobName())) {
-            LogHelper.info("hitEntity: cannot capture " + wootMob.getDisplayName());
+            ((EntityPlayer) attacker).sendStatusMessage(
+                    new TextComponentString(StringHelper.localize("chat.woot.endershard.failure")), false);
             return false;
         }
 
@@ -88,6 +88,10 @@ public class ItemEnderShard extends ItemWoot {
 
         WootMobBuilder.writeToNBT(wootMob, nbtTagCompound);
         stack.setTagCompound(nbtTagCompound);
+
+        ((EntityPlayer) attacker).sendStatusMessage(
+                new TextComponentString(StringHelper.localize("chat.woot.endershard.success")), false);
+
         return true;
     }
 
@@ -113,7 +117,13 @@ public class ItemEnderShard extends ItemWoot {
         if (!isProgrammed(itemStack))
             return false;
 
-        //TODO return wootMob.getDeathCount() == 1;
+        WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
+        if (!wootMob.isValid())
+            return false;
+
+        if (wootMob.getDeaths() < Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT))
+            return false;
+
         return true;
     }
 
@@ -131,17 +141,20 @@ public class ItemEnderShard extends ItemWoot {
         tooltip.add(StringHelper.getInfoText("info.woot.endershard.1"));
 
         if (!isProgrammed(stack)) {
-            tooltip.add(StringHelper.getInfoText("info.woot.endershard.a.1"));
+            tooltip.add(StringHelper.getInfoText("info.woot.endershard.a.0"));
         } else {
             WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
             if (wootMob.isValid()) {
                 tooltip.add(wootMob.getDisplayName());
-                if (isFull(stack))
+                if (isFull(stack)) {
                     tooltip.add(StringHelper.localize("info.woot.endershard.b.1"));
-                else
-                    tooltip.add(StringHelper.localizeFormat("info.woot.endershard.b.1",
-                            1,
+                } else {
+                    int deaths = wootMob.getDeaths();
+                    deaths = MathHelper.clamp(deaths, 0, Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT));
+                    tooltip.add(StringHelper.localizeFormat("info.woot.endershard.b.0",
+                            deaths,
                             Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT)));
+                }
 
                 if (flagIn.isAdvanced())
                     tooltip.add(wootMob.getWootMobName().getName());
@@ -158,10 +171,10 @@ public class ItemEnderShard extends ItemWoot {
             return;
 
         WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
-        if (wootMob == null)
+        if (!wootMob.isValid())
             return;
 
-        // TODO wootMob.incrementDeathCount(count);
+        wootMob.incrementDeathCount(count);
         WootMobBuilder.writeToNBT(wootMob, itemStack.getTagCompound());
     }
 
@@ -174,7 +187,7 @@ public class ItemEnderShard extends ItemWoot {
             return false;
 
         WootMob wootMob = WootMobBuilder.create(itemStack.getTagCompound());
-        if (wootMob == null)
+        if (!wootMob.isValid())
             return false;
 
         if (!wootMob.getWootMobName().equals(wootMobName))

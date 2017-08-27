@@ -2,8 +2,8 @@ package ipsis.woot.util;
 
 public class WootMob {
 
-    public static int UNKNOWN_XP = -1;
     public static String UNKNOWN_MOB = "Unknown Mob";
+
 
     public WootMobName getWootMobName() {
         return wootMobName;
@@ -17,19 +17,18 @@ public class WootMob {
 
     private String displayName = UNKNOWN_MOB;
 
-    public int getXpValue() {
-        return xpValue;
-    }
+    public int getDeaths() { return deaths; }
 
-    public void setXpValue(int xpValue) {
-        this.xpValue = xpValue;
-    }
-
-    private int xpValue = UNKNOWN_XP;
+    private int deaths = 0;
 
     public WootMob(WootMobName wootMobName, String displayName) {
+        this(wootMobName, displayName, 0);
+    }
+
+    public WootMob(WootMobName wootMobName, String displayName, int deaths) {
         this.wootMobName = wootMobName;
         this.displayName = displayName;
+        this.deaths = deaths;
     }
 
     public WootMob() {
@@ -42,9 +41,14 @@ public class WootMob {
         return wootMobName.isValid();
     }
 
+    public void incrementDeathCount(int count) {
+
+        this.deaths += count;
+    }
+
     @Override
     public String toString() {
 
-        return displayName + ":" + xpValue + ":" + wootMobName;
+        return displayName + ":" + deaths + ":" + wootMobName;
     }
 }

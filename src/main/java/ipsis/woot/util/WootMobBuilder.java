@@ -21,6 +21,7 @@ public class WootMobBuilder {
     }
 
     private final static String NBT_WOOT_MOB_DISPLAY_NAME = "wootMobDisplayName";
+    private final static String NBT_WOOT_MOB_DEATHS = "wootMobDeaths";
     public static void writeToNBT(WootMob wootMob, NBTTagCompound tagCompound) {
 
         if (!wootMob.isValid())
@@ -30,15 +31,17 @@ public class WootMobBuilder {
             tagCompound = new NBTTagCompound();
 
         tagCompound.setString(NBT_WOOT_MOB_DISPLAY_NAME, wootMob.getDisplayName());
+        tagCompound.setInteger(NBT_WOOT_MOB_DEATHS, wootMob.getDeaths());
         WootMobNameBuilder.writeToNBT(wootMob.getWootMobName(), tagCompound);
     }
 
     public static @Nonnull WootMob create(NBTTagCompound tagCompound) {
 
         if (tagCompound == null ||
-            !tagCompound.hasKey(NBT_WOOT_MOB_DISPLAY_NAME))
+            !tagCompound.hasKey(NBT_WOOT_MOB_DISPLAY_NAME) ||
+            !tagCompound.hasKey(NBT_WOOT_MOB_DEATHS))
             return new WootMob();
 
-        return new WootMob(WootMobNameBuilder.create(tagCompound), tagCompound.getString(NBT_WOOT_MOB_DISPLAY_NAME));
+        return new WootMob(WootMobNameBuilder.create(tagCompound), tagCompound.getString(NBT_WOOT_MOB_DISPLAY_NAME), tagCompound.getInteger(NBT_WOOT_MOB_DEATHS));
     }
 }

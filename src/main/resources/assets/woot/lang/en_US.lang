@@ -99,6 +99,13 @@ info.woot.endershard.b.0=Kills %d/%d
 info.woot.endershard.b.1=Fully programmed
 
 ###########################################################
+# Chat
+###########################################################
+chat.woot.endershard.failure=Cannot capture mob
+chat.woot.endershard.success=Captured mob
+
+
+###########################################################
 # Config
 ###########################################################
 

@@ -73,6 +73,10 @@ public class TileEntityLayout extends TileEntity {
         markDirty();
     }
 
+    public EnumFacing getFacing() {
+        return facing;
+    }
+
     public void setNextTier() {
 
         this.tier = this.tier.getNext();

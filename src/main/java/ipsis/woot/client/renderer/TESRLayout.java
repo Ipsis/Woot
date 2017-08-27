@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
@@ -108,16 +109,29 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
                 /**
                  * Factory block
+                 * Offset the heart by 2 as this is from the guide block
                  */
-                GlStateManager.translate(0, 2, 0);
-                RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.factory, 0.4F);
+                GlStateManager.pushMatrix();
+                {
+                    GlStateManager.translate(0, 2, 0);
+                    RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.factory, 0.4F);
+                }
+                GlStateManager.popMatrix();
 
                 /**
                  * Mob controller
+                 * Offset the controller by 3 as this is from the guide block
                  */
-                // TODO this needs fixed for each orientation
-                GlStateManager.translate(1, 1, 0);
-                RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.controller, 0.4F);
+                BlockPos controllerPos = te.getPos().up(3).offset(te.getFacing(), -1);
+                GlStateManager.pushMatrix();
+                {
+                    GlStateManager.translate(
+                            (te.getPos().getX() - controllerPos.getX()) * -1.0F,
+                            (te.getPos().getY() - controllerPos.getY()) * -1.0F,
+                            (te.getPos().getZ() - controllerPos.getZ()) * -1.0F);
+                    RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.controller, 0.4F);
+                }
+                GlStateManager.popMatrix();
 
                 GlStateManager.disableBlend();
             }
@@ -165,21 +179,28 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
             }
 
             /**
-             * Render the factory block and the controller
+             * Factory block
+             * Offset the heart by 2 as this is from the guide block
              */
             GlStateManager.pushMatrix();
             {
-                /**
-                 * Factory block
-                 */
                 GlStateManager.translate(0, 2, 0);
                 GlStateManager.color(0.0F, 1.0F, 1.0F, RENDER_ALPHA);
                 RenderUtils.drawShadedCube(0.4F);
+            }
+            GlStateManager.popMatrix();
 
-                /**
-                 * Mob controller
-                 */
-                GlStateManager.translate(1, 1, 0);
+            /**
+             * Mob controller
+             * Offset the controller by 3 as this is from the guide block
+             */
+            BlockPos controllerPos = te.getPos().up(3).offset(te.getFacing(), -1);
+            GlStateManager.pushMatrix();
+            {
+                GlStateManager.translate(
+                        (te.getPos().getX() - controllerPos.getX()) * -1.0F,
+                        (te.getPos().getY() - controllerPos.getY()) * -1.0F,
+                        (te.getPos().getZ() - controllerPos.getZ()) * -1.0F);
                 GlStateManager.color(0.0F, 1.0F, 0.0F, RENDER_ALPHA);
                 RenderUtils.drawShadedCube(0.4F);
             }

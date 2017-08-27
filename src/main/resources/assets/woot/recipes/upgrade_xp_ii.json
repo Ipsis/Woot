@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "woot:upgrade",
+    "data": 7
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "woot:factorycore",
+      "data": 0
+    },
+    {
+      "type": "minecraft:item_nbt",
+      "item": "minecraft:enchanted_book",
+      "nbt": {
+        "StoredEnchantments": [
+          {
+            "id": 61,
+            "lvl": 2
+          }
+        ]
+      }
+    }
+  ]
+}

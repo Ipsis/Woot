@@ -9,4 +9,16 @@ public class StringHelper {
 
         return I18n.translateToLocal(s);
     }
+
+    public static String localizeFormat(String s, Object... format) {
+
+        return I18n.translateToLocalFormatted(s, format);
+    }
+
+    public static String getInfoText(String key) {
+
+        // TODO apply consistent coloring
+        return localize(key);
+
+    }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ItemXpShard extends ItemWoot {
 
-    public static final String BASENAME = "xpShard";
+    public static final String BASENAME = "xpshard";
     public static final int XP_VALUE = 16;
 
     public ItemXpShard() {
@@ -73,7 +73,7 @@ public class ItemXpShard extends ItemWoot {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
-        tooltip.add(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".0"));
-        tooltip.add(String.format(StringHelper.localize(Lang.TAG_TOOLTIP + BASENAME + ".1"), XP_VALUE));
+        tooltip.add(StringHelper.getInfoText("info.woot.xpshard.0"));
+        tooltip.add(StringHelper.getInfoText("info.woot.xpshard.1"));
     }
 }

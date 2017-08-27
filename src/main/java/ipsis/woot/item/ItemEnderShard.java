@@ -1,8 +1,10 @@
 package ipsis.woot.item;
 
 import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import ipsis.woot.util.WootMobName;
@@ -28,6 +30,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import javax.print.DocFlavor;
 import java.util.List;
 
 public class ItemEnderShard extends ItemWoot {
@@ -124,13 +127,22 @@ public class ItemEnderShard extends ItemWoot {
         if (!isEnderShard(stack))
             return;
 
+        tooltip.add(StringHelper.getInfoText("info.woot.endershard.0"));
+        tooltip.add(StringHelper.getInfoText("info.woot.endershard.1"));
+
         if (!isProgrammed(stack)) {
-            tooltip.add("Unprogrammed");
+            tooltip.add(StringHelper.getInfoText("info.woot.endershard.a.1"));
         } else {
             WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
             if (wootMob.isValid()) {
                 tooltip.add(wootMob.getDisplayName());
-                // TODO tooltip.add("Killed: " + wootMob.getDeathCount() + "/1");
+                if (isFull(stack))
+                    tooltip.add(StringHelper.localize("info.woot.endershard.b.1"));
+                else
+                    tooltip.add(StringHelper.localizeFormat("info.woot.endershard.b.1",
+                            1,
+                            Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT)));
+
                 if (flagIn.isAdvanced())
                     tooltip.add(wootMob.getWootMobName().getName());
             }

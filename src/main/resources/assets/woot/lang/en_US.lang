@@ -31,7 +31,7 @@ item.woot.shard.diamond.name=Diamond Shard
 item.woot.shard.emerald.name=Emerald Shard
 item.woot.shard.quartz.name=Quartz Shard
 item.woot.shard.netherstar.name=Nether Star Shard
-item.woot.xpShard.name=XP Shard
+item.woot.xpshard.name=XP Shard
 
 item.woot.yahhammer.name=Yah Hammer
 
@@ -89,6 +89,14 @@ tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
 ###########################################################
 # Tooltips
 ###########################################################
+info.woot.xpshard.0=Use to gain experience
+info.woot.xpshard.1=Use while sneaking to use the full stack
+
+info.woot.endershard.0=Captures mobs
+info.woot.endershard.1=Hit mob with shard to program
+info.woot.endershard.a.0=Unprogrammed
+info.woot.endershard.b.0=Kills %d/%d
+info.woot.endershard.b.1=Fully programmed
 
 ###########################################################
 # Config

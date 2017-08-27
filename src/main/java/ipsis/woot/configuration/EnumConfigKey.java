@@ -9,6 +9,12 @@ import java.util.List;
  */
 public enum EnumConfigKey {
 
+    SIMPLE_LAYOUT(
+            "Render the layout as colors",
+            "simpleLayout",
+            Boolean.class,
+            false,
+            false),
     SAMPLE_SIZE(
             "Number of mobs to kill to learn from - higher is more accurate",
             "sampleSize", Integer.class, 500, false),

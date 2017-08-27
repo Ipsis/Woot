@@ -21,7 +21,7 @@ public class ConfigurationLoader {
                     config.get(Configuration.CATEGORY_GENERAL,
                             key.getText(),
                             key.getDefaultBoolean(),
-                            key.getTranslated()).getBoolean(key.getDefaultBoolean()));
+                            key.getComment()).getBoolean(key.getDefaultBoolean()));
         }
 
         // Integer keys
@@ -32,7 +32,7 @@ public class ConfigurationLoader {
                     config.get(Configuration.CATEGORY_GENERAL,
                             key.getText(),
                             key.getDefaultInteger(),
-                            key.getTranslated()).getInt(key.getDefaultInteger()));
+                            key.getComment()).getInt(key.getDefaultInteger()));
         }
     }
 }

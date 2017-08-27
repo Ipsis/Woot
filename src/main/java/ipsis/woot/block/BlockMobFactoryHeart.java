@@ -1,5 +1,8 @@
 package ipsis.woot.block;
 
+import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.oss.ItemHelper;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -18,8 +21,11 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -105,4 +111,42 @@ public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITi
         private PluginTooltipInfo() { }
     }
 
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+
+        if (worldIn.isRemote)
+            return true;
+
+        ItemStack heldItem = playerIn.getHeldItemMainhand();
+        if (heldItem.isEmpty()) {
+            LogHelper.info("onBlockActivated: dump status to conosle");
+            return true;
+        }
+
+        if (ItemHelper.areItemsEqual(heldItem.getItem(), Item.getItemFromBlock(Blocks.TORCH))) {
+
+            EnumMobFactoryTier tier;
+            if (heldItem.getCount() == 1) {
+                tier = EnumMobFactoryTier.TIER_ONE;
+                LogHelper.info("Validating Tier I");
+            } else if (heldItem.getCount() == 2) {
+                tier = EnumMobFactoryTier.TIER_TWO;
+                LogHelper.info("Validating Tier II");
+            } else if (heldItem.getCount() == 3) {
+                tier = EnumMobFactoryTier.TIER_THREE;
+                LogHelper.info("Validating Tier III");
+            } else {
+                tier = EnumMobFactoryTier.TIER_FOUR;
+                LogHelper.info("Validating Tier IV");
+            }
+
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TileEntityMobFactoryHeart)
+                ((TileEntityMobFactoryHeart) te).manualFarmScan(tier);
+
+            return true;
+        }
+
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    }
 }

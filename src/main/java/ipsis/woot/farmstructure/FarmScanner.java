@@ -2,6 +2,7 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryStructure;
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.multiblock.MobFactoryModule;
@@ -19,10 +20,47 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class FarmScanner implements IFarmScanner {
+
+    private List<BadFarmBlock> scanFarmTier(World world, BlockPos origin, EnumFacing facing, EnumMobFactoryTier tier) {
+
+        List<BadFarmBlock> badFarmBlocks = new ArrayList<>();
+
+        Set<BlockPos> blockPosList = new HashSet<>();
+        BlockPos patternOrigin = origin;
+        for (MobFactoryModule module : tier.getStructureModules()) {
+
+            BlockPos p = BlockPosHelper.rotateFromSouth(module.getOffset(), facing.getOpposite());
+            p = patternOrigin.add(p);
+
+            if (!world.isBlockLoaded(p)) {
+                badFarmBlocks.add(new BadFarmBlock(p, ModBlocks.blockStructure, module.getModuleType().getMetadata()));
+                continue;
+            }
+
+            IBlockState blockState = world.getBlockState(p);
+            Block block = blockState.getBlock();
+
+            if (!(block instanceof BlockMobFactoryStructure)) {
+                badFarmBlocks.add(new BadFarmBlock(p, ModBlocks.blockStructure, module.getModuleType().getMetadata()));
+                continue;
+            }
+
+            if (!(((BlockMobFactoryStructure)block).getModuleTypeFromState(blockState) == module.getModuleType())) {
+                badFarmBlocks.add(new BadFarmBlock(p, ModBlocks.blockStructure, module.getModuleType().getMetadata()));
+                continue;
+            }
+
+            blockPosList.add(p);
+        }
+
+        return badFarmBlocks;
+    }
 
     private void scanFarmBaseTier(World world, BlockPos origin, EnumFacing facing, ScannedFarmBase base, EnumMobFactoryTier tier) {
 
@@ -53,7 +91,6 @@ public class FarmScanner implements IFarmScanner {
 
         base.addBlocks(blockPosList);
         base.tier = tier;
-        LogHelper.info("Farm is correct for " + tier);
     }
 
 
@@ -187,5 +224,29 @@ public class FarmScanner implements IFarmScanner {
 
             LogHelper.info("TODO validate upgrade against mob");
         }
+    }
+
+    @Override
+    public void scanFarmNoStop(World world, BlockPos origin, EnumFacing facing, EnumMobFactoryTier tier, BadFarmInfo badFarmInfo) {
+
+        /**
+         * Scan main farm
+         */
+        badFarmInfo.badFarmBlocks.addAll(scanFarmTier(world, origin, facing, tier));
+
+        /**
+         * Scan remote
+         */
+        ScannedFarmRemote scannedFarmRemote = scanFarmRemote(world, origin);
+        badFarmInfo.hasCell = scannedFarmRemote.hasPower();
+        badFarmInfo.hasExporter = scannedFarmRemote.hasExport();
+        badFarmInfo.hasImporter = scannedFarmRemote.hasImport();
+
+        /**
+         * Scan controller
+         */
+        ScannedFarmController scannedFarmController = scanFarmController(world, origin, facing);
+        if (!scannedFarmController.isValid())
+            badFarmInfo.badFarmBlocks.add(new BadFarmBlock(origin.up().offset(facing, -1), ModBlocks.blockFactoryController, 0));
     }
 }

@@ -68,6 +68,21 @@ public class ScannedFarmRemote {
         return true;
     }
 
+    public boolean hasPower() {
+
+        return this.powerPos != null;
+    }
+
+    public boolean hasExport() {
+
+        return this.exportPos != null;
+    }
+
+    public boolean hasImport() {
+
+        return this.importPos != null;
+    }
+
     public void setPowerPos(BlockPos pos) {
 
         this.powerPos = pos;

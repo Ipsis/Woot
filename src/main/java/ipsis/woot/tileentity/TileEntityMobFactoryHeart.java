@@ -1,15 +1,16 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
+import ipsis.woot.block.BlockMobFactoryHeart;
 import ipsis.woot.farming.*;
-import ipsis.woot.farmstructure.IFarmSetup;
+import ipsis.woot.farmstructure.*;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
-import ipsis.woot.farmstructure.FarmBuilder;
-import ipsis.woot.farmstructure.IFarmStructure;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.mock.MockSpawnRecipeConsumer;
 import ipsis.woot.mock.MockSpawnRecipeRepository;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
@@ -120,6 +121,18 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 storedXp = farmSetup.getStoredXp();
                 recipeProgressTracker.reset();
             }
+        }
+    }
+
+    public void manualFarmScan(EnumMobFactoryTier tier) {
+
+        EnumFacing facing = world.getBlockState(getPos()).getValue(BlockMobFactoryHeart.FACING);
+        IFarmScanner farmScanner = new FarmScanner();
+        IFarmScanner.BadFarmInfo badFarmInfo = new IFarmScanner.BadFarmInfo();
+        farmScanner.scanFarmNoStop(world, getPos(), facing, tier, badFarmInfo);
+        for (IFarmScanner.BadFarmBlock badFarmBlock : badFarmInfo.badFarmBlocks) {
+            ItemStack itemStack = new ItemStack(badFarmBlock.getCorrectBlock(), 1, badFarmBlock.getCorrectBlockMeta());
+            LogHelper.info(badFarmBlock.getPos() + "->" + itemStack.getDisplayName());
         }
     }
 

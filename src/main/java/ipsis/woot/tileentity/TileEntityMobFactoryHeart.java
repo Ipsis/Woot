@@ -14,11 +14,13 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
@@ -124,7 +126,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         }
     }
 
-    public void manualFarmScan(EnumMobFactoryTier tier) {
+    public void manualFarmScan(EntityPlayer player, EnumMobFactoryTier tier) {
 
         EnumFacing facing = world.getBlockState(getPos()).getValue(BlockMobFactoryHeart.FACING);
         IFarmScanner farmScanner = new FarmScanner();
@@ -132,8 +134,15 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         farmScanner.scanFarmNoStop(world, getPos(), facing, tier, badFarmInfo);
         for (IFarmScanner.BadFarmBlock badFarmBlock : badFarmInfo.badFarmBlocks) {
             ItemStack itemStack = new ItemStack(badFarmBlock.getCorrectBlock(), 1, badFarmBlock.getCorrectBlockMeta());
-            LogHelper.info(badFarmBlock.getPos() + "->" + itemStack.getDisplayName());
+            player.sendStatusMessage(new TextComponentString(badFarmBlock.getPos() + "->" + itemStack.getDisplayName()), false);
         }
+
+        if (!badFarmInfo.hasCell)
+            player.sendStatusMessage(new TextComponentString("No power cell"), false);
+        if (!badFarmInfo.hasImporter)
+            player.sendStatusMessage(new TextComponentString("No importer"), false);
+        if (!badFarmInfo.hasExporter)
+            player.sendStatusMessage(new TextComponentString("No exporter"), false);
     }
 
     /**

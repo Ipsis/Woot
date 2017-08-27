@@ -126,23 +126,18 @@ public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITi
         if (ItemHelper.areItemsEqual(heldItem.getItem(), Item.getItemFromBlock(Blocks.TORCH))) {
 
             EnumMobFactoryTier tier;
-            if (heldItem.getCount() == 1) {
+            if (heldItem.getCount() == 1)
                 tier = EnumMobFactoryTier.TIER_ONE;
-                LogHelper.info("Validating Tier I");
-            } else if (heldItem.getCount() == 2) {
+            else if (heldItem.getCount() == 2)
                 tier = EnumMobFactoryTier.TIER_TWO;
-                LogHelper.info("Validating Tier II");
-            } else if (heldItem.getCount() == 3) {
+            else if (heldItem.getCount() == 3)
                 tier = EnumMobFactoryTier.TIER_THREE;
-                LogHelper.info("Validating Tier III");
-            } else {
+            else
                 tier = EnumMobFactoryTier.TIER_FOUR;
-                LogHelper.info("Validating Tier IV");
-            }
 
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TileEntityMobFactoryHeart)
-                ((TileEntityMobFactoryHeart) te).manualFarmScan(tier);
+                ((TileEntityMobFactoryHeart) te).manualFarmScan(playerIn, tier);
 
             return true;
         }

@@ -1,69 +1,68 @@
-itemGroup.woot=woot
+#
+# This is currently WIP
+# Please do not try and translate
+#
 
-item.woot.yahhammer.name=Yah Hammer
-item.woot.manual.name=Woot Manual [WIP]
 
-# Dies
+###########################################################
+# Items
+###########################################################
+
 item.woot.die.mesh.name=Mesh Die
 item.woot.die.plate.name=Plate Die
 item.woot.die.core.name=Core Die
-item.woot.die.shard.name=Shard Die
+item.woot.die.shard.name=Shared Die
 
-# Factory Cores
-item.woot.factorycore.heart.name=Factory Heart Core
-item.woot.factorycore.controller.name=Factory Controller Core
-item.woot.factorycore.t1_upgrade.name=Factory Tier I Upgrade Core
-item.woot.factorycore.t2_upgrade.name=Factory Tier II Upgrade Core
-item.woot.factorycore.t3_upgrade.name=Factory Tier III Upgrade Core
+item.woot.factorycore.heart.name=Heart Core
+item.woot.factorycore.controller.name=Controller Core
+item.woot.factorycore.t1_upgrade.name=Tier I Upgrade Core
+item.woot.factorycore.t2_upgrade.name=Tier II Upgrade Core
+item.woot.factorycore.t3_upgrade.name=Tier III Upgrade Core
 
 item.woot.factorybase.name=Factory Base
 
-# Stygian Iron
 item.woot.stygianironingot.name=Stygian Iron Ingot
 item.woot.stygianironplate.name=Stygian Iron Plate
-tile.woot.stygianiron.name=Stygian Iron Block
 item.woot.stygianirondust.name=Stygian Iron Dust
-
 item.woot.netherrackdust.name=Netherrack Dust
 
-tile.woot.anvil.name=Stygian Iron Anvil
-
 item.woot.endershard.name=Ender Shard
-
-# Skulls
-item.woot.skull.quartz.name=Quartz Skull
-item.woot.skull.gold.name=Gold Plated Skull
-item.woot.skull.diamond.name=Diamond Encrusted Skull
-item.woot.skull.emerald.name=Emerald Encrusted Skull
-
-# Shards
-item.woot.xpShard.name=Xp Shard
-
 item.woot.shard.diamond.name=Diamond Shard
 item.woot.shard.emerald.name=Emerald Shard
 item.woot.shard.quartz.name=Quartz Shard
 item.woot.shard.netherstar.name=Nether Star Shard
+item.woot.xpShard.name=XP Shard
 
+item.woot.yahhammer.name=Yah Hammer
 
-# Factory Blocks
-tile.woot.layout.name=Mob Factory Layout
-tile.woot.factory.name=Mob Factory/Farm/Spawner/Grinder
-tile.woot.controller.name=Mob Controller
-tile.woot.extender.name=Mob Factory Extender
-tile.woot.proxy.name=Mob Factory Proxy
+###########################################################
+# Blocks
+###########################################################
 
-tile.woot.structure.block_1.name=Mob Factory Block Gray
-tile.woot.structure.block_2.name=Mob Factory Block Red
-tile.woot.structure.block_3.name=Mob Factory Block Orange
-tile.woot.structure.block_4.name=Mob Factory Block Green
-tile.woot.structure.block_5.name=Mob Factory Block White
+tile.woot.stygianiron.name=Stygian Iron Block
+tile.woot.anvil.name=Stygian Iron Anvil
+tile.woot.layout.name=Factory Layout
 
-tile.woot.structure.block_upgrade.name=Mob Factory Block Upgrade Base
+tile.woot.factory.name=Factory Heart
+tile.woot.controller.name=Factory Controller
+tile.woot.importer.name=Factory Importer
+tile.woot.exporter.name=Factory Exporter
 
-tile.woot.structure.tier_i_cap.name=Mob Factory Tier I Cap Stone
-tile.woot.structure.tier_ii_cap.name=Mob Factory Tier II Cap Stone
-tile.woot.structure.tier_iii_cap.name=Mob Factory Tier III Cap Stone
-tile.woot.structure.tier_iv_cap.name=Mob Factory Tier IV Cap Stone
+tile.woot.structure.block_1.name=Factory Block Gray
+tile.woot.structure.block_2.name=Factory Block Red
+tile.woot.structure.block_3.name=Factory Block Orange
+tile.woot.structure.block_4.name=Factory Block Green
+tile.woot.structure.block_5.name=Factory Block White
+tile.woot.structure.block_upgrade.name=Factory Block Purple
+
+tile.woot.structure.tier_i_cap.name=Factory Tier I Cap
+tile.woot.structure.tier_ii_cap.name=Factory Tier II Cap
+tile.woot.structure.tier_iii_cap.name=Factory Tier III Cap
+tile.woot.structure.tier_iv_cap.name=Factory Tier IV Cap
+
+tile.woot.cell.tier_i.name=Cell Tier I
+tile.woot.cell.tier_ii.name=Cell Tier II
+tile.woot.cell.tier_iii.name=Cell Tier III
 
 tile.woot.upgrade.xp_i.name=XP I Upgrade
 tile.woot.upgrade.xp_ii.name=XP II Upgrade
@@ -87,225 +86,17 @@ tile.woot.upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
 tile.woot.upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
 tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
 
-#################
-### Waila
-#################
+###########################################################
+# Tooltips
+###########################################################
 
-waila.woot:factory.tier=Tier %s
-waila.woot:factory.mob=Spawning %s
-waila.woot:factory.rate=Spawn %d mob(s) every %d ticks
-waila.woot:factory.cost=Costs %dRF @ %dRF/tick
-waila.woot:controller.tier=Requires Tier %s
-waila.woot:factory.running=Factory is running
-waila.woot:factory.stopped=Factory is stopped
-waila.woot:factory.sneak=Sneak for installed upgrades and learned drops
-waila.woot:factory.nullupgrades=No upgrades installed
+###########################################################
+# Config
+###########################################################
 
-entity.woot:witherskelly.name=Wither Skeleton
-entity.woot:chargedcreeper.name=Charged Creeper
-entity.woot:elderguardian.name=Elder Guardian
-
-config.woot:sampleSize=Maximum number of mobs of each type/looting to learn from
-config.woot:learnTicks=Minimum number of ticks between fake spawn learning
-config.woot:spawnTicks=Number of ticks for the factory to spawn a mob
-config.woot:numMobs=Number of mobs for the factory to spawn
-config.woot:tp1XpMax=Tier I max mob XP
-config.woot:tp2XpMax=Tier II max mob XP
-config.woot:tp3XpMax=Tier III max mob XP
-config.woot:tp4XpMax=Tier IV max mob XP
-config.woot:strictPower=Must provide full power/tick or lose progress
-config.woot:strictSpawn=Only learn from factory spawns, not normal deaths
-config.woot:allowEnderDragon=Support the Ender Dragon
-config.woot:allowXpGeneration=Support generating XP from the factory
-config.woot:maxPower=Maximum power that the factory can store
-config.woot:t1PowerTick=Tier I power per tick
-config.woot:t2PowerTick=Tier II power per tick
-config.woot:t3PowerTick=Tier III power per tick
-config.woot:t4PowerTick=Tier IV power per tick
-config.woot:xpPowerTick=XP power per tick
-config.woot:rate1PowerTick=Rate I power per tick
-config.woot:rate2PowerTick=Rate II power per tick
-config.woot:rate3PowerTick=Rate III power per tick
-config.woot:mass1PowerTick=Mass I power per tick
-config.woot:mass2PowerTick=Mass II power per tick
-config.woot:mass3PowerTick=Mass III power per tick
-config.woot:looting1PowerTick=Looting I power per tick
-config.woot:looting2PowerTick=Looting II power per tick
-config.woot:looting3PowerTick=Looting III power per tick
-config.woot:decap1PowerTick=Decapitate I power per tick
-config.woot:decap2PowerTick=Decapitate II power per tick
-config.woot:decap3PowerTick=Decapitate III power per tick
-config.woot:xp1PowerTick=XP I power per tick
-config.woot:xp2PowerTick=XP II power per tick
-config.woot:xp3PowerTick=XP III power per tick
-config.woot:eff1PowerTick=Efficiency I power per tick
-config.woot:eff2PowerTick=Efficiency II power per tick
-config.woot:eff3PowerTick=Efficiency III power per tick
-config.woot:bm1PowerTick=Blood Magic I power per tick
-config.woot:bm2PowerTick=Blood Magic II power per tick
-config.woot:bm3PowerTick=Blood Magic III power per tick
-config.woot:rate1Param=Rate I percentage decrease in spawn time
-config.woot:rate2Param=Rate II percentage decrease in spawn time
-config.woot:rate3Param=Rate III percentage decrease in spawn time
-config.woot:mass1Param=Mass I number of mobs to spawn
-config.woot:mass2Param=Mass II number of mobs to spawn
-config.woot:mass3Param=Mass III number of mobs to spawn
-config.woot:looting1Param=Looting I enchantment value
-config.woot:looting2Param=Looting II enchantment value
-config.woot:looting3Param=Looting III enchantment value
-config.woot:decap1Param=Decapitate I percentage chance
-config.woot:decap2Param=Decapitate II percentage chance
-config.woot:decap3Param=Decapitate III percentage chance
-config.woot:xp1Param=XP I percentage increase
-config.woot:xp2Param=XP II percentage increase
-config.woot:xp3Param=XP III percentage increase
-config.woot:eff1Param=Efficiency I percentage decrease
-config.woot:eff2Param=Efficiency II percentage decrease
-config.woot:eff3Param=Efficiency III percentage decrease
-config.woot:bm1Param1=Blood Magic I sacrifice count
-config.woot:bm2Param1=Blood Magic II sacrifice count
-config.woot:bm3Param1=Blood Magic III sacrifice count
-config.woot:bm1Param2=Blood Magic I altar life essence
-config.woot:bm2Param2=Blood Magic II altar life essence
-config.woot:bm3Param2=Blood Magic III altar life essence
-
-config.woot:globalSampleSize=Maximum number of mobs of each type to learn from
-config.woot:globalLearnTicks=Minimum number of ticks between fake spawn learning
-config.woot:globalStrictSpawns=Learn only from mob factory spawning
-config.woot:globalStrictPower=Must provide full RF/tick or lose progress
-config.woot:globalTierIRF=Tier I power cost (RF/tick)
-config.woot:globalTierIIRF=Tier II power cost (RF/tick)
-config.woot:globalTierIIIRF=Tier III power cost (RF/tick)
-config.woot:globalTierIVRF=Tier IV power cost (RF/tick)
-config.woot:globalXpRF=Mob XP cost (RF/tick)
-config.woot:globalTierIMobXpCap=Tier I max mob XP
-config.woot:globalTierIIMobXpCap=Tier II max mob XP
-config.woot:globalTierIIIMobXpCap=Tier III max mob XP
-config.woot:globalTierIVMobXpCap=Tier IV max mob XP
-config.woot:globalBaseMobCount=Number of mobs to spawn
-config.woot:globalBaseRateTicks=Number of ticks to spawn mobs
-config.woot:globalPrismBlacklist=List of entities that cannot be spawned
-config.woot:globalPrismWhitelist=List of entities that can be spawned
-config.woot:globalTierIMobList=List of entities that need a Tier I factory
-config.woot:globalTierIIMobList=List of entities that need a Tier II factory
-config.woot:globalTierIIIMobList=List of entities that need a Tier III factory
-config.woot:globalTierIVMobList=List of entities that need a Tier IV factory
-config.woot:globalDropBlacklist=List of items to never generate from the factory
-config.woot:globalPrismUseWhitelist=Use the prism whitelist - ignores the blacklist
-config.woot:globalSpawnCostList=List of mobs and spawn costs
-
-config.woot:rateI_RFTick=Rate I cost (RF/tick)
-config.woot:rateII_RFTick=Rate II cost (RF/tick)
-config.woot:rateIII_RFTick=Rate III cost (RF/tick)
-config.woot:lootingI_RFTick=Looting I cost (RF/tick)
-config.woot:lootingII_RFTick=Looting II cost (RF/tick)
-config.woot:lootingIII_RFTick=Looting III cost (RF/tick)
-config.woot:xpI_RFTick=XP I cost (RF/tick)
-config.woot:xpII_RFTick=XP II cost (RF/tick)
-config.woot:xpIII_RFTick=XP III cost (RF/tick)
-config.woot:massI_RFTick=Mass I cost (RF/tick)
-config.woot:massII_RFTick=Mass II cost (RF/tick)
-config.woot:massIII_RFTick=Mass III cost (RF/tick)
-config.woot:decapI_RFTick=Decapitate I cost (RF/tick)
-config.woot:decapII_RFTick=Decapitate II cost (RF/tick)
-config.woot:decapIII_RFTick=Decapitate III cost (RF/tick)
-config.woot:bmI_RFTick=Blood Magic I cost (RF/tick)
-config.woot:bmII_RFTick=Blood Magic II cost (RF/tick)
-config.woot:bmIII_RFTick=Blood Magic III cost (RF/tick)
-
-config.woot:lootingI_enchantLevel=Looting I enchant level
-config.woot:lootingII_enchantLevel=Looting II enchant level
-config.woot:lootingIII_enchantLevel=Looting III enchant level
-config.woot:rateI_ticks=Rate I number of ticks to spawn mobs
-config.woot:rateII_ticks=Rate II number of ticks to spawn mobs
-config.woot:rateIII_ticks=Rate III number of ticks to spawn mobs
-config.woot:massI_mobCount=Mass I number of mobs
-config.woot:massII_mobCount=Mass II number of mobs
-config.woot:massIII_mobCount=Mass III number of mobs
-config.woot:decapI_percentage=Decapitate I chance to drop head
-config.woot:decapII_percentage=Decapitate II chance to drop head
-config.woot:decapIII_percentage=Decapitate III chance to drop head
-config.woot:xpI_boost=XP I experience percentage
-config.woot:xpII_boost=XP II experience percentage
-config.woot:xpIII_boost=XP III experience percentage
-config.woot:efficiencyI_percentage=Efficiency I increase in efficiency
-config.woot:efficiencyII_percentage=Efficiency II increase in efficiency
-config.woot:efficiencyIII_percentage=Efficiency III increase in efficiency
-
-tooltip.woot:factory_cost=Tier %s %dRF/tick
-
-tooltip.woot:upgrade_cost=%d RF/tick
-
-tooltip.woot:upgrade_rate_effect=Spawn mobs every %d ticks
-tooltip.woot:upgrade_lootingI_effect=Applys Looting I enchant to kills
-tooltip.woot:upgrade_lootingII_effect=Applys Looting II enchant to kills
-tooltip.woot:upgrade_lootingIII_effect=Applys Looting III enchant to kills
-tooltip.woot:upgrade_xp_effect=Increases XP collected by %d%%
-tooltip.woot:upgrade_xp_base_effect=Collect XP
-tooltip.woot:upgrade_mass_effect=Spawn %d mobs
-tooltip.woot:upgrade_decap_effect=Increases chance to decapitate to %d%%
-tooltip.woot:upgrade_efficiency_effect=Reduce factory power cost by %d%%
-tooltip.woot:upgrade_bloodmagic_effect=Generate Life Essence. When direct to Tank:%d sacrifice runes, when direct to Altar:%d Life Essence
-
-tooltip.woot:upgrade.rate_i=Spawn Rate I
-tooltip.woot:upgrade.rate_ii=Spawn Rate II
-tooltip.woot:upgrade.rate_iii=Spawn Rate III
-tooltip.woot:upgrade.looting_i=Looting I
-tooltip.woot:upgrade.looting_ii=Looting II
-tooltip.woot:upgrade.looting_iii=Looting III
-tooltip.woot:upgrade.xp_i=XP Collection I
-tooltip.woot:upgrade.xp_ii=XP Collection II
-tooltip.woot:upgrade.xp_iii=XP Collection III
-tooltip.woot:upgrade.mass_i=Mob Count I
-tooltip.woot:upgrade.mass_ii=Mob Count II
-tooltip.woot:upgrade.mass_iii=Mob Count III
-tooltip.woot:upgrade.decapitate_i=Mob Beheading I
-tooltip.woot:upgrade.decapitate_ii=Mob Beheading II
-tooltip.woot:upgrade.decapitate_iii=Mob Beheading III
-tooltip.woot:upgrade.efficiency_i=Efficiency I
-tooltip.woot:upgrade.efficiency_ii=Efficiency II
-tooltip.woot:upgrade.efficiency_iii=Efficiency III
-tooltip.woot:upgrade.bloodmagic_i=Blood Magic I
-tooltip.woot:upgrade.bloodmagic_ii=Blood Magic II
-tooltip.woot:upgrade.bloodmagic_iii=Blood Magic III
-
-tooltip.woot:extender=Use a column underneath your factory to connect a proxy
-tooltip.woot:proxy=Connect to bottom of extenders to allow power and inventory to each side of the proxy
-
-tooltip.woot:xpShard.0=Right click to use and gain experience
-tooltip.woot:xpShard.1=Gives %d experience
-tooltip.woot:prism.0=Attack to capture mob
-tooltip.woot:prism.1=Use on controller to program
-
-chat.woot:prism.invalid=Mob %s cannot be captured (%s)
-chat.woot:prism.program=Mob %s programmed (%s)
-chat.woot:mob.invalid=Mob %s is blacklisted (%s)
-
-commands.woot:woot.usage=/woot <status|mobs|blacklist|tiers|prism|cost|flush {all|<mob>}|loot <mob> [detail]|give <player> <mob> <xp>|dev {true|false}>
-commands.woot:woot.dev.summary=Dev mode to %s
-commands.woot:woot.flush.summary=Flushed all loot data for %s/%s
-commands.woot:woot.flush.all.summary=Flushed all loot data for all mobs
-commands.woot:woot.status.summary=%s: %s
-commands.woot:woot.mobs.summary=Known mobs: %s
-commands.woot:woot.loot.summary=Learned loot for %s/%s: %s
-commands.woot:woot.blacklist.summary=Factory blacklisted items: %s
-commands.woot:woot.tiers.summary=Mob %s requires %s
-commands.woot:woot.prism.blacklist.summary=Prism blacklisted mobs: %s
-commands.woot:woot.prism.whitelist.summary=Prism whitelisted mobs: %s
-commands.woot:woot.cost.summary=Mob %s costs %d xp
-
-validate.woot:factory.missing_controller=%s: No mob controller
-validate.woot:factory.missing_mob=%s: Unprogrammed mob controller
-validate.woot:factory.invalid_block=%s: Invalid block at %d, %d, %d (%s)
-validate.woot:factory.mob_tier=%s: Mob needs higher tier factory
-validate.woot:factory.blocks_ok=%s: Valid layout
-
-ritual.woot:ritualInfernalMachine=Ritual Of The Infernal Machine
-ritual.woot:ritualInfernalMachine.info=Fill adjacent tanks or a nearby Blood Altar with Life Essence
-
-enchantment.woot_decapitate=Decapitation
-
-########## NEW STUFF ##########
+###########################################################
+# Commands
+###########################################################
 commands.woot.usage=Use /woot <subcommand>.
 commands.woot.dev.usage=Use /woot dev <subcommand>.
 commands.woot.dev.debug.usage=Use /woot dev debug {[!]event|show|list}.
@@ -313,16 +104,20 @@ commands.woot.dev.power.usage=Use /woot dev power <bool>.
 commands.woot.dev.debug.power.disabled=Factories do not need power.
 commands.woot.dev.debug.trace_loot_event.enabled=Tracing loot drop event.
 
-######## GUIDE BOOK ########
+###########################################################
+# Guide Book
+###########################################################
 guide.woot:title=Woot Guide Title
 guide.woot:display=Woot Guide Display
 guide.woot:welcome=Woot Guide Welcome
 
+###########################################################
 # Guide Categories
 guide.woot:category.introduction=About Woot
 guide.woot:category.operation=Operating A Factory
 guide.woot:category.upgrades=Upgrades
 
+###########################################################
 # Introduction Entries
 guide.woot:entry.introduction.intro=What Is Woot
 guide.woot:entry.introduction.credits=Credits
@@ -330,11 +125,12 @@ guide.woot:entry.introduction.credits=Credits
 guide.woot:entry.introduction.intro.info=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades. So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
 guide.woot:entry.introduction.credits.info=WayOfTime and Tehnut - as the BloodMagic code helped a lot in how to create the manual. TeamAmeriFrance for the GuideAPI as my original manual was terrible.
 
+###########################################################
 # Operation Entries
 guide.woot:entry.operation.resources=Basic Materials
 guide.woot:entry.operation.crafting=How To Craft Factory Components
 
-
+###########################################################
 # Upgrade Entries
 guide.woot:entry.upgrade.intro=Upgrades
 guide.woot:entry.upgrade.rate=Rate Upgrade

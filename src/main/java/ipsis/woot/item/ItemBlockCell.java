@@ -31,6 +31,6 @@ public class ItemBlockCell extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack) + "." + BlockMobFactoryCell.EnumCellTier.byMetadata(stack.getMetadata());
+        return super.getUnlocalizedName(stack) + "." + BlockMobFactoryCell.EnumCellTier.byMetadata(stack.getMetadata()).getName();
     }
 }

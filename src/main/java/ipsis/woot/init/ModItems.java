@@ -15,7 +15,6 @@ public class ModItems {
     public static ItemWoot itemManual;
     public static ItemWoot itemNetherrackDust;
     public static ItemWoot itemEnderShard;
-    public static ItemWoot itemSkull;
     public static ItemWoot itemShard;
     public static ItemWoot itemXpShard;
     public static ItemWoot itemYahHammer;
@@ -30,7 +29,6 @@ public class ModItems {
         itemEnderShard = new ItemEnderShard();
         itemFactoryBase = new ItemFactoryBase();
         itemXpShard = new ItemXpShard();
-        itemSkull = new ItemSkull();
         itemShard = new ItemShard();
         itemDie = new ItemDie();
         itemNetherrackDust = new ItemNetherrackDust();
@@ -48,7 +46,6 @@ public class ModItems {
         ModItems.itemEnderShard.initModel();
         ModItems.itemFactoryBase.initModel();
         ModItems.itemXpShard.initModel();
-        ModItems.itemSkull.initModel();
         ModItems.itemShard.initModel();
         ModItems.itemDie.initModel();
         ModItems.itemYahHammer.initModel();

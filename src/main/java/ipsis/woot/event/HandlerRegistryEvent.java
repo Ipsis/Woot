@@ -51,7 +51,6 @@ public class HandlerRegistryEvent {
                 ModItems.itemEnderShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemEnderShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemEnderShard.BASENAME),
                 ModItems.itemStygianIronDust.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronDust.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronDust.BASENAME),
                 ModItems.itemShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemShard.BASENAME),
-                ModItems.itemSkull.setUnlocalizedName(Reference.MOD_ID + "." + ItemSkull.BASENAME).setRegistryName(Reference.MOD_ID, ItemSkull.BASENAME),
                 ModItems.itemYahHammer.setUnlocalizedName(Reference.MOD_ID + "." + ItemYahHammer.BASENAME).setRegistryName(Reference.MOD_ID, ItemYahHammer.BASENAME),
                 ModItems.itemXpShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemXpShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemXpShard.BASENAME)
         );

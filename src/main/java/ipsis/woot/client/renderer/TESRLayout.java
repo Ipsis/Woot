@@ -4,8 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.event.HandlerTextureStitchEvent;
 import ipsis.woot.proxy.ClientProxy;
-import ipsis.woot.tileentity.LayoutBlockInfo;
-import ipsis.woot.tileentity.TileEntityLayout;
+import ipsis.woot.tileentity.*;
 import ipsis.woot.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -55,88 +54,82 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GlStateManager.color(1F, 1F, 1F, 0.9500F);
 
-                for (LayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
+                for (ILayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
 
-                    if (getWorld().getBlockState(pos.blockPos).isOpaqueCube())
+                    if (getWorld().getBlockState(pos.getPos()).isOpaqueCube())
                         continue;
 
-                    GlStateManager.pushMatrix();
-                    {
-                        GlStateManager.translate(
-                                (te.getPos().getX() - pos.blockPos.getX()) * -1.0F,
-                                (te.getPos().getY() - pos.blockPos.getY()) * -1.0F,
-                                (te.getPos().getZ() - pos.blockPos.getZ()) * -1.0F);
+                    if (pos instanceof StructureLayoutBlockInfo) {
+                        GlStateManager.pushMatrix();
+                        {
+                            GlStateManager.translate(
+                                    (te.getPos().getX() - pos.getPos().getX()) * -1.0F,
+                                    (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
+                                    (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
 
-                        TextureAtlasSprite texture = null;
+                            TextureAtlasSprite texture = null;
 
-                        switch (pos.module) {
-                            case BLOCK_1:
-                                texture = HandlerTextureStitchEvent.block1;
-                                break;
-                            case BLOCK_2:
-                                texture = HandlerTextureStitchEvent.block2;
-                                break;
-                            case BLOCK_3:
-                                texture = HandlerTextureStitchEvent.block3;
-                                break;
-                            case BLOCK_4:
-                                texture = HandlerTextureStitchEvent.block4;
-                                break;
-                            case BLOCK_5:
-                                texture = HandlerTextureStitchEvent.block5;
-                                break;
-                            case BLOCK_UPGRADE:
-                                texture = HandlerTextureStitchEvent.blockupgrade;
-                                break;
-                            case CAP_I:
-                                texture = HandlerTextureStitchEvent.tiericap;
-                                break;
-                            case CAP_II:
-                                texture = HandlerTextureStitchEvent.tieriicap;
-                                break;
-                            case CAP_III:
-                                texture = HandlerTextureStitchEvent.tieriiicap;
-                                break;
-                            case CAP_IV:
-                                texture = HandlerTextureStitchEvent.tierivcap;
-                                break;
+                            switch (((StructureLayoutBlockInfo) pos).module) {
+                                case BLOCK_1:
+                                    texture = HandlerTextureStitchEvent.block1;
+                                    break;
+                                case BLOCK_2:
+                                    texture = HandlerTextureStitchEvent.block2;
+                                    break;
+                                case BLOCK_3:
+                                    texture = HandlerTextureStitchEvent.block3;
+                                    break;
+                                case BLOCK_4:
+                                    texture = HandlerTextureStitchEvent.block4;
+                                    break;
+                                case BLOCK_5:
+                                    texture = HandlerTextureStitchEvent.block5;
+                                    break;
+                                case BLOCK_UPGRADE:
+                                    texture = HandlerTextureStitchEvent.blockupgrade;
+                                    break;
+                                case CAP_I:
+                                    texture = HandlerTextureStitchEvent.tiericap;
+                                    break;
+                                case CAP_II:
+                                    texture = HandlerTextureStitchEvent.tieriicap;
+                                    break;
+                                case CAP_III:
+                                    texture = HandlerTextureStitchEvent.tieriiicap;
+                                    break;
+                                case CAP_IV:
+                                    texture = HandlerTextureStitchEvent.tierivcap;
+                                    break;
+                            }
+
+                            RenderUtils.drawTexturedCube(texture, 0.4F);
                         }
-
-                        RenderUtils.drawTexturedCube(texture, 0.4F);
+                        GlStateManager.popMatrix();
+                    } else if (pos instanceof HeartLayoutBlockInfo) {
+                        GlStateManager.pushMatrix();
+                        {
+                            GlStateManager.translate(
+                                    (te.getPos().getX() - pos.getPos().getX()) * -1.0F,
+                                    (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
+                                    (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
+                            RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.factory, 0.4F);
+                        }
+                        GlStateManager.popMatrix();
+                    } else if (pos instanceof ControllerLayoutBlockInfo) {
+                        GlStateManager.pushMatrix();
+                        {
+                            GlStateManager.translate(
+                                    (te.getPos().getX() - pos.getPos().getX()) * -1.0F,
+                                    (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
+                                    (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
+                            RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.controller, 0.4F);
+                        }
+                        GlStateManager.popMatrix();
                     }
-                    GlStateManager.popMatrix();
                 }
-
-                /**
-                 * Factory block
-                 * Offset the heart by 2 as this is from the guide block
-                 */
-                GlStateManager.pushMatrix();
-                {
-                    GlStateManager.translate(0, 2, 0);
-                    RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.factory, 0.4F);
-                }
-                GlStateManager.popMatrix();
-
-                /**
-                 * Mob controller
-                 * Offset the controller by 3 as this is from the guide block
-                 */
-                BlockPos controllerPos = te.getPos().up(3).offset(te.getFacing(), -1);
-                GlStateManager.pushMatrix();
-                {
-                    GlStateManager.translate(
-                            (te.getPos().getX() - controllerPos.getX()) * -1.0F,
-                            (te.getPos().getY() - controllerPos.getY()) * -1.0F,
-                            (te.getPos().getZ() - controllerPos.getZ()) * -1.0F);
-                    RenderUtils.drawTexturedCube(HandlerTextureStitchEvent.controller, 0.4F);
-                }
-                GlStateManager.popMatrix();
-
                 GlStateManager.disableBlend();
             }
             GlStateManager.popMatrix();
-
         }
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
@@ -163,48 +156,48 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
             float RENDER_ALPHA = 0.7F;
 
-            for (LayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
+            for (ILayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
 
-                GlStateManager.pushMatrix();
-                {
-                    GlStateManager.translate(
-                            (te.getPos().getX() - pos.blockPos.getX()) * -1.0F,
-                            (te.getPos().getY() - pos.blockPos.getY()) * -1.0F,
-                            (te.getPos().getZ() - pos.blockPos.getZ()) * -1.0F);
+                if (pos instanceof StructureLayoutBlockInfo) {
 
-                    GlStateManager.color(pos.module.getColor().getRed(), pos.module.getColor().getGreen(), pos.module.getColor().getBlue(), RENDER_ALPHA);
-                    RenderUtils.drawShadedCube(0.4F);
+                    GlStateManager.pushMatrix();
+                    {
+                        GlStateManager.translate(
+                                (te.getPos().getX() - pos.getPos().getX()) * -1.0F,
+                                (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
+                                (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
+
+                        GlStateManager.color(
+                                ((StructureLayoutBlockInfo) pos).module.getColor().getRed(),
+                                ((StructureLayoutBlockInfo) pos).module.getColor().getGreen(),
+                                ((StructureLayoutBlockInfo) pos).module.getColor().getBlue(), RENDER_ALPHA);
+                        RenderUtils.drawShadedCube(0.4F);
+                    }
+                    GlStateManager.popMatrix();
+                } else if (pos instanceof HeartLayoutBlockInfo) {
+                    GlStateManager.pushMatrix();
+                    {
+                        GlStateManager.translate(
+                                (te.getPos().getX() - pos.getPos().getX()) * -1.0F,
+                                (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
+                                (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
+                        GlStateManager.color(0.0F, 1.0F, 1.0F, RENDER_ALPHA);
+                        RenderUtils.drawShadedCube(0.4F);
+                    }
+                    GlStateManager.popMatrix();
+                } else if (pos instanceof ControllerLayoutBlockInfo) {
+                    GlStateManager.pushMatrix();
+                    {
+                        GlStateManager.translate(
+                                (te.getPos().getX() - pos.getPos().getX()) * -1.0F,
+                                (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
+                                (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
+                        GlStateManager.color(0.0F, 1.0F, 0.0F, RENDER_ALPHA);
+                        RenderUtils.drawShadedCube(0.4F);
+                    }
+                    GlStateManager.popMatrix();
                 }
-                GlStateManager.popMatrix();
             }
-
-            /**
-             * Factory block
-             * Offset the heart by 2 as this is from the guide block
-             */
-            GlStateManager.pushMatrix();
-            {
-                GlStateManager.translate(0, 2, 0);
-                GlStateManager.color(0.0F, 1.0F, 1.0F, RENDER_ALPHA);
-                RenderUtils.drawShadedCube(0.4F);
-            }
-            GlStateManager.popMatrix();
-
-            /**
-             * Mob controller
-             * Offset the controller by 3 as this is from the guide block
-             */
-            BlockPos controllerPos = te.getPos().up(3).offset(te.getFacing(), -1);
-            GlStateManager.pushMatrix();
-            {
-                GlStateManager.translate(
-                        (te.getPos().getX() - controllerPos.getX()) * -1.0F,
-                        (te.getPos().getY() - controllerPos.getY()) * -1.0F,
-                        (te.getPos().getZ() - controllerPos.getZ()) * -1.0F);
-                GlStateManager.color(0.0F, 1.0F, 0.0F, RENDER_ALPHA);
-                RenderUtils.drawShadedCube(0.4F);
-            }
-            GlStateManager.popMatrix();
 
             GlStateManager.disableBlend();
             GlStateManager.enableTexture2D();

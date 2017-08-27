@@ -1,6 +1,7 @@
 package ipsis.woot.multiblock;
 
-import ipsis.woot.tileentity.LayoutBlockInfo;
+import ipsis.woot.tileentity.ILayoutBlockInfo;
+import ipsis.woot.tileentity.StructureLayoutBlockInfo;
 import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -39,13 +40,13 @@ public class MobFactoryMultiblockLogic {
         public String getDisplayName() { return this.displayName; }
     }
 
-    public static void getFactoryLayout(EnumMobFactoryTier tier, BlockPos origin, EnumFacing facing, List<LayoutBlockInfo> layoutBlockInfoList) {
+    public static void getFactoryLayout(EnumMobFactoryTier tier, BlockPos origin, EnumFacing facing, List<ILayoutBlockInfo> layoutBlockInfoList) {
 
         for (MobFactoryModule s : tier.structureModules) {
 
             BlockPos p = BlockPosHelper.rotateFromSouth(s.getOffset(), facing.getOpposite());
             p = origin.add(p);
-            layoutBlockInfoList.add(new LayoutBlockInfo(p, s.moduleType));
+            layoutBlockInfoList.add(new StructureLayoutBlockInfo(p, s.moduleType));
         }
     }
 }

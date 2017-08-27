@@ -19,18 +19,18 @@ import java.util.List;
 
 public class TileEntityLayout extends TileEntity {
 
-    List<LayoutBlockInfo> layoutBlockInfoList;
+    List<ILayoutBlockInfo> layoutBlockInfoList;
     EnumFacing facing;
     EnumMobFactoryTier tier;
 
     public TileEntityLayout() {
 
-        layoutBlockInfoList = new ArrayList<LayoutBlockInfo>();
+        layoutBlockInfoList = new ArrayList<ILayoutBlockInfo>();
         facing = EnumFacing.SOUTH;
         tier = EnumMobFactoryTier.TIER_ONE;
     }
 
-    public List<LayoutBlockInfo> getLayoutBlockInfoList() {
+    public List<ILayoutBlockInfo> getLayoutBlockInfoList() {
 
         return layoutBlockInfoList;
     }
@@ -43,10 +43,16 @@ public class TileEntityLayout extends TileEntity {
             MobFactoryMultiblockLogic.getFactoryLayout(tier, this.getPos(), facing, layoutBlockInfoList);
 
             /**
+             * Add the heart and controller
+             */
+            layoutBlockInfoList.add(new HeartLayoutBlockInfo(this.getPos()));
+            layoutBlockInfoList.add(new ControllerLayoutBlockInfo(this.getPos().up().offset(facing, -1)));
+
+            /**
              * Now offset the layout by +2 in Y so the factory display is ABOVE the guide block
              */
-            for (LayoutBlockInfo p : layoutBlockInfoList)
-                p.blockPos = p.blockPos.offset(EnumFacing.UP, 2);
+            for (ILayoutBlockInfo p : layoutBlockInfoList)
+                p.offsetY(2);
         }
     }
 
@@ -59,11 +65,13 @@ public class TileEntityLayout extends TileEntity {
             /**
              * Now offset the layout by +2 in Y so the factory display is ABOVE the guide block
              */
-            for (LayoutBlockInfo p : layoutBlockInfoList)
-                p.blockPos = p.blockPos.offset(EnumFacing.UP, 2);
+            for (ILayoutBlockInfo p : layoutBlockInfoList)
+                p.offsetY(2);
 
-            for (LayoutBlockInfo pos : layoutBlockInfoList)
-                getWorld().setBlockState(pos.blockPos, ModBlocks.blockStructure.getStateFromMeta(pos.module.getMetadata()));
+            for (ILayoutBlockInfo pos : layoutBlockInfoList)
+                if (pos instanceof StructureLayoutBlockInfo)
+                    getWorld().setBlockState(pos.getPos(),
+                            ModBlocks.blockStructure.getStateFromMeta(((StructureLayoutBlockInfo) pos).module.getMetadata()));
         }
 
     }

@@ -131,13 +131,13 @@ public enum EnumConfigKey {
             "decap3PowerTick", Integer.class, 240, true, 3),
     XP_1_POWER_TICK(
             "Default power cost per tick of a XP I upgrade",
-            "xp1PowerTick", Integer.class, 80, true, 1),
+            "xp1PowerTick", Integer.class, 1, true, 1),
     XP_2_POWER_TICK(
             "Default power cost per tick of a XP II upgrade",
-            "xp2PowerTick", Integer.class, 160, true, 2),
+            "xp2PowerTick", Integer.class, 1, true, 2),
     XP_3_POWER_TICK(
             "Default power cost per tick of a XP III upgrade",
-            "xp3PowerTick", Integer.class, 240, true, 3),
+            "xp3PowerTick", Integer.class, 1, true, 3),
     EFF_1_POWER_TICK(
             "Default power cost per tick of a Efficiency I upgrade",
             "eff1PowerTick", Integer.class, 80, true, 1),
@@ -157,13 +157,13 @@ public enum EnumConfigKey {
             "Default power cost per tick of a Blood Magic Life Essence III upgrade",
             "bm3PowerTick", Integer.class, 240, true, 3),
     RATE_1_PARAM(
-            "Default percentage increase in rate for a Rate I upgrade",
+            "Percentage reduction in spawn time for Rate I upgrade",
             "rate1Param", Integer.class, 25, true, 1),
     RATE_2_PARAM(
-            "Default percentage increase in rate for a Rate II upgrade",
+            "Percentage reduction in spawn time for Rate II upgrade",
             "rate2Param", Integer.class, 30, true, 2),
     RATE_3_PARAM(
-            "Default percentage increase in rate for a Rate III upgrade",
+            "Percentage reduction in spawn time for Rate III upgrade",
             "rate3Param", Integer.class, 50, true, 3),
     MASS_1_PARAM(
             "Default number of mobs to spawn for Mass I upgrade",
@@ -202,13 +202,13 @@ public enum EnumConfigKey {
             "Default percentage of extra XP generated for XP III upgrade",
             "xp3Param", Integer.class, 80, true, 3),
     EFF_1_PARAM(
-            "",
+            "Percentage of power saved for a Efficiency I upgrade",
             "eff1Param", Integer.class, 15, true, 1),
     EFF_2_PARAM(
-            "",
+            "Percentage of power saved for a Efficiency II upgrade",
             "eff2Param", Integer.class, 25, true, 2),
     EFF_3_PARAM(
-            "",
+            "Percentage of power saved for a Efficiency III upgrade",
             "eff3Param", Integer.class, 30, true, 3),
     BM_1_PARAM1(
             "",

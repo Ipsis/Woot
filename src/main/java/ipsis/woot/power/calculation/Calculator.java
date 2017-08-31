@@ -7,6 +7,7 @@ import ipsis.woot.farming.PowerRecipe;
 import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.WootMobName;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -74,13 +75,27 @@ public class Calculator implements IPowerCalculator {
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "totalPower:" + totalPower);
 
-        totalPower = (int)((totalPower / 100.0F) * powerValues.efficiency);
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
-                "efficiency:" + powerValues.efficiency + "->totalPower:" + totalPower);
+        /**
+         * Efficiency saves you a percentage of the total
+         */
+        if (powerValues.efficiency != 0)
+            totalPower -= ((int) ((totalPower / 100.0F) * powerValues.efficiency));
 
-        int finalSpawnTicks = (int)((spawnTicks / 100.0F) * powerValues.rate);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
-                "rate:" + powerValues.rate + "->spawnTicks:" + finalSpawnTicks);
+            "efficiency:" + powerValues.efficiency  +  "=" + totalPower);
+
+        /**
+         * Spawn rate reduces the spawn time by a percentage
+         */
+        int finalSpawnTicks = spawnTicks;
+        if (powerValues.rate != 0)
+            finalSpawnTicks -= ((int)((spawnTicks / 100.0F) * powerValues.rate));
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
+                    "rate:" + powerValues.rate  + "=" + finalSpawnTicks);
+
+        if (finalSpawnTicks <= 0)
+            finalSpawnTicks = 1;
 
         return new PowerRecipe(finalSpawnTicks, totalPower);
     }
@@ -90,8 +105,8 @@ public class Calculator implements IPowerCalculator {
         public int factoryCost = 0;
         public int mobCost = 0;
         public int upgradeCost = 0;
-        public int efficiency = 100;
-        public int rate = 100;
+        public int efficiency = 0; /* default to no saving */
+        public int rate = 0; /* default to no saving */
 
         @Override
         public String toString() {

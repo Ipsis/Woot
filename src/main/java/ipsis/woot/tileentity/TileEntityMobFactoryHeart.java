@@ -85,6 +85,15 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         super.invalidate();
     }
 
+    private boolean isPowered() {
+
+        // Getting a redstone signal STOPS the machine
+        if (hasWorld() && world.isBlockPowered(getPos()))
+            return false;
+
+        return true;
+    }
+
     @Override
     public void update() {
 
@@ -116,12 +125,14 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 }
             }
 
-            Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
-            recipeProgressTracker.tick();
-            if (recipeProgressTracker.isComplete() && spawnRecipeConsumer.consume(getWorld(), getPos(), spawnRecipe, farmSetup.getNumMobs())) {
-                Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
-                storedXp = farmSetup.getStoredXp();
-                recipeProgressTracker.reset();
+            if (isPowered()) {
+                Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
+                recipeProgressTracker.tick();
+                if (recipeProgressTracker.isComplete() && spawnRecipeConsumer.consume(getWorld(), getPos(), spawnRecipe, farmSetup.getNumMobs())) {
+                    Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
+                    storedXp = farmSetup.getStoredXp();
+                    recipeProgressTracker.reset();
+                }
             }
         }
     }
@@ -186,7 +197,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             return;
 
         info.wootMob = farmSetup.getWootMob();
-        info.isRunning = true;
+        info.isRunning = isPowered();
         info.recipeTotalPower = powerRecipe.getTotalPower();
         info.recipeTotalTime = powerRecipe.getTicks();
         info.recipePowerPerTick = powerRecipe.getPowerPerTick();

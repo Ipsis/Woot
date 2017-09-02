@@ -88,7 +88,7 @@ public class FarmBuilder implements IFarmStructure {
             if (world.isBlockLoaded(pos)) {
                 TileEntity te = world.getTileEntity(pos);
                 if (te instanceof IFarmBlockUpgrade)
-                    LogHelper.info("Connecting upgrade");
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "connectNewFarm: connecting upgrade", "");
                 if (te instanceof IFarmBlockConnection) {
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "setMaster", pos);
                     ((IFarmBlockConnection) te).setMaster(master);
@@ -105,20 +105,20 @@ public class FarmBuilder implements IFarmStructure {
 
         scannedFarm.base = farmScanner.scanFarmStructure(world, origin, facing);
         if (!scannedFarm.base.isValid()) {
-            LogHelper.info("scanFullFarm: invalid base");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid base", "");
             return null;
         }
 
         scannedFarm.controller = farmScanner.scanFarmController(world, origin, facing);
         // Is the controller programmed
         if (!scannedFarm.controller.isValid()) {
-            LogHelper.info("scanFullFarm: invalid controller");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid controller", "");
             return null;
         }
 
         scannedFarm.remote = farmScanner.scanFarmRemote(world, origin);
         if (!scannedFarm.remote.isValid()) {
-            LogHelper.info("scanFullFarm: invalid remote");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid remote", "");
             return null;
         }
 
@@ -127,7 +127,7 @@ public class FarmBuilder implements IFarmStructure {
         farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
         // Is the programmed controller valid for this factory tier
         if (!scannedFarm.controller.isValid()) {
-            LogHelper.info("scanFullFarm: invalid controller for upgrades");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid controller for factory", "");
             return null;
         }
 
@@ -139,23 +139,22 @@ public class FarmBuilder implements IFarmStructure {
         ScannedFarm scannedFarm = scanFullFarm();
 
         if (currFarm == null && scannedFarm == null) {
-
-            LogHelper.info("handleDirtyFarm: do nothing");
+            // NA
         } else if (currFarm == null && scannedFarm != null) {
 
-            LogHelper.info("handleDirtyFarm: fresh farm");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "handleDirtyFarm: new farm", "");
             connectNewFarm(currFarm, scannedFarm);
             currFarm = scannedFarm;
             changed = true;
         } else if (currFarm != null && scannedFarm == null) {
 
-            LogHelper.info("handleDirtyFarm: goodbye farm");
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "handleDirtyFarm: goodbye farm", "");
             disconnectOldFarm(currFarm, scannedFarm);
             currFarm = null;
         } else if (currFarm != null && scannedFarm != null) {
 
             if (!ScannedFarm.areFarmsEqual(currFarm, scannedFarm)) {
-                LogHelper.info("handleDirtyFarm: changed farm");
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "handleDirtyFarm: changed farm", "");
                 disconnectOldFarm(currFarm, scannedFarm);
                 connectNewFarm(currFarm, scannedFarm);
                 currFarm = scannedFarm;

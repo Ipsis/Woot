@@ -91,7 +91,6 @@ public class SkyBoxSchool implements ILootLearner {
                     EntityItem.class, axisAlignedBB, EntitySelectors.IS_ALIVE);
 
             if (!items.isEmpty()) {
-                LogHelper.info("checkSkybox: learn for " + wootMobName + " - " + items);
                 Woot.lootRepository.learn(wootMobName, key, items, false);
                 for (EntityItem i : items)
                     ((EntityItem)i).setDead();

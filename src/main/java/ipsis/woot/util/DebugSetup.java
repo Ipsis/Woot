@@ -44,6 +44,7 @@ public class DebugSetup {
         ANVIL_CRAFTING,
         FARM_SCAN,
         FARM_CLIENT_SYNC,
+        FARM_BUILD,
         POWER_CALC,
         GEN_XP,
         GEN_ITEMS,

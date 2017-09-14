@@ -10,6 +10,8 @@ import ipsis.woot.crafting.AnvilManager;
 import ipsis.woot.crafting.AnvilManagerLoader;
 import ipsis.woot.crafting.IAnvilManager;
 import ipsis.woot.event.HandlerRegistryEvent;
+import ipsis.woot.farming.ISpawnRecipeRepository;
+import ipsis.woot.farming.SpawnRecipeRepository;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModEnchantments;
@@ -56,6 +58,7 @@ public class Woot {
     public static DebugSetup debugSetup = new DebugSetup();
     public static IAnvilManager anvilManager = new AnvilManager();
     public static IPolicy policyRepository = new PolicyRepository();
+    public static ISpawnRecipeRepository spawnRecipeRepository = new SpawnRecipeRepository();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();

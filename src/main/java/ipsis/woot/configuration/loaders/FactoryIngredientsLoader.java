@@ -1,13 +1,17 @@
 package ipsis.woot.configuration.loaders;
 
 import com.google.gson.*;
+import ipsis.Woot;
+import ipsis.woot.farming.SpawnRecipe;
 import ipsis.woot.oss.FileUtils;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
 import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.WootMobName;
-import ipsis.woot.util.WootMobNameBuilder;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
+
+import static ipsis.woot.util.JsonHelper.getItemStack;
 
 public class FactoryIngredientsLoader {
 
@@ -49,7 +53,10 @@ public class FactoryIngredientsLoader {
         WootMobName wootMobName = JsonHelper.getWootMobName(json);
         if (wootMobName.isValid()) {
 
+            SpawnRecipe recipe = new SpawnRecipe();
+
             boolean efficieny = JsonUtils.getBoolean(json, "efficiency", false);
+            recipe.setEfficiency(efficieny);
 
             for (JsonElement ele2 : JsonUtils.getJsonArray(json, "items")) {
 
@@ -57,9 +64,13 @@ public class FactoryIngredientsLoader {
                     throw new JsonSyntaxException("Mob config must be object");
 
                 JsonObject json2 = (JsonObject) ele2;
-
-                LogHelper.info(wootMobName + " - " + efficieny + " - "  + json2);
+                ItemStack itemStack = getItemStack(json2);
+                if (!itemStack.isEmpty())
+                    recipe.addIngredient(itemStack);
             }
+
+            if (!recipe.getItems().isEmpty() || !recipe.getFluids().isEmpty())
+                Woot.spawnRecipeRepository.add(wootMobName, recipe);
         }
     }
 }

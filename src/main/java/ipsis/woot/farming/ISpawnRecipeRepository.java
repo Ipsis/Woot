@@ -7,4 +7,5 @@ import javax.annotation.Nullable;
 public interface ISpawnRecipeRepository {
 
     @Nullable SpawnRecipe get(WootMobName wootMobName);
+    void add(WootMobName wootMobName, SpawnRecipe recipe);
 }

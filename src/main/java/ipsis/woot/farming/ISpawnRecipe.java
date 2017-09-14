@@ -10,4 +10,7 @@ public interface ISpawnRecipe {
 
     @Nonnull List<FluidStack> getFluids();
     @Nonnull List<ItemStack> getItems();
+
+    void addIngredient(ItemStack itemStack);
+    void addIngredient(FluidStack fluidStack);
 }

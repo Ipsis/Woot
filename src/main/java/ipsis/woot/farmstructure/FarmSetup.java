@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -174,6 +175,15 @@ public class FarmSetup implements IFarmSetup {
     @Override
     public List<IFluidHandler> getConnectedImportTanks() {
         List<IFluidHandler> tanks = new ArrayList<>();
+
+        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+            if (world.isBlockLoaded(importBlockPos.offset(f))) {
+                TileEntity te = world.getTileEntity(importBlockPos.offset(f));
+                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
+                    tanks.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
+            }
+
+        }
         return tanks;
     }
 
@@ -181,6 +191,14 @@ public class FarmSetup implements IFarmSetup {
     @Override
     public List<IFluidHandler> getConnectedExportTanks() {
         List<IFluidHandler> tanks = new ArrayList<>();
+        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+            if (world.isBlockLoaded(exportBlockPos.offset(f))) {
+                TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
+                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
+                    tanks.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
+            }
+
+        }
         return tanks;
     }
 

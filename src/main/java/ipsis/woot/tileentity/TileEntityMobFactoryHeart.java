@@ -39,7 +39,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     private ISpawnRecipeConsumer spawnRecipeConsumer;
     private int storedXp = 0;
 
-    ISpawnRecipeRepository spawnRecipeRepository;
 
     public TileEntityMobFactoryHeart() {
 
@@ -49,11 +48,10 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 Woot.wootConfiguration.getInteger(EnumConfigKey.LEARN_TICKS) + Woot.RANDOM.nextInt(11));
         tickTracker.setStructureTickCount(20);
 
-        spawnRecipeConsumer = new MockSpawnRecipeConsumer();
+        spawnRecipeConsumer = new SpawnRecipeConsumer();
         spawnRecipe = new SpawnRecipe();
         powerCalculator = new Calculator();
         recipeProgressTracker = new SimpleRecipeProgressTracker();
-        spawnRecipeRepository = new MockSpawnRecipeRepository();
     }
 
     @Override
@@ -113,7 +111,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             if (farmStructure.hasChanged()) {
                 farmSetup = farmStructure.createSetup();
                 powerRecipe = powerCalculator.calculate(world, farmSetup);
-                spawnRecipe = spawnRecipeRepository.get(farmSetup.getWootMobName());
+                spawnRecipe = Woot.spawnRecipeRepository.get(farmSetup.getWootMobName());
                 recipeProgressTracker.setPowerStation(farmSetup.getPowerStation());
                 recipeProgressTracker.setPowerRecipe(powerRecipe);
                 farmStructure.clearChanged();
@@ -128,9 +126,11 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             if (isPowered()) {
                 Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
                 recipeProgressTracker.tick();
-                if (recipeProgressTracker.isComplete() && spawnRecipeConsumer.consume(getWorld(), getPos(), spawnRecipe, farmSetup.getNumMobs())) {
-                    Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
-                    storedXp = farmSetup.getStoredXp();
+                if (recipeProgressTracker.isComplete()) {
+                    if (spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs())) {
+                        Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
+                        storedXp = farmSetup.getStoredXp();
+                    }
                     recipeProgressTracker.reset();
                 }
             }

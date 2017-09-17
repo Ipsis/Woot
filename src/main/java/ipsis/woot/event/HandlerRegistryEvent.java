@@ -20,21 +20,33 @@ public class HandlerRegistryEvent {
 
         ModBlocks.init();
 
-        event.getRegistry().registerAll(
-                ModBlocks.blockAnvil.setUnlocalizedName(Reference.MOD_ID + "." + BlockWootAnvil.BASENAME).setRegistryName(Reference.MOD_ID, BlockWootAnvil.BASENAME),
-                ModBlocks.blockLayout.setUnlocalizedName(Reference.MOD_ID + "." + BlockLayout.BASENAME).setRegistryName(Reference.MOD_ID, BlockLayout.BASENAME),
-                ModBlocks.blockFactoryHeart.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryHeart.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryHeart.BASENAME),
-                ModBlocks.blockSoulStone.setUnlocalizedName(Reference.MOD_ID + "." + BlockSoulStone.BASENAME).setRegistryName(Reference.MOD_ID, BlockSoulStone.BASENAME),
-                ModBlocks.blockStygianIron.setUnlocalizedName(Reference.MOD_ID + "." + BlockStygianIron.BASENAME).setRegistryName(Reference.MOD_ID, BlockStygianIron.BASENAME),
-                ModBlocks.blockStygianIronOre.setUnlocalizedName(Reference.MOD_ID + "." + BlockStygianIronOre.BASENAME).setRegistryName(Reference.MOD_ID, BlockStygianIronOre.BASENAME),
-                ModBlocks.blockFactoryController.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryController.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryController.BASENAME),
-                ModBlocks.blockImporter.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryImporter.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryImporter.BASENAME),
-                ModBlocks.blockExporter.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryExporter.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryExporter.BASENAME),
-                ModBlocks.blockCell.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryCell.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryCell.BASENAME),
-                ModBlocks.blockStructure.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryStructure.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryStructure.BASENAME),
-                ModBlocks.blockUpgrade.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryUpgrade.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryUpgrade.BASENAME),
-                ModBlocks.blockUpgradeB.setUnlocalizedName(Reference.MOD_ID + "." + BlockMobFactoryUpgradeB.BASENAME).setRegistryName(Reference.MOD_ID, BlockMobFactoryUpgradeB.BASENAME)
-        );
+        class RegisterBlock {
+            Block block;
+            String basename;
+            public RegisterBlock(Block block, String basename) {
+               this.basename = basename;
+               this.block = block;
+            }
+        }
+
+        RegisterBlock[] blocks = {
+                new RegisterBlock(ModBlocks.blockAnvil, BlockWootAnvil.BASENAME),
+                new RegisterBlock(ModBlocks.blockLayout, BlockLayout.BASENAME),
+                new RegisterBlock(ModBlocks.blockFactoryHeart, BlockMobFactoryHeart.BASENAME),
+                new RegisterBlock(ModBlocks.blockSoulStone, BlockSoulStone.BASENAME),
+                new RegisterBlock(ModBlocks.blockStygianIron, BlockStygianIron.BASENAME),
+                new RegisterBlock(ModBlocks.blockStygianIronOre, BlockStygianIronOre.BASENAME),
+                new RegisterBlock(ModBlocks.blockFactoryController, BlockMobFactoryController.BASENAME),
+                new RegisterBlock(ModBlocks.blockImporter, BlockMobFactoryImporter.BASENAME),
+                new RegisterBlock(ModBlocks.blockExporter, BlockMobFactoryExporter.BASENAME),
+                new RegisterBlock(ModBlocks.blockCell, BlockMobFactoryCell.BASENAME),
+                new RegisterBlock(ModBlocks.blockStructure, BlockMobFactoryStructure.BASENAME),
+                new RegisterBlock(ModBlocks.blockUpgrade, BlockMobFactoryUpgrade.BASENAME),
+                new RegisterBlock(ModBlocks.blockUpgradeB, BlockMobFactoryUpgradeB.BASENAME),
+        };
+
+        for (RegisterBlock b : blocks)
+            event.getRegistry().register(b.block.setUnlocalizedName(Reference.MOD_ID + "." + b.basename).setRegistryName(Reference.MOD_ID, b.basename));
     }
 
     @SubscribeEvent
@@ -42,32 +54,48 @@ public class HandlerRegistryEvent {
 
         ModItems.init();
 
-        event.getRegistry().registerAll(
-                ModItems.itemDie.setUnlocalizedName(Reference.MOD_ID + "." + ItemDie.BASENAME).setRegistryName(Reference.MOD_ID, ItemDie.BASENAME),
-                ModItems.itemFactoryCore.setUnlocalizedName(Reference.MOD_ID + "." + ItemFactoryCore.BASENAME).setRegistryName(Reference.MOD_ID, ItemFactoryCore.BASENAME),
-                ModItems.itemFactoryBase.setUnlocalizedName(Reference.MOD_ID + "." + ItemFactoryBase.BASENAME).setRegistryName(Reference.MOD_ID, ItemFactoryBase.BASENAME),
-                ModItems.itemStygianIronIngot.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronIngot.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronIngot.BASENAME),
-                ModItems.itemStygianIronPlate.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronPlate.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronPlate.BASENAME),
-                ModItems.itemManual.setUnlocalizedName(Reference.MOD_ID + "." + ItemManual.BASENAME).setRegistryName(Reference.MOD_ID, ItemManual.BASENAME),
-                ModItems.itemNetherrackDust.setUnlocalizedName(Reference.MOD_ID + "." + ItemNetherrackDust.BASENAME).setRegistryName(Reference.MOD_ID, ItemNetherrackDust.BASENAME),
-                ModItems.itemEnderShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemEnderShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemEnderShard.BASENAME),
-                ModItems.itemSoulSandDust.setUnlocalizedName(Reference.MOD_ID + "." + ItemSoulSandDust.BASENAME).setRegistryName(Reference.MOD_ID, ItemSoulSandDust.BASENAME),
-                ModItems.itemStygianIronDust.setUnlocalizedName(Reference.MOD_ID + "." + ItemStygianIronDust.BASENAME).setRegistryName(Reference.MOD_ID, ItemStygianIronDust.BASENAME),
-                ModItems.itemShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemShard.BASENAME),
-                ModItems.itemYahHammer.setUnlocalizedName(Reference.MOD_ID + "." + ItemYahHammer.BASENAME).setRegistryName(Reference.MOD_ID, ItemYahHammer.BASENAME),
-                ModItems.itemXpShard.setUnlocalizedName(Reference.MOD_ID + "." + ItemXpShard.BASENAME).setRegistryName(Reference.MOD_ID, ItemXpShard.BASENAME)
-        );
+        class RegisterItem {
+            Item item;
+            String basename;
+            public RegisterItem(Item item, String basename) {
+                this.basename = basename;
+                this.item = item;
+            }
+        }
+
+        RegisterItem[] items = {
+                new RegisterItem(ModItems.itemDie, ItemDie.BASENAME),
+                new RegisterItem(ModItems.itemFactoryCore, ItemFactoryCore.BASENAME),
+                new RegisterItem(ModItems.itemFactoryBase, ItemFactoryBase.BASENAME),
+                new RegisterItem(ModItems.itemStygianIronIngot, ItemStygianIronIngot.BASENAME),
+                new RegisterItem(ModItems.itemStygianIronPlate, ItemStygianIronPlate.BASENAME),
+                new RegisterItem(ModItems.itemEnderShard, ItemEnderShard.BASENAME),
+                new RegisterItem(ModItems.itemSoulSandDust, ItemSoulSandDust.BASENAME),
+                new RegisterItem(ModItems.itemStygianIronDust, ItemStygianIronDust.BASENAME),
+                new RegisterItem(ModItems.itemShard, ItemShard.BASENAME),
+                new RegisterItem(ModItems.itemYahHammer, ItemYahHammer.BASENAME),
+                new RegisterItem(ModItems.itemXpShard, ItemXpShard.BASENAME)
+        };
+
+        for (RegisterItem item : items)
+            event.getRegistry().register(item.item.setUnlocalizedName(Reference.MOD_ID + "." + item.basename).setRegistryName(Reference.MOD_ID, item.basename));
+
+        Block[] blocks = {
+                ModBlocks.blockAnvil,
+                ModBlocks.blockLayout,
+                ModBlocks.blockFactoryHeart,
+                ModBlocks.blockSoulStone,
+                ModBlocks.blockStygianIron,
+                ModBlocks.blockStygianIronOre,
+                ModBlocks.blockImporter,
+                ModBlocks.blockExporter
+        };
+
+        for (Block b : blocks)
+            event.getRegistry().register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
 
         event.getRegistry().registerAll(
-                new ItemBlock(ModBlocks.blockAnvil).setRegistryName(ModBlocks.blockAnvil.getRegistryName()),
-                new ItemBlock(ModBlocks.blockLayout).setRegistryName(ModBlocks.blockLayout.getRegistryName()),
-                new ItemBlock(ModBlocks.blockFactoryHeart).setRegistryName(ModBlocks.blockFactoryHeart.getRegistryName()),
-                new ItemBlock(ModBlocks.blockSoulStone).setRegistryName(ModBlocks.blockSoulStone.getRegistryName()),
-                new ItemBlock(ModBlocks.blockStygianIron).setRegistryName(ModBlocks.blockStygianIron.getRegistryName()),
-                new ItemBlock(ModBlocks.blockStygianIronOre).setRegistryName(ModBlocks.blockStygianIronOre.getRegistryName()),
                 new ItemBlockController(ModBlocks.blockFactoryController).setRegistryName(ModBlocks.blockFactoryController.getRegistryName()),
-                new ItemBlock(ModBlocks.blockImporter).setRegistryName(ModBlocks.blockImporter.getRegistryName()),
-                new ItemBlock(ModBlocks.blockExporter).setRegistryName(ModBlocks.blockExporter.getRegistryName()),
                 new ItemBlockStructure(ModBlocks.blockStructure).setRegistryName(ModBlocks.blockStructure.getRegistryName()),
                 new ItemBlockCell(ModBlocks.blockCell).setRegistryName(ModBlocks.blockCell.getRegistryName()),
                 new ItemBlockUpgrade(ModBlocks.blockUpgrade).setRegistryName(ModBlocks.blockUpgrade.getRegistryName()),

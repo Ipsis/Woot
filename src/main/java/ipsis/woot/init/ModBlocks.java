@@ -11,7 +11,9 @@ public class ModBlocks {
 
     public static BlockWoot blockAnvil;
     public static BlockWoot blockFactoryHeart;
+    public static BlockWoot blockSoulStone;
     public static BlockWoot blockStygianIron;
+    public static BlockWoot blockStygianIronOre;
     public static BlockWoot blockUpgrade;
     public static BlockWoot blockUpgradeB;
     public static BlockWoot blockStructure;
@@ -29,7 +31,9 @@ public class ModBlocks {
 
         blockAnvil = new BlockWootAnvil();
         blockFactoryHeart = new BlockMobFactoryHeart();
+        blockSoulStone = new BlockSoulStone();
         blockStygianIron = new BlockStygianIron();
+        blockStygianIronOre = new BlockStygianIronOre();
         blockUpgrade = new BlockMobFactoryUpgrade();
         blockUpgradeB = new BlockMobFactoryUpgradeB();
         blockStructure = new BlockMobFactoryStructure();
@@ -45,7 +49,9 @@ public class ModBlocks {
 
         ModBlocks.blockAnvil.initModel();
         ModBlocks.blockFactoryHeart.initModel();
+        ModBlocks.blockSoulStone.initModel();
         ModBlocks.blockStygianIron.initModel();
+        ModBlocks.blockStygianIronOre.initModel();
         ModBlocks.blockUpgrade.initModel();
         ModBlocks.blockUpgradeB.initModel();
         ModBlocks.blockStructure.initModel();

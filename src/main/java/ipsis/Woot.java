@@ -15,6 +15,7 @@ import ipsis.woot.farming.SpawnRecipeRepository;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModEnchantments;
+import ipsis.woot.init.ModItems;
 import ipsis.woot.init.ModOreDictionary;
 //import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.loot.*;
@@ -31,9 +32,11 @@ import ipsis.woot.loot.schools.SkyBoxSchool;
 import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -97,6 +100,7 @@ public class Woot {
 
         proxy.init();
         ModOreDictionary.init();
+        FurnaceRecipes.instance().addSmeltingRecipeForBlock(ModBlocks.blockStygianIronOre, new ItemStack(ModItems.itemStygianIronIngot), 0.7F);
 
 //        if (Loader.isModLoaded(BloodMagic.BM_MODID))
 //            BloodMagic.init();

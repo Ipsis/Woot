@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ore"
+    },
+    {
+      "item": "minecraft:netherrack"
+    },
+    {
+      "item": "minecraft:soul_sand"
+    },
+    {
+      "item": "woot:yahhammer"
+    }
+  ],
+  "result": {
+    "item": "woot:stygianironore"
+  }
+}

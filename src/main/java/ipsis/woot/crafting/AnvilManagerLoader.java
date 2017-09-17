@@ -48,10 +48,13 @@ public class AnvilManagerLoader {
 
         // Dust
         Woot.anvilManager.addRecipe(
-                new ItemStack(ModItems.itemNetherrackDust, 2),
+                new ItemStack(ModItems.itemStygianIronDust, 3),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()),
                 true,
-                new ItemStack(Blocks.NETHERRACK));
+                new ItemStack(Blocks.NETHERRACK),
+                new ItemStack(Blocks.SOUL_SAND),
+                new ItemStack(Blocks.IRON_ORE)
+        );
 
         // Shards
         Woot.anvilManager.addRecipe(

@@ -25,6 +25,7 @@ item.woot.stygianironingot.name=Stygian Iron Ingot
 item.woot.stygianironplate.name=Stygian Iron Plate
 item.woot.stygianirondust.name=Stygian Iron Dust
 item.woot.netherrackdust.name=Netherrack Dust
+item.woot.soulsanddust.name=Soul Dust
 
 item.woot.endershard.name=Ender Shard
 item.woot.shard.diamond.name=Diamond Shard
@@ -33,13 +34,15 @@ item.woot.shard.quartz.name=Quartz Shard
 item.woot.shard.netherstar.name=Nether Star Shard
 item.woot.xpshard.name=XP Shard
 
-item.woot.yahhammer.name=Yah Hammer
+item.woot.yahhammer.name=Ya Hammer
 
 ###########################################################
 # Blocks
 ###########################################################
 
+tile.woot.soulstone.name=Soul Stone
 tile.woot.stygianiron.name=Stygian Iron Block
+tile.woot.stygianironore.name=Stygian Iron Ore
 tile.woot.anvil.name=Stygian Iron Anvil
 tile.woot.layout.name=Factory Layout
 
@@ -85,6 +88,11 @@ tile.woot.upgradeb.efficiency_iii.name=Efficiency III Upgrade
 tile.woot.upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
 tile.woot.upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
 tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
+
+###########################################################
+# Tabs
+###########################################################
+itemGroup.woot.creativeTab=Woot
 
 ###########################################################
 # Tooltips

@@ -3,18 +3,17 @@
     "item": "woot:factorybase"
   },
   "pattern": [
-    "sss",
-    "sIs",
-    "sss"
+    " S ",
+    "SIS",
+    " S "
   ],
   "type": "forge:ore_shaped",
   "key": {
     "I": {
       "item": "woot:stygianironplate"
     },
-    "s": {
-      "type": "forge:ore_dict",
-      "ore": "stone"
+    "S": {
+      "item": "woot:soulstone"
     }
   }
 }

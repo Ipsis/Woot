@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "woot:soulstone",
+    "count": 2
+
+  },
+  "pattern": [
+    "   ",
+    "SDS",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "woot:soulsanddust"
+    },
+    "S": {
+      "item": "minecraft:cobblestone"
+    }
+  }
+}

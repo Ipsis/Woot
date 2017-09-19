@@ -9,11 +9,16 @@
       "item": "woot:factorybase"
     },
     {
-      "item": "minecraft:skull",
-      "data": 1
+      "item": "woot:factorycore",
+      "data": 6
     },
     {
-      "item": "minecraft:emerald"
+      "item": "woot:shard",
+      "data": 3
+    },
+    {
+      "item": "minecraft:skull",
+      "data": 1
     }
   ]
 }

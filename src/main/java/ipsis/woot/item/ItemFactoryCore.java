@@ -20,11 +20,13 @@ public class ItemFactoryCore extends ItemWoot {
             EnumCoreType.CONTROLLER.getName(),
             EnumCoreType.T1_UPGRADE.getName(),
             EnumCoreType.T2_UPGRADE.getName(),
-            EnumCoreType.T3_UPGRADE.getName()
+            EnumCoreType.T3_UPGRADE.getName(),
+            EnumCoreType.POWER.getName(),
+            EnumCoreType.CAP.getName()
     };
 
     public enum EnumCoreType {
-        HEART("heart"), CONTROLLER("controller"), T1_UPGRADE("t1_upgrade"), T2_UPGRADE("t2_upgrade"), T3_UPGRADE("t3_upgrade");
+        HEART("heart"), CONTROLLER("controller"), T1_UPGRADE("t1_upgrade"), T2_UPGRADE("t2_upgrade"), T3_UPGRADE("t3_upgrade"), POWER("power"), CAP("cap");
 
         public int getMeta() { return ordinal(); }
         EnumCoreType(String name) { this.name = name; }

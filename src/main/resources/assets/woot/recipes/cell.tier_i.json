@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "woot:cell",
+    "data": 0
+  },
+  "pattern": [
+    " R ",
+    " B ",
+    " C "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "B": {
+      "item": "woot:factorybase"
+    },
+    "C": {
+      "item": "woot:factorycore",
+      "data": 5
+    }
+  }
+}

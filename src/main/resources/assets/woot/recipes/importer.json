@@ -1,0 +1,20 @@
+{
+  "result": {
+    "item": "woot:importer"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "minecraft:hopper"
+    },
+    {
+      "item": "minecraft:chest"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ]
+}

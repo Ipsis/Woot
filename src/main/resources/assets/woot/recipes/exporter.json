@@ -1,7 +1,6 @@
 {
   "result": {
-    "item": "woot:structure",
-    "data": 4
+    "item": "woot:exporter"
   },
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
@@ -9,8 +8,10 @@
       "item": "woot:factorybase"
     },
     {
-      "item": "woot:shard",
-      "data": 3
+      "item": "minecraft:chest"
+    },
+    {
+      "item": "minecraft:bucket"
     }
   ]
 }

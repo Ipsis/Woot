@@ -23,7 +23,7 @@ public class AnvilManagerLoader {
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PLATE.getMeta()),
-                new ItemStack(Items.BRICK),
+                new ItemStack(Blocks.STONE_SLAB),
                 false,
                 new ItemStack(ModItems.itemStygianIronPlate, 4));
 
@@ -53,8 +53,13 @@ public class AnvilManagerLoader {
                 true,
                 new ItemStack(Blocks.NETHERRACK),
                 new ItemStack(Blocks.SOUL_SAND),
-                new ItemStack(Blocks.IRON_ORE)
-        );
+                new ItemStack(Blocks.IRON_ORE));
+
+        Woot.anvilManager.addRecipe(
+                new ItemStack(ModItems.itemSoulSandDust, 3),
+                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()),
+                true,
+                new ItemStack(Blocks.SOUL_SAND));
 
         // Shards
         Woot.anvilManager.addRecipe(
@@ -93,8 +98,7 @@ public class AnvilManagerLoader {
                 new ItemStack(ModItems.itemEnderShard),
                 false,
                 new ItemStack(ModItems.itemFactoryBase),
-                new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.CONTROLLER.getMeta())
-        );
+                new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.CONTROLLER.getMeta()));
 
         // Cores
         Woot.anvilManager.addRecipe(
@@ -106,35 +110,52 @@ public class AnvilManagerLoader {
                 new ItemStack(Items.DYE, 1, 2),
                 new ItemStack(Items.DYE, 1, 3),
                 new ItemStack(Items.DYE, 1, 4),
-                new ItemStack(Items.DYE, 1, 5),
-                new ItemStack(Items.DYE, 1, 6));
+                new ItemStack(ModItems.itemStygianIronPlate));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.HEART.getMeta()),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
                 true,
                 new ItemStack(Blocks.MAGMA),
-                new ItemStack(ModBlocks.blockStygianIron));
+                new ItemStack(ModBlocks.blockStygianIron),
+                new ItemStack(ModItems.itemStygianIronPlate));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.T1_UPGRADE.getMeta()),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
                 true,
                 new ItemStack(Items.REDSTONE),
-                new ItemStack(Items.IRON_INGOT));
+                new ItemStack(Blocks.IRON_BLOCK),
+                new ItemStack(ModItems.itemStygianIronPlate));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.T2_UPGRADE.getMeta()),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
                 true,
                 new ItemStack(Items.GLOWSTONE_DUST),
-                new ItemStack(Items.GOLD_INGOT));
+                new ItemStack(Blocks.GOLD_BLOCK),
+                new ItemStack(ModItems.itemStygianIronPlate));
 
         Woot.anvilManager.addRecipe(
                 new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.T3_UPGRADE.getMeta()),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
                 true,
                 new ItemStack(Items.PRISMARINE_SHARD),
-                new ItemStack(Items.DIAMOND));
+                new ItemStack(Blocks.DIAMOND_BLOCK),
+                new ItemStack(ModItems.itemStygianIronPlate));
+
+        Woot.anvilManager.addRecipe(
+                new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.POWER.getMeta()),
+                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
+                true,
+                new ItemStack(Blocks.COAL_BLOCK),
+                new ItemStack(ModItems.itemStygianIronPlate));
+
+        Woot.anvilManager.addRecipe(
+                new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.CAP.getMeta()),
+                new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
+                true,
+                new ItemStack(Blocks.REDSTONE_BLOCK),
+                new ItemStack(ModItems.itemStygianIronPlate));
     }
 }

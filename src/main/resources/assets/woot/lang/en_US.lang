@@ -11,20 +11,21 @@
 item.woot.die.mesh.name=Mesh Die
 item.woot.die.plate.name=Plate Die
 item.woot.die.core.name=Core Die
-item.woot.die.shard.name=Shared Die
+item.woot.die.shard.name=Shard Die
 
 item.woot.factorycore.heart.name=Heart Core
 item.woot.factorycore.controller.name=Controller Core
 item.woot.factorycore.t1_upgrade.name=Tier I Upgrade Core
 item.woot.factorycore.t2_upgrade.name=Tier II Upgrade Core
 item.woot.factorycore.t3_upgrade.name=Tier III Upgrade Core
+item.woot.factorycore.power.name=Power Core
+item.woot.factorycore.cap.name=Cap Core
 
 item.woot.factorybase.name=Factory Base
 
 item.woot.stygianironingot.name=Stygian Iron Ingot
 item.woot.stygianironplate.name=Stygian Iron Plate
 item.woot.stygianirondust.name=Stygian Iron Dust
-item.woot.netherrackdust.name=Netherrack Dust
 item.woot.soulsanddust.name=Soul Dust
 
 item.woot.endershard.name=Ender Shard

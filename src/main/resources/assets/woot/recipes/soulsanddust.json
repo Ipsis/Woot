@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "woot:soulsanddust"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:soul_sand"
+    },
+    {
+      "item": "woot:yahhammer"
+    }
+  ]
+}

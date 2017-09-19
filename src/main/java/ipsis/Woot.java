@@ -32,6 +32,7 @@ import ipsis.woot.loot.schools.SkyBoxSchool;
 import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -101,6 +102,7 @@ public class Woot {
         proxy.init();
         ModOreDictionary.init();
         FurnaceRecipes.instance().addSmeltingRecipeForBlock(ModBlocks.blockStygianIronOre, new ItemStack(ModItems.itemStygianIronIngot), 0.7F);
+        FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ModItems.itemStygianIronDust), new ItemStack(ModItems.itemStygianIronIngot), 0.7F);
 
 //        if (Loader.isModLoaded(BloodMagic.BM_MODID))
 //            BloodMagic.init();

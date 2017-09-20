@@ -2,6 +2,9 @@ package ipsis.woot.enchantment;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModEnchantments;
+import ipsis.woot.oss.LogHelper;
+import ipsis.woot.reference.Reference;
+import ipsis.woot.util.SkullHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -12,19 +15,25 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
 
-public class EnchantmentDecapitate extends Enchantment {
+public class EnchantmentHeadhunter extends Enchantment {
 
-    private static final String NAME = "woot_decapitate";
+    private static final String NAME = "headhunter";
 
-    public EnchantmentDecapitate() {
+    public EnchantmentHeadhunter() {
 
         super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND});
         setName(NAME);
         setRegistryName(NAME);
+    }
+
+    @Override
+    public String getName() {
+        return "enchant." + Reference.MOD_ID + "." + NAME;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class EnchantmentDecapitate extends Enchantment {
     }
 
     /**
-     * Returns true if there is ANY skull already in the drops
+     * Returns true if there is ANY vanilla skull already in the drops
      */
     private static boolean containsSkull(List<EntityItem> drops) {
 
@@ -69,7 +78,7 @@ public class EnchantmentDecapitate extends Enchantment {
         return found;
     }
 
-    private static final float DECAPITATE_CHANCE = 20.0F;
+    private static final float DECAPITATE_CHANCE = 30.0F;
     private static boolean hasDecapitated() {
 
         return Woot.RANDOM.nextFloat() <= DECAPITATE_CHANCE / 100.0F;
@@ -80,17 +89,17 @@ public class EnchantmentDecapitate extends Enchantment {
         if (e.getSource().getTrueSource() == null)
             return;
 
+        if (e.getSource().getTrueSource() instanceof FakePlayer)
+            return;
+
         /* Ignore wither skeletons, only for use on other mobs */
         if (e.getEntityLiving() instanceof EntityWitherSkeleton)
             return;
 
         if (hasDecapitated() && !containsSkull(e.getDrops())) {
 
-            /*
-            ItemStack itemStack = Woot.headRegistry.getVanillaHead((EntityLiving)e.getEntityLiving());
-
+            ItemStack itemStack = SkullHelper.getSkullForEntity((EntityLiving) e.getEntityLiving());
             if (!itemStack.isEmpty()) {
-
                 EntityItem entityItem = createEntityItem(
                         e.getSource().getTrueSource().getEntityWorld(),
                         itemStack,
@@ -100,7 +109,7 @@ public class EnchantmentDecapitate extends Enchantment {
 
                 if (entityItem != null)
                     e.getDrops().add(entityItem);
-            } */
+            }
         }
     }
 

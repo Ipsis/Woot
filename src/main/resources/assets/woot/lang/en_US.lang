@@ -108,6 +108,11 @@ info.woot.endershard.b.0=Kills %d/%d
 info.woot.endershard.b.1=Fully programmed
 
 ###########################################################
+# Enchantments
+###########################################################
+enchant.woot.headhunter=Headhunter
+
+###########################################################
 # Chat
 ###########################################################
 chat.woot.endershard.failure=Cannot capture mob

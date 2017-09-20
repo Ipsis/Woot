@@ -1,7 +1,7 @@
 package ipsis.woot.event;
 
 import ipsis.woot.block.*;
-import ipsis.woot.enchantment.EnchantmentDecapitate;
+import ipsis.woot.enchantment.EnchantmentHeadhunter;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.item.*;
@@ -106,7 +106,7 @@ public class HandlerRegistryEvent {
     @SubscribeEvent
     public void onRegisterEnchantments(RegistryEvent.Register<Enchantment> event) {
 
-        event.getRegistry().register(new EnchantmentDecapitate());
+        event.getRegistry().register(new EnchantmentHeadhunter());
 
     }
 }

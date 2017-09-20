@@ -14,6 +14,7 @@ public interface IFarmStructure {
 
     void setStructureDirty();
     void setUpgradeDirty();
+    void fullDisconnect();
 
     IFarmStructure setWorld(@Nonnull World world);
     IFarmStructure setPosition(BlockPos origin);

@@ -259,4 +259,27 @@ public class FarmBuilder implements IFarmStructure {
 
         this.changed = false;
     }
+
+    @Override
+    public void fullDisconnect() {
+
+        if (currFarm == null)
+            return;
+
+        Set<BlockPos> oldBlocks = new HashSet<>();
+        oldBlocks.addAll(currFarm.base.getBlocks());
+        oldBlocks.add(currFarm.controller.getBlocks());
+        oldBlocks.addAll(currFarm.upgrades.getBlocks());
+        oldBlocks.addAll(currFarm.remote.getBlocks());
+
+        for (BlockPos pos : oldBlocks) {
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof IFarmBlockConnection) {
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "clearMaster", pos);
+                    ((IFarmBlockConnection) te).clearMaster();
+                }
+            }
+        }
+    }
 }

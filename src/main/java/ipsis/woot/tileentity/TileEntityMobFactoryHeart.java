@@ -79,8 +79,9 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     @Override
     public void invalidate() {
 
-        // TODO disconnect all the farm blocks!
         super.invalidate();
+        if (farmStructure != null && farmStructure.isFormed())
+            farmStructure.fullDisconnect();
     }
 
     private boolean isPowered() {

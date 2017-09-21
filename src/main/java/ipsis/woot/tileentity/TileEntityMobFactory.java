@@ -698,7 +698,7 @@ public class TileEntityMobFactory extends TileEntity implements ITickable {
                      * We try to insert 1 item and decrease itemStack.stackSize if it is successful
                      */
                     ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
-                    if (result == null)
+                    if (result.isEmpty())
                         itemStack.shrink(1);
                     else
                         success = false;

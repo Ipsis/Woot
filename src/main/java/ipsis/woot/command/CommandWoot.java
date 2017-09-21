@@ -124,7 +124,7 @@ public class CommandWoot extends CommandBase {
         int xp = parseInt(args[3]);
 
         ItemStack itemstack = ItemPrism.getItemStack(wootName, xp);
-        if (itemstack == null)
+        if (itemstack.isEmpty())
             return;
 
         /* straight from the CommandGive code */

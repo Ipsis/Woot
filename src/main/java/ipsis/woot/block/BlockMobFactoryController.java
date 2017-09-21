@@ -100,7 +100,7 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
         if (willHarvest) {
             // TODO need to check harvesting of blocks
             ItemStack itemstack1 = player.getHeldItemMainhand();
-            ItemStack itemstack2 = itemstack1 == null ? null : itemstack1.copy();
+            ItemStack itemstack2 = itemstack1.copy();
             this.harvestBlock(world, player, pos, iBlockState, world.getTileEntity(pos), itemstack2);
         }
 

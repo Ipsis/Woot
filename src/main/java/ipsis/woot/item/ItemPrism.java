@@ -189,7 +189,7 @@ public class ItemPrism extends ItemWoot {
     public static ItemStack getItemStack(String wootName, int xp) {
 
         if (!Woot.mobRegistry.isValidMobName(wootName))
-            return null;
+            return ItemStack.EMPTY;
 
         ItemStack itemStack = new ItemStack(ModItems.itemPrism);
         setMobName(itemStack, wootName, wootName, xp);

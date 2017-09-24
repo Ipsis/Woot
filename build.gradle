@@ -33,7 +33,7 @@ repositories {
         name 'tterrag maven'
         url "http://maven.tterrag.com/"
     }
-    maven { // BloodMagic
+    maven { // BloodMagic and GuideAPI
         name 'Tehnut Maven'
         url "http://tehnut.info/maven/"
     }
@@ -81,7 +81,8 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
     //deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
     deobfCompile "cofh:RedstoneFlux:${config.rf_version}"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:${config.minecraft_version}-${config.guideapi_version}"
+    //deobfCompile "info.amerifrance.guideapi:Guide-API:${config.minecraft_version}-${config.guideapi_version}"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-${config.guideapi_version}"
 }
 
 processResources

@@ -49,6 +49,6 @@ public class GuideWoot implements IGuideBook {
 
         return new ShapelessOreRecipe(new ResourceLocation(Reference.MOD_ID, "guide"),
                 GuideAPI.getStackFromBook(GUIDE_BOOK),
-                new ItemStack(Items.BOOK), new ItemStack(Items.ROTTEN_FLESH)).setRegistryName(GUIDE_BOOK.getRegistryName());
+                new ItemStack(Items.BOOK), new ItemStack(Items.ROTTEN_FLESH)).setRegistryName("guide");
     }
 }

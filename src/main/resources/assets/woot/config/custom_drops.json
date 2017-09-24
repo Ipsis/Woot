@@ -2,20 +2,8 @@
   "version": 1,
   "mobs": [
     {
-      "mobName": "minecraft:villager",
-      "drops": [
-        {
-          "drop": {
-            "item": "minecraft:feather"
-          },
-          "sizes": [ 1, 1, 1, 1 ],
-          "chances": [ 100, 50, 50, 50 ]
-        }
-      ]
-    },
-    {
       "mobName": "minecraft:ender_dragon",
-      "drop": [
+      "drops": [
         {
           "drop": {
             "item": "minecraft:dragon_egg"

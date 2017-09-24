@@ -105,15 +105,17 @@ public class FactoryConfigLoader {
                 if (tag.equals(""))
                     throw new JsonSyntaxException("Tag cannot be empty");
 
-                if (value < 0)
-                    throw new JsonSyntaxException("Value must be >= 0");
-
-                EnumConfigKey configKey = EnumConfigKey.get(tag);
-                if (configKey == null)
-                    throw new JsonSyntaxException("Invalid tag");
-
-                wootConfiguration.setInteger(wootMobName, configKey, value);
-                LogHelper.info(wootMobName + "/" + configKey + "/" + value);
+                if (value >= 0) {
+                    EnumConfigKey configKey = EnumConfigKey.get(tag);
+                    if (configKey == null) {
+                        LogHelper.error(wootMobName + " unknown config key " + tag);
+                    } else {
+                        wootConfiguration.setInteger(wootMobName, configKey, value);
+                        LogHelper.info(wootMobName + "/" + configKey + "/" + value);
+                    }
+                } else {
+                    LogHelper.error(wootMobName + " Value must be >= 0");
+                }
             }
         }
     }

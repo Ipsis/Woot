@@ -1,6 +1,5 @@
 package ipsis.woot.init;
 
-import ipsis.woot.item.ItemShard;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -17,8 +16,5 @@ public class ModOreDictionary {
          */
         ItemStack skull = new ItemStack(Items.SKULL, 1, OreDictionary.WILDCARD_VALUE);
         OreDictionary.registerOre(ORE_DICT_SKULL, skull);
-
-        ItemStack itemStack = new ItemStack(ModItems.itemNetherrackDust);
-        OreDictionary.registerOre("dustNetherrack", itemStack);
     }
 }

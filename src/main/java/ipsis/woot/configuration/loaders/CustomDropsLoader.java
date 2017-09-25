@@ -1,6 +1,7 @@
 package ipsis.woot.configuration.loaders;
 
 import com.google.gson.*;
+import ipsis.Woot;
 import ipsis.woot.oss.FileUtils;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
@@ -8,6 +9,9 @@ import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static ipsis.woot.util.JsonHelper.getItemStack;
 
@@ -68,25 +72,19 @@ public class CustomDropsLoader {
                 if (sizesArray.size() != 4)
                     throw new JsonSyntaxException("Sizes must contain 4 entries");
 
-                int k = 0;
-                int[] sizes = new int[4];
-                for (JsonElement jsonElement : sizesArray) {
-                    sizes[k++] = jsonElement.getAsInt();
-                }
+                List<Integer> sizes = new ArrayList<>(4);
+                for (JsonElement jsonElement : sizesArray)
+                    sizes.add(jsonElement.getAsInt());
 
                 JsonArray chancesArray = JsonUtils.getJsonArray(dropObject, "chances");
                 if (chancesArray.size() != 4)
                     throw new JsonSyntaxException("Chances must contain 4 entries");
 
-                k = 0;
-                int[] chances = new int[4];
-                for (JsonElement jsonElement : chancesArray) {
-                    chances[k++] = jsonElement.getAsInt();
-                }
+                List<Integer> chances = new ArrayList<>(4);
+                for (JsonElement jsonElement : chancesArray)
+                    chances.add(jsonElement.getAsInt());
 
-                LogHelper.info(wootMobName + "-" + itemStack + "-" +
-                        sizes[0] + "#" + sizes[1] + "#" + sizes[2] + "#" + sizes[3] + "#" +
-                        chances[0] + "#" + chances[1] + "#" + chances[2] + "#" + chances[3]);
+                Woot.customDropsRepository.addDrop(wootMobName, itemStack, chances, sizes);
             }
 
         }

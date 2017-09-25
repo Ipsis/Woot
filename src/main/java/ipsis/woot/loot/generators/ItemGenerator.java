@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.loot.repository.ILootRepositoryLoad;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
+import ipsis.woot.util.LootHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -96,7 +97,7 @@ public class ItemGenerator implements ILootGenerator {
         if (itemHandlerList.size() == 0)
             return;
 
-        List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
+        List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (int i = 0; i < farmSetup.getNumMobs(); i++) {
             List<ItemStack> mobLoot = calculateDrops(loot, difficulty);
 

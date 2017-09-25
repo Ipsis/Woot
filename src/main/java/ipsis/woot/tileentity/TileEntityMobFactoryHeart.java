@@ -14,6 +14,7 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import ipsis.woot.util.LootHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +26,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
@@ -208,7 +210,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.powerStored = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
         info.mobCount = farmSetup.getNumMobs();
 
-        List<ILootRepositoryLookup.LootItemStack> loot = Woot.lootRepository.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
+        List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {
             ItemStack itemStack = lootItemStack.itemStack.copy();
             itemStack.setCount(lootItemStack.dropChance);

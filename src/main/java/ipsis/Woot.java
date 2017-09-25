@@ -19,6 +19,7 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.init.ModOreDictionary;
 //import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.loot.*;
+import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
@@ -57,6 +58,7 @@ public class Woot {
     public static ILootGeneration lootGeneration = new LootGeneration();
     public static ILootLearner lootLearner = new SkyBoxSchool();
     public static LootRepository lootRepository = new LootRepository();
+    public static CustomDropsRepository customDropsRepository= new CustomDropsRepository();
     public static IMobCost mobCosting = new MobXPManager();
     public static IEntitySpawner entitySpawner = new EntitySpawner();
     public static DebugSetup debugSetup = new DebugSetup();

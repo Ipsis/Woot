@@ -110,7 +110,9 @@ public class WootConfigurationManager implements IWootConfiguration {
         EnumMobFactoryTier tier;
         String key = makeKey(wootMobName, EnumConfigKey.FACTORY_TIER);
         if (integerMobMap.containsKey(key)) {
-            tier = EnumMobFactoryTier.getTier(integerMobMap.get(key));
+            // User will select 1-4, but getTier expects enum oridinals
+            int tierKey = integerMobMap.get(key) - 1;
+            tier = EnumMobFactoryTier.getTier(tierKey);
         } else {
             int cost = getSpawnCost(world, wootMobName);
             if (cost >= getInteger(wootMobName, EnumConfigKey.T4_XP_MAX))

@@ -25,6 +25,9 @@ public class FarmUIInfo {
     // Filtered list of drops with the stackSize == drop chance
     public List<ItemStack> drops = new ArrayList<>();
 
+    // List of ingredients to spawn
+    public List<ItemStack> ingredients = new ArrayList<>();
+
     public void setValid() {
 
         this.isValid = true;

@@ -27,11 +27,6 @@ public class TOPUIInfoConvertors {
 
     public static void farmConvertor(FarmUIInfo farm, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
-        /**
-         * Power & Redstone state
-         */
-
-        probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (farm.isRunning ? "On" : "Off"));
 
         /**
          * Progress
@@ -39,20 +34,50 @@ public class TOPUIInfoConvertors {
         if (farm.isRunning) {
             int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
             p = MathHelper.clamp(p, 0, 100);
-            TextFormatting form = TextFormatting.GREEN;
-            probeInfo.horizontal().item(new ItemStack(Items.COMPASS), probeInfo.defaultItemStyle().width(14).height(14)).text(form + "Progress: " + p + "%");
+            probeInfo.progress(p, 100,
+                    probeInfo.defaultProgressStyle().suffix("%").filledColor(0x99ffffdd).alternateFilledColor(0xff000043));
         }
+
+        /**
+         * Redstone state
+         */
+        probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (farm.isRunning ? "On" : "Off"));
 
         /**
          * Recipe
          */
-        probeInfo.text(TextFormatting.GREEN + "Mob: " + farm.wootMob.getDisplayName() + " * " + farm.mobCount);
-        probeInfo.text(TextFormatting.GREEN + "Recipe: " + farm.recipeTotalPower + "RF for " + farm.recipeTotalTime + " ticks @ " + farm.recipePowerPerTick + "RF/tick");
+        String total = ElementProgress.format(farm.recipeTotalPower, NumberFormat.COMPACT, "RF");
+        String perTick = ElementProgress.format(farm.recipePowerPerTick, NumberFormat.COMPACT, "RF/tick");
+
+        probeInfo.text(TextFormatting.GREEN + farm.wootMob.getDisplayName() + " * " + farm.mobCount);
+        probeInfo.text(TextFormatting.GREEN + total + " @ " + perTick);
+        probeInfo.text(TextFormatting.GREEN + Integer.toString(farm.recipeTotalTime) + " ticks");
+
+        /**
+         * Ingredients
+         */
+        if (!farm.ingredients.isEmpty()) {
+            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+            IProbeInfo horizontal = null;
+            int rows = 0;
+            int idx = 0;
+            for (ItemStack itemStack : farm.ingredients) {
+                if (idx % 10 == 0) {
+                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
+                    rows++;
+                    if (rows > 4)
+                        break;
+                }
+
+                horizontal.item(itemStack);
+                idx++;
+            }
+        }
 
         /**
          * Drops
          */
-        if (mode == ProbeMode.EXTENDED) {
+        if (mode == ProbeMode.EXTENDED && !farm.drops.isEmpty()) {
 
             IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
             IProbeInfo horizontal = null;

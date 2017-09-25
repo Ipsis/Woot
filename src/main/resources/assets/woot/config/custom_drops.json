@@ -9,14 +9,14 @@
             "item": "minecraft:dragon_egg"
           },
           "sizes": [ 1, 1, 1, 1 ],
-          "chances": [ 20, 40, 60, 80 ]
+          "chances": [ 100, 100, 100, 100 ]
         },
         {
           "drop": {
             "item": "minecraft:dragon_breath"
           },
           "sizes": [ 2, 4, 6, 8 ],
-          "chances": [ 80, 80, 80, 80 ]
+          "chances": [ 100, 100, 100, 100 ]
         },
         {
           "drop": {

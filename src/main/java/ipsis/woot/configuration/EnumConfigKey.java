@@ -23,7 +23,7 @@ public enum EnumConfigKey {
             "learnTicks", Integer.class, 20, false),
     SPAWN_TICKS(
             "Default number of ticks to spawn a mob",
-            "spawnTicks", Integer.class, 16 * 20, false),
+            "spawnTicks", Integer.class, 16 * 20, true),
     NUM_MOBS(
             "Default number of mobs to spawn",
             "numMobs", Integer.class, 1, false),

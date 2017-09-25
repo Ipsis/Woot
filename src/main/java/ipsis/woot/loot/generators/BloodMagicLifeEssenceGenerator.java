@@ -14,6 +14,6 @@ public class BloodMagicLifeEssenceGenerator implements ILootGenerator {
 
     public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup, DifficultyInstance difficulty) {
 
-        LogHelper.info("Generating life essence into tanks and altar");
+//        LogHelper.info("Generating life essence into tanks and altar");
     }
 }

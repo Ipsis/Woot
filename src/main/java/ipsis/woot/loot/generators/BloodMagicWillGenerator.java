@@ -14,6 +14,6 @@ public class BloodMagicWillGenerator implements ILootGenerator {
 
     public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup, DifficultyInstance difficulty) {
 
-        LogHelper.info("Generating will into chests");
+//        LogHelper.info("Generating will into chests");
     }
 }

@@ -30,7 +30,6 @@ public class XpGenerator implements ILootGenerator {
 
         int storedXp = farmSetup.getStoredXp();
 
-        // TODO what about the level of upgrade!
         int deathXp = Woot.wootConfiguration.getDeathCost(world, farmSetup.getWootMobName());
         float increase = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getXpParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
         deathXp *= farmSetup.getNumMobs();

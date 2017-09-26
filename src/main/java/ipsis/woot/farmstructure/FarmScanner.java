@@ -213,13 +213,6 @@ public class FarmScanner implements IFarmScanner {
     @Override
     public void applyConfiguration(World world, @Nonnull ScannedFarmController farmController, @Nonnull ScannedFarmUpgrade farmUpgrade, EnumMobFactoryTier tier) {
 
-        EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, farmController.wootMob.getWootMobName());
-
-        // TODO fix using the ordinal to order the tier enum
-        if (mobTier.ordinal() > tier.ordinal()) {
-            LogHelper.info("TODO Factory tier not good enough for mob");
-        }
-
         for (ScannedFarmUpgrade.Upgrade upgrade : farmUpgrade.getUpgrades()) {
 
             LogHelper.info("TODO validate upgrade against mob");
@@ -247,6 +240,10 @@ public class FarmScanner implements IFarmScanner {
          */
         ScannedFarmController scannedFarmController = scanFarmController(world, origin, facing);
         if (!scannedFarmController.isValid())
+            badFarmInfo.badFarmBlocks.add(new BadFarmBlock(origin.up().offset(facing, -1), ModBlocks.blockFactoryController, 0));
+
+        EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, scannedFarmController.wootMob.getWootMobName());
+        if (!EnumMobFactoryTier.isLessThanOrEqual(mobTier, tier))
             badFarmInfo.badFarmBlocks.add(new BadFarmBlock(origin.up().offset(facing, -1), ModBlocks.blockFactoryController, 0));
     }
 }

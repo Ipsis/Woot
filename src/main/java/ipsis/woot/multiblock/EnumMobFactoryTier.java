@@ -344,4 +344,10 @@ public enum EnumMobFactoryTier {
 
         return values()[v];
     }
+
+    public static boolean isLessThanOrEqual(EnumMobFactoryTier a, EnumMobFactoryTier b) {
+
+        return a.ordinal() <= b.ordinal();
+
+    }
 }

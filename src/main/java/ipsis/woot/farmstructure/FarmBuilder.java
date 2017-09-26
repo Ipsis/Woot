@@ -2,6 +2,7 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryHeart;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.oss.LogHelper;
@@ -126,8 +127,9 @@ public class FarmBuilder implements IFarmStructure {
 
         farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
         // Is the programmed controller valid for this factory tier
-        if (!scannedFarm.controller.isValid()) {
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid controller for factory", "");
+        EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, scannedFarm.controller.wootMob.getWootMobName());
+        if (!EnumMobFactoryTier.isLessThanOrEqual(mobTier, scannedFarm.base.tier)) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: need higher tier for mob", "");
             return null;
         }
 

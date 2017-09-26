@@ -1,12 +1,9 @@
 package ipsis.woot.enchantment;
 
 import ipsis.Woot;
-import ipsis.woot.init.ModEnchantments;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.SkullHelper;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -98,7 +95,7 @@ public class EnchantmentHeadhunter extends Enchantment {
 
         if (hasDecapitated() && !containsSkull(e.getDrops())) {
 
-            ItemStack itemStack = SkullHelper.getSkullForEntity((EntityLiving) e.getEntityLiving());
+            ItemStack itemStack = SkullHelper.getSkull((EntityLiving) e.getEntityLiving());
             if (!itemStack.isEmpty()) {
                 EntityItem entityItem = createEntityItem(
                         e.getSource().getTrueSource().getEntityWorld(),

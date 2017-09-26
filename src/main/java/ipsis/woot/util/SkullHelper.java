@@ -1,30 +1,57 @@
 package ipsis.woot.util;
 
+import ipsis.woot.oss.LogHelper;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityWitherSkeleton;
-import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.*;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.HashMap;
 
 public class SkullHelper {
 
-    public static ItemStack getSkull(SkullType skullType) {
+    // for reference private static final String[] SKULL_TYPES = new String[] {"skeleton", "wither", "zombie", "char", "creeper", "dragon"};
+    private static HashMap<SkullType, ItemStack> skulls = new HashMap<>();
+    private static HashMap<WootMobName, ItemStack> wootSkulls = new HashMap<>();
 
-        if (skullType == SkullType.VANILLA_SKELTON)
-            return new ItemStack(Items.SKULL, 1, 0);
-        else if (skullType == SkullType.VANILLA_WITHER_SKELETON)
-            return new ItemStack(Items.SKULL, 1, 1);
-        else if (skullType == SkullType.VANILLA_ZOMBIE)
-            return new ItemStack(Items.SKULL, 1, 2);
-        else if (skullType == SkullType.VANILLA_CREEPER)
-            return new ItemStack(Items.SKULL, 1, 4);
+    public static void postInit() {
 
-        return new ItemStack(Items.SKULL, 1, 0);
+        skulls.put(SkullType.VANILLA_SKELTON, new ItemStack(Items.SKULL, 1, 0));
+        skulls.put(SkullType.VANILLA_WITHER_SKELETON, new ItemStack(Items.SKULL, 1, 1));
+        skulls.put(SkullType.VANILLA_ZOMBIE, new ItemStack(Items.SKULL, 1, 2));
+        skulls.put(SkullType.VANILLA_CREEPER, new ItemStack(Items.SKULL, 1, 4));
+
+        wootSkulls.put(WootMobNameBuilder.create("minecraft:skeleton"), new ItemStack(Items.SKULL, 1, 0));
+        wootSkulls.put(WootMobNameBuilder.create("minecraft:wither_skeleton"), new ItemStack(Items.SKULL, 1, 1));
+        wootSkulls.put(WootMobNameBuilder.create("minecraft:zombie"), new ItemStack(Items.SKULL, 1, 2));
+        wootSkulls.put(WootMobNameBuilder.create("minecraft:creeper"), new ItemStack(Items.SKULL, 1, 4));
+
+        Item i = Item.getByNameOrId("EnderIO:blockEndermanSkull");
+        if (i != null) {
+            LogHelper.info("Adding EnderIO enderman skull");
+            skulls.put(SkullType.ENDERIO_ENDERMAN, new ItemStack(i));
+            wootSkulls.put(WootMobNameBuilder.create("minecraft:enderman"), new ItemStack(i));
+        }
     }
 
-    public static ItemStack getSkullForEntity(EntityLiving entityLiving) {
+    public static ItemStack getSkull(SkullType skullType) {
+
+        if (skulls.containsKey(skullType))
+            return skulls.get(skullType);
+
+        return ItemStack.EMPTY;
+    }
+
+    public static ItemStack getSkull(WootMobName wootMobName) {
+
+        if (wootSkulls.containsKey(wootMobName))
+            return wootSkulls.get(wootMobName);
+
+        return ItemStack.EMPTY;
+    }
+
+    public static ItemStack getSkull(EntityLiving entityLiving) {
 
         if (entityLiving instanceof EntityWitherSkeleton)
             return getSkull(SkullType.VANILLA_WITHER_SKELETON);
@@ -34,6 +61,8 @@ public class SkullHelper {
             return getSkull(SkullType.VANILLA_SKELTON);
         else if (entityLiving instanceof EntityCreeper)
             return getSkull(SkullType.VANILLA_CREEPER);
+        else if (entityLiving instanceof EntityEnderman)
+            return getSkull(SkullType.ENDERIO_ENDERMAN);
         else
             return ItemStack.EMPTY;
     }
@@ -43,5 +72,8 @@ public class SkullHelper {
         VANILLA_CREEPER,
         VANILLA_ZOMBIE,
         VANILLA_WITHER_SKELETON,
+        ENDERIO_ENDERMAN
     }
+
+
 }

@@ -33,6 +33,7 @@ import ipsis.woot.loot.schools.SkyBoxSchool;
 import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
+import ipsis.woot.util.SkullHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
@@ -121,6 +122,7 @@ public class Woot {
         new FactoryConfigLoader().loadConfig(wootConfiguration);
         new FactoryIngredientsLoader().loadConfig();
         new CustomDropsLoader().loadConfig();
+        SkullHelper.postInit();
     }
 
     @Mod.EventHandler

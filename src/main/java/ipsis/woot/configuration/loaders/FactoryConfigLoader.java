@@ -31,6 +31,7 @@ public class FactoryConfigLoader {
         } catch (Exception e) {
             LogHelper.error("Could not load factory config from " +
                 FileUtils.getConfigFile(Files.FACTORY_CFG_FILENAME).getAbsolutePath());
+            e.printStackTrace();
         }
     }
 

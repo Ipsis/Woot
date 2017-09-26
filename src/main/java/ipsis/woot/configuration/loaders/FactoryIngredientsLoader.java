@@ -26,6 +26,7 @@ public class FactoryIngredientsLoader {
         } catch (Exception e) {
             LogHelper.error("Could not load factory ingredients from " +
                 FileUtils.getConfigFile(Files.FACTORY_ING_FILENAME).getAbsolutePath());
+            e.printStackTrace();
         }
     }
 

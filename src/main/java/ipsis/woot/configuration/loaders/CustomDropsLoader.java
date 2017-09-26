@@ -29,6 +29,7 @@ public class CustomDropsLoader {
         } catch (Exception e) {
             LogHelper.error("Could not load custom loot config from " +
                 FileUtils.getConfigFile(Files.CUSTOM_LOOT_FILENAME).getAbsolutePath());
+            e.printStackTrace();
         }
     }
 

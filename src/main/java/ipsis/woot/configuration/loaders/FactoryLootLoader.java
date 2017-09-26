@@ -29,6 +29,7 @@ public class FactoryLootLoader {
         } catch (Exception e) {
             LogHelper.error("Could not load factory loot from " +
                 Files.lootFile.getAbsolutePath());
+            e.printStackTrace();
         }
     }
 

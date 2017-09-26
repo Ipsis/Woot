@@ -217,10 +217,12 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             info.drops.add(itemStack);
         }
 
-        for (ItemStack itemStack : spawnRecipe.getItems()) {
-            ItemStack ingredient = itemStack.copy();
-            ingredient.setCount(ingredient.getCount() * farmSetup.getNumMobs());
-            info.ingredients.add(itemStack.copy());
+        if (spawnRecipe != null) {
+            for (ItemStack itemStack : spawnRecipe.getItems()) {
+                ItemStack ingredient = itemStack.copy();
+                ingredient.setCount(ingredient.getCount() * farmSetup.getNumMobs());
+                info.ingredients.add(itemStack.copy());
+            }
         }
 
         // Say everything is okay

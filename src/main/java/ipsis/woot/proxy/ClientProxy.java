@@ -1,6 +1,5 @@
 package ipsis.woot.proxy;
 
-import ipsis.woot.client.manual.BookManager;
 import ipsis.woot.client.renderer.TESRAnvil;
 import ipsis.woot.client.renderer.TESRLayout;
 import ipsis.woot.event.HandlerTextureStitchEvent;
@@ -40,8 +39,6 @@ public class ClientProxy extends CommonProxy {
     public void postInit() {
 
         super.postInit();
-
-        BookManager.INSTANCE.load();
     }
 
     @SubscribeEvent

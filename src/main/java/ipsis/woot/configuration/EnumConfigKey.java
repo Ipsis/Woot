@@ -193,14 +193,14 @@ public enum EnumConfigKey {
             "Default chance to generate a skull for Decapitate III upgrade",
             "decap3Param", Integer.class, 80, true, 3),
     XP_1_PARAM(
-            "Default percentage of extra XP generated for XP I upgrade",
-            "xp1Param", Integer.class, 20, true, 1),
+            "Percentage of XP generated for XP I upgrade",
+            "xp1Param", Integer.class, 100, true, 1),
     XP_2_PARAM(
-            "Default percentage of extra XP generated for XP II upgrade",
-            "xp2Param", Integer.class, 40, true, 2),
+            "Percentage of XP generated for XP II upgrade",
+            "xp2Param", Integer.class, 140, true, 2),
     XP_3_PARAM(
-            "Default percentage of extra XP generated for XP III upgrade",
-            "xp3Param", Integer.class, 80, true, 3),
+            "Percentage of XP generated for XP III upgrade",
+            "xp3Param", Integer.class, 180, true, 3),
     EFF_1_PARAM(
             "Percentage of power saved for a Efficiency I upgrade",
             "eff1Param", Integer.class, 15, true, 1),

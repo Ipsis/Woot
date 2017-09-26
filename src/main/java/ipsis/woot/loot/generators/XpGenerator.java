@@ -2,6 +2,7 @@ package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.farmstructure.IFarmSetup;
@@ -31,8 +32,11 @@ public class XpGenerator implements ILootGenerator {
 
         // TODO what about the level of upgrade!
         int deathXp = Woot.wootConfiguration.getDeathCost(world, farmSetup.getWootMobName());
+        float increase = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getXpParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
         deathXp *= farmSetup.getNumMobs();
         int totalXp = storedXp + deathXp;
+        float extraXp = ((increase - 100.0F) / 100.0F) * totalXp;
+        totalXp += (int)extraXp;
 
         int generate = totalXp / XP_CHUNKS;
 

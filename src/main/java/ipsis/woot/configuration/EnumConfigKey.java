@@ -188,10 +188,10 @@ public enum EnumConfigKey {
             "decap1Param", Integer.class, 20, true, 1),
     DECAP_2_PARAM(
             "Default chance to generate a skull for Decapitate II upgrade",
-            "decap1Param", Integer.class, 40, true, 2),
+            "decap2Param", Integer.class, 40, true, 2),
     DECAP_3_PARAM(
             "Default chance to generate a skull for Decapitate III upgrade",
-            "decap1Param", Integer.class, 80, true, 3),
+            "decap3Param", Integer.class, 80, true, 3),
     XP_1_PARAM(
             "Default percentage of extra XP generated for XP I upgrade",
             "xp1Param", Integer.class, 20, true, 1),

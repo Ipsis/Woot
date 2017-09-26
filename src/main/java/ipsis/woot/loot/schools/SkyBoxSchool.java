@@ -84,7 +84,7 @@ public class SkyBoxSchool implements ILootLearner {
             if (axisAlignedBB == null) {
                 BlockPos spawnPos = new BlockPos(origin.getX(), world.getHeight() - 3, origin.getZ());
                 int range = 2;
-                axisAlignedBB = new AxisAlignedBB(spawnPos).expand(range, 0, range);
+                axisAlignedBB = new AxisAlignedBB(spawnPos).grow(range, 0, range);
             }
 
             List<EntityItem> items = world.getEntitiesWithinAABB(

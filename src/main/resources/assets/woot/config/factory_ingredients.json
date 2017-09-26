@@ -3,7 +3,6 @@
   "ingredients": [
     {
       "mobName": "minecraft:wither",
-      "efficiency": true,
       "items": [
         {
           "item": "minecraft:soul_sand",
@@ -19,7 +18,6 @@
     },
     {
       "mobName": "minecraft:ender_dragon",
-      "efficiency": true,
       "items": [
         {
           "item": "minecraft:end_crystal",

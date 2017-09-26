@@ -55,8 +55,7 @@ public class FactoryIngredientsLoader {
 
             SpawnRecipe recipe = new SpawnRecipe();
 
-            boolean efficieny = JsonUtils.getBoolean(json, "efficiency", false);
-            recipe.setEfficiency(efficieny);
+            recipe.setEfficiency(true);
 
             for (JsonElement ele2 : JsonUtils.getJsonArray(json, "items")) {
 

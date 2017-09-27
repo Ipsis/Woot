@@ -4,11 +4,10 @@ import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
 import amerifrance.guideapi.api.IGuideBook;
 import amerifrance.guideapi.api.impl.Book;
-import amerifrance.guideapi.category.CategoryItemStack;
-import ipsis.woot.plugins.guideapi.book.CategoryIntroduction;
+import ipsis.woot.plugins.guideapi.book.CategoryAnvil;
+import ipsis.woot.plugins.guideapi.book.CategoryIngredients;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.StringHelper;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -30,17 +29,22 @@ public class GuideWoot implements IGuideBook {
 
         GUIDE_BOOK.setAuthor("Ipsis");
         GUIDE_BOOK.setColor(Color.GREEN);
-        GUIDE_BOOK.setDisplayName(StringHelper.localize("guide.woot:display"));
-        GUIDE_BOOK.setTitle(StringHelper.localize("guide.woot:title"));
-        GUIDE_BOOK.setWelcomeMessage(StringHelper.localize("guide.woot:welcome"));
+        GUIDE_BOOK.setDisplayName(StringHelper.localize("guide.woot.display"));
+        GUIDE_BOOK.setTitle(StringHelper.localize("guide.woot.title"));
+        GUIDE_BOOK.setWelcomeMessage(StringHelper.localize("guide.woot.welcome"));
         GUIDE_BOOK.setRegistryName(new ResourceLocation(Reference.MOD_ID, "guide"));
+
+        // Categories with json recipes must be created here or the conversion to
+        // actual recipes will not see them.
         return GUIDE_BOOK;
     }
 
     @Override
     public void handlePost(@Nonnull ItemStack bookStack) {
 
-        GUIDE_BOOK.addCategory(new CategoryItemStack(CategoryIntroduction.buildCategory(), "guide.woot:category.introduction", new ItemStack(Items.SKULL, 1)));
+        // Do NOT add anything here with a json recipe page or the book will crash
+        CategoryAnvil.buildCategory(GUIDE_BOOK);
+        CategoryIngredients.buildCategory(GUIDE_BOOK);
     }
 
     @Nullable

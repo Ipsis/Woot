@@ -136,38 +136,67 @@ commands.woot.dev.debug.trace_loot_event.enabled=Tracing loot drop event.
 ###########################################################
 # Guide Book
 ###########################################################
-guide.woot:title=Woot Guide Title
-guide.woot:display=Woot Guide Display
-guide.woot:welcome=Woot Guide Welcome
+guide.woot.title=Woot Guide Title
+guide.woot.display=Woot Guide Display
+guide.woot.welcome=Woot Guide Welcome
 
 ###########################################################
 # Guide Categories
-guide.woot:category.introduction=About Woot
-guide.woot:category.operation=Operating A Factory
-guide.woot:category.upgrades=Upgrades
+guide.woot.category.introduction=About Woot
+guide.woot.category.operation=Operating A Factory
+guide.woot.category.upgrades=Upgrades
+guide.woot.entry.anvil.anvil=Using The Anvil
+guide.woot.entry.ingredients.ingredients=Feeding The Factory
 
 ###########################################################
 # Introduction Entries
-guide.woot:entry.introduction.intro=What Is Woot
-guide.woot:entry.introduction.credits=Credits
+guide.woot.entry.introduction.intro=What Is Woot
+guide.woot.entry.introduction.credits=Credits
 
-guide.woot:entry.introduction.intro.info=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades. So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
-guide.woot:entry.introduction.credits.info=WayOfTime and Tehnut - as the BloodMagic code helped a lot in how to create the manual. TeamAmeriFrance for the GuideAPI as my original manual was terrible.
+guide.woot.entry.introduction.intro.info=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades. So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
+guide.woot.entry.introduction.credits.info=WayOfTime and Tehnut - as the BloodMagic code helped a lot in how to create the manual. TeamAmeriFrance for the GuideAPI as my original manual was terrible.
 
 ###########################################################
 # Operation Entries
-guide.woot:entry.operation.resources=Basic Materials
-guide.woot:entry.operation.crafting=How To Craft Factory Components
+guide.woot.entry.operation.resources=Basic Materials
+guide.woot.entry.operation.crafting=How To Craft Factory Components
 
 ###########################################################
 # Upgrade Entries
-guide.woot:entry.upgrade.intro=Upgrades
-guide.woot:entry.upgrade.rate=Rate Upgrade
-guide.woot:entry.upgrade.mass=Mass Upgrade
-guide.woot:entry.upgrade.looting=Looting Upgrade
-guide.woot:entry.upgrade.efficiency=Efficiency Upgrade
-guide.woot:entry.upgrade.xp=XP Upgrade
-guide.woot:entry.upgrade.decapitate=Decapitate Upgrade
+guide.woot.entry.upgrade.intro=Upgrades
+guide.woot.entry.upgrade.rate=Rate Upgrade
+guide.woot.entry.upgrade.mass=Mass Upgrade
+guide.woot.entry.upgrade.looting=Looting Upgrade
+guide.woot.entry.upgrade.efficiency=Efficiency Upgrade
+guide.woot.entry.upgrade.xp=XP Upgrade
+guide.woot.entry.upgrade.decapitate=Decapitate Upgrade
 
-guide.woot:entry.upgrade.intro.info=There are three tiers of upgrades.
-guide.woot:entry.upgrade.rate.info=This upgrade reduces the number of ticks between each spawn.
+guide.woot.entry.upgrade.intro.info=There are three tiers of upgrades.
+guide.woot.entry.upgrade.rate.info=This upgrade reduces the number of ticks between each spawn.
+
+###########################################################
+# Anvil Entries
+guide.woot.page.anvil=Stygian Anvil
+guide.woot.entry.anvil.intro=Introduction
+guide.woot.entry.anvil.dies=Dies
+guide.woot.entry.anvil.plate=Stygian Iron Plate
+guide.woot.entry.anvil.shards=Shards
+guide.woot.entry.anvil.dusts=Dusts
+guide.woot.entry.anvil.cores=Factory Cores
+guide.woot.entry.anvil.controller=Programmed Controllers
+
+guide.woot.entry.anvil.intro.info=The anvil allows you to create some items with a greater efficiency. It is also used to craft the factory cores and more importantly combine the Ender Shards with the controller cores.
+guide.woot.entry.anvil.dies.info=Dies are used to create various different items and form some of the factory components.
+guide.woot.entry.anvil.plate.info=The Stygian Iron Plate is the base ingredient of the factory components.
+guide.woot.entry.anvil.shards.info=The shards are used both to capture mobs and as part of the factory components.
+guide.woot.entry.anvil.dusts.info=Some text dusts
+guide.woot.entry.anvil.cores.info=Some text about cores
+guide.woot.entry.anvil.controller.info=Some text about programmed controller
+
+
+###########################################################
+# Mob Recipe Entries
+guide.woot.entry.ingredients.intro=Introduction
+guide.woot.entry.ingredients.intro.info=Some mobs require you to make ingredients available for the factory to consume. They must be placed in tanks and chests adjacent to the importer.
+guide.woot.entry.ingredients.recipes=Recipes
+guide.woot.entry.ingredients.recipes.info=The following pages show you mobs that require ingredients and what those ingredients are.

@@ -14,6 +14,7 @@ import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemDie;
 import ipsis.woot.item.ItemFactoryCore;
 import ipsis.woot.item.ItemShard;
+import ipsis.woot.plugins.guideapi.GuideWoot;
 import ipsis.woot.plugins.guideapi.page.PageAnvilRecipe;
 import ipsis.woot.reference.Reference;
 import net.minecraft.item.ItemStack;
@@ -28,7 +29,7 @@ public class CategoryAnvil {
         category.withKeyBase(keyBase);
 
         category.addEntry("intro", new Entry(keyBase + "intro", true));
-        category.getEntry("intro").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro.info")));
+        category.getEntry("intro").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro.info"), GuideWoot.MAX_PAGE_LEN));
 
         category.addEntry("dies", new Entry(keyBase + "dies", true));
         category.getEntry("dies").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()))));
@@ -38,10 +39,10 @@ public class CategoryAnvil {
 
         category.addEntry("plate", new Entry(keyBase + "plate", true));
         category.getEntry("plate").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemStygianIronPlate))));
-        category.getEntry("plate").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "plate.info")));
+        category.getEntry("plate").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "plate.info"), GuideWoot.MAX_PAGE_LEN));
 
         category.addEntry("shards", new Entry(keyBase + "shards", true));
-        category.getEntry("shards").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "shards.info")));
+        category.getEntry("shards").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "shards.info"), GuideWoot.MAX_PAGE_LEN));
         category.getEntry("shards").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemEnderShard))));
         category.getEntry("shards").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.QUARTZ.getMeta()))));
         category.getEntry("shards").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.DIAMOND.getMeta()))));

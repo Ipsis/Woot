@@ -8,32 +8,27 @@ import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.category.CategoryItemStack;
-import ipsis.Woot;
+import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.guideapi.GuideWoot;
-import ipsis.woot.plugins.guideapi.page.PageFarmRecipe;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.util.WootMobName;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryIngredients {
+public class CategoryFarming {
 
     public static void buildCategory(Book book) {
 
-        final String keyBase = "guide." + Reference.MOD_ID + ".entry.ingredients.";
+        final String keyBase = "guide." + Reference.MOD_ID + ".entry.farming.";
 
-        CategoryItemStack category = new CategoryItemStack(keyBase + "ingredients", new ItemStack(Items.BREWING_STAND));
+        CategoryItemStack category = new CategoryItemStack(keyBase + "farming", new ItemStack(ModBlocks.blockFactoryHeart));
+
         category.withKeyBase(keyBase);
 
         category.addEntry("intro", new Entry(keyBase + "intro", true));
         category.getEntry("intro").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro.info"), GuideWoot.MAX_PAGE_LEN));
 
-        category.addEntry("recipes", new Entry(keyBase + "recipes", true));
-        category.getEntry("recipes").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "recipes.info"), GuideWoot.MAX_PAGE_LEN));
-
-        for (WootMobName wootMobName : Woot.spawnRecipeRepository.getAllMobs()) {
-            category.getEntry("recipes").addPage(new PageFarmRecipe(wootMobName, Woot.spawnRecipeRepository.get(wootMobName)));
-        }
+        category.addEntry("farm", new Entry(keyBase + "farm", true));
+        category.getEntry("farm").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "farm.info.1"), GuideWoot.MAX_PAGE_LEN));
+        category.getEntry("farm").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "farm.info.2"), GuideWoot.MAX_PAGE_LEN));
 
         for (EntryAbstract entry : category.entries.values()) {
             for (IPage p : entry.pageList) {
@@ -44,6 +39,6 @@ public class CategoryIngredients {
         }
 
         book.addCategory(category);
-    }
 
+    }
 }

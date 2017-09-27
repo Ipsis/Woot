@@ -139,14 +139,26 @@ commands.woot.dev.debug.trace_loot_event.enabled=Tracing loot drop event.
 guide.woot.title=Woot Guide Title
 guide.woot.display=Woot Guide Display
 guide.woot.welcome=Woot Guide Welcome
+guide.woot.author=Nico Di Angelo
 
 ###########################################################
 # Guide Categories
 guide.woot.category.introduction=About Woot
 guide.woot.category.operation=Operating A Factory
 guide.woot.category.upgrades=Upgrades
+guide.woot.entry.farming.farming=Mob Farming
 guide.woot.entry.anvil.anvil=Using The Anvil
 guide.woot.entry.ingredients.ingredients=Feeding The Factory
+
+###########################################################
+# Farming Entries
+guide.woot.entry.farming.intro=Introduction
+guide.woot.entry.farming.farm=The Farm/Factory
+
+guide.woot.entry.farming.intro.info=So what is Woot?\n\n\tWell to be honest it is one of those infamous magic blocks, or in this case a big magic multiblock. Its sole purpose is to allow the generation of loot drops, without the risk of impacting the game with large numbers of entities being spawned.\nOf course I encourage you to build interesting and creative mob farms without using Woot. However if that doesn't interest you, then Woot is an option.
+guide.woot.entry.farming.farm.info.1=Woot provides you with a mob farm or mob factory, whichever is your preferred word. You built a tier of factory, program it with a specific mob, give it power and it will generate the mob drops into an attached inventory. There are no entities spawned in world, be that the mob or the drops themselves.
+guide.woot.entry.farming.farm.info.2=Once you have your structure, you can then upgrade it to make it go faster, generate XP, spawn more mobs etc. Of course there is a cost and that cost is power. Woot needs power and lots of it.
+
 
 ###########################################################
 # Introduction Entries

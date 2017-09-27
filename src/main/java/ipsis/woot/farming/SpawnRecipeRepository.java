@@ -1,5 +1,6 @@
 package ipsis.woot.farming;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 
 import javax.annotation.Nullable;
@@ -20,6 +21,16 @@ public class SpawnRecipeRepository implements ISpawnRecipeRepository {
 
     @Override
     public void add(WootMobName wootMobName, SpawnRecipe recipe) {
+
+        if (recipe.getItems().size() > 6) {
+            LogHelper.error("Too many spawn recipe item ingredients max of 6 " + wootMobName.toString());
+            return;
+        }
+
+        if (recipe.getFluids().size() > 6) {
+            LogHelper.error("Too many spawn recipe fluid ingredients max of 6 " + wootMobName.toString());
+            return;
+        }
 
         recipes.put(wootMobName, recipe);
     }

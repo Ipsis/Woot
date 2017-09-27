@@ -58,6 +58,7 @@ public class FactoryIngredientsLoader {
 
             recipe.setEfficiency(true);
 
+            boolean valid = true;
             for (JsonElement ele2 : JsonUtils.getJsonArray(json, "items")) {
 
                 if (ele2 == null || !ele.isJsonObject())
@@ -65,11 +66,13 @@ public class FactoryIngredientsLoader {
 
                 JsonObject json2 = (JsonObject) ele2;
                 ItemStack itemStack = getItemStack(json2);
-                if (!itemStack.isEmpty())
+                if (itemStack.isEmpty())
+                    valid = false;
+                else
                     recipe.addIngredient(itemStack);
             }
 
-            if (!recipe.getItems().isEmpty() || !recipe.getFluids().isEmpty())
+            if (valid && !recipe.getItems().isEmpty() || !recipe.getFluids().isEmpty())
                 Woot.spawnRecipeRepository.add(wootMobName, recipe);
         }
     }

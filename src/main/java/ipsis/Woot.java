@@ -14,9 +14,8 @@ import ipsis.woot.farming.ISpawnRecipeRepository;
 import ipsis.woot.farming.SpawnRecipeRepository;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.init.ModEnchantments;
+import ipsis.woot.init.ModFurnace;
 import ipsis.woot.init.ModItems;
-import ipsis.woot.init.ModOreDictionary;
 //import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.loot.*;
 import ipsis.woot.loot.customdrops.CustomDropsRepository;
@@ -34,8 +33,6 @@ import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.SkullHelper;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -91,21 +88,28 @@ public class Woot {
 
         proxy.preInit();
         Files.init(event);
-
         ConfigHandler.init(Files.configFile);
-
-        FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
-        EnderIO.loadRecipes();
-
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
 
+        // From Forge docs - RegistryEvents are fired after Pre-Initialization
+        // So item/blocks are only available now
+
         proxy.init();
-        ModOreDictionary.init();
-        FurnaceRecipes.instance().addSmeltingRecipeForBlock(ModBlocks.blockStygianIronOre, new ItemStack(ModItems.itemStygianIronIngot), 0.7F);
-        FurnaceRecipes.instance().addSmeltingRecipe(new ItemStack(ModItems.itemStygianIronDust), new ItemStack(ModItems.itemStygianIronIngot), 0.7F);
+
+        new InternalPolicyLoader().load(policyRepository);
+        new FactoryConfigLoader().loadConfig(wootConfiguration);
+        new FactoryIngredientsLoader().loadConfig();
+        new CustomDropsLoader().loadConfig();
+
+        ModFurnace.init();
+        lootGeneration.initialise();
+        AnvilManagerLoader.load();
+        EnderIO.loadRecipes();
+
+        FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
 
 //        if (Loader.isModLoaded(BloodMagic.BM_MODID))
 //            BloodMagic.init();
@@ -115,13 +119,6 @@ public class Woot {
     public void postInit(FMLPostInitializationEvent event) {
 
         proxy.postInit();
-        ModEnchantments.postInit();
-        lootGeneration.initialise();
-        AnvilManagerLoader.load();
-        new InternalPolicyLoader().load(policyRepository);
-        new FactoryConfigLoader().loadConfig(wootConfiguration);
-        new FactoryIngredientsLoader().loadConfig();
-        new CustomDropsLoader().loadConfig();
         SkullHelper.postInit();
     }
 

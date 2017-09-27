@@ -28,4 +28,6 @@ public interface IAnvilManager {
     boolean isValidBaseItem(ItemStack itemStack);
 
     List<IAnvilRecipe> getRecipes();
+
+    IAnvilRecipe getRecipe(ItemStack output);
 }

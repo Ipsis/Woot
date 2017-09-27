@@ -13,4 +13,5 @@ public interface IAnvilRecipe {
     boolean isMatchingBase(ItemStack itemStack);
     int getRecipeSize();
     boolean isIngredient(ItemStack itemStack);
+    boolean isOutput(ItemStack itemStack);
     List<ItemStack> getInputs();}

@@ -76,4 +76,10 @@ public class AnvilRecipe implements IAnvilRecipe {
 
         return false;
     }
+
+    @Override
+    public boolean isOutput(ItemStack itemStack) {
+
+        return output.isItemEqual(itemStack);
+    }
 }

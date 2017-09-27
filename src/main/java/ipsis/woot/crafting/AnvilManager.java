@@ -82,4 +82,14 @@ public class AnvilManager implements IAnvilManager {
 
         return recipes;
     }
+
+    public IAnvilRecipe getRecipe(ItemStack output) {
+
+        for (IAnvilRecipe recipe : recipes) {
+            if (recipe.isOutput(output))
+                return recipe;
+        }
+
+        return null;
+    }
 }

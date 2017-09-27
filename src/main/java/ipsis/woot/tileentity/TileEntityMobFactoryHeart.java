@@ -7,10 +7,7 @@ import ipsis.woot.farmstructure.*;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
-import ipsis.woot.mock.MockSpawnRecipeConsumer;
-import ipsis.woot.mock.MockSpawnRecipeRepository;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
@@ -26,7 +23,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {

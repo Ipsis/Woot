@@ -17,6 +17,7 @@ import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModFurnace;
 import ipsis.woot.init.ModItems;
 //import ipsis.woot.plugins.bloodmagic.BloodMagic;
+import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.loot.*;
 import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
@@ -108,6 +109,7 @@ public class Woot {
         lootGeneration.initialise();
         AnvilManagerLoader.load();
         EnderIO.loadRecipes();
+        ModOreDictionary.init();
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
 

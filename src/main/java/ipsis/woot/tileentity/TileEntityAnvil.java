@@ -9,7 +9,6 @@ import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -3,7 +3,6 @@ package ipsis.woot.power.storage;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryCell;
 import ipsis.woot.configuration.EnumConfigKey;
-import ipsis.woot.multiblock.EnumMobFactoryTier;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.IEnergyStorage;
 

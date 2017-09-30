@@ -1,7 +1,6 @@
 package ipsis.woot.power.storage;
 
 import ipsis.woot.block.BlockMobFactoryCell;
-import ipsis.woot.multiblock.EnumMobFactoryTier;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.IEnergyStorage;
 

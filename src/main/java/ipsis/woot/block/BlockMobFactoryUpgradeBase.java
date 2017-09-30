@@ -1,7 +1,6 @@
 package ipsis.woot.block;
 
 import ipsis.woot.util.EnumSpawnerUpgrade;
-import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryUpgrade;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

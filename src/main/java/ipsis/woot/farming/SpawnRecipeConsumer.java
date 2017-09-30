@@ -1,8 +1,6 @@
 package ipsis.woot.farming;
 
 import ipsis.woot.oss.ItemHelper;
-import ipsis.woot.oss.LogHelper;
-import ipsis.woot.util.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

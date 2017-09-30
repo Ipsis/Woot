@@ -7,7 +7,6 @@ import ipsis.woot.farming.PowerRecipe;
 import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.WootMobName;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;

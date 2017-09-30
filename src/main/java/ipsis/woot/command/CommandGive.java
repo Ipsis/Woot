@@ -5,8 +5,6 @@ import ipsis.woot.reference.Localization;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
-import ipsis.woot.util.WootMobName;
-import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;

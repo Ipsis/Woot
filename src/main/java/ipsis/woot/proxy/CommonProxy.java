@@ -7,9 +7,6 @@ import ipsis.woot.event.HandlerLivingDropsEvent;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
-//import ipsis.woot.init.ModRecipes;
-//import ipsis.woot.plugins.top.TOPCompat;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.plugins.top.TOPCompat;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -33,7 +30,6 @@ public class CommonProxy {
 
     public void init() {
 
-//        ModRecipes.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(Woot.instance, new GuiProxy());
     }
 

@@ -2,7 +2,6 @@ package ipsis.woot.loot.schools;
 
 import ipsis.Woot;
 import ipsis.woot.util.*;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.farming.ITickTracker;
 import ipsis.woot.loot.ILootLearner;

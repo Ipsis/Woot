@@ -5,7 +5,6 @@ import ipsis.woot.block.BlockMobFactoryHeart;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.farming.ITickTracker;
 import ipsis.woot.farmblocks.IFarmBlockConnection;

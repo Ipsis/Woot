@@ -3,15 +3,12 @@ package ipsis.woot.client.renderer;
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.event.HandlerTextureStitchEvent;
-import ipsis.woot.proxy.ClientProxy;
 import ipsis.woot.tileentity.*;
 import ipsis.woot.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{

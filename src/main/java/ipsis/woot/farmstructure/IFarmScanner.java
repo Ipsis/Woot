@@ -1,8 +1,6 @@
 package ipsis.woot.farmstructure;
 
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.WootMob;
-import ipsis.woot.util.WootMobName;
 import net.minecraft.block.Block;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

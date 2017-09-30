@@ -1,7 +1,6 @@
 package ipsis.woot.farmblocks;
 
 import ipsis.woot.util.WootMob;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;

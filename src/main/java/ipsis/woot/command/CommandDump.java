@@ -17,7 +17,6 @@ import net.minecraftforge.server.command.CommandTreeBase;
 
 import java.util.List;
 
-import static net.minecraft.entity.EntityList.getEntityNameList;
 
 public class CommandDump extends CommandTreeBase {
 

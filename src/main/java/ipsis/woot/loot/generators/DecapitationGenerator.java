@@ -1,14 +1,11 @@
 package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
-import ipsis.woot.configuration.EnumConfigKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.SkullHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;

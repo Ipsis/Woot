@@ -2,8 +2,6 @@ package ipsis.woot.block;
 
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
-import ipsis.woot.init.ModBlocks;
-import ipsis.woot.init.ModItems;
 import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryCell;
@@ -35,7 +33,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

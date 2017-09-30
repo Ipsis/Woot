@@ -1,7 +1,6 @@
 package ipsis.woot.block;
 
 import ipsis.Woot;
-import ipsis.woot.util.UnlocalizedName;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fml.relauncher.Side;

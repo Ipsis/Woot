@@ -2,9 +2,7 @@ package ipsis.woot.farmblocks;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.IEnergyStorage;
 
-import javax.annotation.Nullable;
 
 public interface IFarmBlockMaster {
 

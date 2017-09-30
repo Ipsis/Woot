@@ -1,7 +1,6 @@
 package ipsis.woot.tileentity.ui;
 
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.WootMob;
 import net.minecraft.item.ItemStack;
 

@@ -1,6 +1,5 @@
 package ipsis.woot.util;
 
-import ipsis.woot.reference.Reference;
 import net.minecraft.util.ResourceLocation;
 
 public class WootMobName {

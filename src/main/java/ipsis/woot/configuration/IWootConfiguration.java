@@ -3,7 +3,6 @@ package ipsis.woot.configuration;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.WootMobName;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;

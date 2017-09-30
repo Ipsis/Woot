@@ -3,7 +3,6 @@ package ipsis.woot.farming;
 import ipsis.woot.util.WootMobName;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Set;
 
 public interface ISpawnRecipeRepository {

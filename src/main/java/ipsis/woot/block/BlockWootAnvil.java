@@ -1,13 +1,10 @@
 package ipsis.woot.block;
 
 import ipsis.Woot;
-import ipsis.woot.crafting.IAnvilRecipe;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.tileentity.TileEntityAnvil;
-import ipsis.woot.util.DebugSetup;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

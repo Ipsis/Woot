@@ -1,6 +1,5 @@
 package ipsis.woot.loot.generators;
 
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.farmstructure.IFarmSetup;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;

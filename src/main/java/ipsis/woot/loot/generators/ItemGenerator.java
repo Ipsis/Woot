@@ -2,10 +2,8 @@ package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
-import ipsis.woot.loot.repository.ILootRepositoryLoad;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.util.LootHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;

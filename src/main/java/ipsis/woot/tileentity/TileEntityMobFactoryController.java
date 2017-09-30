@@ -2,8 +2,6 @@ package ipsis.woot.tileentity;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.item.ItemEnderShard;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.ui.ControllerUIInfo;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
@@ -11,7 +9,6 @@ import ipsis.woot.farmblocks.ControllerMasterLocator;
 import ipsis.woot.farmblocks.IFarmBlockConnection;
 import ipsis.woot.farmblocks.IFarmBlockController;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
-import ipsis.woot.util.WootMobName;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

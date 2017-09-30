@@ -1,8 +1,6 @@
 package ipsis.woot.farmstructure;
 
 import ipsis.woot.util.EnumSpawnerUpgrade;
-import ipsis.woot.farmblocks.IFarmBlockUpgrade;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

@@ -1,7 +1,6 @@
 package ipsis.woot.plugins.jei.anvil;
 
 import ipsis.woot.plugins.jei.JEIPlugin;
-import ipsis.woot.reference.Reference;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 

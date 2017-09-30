@@ -35,8 +35,6 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
     private void texturedLayout(TileEntityLayout te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
-        TileEntityLayout tileEntityLayout = (TileEntityLayout)te;
-
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
         {
@@ -51,7 +49,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GlStateManager.color(1F, 1F, 1F, 0.9500F);
 
-                for (ILayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
+                for (ILayoutBlockInfo pos : te.getLayoutBlockInfoList()) {
 
                     if (getWorld().getBlockState(pos.getPos()).isOpaqueCube())
                         continue;
@@ -135,8 +133,6 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
     private void coloredLayout(TileEntityLayout te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 
-        TileEntityLayout tileEntityLayout = (TileEntityLayout)te;
-
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();
         {
@@ -153,7 +149,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
             float RENDER_ALPHA = 0.7F;
 
-            for (ILayoutBlockInfo pos : tileEntityLayout.getLayoutBlockInfoList()) {
+            for (ILayoutBlockInfo pos : te.getLayoutBlockInfoList()) {
 
                 if (pos instanceof StructureLayoutBlockInfo) {
 

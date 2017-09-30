@@ -93,7 +93,7 @@ public class BlockWootAnvil extends BlockWoot implements ITileEntityProvider {
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot)
     {
-        return state.getBlock() != this ? state : state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+        return state.getBlock() != this ? state : state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override

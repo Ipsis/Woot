@@ -25,7 +25,7 @@ public class ItemBlockController extends ItemBlock {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
-        if (stack != null && stack.hasTagCompound()) {
+        if (!stack.isEmpty() && stack.hasTagCompound()) {
 
             WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
             if (wootMob.isValid()) {

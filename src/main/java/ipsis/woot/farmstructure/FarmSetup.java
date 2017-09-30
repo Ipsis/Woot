@@ -31,7 +31,6 @@ public class FarmSetup implements IFarmSetup {
     private EnumEnchantKey enchantKey = EnumEnchantKey.NO_ENCHANT;
     private EnumMobFactoryTier tier = EnumMobFactoryTier.TIER_ONE;
     private EnumFacing facing = EnumFacing.SOUTH;
-    private BlockPos powerCellBlockPos;
     private BlockPos exportBlockPos;
     private BlockPos importBlockPos;
     private IPowerStation powerStation;
@@ -155,10 +154,13 @@ public class FarmSetup implements IFarmSetup {
 
     @Override
     public void setPowerCellBlockPos(BlockPos blockPos) {
-        this.powerCellBlockPos = blockPos;
 
-        TileEntityMobFactoryCell cell = (TileEntityMobFactoryCell)world.getTileEntity(this.powerCellBlockPos);
-        powerStation = cell.getPowerStation();
+        TileEntity te = world.getTileEntity(blockPos);
+        if (te instanceof TileEntityMobFactoryCell) {
+            powerStation = ((TileEntityMobFactoryCell) te).getPowerStation();
+        } else {
+            powerStation = null;
+        }
     }
 
     @Override

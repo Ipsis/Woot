@@ -42,8 +42,9 @@ public class BlockMobFactoryImporter extends BlockWoot implements ITileEntityPro
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
-        TileEntityMobFactoryImporter te = (TileEntityMobFactoryImporter) worldIn.getTileEntity(pos);
-        te.blockAdded();
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryImporter)
+            ((TileEntityMobFactoryImporter) te).blockAdded();
     }
 
     @Override

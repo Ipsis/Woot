@@ -52,8 +52,9 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
-        TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure)worldIn.getTileEntity(pos);
-        te.blockAdded();
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryStructure)
+            ((TileEntityMobFactoryStructure) te).blockAdded();
     }
 
     @Override
@@ -122,14 +123,15 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
         return false;
     }
 
+
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 
-        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryStructure) {
-            TileEntityMobFactoryStructure te = (TileEntityMobFactoryStructure)blockAccess.getTileEntity(pos);
+        TileEntity te = blockAccess.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryStructure) {
             boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
 
-            if (validBlock && !te.isClientFormed())
+            if (validBlock && !((TileEntityMobFactoryStructure) te).isClientFormed())
                 return true;
         }
 

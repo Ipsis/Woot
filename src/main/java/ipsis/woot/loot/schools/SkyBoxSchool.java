@@ -92,7 +92,7 @@ public class SkyBoxSchool implements ILootLearner {
             if (!items.isEmpty()) {
                 Woot.lootRepository.learn(wootMobName, key, items, false);
                 for (EntityItem i : items)
-                    ((EntityItem)i).setDead();
+                    i.setDead();
             }
         }
     }

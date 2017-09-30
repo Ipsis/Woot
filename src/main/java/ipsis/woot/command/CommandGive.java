@@ -48,7 +48,7 @@ public class CommandGive extends CommandTreeBase {
             if (flag)
             {
             /* added to the players inventory */
-                entityplayer.world.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
+                entityplayer.world.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
                         SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((entityplayer.getRNG().nextFloat() - entityplayer.getRNG().nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 entityplayer.inventoryContainer.detectAndSendChanges();
             }

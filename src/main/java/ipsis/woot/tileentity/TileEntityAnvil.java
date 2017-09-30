@@ -107,7 +107,7 @@ public class TileEntityAnvil extends TileEntity {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Unprogrammed ender shard");
 
             // TODO failed clang!
-            world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             return;
         }
 
@@ -130,7 +130,7 @@ public class TileEntityAnvil extends TileEntity {
             if (!recipe.shouldPreserveBase())
                 setBaseItem(ItemStack.EMPTY);
 
-            world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             EntityItem out = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output);
             world.spawnEntity(out);
 
@@ -144,7 +144,7 @@ public class TileEntityAnvil extends TileEntity {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "No matching recipe " + itemStack + " " + ingredients);
 
             // TODO failed clang!
-            world.playSound((EntityPlayer)null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
     }
 }

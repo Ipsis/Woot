@@ -30,8 +30,9 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
-        TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade) worldIn.getTileEntity(pos);
-        te.blockAdded();
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryUpgrade)
+            ((TileEntityMobFactoryUpgrade) te).blockAdded();
     }
 
     public void getUpgradeTooltip(EnumSpawnerUpgrade u, List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
@@ -48,11 +49,11 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
     @Override
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 
-        if (blockAccess.getTileEntity(pos) instanceof TileEntityMobFactoryUpgrade) {
-            TileEntityMobFactoryUpgrade te = (TileEntityMobFactoryUpgrade)blockAccess.getTileEntity(pos);
+        TileEntity te = blockAccess.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryUpgrade) {
             boolean validBlock =  !isAir(blockState, blockAccess, pos.offset(side.getOpposite()));
 
-            if (validBlock && !te.isClientFormed())
+            if (validBlock && !((TileEntityMobFactoryUpgrade) te).isClientFormed())
                 return true;
         }
 

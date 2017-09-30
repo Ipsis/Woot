@@ -48,7 +48,7 @@ public class ItemXpShard extends ItemWoot {
                 /**
                  * This is the EntityXPOrb playSound call
                  */
-                worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ,
+                worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ,
                         SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
                         SoundCategory.PLAYERS,
                         0.2F, 0.5F * ((itemRand.nextFloat() - itemRand.nextFloat()) * 0.7F + 1.8F));

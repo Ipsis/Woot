@@ -68,8 +68,9 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
-        TileEntityMobFactoryCell te = (TileEntityMobFactoryCell) worldIn.getTileEntity(pos);
-        te.blockAdded();
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TileEntityMobFactoryCell)
+            ((TileEntityMobFactoryCell) te).blockAdded();
     }
 
     @Override

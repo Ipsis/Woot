@@ -35,7 +35,6 @@ public class MobXPManager implements IMobCost {
                 if (entity != null) {
                     cost = ((EntityLiving)entity).experienceValue;
                     mobXpMap.put(key, cost);
-                    entity = null;
                 }
             }
         }

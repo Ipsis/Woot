@@ -14,11 +14,11 @@ public class ItemTooltipHandler {
         if (event.getEntityPlayer() == null)
             return;
 
-        if (event.getItemStack() == null)
+        if (event.getItemStack().isEmpty())
             return;
 
         Block block = Block.getBlockFromItem(event.getItemStack().getItem());
-        if (block == null || !(block instanceof ITooltipInfo))
+        if (!(block instanceof ITooltipInfo))
             return;
 
         int meta = event.getItemStack().getMetadata();

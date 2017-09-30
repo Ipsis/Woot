@@ -13,7 +13,6 @@ public class ModItems {
     public static ItemWoot itemStygianIronDust;
     public static ItemWoot itemStygianIronIngot;
     public static ItemWoot itemStygianIronPlate;
-    public static ItemWoot itemManual;
     public static ItemWoot itemEnderShard;
     public static ItemWoot itemShard;
     public static ItemWoot itemXpShard;
@@ -36,7 +35,6 @@ public class ModItems {
         itemSoulSandDust = new ItemSoulSandDust();
         itemStygianIronDust = new ItemStygianIronDust();
         itemStygianIronIngot = new ItemStygianIronIngot();
-        itemManual = new ItemManual();
         itemFactoryCore = new ItemFactoryCore();
     }
 
@@ -53,7 +51,6 @@ public class ModItems {
         ModItems.itemStygianIronDust.initModel();
         ModItems.itemStygianIronIngot.initModel();
         ModItems.itemStygianIronPlate.initModel();
-        ModItems.itemManual.initModel();
         ModItems.itemFactoryCore.initModel();
     }
 

@@ -1,9 +1,11 @@
 package ipsis.woot.multiblock;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -309,6 +311,9 @@ public enum EnumMobFactoryTier {
 
     private static void parsePattern(List<MobFactoryModule> modules, String[][] pattern, int originLayer, int originRow, int originColumn) {
 
+
+        HashMap<Character, Integer> blockCount = new HashMap<>();
+
         for (int currLayer = 0; currLayer < pattern.length; currLayer++) {
             int dLayer = (originLayer - currLayer) * -1;
             for (int currRow = 0; currRow < pattern[0].length; currRow++) {
@@ -317,15 +322,27 @@ public enum EnumMobFactoryTier {
                     char c = pattern[currLayer][currRow].charAt(currCol);
                     int dCol = (originColumn - currCol) * -1;
 
+
                     // - = anything, o = origin marker
                     if (c == '-' || c == 'x')
                         continue;
 
                     EnumMobFactoryModule m = EnumMobFactoryModule.byChar(c);
                     modules.add(new MobFactoryModule(new BlockPos(dCol, dLayer, dRow), m));
+
+                    int count = 1;
+                    if (blockCount.containsKey(c)) {
+                        count = blockCount.get(c);
+                        count++;
+                    }
+                    blockCount.put(c, count);
                 }
             }
         }
+
+//        LogHelper.info("Tier block count");
+//        for (Character c : blockCount.keySet())
+//            LogHelper.info("parsePattern: " + EnumMobFactoryModule.byChar(c) + " " + blockCount.get(c));
     }
 
     ArrayList<MobFactoryModule> structureModules = new ArrayList<MobFactoryModule>();

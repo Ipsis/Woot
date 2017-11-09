@@ -44,8 +44,11 @@ public class PageFarmRecipe extends Page {
         guiBase.drawCenteredString(fontRendererObj, name, guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
         if (!itemIngredients.isEmpty()) {
-            for (int i = 0; i < itemIngredients.size(); i++)
-                GuiHelper.drawItemStack(itemIngredients.get(i), guiLeft + 30, guiTop + (30 * (i + 1)));
+            for (int i = 0; i < itemIngredients.size(); i++) {
+                int topOffset = 10 + (30 * (i + 1));
+                GuiHelper.drawItemStack(itemIngredients.get(i), guiLeft + 50, guiTop + topOffset);
+                guiBase.drawSplitString(itemIngredients.get(i).getDisplayName(), guiLeft + 70, guiTop + topOffset + 5, 60, 0);
+            }
         }
     }
 }

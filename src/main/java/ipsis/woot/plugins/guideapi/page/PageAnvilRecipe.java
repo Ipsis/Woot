@@ -41,11 +41,15 @@ public class PageAnvilRecipe extends Page {
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 146, 104);
         guiBase.drawCenteredString(fontRendererObj, TextHelper.localize("guide.woot.page.anvil"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
-        GuiHelper.drawItemStack(outputItem, guiLeft + 30, guiTop + 30);
-        GuiHelper.drawItemStack(baseItem, guiLeft + 30, guiTop + 50);
+        GuiHelper.drawItemStack(outputItem, guiLeft + 130, guiTop + 81);
+        GuiHelper.drawItemStack(baseItem, guiLeft + 61, guiTop + 92);
 
-        for (int i = 0; i < inputItems.size(); i++)
-            GuiHelper.drawItemStack(inputItems.get(i), guiLeft + 30, guiTop + 70 + (20 * i));
+        for (int i = 0; i < inputItems.size(); i++) {
+            int topOffset = 54;
+            if (i == 3)
+                topOffset = 71;
+            GuiHelper.drawItemStack(inputItems.get(i), guiLeft + 43 + (18 * (i % 3)), guiTop + topOffset);
+        }
 
 
     }

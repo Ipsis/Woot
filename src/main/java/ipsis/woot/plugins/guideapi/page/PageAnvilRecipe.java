@@ -41,16 +41,27 @@ public class PageAnvilRecipe extends Page {
         guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 0, 146, 104);
         guiBase.drawCenteredString(fontRendererObj, TextHelper.localize("guide.woot.page.anvil"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
-        GuiHelper.drawItemStack(outputItem, guiLeft + 130, guiTop + 81);
-        GuiHelper.drawItemStack(baseItem, guiLeft + 61, guiTop + 92);
+        int uiLeftOrigin = guiLeft + 42;
+        int uiTopOrigin = guiTop + 53;
+        List<String> tooltip = null;
+
+        GuiHelper.drawItemStack(outputItem, uiLeftOrigin + 88, uiTopOrigin + 29);
+        if (GuiHelper.isMouseBetween(mouseX, mouseY, uiLeftOrigin + 88, uiTopOrigin + 29, 15, 15))
+            tooltip = GuiHelper.getTooltip(outputItem);
+
+        GuiHelper.drawItemStack(baseItem, uiLeftOrigin + 19, uiTopOrigin + 39);
+        if (GuiHelper.isMouseBetween(mouseX, mouseY, uiLeftOrigin + 19, uiTopOrigin + 39, 15, 15))
+            tooltip = GuiHelper.getTooltip(baseItem);
 
         for (int i = 0; i < inputItems.size(); i++) {
-            int topOffset = 54;
-            if (i == 3)
-                topOffset = 71;
-            GuiHelper.drawItemStack(inputItems.get(i), guiLeft + 43 + (18 * (i % 3)), guiTop + topOffset);
+            int rowOffset = i < 3 ? 1 : 19;
+            int colOffset = 1 + ((i % 3) * 18);
+            GuiHelper.drawItemStack(inputItems.get(i), uiLeftOrigin + colOffset, uiTopOrigin + rowOffset);
+            if (GuiHelper.isMouseBetween(mouseX, mouseY, uiLeftOrigin + colOffset, uiTopOrigin + rowOffset, 15, 15))
+                tooltip = GuiHelper.getTooltip(inputItems.get(i));
         }
 
-
+        if (tooltip != null)
+            guiBase.drawHoveringText(tooltip, mouseX, mouseY);
     }
 }

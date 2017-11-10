@@ -10,8 +10,12 @@ import ipsis.woot.farming.SpawnRecipe;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.EntityList;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,12 +47,24 @@ public class PageFarmRecipe extends Page {
 
         guiBase.drawCenteredString(fontRendererObj, name, guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
 
-        if (!itemIngredients.isEmpty()) {
-            for (int i = 0; i < itemIngredients.size(); i++) {
-                int topOffset = 10 + (30 * (i + 1));
-                GuiHelper.drawItemStack(itemIngredients.get(i), guiLeft + 50, guiTop + topOffset);
-                guiBase.drawSplitString(itemIngredients.get(i).getDisplayName(), guiLeft + 70, guiTop + topOffset + 5, 60, 0);
-            }
+        List<String> tooltip = null;
+
+        int uiLeftOrigin = guiLeft + 42;
+        int uiTopOrigin = guiTop + 30;
+        for (int i = 0; i < itemIngredients.size(); i++) {
+            int rowOffset = i < 5 ? 1 : 19;
+            int colOffset = 1 + ((i % 5) * 18);
+            GuiHelper.drawItemStack(itemIngredients.get(i), uiLeftOrigin + colOffset, uiTopOrigin + rowOffset);
+            if (GuiHelper.isMouseBetween(mouseX, mouseY, uiLeftOrigin + colOffset, uiTopOrigin + rowOffset, 15, 15))
+                tooltip = GuiHelper.getTooltip(itemIngredients.get(i));
         }
+
+        uiTopOrigin = guiTop + 70;
+        for (int i = 0; i < fluidIngredients.size(); i++) {
+            guiBase.drawCenteredString(fontRendererObj, fluidIngredients.get(i).getLocalizedName(), guiLeft + guiBase.xSize / 2, uiTopOrigin + (12 * i), 0);
+        }
+
+        if (tooltip != null)
+            guiBase.drawHoveringText(tooltip, mouseX, mouseY);
     }
 }

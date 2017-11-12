@@ -64,9 +64,9 @@ tile.woot.structure.tier_ii_cap.name=Factory Tier II Cap
 tile.woot.structure.tier_iii_cap.name=Factory Tier III Cap
 tile.woot.structure.tier_iv_cap.name=Factory Tier IV Cap
 
-tile.woot.cell.tier_i.name=Cell Tier I
-tile.woot.cell.tier_ii.name=Cell Tier II
-tile.woot.cell.tier_iii.name=Cell Tier III
+tile.woot.cell.tier_i.name=Basic Power Cell
+tile.woot.cell.tier_ii.name=Advanced Power Cell
+tile.woot.cell.tier_iii.name=Premium Power Cell
 
 tile.woot.upgrade.xp_i.name=XP I Upgrade
 tile.woot.upgrade.xp_ii.name=XP II Upgrade
@@ -136,79 +136,106 @@ commands.woot.dev.debug.trace_loot_event.enabled=Tracing loot drop event.
 ###########################################################
 # Guide Book
 ###########################################################
-guide.woot.title=Woot Guide Title
-guide.woot.display=Woot Guide Display
-guide.woot.welcome=Woot Guide Welcome
+guide.woot.title=Woot Guide
+guide.woot.display=Woot Guide
 guide.woot.author=Nico Di Angelo
+guide.woot.welcome=Woot
 
-###########################################################
-# Guide Categories
-guide.woot.category.introduction=About Woot
-guide.woot.category.operation=Operating A Factory
-guide.woot.category.upgrades=Upgrades
-guide.woot.entry.farming.farming=Mob Farming
-guide.woot.entry.anvil.anvil=Using The Anvil
-guide.woot.entry.ingredients.ingredients=Feeding The Factory
+# Page Information
+guide.woot.page.anvil=Stygian Anvil Recipe
+guide.woot.page.ingredient=Mob Ingredients
 
-###########################################################
-# Farming Entries
-guide.woot.entry.farming.intro=Introduction
-guide.woot.entry.farming.farm=The Farm/Factory
+# Categories
+guide.woot.category.foreword=Foreword
+guide.woot.category.factory=Factory
+guide.woot.category.anvil=Stygian Anvil
+guide.woot.category.ingredients=Mob Spawning Ingredients
+guide.woot.category.upgrades=Factory Upgrades
 
-guide.woot.entry.farming.intro.info=So what is Woot?\n\n\tWell to be honest it is one of those infamous magic blocks, or in this case a big magic multiblock. Its sole purpose is to allow the generation of loot drops, without the risk of impacting the game with large numbers of entities being spawned.\nOf course I encourage you to build interesting and creative mob farms without using Woot. However if that doesn't interest you, then Woot is an option.
-guide.woot.entry.farming.farm.info.1=Woot provides you with a mob farm or mob factory, whichever is your preferred word. You built a tier of factory, program it with a specific mob, give it power and it will generate the mob drops into an attached inventory. There are no entities spawned in world, be that the mob or the drops themselves.
-guide.woot.entry.farming.farm.info.2=Once you have your structure, you can then upgrade it to make it go faster, generate XP, spawn more mobs etc. Of course there is a cost and that cost is power. Woot needs power and lots of it.
+# Foreward Entries
+guide.woot.entry.foreword.intro=Introduction
+guide.woot.entry.foreword.purpose=What Does It Do?
+guide.woot.entry.foreword.naming=Factory Or Farm?
 
+# Foreward Entry Text
+guide.woot.entry.foreword.intro.info=Woot is a big, magic multiblock.\n\nYou build the structure, feed it lots of power and it then generates loot.\n\nIf the idea of that horrifies you, then dont use Woot. Build a nice, safe, interesting, creative mob farm instead.
+guide.woot.entry.foreword.purpose.info=Woot is one of many solutions to the age old Minecraft problem of wanting lots of mob drops. The traditional way of doing this is to spawn mobs in the world, kill them somehow and then pick up all the drops. If you are not careful, this can cause performance problems.\n\nSo Woot does it in a different way. It learns the loot that mobs drop when they die. Then you create the Woot farm/factory building and program it with the mob that you want to generate the loot for. Provide it enough power and it starts putting the appropriate drops into attached inventories. No entities are generated in the world, so hopefully there is less performace impact. (E&OE)\n\nIt also has a second purpose. I dont like building mob farms, so this is my solution to my problem.
+guide.woot.entry.foreword.naming.info=Is it a factory? Is it a farm? I can never decide, so expect both words to be used throughout this guide.
 
-###########################################################
-# Introduction Entries
-guide.woot.entry.introduction.intro=What Is Woot
-guide.woot.entry.introduction.credits=Credits
+# Factory Entries
+guide.woot.entry.factory.guide=How To Build
+guide.woot.entry.factory.structure=A Building Of Two Parts
+guide.woot.entry.factory.importer=The Importer
+guide.woot.entry.factory.exporter=The Exporter
+guide.woot.entry.factory.power=Power Cells
+guide.woot.entry.factory.stygianiron=Stygian Iron
+guide.woot.entry.factory.capturing=Capturing Mobs
+guide.woot.entry.factory.programming=Mob Controller
+guide.woot.entry.factory.stygiananvil=Stygian Anvil
+guide.woot.entry.factory.headhunter=Headhunter Enchant
+guide.woot.entry.factory.tiers=Tiers
 
-guide.woot.entry.introduction.intro.info=Welcome to the user manual for you new Mob Factory, the safe, easy, clean way to murder your favourite mobs for their goodies. Never again will you have to mess around with spawning, killing and cleaning up behind all those mobs. You can also expand your Mob Factory with handy upgrades. So sit back and relax as you peruse this handy manual to learn how to build, program and safely operate your new factory.
-guide.woot.entry.introduction.credits.info=WayOfTime and Tehnut - as the BloodMagic code helped a lot in how to create the manual. TeamAmeriFrance for the GuideAPI as my original manual was terrible.
+# Factory Entry Text
+guide.woot.entry.factory.guide.info=To build the factory you should create a Guide Block. This will allow you to see in the world, where the blocks need to go, as these can be large structures.\n\nPlace the Guide Block on the ground and it will display the factory layout. You can right-click to cycle through different factory tiers.\n\nIn creative mode, clicking with redstone will instantly create the factory.\n\nIf you are upgrading a factory, then you can place the Guide Block underneath the Factory Heart and it will line up correctly with your current structure.\n\nOnce the factory structure is in place, you can validate it by cicking with a stack of torches. The number of torches in the stack determines which tier you want to validate.
+guide.woot.entry.factory.structure.info=The factory structure consists of two structures. The first is the main factory structure where the Heart, Upgrades and Mob Conroller live. The second is a remote structure which provides power, import and export of items and fluids. The remote structure must be located at most 10 blocks directly below the Heart. The remote structure consists of a column of three blocks with the Exporter on the bottom, the Importer in the middle and a Power Cell on the top.
+guide.woot.entry.factory.importer.info=The Importer is responsible for consuming the ingredients required to spawn certain mobs. It will take items from any inventories adjacent to it and fluids from any tanks adjacent to it.
+guide.woot.entry.factory.exporter.info=The Exporter is responsible for generating and items of fluids from the factory. It will place items in any inventories adjacent to it and fluids in any tanks adjacent to it.
+guide.woot.entry.factory.power.info=The power cells power the factory and are where you connect any power cables. Any factory tier can use any tier of power cell. Different power cells have different storage capacity and transfer rates. Cells preserve their contents when broken.\n\nPower cables will only connect when the factory is fully formed.
+guide.woot.entry.factory.stygianiron.info=Stygian Iron is the basic ore used in this mob. It does not, by default, generate in the world, but can be created using Iron Ore blocks.
+guide.woot.entry.factory.capturing.info=To capture a mob you will need an Ender Shard. The capturing process has two stages.\n\nFirst, quietly approach your chosen mob and strike it with the Ender Shard.\n\nSecond, kill enough of those mobs with the Ender Shard in your inventory to meet that mobs death requirement. This can be seen in the Ender Shard tooltip. When you have killed enough, then the Ender Shard will glow.
+guide.woot.entry.factory.programming.info=To create a Mob Controller to put on the factory, you will need a glowing Ender Shard. Use this in the Stygian Anvil to produce the programmed controller. Mob Controllers retains their programming when broken, so you can swap between them on the same factory.
+guide.woot.entry.factory.stygiananvil.info=The anvil serves two purposes. The first is to create some of the items used for crafting, such as the cores. The second is to reduce the cost of creating some items.\n\nThe anvil must be placed on top off a magma block.\n\nTo create an item using the anvil, right-click with a die which will then be placed on the anvil. Then drop one of each ingredient on top off the anvil and then right-click with the Ya Hammer.\n\nThe dies are created on the anvil in the same way, except that the item to generate the die is placed on the anvil first.
+guide.woot.entry.factory.headhunter.info=To build the factory you need mob heads. To assist you in this, there is a Headhunter enchantment. This increases the change of a skull drop when you manually kill a mob.\n\nThis only works on Zombies, Skeletons and Creepers. It has no effect on Wither Skeletons.
 
-###########################################################
-# Operation Entries
-guide.woot.entry.operation.resources=Basic Materials
-guide.woot.entry.operation.crafting=How To Craft Factory Components
+guide.woot.entry.factory.tiers.info=There are four tiers of factory available. Depending on the mob you want to spawn, each has a minimum factory tier that is needed. Higher tiers can also support a larger number of upgrades and higher tiers of upgrades.\n\nAll tiers of factory support all the power cells.
+guide.woot.entry.factory.tiers.tieri=Tier I factory supports\n\tX upgrades\n\nTier I factory needs\n\t2 Tier I Capstones\n\t10 block type 1\n\t14 block type 2
+guide.woot.entry.factory.tiers.tierii=Tier II factory supports\n\tX upgrades\n\nTier II factory needs\n\t2 Tier I Capstones\n\t4 Tier II Capstones\n\t10 block type 1\n\t14 block type 2\n\t35 block type 3
+guide.woot.entry.factory.tiers.tieriii=Tier III factory supports\n\tX upgrades\n\nTier III factory needs\n\t2 Tier I Capstones\n\t4 Tier II Capstones\n\t5 Tier III Capstones\n\t10 block type 1\n\t14 block type 2\n\t35 block type 3\n\t60 block type 4
+guide.woot.entry.factory.tiers.tieriv=Tier IV factory supports\n\tX upgrades\n\nTier IV factory needs\n\t2 Tier I Capstones\n\t4 Tier II Capstones\n\t5 Tier III Capstones\n\t7 Tier IV Capstones\n\t10 block type 1\n\t14 block type 2\n\t35 block type 3\n\t60 block type 4\n\t95 block type 5
 
-###########################################################
-# Upgrade Entries
-guide.woot.entry.upgrade.intro=Upgrades
-guide.woot.entry.upgrade.rate=Rate Upgrade
-guide.woot.entry.upgrade.mass=Mass Upgrade
-guide.woot.entry.upgrade.looting=Looting Upgrade
-guide.woot.entry.upgrade.efficiency=Efficiency Upgrade
-guide.woot.entry.upgrade.xp=XP Upgrade
-guide.woot.entry.upgrade.decapitate=Decapitate Upgrade
+# Upgrades Entries
+guide.woot.entry.upgrades.intro=Introduction
+guide.woot.entry.upgrades.totems=Tiers And Totems
+guide.woot.entry.upgrades.mobs=Upgrades And Mobs
+guide.woot.entry.upgrades.decapitation=Decapitation
+guide.woot.entry.upgrades.efficiency=Efficiency
+guide.woot.entry.upgrades.looting=Looting
+guide.woot.entry.upgrades.mass=Mass
+guide.woot.entry.upgrades.rate=Rate
+guide.woot.entry.upgrades.xp=XP
 
-guide.woot.entry.upgrade.intro.info=There are three tiers of upgrades.
-guide.woot.entry.upgrade.rate.info=This upgrade reduces the number of ticks between each spawn.
+# Upgrades Entry Text
+guide.woot.entry.upgrades.intro.info=The upgrades allow you to change the way that the factory works, maybe spawning more mobs or generating XP on each mob death etc. Each upgrade has three different tiers. The higher the upgrade tier the more powerful it is. Of course they also cost more to craft and run.
+guide.woot.entry.upgrades.totems.info=Each upgrade tier needs the previous tier to be present to work. eg. to use a Tier III upgrade, you need both the Tier I and Tier II of that particular upgrade.\n\nThe upgrades are placed onto the factory upgrade bases. The Tier I goes on first, then the Tier II and the Tier III on top. This creates an upgrade totem for that particular upgrade.\n\nRemember that each factory tier only supports a certain number of upgrades and tier of upgrade.
+guide.woot.entry.upgrades.mobs.info=The impact of an upgrade will depends on the mob that the factor is spawning. For example the Tier II Mass upgrade may spawn four extra zombies, but only one extra Wither Boss.
+guide.woot.entry.upgrades.decapitation.info=This upgrade increases the chances of a mob head dropping. Higher tiers of this upgrade increase that drop chance.
+guide.woot.entry.upgrades.efficiency.info=This upgrade decreases the power cost to run the factory. Higher tiers of this upgrade increase that power saving.
+guide.woot.entry.upgrades.looting.info=This upgrade applies different levels of looting to the mob kills. This can cause mobs to drop more loot when killed.
+guide.woot.entry.upgrades.mass.info=This upgrade spawns more mobs at a time. Higher tiers of this upgrade increases the number of mobs.
+guide.woot.entry.upgrades.rate.info=This upgrade decreases the time between mob spawns. Higher tiers of this upgrade decrease the time further.
+guide.woot.entry.upgrades.xp.info=By default the factory does not generate XP when a mob is killed. This upgrade causes XP shards to be generated with higher tiers generating extra XP.
 
-###########################################################
 # Anvil Entries
-guide.woot.page.anvil=Stygian Anvil
 guide.woot.entry.anvil.intro=Introduction
+guide.woot.entry.anvil.usage=Using The Anvil
 guide.woot.entry.anvil.dies=Dies
 guide.woot.entry.anvil.plate=Stygian Iron Plate
 guide.woot.entry.anvil.shards=Shards
 guide.woot.entry.anvil.dusts=Dusts
-guide.woot.entry.anvil.cores=Factory Cores
-guide.woot.entry.anvil.controller=Programmed Controllers
+guide.woot.entry.anvil.cores=Cores
+guide.woot.entry.anvil.controller=Programmed Controller
 
-guide.woot.entry.anvil.intro.info=The anvil allows you to create some items with a greater efficiency. It is also used to craft the factory cores and more importantly combine the Ender Shards with the controller cores.
-guide.woot.entry.anvil.dies.info=Dies are used to create various different items and form some of the factory components.
-guide.woot.entry.anvil.plate.info=The Stygian Iron Plate is the base ingredient of the factory components.
-guide.woot.entry.anvil.shards.info=The shards are used both to capture mobs and as part of the factory components.
-guide.woot.entry.anvil.dusts.info=Some text dusts
-guide.woot.entry.anvil.cores.info=Some text about cores
-guide.woot.entry.anvil.controller.info=Some text about programmed controller
+# Anvil Text
+guide.woot.entry.anvil.intro.info=The anvil serves two purposes. The first is to create some of the items used for crafting, such as the cores. The second is to reduce the cost of creating some items.\n\nThe anvil must be placed on top of a magma block.
+guide.woot.entry.anvil.dies.info=Most items created from the anvil require a die to be placed on the anvil. These dies are reusable and are created in the anvil. To create the dies, place a Stygian Iron Ingot on the anvil, then drop the requied ingredient on top. Right-click with the Ya Hammer and a corresponding die will be generated.
+guide.woot.entry.anvil.usage.info=To create an item using the anvil, right-click with a die which will then be placed on the anvil.\n\nThen drop one of each ingredient on top off the anvil and then right-click with the Ya Hammer.\n\nThe anvil is the only place where the Mob Controller can be created.
 
-
-###########################################################
-# Mob Recipe Entries
+# Ingredients Entries
 guide.woot.entry.ingredients.intro=Introduction
-guide.woot.entry.ingredients.intro.info=Some mobs require you to make ingredients available for the factory to consume. They must be placed in tanks and chests adjacent to the importer.
 guide.woot.entry.ingredients.recipes=Recipes
-guide.woot.entry.ingredients.recipes.info=The following pages show you mobs that require ingredients and what those ingredients are.
+
+# Ingredients Text
+guide.woot.entry.ingredients.intro.info=Some mobs require you to provide the factory with extra ingredients for each mob that you want to process. Those ingredients can be items or fluid or both. You feed the factory by using the Importer.\n\nThe following pages list the mobs that require extra ingredients and what those ingredients are.
+
+
+

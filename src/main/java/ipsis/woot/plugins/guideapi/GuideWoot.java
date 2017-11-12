@@ -4,9 +4,7 @@ import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.GuideBook;
 import amerifrance.guideapi.api.IGuideBook;
 import amerifrance.guideapi.api.impl.Book;
-import ipsis.woot.plugins.guideapi.book.CategoryAnvil;
-import ipsis.woot.plugins.guideapi.book.CategoryFarming;
-import ipsis.woot.plugins.guideapi.book.CategoryIngredients;
+import ipsis.woot.plugins.guideapi.book.*;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.init.Items;
@@ -23,7 +21,7 @@ import java.awt.*;
 public class GuideWoot implements IGuideBook {
 
     public static final Book GUIDE_BOOK = new Book();
-    public static final int MAX_PAGE_LEN = 370;
+    public static final int MAX_PAGE_LEN = 360;
 
     @Nullable
     @Override
@@ -45,9 +43,11 @@ public class GuideWoot implements IGuideBook {
     public void handlePost(@Nonnull ItemStack bookStack) {
 
         // Do NOT add anything here with a json recipe page or the book will crash
-        CategoryFarming.buildCategory(GUIDE_BOOK);
+        CategoryForeword.buildCategory(GUIDE_BOOK);
+        CategoryFactory.buildCategory(GUIDE_BOOK);
         CategoryAnvil.buildCategory(GUIDE_BOOK);
         CategoryIngredients.buildCategory(GUIDE_BOOK);
+        CategoryUpgrades.buildCategory(GUIDE_BOOK);
     }
 
     @Nullable

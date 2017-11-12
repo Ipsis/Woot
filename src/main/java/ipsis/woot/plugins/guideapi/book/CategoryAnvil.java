@@ -1,10 +1,7 @@
 package ipsis.woot.plugins.guideapi.book;
 
-import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.impl.Entry;
-import amerifrance.guideapi.api.impl.Page;
-import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.category.CategoryItemStack;
@@ -24,25 +21,28 @@ public class CategoryAnvil {
     public static void buildCategory(Book book) {
 
         final String keyBase = "guide." + Reference.MOD_ID + ".entry.anvil.";
+        final String title = "guide." + Reference.MOD_ID + ".category.anvil";
 
-        CategoryItemStack category = new CategoryItemStack(keyBase + "anvil", new ItemStack(ModBlocks.blockAnvil));
+        CategoryItemStack category = new CategoryItemStack(title, new ItemStack(ModBlocks.blockAnvil));
         category.withKeyBase(keyBase);
 
         category.addEntry("intro", new Entry(keyBase + "intro", true));
         category.getEntry("intro").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro.info"), GuideWoot.MAX_PAGE_LEN));
 
+        category.addEntry("usage", new Entry(keyBase + "usage", true));
+        category.getEntry("usage").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "usage.info"), GuideWoot.MAX_PAGE_LEN));
+
         category.addEntry("dies", new Entry(keyBase + "dies", true));
+        category.getEntry("dies").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "dies.info"), GuideWoot.MAX_PAGE_LEN));
         category.getEntry("dies").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()))));
-        category.getEntry("dies").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.MESH.getMeta()))));
+        category.getEntry("dies").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.PLATE.getMeta()))));
         category.getEntry("dies").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.SHARD.getMeta()))));
         category.getEntry("dies").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()))));
 
         category.addEntry("plate", new Entry(keyBase + "plate", true));
         category.getEntry("plate").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemStygianIronPlate))));
-        category.getEntry("plate").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "plate.info"), GuideWoot.MAX_PAGE_LEN));
 
         category.addEntry("shards", new Entry(keyBase + "shards", true));
-        category.getEntry("shards").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "shards.info"), GuideWoot.MAX_PAGE_LEN));
         category.getEntry("shards").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemEnderShard))));
         category.getEntry("shards").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.QUARTZ.getMeta()))));
         category.getEntry("shards").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModItems.itemShard, 1, ItemShard.EnumShardType.DIAMOND.getMeta()))));
@@ -65,13 +65,7 @@ public class CategoryAnvil {
         category.addEntry("controller", new Entry(keyBase + "controller", true));
         category.getEntry("controller").addPage(new PageAnvilRecipe(Woot.anvilManager.getRecipe(new ItemStack(ModBlocks.blockFactoryController))));
 
-        for (EntryAbstract entry : category.entries.values()) {
-            for (IPage p : entry.pageList) {
-                if (p instanceof Page)
-                    ((Page) p).setUnicodeFlag(true);
-
-            }
-        }
+        CategoryUtils.toUnicodeAndBeyond(category.entries);
 
         book.addCategory(category);
     }

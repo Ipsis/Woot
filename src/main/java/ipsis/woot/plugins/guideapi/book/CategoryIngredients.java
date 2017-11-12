@@ -1,19 +1,17 @@
 package ipsis.woot.plugins.guideapi.book;
 
-import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.impl.Entry;
-import amerifrance.guideapi.api.impl.Page;
-import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.category.CategoryItemStack;
 import ipsis.Woot;
+import ipsis.woot.init.ModItems;
 import ipsis.woot.plugins.guideapi.GuideWoot;
 import ipsis.woot.plugins.guideapi.page.PageFarmRecipe;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.WootMobName;
-import net.minecraft.init.Items;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.ItemStack;
 
 public class CategoryIngredients {
@@ -21,27 +19,22 @@ public class CategoryIngredients {
     public static void buildCategory(Book book) {
 
         final String keyBase = "guide." + Reference.MOD_ID + ".entry.ingredients.";
+        final String title = "guide." + Reference.MOD_ID + ".category.ingredients";
 
-        CategoryItemStack category = new CategoryItemStack(keyBase + "ingredients", new ItemStack(Items.BREWING_STAND));
+        CategoryItemStack category = new CategoryItemStack(title, new ItemStack(ModItems.itemEnderShard));
+
         category.withKeyBase(keyBase);
 
         category.addEntry("intro", new Entry(keyBase + "intro", true));
         category.getEntry("intro").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro.info"), GuideWoot.MAX_PAGE_LEN));
 
-        category.addEntry("recipes", new Entry(keyBase + "recipes", true));
-        category.getEntry("recipes").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "recipes.info"), GuideWoot.MAX_PAGE_LEN));
-
         for (WootMobName wootMobName : Woot.spawnRecipeRepository.getAllMobs()) {
-            category.getEntry("recipes").addPage(new PageFarmRecipe(wootMobName, Woot.spawnRecipeRepository.get(wootMobName)));
+            String name = EntityList.getTranslationName(wootMobName.getResourceLocation());
+            category.addEntry(name, new Entry(name, true));
+            category.getEntry(name).addPage(new PageFarmRecipe(wootMobName, Woot.spawnRecipeRepository.get(wootMobName)));
         }
 
-        for (EntryAbstract entry : category.entries.values()) {
-            for (IPage p : entry.pageList) {
-                if (p instanceof Page)
-                    ((Page) p).setUnicodeFlag(true);
-
-            }
-        }
+        CategoryUtils.toUnicodeAndBeyond(category.entries);
 
         book.addCategory(category);
     }

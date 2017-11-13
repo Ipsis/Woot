@@ -1,10 +1,9 @@
-# Woot
+# Woot [![](http://cf.way2muchnoise.eu/full_woot_downloads.svg)](https://minecraft.curseforge.com/projects/woot)
 
-> The alternative spawner/grinder mod.
-
+## What Is It For?????
 Get mod loot drops, without all those messy entities being generated.
+Be warned ... it is a big, magic multiblock.
 
-See https://github.com/Ipsis/Woot/wiki for how to use this mod
-See https://github.com/Ipsis/Woot/wiki/Changelog for the changelog
-See https://github.com/Ipsis/Woot/issues if you want to raise a bug or suggest a feature.
+## Links
+* [Downloads](http://minecraft.curseforge.com/projects/woot/files)
 

@@ -119,6 +119,7 @@ enchant.woot.headhunter=Headhunter
 ###########################################################
 chat.woot.endershard.failure=Cannot capture mob
 chat.woot.endershard.success=Captured mob
+chat.woot.anvil.nomagma=Anvil must be sitting on a Magma Block
 
 ###########################################################
 # Commands

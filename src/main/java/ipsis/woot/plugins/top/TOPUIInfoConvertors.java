@@ -21,7 +21,7 @@ public class TOPUIInfoConvertors {
     public static void controllerConvertor(ControllerUIInfo controller, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
         probeInfo.text(TextFormatting.GREEN + "Mob: " + StringHelper.localize(controller.wootMob.getDisplayName()));
-        probeInfo.text(TextFormatting.BLUE + "Tier: " + controller.requiredTier.toString());
+        probeInfo.text(TextFormatting.BLUE + controller.requiredTier.getTranslated("info.woot.tier"));
     }
 
     public static void farmConvertor(FarmUIInfo farm, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {

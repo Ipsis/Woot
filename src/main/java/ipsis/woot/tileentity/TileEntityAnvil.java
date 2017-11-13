@@ -5,10 +5,12 @@ import ipsis.woot.crafting.AnvilHelper;
 import ipsis.woot.crafting.IAnvilRecipe;
 import ipsis.woot.item.ItemEnderShard;
 import ipsis.woot.util.DebugSetup;
+import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,6 +18,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentString;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -86,13 +89,15 @@ public class TileEntityAnvil extends TileEntity {
         return compound;
     }
 
-    public void tryCraft() {
+    public void tryCraft(EntityPlayer entityPlayer) {
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", itemStack);
 
         if (!AnvilHelper.isAnvilHot(getWorld(), getPos())) {
             // TODO tell user not hot
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Anvil not hot " + getPos());
+
+            entityPlayer.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.anvil.nomagma")), false);
             return;
         }
 

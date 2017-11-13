@@ -138,7 +138,7 @@ public class BlockWootAnvil extends BlockWoot implements ITileEntityProvider {
                     }
                 } else {
                     if (playerItem.getItem() == ModItems.itemYahHammer) {
-                        anvil.tryCraft();
+                        anvil.tryCraft(playerIn);
                     } else {
                         // From anvil to player
                         ItemStack baseItem = anvil.getBaseItem();

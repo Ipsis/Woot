@@ -62,7 +62,7 @@ public enum EnumConfigKey {
             "allowXpGeneration", Boolean.class, true, false),
     T1_POWER_MAX(
             "Maximum power stored in a Tier I cell",
-            "t1PowerMax", Integer.class, 10000, false),
+            "t1PowerMax", Integer.class, 100000, false),
     T2_POWER_MAX(
             "Maximum power stored in a Tier II cell",
             "t2PowerMax", Integer.class, 1000000, false),

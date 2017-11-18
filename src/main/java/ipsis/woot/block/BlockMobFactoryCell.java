@@ -124,17 +124,6 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
-
-        if (stack.hasTagCompound()) {
-            EnumCellTier tier = EnumCellTier.byMetadata(stack.getMetadata());
-            tooltip.add("Energy: " + stack.getTagCompound().getInteger("Energy") + "/" + EnumCellTier.getMaxPower(tier));
-            tooltip.add("Tier: " + tier.getName() + " " + stack.getMetadata());
-
-        }
-    }
-
-    @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
         TileEntity te = world.getTileEntity(pos);
@@ -238,6 +227,16 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
                 return Woot.wootConfiguration.getInteger(EnumConfigKey.T2_POWER_MAX);
 
             return Woot.wootConfiguration.getInteger(EnumConfigKey.T3_POWER_MAX);
+        }
+
+        public static int getMaxTransfer(EnumCellTier tier) {
+
+            if (tier == TIER_I)
+                return Woot.wootConfiguration.getInteger(EnumConfigKey.T1_POWER_RX_TICK);
+            else if (tier == TIER_II)
+                return Woot.wootConfiguration.getInteger(EnumConfigKey.T2_POWER_RX_TICK);
+
+            return Woot.wootConfiguration.getInteger(EnumConfigKey.T3_POWER_RX_TICK);
         }
     }
 }

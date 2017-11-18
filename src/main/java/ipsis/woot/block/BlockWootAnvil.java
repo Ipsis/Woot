@@ -132,9 +132,18 @@ public class BlockWootAnvil extends BlockWoot implements ITileEntityProvider {
                 if (anvil.getBaseItem().isEmpty()) {
                     if (Woot.anvilManager.isValidBaseItem(playerItem)) {
                         // From player hand to empty anvil
-                        anvil.setBaseItem(playerItem);
-                        playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, ItemStack.EMPTY);
+                        ItemStack baseItem = playerItem.copy();
+                        baseItem.setCount(1);
+                        anvil.setBaseItem(baseItem);
+
+                        playerItem.setCount(playerItem.getCount() - 1);
+                        if (playerItem.isEmpty()) {
+                            playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, ItemStack.EMPTY);
+                        } else {
+                            playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, playerItem);
+                        }
                         playerIn.openContainer.detectAndSendChanges();
+
                     }
                 } else {
                     if (playerItem.getItem() == ModItems.itemYahHammer) {

@@ -2,6 +2,8 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.util.WootMob;
+import ipsis.woot.util.WootMobName;
+import net.minecraft.entity.EntityList;
 import net.minecraft.util.math.BlockPos;
 
 public class ScannedFarmController {
@@ -22,7 +24,10 @@ public class ScannedFarmController {
 
     public boolean isValid() {
 
-        return pos != null && wootMob!= null && Woot.policyRepository.canCapture(wootMob.getWootMobName());
+        if (pos == null || wootMob == null || !Woot.policyRepository.canCapture(wootMob.getWootMobName()))
+            return false;
+
+        return (EntityList.isRegistered(wootMob.getWootMobName().getResourceLocation()));
     }
 
     public BlockPos getBlocks() {

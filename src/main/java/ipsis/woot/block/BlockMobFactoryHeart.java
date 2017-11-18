@@ -118,10 +118,12 @@ public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITi
             return true;
 
         ItemStack heldItem = playerIn.getHeldItemMainhand();
+
+        /**
+         * TODO - should be give some feedback?
         if (heldItem.isEmpty()) {
-            LogHelper.info("onBlockActivated: dump status to conosle");
             return true;
-        }
+        } */
 
         if (ItemHelper.areItemsEqual(heldItem.getItem(), Item.getItemFromBlock(Blocks.TORCH))) {
 

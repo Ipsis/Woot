@@ -120,6 +120,13 @@ enchant.woot.headhunter=Headhunter
 chat.woot.endershard.failure=Cannot capture mob
 chat.woot.endershard.success=Captured mob
 chat.woot.anvil.nomagma=Anvil must be sitting on a Magma Block
+chat.woot.anvil.emptyshard=Unprogrammed Ender Shard
+chat.woot.anvil.invalid=No matching recipe
+chat.woot.validate.nopower=No Power Cell
+chat.woot.validate.noimporter=No Importer
+chat.woot.validate.noexporter=No Exporter
+chat.woot.validate.noblock=Block at %d,%d,%d should be a %s
+chat.woot.validate.validating=Validating factory for
 
 ###########################################################
 # Commands

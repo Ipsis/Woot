@@ -12,6 +12,7 @@ import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import ipsis.woot.util.LootHelper;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -142,17 +143,18 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         IFarmScanner farmScanner = new FarmScanner();
         IFarmScanner.BadFarmInfo badFarmInfo = new IFarmScanner.BadFarmInfo();
         farmScanner.scanFarmNoStop(world, getPos(), facing, tier, badFarmInfo);
+        player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.validating") + tier.getTranslated("info.woot.tier")), false);
         for (IFarmScanner.BadFarmBlock badFarmBlock : badFarmInfo.badFarmBlocks) {
             ItemStack itemStack = new ItemStack(badFarmBlock.getCorrectBlock(), 1, badFarmBlock.getCorrectBlockMeta());
-            player.sendStatusMessage(new TextComponentString(badFarmBlock.getPos() + "->" + itemStack.getDisplayName()), false);
+            player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.noblock", badFarmBlock.getPos().getX(), badFarmBlock.getPos().getY(), badFarmBlock.getPos().getZ(),  itemStack.getDisplayName())), false);
         }
 
         if (!badFarmInfo.hasCell)
-            player.sendStatusMessage(new TextComponentString("No power cell"), false);
+            player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.nopower")), false);
         if (!badFarmInfo.hasImporter)
-            player.sendStatusMessage(new TextComponentString("No importer"), false);
+            player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.noimporter")), false);
         if (!badFarmInfo.hasExporter)
-            player.sendStatusMessage(new TextComponentString("No exporter"), false);
+            player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.noexporter")), false);
     }
 
     /**

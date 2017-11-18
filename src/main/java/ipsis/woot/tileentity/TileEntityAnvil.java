@@ -94,9 +94,6 @@ public class TileEntityAnvil extends TileEntity {
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", itemStack);
 
         if (!AnvilHelper.isAnvilHot(getWorld(), getPos())) {
-            // TODO tell user not hot
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Anvil not hot " + getPos());
-
             entityPlayer.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.anvil.nomagma")), false);
             return;
         }
@@ -108,9 +105,7 @@ public class TileEntityAnvil extends TileEntity {
 
         if (ItemEnderShard.isEnderShard(itemStack) && !ItemEnderShard.isFull(itemStack)) {
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Unprogrammed ender shard");
-
-            // TODO failed clang!
+            entityPlayer.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.anvil.emptyshard")), false);
             world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             return;
         }
@@ -142,12 +137,9 @@ public class TileEntityAnvil extends TileEntity {
                 Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Leftovers " + ingredients);
             }
 
-
         }  else {
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "No matching recipe " + itemStack + " " + ingredients);
-
-            // TODO failed clang!
+            entityPlayer.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.anvil.invalid")), false);
             world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
     }

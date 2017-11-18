@@ -16,7 +16,7 @@ public class LogHelper {
      */
     public static void log(Level logLevel, Object object) {
 
-        LOGGER.log(logLevel, object);
+        LOGGER.log(logLevel, Reference.MOD_NAME + ": "+ object);
     }
 
     public static void all(Object object) {

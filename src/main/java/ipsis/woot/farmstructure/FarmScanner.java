@@ -215,7 +215,7 @@ public class FarmScanner implements IFarmScanner {
 
         for (ScannedFarmUpgrade.Upgrade upgrade : farmUpgrade.getUpgrades()) {
 
-            LogHelper.info("TODO validate upgrade against mob");
+            // TODO validate upgrade against mob
         }
     }
 

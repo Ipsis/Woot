@@ -1,6 +1,5 @@
 package ipsis.woot.command;
 
-import ipsis.woot.reference.Localization;
 import ipsis.woot.reference.Reference;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.server.command.CommandTreeBase;
@@ -9,9 +8,9 @@ public class WootCommand extends CommandTreeBase {
 
     public WootCommand() {
 
-        addSubcommand(new CommandFlush());
         addSubcommand(new CommandDev());
         addSubcommand(new CommandDump());
+        addSubcommand(new CommandFlush());
         addSubcommand(new CommandGive());
     }
 
@@ -36,7 +35,7 @@ public class WootCommand extends CommandTreeBase {
     @Override
     public String getUsage(ICommandSender sender) {
 
-        return Localization.TAG_COMMAND + "usage";
+        return "commands.woot.usage";
     }
 
 }

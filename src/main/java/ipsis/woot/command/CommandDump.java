@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Localization;
 import ipsis.woot.util.CommandHelper;
+import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.command.CommandBase;
@@ -36,7 +37,7 @@ public class CommandDump extends CommandTreeBase {
     @Override
     public String getUsage(ICommandSender sender) {
 
-        return Localization.TAG_COMMAND + "dump.usage";
+        return "commands.woot.dump.usage";
     }
 
     public static class CommandDumpMobs extends CommandBase {
@@ -50,7 +51,7 @@ public class CommandDump extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
 
-            return Localization.TAG_COMMAND + "dump.mobs.usage";
+            return "commands.woot.dump.mobs.usage";
         }
 
         @Override
@@ -76,7 +77,7 @@ public class CommandDump extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
 
-            return Localization.TAG_COMMAND + "dump.status.usage";
+            return "commands.woot.dump.status.usage";
         }
 
         @Override
@@ -96,20 +97,12 @@ public class CommandDump extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
 
-            return Localization.TAG_COMMAND + "dump.loot.usage";
+            return "commands.woot.dump.loot.usage";
         }
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
-            if (args.length < 1)
-                throw new WrongUsageException(getUsage(sender));
-
-            WootMobName wootMobName = WootMobNameBuilder.create(args[0]);
-            if (wootMobName.isValid())
-                LogHelper.info("Dump loot for " + wootMobName);
-            else
-                LogHelper.info(Localization.INVALID_MOB_NAME);
         }
     }
 }

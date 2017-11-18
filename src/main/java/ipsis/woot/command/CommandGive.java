@@ -3,6 +3,7 @@ package ipsis.woot.command;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Localization;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
+import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
 import net.minecraft.command.CommandException;
@@ -28,7 +29,7 @@ public class CommandGive extends CommandTreeBase {
     @Override
     public String getUsage(ICommandSender sender) {
 
-        return Localization.TAG_COMMAND + "give.usage";
+        return "commands.woot.give.usage";
     }
 
     @Override
@@ -75,10 +76,8 @@ public class CommandGive extends CommandTreeBase {
                     entityitem.setOwner(entityplayer.getName());
                 }
             }
-
-
         } else {
-            LogHelper.info(Localization.INVALID_MOB_NAME);
+            throw new WrongUsageException("commands.woot.invalidmod");
         }
     }
 }

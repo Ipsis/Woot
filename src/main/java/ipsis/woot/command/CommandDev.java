@@ -30,7 +30,7 @@ public class CommandDev extends CommandTreeBase {
     @Override
     public String getUsage(ICommandSender sender) {
 
-        return Localization.TAG_COMMAND + "dev.usage";
+        return "commands.woot.dev.usage";
     }
 
     public static class CommandDevDebug extends CommandBase {
@@ -45,7 +45,7 @@ public class CommandDev extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
 
-            return Localization.TAG_COMMAND + "dev.debug.usage";
+            return "commands.woot.dev.debug.usage";
         }
 
         // This needs to be in sync with getUsage so people know what they can type in!
@@ -109,7 +109,7 @@ public class CommandDev extends CommandTreeBase {
         @Override
         public String getUsage(ICommandSender sender) {
 
-            return Localization.TAG_COMMAND + "dev.power.usage";
+            return "commands.woot.dev.power.usage";
         }
 
         @Override

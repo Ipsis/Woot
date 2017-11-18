@@ -3,6 +3,7 @@ package ipsis.woot.command;
 import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Localization;
+import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.command.CommandException;
@@ -22,7 +23,7 @@ public class CommandFlush extends CommandTreeBase {
     @Override
     public String getUsage(ICommandSender sender) {
 
-        return Localization.TAG_COMMAND + "flush.usage";
+        return "commands.woot.flush.usage";
     }
 
     @Override
@@ -38,7 +39,7 @@ public class CommandFlush extends CommandTreeBase {
             if (wootMobName.isValid())
                 Woot.lootRepository.flushMob(wootMobName);
             else
-                LogHelper.info(Localization.INVALID_MOB_NAME);
+                throw new WrongUsageException("commands.woot.invalidmod");
 
         }
     }

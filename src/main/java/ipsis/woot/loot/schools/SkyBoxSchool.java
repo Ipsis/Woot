@@ -1,6 +1,7 @@
 package ipsis.woot.loot.schools;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.*;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.farming.ITickTracker;
@@ -28,7 +29,8 @@ public class SkyBoxSchool implements ILootLearner {
      */
     private void createSkybox(World world, BlockPos factoryPos) {
 
-       Block b = Blocks.COBBLESTONE;
+//       Block b = Blocks.COBBLESTONE;
+       Block b = Blocks.BARRIER;
 
        int worldHeight = world.getHeight();
        int yMin = worldHeight - 5;

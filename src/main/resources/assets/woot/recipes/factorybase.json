@@ -1,6 +1,7 @@
 {
   "result": {
-    "item": "woot:factorybase"
+    "item": "woot:factorybase",
+    "count": 4
   },
   "pattern": [
     " S ",

@@ -239,11 +239,12 @@ public class FarmScanner implements IFarmScanner {
          * Scan controller
          */
         ScannedFarmController scannedFarmController = scanFarmController(world, origin, facing);
-        if (!scannedFarmController.isValid())
+        if (!scannedFarmController.isValid()) {
             badFarmInfo.badFarmBlocks.add(new BadFarmBlock(origin.up().offset(facing, -1), ModBlocks.blockFactoryController, 0));
-
-        EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, scannedFarmController.wootMob.getWootMobName());
-        if (!EnumMobFactoryTier.isLessThanOrEqual(mobTier, tier))
-            badFarmInfo.badFarmBlocks.add(new BadFarmBlock(origin.up().offset(facing, -1), ModBlocks.blockFactoryController, 0));
+        } else {
+            EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, scannedFarmController.wootMob.getWootMobName());
+            if (!EnumMobFactoryTier.isLessThanOrEqual(mobTier, tier))
+                badFarmInfo.badFarmBlocks.add(new BadFarmBlock(origin.up().offset(facing, -1), ModBlocks.blockFactoryController, 0));
+        }
     }
 }

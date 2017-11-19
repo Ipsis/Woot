@@ -48,28 +48,54 @@ public class FactoryConfigLoader {
             parseMobConfigs(ele);
         }
 
-        JsonElement ele = json.get("moblist");
-        if (!ele.isJsonArray())
-            throw new JsonSyntaxException("Moblist must a string list");
+        // blacklist all entities from mods
+        JsonElement ele = json.get("entitymodblacklist");
+        if (ele == null || !ele.isJsonArray())
+            throw new JsonSyntaxException("entitymodblacklist: must a string list");
+
+        String entityMods[] = GSON.fromJson(ele, String[].class);
+        for (String mod : entityMods)
+            Woot.policyRepository.addModToEntityList(mod, false);
+
+        // blacklist specific entity
+        ele = json.get("entityblacklist");
+        if (ele == null || !ele.isJsonArray())
+            throw new JsonSyntaxException("entityblacklist must a string list");
 
         String mobs[] = GSON.fromJson(ele, String[].class);
-        for (int i = 0; i < mobs.length; i++) {
-            WootMobName wootMobName = WootMobNameBuilder.createFromConfigString(mobs[i]);
+        for (String mob : mobs) {
+            WootMobName wootMobName = WootMobNameBuilder.createFromConfigString(mob);
             if (wootMobName.isValid())
                 Woot.policyRepository.addEntityToEntityList(wootMobName, false);
             else
-                LogHelper.warn("Invalid mob name " + mobs[i]);
+                LogHelper.warn("Entity blacklist: invalid mob name " + mob);
         }
 
-        ele = json.get("moditemblacklist");
-        if (!ele.isJsonArray())
-            throw new JsonSyntaxException("Moditemblacklist must a string list");
+        // whitelist of mobs
+        ele = json.get("entitywhitelist");
+        if (ele == null || !ele.isJsonArray())
+            throw new JsonSyntaxException("entitywhitelist must a string list");
+
+        mobs = GSON.fromJson(ele, String[].class);
+        for (String mob : mobs) {
+            WootMobName wootMobName = WootMobNameBuilder.createFromConfigString(mob);
+            if (wootMobName.isValid())
+                Woot.policyRepository.addEntityToEntityWhitelist(wootMobName);
+            else
+                LogHelper.warn("Entity whitelist: invalid mob name " + mob);
+        }
+
+        // blacklist all items from mods
+        ele = json.get("itemmodblacklist");
+        if (ele == null || !ele.isJsonArray())
+            throw new JsonSyntaxException("itemmodblacklist: must a string list");
 
         String mods[] = GSON.fromJson(ele, String[].class);
         for (int i = 0; i < mods.length; i++) {
             Woot.policyRepository.addModToDropList(mods[i], false);
         }
 
+        // blacklist specific item
         for (JsonElement ele2 : JsonUtils.getJsonArray(json, "itemblacklist")) {
             if (ele2 == null || !ele2.isJsonObject())
                 throw new JsonSyntaxException("Blacklisted item must be an object");
@@ -77,11 +103,11 @@ public class FactoryConfigLoader {
             JsonObject itemObject = (JsonObject)ele2;
             ItemStack itemStack = getItemStack(itemObject);
             if (itemStack.isEmpty()) {
-                LogHelper.info("Ignoring invalid blacklisted item");
+                LogHelper.info("Item blacklist: invalid item");
                 continue;
             }
 
-            Woot.policyRepository.addIteStackToDropList(itemStack, false);
+            Woot.policyRepository.addItemToDropList(itemStack, false);
         }
     }
 

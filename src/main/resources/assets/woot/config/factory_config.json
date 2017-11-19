@@ -158,11 +158,17 @@
       ]
     }
   ],
-  "moblist": [
+  "entitymodblacklist": [
+    "botania"
   ],
-  "moditemblacklist": [
+  "entityblacklist": [
+  ],
+  "entitywhitelist": [
+  ],
+  "itemmodblacklist": [
   ],
   "itemblacklist": [
+
   ]
 }
 

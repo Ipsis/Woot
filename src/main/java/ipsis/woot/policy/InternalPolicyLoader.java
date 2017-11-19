@@ -5,12 +5,18 @@ import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.item.ItemStack;
 
+/**
+ * This specifies mods, entities and items that don't work well with
+ * Woot.
+ * Anything that I regard as OP or goes against the direction that
+ * another mod author intended will be in the main config files.
+ */
 public class InternalPolicyLoader {
 
     // MODS where the entities don't work well with Woot
     private static final String[] BLACKLIST_ENTITIES_FROM_MODS = {
             "cyberware",
-            "botania",
+//            "botania",
             "withercrumbs",
             "draconicevolution"
     };
@@ -55,7 +61,7 @@ public class InternalPolicyLoader {
         for (String drop : BLACKLIST_ITEMS) {
             ItemStack itemStack = ItemStackHelper.getItemStackFromName(drop);
             if (!itemStack.isEmpty())
-                policy.addIteStackToDropList(itemStack, true);
+                policy.addItemToDropList(itemStack, true);
         }
     }
 }

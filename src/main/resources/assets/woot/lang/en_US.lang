@@ -138,6 +138,7 @@ commands.woot.dev.power.usage=Use /woot dev power <bool>.
 commands.woot.dump.loot.usage=Not implemented
 commands.woot.dump.mobs.usage=Use /woot dump mobs
 commands.woot.dump.status.usage=Not implemented
+commands.woot.dump.policy.usage=Use /woot dump policy <int|ext> <mob|item>
 
 commands.woot.flush.usage=Use /woot flush {all|<mobname>}
 

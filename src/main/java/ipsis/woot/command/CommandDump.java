@@ -26,6 +26,7 @@ public class CommandDump extends CommandTreeBase {
         addSubcommand(new CommandDumpLoot());
         addSubcommand(new CommandDumpMobs());
         addSubcommand(new CommandDumpStatus());
+        addSubcommand(new CommandDumpPolicy());
     }
 
     @Override
@@ -103,6 +104,56 @@ public class CommandDump extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
+        }
+    }
+
+    public static class CommandDumpPolicy extends CommandBase {
+
+        @Override
+        public String getName() {
+
+            return "policy";
+        }
+
+        @Override
+        public String getUsage(ICommandSender sender) {
+
+            return "commands.woot.dump.policy.usage";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+
+            if (args.length < 2)
+                throw new WrongUsageException(getUsage(sender));
+
+            boolean internal;
+            if (args[0].equalsIgnoreCase("ext"))
+                internal = false;
+            else if (args[0].equalsIgnoreCase("int"))
+                internal = true;
+            else
+                throw new WrongUsageException(getUsage(sender));
+
+            if (args[1].equalsIgnoreCase("mob")) {
+                List<String> mobList = Woot.policyRepository.getEntityList(internal);
+                StringBuilder sb = new StringBuilder();
+                for (String s : mobList)
+                    sb.append(s).append(" ");
+
+                CommandHelper.display(sender, sb.toString());
+
+            } else if (args[1].equalsIgnoreCase("item")) {
+                List<String> mobList = Woot.policyRepository.getItemList(internal);
+                StringBuilder sb = new StringBuilder();
+                for (String s : mobList)
+                    sb.append(s).append(" ");
+
+                CommandHelper.display(sender, sb.toString());
+
+            } else {
+                throw new WrongUsageException(getUsage(sender));
+            }
         }
     }
 }

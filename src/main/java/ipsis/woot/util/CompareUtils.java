@@ -2,9 +2,9 @@ package ipsis.woot.util;
 
 import net.minecraft.item.ItemStack;
 
-public class BlacklistComparator {
+public class CompareUtils {
 
-    public static boolean isSameMod(WootMobName wootMobName, String mod) {
+    public static boolean isFromMod(WootMobName wootMobName, String mod) {
 
         return wootMobName.getResourceLocation().getResourceDomain().equalsIgnoreCase(mod);
     }
@@ -14,7 +14,7 @@ public class BlacklistComparator {
         return wootMobName.getName().equalsIgnoreCase(mob) || wootMobName.getEntityKey().equalsIgnoreCase(mob);
     }
 
-    public static boolean isSameMod(ItemStack itemStack, String mod) {
+    public static boolean isFromMod(ItemStack itemStack, String mod) {
 
         return itemStack.getItem().getRegistryName().getResourceDomain().equalsIgnoreCase(mod);
     }

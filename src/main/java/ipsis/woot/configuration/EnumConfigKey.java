@@ -54,9 +54,6 @@ public enum EnumConfigKey {
     POWER_PER_XP(
             "Power cost per level of XP",
             "powerPerXp", Integer.class, 1, true),
-    MOB_WHITELIST(
-            "Define in factory_config.json",
-            "mobWhitelist", Boolean.class, false, false),
     ALLOW_XP_GENERATION(
             "Allow the factory to generate XP shards",
             "allowXpGeneration", Boolean.class, true, false),

@@ -334,8 +334,8 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
         }
         obj.add("drops", dropsArray);
 
-        // TODO disable pretty printing
-        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        //Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
         String t = GSON.toJson(obj);
         SerializationHelper.writeJsonFile(file, t);
     }

@@ -43,8 +43,11 @@ public class EntitySpawner implements IEntitySpawner {
 
         ResourceLocation resourceLocation = wootMobName.getResourceLocation();
         Entity entity = EntityList.createEntityByIDFromName(resourceLocation, world);
-        if (entity != null)
+        // Got to be a mob, not a bottle or other non-living entity
+        if (entity != null && entity instanceof EntityLiving)
             applyCustomConfig(entity, wootMobName, world);
+        else
+            entity = null;
 
         return entity;
     }

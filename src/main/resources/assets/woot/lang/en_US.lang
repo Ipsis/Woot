@@ -143,6 +143,7 @@ commands.woot.dump.policy.usage=Use /woot dump policy <int|ext> <mob|item>
 commands.woot.flush.usage=Use /woot flush {all|<mobname>}
 
 commands.woot.give.usage=Use /woot give <player> <mobname> <mob display name>
+commands.woot.give.unknownentity=Entity not on EntityList
 
 commands.woot.invalidmob=Invalid mob name
 

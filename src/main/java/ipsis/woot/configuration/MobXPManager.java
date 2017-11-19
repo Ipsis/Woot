@@ -32,7 +32,7 @@ public class MobXPManager implements IMobCost {
                 cost = mobXpMap.get(key);
             } else {
                 Entity entity = EntityList.createEntityByIDFromName(wootMobName.getResourceLocation(), world);
-                if (entity != null) {
+                if (entity != null && entity instanceof EntityLiving) {
                     cost = ((EntityLiving)entity).experienceValue;
                     mobXpMap.put(key, cost);
                 }

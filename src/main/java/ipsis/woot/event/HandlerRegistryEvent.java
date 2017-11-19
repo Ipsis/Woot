@@ -70,6 +70,7 @@ public class HandlerRegistryEvent {
                 new RegisterItem(ModItems.itemStygianIronIngot, ItemStygianIronIngot.BASENAME),
                 new RegisterItem(ModItems.itemStygianIronPlate, ItemStygianIronPlate.BASENAME),
                 new RegisterItem(ModItems.itemEnderShard, ItemEnderShard.BASENAME),
+                new RegisterItem(ModItems.itemPrism, ItemPrism.BASENAME),
                 new RegisterItem(ModItems.itemSoulSandDust, ItemSoulSandDust.BASENAME),
                 new RegisterItem(ModItems.itemStygianIronDust, ItemStygianIronDust.BASENAME),
                 new RegisterItem(ModItems.itemShard, ItemShard.BASENAME),

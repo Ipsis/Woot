@@ -105,11 +105,7 @@ public class AnvilManagerLoader {
                 new ItemStack(ModItems.itemFactoryCore, 1, ItemFactoryCore.EnumCoreType.CONTROLLER.getMeta()),
                 new ItemStack(ModItems.itemDie, 1, ItemDie.EnumDyeType.CORE.getMeta()),
                 true,
-                new ItemStack(Items.DYE, 1, 0),
-                new ItemStack(Items.DYE, 1, 1),
-                new ItemStack(Items.DYE, 1, 2),
-                new ItemStack(Items.DYE, 1, 3),
-                new ItemStack(Items.DYE, 1, 4),
+                new ItemStack(ModItems.itemPrism, 1),
                 new ItemStack(ModItems.itemStygianIronPlate));
 
         Woot.anvilManager.addRecipe(

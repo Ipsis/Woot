@@ -14,6 +14,7 @@ public class ModItems {
     public static ItemWoot itemStygianIronIngot;
     public static ItemWoot itemStygianIronPlate;
     public static ItemWoot itemEnderShard;
+    public static ItemWoot itemPrism;
     public static ItemWoot itemShard;
     public static ItemWoot itemXpShard;
     public static ItemWoot itemYahHammer;
@@ -26,6 +27,7 @@ public class ModItems {
     public static void init() {
 
         itemEnderShard = new ItemEnderShard();
+        itemPrism = new ItemPrism();
         itemFactoryBase = new ItemFactoryBase();
         itemXpShard = new ItemXpShard();
         itemShard = new ItemShard();
@@ -42,6 +44,7 @@ public class ModItems {
     public static void initClient() {
 
         ModItems.itemEnderShard.initModel();
+        ModItems.itemPrism.initModel();
         ModItems.itemFactoryBase.initModel();
         ModItems.itemXpShard.initModel();
         ModItems.itemShard.initModel();

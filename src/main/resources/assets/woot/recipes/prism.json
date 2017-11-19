@@ -1,0 +1,49 @@
+{
+  "result": {
+    "item": "woot:prism"
+
+  },
+  "pattern": [
+    "ROY",
+    "WCB",
+    "GLP"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:dye",
+      "data": 1
+    },
+    "O": {
+      "item": "minecraft:dye",
+      "data": 14
+    },
+    "Y": {
+      "item": "minecraft:dye",
+      "data": 11
+    },
+    "W": {
+      "item": "minecraft:dye",
+      "data": 15
+    },
+    "B": {
+      "item": "minecraft:dye",
+      "data": 0
+    },
+    "G": {
+      "item": "minecraft:dye",
+      "data": 2
+    },
+    "L": {
+      "item": "minecraft:dye",
+      "data": 4
+    },
+    "P": {
+      "item": "minecraft:dye",
+      "data":5
+    },
+    "C": {
+      "item": "minecraft:glass"
+    }
+  }
+}

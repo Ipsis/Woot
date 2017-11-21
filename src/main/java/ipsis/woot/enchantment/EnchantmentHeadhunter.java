@@ -1,13 +1,18 @@
 package ipsis.woot.enchantment;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.SkullHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityWitherSkeleton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -83,14 +88,17 @@ public class EnchantmentHeadhunter extends Enchantment {
 
     public static void handleLivingDrops(LivingDropsEvent e) {
 
-        if (e.getSource().getTrueSource() == null)
+        Entity perp = e.getSource().getTrueSource();
+        if (perp == null || perp instanceof  FakePlayer)
             return;
 
-        if (e.getSource().getTrueSource() instanceof FakePlayer)
-            return;
+        EntityLivingBase whatDied = e.getEntityLiving();
 
         /* Ignore wither skeletons, only for use on other mobs */
-        if (e.getEntityLiving() instanceof EntityWitherSkeleton)
+        if (whatDied instanceof EntityWitherSkeleton)
+            return;
+
+        if (whatDied instanceof EntityPlayer || !(whatDied instanceof EntityLiving))
             return;
 
         if (hasDecapitated() && !containsSkull(e.getDrops())) {

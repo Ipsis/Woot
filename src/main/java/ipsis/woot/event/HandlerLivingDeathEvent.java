@@ -28,6 +28,10 @@ public class HandlerLivingDeathEvent {
         EntityPlayer entityPlayer = (EntityPlayer)event.getSource().getTrueSource();
         EntityLivingBase entityLivingBase = event.getEntityLiving();
 
+        // player on player kill would cause invalid cast for this method
+        if (!(entityLivingBase instanceof EntityLiving))
+            return;
+
         WootMobName wootMobName = WootMobNameBuilder.create((EntityLiving)entityLivingBase);
         if (!wootMobName.isValid())
             return;

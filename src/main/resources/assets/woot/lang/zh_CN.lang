@@ -8,18 +8,18 @@
 # Items
 ###########################################################
 
-item.woot.die.mesh.name=Mesh Die
-item.woot.die.plate.name=Plate Die
-item.woot.die.core.name=Core Die
-item.woot.die.shard.name=Shard Die
+item.woot.die.mesh.name=网状模具
+item.woot.die.plate.name=板状模具
+item.woot.die.core.name=核心模具
+item.woot.die.shard.name=碎片模具
 
-item.woot.factorycore.heart.name=Heart Core
-item.woot.factorycore.controller.name=Controller Core
-item.woot.factorycore.t1_upgrade.name=Tier I Upgrade Core
-item.woot.factorycore.t2_upgrade.name=Tier II Upgrade Core
-item.woot.factorycore.t3_upgrade.name=Tier III Upgrade Core
-item.woot.factorycore.power.name=Power Core
-item.woot.factorycore.cap.name=Cap Core
+item.woot.factorycore.heart.name=心脏核心
+item.woot.factorycore.controller.name=控制器核心
+item.woot.factorycore.t1_upgrade.name=1级升级核心
+item.woot.factorycore.t2_upgrade.name=2级升级核心
+item.woot.factorycore.t3_upgrade.name=3级升级核心
+item.woot.factorycore.power.name=能量核心
+item.woot.factorycore.cap.name=拱顶核心
 
 item.woot.factorybase.name=Factory Base
 item.woot.prism.name=Prism

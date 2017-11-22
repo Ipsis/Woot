@@ -5,6 +5,7 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.SkullHelper;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -21,6 +22,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
+import java.util.Map;
 
 public class EnchantmentHeadhunter extends Enchantment {
 
@@ -86,10 +88,37 @@ public class EnchantmentHeadhunter extends Enchantment {
         return Woot.RANDOM.nextFloat() <= DECAPITATE_CHANCE / 100.0F;
     }
 
+    private static boolean isEquipped(EntityPlayer entityPlayer) {
+
+        if (entityPlayer == null)
+            return false;
+
+        ItemStack itemStack = entityPlayer.getHeldItemMainhand();
+        if (itemStack.isEmpty())
+            return false;
+
+
+        Map<Enchantment, Integer> enchantmentIntegerMap = EnchantmentHelper.getEnchantments(itemStack);
+        if (enchantmentIntegerMap.isEmpty())
+            return false;
+
+        for (Enchantment e : enchantmentIntegerMap.keySet())
+            if (e instanceof EnchantmentHeadhunter)
+                return true;
+
+        return true;
+    }
+
     public static void handleLivingDrops(LivingDropsEvent e) {
 
         Entity perp = e.getSource().getTrueSource();
         if (perp == null || perp instanceof  FakePlayer)
+            return;
+
+        if (!(perp instanceof EntityPlayer))
+            return;
+
+        if (!isEquipped((EntityPlayer)perp))
             return;
 
         EntityLivingBase whatDied = e.getEntityLiving();
@@ -100,6 +129,7 @@ public class EnchantmentHeadhunter extends Enchantment {
 
         if (whatDied instanceof EntityPlayer || !(whatDied instanceof EntityLiving))
             return;
+
 
         if (hasDecapitated() && !containsSkull(e.getDrops())) {
 

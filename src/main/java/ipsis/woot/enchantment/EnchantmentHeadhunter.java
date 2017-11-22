@@ -1,6 +1,7 @@
 package ipsis.woot.enchantment;
 
 import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.SkullHelper;
@@ -94,13 +95,15 @@ public class EnchantmentHeadhunter extends Enchantment {
 
         float chance;
         if (level == 1)
-            chance = DECAPITATE_CHANCE_1;
+            chance = (float)Woot.wootConfiguration.getInteger(EnumConfigKey.HEADHUNTER_1_CHANCE);
         else if (level == 2)
-            chance = DECAPITATE_CHANCE_2;
+            chance = (float)Woot.wootConfiguration.getInteger(EnumConfigKey.HEADHUNTER_2_CHANCE);
         else if (level == 3)
-            chance = DECAPITATE_CHANCE_3;
+            chance = (float)Woot.wootConfiguration.getInteger(EnumConfigKey.HEADHUNTER_3_CHANCE);
         else
             return false;
+
+        LogHelper.info("Headhunter chance " +  chance);
 
 
         return Woot.RANDOM.nextFloat() <= chance / 100.0F;

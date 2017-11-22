@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +44,7 @@ public class EnchantmentHeadhunter extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 1;
+        return 3;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class EnchantmentHeadhunter extends Enchantment {
 
     private static EntityItem createEntityItem(World world, ItemStack itemStack, double x, double y, double z) {
 
-        if (world == null || itemStack == null)
+        if (world == null || itemStack.isEmpty())
             return null;
 
         EntityItem entityItem = new EntityItem(world, x, y, z, itemStack);
@@ -82,62 +84,79 @@ public class EnchantmentHeadhunter extends Enchantment {
         return found;
     }
 
-    private static final float DECAPITATE_CHANCE = 30.0F;
-    private static boolean hasDecapitated() {
+    private static final float DECAPITATE_CHANCE_1 = 30.0F;
+    private static final float DECAPITATE_CHANCE_2 = 60.0F;
+    private static final float DECAPITATE_CHANCE_3 = 80.0F;
+    private static boolean hasDecapitated(int level) {
 
-        return Woot.RANDOM.nextFloat() <= DECAPITATE_CHANCE / 100.0F;
+        if (level < 1)
+            return false;
+
+        float chance;
+        if (level == 1)
+            chance = DECAPITATE_CHANCE_1;
+        else if (level == 2)
+            chance = DECAPITATE_CHANCE_2;
+        else if (level == 3)
+            chance = DECAPITATE_CHANCE_3;
+        else
+            return false;
+
+
+        return Woot.RANDOM.nextFloat() <= chance / 100.0F;
     }
 
-    private static boolean isEquipped(EntityPlayer entityPlayer) {
+    private static Map<Enchantment, Integer> getEnchantMap(EntityPlayer entityPlayer) {
 
         if (entityPlayer == null)
-            return false;
+            return Collections.emptyMap();
 
         ItemStack itemStack = entityPlayer.getHeldItemMainhand();
         if (itemStack.isEmpty())
-            return false;
+            return Collections.emptyMap();
 
+        return EnchantmentHelper.getEnchantments(itemStack);
+    }
 
-        Map<Enchantment, Integer> enchantmentIntegerMap = EnchantmentHelper.getEnchantments(itemStack);
-        if (enchantmentIntegerMap.isEmpty())
-            return false;
+    private static int getHeadhunterLevel(Map<Enchantment, Integer> enchantmentIntegerMap) {
 
         for (Enchantment e : enchantmentIntegerMap.keySet())
             if (e instanceof EnchantmentHeadhunter)
-                return true;
+                return enchantmentIntegerMap.get(e);
 
-        return true;
+        return 0;
     }
 
     public static void handleLivingDrops(LivingDropsEvent e) {
 
-        Entity perp = e.getSource().getTrueSource();
-        if (perp == null || perp instanceof  FakePlayer)
+        // Only handle kills made by a player
+        if (!(e.getSource().getTrueSource() instanceof EntityPlayer))
             return;
 
-        if (!(perp instanceof EntityPlayer))
+        // Only handle mobs being killed
+        if (!(e.getEntityLiving() instanceof EntityLiving))
             return;
 
-        if (!isEquipped((EntityPlayer)perp))
+        EntityPlayer entityPlayer = (EntityPlayer)e.getSource().getTrueSource();
+        EntityLiving entityLiving = (EntityLiving)e.getEntityLiving();
+
+        // Ignore fake player kills
+        if (entityPlayer instanceof FakePlayer)
             return;
 
-        EntityLivingBase whatDied = e.getEntityLiving();
-
-        /* Ignore wither skeletons, only for use on other mobs */
-        if (whatDied instanceof EntityWitherSkeleton)
+        // Ignore wither skeletons, only for use on other mobs
+        if (entityLiving instanceof EntityWitherSkeleton)
             return;
 
-        if (whatDied instanceof EntityPlayer || !(whatDied instanceof EntityLiving))
-            return;
+        // Player must be holding a headhunter enchanted weapon
+        int level = getHeadhunterLevel(getEnchantMap(entityPlayer));
+        if (hasDecapitated(level) && !containsSkull(e.getDrops())) {
 
-
-        if (hasDecapitated() && !containsSkull(e.getDrops())) {
-
-            ItemStack itemStack = SkullHelper.getSkull((EntityLiving) e.getEntityLiving());
+            ItemStack itemStack = SkullHelper.getSkull(entityLiving);
             if (!itemStack.isEmpty()) {
                 EntityItem entityItem = createEntityItem(
                         e.getSource().getTrueSource().getEntityWorld(),
-                        itemStack,
+                        itemStack.copy(),
                         e.getEntityLiving().getPosition().getX(),
                         e.getEntityLiving().getPosition().getY(),
                         e.getEntityLiving().getPosition().getZ());

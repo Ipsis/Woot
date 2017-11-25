@@ -95,7 +95,7 @@
         },
         {
           "tag": "spawn_ticks",
-          "value": 1200
+          "value": 6000
         },
         {
           "tag": "mass_1_param",

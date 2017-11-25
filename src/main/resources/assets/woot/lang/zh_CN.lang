@@ -21,57 +21,55 @@ item.woot.factorycore.t3_upgrade.name=3级升级核心
 item.woot.factorycore.power.name=能量核心
 item.woot.factorycore.cap.name=拱顶核心
 
-item.woot.factorybase.name=Factory Base
-item.woot.prism.name=Prism
+item.woot.factorybase.name=工厂基座
+item.woot.prism.name=棱镜
 
-item.woot.stygianironingot.name=Stygian Iron Ingot
-item.woot.stygianironplate.name=Stygian Iron Plate
-item.woot.stygianirondust.name=Stygian Iron Dust
-item.woot.soulsanddust.name=Soul Dust
+item.woot.stygianironingot.name=地狱铁锭
+item.woot.stygianironplate.name=地狱铁板
+item.woot.stygianirondust.name=地狱铁粉
+item.woot.soulsanddust.name=灵魂粉
+item.woot.endershard.name=末影碎片
+item.woot.shard.diamond.name=钻石碎片
+item.woot.shard.emerald.name=绿宝石碎片
+item.woot.shard.quartz.name=石英碎片
+item.woot.shard.netherstar.name=下界星碎片
+item.woot.xpshard.name=经验碎片
 
-item.woot.endershard.name=Ender Shard
-item.woot.shard.diamond.name=Diamond Shard
-item.woot.shard.emerald.name=Emerald Shard
-item.woot.shard.quartz.name=Quartz Shard
-item.woot.shard.netherstar.name=Nether Star Shard
-item.woot.xpshard.name=XP Shard
-
-item.woot.yahhammer.name=Ya Hammer
+item.woot.yahhammer.name=Ya 锤子
 
 ###########################################################
 # Blocks
 ###########################################################
 
-tile.woot.soulstone.name=Soul Stone
-tile.woot.stygianiron.name=Stygian Iron Block
-tile.woot.stygianironore.name=Stygian Iron Ore
-tile.woot.anvil.name=Stygian Iron Anvil
-tile.woot.layout.name=Factory Layout
+tile.woot.soulstone.name=灵魂石
+tile.woot.stygianiron.name=地狱铁块
+tile.woot.stygianironore.name=地狱铁矿
+tile.woot.anvil.name=地狱铁砧
+tile.woot.layout.name=工厂指导石
 
-tile.woot.factory.name=Factory Heart
-tile.woot.controller.name=Factory Controller
-tile.woot.importer.name=Factory Importer
-tile.woot.exporter.name=Factory Exporter
+tile.woot.factory.name=工厂心脏
+tile.woot.controller.name=工厂控制器
+tile.woot.importer.name=工厂输入器
+tile.woot.exporter.name=工厂输出器
+tile.woot.structure.block_1.name=骨头工厂方块
+tile.woot.structure.block_2.name=腐肉工厂方块
+tile.woot.structure.block_3.name=烈焰工厂方块
+tile.woot.structure.block_4.name=末影工厂方块
+tile.woot.structure.block_5.name=下界星工厂方块
+tile.woot.structure.block_upgrade.name=工厂升级基座
 
-tile.woot.structure.block_1.name=Factory Bone Casing
-tile.woot.structure.block_2.name=Factory Flesh Casing
-tile.woot.structure.block_3.name=Factory Blaze Casing
-tile.woot.structure.block_4.name=Factory Ender Casing
-tile.woot.structure.block_5.name=Factory Nether Casing
-tile.woot.structure.block_upgrade.name=Factory Upgrade Base
+tile.woot.structure.tier_i_cap.name=一级工厂拱顶石
+tile.woot.structure.tier_ii_cap.name=二级工厂拱顶石
+tile.woot.structure.tier_iii_cap.name=三级工厂拱顶石
+tile.woot.structure.tier_iv_cap.name=四级工厂拱顶石
 
-tile.woot.structure.tier_i_cap.name=Factory Tier I Cap
-tile.woot.structure.tier_ii_cap.name=Factory Tier II Cap
-tile.woot.structure.tier_iii_cap.name=Factory Tier III Cap
-tile.woot.structure.tier_iv_cap.name=Factory Tier IV Cap
+tile.woot.cell.tier_i.name=基础能量单元
+tile.woot.cell.tier_ii.name=进阶能量单元
+tile.woot.cell.tier_iii.name=高级能量单元
 
-tile.woot.cell.tier_i.name=Basic Power Cell
-tile.woot.cell.tier_ii.name=Advanced Power Cell
-tile.woot.cell.tier_iii.name=Premium Power Cell
-
-tile.woot.upgrade.xp_i.name=XP I Upgrade
-tile.woot.upgrade.xp_ii.name=XP II Upgrade
-tile.woot.upgrade.xp_iii.name=XP III Upgrade
+tile.woot.upgrade.xp_i.name=经验 1 升级
+tile.woot.upgrade.xp_ii.name=经验 2 升级
+tile.woot.upgrade.xp_iii.name=经验 3 升级
 tile.woot.upgrade.rate_i.name=Rate I Upgrade
 tile.woot.upgrade.rate_ii.name=Rate II Upgrade
 tile.woot.upgrade.rate_iii.name=Rate III Upgrade

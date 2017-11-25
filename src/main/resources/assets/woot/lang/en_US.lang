@@ -243,8 +243,8 @@ guide.woot.entry.anvil.controller=Programmed Controller
 
 # Anvil Text
 guide.woot.entry.anvil.intro.info=The anvil serves two purposes. The first is to create some of the items used for crafting, such as the cores. The second is to reduce the cost of creating some items.\n\nThe anvil must be placed on top of a magma block.
-guide.woot.entry.anvil.dies.info=Most items created from the anvil require a die to be placed on the anvil. These dies are reusable and are created in the anvil. To create the dies, place a Stygian Iron Ingot on the anvil, then drop the requied ingredient on top. Right-click with the Ya Hammer and a corresponding die will be generated.
-guide.woot.entry.anvil.usage.info=To create an item using the anvil, right-click with a die which will then be placed on the anvil.\n\nThen drop one of each ingredient on top off the anvil and then right-click with the Ya Hammer.\n\nThe anvil is the only place where the Mob Controller can be created.
+guide.woot.entry.anvil.dies.info=Most items created from the anvil require a die to be placed on the anvil. These dies are reusable and are created in the anvil.\n\nTo create the dies, right-click the required ingredient on the anvil, then drop a Stygian Iron Plate on the anvil. Right-click with the Ya Hammer and a corresponding die will be generated.
+guide.woot.entry.anvil.usage.info=To create an item using the anvil, right-click with a die which will then be placed on the anvil.\n\nThen drop one of each ingredient on top of the anvil and then right-click with the Ya Hammer.\n\nThe anvil is the only place where the Mob Controller can be created.
 
 # Ingredients Entries
 guide.woot.entry.ingredients.intro=Introduction

@@ -24,6 +24,15 @@ public enum EnumConfigKey {
     SPAWN_TICKS(
             "Default number of ticks to spawn a mob",
             "spawnTicks", Integer.class, 16 * 20, true),
+    HEADHUNTER_1_CHANCE(
+            "Percentage chance of headhunter I enchant dropping a skull",
+            "headhunter1DropChance", Integer.class, 30, false),
+    HEADHUNTER_2_CHANCE(
+            "Percentage chance of headhunter II enchant dropping a skull",
+            "headhunter2DropChance", Integer.class, 50, false),
+    HEADHUNTER_3_CHANCE(
+            "Percentage chance of headhunter III enchant dropping a skull",
+            "headhunter3DropChance", Integer.class, 80, false),
     NUM_MOBS(
             "Default number of mobs to spawn",
             "numMobs", Integer.class, 1, false),

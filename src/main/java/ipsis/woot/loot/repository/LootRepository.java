@@ -160,11 +160,22 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
         map.put(stackSize, drops);
     }
 
+    private static boolean hasCustomDropsOnly(WootMobName wootMobName) {
+
+        if (wootMobName.isEnderDragon())
+            return true;
+
+        return false;
+    }
+
     /**
      * ILootRepositoryLearn
      */
     @Override
     public boolean isEmpty(WootMobName wootMobName, EnumEnchantKey key) {
+
+        if (hasCustomDropsOnly(wootMobName))
+            return false;
 
         int sampleCount = getSampleCount(wootMobName, key);
         if (sampleCount == 0)
@@ -176,12 +187,18 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
     @Override
     public boolean isFull(WootMobName wootMobName, EnumEnchantKey key) {
 
+        if (hasCustomDropsOnly(wootMobName))
+            return true;
+
         int sampleCount = getSampleCount(wootMobName, key);
         return sampleCount >= Woot.wootConfiguration.getInteger(EnumConfigKey.SAMPLE_SIZE);
     }
 
     @Override
     public void learn(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount) {
+
+        if (hasCustomDropsOnly(wootMobName))
+            return;
 
         if (updateSampleCount)
             incMobSample(wootMobName, key);
@@ -227,6 +244,9 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
      */
     @Override
     public List<ILootRepositoryLookup.LootItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key) {
+
+        if (hasCustomDropsOnly(wootMobName))
+            return new ArrayList<>();
 
         List<ILootRepositoryLookup.LootItemStack> lootDrops = new ArrayList<>();
 

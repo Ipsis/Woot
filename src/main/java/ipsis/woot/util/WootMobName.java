@@ -61,6 +61,11 @@ public class WootMobName {
         return !this.entityKey.equals("INVALID");
     }
 
+    public boolean isEnderDragon() {
+
+        return this.entityKey.equalsIgnoreCase("minecraft:ender_dragon");
+    }
+
     public ResourceLocation getResourceLocation() {
 
         return new ResourceLocation(entityKey);

@@ -119,11 +119,12 @@ public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITi
 
         ItemStack heldItem = playerIn.getHeldItemMainhand();
 
-        /**
-         * TODO - should be give some feedback?
         if (heldItem.isEmpty()) {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TileEntityMobFactoryHeart)
+                ((TileEntityMobFactoryHeart)te).dumpStatusToPlayer(playerIn);
             return true;
-        } */
+        }
 
         if (ItemHelper.areItemsEqual(heldItem.getItem(), Item.getItemFromBlock(Blocks.TORCH))) {
 

@@ -19,11 +19,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
@@ -225,5 +228,36 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         // Say everything is okay
         info.setValid();
+    }
+
+    public void dumpStatusToPlayer(EntityPlayer entityPlayer) {
+
+        List<String> messages = new ArrayList<>();
+
+        FarmUIInfo farm = new FarmUIInfo();
+        getUIInfo(farm);
+        if (!farm.isValid) {
+            messages.add(TextFormatting.RED + StringHelper.localize("info.woot.heart.unformed"));
+        } else {
+
+            int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
+            p = MathHelper.clamp(p, 0, 100);
+            messages.add((farm.isRunning ? TextFormatting.YELLOW : TextFormatting.RED) + StringHelper.localizeFormat("info.woot.heart.progress",
+                        p, farm.isRunning ? "Running" : "Stopped"));
+
+            messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.recipe",
+                    farm.wootMob.getDisplayName(), farm.mobCount));
+            messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.cost",
+                    farm.recipeTotalPower, farm.recipePowerPerTick, farm.recipeTotalTime));
+
+            if (!farm.ingredients.isEmpty()) {
+                for (ItemStack itemStack : farm.ingredients)
+                    messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
+                            itemStack.getCount(), itemStack.getDisplayName()));
+            }
+        }
+
+        for (String s : messages)
+            entityPlayer.sendStatusMessage(new TextComponentString(s), false);
     }
 }

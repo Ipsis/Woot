@@ -110,6 +110,12 @@ info.woot.endershard.b.1=Fully programmed
 
 info.woot.tier=Tier %s
 
+info.woot.heart.unformed=Factory not formed
+info.woot.heart.progress=Progress: %d%% (%s)
+info.woot.heart.recipe=Spawning %s * %d
+info.woot.heart.cost=Power %dRF @ %dRF/tick for %d ticks
+info.woot.heart.ingredients=Ingredients Per Mob: %d * %s
+
 ###########################################################
 # Enchantments
 ###########################################################

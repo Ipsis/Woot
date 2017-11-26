@@ -18,12 +18,11 @@ public interface IAnvilManager {
     void addRecipe(ItemStack output, ItemStack base, boolean preserveBase, Object ... ingredients);
 
     /**
-     *
      * @param baseItem
-     * @param ingredients - will have the used items removed
-     * @return matching recipe
+     * @param ingredients
+     * @return returns first matching recipe or null
      */
-    @Nullable IAnvilRecipe tryCraft(ItemStack baseItem, @Nonnull List<ItemStack> ingredients);
+    @Nullable IAnvilRecipe getRecipe(ItemStack baseItem, @Nonnull List<ItemStack> ingredients);
 
     boolean isValidBaseItem(ItemStack itemStack);
 

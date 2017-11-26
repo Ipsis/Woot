@@ -110,11 +110,8 @@ public class TileEntityAnvil extends TileEntity {
             return;
         }
 
-        IAnvilRecipe recipe = Woot.anvilManager.tryCraft(itemStack, ingredients);
+        IAnvilRecipe recipe = Woot.anvilManager.getRecipe(itemStack, ingredients);
         if (recipe != null) {
-
-            for (EntityItem e : entityItemList)
-                e.setDead();
 
             ItemStack output = recipe.getCopyOutput();
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Output " + output);
@@ -137,6 +134,31 @@ public class TileEntityAnvil extends TileEntity {
                 Woot.debugSetup.trace(DebugSetup.EnumDebugType.ANVIL_CRAFTING, "tryCraft", "Leftovers " + ingredients);
             }
 
+            /**
+             * Remove the used items from the incoming entity items
+             * This has already been checked to ensure that the items are in the list
+              */
+            for (ItemStack recipeStack : recipe.getInputs()) {
+                int count = recipeStack.getCount();
+                for (EntityItem entityItem : entityItemList) {
+                    ItemStack itemStack = entityItem.getItem();
+                    if (ItemStack.areItemsEqual(itemStack, recipeStack) && ItemStack.areItemStackTagsEqual(itemStack, recipeStack)) {
+                        if (entityItem.getItem().getCount() >= count) {
+                            entityItem.getItem().setCount(entityItem.getItem().getCount() - count);
+                            count = 0;
+                        } else {
+                            count -= entityItem.getItem().getCount();
+                            entityItem.getItem().setCount(0);
+                        }
+
+                        if (entityItem.getItem().getCount() <= 0)
+                            entityItem.setDead();
+                    }
+
+                    if (count == 0)
+                        break;
+                }
+            }
         }  else {
 
             entityPlayer.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.anvil.invalid")), false);

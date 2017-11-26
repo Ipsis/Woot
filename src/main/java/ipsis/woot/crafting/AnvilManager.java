@@ -46,16 +46,12 @@ public class AnvilManager implements IAnvilManager {
 
     @Nullable
     @Override
-    public IAnvilRecipe tryCraft(ItemStack baseItem, @Nonnull List<ItemStack> items) {
+    public IAnvilRecipe getRecipe(ItemStack baseItem, @Nonnull List<ItemStack> ingredients) {
 
-        if (!isValidBaseItem(baseItem))
-            return null;
-
-        for (IAnvilRecipe recipe : recipes) {
-            if (AnvilRecipeMatcher.isMatch(recipe, baseItem, items)) {
-                items.clear();
-                // TODO only remove the matching items
-                return recipe;
+        if (isValidBaseItem(baseItem)) {
+            for (IAnvilRecipe recipe : recipes) {
+                if (AnvilRecipeMatcher.isMatch(recipe, baseItem, ingredients))
+                    return recipe;
             }
         }
 

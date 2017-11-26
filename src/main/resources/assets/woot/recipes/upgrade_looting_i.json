@@ -15,14 +15,7 @@
     {
       "type": "minecraft:item_nbt",
       "item": "minecraft:enchanted_book",
-      "nbt": {
-        "StoredEnchantments": [
-          {
-            "id": 21,
-            "lvl": 1
-          }
-        ]
-      }
+      "nbt": "{ StoredEnchantments: [ { id: 21s, lvl: 1s } ] }"
     }
   ]
 }

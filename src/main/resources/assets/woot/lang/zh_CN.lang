@@ -70,25 +70,24 @@ tile.woot.cell.tier_iii.name=高级能量单元
 tile.woot.upgrade.xp_i.name=经验 1 升级
 tile.woot.upgrade.xp_ii.name=经验 2 升级
 tile.woot.upgrade.xp_iii.name=经验 3 升级
-tile.woot.upgrade.rate_i.name=Rate I Upgrade
-tile.woot.upgrade.rate_ii.name=Rate II Upgrade
-tile.woot.upgrade.rate_iii.name=Rate III Upgrade
-tile.woot.upgrade.looting_i.name=Looting I Upgrade
-tile.woot.upgrade.looting_ii.name=Looting II Upgrade
-tile.woot.upgrade.looting_iii.name=Looting III Upgrade
-tile.woot.upgrade.mass_i.name=Mass I Upgrade
-tile.woot.upgrade.mass_ii.name=Mass II Upgrade
-tile.woot.upgrade.mass_iii.name=Mass III Upgrade
-tile.woot.upgrade.decapitate_i.name=Decapitate I Upgrade
-tile.woot.upgrade.decapitate_ii.name=Decapitate II Upgrade
-tile.woot.upgrade.decapitate_iii.name=Decapitate III Upgrade
-tile.woot.upgradeb.efficiency_i.name=Efficiency I Upgrade
-tile.woot.upgradeb.efficiency_ii.name=Efficiency II Upgrade
-tile.woot.upgradeb.efficiency_iii.name=Efficiency III Upgrade
-tile.woot.upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
-tile.woot.upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
-tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
-
+tile.woot.upgrade.rate_i.name=速率 1 升级
+tile.woot.upgrade.rate_ii.name=速率 2 升级
+tile.woot.upgrade.rate_iii.name=速率 3 升级
+tile.woot.upgrade.looting_i.name=抢夺 1 升级
+tile.woot.upgrade.looting_ii.name=抢夺 2 升级
+tile.woot.upgrade.looting_iii.name=抢夺 3 升级
+tile.woot.upgrade.mass_i.name=数量 1 升级
+tile.woot.upgrade.mass_ii.name=数量 2 升级
+tile.woot.upgrade.mass_iii.name=数量 3 升级
+tile.woot.upgrade.decapitate_i.name=斩首 1 升级
+tile.woot.upgrade.decapitate_ii.name=斩首 2 升级
+tile.woot.upgrade.decapitate_iii.name=斩首 3 升级
+tile.woot.upgradeb.efficiency_i.name=能效 1 升级
+tile.woot.upgradeb.efficiency_ii.name=能效 2 升级
+tile.woot.upgradeb.efficiency_iii.name=能效 3 升级
+tile.woot.upgradeb.bloodmagic_i.name=血魔 1 升级
+tile.woot.upgradeb.bloodmagic_ii.name=血魔 2 升级
+tile.woot.upgradeb.bloodmagic_iii.name=血魔 3 升级
 ###########################################################
 # Tabs
 ###########################################################
@@ -97,16 +96,16 @@ itemGroup.woot=Woot
 ###########################################################
 # Tooltips
 ###########################################################
-info.woot.xpshard.0=Use to gain experience
-info.woot.xpshard.1=Use while sneaking to use the full stack
+info.woot.xpshard.0=用来获得经验
+info.woot.xpshard.1=潜行右击可以用掉一整组
 
-info.woot.endershard.0=Captures mobs
-info.woot.endershard.1=Hit mob with shard to program
-info.woot.endershard.a.0=Unprogrammed
-info.woot.endershard.b.0=Kills %d/%d
-info.woot.endershard.b.1=Fully programmed
+info.woot.endershard.0=标记生物
+info.woot.endershard.1=用末影碎片击打生物以编写
+info.woot.endershard.a.0=未编写
+info.woot.endershard.b.0=杀死 %d/%d
+info.woot.endershard.b.1=完全编写
 
-info.woot.tier=Tier %s
+info.woot.tier=等级 %s
 
 ###########################################################
 # Enchantments
@@ -116,16 +115,16 @@ enchant.woot.headhunter=Headhunter
 ###########################################################
 # Chat
 ###########################################################
-chat.woot.endershard.failure=Cannot capture mob
-chat.woot.endershard.success=Captured mob
-chat.woot.anvil.nomagma=Anvil must be sitting on a Magma Block
-chat.woot.anvil.emptyshard=Unprogrammed Ender Shard
-chat.woot.anvil.invalid=No matching recipe
-chat.woot.validate.nopower=No Power Cell
-chat.woot.validate.noimporter=No Importer
-chat.woot.validate.noexporter=No Exporter
+chat.woot.endershard.failure=无法标记生物
+chat.woot.endershard.success=生物被标记
+chat.woot.anvil.nomagma=铁砧必须放在岩浆块上
+chat.woot.anvil.emptyshard=未编写的末影碎片
+chat.woot.anvil.invalid=没有匹配的合成
+chat.woot.validate.nopower=没有能量单元
+chat.woot.validate.noimporter=没有输入器
+chat.woot.validate.noexporter=没有输出器
 chat.woot.validate.noblock=Block at %d,%d,%d should be a %s
-chat.woot.validate.validating=Validating factory for
+chat.woot.validate.validating=有效，对当前的
 
 ###########################################################
 # Commands
@@ -143,36 +142,36 @@ commands.woot.flush.usage=Use /woot flush {all|<mobname>}
 commands.woot.give.usage=Use /woot give <player> <mobname> <mob display name>
 commands.woot.give.unknownentity=Entity not on EntityList
 
-commands.woot.invalidmob=Invalid mob name
+commands.woot.invalidmob=无效的生物名
 
 ###########################################################
 # Guide Book
 ###########################################################
-guide.woot.title=Woot Guide
-guide.woot.display=Woot Guide
+guide.woot.title=Woot 说明书
+guide.woot.display=Woot 说明书
 guide.woot.author=Nico Di Angelo
 guide.woot.welcome=Woot
 
 # Page Information
-guide.woot.page.anvil=Stygian Anvil Recipe
-guide.woot.page.ingredient=Mob Ingredients
+guide.woot.page.anvil=地狱铁砧合成
+guide.woot.page.ingredient=生物要素
 
 # Categories
-guide.woot.category.foreword=Foreword
-guide.woot.category.factory=Factory
-guide.woot.category.anvil=Stygian Anvil
-guide.woot.category.ingredients=Mob Spawning Ingredients
-guide.woot.category.upgrades=Factory Upgrades
+guide.woot.category.foreword=前言
+guide.woot.category.factory=工厂
+guide.woot.category.anvil=地狱铁砧
+guide.woot.category.ingredients=生物产生要素
+guide.woot.category.upgrades=工厂升级
 
 # Foreward Entries
-guide.woot.entry.foreword.intro=Introduction
-guide.woot.entry.foreword.purpose=What Does It Do?
-guide.woot.entry.foreword.naming=Factory Or Farm?
-guide.woot.entry.foreword.credits=Credits
+guide.woot.entry.foreword.intro=介绍
+guide.woot.entry.foreword.purpose=它能做什么？
+guide.woot.entry.foreword.naming=工厂还是农场？
+guide.woot.entry.foreword.credits=贡献
 
 # Foreward Entry Text
-guide.woot.entry.foreword.intro.info=Woot is a big, magic multiblock.\n\nYou build the structure, feed it lots of power and it then generates loot.\n\nIf the idea of that horrifies you, then dont use Woot. Build a nice, safe, interesting, creative mob farm instead.
-guide.woot.entry.foreword.purpose.info=Woot is one of many solutions to the age old Minecraft problem of wanting lots of mob drops. The traditional way of doing this is to spawn mobs in the world, kill them somehow and then pick up all the drops. If you are not careful, this can cause performance problems.\n\nSo Woot does it in a different way. It learns the loot that mobs drop when they die. Then you create the Woot farm/factory building and program it with the mob that you want to generate the loot for. Provide it enough power and it starts putting the appropriate drops into attached inventories. No entities are generated in the world, so hopefully there is less performace impact. (E&OE)\n\nIt also has a second purpose. I dont like building mob farms, so this is my solution to my problem.
+guide.woot.entry.foreword.intro.info=Woot是一个大型魔法多方块结构。\n\n你只需建造这个结构，供给它大量的电能就可以获得生物的掉落物\n\n如果这个主意吓到你了，别用woot了，再建一个更漂亮，更安全，更有趣，更有创造性的刷怪塔吧。
+guide.woot.entry.foreword.purpose.info=获得大量生物战利品是MC的一个老问题了，Woot是它诸多的解决方式中之一. 传统的方式是在世界中生成生物，想办法杀掉它们，然后收集所有的掉落物。如果你设计得不小心，就会引发不少问题。\n\n所以Woot用一种不同的方式刷怪，它可以获取生物死亡时的战利品表，然后你就可以建造Woot工厂/农场结构，然后用那种你想获得战利品的 Provide it enough power and it starts putting the appropriate drops into attached inventories. No entities are generated in the world, so hopefully there is less performace impact. (E&OE)\n\nIt also has a second purpose. I dont like building mob farms, so this is my solution to my problem.
 guide.woot.entry.foreword.naming.info=Is it a factory? Is it a farm? I can never decide, so expect both words to be used throughout this guide.
 guide.woot.entry.foreword.credits.info=This guide is only possible due to Guide-API.\n\nSo thankyou to TeamAmeriFrance and of course the extra work that TehNut did on the BloodMagic guide.
 

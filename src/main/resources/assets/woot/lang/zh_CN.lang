@@ -171,7 +171,7 @@ guide.woot.entry.foreword.credits=贡献
 
 # Foreward Entry Text
 guide.woot.entry.foreword.intro.info=Woot是一个大型魔法多方块结构。\n\n你只需建造这个结构，供给它大量的电能就可以获得生物的掉落物\n\n如果这个主意吓到你了，别用woot了，再建一个更漂亮，更安全，更有趣，更有创造性的刷怪塔吧。
-guide.woot.entry.foreword.purpose.info=获得大量生物战利品是MC的一个老问题了，Woot是它诸多的解决方式中之一. 传统的方式是在世界中生成生物，想办法杀掉它们，然后收集所有的掉落物。如果你设计得不小心，就会引发不少问题。\n\n所以Woot用一种不同的方式刷怪，它可以获取生物死亡时的战利品表，然后你就可以建造Woot工厂/农场结构，然后用那种你想获得战利品的 Provide it enough power and it starts putting the appropriate drops into attached inventories. No entities are generated in the world, so hopefully there is less performace impact. (E&OE)\n\nIt also has a second purpose. I dont like building mob farms, so this is my solution to my problem.
+guide.woot.entry.foreword.purpose.info=获得大量生物战利品是MC的一个老问题了，Woot是它诸多的解决方式中之一. 传统的方式是在世界中生成生物，想办法杀掉它们，然后收集所有的掉落物。如果你设计得不小心，就会引发性能问题。\n\n所以Woot用一种不同的方式刷怪，它可以获取生物死亡时的战利品表，然后你就可以建造Woot工厂/农场结构，然后用那种你想获得战利品的生物来标记它。 提供它足够的电能，它就会将适合的掉落物输出到连接的容器中。 世界中不生成实体，性能影响很有可能更小。 (E&OE)\n\n也有别的目的，我不喜欢建造农场/刷怪塔，这就是我的解决方式。
 guide.woot.entry.foreword.naming.info=Is it a factory? Is it a farm? I can never decide, so expect both words to be used throughout this guide.
 guide.woot.entry.foreword.credits.info=This guide is only possible due to Guide-API.\n\nSo thankyou to TeamAmeriFrance and of course the extra work that TehNut did on the BloodMagic guide.
 

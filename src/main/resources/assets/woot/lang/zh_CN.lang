@@ -67,27 +67,27 @@ tile.woot.cell.tier_i.name=基础能量单元
 tile.woot.cell.tier_ii.name=进阶能量单元
 tile.woot.cell.tier_iii.name=高级能量单元
 
-tile.woot.upgrade.xp_i.name=经验 1 升级
-tile.woot.upgrade.xp_ii.name=经验 2 升级
-tile.woot.upgrade.xp_iii.name=经验 3 升级
-tile.woot.upgrade.rate_i.name=速率 1 升级
-tile.woot.upgrade.rate_ii.name=速率 2 升级
-tile.woot.upgrade.rate_iii.name=速率 3 升级
-tile.woot.upgrade.looting_i.name=抢夺 1 升级
-tile.woot.upgrade.looting_ii.name=抢夺 2 升级
-tile.woot.upgrade.looting_iii.name=抢夺 3 升级
-tile.woot.upgrade.mass_i.name=数量 1 升级
-tile.woot.upgrade.mass_ii.name=数量 2 升级
-tile.woot.upgrade.mass_iii.name=数量 3 升级
-tile.woot.upgrade.decapitate_i.name=斩首 1 升级
-tile.woot.upgrade.decapitate_ii.name=斩首 2 升级
-tile.woot.upgrade.decapitate_iii.name=斩首 3 升级
-tile.woot.upgradeb.efficiency_i.name=能效 1 升级
-tile.woot.upgradeb.efficiency_ii.name=能效 2 升级
-tile.woot.upgradeb.efficiency_iii.name=能效 3 升级
-tile.woot.upgradeb.bloodmagic_i.name=血魔 1 升级
-tile.woot.upgradeb.bloodmagic_ii.name=血魔 2 升级
-tile.woot.upgradeb.bloodmagic_iii.name=血魔 3 升级
+tile.woot.upgrade.xp_i.name=经验I升级
+tile.woot.upgrade.xp_ii.name=经验II升级
+tile.woot.upgrade.xp_iii.name=经验III升级
+tile.woot.upgrade.rate_i.name=速率I升级
+tile.woot.upgrade.rate_ii.name=速率II升级
+tile.woot.upgrade.rate_iii.name=速率III升级
+tile.woot.upgrade.looting_i.name=抢夺I升级
+tile.woot.upgrade.looting_ii.name=抢夺II升级
+tile.woot.upgrade.looting_iii.name=抢夺III升级
+tile.woot.upgrade.mass_i.name=数量I升级
+tile.woot.upgrade.mass_ii.name=数量II升级
+tile.woot.upgrade.mass_iii.name=数量III升级
+tile.woot.upgrade.decapitate_i.name=斩首I升级
+tile.woot.upgrade.decapitate_ii.name=斩首II升级
+tile.woot.upgrade.decapitate_iii.name=斩首III升级
+tile.woot.upgradeb.efficiency_i.name=能效I升级
+tile.woot.upgradeb.efficiency_ii.name=能效II升级
+tile.woot.upgradeb.efficiency_iii.name=能效III升级
+tile.woot.upgradeb.bloodmagic_i.name=血魔I升级
+tile.woot.upgradeb.bloodmagic_ii.name=血魔II升级
+tile.woot.upgradeb.bloodmagic_iii.name=血魔III升级
 ###########################################################
 # Tabs
 ###########################################################
@@ -172,8 +172,8 @@ guide.woot.entry.foreword.credits=贡献
 # Foreward Entry Text
 guide.woot.entry.foreword.intro.info=Woot是一个大型魔法多方块结构。\n\n你只需建造这个结构，供给它大量的电能就可以获得生物的掉落物\n\n如果这个主意吓到你了，别用woot了，再建一个更漂亮，更安全，更有趣，更有创造性的刷怪塔吧。
 guide.woot.entry.foreword.purpose.info=获得大量生物战利品是MC的一个老问题了，Woot是它诸多的解决方式中之一. 传统的方式是在世界中生成生物，想办法杀掉它们，然后收集所有的掉落物。如果你设计得不小心，就会引发性能问题。\n\n所以Woot用一种不同的方式刷怪，它可以获取生物死亡时的战利品表，然后你就可以建造Woot工厂/农场结构，然后用那种你想获得战利品的生物来标记它。 提供它足够的电能，它就会将适合的掉落物输出到连接的容器中。 世界中不生成实体，性能影响很有可能更小。 (E&OE)\n\n也有别的目的，我不喜欢建造农场/刷怪塔，这就是我的解决方式。
-guide.woot.entry.foreword.naming.info=Is it a factory? Is it a farm? I can never decide, so expect both words to be used throughout this guide.
-guide.woot.entry.foreword.credits.info=This guide is only possible due to Guide-API.\n\nSo thankyou to TeamAmeriFrance and of course the extra work that TehNut did on the BloodMagic guide.
+guide.woot.entry.foreword.naming.info=是工厂，还是农场？所以这本说明书中，两个词都会用到。
+guide.woot.entry.foreword.credits.info=只有当安装Guide-API时，这个手册才是可用的。\n\n所以感谢TeamAmeriFrance，当然还有TehNut在BloodMagic说明书上做的额外工作。
 
 # Factory Entries
 guide.woot.entry.factory.guide=How To Build

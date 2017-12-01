@@ -9,7 +9,12 @@ import java.util.List;
 
 public interface ILootRepositoryLearn {
 
+    // False returned for custom-drops-only mobs
     boolean isEmpty(WootMobName wootMobName, EnumEnchantKey key);
+
+    // True returned for custom-drops-only mobs
     boolean isFull(WootMobName wootMobName, EnumEnchantKey key);
+
+    // No effect for custom-drops-only mobs
     void learn(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount);
 }

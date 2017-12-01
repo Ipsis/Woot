@@ -21,6 +21,7 @@ public interface ILootRepositoryLookup {
         }
     }
 
+    // Empty list returned for custom-drops-only mobs
     List<LootItemStack> getDrops(WootMobName wootMobName, EnumEnchantKey key);
     List<String> getAllMobs();
 }

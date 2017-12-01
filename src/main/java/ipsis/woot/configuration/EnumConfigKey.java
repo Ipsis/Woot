@@ -164,10 +164,10 @@ public enum EnumConfigKey {
             "bm3PowerTick", Integer.class, 240, true, 3),
     RATE_1_PARAM(
             "Percentage reduction in spawn time for Rate I upgrade",
-            "rate1Param", Integer.class, 25, true, 1),
+            "rate1Param", Integer.class, 20, true, 1),
     RATE_2_PARAM(
             "Percentage reduction in spawn time for Rate II upgrade",
-            "rate2Param", Integer.class, 30, true, 2),
+            "rate2Param", Integer.class, 35, true, 2),
     RATE_3_PARAM(
             "Percentage reduction in spawn time for Rate III upgrade",
             "rate3Param", Integer.class, 50, true, 3),

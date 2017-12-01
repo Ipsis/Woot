@@ -53,8 +53,8 @@ tile.woot.controller.name=Factory Controller
 tile.woot.importer.name=Factory Importer
 tile.woot.exporter.name=Factory Exporter
 
-tile.woot.structure.block_1.name=Factory Bone Casing
-tile.woot.structure.block_2.name=Factory Flesh Casing
+tile.woot.structure.block_1.name=Factory Flesh Casing
+tile.woot.structure.block_2.name=Factory Bone Casing
 tile.woot.structure.block_3.name=Factory Blaze Casing
 tile.woot.structure.block_4.name=Factory Ender Casing
 tile.woot.structure.block_5.name=Factory Nether Casing

@@ -3,6 +3,7 @@ package ipsis.woot.loot.generators;
 import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.LootHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -61,6 +62,7 @@ public class ItemGenerator implements ILootGenerator {
                 continue;
 
             int chance = Woot.RANDOM.nextInt(101);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " rolled:" + chance);
             int stackSize = 0;
             for (int s : drop.sizes.keySet()) {
                 if (chance <= drop.sizes.get(s) && s > stackSize)
@@ -96,7 +98,9 @@ public class ItemGenerator implements ILootGenerator {
             return;
 
         List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", farmSetup.getNumMobs() + "*" + farmSetup.getWootMobName());
         for (int i = 0; i < farmSetup.getNumMobs(); i++) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", "Generating loot for mob " + i);
             List<ItemStack> mobLoot = calculateDrops(loot, difficulty);
 
             for (IItemHandler hdlr : itemHandlerList) {
@@ -114,15 +118,17 @@ public class ItemGenerator implements ILootGenerator {
                          * This is not very efficient
                          */
                         ItemStack result = ItemHandlerHelper.insertItem(hdlr, ItemHandlerHelper.copyStackWithSize(itemStack, 1), false);
-                        if (result.isEmpty())
+                        if (result.isEmpty()) {
+                            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", "Placed itemstack of size 1 into inventory " + itemStack.getDisplayName());
                             itemStack.shrink(1);
-                        else
+                        } else {
                             success = false;
+                        }
                     }
                 }
             }
 
-            loot.clear();
+            mobLoot.clear();
         }
     }
 }

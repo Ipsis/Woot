@@ -19,6 +19,25 @@ public interface ILootRepositoryLookup {
 
             this.itemStack = itemStack;
         }
+
+        @Override
+        public String toString() {
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(itemStack);
+            sb.append(" chance:");
+            sb.append(dropChance);
+            sb.append("% ");
+
+            for (Integer k : sizes.keySet()) {
+                sb.append(k);
+                sb.append(":");
+                sb.append(sizes.get(k));
+                sb.append("% ");
+            }
+
+            return sb.toString();
+        }
     }
 
     // Empty list returned for custom-drops-only mobs

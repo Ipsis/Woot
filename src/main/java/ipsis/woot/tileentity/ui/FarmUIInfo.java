@@ -3,6 +3,7 @@ package ipsis.woot.tileentity.ui;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.WootMob;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,10 @@ public class FarmUIInfo {
     public List<ItemStack> drops = new ArrayList<>();
 
     // List of ingredients to spawn
-    public List<ItemStack> ingredients = new ArrayList<>();
+    public List<ItemStack> ingredientsItems = new ArrayList<>();
+
+    // List of fluids to spawn
+    public List<FluidStack> ingredientsFluids = new ArrayList<>();
 
     public void setValid() {
 

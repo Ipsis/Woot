@@ -24,6 +24,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -219,11 +220,11 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         }
 
         if (spawnRecipe != null) {
-            for (ItemStack itemStack : spawnRecipe.getItems()) {
-                ItemStack ingredient = itemStack.copy();
-                ingredient.setCount(ingredient.getCount() * farmSetup.getNumMobs());
-                info.ingredients.add(itemStack.copy());
-            }
+            for (ItemStack itemStack : spawnRecipe.getItems())
+                info.ingredientsItems.add(itemStack.copy());
+
+            for (FluidStack fluidStack : spawnRecipe.getFluids())
+                info.ingredientsFluids.add(fluidStack.copy());
         }
 
         // Say everything is okay
@@ -250,10 +251,16 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.cost",
                     farm.recipeTotalPower, farm.recipePowerPerTick, farm.recipeTotalTime));
 
-            if (!farm.ingredients.isEmpty()) {
-                for (ItemStack itemStack : farm.ingredients)
+            if (!farm.ingredientsItems.isEmpty()) {
+                for (ItemStack itemStack : farm.ingredientsItems)
                     messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
                             itemStack.getCount(), itemStack.getDisplayName()));
+            }
+
+            if (!farm.ingredientsFluids.isEmpty()) {
+                for (FluidStack fluidStack : farm.ingredientsFluids)
+                    messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
+                            fluidStack.amount, fluidStack.getLocalizedName()));
             }
         }
 

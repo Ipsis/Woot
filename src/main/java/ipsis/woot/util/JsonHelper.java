@@ -9,7 +9,12 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import javax.annotation.Nullable;
 
 public class JsonHelper {
 
@@ -46,6 +51,22 @@ public class JsonHelper {
             jsonObject.addProperty("nbt", nbt.toString());
         }
         return jsonObject;
+    }
+
+    public static @Nullable FluidStack getFluidStack(JsonObject json) {
+
+        String fluidName = JsonUtils.getString(json, "fluid");
+
+        if (!FluidRegistry.isFluidRegistered(fluidName))
+            return null;
+
+        if (!json.has("mb")) {
+            LogHelper.error("getFluidStack: missing mb for fluid " + fluidName);
+            return null;
+        }
+
+        int mb = JsonUtils.getInt(json, "mb", 1000);
+        return FluidRegistry.getFluidStack(fluidName, JsonUtils.getInt(json, "mb", 1000));
     }
 
     /**

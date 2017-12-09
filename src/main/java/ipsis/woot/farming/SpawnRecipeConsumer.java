@@ -4,7 +4,9 @@ import ipsis.woot.oss.ItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -40,6 +42,25 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
         return count;
     }
 
+    private int getFluidCount(List<IFluidHandler> fluidHandlerList, FluidStack fluidStack) {
+
+        int amount = 0;
+
+        for (IFluidHandler iFluidHandler : fluidHandlerList) {
+
+            for (IFluidTankProperties iFluidTankProperties : iFluidHandler.getTankProperties()) {
+                FluidStack contentStack = iFluidTankProperties.getContents();
+                if (contentStack == null)
+                    continue;
+
+                if (contentStack.isFluidEqual(fluidStack))
+                    amount += contentStack.amount;
+            }
+        }
+
+        return amount;
+    }
+
     private int consumeItems(List<IItemHandler> itemHandlerList, ItemStack itemStack, int count) {
 
         int left = count;
@@ -64,6 +85,25 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
         }
 
         return left;
+    }
+
+    private int consumeFluids(List<IFluidHandler> fluidHandlerList, FluidStack fluidStack, int amount) {
+
+        FluidStack drainStack = fluidStack.copy();
+        drainStack.amount = amount;
+        for (IFluidHandler iFluidHandler : fluidHandlerList) {
+
+
+            FluidStack successStack = iFluidHandler.drain(drainStack, true);
+            if (successStack != null) {
+                drainStack.amount -= successStack.amount;
+                if (drainStack.amount < 0)
+                    drainStack.amount = 0;
+            }
+
+        }
+
+        return drainStack.amount;
     }
 
     private boolean processItems(List<IItemHandler> itemHandlerList, @Nonnull ISpawnRecipe spawnRecipe, int mobCount) {
@@ -102,7 +142,29 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
         if (spawnRecipe.getFluids().isEmpty())
             return true;
 
-        return true;
+        boolean allFluidPresent = true;
+
+        // Do we have all fluids
+        for (FluidStack fluidStack :spawnRecipe.getFluids()) {
+
+            int need = fluidStack.amount * mobCount;
+            int found = getFluidCount(fluidHandlerList, fluidStack);
+
+            if (found < need) {
+                allFluidPresent = false;
+                break;
+            }
+        }
+
+        if (allFluidPresent) {
+            // Consume all the fluids which we have already checked are present
+            for (FluidStack fluidStack : spawnRecipe.getFluids())
+                consumeFluids(fluidHandlerList, fluidStack, fluidStack.amount * mobCount);
+
+            return true;
+        }
+
+        return false;
     }
 
     @Override

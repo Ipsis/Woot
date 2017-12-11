@@ -62,9 +62,11 @@ public class Calculator implements IPowerCalculator {
         for (AbstractUpgradePowerCalc calc : powerCalcList)
             calc.calculate(farmSetup, powerValues, spawnTicks);
 
+        /**
+         * The calculator converts mobCost into upgradeCost as it has to handle the mass upgrade
+         */
         int totalPower = powerValues.factoryCost +
-                powerValues.upgradeCost +
-                powerValues.mobCost;
+                powerValues.upgradeCost;
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                     "tierPowerPerTick:" + tierPowerPerTick + " spawnXp:" + spawnXp +

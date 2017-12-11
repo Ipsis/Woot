@@ -45,6 +45,9 @@ public enum EnumConfigKey {
     DEATH_XP(
             "Default XP to generate for a killed mob",
             "deathXp", Integer.class, 1, true),
+    MASS_FX(
+            "Function to apply to generate the power cost when more than one mob spawned. (0-linear), (1-powers of 2), (2-powers of 3)",
+            "massFx", Integer.class, 0, true),
     FACTORY_TIER(
             "Default tier to assign mobs to",
             "factoryTier", Integer.class, -1, true), // calculated but can override

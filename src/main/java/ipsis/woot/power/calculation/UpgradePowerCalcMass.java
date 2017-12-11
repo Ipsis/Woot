@@ -14,7 +14,7 @@ public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
         X_BASE_3 // multiply by 3^(mob-1) (eg 1,3,9,27)
         ;
 
-        public static EnumMassScalar SCALARS[] = { LINEAR };
+        public static EnumMassScalar SCALARS[] = { LINEAR, X_BASE_2, X_BASE_3 };
 
         public static EnumMassScalar getFromIndex(int index) {
 

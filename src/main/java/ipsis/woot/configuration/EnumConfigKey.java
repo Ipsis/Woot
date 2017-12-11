@@ -137,13 +137,13 @@ public enum EnumConfigKey {
             "decap3PowerTick", Integer.class, 240, true, 3),
     XP_1_POWER_TICK(
             "Default power cost per tick of a XP I upgrade",
-            "xp1PowerTick", Integer.class, 1, true, 1),
+            "xp1PowerTick", Integer.class, 80, true, 1),
     XP_2_POWER_TICK(
             "Default power cost per tick of a XP II upgrade",
-            "xp2PowerTick", Integer.class, 1, true, 2),
+            "xp2PowerTick", Integer.class, 160, true, 2),
     XP_3_POWER_TICK(
             "Default power cost per tick of a XP III upgrade",
-            "xp3PowerTick", Integer.class, 1, true, 3),
+            "xp3PowerTick", Integer.class, 240, true, 3),
     EFF_1_POWER_TICK(
             "Default power cost per tick of a Efficiency I upgrade",
             "eff1PowerTick", Integer.class, 80, true, 1),

@@ -39,8 +39,8 @@ public class Calculator implements IPowerCalculator {
 
         int tierPowerPerTick = Woot.wootConfiguration.getInteger(wootMobName, ConfigKeyHelper.getPowerPerTick(farmSetup.getFarmTier()));
         int spawnTicks = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.SPAWN_TICKS);
-        int spawnXp = Woot.wootConfiguration.getSpawnCost(world, wootMobName);
-        int powerPerXp = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.POWER_PER_XP);
+        int spawnUnits = Woot.wootConfiguration.getSpawnCost(world, wootMobName);
+        int powerPerSpawnUnit = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.POWER_PER_UNIT);
 
 
         /**
@@ -57,7 +57,7 @@ public class Calculator implements IPowerCalculator {
          * Rate decreases the real time to spawn
          */
         powerValues.factoryCost = tierPowerPerTick * spawnTicks;
-        powerValues.mobCost = spawnXp * powerPerXp * spawnTicks;
+        powerValues.mobCost = spawnUnits * powerPerSpawnUnit * spawnTicks;
 
         for (AbstractUpgradePowerCalc calc : powerCalcList)
             calc.calculate(farmSetup, powerValues, spawnTicks);
@@ -69,8 +69,8 @@ public class Calculator implements IPowerCalculator {
                 powerValues.upgradeCost;
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
-                    "tierPowerPerTick:" + tierPowerPerTick + " spawnXp:" + spawnXp +
-                            " powerPerXp:" + powerPerXp + " spawnTicks:" + spawnTicks);
+                    "tierPowerPerTick:" + tierPowerPerTick + " spawnUnits:" + spawnUnits +
+                            " powerPerSpawnUnit:" + powerPerSpawnUnit + " spawnTicks:" + spawnTicks);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "PowerValues " + powerValues);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",

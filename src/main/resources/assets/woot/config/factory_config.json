@@ -159,8 +159,7 @@
     }
   ],
   "entitymodblacklist": [
-    "botania",
-    "cyberware"
+    "botania"
   ],
   "entityblacklist": [
     "twilightforest:naga",

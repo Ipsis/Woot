@@ -13,26 +13,12 @@
     "P": {
       "type": "minecraft:item_nbt",
       "item": "minecraft:enchanted_book",
-      "nbt": {
-        "StoredEnchantments": [
-          {
-            "id": 48,
-            "lvl": 3
-          }
-        ]
-      }
+      "nbt": "{ StoredEnchantments: [ { id: 48s, lvl: 3s } ] }"
     },
     "E": {
       "type": "minecraft:item_nbt",
       "item": "minecraft:enchanted_book",
-      "nbt": {
-        "StoredEnchantments": [
-          {
-            "id": 32,
-            "lvl": 3
-          }
-        ]
-      }
+      "nbt": "{ StoredEnchantments: [ { id: 32s, lvl: 3s } ] }"
     },
     "I": {
       "item": "woot:cell",

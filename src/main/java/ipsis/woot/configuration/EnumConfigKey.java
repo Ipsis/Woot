@@ -53,13 +53,13 @@ public enum EnumConfigKey {
             "factoryTier", Integer.class, -1, true), // calculated but can override
     T1_UNITS_MAX(
             "Maximum units for a Tier I factory",
-            "t1UnitsMax", Integer.class, 5, false, 1),
+            "t1UnitsMax", Integer.class, 20, false, 1),
     T2_UNITS_MAX(
             "Maximum units for a Tier II factory",
-            "t2UnitsMax", Integer.class, 20, false, 2),
+            "t2UnitsMax", Integer.class, 40, false, 2),
     T3_UNITS_MAX(
             "Maximum units for a Tier III factory",
-            "t3UnitsMax", Integer.class, 49, false, 3),
+            "t3UnitsMax", Integer.class, 60, false, 3),
     T4_UNITS_MAX(
             "Maximum units for a Tier IV factory",
             "t4CostMax", Integer.class, 65535, false, 4),

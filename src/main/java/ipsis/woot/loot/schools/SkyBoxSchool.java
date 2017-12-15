@@ -105,6 +105,8 @@ public class SkyBoxSchool implements ILootLearner {
 
     public void tick(ITickTracker tickTracker, World world, BlockPos origin, IFarmSetup farmSetup) {
 
+        Woot.wootDimensionManager.touchSpawnChunk(world);
+
         if (hasSkyBox)
             checkSkybox(world, origin, farmSetup);
 

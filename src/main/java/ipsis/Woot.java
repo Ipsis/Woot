@@ -9,6 +9,7 @@ import ipsis.woot.configuration.loaders.FactoryLootLoader;
 import ipsis.woot.crafting.AnvilManager;
 import ipsis.woot.crafting.AnvilManagerLoader;
 import ipsis.woot.crafting.IAnvilManager;
+import ipsis.woot.dimension.WootDimensionManager;
 import ipsis.woot.event.HandlerRegistryEvent;
 import ipsis.woot.farming.ISpawnRecipeRepository;
 import ipsis.woot.farming.SpawnRecipeRepository;
@@ -62,6 +63,7 @@ public class Woot {
     public static IAnvilManager anvilManager = new AnvilManager();
     public static IPolicy policyRepository = new PolicyRepository();
     public static ISpawnRecipeRepository spawnRecipeRepository = new SpawnRecipeRepository();
+    public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();

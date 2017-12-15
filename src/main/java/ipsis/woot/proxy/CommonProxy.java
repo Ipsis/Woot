@@ -6,7 +6,6 @@ import ipsis.woot.event.HandlerLivingDeathEvent;
 import ipsis.woot.event.HandlerLivingDropsEvent;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.init.ModDimensions;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.plugins.top.TOPCompat;
@@ -31,7 +30,7 @@ public class CommonProxy {
         if (Loader.isModLoaded("theoneprobe"))
             TOPCompat.register();
 
-        ModDimensions.init();
+        Woot.wootDimensionManager.init();
     }
 
     public void init() {

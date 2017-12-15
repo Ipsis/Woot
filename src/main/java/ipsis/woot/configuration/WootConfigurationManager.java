@@ -115,11 +115,11 @@ public class WootConfigurationManager implements IWootConfiguration {
             tier = EnumMobFactoryTier.getTier(tierKey);
         } else {
             int cost = getSpawnCost(world, wootMobName);
-            if (cost >= getInteger(wootMobName, EnumConfigKey.T4_XP_MAX))
+            if (cost >= getInteger(wootMobName, EnumConfigKey.T4_UNITS_MAX))
                 tier = EnumMobFactoryTier.TIER_FOUR;
-            else if (cost >= getInteger(wootMobName, EnumConfigKey.T3_XP_MAX))
+            else if (cost >= getInteger(wootMobName, EnumConfigKey.T3_UNITS_MAX))
                 tier = EnumMobFactoryTier.TIER_THREE;
-            else if (cost >= getInteger(wootMobName, EnumConfigKey.T2_XP_MAX))
+            else if (cost >= getInteger(wootMobName, EnumConfigKey.T2_UNITS_MAX))
                 tier = EnumMobFactoryTier.TIER_TWO;
             else
                 tier = EnumMobFactoryTier.TIER_ONE;
@@ -131,7 +131,7 @@ public class WootConfigurationManager implements IWootConfiguration {
     @Override
     public int getSpawnCost(World world, WootMobName wootMobName) {
 
-        String key = makeKey(wootMobName, EnumConfigKey.SPAWN_XP);
+        String key = makeKey(wootMobName, EnumConfigKey.SPAWN_UNITS);
         if (integerMobMap.containsKey(key))
             return integerMobMap.get(key);
 
@@ -145,10 +145,7 @@ public class WootConfigurationManager implements IWootConfiguration {
         if (integerMobMap.containsKey(key))
             return integerMobMap.get(key);
 
-        /**
-         * If no local override then death == spawn
-         */
-        return Woot.mobCosting.getMobSpawnCost(world, wootMobName);
+        return Woot.wootConfiguration.getInteger(EnumConfigKey.DEATH_XP);
     }
 
 

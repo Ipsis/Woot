@@ -281,6 +281,12 @@ public enum EnumMobFactoryTier {
                 this == TIER_ONE ? "I" : this == TIER_TWO ? "II" : this == TIER_THREE ? "III" : "IV");
     }
 
+    public int getLevel() {
+
+        // ordinal is 0 based, level is 1 based
+        return this.ordinal() + 1;
+    }
+
     /**
      *
      * @return the offset from center of the widest factory tier

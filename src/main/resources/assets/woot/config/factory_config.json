@@ -5,10 +5,6 @@
       "mobName": "minecraft:villager",
       "configs": [
         {
-          "tag": "spawn_xp",
-          "value": 10
-        },
-        {
           "tag": "factory_tier",
           "value": 3
         }
@@ -18,8 +14,8 @@
       "mobName": "minecraft:wither_skeleton",
       "configs": [
         {
-          "tag": "spawn_xp",
-          "value": 10
+          "tag": "spawn_units",
+          "value": 40
         },
         {
           "tag": "factory_tier",
@@ -31,10 +27,6 @@
       "mobName": "minecraft:magma_cube",
       "configs": [
         {
-          "tag": "spawn_xp",
-          "value": 5
-        },
-        {
           "tag": "factory_tier",
           "value": 2
         }
@@ -43,10 +35,6 @@
     {
       "mobName": "minecraft:enderman",
       "configs": [
-        {
-          "tag": "spawn_xp",
-          "value": 10
-        },
         {
           "tag": "factory_tier",
           "value": 3
@@ -57,12 +45,12 @@
       "mobName": "minecraft:ender_dragon",
       "configs": [
         {
-          "tag": "spawn_xp",
-          "value": 750
-        },
-        {
           "tag": "death_xp",
           "value": 500
+        },
+        {
+          "tag": "spawn_units",
+          "value": 300
         },
         {
           "tag": "factory_tier",
@@ -94,6 +82,10 @@
           "value": 4
         },
         {
+          "tag": "spawn_units",
+          "value": 500
+        },
+        {
           "tag": "spawn_ticks",
           "value": 1200
         },
@@ -114,10 +106,6 @@
     {
       "mobName": "minecraft:villager_golem",
       "configs": [
-        {
-          "tag": "spawn_xp",
-          "value": 10
-        },
         {
           "tag": "factory_tier",
           "value": 3

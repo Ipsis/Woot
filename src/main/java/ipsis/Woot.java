@@ -56,7 +56,7 @@ public class Woot {
     public static ILootLearner lootLearner = new SkyBoxSchool();
     public static LootRepository lootRepository = new LootRepository();
     public static CustomDropsRepository customDropsRepository= new CustomDropsRepository();
-    public static IMobCost mobCosting = new MobXPManager();
+    public static IMobCost mobCosting = new MobHealthManager();
     public static IEntitySpawner entitySpawner = new EntitySpawner();
     public static DebugSetup debugSetup = new DebugSetup();
     public static IAnvilManager anvilManager = new AnvilManager();

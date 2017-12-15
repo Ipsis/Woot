@@ -23,7 +23,7 @@ public class ConfigKeyHelper {
      */
     public static EnumConfigKey getPowerPerTick(EnumMobFactoryTier tier) {
 
-        int level = tier.ordinal();
+        int level = tier.getLevel();
         return getEntryFromLevel(level, EnumConfigKey.POWER_PER_TICK);
     }
 

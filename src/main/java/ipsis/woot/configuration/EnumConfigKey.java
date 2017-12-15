@@ -39,9 +39,9 @@ public enum EnumConfigKey {
     KILL_COUNT(
             "Default number of mobs to kill to program the ender shard",
             "killCount", Integer.class, 1, true),
-    SPAWN_XP(
-            "Default XP cost for a spawned mob",
-            "spawnXp", Integer.class, 1, true),
+    SPAWN_UNITS(
+            "Default units for spawning a mob",
+            "spawnUnits", Integer.class, 1, true),
     DEATH_XP(
             "Default XP to generate for a killed mob",
             "deathXp", Integer.class, 1, true),
@@ -51,21 +51,21 @@ public enum EnumConfigKey {
     FACTORY_TIER(
             "Default tier to assign mobs to",
             "factoryTier", Integer.class, -1, true), // calculated but can override
-    T1_XP_MAX(
-            "Maximum XP level for a Tier I factory",
-            "t1XpMax", Integer.class, 5, false, 1),
-    T2_XP_MAX(
-            "Maximum XP level for a Tier II factory",
-            "t2XpMax", Integer.class, 20, false, 2),
-    T3_XP_MAX(
-            "Maximum XP level for a Tier III factory",
-            "t3XpMax", Integer.class, 49, false, 3),
-    T4_XP_MAX(
-            "Maximum XP level for a Tier IV factory",
-            "t4XpMax", Integer.class, 65535, false, 4),
-    POWER_PER_XP(
-            "Power cost per level of XP",
-            "powerPerXp", Integer.class, 1, true),
+    T1_UNITS_MAX(
+            "Maximum units for a Tier I factory",
+            "t1UnitsMax", Integer.class, 20, false, 1),
+    T2_UNITS_MAX(
+            "Maximum units for a Tier II factory",
+            "t2UnitsMax", Integer.class, 40, false, 2),
+    T3_UNITS_MAX(
+            "Maximum units for a Tier III factory",
+            "t3UnitsMax", Integer.class, 60, false, 3),
+    T4_UNITS_MAX(
+            "Maximum units for a Tier IV factory",
+            "t4CostMax", Integer.class, 65535, false, 4),
+    POWER_PER_UNIT(
+            "Power cost per spawn unit",
+            "powerPerSpawnUnit", Integer.class, 1, true),
     ALLOW_XP_GENERATION(
             "Allow the factory to generate XP shards",
             "allowXpGeneration", Boolean.class, true, false),
@@ -99,9 +99,6 @@ public enum EnumConfigKey {
     T4_POWER_TICK(
             "Default power cost per tick of a Tier IV factory",
             "t4PowerTick", Integer.class, 320, true, 4),
-    XP_POWER_TICK(
-            "Default power cost per tick per XP level",
-            "xpPowerTick", Integer.class, 16, true),
     RATE_1_POWER_TICK(
             "Default power cost per tick of a Rate I upgrade",
             "rate1PowerTick", Integer.class, 80, true, 1),

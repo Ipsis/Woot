@@ -172,7 +172,8 @@
     "twilightforest:snow_queen",
     "twilightforest:giant_miner",
     "twilightforest:armored_giant",
-    "twilightforest:quest_ram"
+    "twilightforest:quest_ram",
+    "forestry:butterflyge"
   ],
   "entitywhitelist": [
   ],

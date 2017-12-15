@@ -163,17 +163,13 @@
   ],
   "entityblacklist": [
     "twilightforest:naga",
-    "twilightforest:lich",
     "twilightforest:minoshroom",
     "twilightforest:hydra",
-    "twilightforest:knight_phantom",
     "twilightforest:ur_ghast",
     "twilightforest:yeti_alpha",
     "twilightforest:snow_queen",
     "twilightforest:giant_miner",
-    "twilightforest:armored_giant",
-    "twilightforest:quest_ram",
-    "forestry:butterflyge"
+    "twilightforest:armored_giant"
   ],
   "entitywhitelist": [
   ],

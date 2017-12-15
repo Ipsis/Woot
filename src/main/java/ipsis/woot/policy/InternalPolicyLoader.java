@@ -28,7 +28,11 @@ public class InternalPolicyLoader {
             "abyssalcraft:chagaroth",
             "abyssalcraft:shadowboss",
             "abyssalcraft:Jzahar",
-            "roots:spriteGuardian"
+            "roots:spriteGuardian",
+            "twilightforest:lich",
+            "twilightforest:knight_phantom",
+            "twilightforest:quest_ram",
+            "forestry:butterflyge"
     };
 
     // MODS where the drops don't work well with Woot

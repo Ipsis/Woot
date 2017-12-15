@@ -71,6 +71,10 @@
         {
           "tag": "mass_3_param",
           "value": 4
+        },
+        {
+          "tag": "mass_fx",
+          "value": 2
         }
       ]
     },
@@ -100,6 +104,10 @@
         {
           "tag": "mass_3_param",
           "value": 4
+        },
+        {
+          "tag": "mass_fx",
+          "value": 2
         }
       ]
     },

@@ -146,13 +146,13 @@ public enum EnumConfigKey {
             "xp3PowerTick", Integer.class, 240, true, 3),
     EFF_1_POWER_TICK(
             "Default power cost per tick of a Efficiency I upgrade",
-            "eff1PowerTick", Integer.class, 80, true, 1),
+            "eff1PowerTick", Integer.class, 1, true, 1),
     EFF_2_POWER_TICK(
             "Default power cost per tick of a Efficiency II upgrade",
-            "eff2PowerTick", Integer.class, 160, true, 2),
+            "eff2PowerTick", Integer.class, 2, true, 2),
     EFF_3_POWER_TICK(
             "Default power cost per tick of a Efficiency III upgrade",
-            "eff3PowerTick", Integer.class, 240, true, 3),
+            "eff3PowerTick", Integer.class, 4, true, 3),
     BM_1_POWER_TICK(
             "Default power cost per tick of a Blood Magic Life Essence I upgrade",
             "bm1PowerTick", Integer.class, 80, true, 1),

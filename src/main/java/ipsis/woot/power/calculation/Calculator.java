@@ -98,6 +98,8 @@ public class Calculator implements IPowerCalculator {
         if (finalSpawnTicks <= 0)
             finalSpawnTicks = 1;
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
+                "ticks:" + finalSpawnTicks + " total:" + totalPower);
         return new PowerRecipe(finalSpawnTicks, totalPower);
     }
 

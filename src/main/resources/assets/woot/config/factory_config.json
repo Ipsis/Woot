@@ -50,7 +50,7 @@
         },
         {
           "tag": "spawn_units",
-          "value": 300
+          "value": 500
         },
         {
           "tag": "factory_tier",

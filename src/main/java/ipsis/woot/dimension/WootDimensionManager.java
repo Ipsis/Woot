@@ -31,7 +31,7 @@ public class WootDimensionManager {
 
     public void touchSpawnChunk(World world) {
 
-        if (poked == false) {
+        if (!poked) {
 
             WorldServer worldServer = world.getMinecraftServer().getWorld(dimensionId);
             ChunkProviderServer chunkProviderServer = worldServer.getChunkProvider();

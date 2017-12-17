@@ -3,6 +3,7 @@ package ipsis.woot.dimension.world;
 import com.google.common.collect.ImmutableList;
 import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -65,6 +66,8 @@ public class WootChunkGenerator implements IChunkGenerator {
     public void populate(int x, int z) {
 
         LogHelper.info("populate @ " + x + ", " + z);
+        if (x == 0 && z == 0)
+            Woot.dimensionSchoolManager.build(world, x, z);
     }
 
     @Override

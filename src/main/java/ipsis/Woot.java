@@ -16,11 +16,11 @@ import ipsis.woot.farming.SpawnRecipeRepository;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModFurnace;
-//import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.loot.*;
 import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
+import ipsis.woot.loot.schools.DimensionSchoolManager;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -54,7 +54,7 @@ public class Woot {
     public static Random RANDOM = new Random();
     public static IWootConfiguration wootConfiguration = new WootConfigurationManager();
     public static ILootGeneration lootGeneration = new LootGeneration();
-    public static ILootLearner lootLearner = new SkyBoxSchool();
+    public static ILootLearner lootLearner = new LootLearner(new SkyBoxSchool());
     public static LootRepository lootRepository = new LootRepository();
     public static CustomDropsRepository customDropsRepository= new CustomDropsRepository();
     public static IMobCost mobCosting = new MobHealthManager();
@@ -64,6 +64,7 @@ public class Woot {
     public static IPolicy policyRepository = new PolicyRepository();
     public static ISpawnRecipeRepository spawnRecipeRepository = new SpawnRecipeRepository();
     public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
+    public static DimensionSchoolManager dimensionSchoolManager = new DimensionSchoolManager();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();

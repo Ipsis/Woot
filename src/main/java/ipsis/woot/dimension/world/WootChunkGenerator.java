@@ -2,6 +2,7 @@ package ipsis.woot.dimension.world;
 
 import com.google.common.collect.ImmutableList;
 import ipsis.Woot;
+import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.oss.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
@@ -34,7 +35,10 @@ public class WootChunkGenerator implements IChunkGenerator {
 
         ChunkPrimer chunkPrimer = new ChunkPrimer();
         this.biomesForGeneration = this.world.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
-        this.setBlocksInChunk(x, z, chunkPrimer);
+
+        // Everything is air as it is void
+        for (int i = 0; i < 65536; i++)
+            chunkPrimer.data[i] = (char)Block.BLOCK_STATE_IDS.get(Blocks.AIR.getDefaultState());
 
         Chunk chunk = new Chunk(this.world, chunkPrimer, x, z);
         byte[] abyte = chunk.getBiomeArray();
@@ -46,34 +50,17 @@ public class WootChunkGenerator implements IChunkGenerator {
         return chunk;
     }
 
-    private void setBlocksInChunk(int x, int z, ChunkPrimer chunkPrimer) {
-
-        // 16 x 16 x 256 blocks
-        int chunkX = x * 16;
-        int chunkZ = z * 16;
-
-        // Everything is air - it is a void dimension
-        for (int xx = 0; xx < 16; xx++) {
-            for (int zz = 0; zz < 16; zz++) {
-                for (int y = 0; y < 256; y++) {
-                    chunkPrimer.setBlockState(chunkX + xx, y, chunkZ + zz, Blocks.AIR.getDefaultState());
-                }
-            }
-        }
-    }
-
     @Override
     public void populate(int x, int z) {
 
         LogHelper.info("populate @ " + x + ", " + z);
-        if (x == 0 && z == 0)
-            Woot.dimensionSchoolManager.build(world, x, z);
+        if (x == TartarusManager.CHUNK_X && z == TartarusManager.CHUNK_Z)
+            Woot.tartarusManager.build(world);
     }
 
     @Override
     public boolean generateStructures(Chunk chunkIn, int x, int z) {
 
-        LogHelper.info("generateStructures ~ " + x + ", " + z);
         return false;
     }
 

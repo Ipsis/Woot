@@ -1,6 +1,7 @@
 package ipsis.woot.dimension;
 
 import ipsis.woot.dimension.world.WootWorldProvider;
+import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import net.minecraft.world.DimensionType;
@@ -13,7 +14,6 @@ public class WootDimensionManager {
 
     private static int dimensionId = 666;
     private static DimensionType dimensionType;
-    private boolean poked = false;
 
     public void init() {
 
@@ -31,21 +31,16 @@ public class WootDimensionManager {
 
     public void touchSpawnChunk(World world) {
 
-        if (!poked) {
+        WorldServer worldServer = world.getMinecraftServer().getWorld(dimensionId);
+        ChunkProviderServer chunkProviderServer = worldServer.getChunkProvider();
 
-            WorldServer worldServer = world.getMinecraftServer().getWorld(dimensionId);
-            ChunkProviderServer chunkProviderServer = worldServer.getChunkProvider();
-
-            if (!chunkProviderServer.chunkExists(0, 0)) {
-                try {
-                    chunkProviderServer.provideChunk(0, 0);
-                    chunkProviderServer.chunkGenerator.populate(0, 0);
-                } catch (Exception e) {
-                    LogHelper.error("WootDimensionManager failed to create dimension");
-                }
+        if (!chunkProviderServer.chunkExists(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z)) {
+            try {
+                chunkProviderServer.provideChunk(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z);
+                chunkProviderServer.chunkGenerator.populate(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z);
+            } catch (Exception e) {
+                LogHelper.error("WootDimensionManager failed to create dimension");
             }
         }
-
-        poked = true;
     }
 }

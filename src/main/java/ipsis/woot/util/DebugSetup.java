@@ -52,7 +52,8 @@ public class DebugSetup {
         GEN_BM_WILL,
         GEN_HEADS,
         SPAWN,
-        LEARN
+        LEARN,
+        LOOT_SCHOOL
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

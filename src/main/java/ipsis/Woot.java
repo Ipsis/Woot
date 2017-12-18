@@ -21,6 +21,7 @@ import ipsis.woot.loot.*;
 import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.loot.schools.DimensionSchoolManager;
+import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -63,8 +64,8 @@ public class Woot {
     public static IAnvilManager anvilManager = new AnvilManager();
     public static IPolicy policyRepository = new PolicyRepository();
     public static ISpawnRecipeRepository spawnRecipeRepository = new SpawnRecipeRepository();
+    public static TartarusManager tartarusManager = new TartarusManager();
     public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
-    public static DimensionSchoolManager dimensionSchoolManager = new DimensionSchoolManager();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();

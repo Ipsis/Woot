@@ -8,8 +8,9 @@ public class SpawnBox {
     private BlockPos spawnPos;
     private boolean used = false;
 
-    public SpawnBox(BlockPos basePos) {
-        this.basePos = basePos;
+    public SpawnBox(BlockPos basePos, BlockPos spawnPos) {
+        this.basePos = new BlockPos(basePos);
+        this.spawnPos = new BlockPos(spawnPos);
     }
 
     public void setUsed() {
@@ -27,10 +28,11 @@ public class SpawnBox {
     public BlockPos getBasePos() {
         return this.basePos;
     }
+    public BlockPos getSpawnPos() { return this.spawnPos; }
 
     @Override
     public String toString() {
 
-        return "Base:" + basePos + " Used:" + used;
+        return "Base: " + basePos + "Spawn: " + spawnPos + " Used:" + used;
     }
 }

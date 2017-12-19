@@ -27,7 +27,6 @@ public class WootChunkGenerator implements IChunkGenerator {
         this.world = world;
     }
 
-
     @Override
     public Chunk generateChunk(int x, int z) {
 

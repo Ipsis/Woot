@@ -197,6 +197,9 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
     @Override
     public void learn(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount) {
 
+        if (drops.isEmpty())
+            return;
+
         if (hasCustomDropsOnly(wootMobName))
             return;
 

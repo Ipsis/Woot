@@ -14,6 +14,7 @@ public class WootDimensionManager {
 
     private static int dimensionId = 666;
     private static DimensionType dimensionType;
+    private boolean touched = false;
 
     public void init() {
 
@@ -31,16 +32,23 @@ public class WootDimensionManager {
 
     public void touchSpawnChunk(World world) {
 
-        WorldServer worldServer = world.getMinecraftServer().getWorld(dimensionId);
-        ChunkProviderServer chunkProviderServer = worldServer.getChunkProvider();
+        if (!touched) {
 
-        if (!chunkProviderServer.chunkExists(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z)) {
-            try {
-                chunkProviderServer.provideChunk(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z);
-                chunkProviderServer.chunkGenerator.populate(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z);
-            } catch (Exception e) {
-                LogHelper.error("WootDimensionManager failed to create dimension");
+            LogHelper.info("WootDimensionManager: generating chunks");
+
+            WorldServer worldServer = world.getMinecraftServer().getWorld(dimensionId);
+            ChunkProviderServer chunkProviderServer = worldServer.getChunkProvider();
+
+            if (!chunkProviderServer.chunkExists(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z)) {
+                try {
+                    chunkProviderServer.provideChunk(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z);
+                    chunkProviderServer.chunkGenerator.populate(TartarusManager.CHUNK_X, TartarusManager.CHUNK_Z);
+                } catch (Exception e) {
+                    LogHelper.error("WootDimensionManager failed to create dimension");
+                }
             }
+
+            touched = true;
         }
     }
 }

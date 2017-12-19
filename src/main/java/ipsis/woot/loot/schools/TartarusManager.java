@@ -1,17 +1,26 @@
 package ipsis.woot.loot.schools;
 
+import ipsis.Woot;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.EnumEnchantKey;
+import ipsis.woot.util.WootMobName;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TartarusManager {
 
     public static final int CHUNK_X = 0;
     public static final int CHUNK_Z = 0;
+    public static final int INVALID_SPAWN_ID = -1;
 
     private HashMap<Integer, SpawnBox> spawnBoxMap = new HashMap<>();
 
@@ -49,10 +58,18 @@ public class TartarusManager {
         int spawnId = 0;
         for (int y = 0; y < 256; y += 8) {
 
-            spawnBoxMap.put(spawnId++, new SpawnBox(new BlockPos(origin.getX() + 0, y, origin.getZ() + 0)));
-            spawnBoxMap.put(spawnId++, new SpawnBox(new BlockPos(origin.getX() + 8, y, origin.getZ() + 0)));
-            spawnBoxMap.put(spawnId++, new SpawnBox(new BlockPos(origin.getX() + 0, y, origin.getZ() + 8)));
-            spawnBoxMap.put(spawnId++, new SpawnBox(new BlockPos(origin.getX() + 8, y, origin.getZ() + 8)));
+            spawnBoxMap.put(spawnId++, new SpawnBox(
+                    new BlockPos(origin.getX() + 0, y, origin.getZ() + 0),
+                    new BlockPos(origin.getX() + 0 + 4, y + 4, origin.getZ() + 0 + 4)));
+            spawnBoxMap.put(spawnId++,
+                    new SpawnBox(new BlockPos(origin.getX() + 8, y, origin.getZ() + 0),
+                    new BlockPos(origin.getX() + 8 + 4, y + 4, origin.getZ() + 0 + 4)));
+            spawnBoxMap.put(spawnId++, new SpawnBox(
+                    new BlockPos(origin.getX() + 0, y, origin.getZ() + 0),
+                    new BlockPos(origin.getX() + 0 + 4, y + 4, origin.getZ() + 0 + 4)));
+            spawnBoxMap.put(spawnId++, new SpawnBox(
+                    new BlockPos(origin.getX() + 8, y, origin.getZ() + 8),
+                    new BlockPos(origin.getX() + 8 + 4, y + 4, origin.getZ() + 8 + 4)));
         }
     }
 
@@ -60,13 +77,73 @@ public class TartarusManager {
 
         init();
         for (int id : spawnBoxMap.keySet())
-            LogHelper.info("TartarusManager: Id=" +id + " " + spawnBoxMap.get(id));
+            LogHelper.info("TartarusManager: Id=" + id + " " + spawnBoxMap.get(id));
     }
 
     public void build(World world) {
 
         for (SpawnBox spawnBox : spawnBoxMap.values())
             buildSpawnBox(world, spawnBox);
+    }
 
+    public int allocateSpawnBoxId() {
+
+        for (int id : spawnBoxMap.keySet()) {
+            if (!spawnBoxMap.get(id).isUsed()) {
+                spawnBoxMap.get(id).setUsed();
+                return id;
+            }
+        }
+
+        return INVALID_SPAWN_ID;
+    }
+
+    public int freeSpawnBoxId(int id) {
+
+        if (spawnBoxMap.containsKey(id))
+            spawnBoxMap.get(id).clearUsed();
+        else
+            LogHelper.error("freeSpawnBoxId: id " + id + " not allocated");
+
+        return INVALID_SPAWN_ID;
+    }
+
+    public void spawnInBox(World world, int id, WootMobName wootMobName, EnumEnchantKey key) {
+
+        Woot.wootDimensionManager.touchSpawnChunk(world);
+
+        if (id == INVALID_SPAWN_ID)
+            return;
+
+        if (!spawnBoxMap.containsKey(id)) {
+            LogHelper.error("spawnInBox: id " + id + " not allocated");
+            return;
+        }
+
+        SpawnBox spawnBox = spawnBoxMap.get(id);
+        Woot.entitySpawner.spawn(wootMobName, key, world, spawnBox.getSpawnPos());
+    }
+
+    private AxisAlignedBB axisAlignedBB;
+    public List<EntityItem> getLootInBox(World world, int id) {
+
+        Woot.wootDimensionManager.touchSpawnChunk(world);
+
+       List<EntityItem> itemList = new ArrayList<>();
+
+        if (!spawnBoxMap.containsKey(id)) {
+            LogHelper.error("getLootInBox: id " + id + " not allocated");
+            return itemList;
+        }
+
+        SpawnBox spawnBox = spawnBoxMap.get(id);
+
+        if (axisAlignedBB == null) {
+            int range = 6;
+            axisAlignedBB = new AxisAlignedBB(spawnBox.getSpawnPos()).grow(range, 0, range);
+        }
+
+        itemList.addAll(world.getEntitiesWithinAABB(EntityItem.class, axisAlignedBB, EntitySelectors.IS_ALIVE));
+        return itemList;
     }
 }

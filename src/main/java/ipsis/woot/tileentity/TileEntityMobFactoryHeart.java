@@ -6,7 +6,9 @@ import ipsis.woot.farming.*;
 import ipsis.woot.farmstructure.*;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.loot.ILootLearner;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
+import ipsis.woot.loot.schools.TartarusSchool;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
@@ -40,6 +42,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     private IPowerCalculator powerCalculator;
     private IRecipeProgressTracker recipeProgressTracker;
     private ISpawnRecipeConsumer spawnRecipeConsumer;
+    private ILootLearner lootLearner;
     private int storedXp = 0;
 
 
@@ -55,6 +58,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         spawnRecipe = new SpawnRecipe();
         powerCalculator = new Calculator();
         recipeProgressTracker = new SimpleRecipeProgressTracker();
+        lootLearner = new TartarusSchool();
     }
 
     @Override
@@ -155,7 +159,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             }
 
             if (isPowered()) {
-                Woot.lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
+                lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
                 recipeProgressTracker.tick();
                 if (recipeProgressTracker.isComplete()) {
                     if (spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs())) {

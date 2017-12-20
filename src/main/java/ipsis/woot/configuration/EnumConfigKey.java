@@ -24,6 +24,9 @@ public enum EnumConfigKey {
     SPAWN_TICKS(
             "Default number of ticks to spawn a mob",
             "spawnTicks", Integer.class, 16 * 20, true),
+    STRICT_POWER(
+            "Factory needs at least the power per tick or power is consumed and thrown away",
+            "strictPower", Boolean.class, false, false),
     HEADHUNTER_1_CHANCE(
             "Percentage chance of headhunter I enchant dropping a skull",
             "headhunter1DropChance", Integer.class, 30, false),

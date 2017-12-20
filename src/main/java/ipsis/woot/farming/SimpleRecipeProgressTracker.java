@@ -1,5 +1,8 @@
 package ipsis.woot.farming;
 
+import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.storage.IPowerStation;
 
 public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
@@ -14,7 +17,12 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
     public void tick() {
 
         int consumed = powerStation.consume(powerRecipe.getPowerPerTick());
-        consumedPower += consumed;
+        if (Woot.wootConfiguration.getBoolean(EnumConfigKey.STRICT_POWER)) {
+            if (consumed >= powerRecipe.getPowerPerTick())
+                consumedPower += consumed;
+        } else {
+            consumedPower += consumed;
+        }
     }
 
     public boolean isComplete() {

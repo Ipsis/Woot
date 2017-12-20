@@ -16,7 +16,7 @@ public class WootWorldProvider extends WorldProvider {
     @Override
     public String getSaveFolder() {
 
-        return "WOOT_TEST_DIMENSION";
+        return "tartarus";
     }
 
     @Override

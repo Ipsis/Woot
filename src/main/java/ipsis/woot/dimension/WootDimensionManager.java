@@ -10,6 +10,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.DimensionManager;
 
+import javax.annotation.Nullable;
+
 public class WootDimensionManager {
 
     private static int dimensionId = 666;
@@ -28,6 +30,11 @@ public class WootDimensionManager {
 
     public int getDimensionId() {
         return dimensionId;
+    }
+
+    public @Nullable WorldServer getWorldServer(World world) {
+
+        return world.getMinecraftServer().getWorld(dimensionId);
     }
 
     public void touchSpawnChunk(World world) {

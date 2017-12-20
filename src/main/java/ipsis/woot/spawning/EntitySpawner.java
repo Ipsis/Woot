@@ -1,6 +1,7 @@
 package ipsis.woot.spawning;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.WootMobName;
@@ -41,6 +42,7 @@ public class EntitySpawner implements IEntitySpawner {
 
     private @Nullable Entity createEntity(WootMobName wootMobName, World world) {
 
+        LogHelper.info("createEntity: " + wootMobName + ":" + world);
         ResourceLocation resourceLocation = wootMobName.getResourceLocation();
         Entity entity = EntityList.createEntityByIDFromName(resourceLocation, world);
         // Got to be a mob, not a bottle or other non-living entity

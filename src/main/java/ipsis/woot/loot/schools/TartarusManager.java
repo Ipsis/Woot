@@ -11,6 +11,7 @@ import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,8 +121,11 @@ public class TartarusManager {
             return;
         }
 
-        SpawnBox spawnBox = spawnBoxMap.get(id);
-        Woot.entitySpawner.spawn(wootMobName, key, world, spawnBox.getSpawnPos());
+        WorldServer spawnWorldServer = Woot.wootDimensionManager.getWorldServer(world);
+        if (spawnWorldServer != null) {
+            SpawnBox spawnBox = spawnBoxMap.get(id);
+            Woot.entitySpawner.spawn(wootMobName, key, spawnWorldServer, spawnBox.getSpawnPos());
+        }
     }
 
     private AxisAlignedBB axisAlignedBB;
@@ -140,10 +144,12 @@ public class TartarusManager {
 
         if (axisAlignedBB == null) {
             int range = 6;
-            axisAlignedBB = new AxisAlignedBB(spawnBox.getSpawnPos()).grow(range, 0, range);
+            axisAlignedBB = new AxisAlignedBB(spawnBox.getSpawnPos()).grow(range);
         }
 
-        itemList.addAll(world.getEntitiesWithinAABB(EntityItem.class, axisAlignedBB, EntitySelectors.IS_ALIVE));
+        WorldServer spawnWorldServer = Woot.wootDimensionManager.getWorldServer(world);
+        if (spawnWorldServer != null)
+            itemList.addAll(spawnWorldServer.getEntitiesWithinAABB(EntityItem.class, axisAlignedBB, EntitySelectors.IS_ALIVE));
         return itemList;
     }
 }

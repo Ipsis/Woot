@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketFactoryGui implements IMessage {
 
     private FarmUIInfo farmUIInfo;
+    private String mobName;
 
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -25,6 +26,7 @@ public class PacketFactoryGui implements IMessage {
         farmUIInfo.recipeTotalTime = buf.readInt();
         farmUIInfo.mobCount = buf.readInt();
         farmUIInfo.tier = EnumMobFactoryTier.getTier(buf.readByte());
+        mobName = NetworkTools.readString(buf);
 
         int drops = buf.readInt();
         for (int i = 0; i < drops; i++)
@@ -43,6 +45,7 @@ public class PacketFactoryGui implements IMessage {
         buf.writeInt(farmUIInfo.recipeTotalTime);
         buf.writeInt(farmUIInfo.mobCount);
         buf.writeByte(farmUIInfo.tier.ordinal());
+        NetworkTools.writeString(buf, mobName);
 
         LogHelper.info("toBytes: drops: " + farmUIInfo.drops.size());
         buf.writeInt(farmUIInfo.drops.size());
@@ -58,9 +61,10 @@ public class PacketFactoryGui implements IMessage {
     public PacketFactoryGui() {
     }
 
-    public PacketFactoryGui(FarmUIInfo farmUIInfo) {
+    public PacketFactoryGui(FarmUIInfo farmUIInfo, String mobName) {
 
         this.farmUIInfo = farmUIInfo;
+        this.mobName = mobName;
     }
 
     public static class Handler implements IMessageHandler<PacketFactoryGui, IMessage> {
@@ -74,7 +78,7 @@ public class PacketFactoryGui implements IMessage {
 
         private void handle(PacketFactoryGui pkt, MessageContext ctx) {
 
-            LogHelper.info("handle message: ");
+            LogHelper.info("handle message: " + pkt.mobName);
         }
     }
 }

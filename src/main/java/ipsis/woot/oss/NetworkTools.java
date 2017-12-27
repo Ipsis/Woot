@@ -40,4 +40,29 @@ public class NetworkTools {
         }
         return ItemStack.EMPTY;
     }
+
+    public static String readString(ByteBuf dataIn) {
+        int s = dataIn.readInt();
+        if (s == -1) {
+            return null;
+        }
+        if (s == 0) {
+            return "";
+        }
+        byte[] dst = new byte[s];
+        dataIn.readBytes(dst);
+        return new String(dst);
+    }
+
+    public static void writeString(ByteBuf dataOut, String str) {
+        if (str == null) {
+            dataOut.writeInt(-1);
+            return;
+        }
+        byte[] bytes = str.getBytes();
+        dataOut.writeInt(bytes.length);
+        if (bytes.length > 0) {
+            dataOut.writeBytes(bytes);
+        }
+    }
 }

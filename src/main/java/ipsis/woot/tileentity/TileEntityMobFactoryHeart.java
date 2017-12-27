@@ -244,7 +244,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             messages.add(TextFormatting.RED + StringHelper.localize("info.woot.heart.unformed"));
         } else {
 
-            PacketHandler.INSTANCE.sendTo(new PacketFactoryGui(farm), (EntityPlayerMP)entityPlayer);
+            PacketHandler.INSTANCE.sendTo(new PacketFactoryGui(farm, farm.wootMob.getDisplayName()), (EntityPlayerMP)entityPlayer);
 
             int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
             p = MathHelper.clamp(p, 0, 100);

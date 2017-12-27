@@ -67,7 +67,7 @@ public class CommandDev extends CommandTreeBase {
             devTags.put("genheads", DebugSetup.EnumDebugType.GEN_HEADS);
             devTags.put("spawn", DebugSetup.EnumDebugType.SPAWN);
             devTags.put("learn", DebugSetup.EnumDebugType.LEARN);
-            devTags.put("lootschool", DebugSetup.EnumDebugType.LOOT_SCHOOL);
+            devTags.put("tartarus", DebugSetup.EnumDebugType.TARTARUS);
         };
 
         @Override
@@ -146,22 +146,27 @@ public class CommandDev extends CommandTreeBase {
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
-            if (args.length != 4)
-                throw new WrongUsageException(getUsage(sender));
-
             int dimensionId, x, y, z;
-            try {
-                dimensionId = Integer.parseInt(args[0]);
-                x = Integer.parseInt(args[1]);
-                y = Integer.parseInt(args[2]);
-                z = Integer.parseInt(args[3]);
-            } catch (NumberFormatException e) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("tartarus")) {
+                dimensionId = Woot.wootDimensionManager.getDimensionId();
+                x = 18;
+                y = 0;
+                z = 18;
+            } else if (args.length == 4) {
+                try {
+                    dimensionId = Integer.parseInt(args[0]);
+                    x = Integer.parseInt(args[1]);
+                    y = Integer.parseInt(args[2]);
+                    z = Integer.parseInt(args[3]);
+                } catch (NumberFormatException e) {
+                    throw new WrongUsageException(getUsage(sender));
+                }
+            } else {
                 throw new WrongUsageException(getUsage(sender));
             }
 
-            if (sender instanceof EntityPlayer) {
+            if (sender instanceof EntityPlayer)
                 CustomTeleporter.teleportToDimension((EntityPlayer)sender, dimensionId, x, y, z);
-            }
         }
     }
 }

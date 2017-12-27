@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import ipsis.Woot;
+import ipsis.woot.command.ITextStatus;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.ItemHelper;
 import ipsis.woot.oss.LogHelper;
@@ -12,13 +13,14 @@ import ipsis.woot.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.WorldServer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.util.*;
 
-public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn, ILootRepositoryLookup, ILootRepositoryWriter {
+public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn, ILootRepositoryLookup, ILootRepositoryWriter, ITextStatus {
 
     public static final int VERSION = 1;
 
@@ -73,7 +75,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
         return samples.get(wootMobName);
     }
 
-    private int getSampleCount(WootMobName wootMobName, EnumEnchantKey key) {
+    public int getSampleCount(WootMobName wootMobName, EnumEnchantKey key) {
 
         Integer[] s = samples.get(wootMobName);
         if (s != null)
@@ -197,8 +199,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
     @Override
     public void learn(WootMobName wootMobName, EnumEnchantKey key, @Nonnull List<EntityItem> drops, boolean updateSampleCount) {
 
-        if (drops.isEmpty())
-            return;
+        // No drops is a completely valid learn
 
         if (hasCustomDropsOnly(wootMobName))
             return;
@@ -293,7 +294,32 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
     public List<String> getAllMobs() {
 
         List<String> mobs = new ArrayList<>();
+        for (WootMobName wootMobName : samples.keySet())
+            mobs.add(wootMobName.getName());
         return mobs;
+    }
+
+    // ITextStatus
+    @Override
+    public List<String> getStatus() {
+
+        List<String> status = new ArrayList<>();
+        for (WootMobName wootMobName : samples.keySet()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(wootMobName).append("-");
+            sb.append(getSampleCount(wootMobName, EnumEnchantKey.NO_ENCHANT)).append("/");
+            sb.append(getSampleCount(wootMobName, EnumEnchantKey.LOOTING_I)).append("/");
+            sb.append(getSampleCount(wootMobName, EnumEnchantKey.LOOTING_II)).append("/");
+            sb.append(getSampleCount(wootMobName, EnumEnchantKey.LOOTING_III));
+            status.add(sb.toString());
+        }
+        return status;
+    }
+
+    @Override
+    public List<String> getStatus(WorldServer worldServer) {
+
+        return new ArrayList<>();
     }
 
     /**

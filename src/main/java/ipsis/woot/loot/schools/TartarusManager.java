@@ -1,7 +1,9 @@
 package ipsis.woot.loot.schools;
 
 import ipsis.Woot;
+import ipsis.woot.command.ITextStatus;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.block.Block;
@@ -17,10 +19,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TartarusManager {
+import static ipsis.woot.dimension.WootDimensionManager.CHUNK_X;
+import static ipsis.woot.dimension.WootDimensionManager.CHUNK_Z;
 
-    public static final int CHUNK_X = 0;
-    public static final int CHUNK_Z = 0;
+public class TartarusManager implements ITextStatus {
+
     public static final int INVALID_SPAWN_ID = -1;
 
     private HashMap<Integer, SpawnBox> spawnBoxMap = new HashMap<>();
@@ -46,6 +49,9 @@ public class TartarusManager {
             }
         }
 
+//        world.setBlockState(spawnBox.getBasePos(), Blocks.GOLD_BLOCK.getDefaultState());
+//        world.setBlockState(spawnBox.getSpawnPos(), Blocks.DIAMOND_BLOCK.getDefaultState());
+
     }
 
     /**
@@ -56,29 +62,25 @@ public class TartarusManager {
 
         BlockPos origin = new BlockPos(CHUNK_X * 16, 0, CHUNK_Z * 16);
 
+
+        int[] xOffsets = { 0, 8, 0, 8 };
+        int[] zOffsets = { 0, 0, 8, 8 };
+
         int spawnId = 0;
         for (int y = 0; y < 256; y += 8) {
 
-            spawnBoxMap.put(spawnId++, new SpawnBox(
-                    new BlockPos(origin.getX() + 0, y, origin.getZ() + 0),
-                    new BlockPos(origin.getX() + 0 + 4, y + 4, origin.getZ() + 0 + 4)));
-            spawnBoxMap.put(spawnId++,
-                    new SpawnBox(new BlockPos(origin.getX() + 8, y, origin.getZ() + 0),
-                    new BlockPos(origin.getX() + 8 + 4, y + 4, origin.getZ() + 0 + 4)));
-            spawnBoxMap.put(spawnId++, new SpawnBox(
-                    new BlockPos(origin.getX() + 0, y, origin.getZ() + 0),
-                    new BlockPos(origin.getX() + 0 + 4, y + 4, origin.getZ() + 0 + 4)));
-            spawnBoxMap.put(spawnId++, new SpawnBox(
-                    new BlockPos(origin.getX() + 8, y, origin.getZ() + 8),
-                    new BlockPos(origin.getX() + 8 + 4, y + 4, origin.getZ() + 8 + 4)));
+            for (int i = 0; i < 4; i++) {
+                BlockPos basePos = new BlockPos(origin.getX() + xOffsets[i], y, origin.getZ() + zOffsets[i]);
+                BlockPos spawnPos = new BlockPos(basePos.getX() + 4, basePos.getY() + 4, basePos.getZ() + 4);
+                spawnBoxMap.put(spawnId++, new SpawnBox(basePos, spawnPos));
+            }
         }
     }
 
     public TartarusManager() {
 
         init();
-        for (int id : spawnBoxMap.keySet())
-            LogHelper.info("TartarusManager: Id=" + id + " " + spawnBoxMap.get(id));
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "TartatrusManager", spawnBoxMap.keySet());
     }
 
     public void build(World world) {
@@ -92,14 +94,19 @@ public class TartarusManager {
         for (int id : spawnBoxMap.keySet()) {
             if (!spawnBoxMap.get(id).isUsed()) {
                 spawnBoxMap.get(id).setUsed();
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "allocateSpawnBoxId", "Id:" + id);
                 return id;
             }
         }
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "allocateSpawnBoxId", "Id:INVALID");
 
         return INVALID_SPAWN_ID;
     }
 
     public int freeSpawnBoxId(int id) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "freeSpawnBoxId", "Id:" + id);
 
         if (spawnBoxMap.containsKey(id))
             spawnBoxMap.get(id).clearUsed();
@@ -110,6 +117,8 @@ public class TartarusManager {
     }
 
     public void spawnInBox(World world, int id, WootMobName wootMobName, EnumEnchantKey key) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "spawnInBox", "Id:" + id + " " + wootMobName + " " + key);
 
         Woot.wootDimensionManager.touchSpawnChunk(world);
 
@@ -128,12 +137,13 @@ public class TartarusManager {
         }
     }
 
-    private AxisAlignedBB axisAlignedBB;
     public List<EntityItem> getLootInBox(World world, int id) {
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "getLootInBox", "Id:" + id);
 
         Woot.wootDimensionManager.touchSpawnChunk(world);
 
-       List<EntityItem> itemList = new ArrayList<>();
+        List<EntityItem> itemList = new ArrayList<>();
 
         if (!spawnBoxMap.containsKey(id)) {
             LogHelper.error("getLootInBox: id " + id + " not allocated");
@@ -142,14 +152,30 @@ public class TartarusManager {
 
         SpawnBox spawnBox = spawnBoxMap.get(id);
 
-        if (axisAlignedBB == null) {
-            int range = 6;
-            axisAlignedBB = new AxisAlignedBB(spawnBox.getSpawnPos()).grow(range);
-        }
-
         WorldServer spawnWorldServer = Woot.wootDimensionManager.getWorldServer(world);
         if (spawnWorldServer != null)
-            itemList.addAll(spawnWorldServer.getEntitiesWithinAABB(EntityItem.class, axisAlignedBB, EntitySelectors.IS_ALIVE));
+            itemList.addAll(spawnWorldServer.getEntitiesWithinAABB(EntityItem.class, spawnBox.getAxisAlignedBB(), EntitySelectors.IS_ALIVE));
         return itemList;
+    }
+
+    @Override
+    public List<String> getStatus(WorldServer worldServer) {
+
+        List<String> status = new ArrayList<>();
+        boolean canUnload = true;
+        for (Integer spawnId : spawnBoxMap.keySet()) {
+            if (spawnBoxMap.get(spawnId).isUsed()) {
+                status.add(String.format("%d: %s", spawnId, spawnBoxMap.get(spawnId)));
+                canUnload = false;
+            }
+        }
+        status.add("Can unload tartarus: " + canUnload);
+        return status;
+    }
+
+    @Override
+    public List<String> getStatus() {
+
+        return new ArrayList<>();
     }
 }

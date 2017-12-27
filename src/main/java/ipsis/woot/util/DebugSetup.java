@@ -53,7 +53,7 @@ public class DebugSetup {
         GEN_HEADS,
         SPAWN,
         LEARN,
-        LOOT_SCHOOL
+        TARTARUS
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

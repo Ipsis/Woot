@@ -2,8 +2,7 @@ package ipsis.woot.dimension.world;
 
 import com.google.common.collect.ImmutableList;
 import ipsis.Woot;
-import ipsis.woot.loot.schools.TartarusManager;
-import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -16,6 +15,9 @@ import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static ipsis.woot.dimension.WootDimensionManager.CHUNK_X;
+import static ipsis.woot.dimension.WootDimensionManager.CHUNK_Z;
 
 public class WootChunkGenerator implements IChunkGenerator {
 
@@ -30,7 +32,7 @@ public class WootChunkGenerator implements IChunkGenerator {
     @Override
     public Chunk generateChunk(int x, int z) {
 
-        LogHelper.info("generateChunk @ " + x + ", " + z);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "generateChunk", "Generating chunks " + x + ", " + z);
 
         ChunkPrimer chunkPrimer = new ChunkPrimer();
         this.biomesForGeneration = this.world.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
@@ -52,9 +54,10 @@ public class WootChunkGenerator implements IChunkGenerator {
     @Override
     public void populate(int x, int z) {
 
-        LogHelper.info("populate @ " + x + ", " + z);
-        if (x == TartarusManager.CHUNK_X && z == TartarusManager.CHUNK_Z)
+        if (x == CHUNK_X && z == CHUNK_Z) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "populate", "Populating chunk " + x + ", " + z);
             Woot.tartarusManager.build(world);
+        }
     }
 
     @Override

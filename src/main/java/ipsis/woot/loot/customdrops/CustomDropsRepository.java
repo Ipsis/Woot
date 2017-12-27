@@ -37,6 +37,8 @@ public class CustomDropsRepository implements ILootRepositoryLookup {
     public List<String> getAllMobs() {
 
         List<String> mobs = new ArrayList<>();
+        for (CustomDrop customDrop : drops)
+            mobs.add(customDrop.wootMobName.getName());
         return mobs;
     }
 

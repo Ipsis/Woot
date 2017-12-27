@@ -4,7 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.farming.ITickTracker;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.loot.ILootLearner;
-import ipsis.woot.oss.LogHelper;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.entity.item.EntityItem;
@@ -22,26 +22,30 @@ public class TartarusSchool implements ILootLearner {
     @Override
     public void tick(ITickTracker tickTracker, World world, BlockPos origin, IFarmSetup farmSetup) {
 
-        if (spawnId != INVALID_SPAWN_ID) {
-            List<EntityItem> items = Woot.tartarusManager.getLootInBox(world, spawnId);
-            LogHelper.info("Tartaruschool: collected drops " + items);
-
-            Woot.lootRepository.learn(farmSetup.getWootMobName(), farmSetup.getEnchantKey(), items, false);
-            for (EntityItem i : items)
-                i.setDead();
-        }
-
+        // Just before we do another spawn, try and pickup the drops
         if (!tickTracker.hasLearnTickExpired())
             return;
 
         WootMobName wootMobName = farmSetup.getWootMobName();
         EnumEnchantKey key = farmSetup.getEnchantKey();
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "TartarusSchool:tick", wootMobName + "/" + key + " spawnid: " + spawnId + " count: " + Woot.lootRepository.getSampleCount(wootMobName, key));
+
+        if (spawnId != INVALID_SPAWN_ID) {
+            List<EntityItem> items = Woot.tartarusManager.getLootInBox(world, spawnId);
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "TartarusSchool:tick", "collecting drops " + items);
+            Woot.lootRepository.learn(wootMobName, key, items, false);
+            for (EntityItem i : items)
+                i.setDead();
+        }
+
+
         if (!Woot.lootRepository.isFull(wootMobName, key)) {
             if (spawnId == INVALID_SPAWN_ID)
                 spawnId = Woot.tartarusManager.allocateSpawnBoxId();
 
-            LogHelper.info("TartarusSchool: spawn mob " + wootMobName + "/" + key);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.TARTARUS, "TartarusSchool:tick", "spawning mob");
             Woot.tartarusManager.spawnInBox(world, spawnId, wootMobName, key);
         } else if (spawnId != INVALID_SPAWN_ID) {
             spawnId = Woot.tartarusManager.freeSpawnBoxId(spawnId);

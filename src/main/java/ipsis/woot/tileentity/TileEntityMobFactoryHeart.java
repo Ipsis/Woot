@@ -9,7 +9,7 @@ import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.network.PacketHandler;
-import ipsis.woot.network.packets.PacketFactoryGui;
+import ipsis.woot.network.packets.PacketFarmInfo;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
@@ -244,8 +244,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             messages.add(TextFormatting.RED + StringHelper.localize("info.woot.heart.unformed"));
         } else {
 
-            PacketHandler.INSTANCE.sendTo(new PacketFactoryGui(farm, farm.wootMob.getDisplayName()), (EntityPlayerMP)entityPlayer);
-
             int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
             p = MathHelper.clamp(p, 0, 100);
             messages.add((farm.isRunning ? TextFormatting.YELLOW : TextFormatting.RED) + StringHelper.localizeFormat("info.woot.heart.progress",
@@ -271,5 +269,21 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         for (String s : messages)
             entityPlayer.sendStatusMessage(new TextComponentString(s), false);
+    }
+
+    public boolean canInteractWith(EntityPlayer entityPlayer) {
+
+        if (!farmStructure.isFormed())
+            return false;
+
+        return entityPlayer.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
+    }
+
+    private FarmUIInfo guiInfoOnly;
+    public void setGuiFarmInfo(FarmUIInfo info) {
+        this.guiInfoOnly = info;
+    }
+    public FarmUIInfo getGuiFarmInfo() {
+        return guiInfoOnly;
     }
 }

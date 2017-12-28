@@ -1,6 +1,7 @@
 package ipsis.woot.network;
 
-import ipsis.woot.network.packets.PacketFactoryGui;
+import ipsis.woot.network.packets.PacketFarmInfo;
+import ipsis.woot.network.packets.PacketGetFarmInfo;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,6 +26,7 @@ public class PacketHandler {
 
     public static void registerMessages() {
 
-        INSTANCE.registerMessage(PacketFactoryGui.Handler.class, PacketFactoryGui.class, getNextId(), Side.CLIENT);
+        INSTANCE.registerMessage(PacketFarmInfo.Handler.class, PacketFarmInfo.class, getNextId(), Side.CLIENT);
+        INSTANCE.registerMessage(PacketGetFarmInfo.Handler.class, PacketGetFarmInfo.class, getNextId(), Side.SERVER);
     }
 }

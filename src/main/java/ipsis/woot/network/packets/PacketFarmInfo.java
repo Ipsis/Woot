@@ -1,17 +1,24 @@
 package ipsis.woot.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.client.gui.FactoryHeartContainerGui;
+import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.NetworkTools;
+import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketFactoryGui implements IMessage {
+public class PacketFarmInfo implements IMessage {
 
     private FarmUIInfo farmUIInfo;
     private String mobName;
@@ -58,27 +65,30 @@ public class PacketFactoryGui implements IMessage {
             NetworkTools.writeItemStack(buf, itemStack);
     }
 
-    public PacketFactoryGui() {
+    public PacketFarmInfo() {
     }
 
-    public PacketFactoryGui(FarmUIInfo farmUIInfo, String mobName) {
+    public PacketFarmInfo(FarmUIInfo farmUIInfo, String mobName) {
 
         this.farmUIInfo = farmUIInfo;
         this.mobName = mobName;
     }
 
-    public static class Handler implements IMessageHandler<PacketFactoryGui, IMessage> {
+    public static class Handler implements IMessageHandler<PacketFarmInfo, IMessage> {
 
         @Override
-        public IMessage onMessage(PacketFactoryGui message, MessageContext ctx) {
+        public IMessage onMessage(PacketFarmInfo message, MessageContext ctx) {
 
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
 
-        private void handle(PacketFactoryGui pkt, MessageContext ctx) {
+        private void handle(PacketFarmInfo pkt, MessageContext ctx) {
 
-            LogHelper.info("handle message: " + pkt.mobName);
+            EntityPlayerSP player = FMLClientHandler.instance().getClient().player;
+            LogHelper.info("handle PacketFarmInfo: " + pkt.mobName);
+            if (player != null && player.openContainer != null && player.openContainer instanceof FactoryHeartContainer)
+                ((FactoryHeartContainer)player.openContainer).handleFarmInfo(pkt.farmUIInfo);
         }
     }
 }

@@ -15,7 +15,7 @@
     {
       "type": "woot:enchanted_book",
       "item": "minecraft:enchanted_book",
-      "enchant_id": 21,
+      "enchant": "minecraft:looting",
       "enchant_lvl" : 3
     }
   ]

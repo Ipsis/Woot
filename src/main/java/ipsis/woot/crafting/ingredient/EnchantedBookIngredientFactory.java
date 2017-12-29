@@ -23,16 +23,16 @@ public class EnchantedBookIngredientFactory implements IIngredientFactory{
 
         final ItemStack itemStack = CraftingHelper.getItemStack(json, context);
 
-        int enchantId = JsonUtils.getInt(json, "enchant_id");
+        String enchantName = JsonUtils.getString(json, "enchant");
         int enchantLvl = JsonUtils.getInt(json, "enchant_lvl");
 
-        if (Enchantment.getEnchantmentByID(enchantId) == null)
-            throw new JsonSyntaxException("Unknown enchantment id '" + enchantId + "'");
+        Enchantment enchantment = Enchantment.getEnchantmentByLocation(enchantName);
+        if (enchantment == null)
+            throw new JsonSyntaxException("Unknown enchantment '" + enchantName + "'");
 
-        Enchantment enchantment = Enchantment.getEnchantmentByID(enchantId);
         Map<Enchantment, Integer> enchMap = Collections.singletonMap(enchantment, enchantLvl);
         EnchantmentHelper.setEnchantments(enchMap, itemStack);
 
-        return new IngredientEnchantedBook(itemStack, enchantId, enchantLvl);
+        return new IngredientEnchantedBook(itemStack, enchantment, enchantLvl);
     }
 }

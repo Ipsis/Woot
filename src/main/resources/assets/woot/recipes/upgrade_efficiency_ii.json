@@ -15,7 +15,7 @@
     {
       "type": "woot:enchanted_book",
       "item": "minecraft:enchanted_book",
-      "enchant_id": 32,
+      "enchant": "minecraft:efficiency",
       "enchant_lvl" : 2
     }
   ]

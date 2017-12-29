@@ -13,7 +13,7 @@
     "B": {
       "type": "woot:enchanted_book",
       "item": "minecraft:enchanted_book",
-      "enchant_id": 48,
+      "enchant": "minecraft:power",
       "enchant_lvl" : 2
     },
     "I": {

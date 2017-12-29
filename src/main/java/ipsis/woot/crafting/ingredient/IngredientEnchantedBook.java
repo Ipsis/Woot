@@ -11,14 +11,14 @@ import java.util.Map;
 public class IngredientEnchantedBook extends IngredientNBT {
 
     private final ItemStack stack;
-    private final int enchantment_id;
+    private final Enchantment enchantment;
     private final int enchantment_lvl;
-    protected IngredientEnchantedBook(ItemStack stack, int id, int lvl) {
+    protected IngredientEnchantedBook(ItemStack stack, Enchantment enchantment, int lvl) {
 
         super(stack);
         this.stack = stack;
-        this.enchantment_id = id;
         this.enchantment_lvl = lvl;
+        this.enchantment = enchantment;
     }
 
     @Override
@@ -32,11 +32,10 @@ public class IngredientEnchantedBook extends IngredientNBT {
         if (enchantmentMap.size() != 1)
             return false;
 
-        for (Enchantment enchantment : enchantmentMap.keySet()) {
+        for (Enchantment enchantment2 : enchantmentMap.keySet()) {
 
-            int id = Enchantment.getEnchantmentID(enchantment);
-            int lvl = enchantmentMap.get(enchantment);
-            if (id == enchantment_id && lvl == enchantment_lvl)
+            int lvl = enchantmentMap.get(enchantment2);
+            if (enchantment2.equals(enchantment) && lvl == enchantment_lvl)
                 return true;
         }
 

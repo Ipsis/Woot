@@ -15,7 +15,7 @@
     {
       "type": "woot:enchanted_book",
       "item": "minecraft:enchanted_book",
-      "enchant_id": 35,
+      "enchant": "minecraft:fortune",
       "enchant_lvl" : 2
     }
   ]

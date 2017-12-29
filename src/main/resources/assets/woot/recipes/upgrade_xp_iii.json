@@ -15,7 +15,7 @@
     {
       "type": "woot:enchanted_book",
       "item": "minecraft:enchanted_book",
-      "enchant_id": 61,
+      "enchant": "minecraft:luck_of_the_sea",
       "enchant_lvl" : 3
     }
   ]

@@ -15,13 +15,14 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FactoryHeartContainerGui extends GuiContainer {
+public class FactoryHeartContainerGui extends GuiContainerWoot {
 
     private static final int WIDTH = 256;
     private static final int HEIGHT = 224;
     private TileEntityMobFactoryHeart te;
 
     private static final ResourceLocation bg = new ResourceLocation(Reference.MOD_ID, "textures/gui/heart.png");
+    private List<ElementBase> elementBaseList = new ArrayList<>();
 
     @Override
     public void initGui() {
@@ -36,6 +37,9 @@ public class FactoryHeartContainerGui extends GuiContainer {
         xSize = WIDTH;
         ySize = HEIGHT;
         this.te = te;
+
+        elementBaseList.add(new ElementTextBox(this, 0, 0, 200, 4 * TXT_HEIGHT));
+
     }
 
     @Override
@@ -44,7 +48,8 @@ public class FactoryHeartContainerGui extends GuiContainer {
         mc.getTextureManager().bindTexture(bg);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        drawGradientRect(0, 0, 200, 4 * TXT_HEIGHT, BG_COLOR, BG_COLOR);
+        for (ElementBase elementBase : elementBaseList)
+            elementBase.drawBackground();
     }
 
     @Override
@@ -55,6 +60,7 @@ public class FactoryHeartContainerGui extends GuiContainer {
         if (info == null)
             return;
 
+        /*
         List<String> strings = new ArrayList<>();
         strings.add("Total Power: " + info.recipeTotalPower + " RF");
         strings.add("Total Time: " + info.recipeTotalTime + " ticks");
@@ -69,7 +75,10 @@ public class FactoryHeartContainerGui extends GuiContainer {
         drawIngredientPanel(info.ingredients, new ArrayList<>(), x, y, 200, (2 * STACK_HEIGHT) + 4);
 
         y += (TXT_HEIGHT + (2 * STACK_HEIGHT) + 4);
-        drawDropsPanel(info.drops, x, y, 200, 4 * STACK_HEIGHT);
+        drawDropsPanel(info.drops, x, y, 200, 4 * STACK_HEIGHT); */
+
+        for (ElementBase elementBase : elementBaseList)
+            elementBase.drawForeground();
     }
 
     private static final int BG_COLOR = 0x205060;

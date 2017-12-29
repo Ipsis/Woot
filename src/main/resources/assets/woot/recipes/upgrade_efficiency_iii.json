@@ -13,9 +13,10 @@
       "data": 4
     },
     {
-      "type": "minecraft:item_nbt",
+      "type": "woot:enchanted_book",
       "item": "minecraft:enchanted_book",
-      "nbt": "{ StoredEnchantments: [ { id: 32s, lvl: 3s } ] }"
+      "enchant_id": 32,
+      "enchant_lvl" : 3
     }
   ]
 }

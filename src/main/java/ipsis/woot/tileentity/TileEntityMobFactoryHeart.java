@@ -96,6 +96,24 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         return true;
     }
 
+    public int getRecipeProgress() {
+
+        int progress = 0;
+        if (farmStructure != null && farmStructure.isFormed())
+            progress = recipeProgressTracker.getProgress();
+
+        return progress;
+    }
+
+    public int getStoredPower() {
+
+        int power = 0;
+        if (farmStructure != null && farmStructure.isFormed() && farmSetup != null)
+            power = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
+
+        return power;
+    }
+
     @Override
     public void update() {
 
@@ -276,6 +294,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         return entityPlayer.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
+    // Client GUI sync only
     private FarmUIInfo guiInfoOnly;
     public void setGuiFarmInfo(FarmUIInfo info) {
         this.guiInfoOnly = info;
@@ -283,4 +302,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     public FarmUIInfo getGuiFarmInfo() {
         return guiInfoOnly;
     }
+    public int guiProgress;
+    public int guiStoredPower;
 }

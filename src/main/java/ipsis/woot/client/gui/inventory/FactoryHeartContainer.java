@@ -5,8 +5,11 @@ import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FactoryHeartContainer extends Container {
 
@@ -40,5 +43,36 @@ public class FactoryHeartContainer extends Container {
 
         LogHelper.info("FactoryHeartContainer: handleFarmInfo");
         te.setGuiFarmInfo(info);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void updateProgressBar(int id, int data) {
+
+        if (id == 0)
+            this.te.guiProgress = data;
+        else if (id == 1)
+            this.te.guiStoredPower = data;
+    }
+
+    private int prevGuiProgress;
+    private int prevGuiStoredPower;
+    @Override
+    public void detectAndSendChanges() {
+
+        super.detectAndSendChanges();
+
+        for (int i = 0; i < this.listeners.size(); i++) {
+
+            IContainerListener listener = this.listeners.get(i);
+            if (this.prevGuiProgress != this.te.getRecipeProgress())
+                listener.sendWindowProperty(this, 0, this.te.getRecipeProgress());
+            if (this.prevGuiStoredPower != this.te.getStoredPower())
+                listener.sendWindowProperty(this, 1, this.te.getStoredPower());
+
+        }
+
+        this.prevGuiProgress = this.te.getRecipeProgress();
+        this.prevGuiStoredPower = this.te.getStoredPower();
     }
 }

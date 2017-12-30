@@ -74,10 +74,10 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 else
                     recipeElement.addString(TextFormatting.RED + "Stopped");
 
-                recipeElement.addString(TextFormatting.GREEN + (info.mobCount + " mobs"));
-                recipeElement.addString(TextFormatting.GREEN + (info.recipeTotalPower + "RF @ " + info.recipePowerPerTick + "Rf/tick"));
-                recipeElement.addString(TextFormatting.GREEN + (info.recipeTotalTime + " ticks"));
-                recipeElement.addString("Progress: 40%");
+                recipeElement.addString(TextFormatting.GREEN + "Mobs: " + info.mobCount);
+                recipeElement.addString(TextFormatting.GREEN + "Power: " + info.recipeTotalPower + "RF @ " + info.recipePowerPerTick + "RF/tick");
+                recipeElement.addString(TextFormatting.GREEN + "Time: " + info.recipeTotalTime + " ticks");
+                recipeElement.addString(TextFormatting.GREEN + "Cell: " + info.powerStored + "/" + info.powerCapacity);
 
                 for (ItemStack itemStack : info.itemIngredients) {
                     DisplayItemStack displayItemStack = ingredientElement.addItemStack(itemStack);
@@ -121,6 +121,8 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
         for (ElementBase elementBase : elementBaseList)
             elementBase.drawForeground(mouseX - guiLeft, mouseY - guiTop);
 
+        drawCenteredString(fontRenderer, "Progress " + te.guiProgress + "%", 40, 40, 0xFFEEFF);
+        drawCenteredString(fontRenderer, "Power " + te.guiStoredPower + "%", 40, 52, 0xFFEEFF);
     }
 
     private void requestFarmInfo() {

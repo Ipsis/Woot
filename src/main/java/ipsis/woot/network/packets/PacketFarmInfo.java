@@ -29,6 +29,8 @@ public class PacketFarmInfo implements IMessage {
         farmUIInfo.mobCount = buf.readInt();
         farmUIInfo.isRunning = buf.readBoolean();
         farmUIInfo.tier = EnumMobFactoryTier.getTier(buf.readByte());
+        farmUIInfo.powerStored = buf.readInt();
+        farmUIInfo.powerCapacity = buf.readInt();
         farmUIInfo.mobName = NetworkTools.readString(buf);
 
         int drops = buf.readInt();
@@ -49,6 +51,8 @@ public class PacketFarmInfo implements IMessage {
         buf.writeInt(farmUIInfo.mobCount);
         buf.writeBoolean(farmUIInfo.isRunning);
         buf.writeByte(farmUIInfo.tier.ordinal());
+        buf.writeInt(farmUIInfo.powerStored);
+        buf.writeInt(farmUIInfo.powerCapacity);
         NetworkTools.writeString(buf, farmUIInfo.mobName);
 
         buf.writeInt(farmUIInfo.drops.size());

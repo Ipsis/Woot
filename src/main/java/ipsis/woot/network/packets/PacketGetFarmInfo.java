@@ -48,14 +48,13 @@ public class PacketGetFarmInfo implements IMessage {
 
         private void handle(PacketGetFarmInfo pkt, MessageContext ctx) {
 
-            LogHelper.info("handle PacketGetFarmInfo");
             TileEntity te = ctx.getServerHandler().player.getEntityWorld().getTileEntity(pkt.pos);
             if (!(te instanceof TileEntityMobFactoryHeart))
                 return;
 
             FarmUIInfo info = new FarmUIInfo();
             ((TileEntityMobFactoryHeart) te).getUIInfo(info);
-            PacketHandler.INSTANCE.sendTo(new PacketFarmInfo(info, info.wootMob.getDisplayName()), ctx.getServerHandler().player);
+            PacketHandler.INSTANCE.sendTo(new PacketFarmInfo(info), ctx.getServerHandler().player);
         }
     }
 }

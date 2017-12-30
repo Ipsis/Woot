@@ -49,7 +49,7 @@ public class TOPUIInfoConvertors {
         String total = ElementProgress.format(farm.recipeTotalPower, NumberFormat.COMPACT, "RF");
         String perTick = ElementProgress.format(farm.recipePowerPerTick, NumberFormat.COMPACT, "RF/tick");
 
-        probeInfo.text(TextFormatting.GREEN + farm.wootMob.getDisplayName() + " * " + farm.mobCount);
+        probeInfo.text(TextFormatting.GREEN + farm.mobName + " * " + farm.mobCount);
         probeInfo.text(TextFormatting.GREEN + total + " @ " + perTick);
         probeInfo.text(TextFormatting.GREEN + Integer.toString(farm.recipeTotalTime) + " ticks");
 

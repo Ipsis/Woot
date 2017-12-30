@@ -8,15 +8,12 @@ import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.network.PacketHandler;
-import ipsis.woot.network.packets.PacketFarmInfo;
 import ipsis.woot.power.calculation.Calculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import ipsis.woot.util.LootHelper;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -204,7 +201,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         if (!farmStructure.isFormed())
             return;
 
-        info.wootMob = farmSetup.getWootMob();
+        info.mobName = farmSetup.getWootMob().getDisplayName();
         info.isRunning = isPowered();
         info.recipeTotalPower = powerRecipe.getTotalPower();
         info.recipeTotalTime = powerRecipe.getTicks();
@@ -250,7 +247,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                         p, farm.isRunning ? "Running" : "Stopped"));
 
             messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.recipe",
-                    farm.wootMob.getDisplayName(), farm.mobCount));
+                    farm.mobName, farm.mobCount));
             messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.cost",
                     farm.recipeTotalPower, farm.recipePowerPerTick, farm.recipeTotalTime));
 

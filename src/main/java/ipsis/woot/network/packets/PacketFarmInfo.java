@@ -1,17 +1,13 @@
 package ipsis.woot.network.packets;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.woot.client.gui.FactoryHeartContainerGui;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.NetworkTools;
-import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -21,7 +17,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketFarmInfo implements IMessage {
 
     private FarmUIInfo farmUIInfo;
-    private String mobName;
 
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -32,8 +27,9 @@ public class PacketFarmInfo implements IMessage {
         farmUIInfo.recipePowerPerTick = buf.readInt();
         farmUIInfo.recipeTotalTime = buf.readInt();
         farmUIInfo.mobCount = buf.readInt();
+        farmUIInfo.isRunning = buf.readBoolean();
         farmUIInfo.tier = EnumMobFactoryTier.getTier(buf.readByte());
-        mobName = NetworkTools.readString(buf);
+        farmUIInfo.mobName = NetworkTools.readString(buf);
 
         int drops = buf.readInt();
         for (int i = 0; i < drops; i++)
@@ -41,7 +37,7 @@ public class PacketFarmInfo implements IMessage {
 
         int itemIngredients = buf.readInt();
         for (int i = 0; i < itemIngredients; i++)
-            farmUIInfo.ingredients.add(NetworkTools.readItemStack(buf));
+            farmUIInfo.itemIngredients.add(NetworkTools.readItemStack(buf));
     }
 
     @Override
@@ -51,27 +47,25 @@ public class PacketFarmInfo implements IMessage {
         buf.writeInt(farmUIInfo.recipePowerPerTick);
         buf.writeInt(farmUIInfo.recipeTotalTime);
         buf.writeInt(farmUIInfo.mobCount);
+        buf.writeBoolean(farmUIInfo.isRunning);
         buf.writeByte(farmUIInfo.tier.ordinal());
-        NetworkTools.writeString(buf, mobName);
+        NetworkTools.writeString(buf, farmUIInfo.mobName);
 
-        LogHelper.info("toBytes: drops: " + farmUIInfo.drops.size());
         buf.writeInt(farmUIInfo.drops.size());
         for (ItemStack itemStack : farmUIInfo.drops)
             NetworkTools.writeItemStack(buf, itemStack);
 
-        LogHelper.info("toBytes: ingredients: " + farmUIInfo.ingredients.size());
-        buf.writeInt(farmUIInfo.ingredients.size());
-        for (ItemStack itemStack : farmUIInfo.ingredients)
+        buf.writeInt(farmUIInfo.itemIngredients.size());
+        for (ItemStack itemStack : farmUIInfo.itemIngredients)
             NetworkTools.writeItemStack(buf, itemStack);
     }
 
     public PacketFarmInfo() {
     }
 
-    public PacketFarmInfo(FarmUIInfo farmUIInfo, String mobName) {
+    public PacketFarmInfo(FarmUIInfo farmUIInfo) {
 
         this.farmUIInfo = farmUIInfo;
-        this.mobName = mobName;
     }
 
     public static class Handler implements IMessageHandler<PacketFarmInfo, IMessage> {
@@ -86,7 +80,6 @@ public class PacketFarmInfo implements IMessage {
         private void handle(PacketFarmInfo pkt, MessageContext ctx) {
 
             EntityPlayerSP player = FMLClientHandler.instance().getClient().player;
-            LogHelper.info("handle PacketFarmInfo: " + pkt.mobName);
             if (player != null && player.openContainer != null && player.openContainer instanceof FactoryHeartContainer)
                 ((FactoryHeartContainer)player.openContainer).handleFarmInfo(pkt.farmUIInfo);
         }

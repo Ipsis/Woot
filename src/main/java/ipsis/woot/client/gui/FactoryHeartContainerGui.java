@@ -4,14 +4,13 @@ import ipsis.woot.client.gui.element.*;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.network.packets.PacketGetFarmInfo;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
-import net.minecraft.client.gui.Gui;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -42,7 +41,7 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
         int margin = 4;
         int dropsHeight = HEIGHT - (margin * 2) - recipeHeight - ingredientHeight - (margin * 2);
 
-        recipeElement = new ElementTextBox(this, fontRenderer, "Recipe", 4, margin, 248, recipeHeight);
+        recipeElement = new ElementTextBox(this, fontRenderer, "Configuration", 4, margin, 248, recipeHeight);
         ingredientElement = new ElementStackBox(this, fontRenderer, "Ingredients", 4, margin + recipeHeight + margin, 248, ingredientHeight);
         dropsElement = new ElementStackBox(this, fontRenderer, "Drops", 4, margin + recipeHeight + margin + ingredientHeight + margin, 248, dropsHeight);
 
@@ -66,21 +65,29 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
             FarmUIInfo info = te.getGuiFarmInfo();
             if (info != null) {
 
-                recipeElement.addString("Total Power: " + info.recipeTotalPower + " RF");
-                recipeElement.addString("Total Time: " + info.recipeTotalTime + " ticks");
-                recipeElement.addString("Power Per Tick: " + info.recipePowerPerTick + " RF/tick");
-                recipeElement.addString("Mobs: " + info.mobCount + " x " + "??? mob");
+                String s = info.tier.getTranslated("info.woot.tier");
+                s += " " + info.mobName;
+                recipeElement.addString(s);
 
-                for (ItemStack itemStack : info.ingredients) {
+                if (info.isRunning)
+                    recipeElement.addString("Running");
+                else
+                    recipeElement.addString(TextFormatting.RED + "Stopped");
+
+                recipeElement.addString(TextFormatting.GREEN + (info.mobCount + " mobs"));
+                recipeElement.addString(TextFormatting.GREEN + (info.recipeTotalPower + "RF @ " + info.recipePowerPerTick + "Rf/tick"));
+                recipeElement.addString(TextFormatting.GREEN + (info.recipeTotalTime + " ticks"));
+                recipeElement.addString("Progress: 40%");
+
+                for (ItemStack itemStack : info.itemIngredients) {
                     DisplayItemStack displayItemStack = ingredientElement.addItemStack(itemStack);
                     displayItemStack.appendTooltip(itemStack.getCount() + " per mob");
                 }
 
-                DisplayFluidStack displayFluidStack;
-                displayFluidStack = ingredientElement.addFluidStack(new FluidStack(FluidRegistry.WATER, 1000));
-                displayFluidStack.appendTooltip("1000mb per mob");
-                displayFluidStack = ingredientElement.addFluidStack(new FluidStack(FluidRegistry.LAVA, 1000));
-                displayFluidStack.appendTooltip("1000mb per mob");
+                for (FluidStack fluidStack : info.fluidIngredients) {
+                    DisplayFluidStack displayFluidStack = ingredientElement.addFluidStack(fluidStack);
+                    displayFluidStack.appendTooltip(fluidStack.amount + "mb per mob");
+                }
 
                 for (ItemStack itemStack : info.drops) {
                     DisplayItemStack displayItemStack = dropsElement.addItemStack(itemStack);

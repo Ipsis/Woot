@@ -18,7 +18,7 @@ public class ElementBase {
 
     protected final int X_MARGIN = 4;
     protected final int Y_MARGIN = 4;
-    protected final int TXT_HEIGHT = 10;
+    protected final int TXT_HEIGHT = 12;
 
     public ElementBase(GuiContainerWoot guiContainer, FontRenderer fontRenderer, String header, int baseX, int baseY, int sizeX, int sizeY) {
 

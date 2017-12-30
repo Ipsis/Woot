@@ -11,7 +11,7 @@ import java.util.List;
 public class FarmUIInfo {
 
     public EnumMobFactoryTier tier;
-    public WootMob wootMob;
+    public String mobName;
     public boolean isRunning;
     public int recipeTotalPower;
     public int recipeTotalTime;

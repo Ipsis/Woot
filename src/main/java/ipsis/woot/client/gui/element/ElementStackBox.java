@@ -1,9 +1,9 @@
 package ipsis.woot.client.gui.element;
 
 import ipsis.woot.client.gui.GuiContainerWoot;
-import ipsis.woot.oss.LogHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,28 +22,60 @@ public class ElementStackBox extends ElementBase {
     private int currRow = 0;
     private int currCol = 0;
     private int maxCol = 0;
-    public void addStack(ItemStack itemStack) {
 
-        int x = guiContainer.getGuiLeft() + baseX + X_MARGIN + (currCol * 18) + 1;
-        int y = guiContainer.getGuiTop() + contentY + (currRow * 18) + 1;
-        stacks.add(new DisplayStack(x, y, itemStack));
+    public DisplayItemStack addItemStack(ItemStack itemStack) {
+
+        int x = baseX + X_MARGIN + (currCol * 18) + 1;
+        int y = contentY + (currRow * 18) + 1;
+        DisplayItemStack displayItemStack = new DisplayItemStack(x, y, itemStack);
+        stacks.add(displayItemStack);
 
         currCol++;
         if (currCol == maxCol) {
             currRow++;
             currCol = 0;
         }
+
+        return displayItemStack;
     }
 
-    @Override
-    public void drawBackground() {
+    public DisplayFluidStack addFluidStack(FluidStack fluidStack) {
 
-        super.drawBackground();
+        int x = baseX + X_MARGIN + (currCol * 18) + 1;
+        int y = contentY + (currRow * 18) + 1;
+        DisplayFluidStack displayFluidStack = new DisplayFluidStack(x, y, fluidStack);
+        stacks.add(displayFluidStack);
+
+        currCol++;
+        if (currCol == maxCol) {
+            currRow++;
+            currCol = 0;
+        }
+
+        return displayFluidStack;
+    }
+
+
+    @Override
+    public void drawBackground(int mouseX, int mouseY) {
+
+        super.drawBackground(mouseX, mouseY);
 
         for (int n = 0; n < stacks.size(); n++) {
 
-           DisplayStack displayStack = stacks.get(n);
-           guiContainer.drawItemStack(displayStack.itemStack, displayStack.x, displayStack.y, null);
+            DisplayStack stack = stacks.get(n);
+            if (stack instanceof DisplayItemStack) {
+                DisplayItemStack displayStack = (DisplayItemStack)stack;
+                gui.drawItemStack(displayStack.itemStack,
+                        gui.getGuiLeft() + displayStack.x,
+                        gui.getGuiTop() + displayStack.y, false, null);
+            } else if (stack instanceof DisplayFluidStack) {
+                DisplayFluidStack displayStack = (DisplayFluidStack)stack;
+                gui.drawFluid(gui.getGuiLeft() + displayStack.x,
+                        gui.getGuiTop() + displayStack.y,
+                        displayStack.fluidStack,
+                        16, 16);
+            }
         }
     }
 
@@ -52,9 +84,15 @@ public class ElementStackBox extends ElementBase {
 
         super.drawForeground(mouseX, mouseY);
 
-        for (DisplayStack displayStack : stacks) {
-            if (displayStack.isHit(mouseX, mouseY))
-                LogHelper.info("Hit " + displayStack);
+        for (DisplayStack stack : stacks) {
+
+            if (stack.isHit(mouseX, mouseY)) {
+                List<String> tooltip = stack.getTooltip(gui);
+                gui.drawHoveringText(tooltip, mouseX, mouseY);
+
+                // Can only hover over one icon at a time!
+                break;
+            }
         }
 
     }

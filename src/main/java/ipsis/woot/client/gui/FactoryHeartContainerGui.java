@@ -1,13 +1,17 @@
 package ipsis.woot.client.gui;
 
+import ipsis.woot.client.gui.element.ElementBase;
+import ipsis.woot.client.gui.element.ElementDualStackRows;
+import ipsis.woot.client.gui.element.ElementStackBox;
+import ipsis.woot.client.gui.element.ElementTextBox;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.network.packets.PacketGetFarmInfo;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
@@ -23,12 +27,29 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
 
     private static final ResourceLocation bg = new ResourceLocation(Reference.MOD_ID, "textures/gui/heart.png");
     private List<ElementBase> elementBaseList = new ArrayList<>();
+    private ElementTextBox recipeElement;
+    private ElementDualStackRows ingredientElement;
+    private ElementStackBox dropsElement;
+    private boolean populated = false;
 
     @Override
     public void initGui() {
         super.initGui();
 
         requestFarmInfo();
+
+        int recipeHeight = 80;
+        int ingredientHeight = 60;
+        int margin = 4;
+        int dropsHeight = HEIGHT - (margin * 2) - recipeHeight - ingredientHeight - (margin * 2);
+
+        recipeElement = new ElementTextBox(this, fontRenderer, "Recipe", 4, margin, 248, recipeHeight);
+        ingredientElement = new ElementDualStackRows(this, fontRenderer, "Ingredients", 4, margin + recipeHeight + margin, 248, ingredientHeight);
+        dropsElement = new ElementStackBox(this, fontRenderer, "Drops", 4, margin + recipeHeight + margin + ingredientHeight + margin, 248, dropsHeight);
+
+        elementBaseList.add(recipeElement);
+        elementBaseList.add(ingredientElement);
+        elementBaseList.add(dropsElement);
     }
 
     public FactoryHeartContainerGui(TileEntityMobFactoryHeart te, FactoryHeartContainer container) {
@@ -37,9 +58,31 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
         xSize = WIDTH;
         ySize = HEIGHT;
         this.te = te;
+    }
 
-        elementBaseList.add(new ElementTextBox(this, 0, 0, 200, 4 * TXT_HEIGHT));
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
+        if (!populated) {
+            FarmUIInfo info = te.getGuiFarmInfo();
+            if (info != null) {
+
+                recipeElement.addString("Total Power: " + info.recipeTotalPower + " RF");
+                recipeElement.addString("Total Time: " + info.recipeTotalTime + " ticks");
+                recipeElement.addString("Power Per Tick: " + info.recipePowerPerTick + " RF/tick");
+                recipeElement.addString("Mobs: " + info.mobCount + " x " + "??? mob");
+
+                for (ItemStack itemStack : info.ingredients)
+                    ingredientElement.addStack(itemStack);
+
+                for (ItemStack itemStack : info.drops)
+                    dropsElement.addStack(itemStack);
+
+                populated = true;
+            }
+        }
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override
@@ -54,85 +97,11 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        FarmUIInfo info = te.getGuiFarmInfo();
-        if (info == null)
-            return;
-
-        /*
-        List<String> strings = new ArrayList<>();
-        strings.add("Total Power: " + info.recipeTotalPower + " RF");
-        strings.add("Total Time: " + info.recipeTotalTime + " ticks");
-        strings.add("Power Per Tick: " + info.recipePowerPerTick + " RF/tick");
-        strings.add("Num Mobs: " + info.mobCount);
-
-        int x = 4;
-        int y = 4;
-        drawRecipePanel(strings, x, y, 200, 4 * TXT_HEIGHT);
-
-        y += (5 * TXT_HEIGHT);
-        drawIngredientPanel(info.ingredients, new ArrayList<>(), x, y, 200, (2 * STACK_HEIGHT) + 4);
-
-        y += (TXT_HEIGHT + (2 * STACK_HEIGHT) + 4);
-        drawDropsPanel(info.drops, x, y, 200, 4 * STACK_HEIGHT); */
-
+        LogHelper.info((mouseX - guiLeft) + ", " + (mouseY - guiTop));
         for (ElementBase elementBase : elementBaseList)
-            elementBase.drawForeground();
-    }
+            elementBase.drawForeground(mouseX - guiLeft, mouseY - guiTop);
 
-    private static final int BG_COLOR = 0x205060;
-    private static final int HDR_COLOR = 0xFFFFFF;
-    private static final int TXT_HEIGHT = 12;
-    private static final int STACK_HEIGHT = 12;
-    private static final int X_MARGIN = 4;
-
-    private void drawPanel(String header, int x, int y, int sizeX, int sizeY, int bgColor, int hdrColor) {
-
-        // Draw background box
-        Gui.drawRect(x, y, x + sizeX, y + sizeY, bgColor);
-//        drawGradientRect(x, y, x + sizeX, y + sizeY, bgColor, bgColor);
-        fontRenderer.drawString(header, x, y, hdrColor);
-    }
-
-    private void drawRecipePanel(List<String> textList, int x, int y, int sizeX, int sizeY) {
-
-        drawPanel("Recipe", x, y, sizeX, sizeY, BG_COLOR, HDR_COLOR);
-        int yy = y + TXT_HEIGHT;
-        int xx = x + X_MARGIN;
-
-        for (int c = 0; c < textList.size(); c++)
-            fontRenderer.drawString(textList.get(c), xx, yy + (c * TXT_HEIGHT), HDR_COLOR);
-    }
-
-    private void drawIngredientPanel(List<ItemStack> itemList, List<FluidStack> fluidList, int x, int y, int sizeX, int sizeY) {
-
-        drawPanel("Ingredients", x, y, sizeX, sizeY, BG_COLOR, HDR_COLOR);
-        int yy = y + TXT_HEIGHT;
-        int xx = x + X_MARGIN;
-
-        for (int c = 0; c < itemList.size(); c++) {
-            ItemStack itemStack = itemList.get(c);
-            fontRenderer.drawString(Integer.toString(itemStack.getCount()), xx + (c * 18)  + 1, yy, HDR_COLOR);
-        }
-
-        for (int c = 0; c < fluidList.size(); c++) {
-            FluidStack fluidStack = fluidList.get(c);
-            fontRenderer.drawString(Integer.toString(fluidStack.amount), xx + (c * 18)  + 1, yy + STACK_HEIGHT, HDR_COLOR);
-        }
-    }
-
-    private void drawDropsPanel(List<ItemStack> dropList, int x, int y, int sizeX, int sizeY) {
-
-        drawPanel("Drops", x, y, sizeX, sizeY, BG_COLOR, HDR_COLOR);
-        int yy = y + TXT_HEIGHT;
-        int xx = x + X_MARGIN;
-
-        for (int c = 0; c < dropList.size(); c++) {
-            ItemStack itemStack = dropList.get(c);
-            String s = itemStack.getCount() + "% " + itemStack.getDisplayName();
-            fontRenderer.drawString(s, xx, yy + (c * STACK_HEIGHT), HDR_COLOR);
-        }
     }
 
     private void requestFarmInfo() {

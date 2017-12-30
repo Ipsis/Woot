@@ -1,11 +1,13 @@
 package ipsis.woot.client.gui;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 public abstract class GuiContainerWoot extends GuiContainer {
@@ -47,5 +49,31 @@ public abstract class GuiContainerWoot extends GuiContainer {
         Tessellator.getInstance().draw();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
+    }
+
+    public void drawItemStack(ItemStack stack, int x, int y, String overlayTxt) {
+
+        GlStateManager.enableDepth();
+        GlStateManager.enableLighting();
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(0.0F, 0.0F, 32.0F);
+        this.zLevel = 200.0F;
+        itemRender.zLevel = 200.0F;
+
+        FontRenderer font = null;
+        if (!stack.isEmpty()) {
+            font = stack.getItem().getFontRenderer(stack);
+        }
+        if (font == null) {
+            font = fontRenderer;
+        }
+
+        itemRender.renderItemAndEffectIntoGUI(stack, x, y);
+        itemRender.renderItemOverlayIntoGUI(font, stack, x, y - 8, overlayTxt);
+
+        this.zLevel = 0.0F;
+        itemRender.zLevel = 0.0F;
+        GlStateManager.popMatrix();
+        GlStateManager.disableLighting();
     }
 }

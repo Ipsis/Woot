@@ -249,43 +249,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.setValid();
     }
 
-    public void dumpStatusToPlayer(EntityPlayer entityPlayer) {
-
-        List<String> messages = new ArrayList<>();
-
-        FarmUIInfo farm = new FarmUIInfo();
-        getUIInfo(farm);
-        if (!farm.isValid) {
-            messages.add(TextFormatting.RED + StringHelper.localize("info.woot.heart.unformed"));
-        } else {
-
-            int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
-            p = MathHelper.clamp(p, 0, 100);
-            messages.add((farm.isRunning ? TextFormatting.YELLOW : TextFormatting.RED) + StringHelper.localizeFormat("info.woot.heart.progress",
-                        p, farm.isRunning ? "Running" : "Stopped"));
-
-            messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.recipe",
-                    farm.mobName, farm.mobCount));
-            messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.cost",
-                    farm.recipeTotalPower, farm.recipePowerPerTick, farm.recipeTotalTime));
-
-            if (!farm.ingredientsItems.isEmpty()) {
-                for (ItemStack itemStack : farm.ingredientsItems)
-                    messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
-                            itemStack.getCount(), itemStack.getDisplayName()));
-            }
-
-            if (!farm.ingredientsFluids.isEmpty()) {
-                for (FluidStack fluidStack : farm.ingredientsFluids)
-                    messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
-                            fluidStack.amount, fluidStack.getLocalizedName()));
-            }
-        }
-
-        for (String s : messages)
-            entityPlayer.sendStatusMessage(new TextComponentString(s), false);
-    }
-
     public boolean canInteractWith(EntityPlayer entityPlayer) {
 
         if (!farmStructure.isFormed())

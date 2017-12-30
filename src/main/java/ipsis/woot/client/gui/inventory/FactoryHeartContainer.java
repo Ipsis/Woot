@@ -41,7 +41,6 @@ public class FactoryHeartContainer extends Container {
 
     public void handleFarmInfo(FarmUIInfo info) {
 
-        LogHelper.info("FactoryHeartContainer: handleFarmInfo");
         te.setGuiFarmInfo(info);
     }
 

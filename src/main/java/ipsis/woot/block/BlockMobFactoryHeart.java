@@ -123,7 +123,6 @@ public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITi
         if (heldItem.isEmpty()) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TileEntityMobFactoryHeart) {
-                ((TileEntityMobFactoryHeart) te).dumpStatusToPlayer(playerIn);
                 playerIn.openGui(Woot.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
             }
             return true;

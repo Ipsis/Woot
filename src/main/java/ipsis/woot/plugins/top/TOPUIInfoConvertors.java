@@ -27,7 +27,6 @@ public class TOPUIInfoConvertors {
 
     public static void farmConvertor(FarmUIInfo farm, ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 
-
         /**
          * Progress
          */
@@ -42,71 +41,72 @@ public class TOPUIInfoConvertors {
          * Redstone state
          */
         probeInfo.horizontal().item(new ItemStack(Items.REDSTONE), probeInfo.defaultItemStyle().width(14).height(14)).text("State: " + (farm.isRunning ? "On" : "Off"));
-
-        /**
-         * Recipe
-         */
-        String total = ElementProgress.format(farm.recipeTotalPower, NumberFormat.COMPACT, "RF");
-        String perTick = ElementProgress.format(farm.recipePowerPerTick, NumberFormat.COMPACT, "RF/tick");
-
         probeInfo.text(TextFormatting.GREEN + farm.mobName + " * " + farm.mobCount);
-        probeInfo.text(TextFormatting.GREEN + total + " @ " + perTick);
-        probeInfo.text(TextFormatting.GREEN + Integer.toString(farm.recipeTotalTime) + " ticks");
 
-        /**
-         * Ingredients
-         */
-        if (!farm.ingredientsItems.isEmpty() || !farm.ingredientsFluids.isEmpty()) {
-            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
-            IProbeInfo horizontal = null;
-            int rows = 0;
-            int idx = 0;
-            for (ItemStack itemStack : farm.ingredientsItems) {
-                if (idx % 10 == 0) {
-                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
-                    rows++;
-                    if (rows > 4)
-                        break;
+        if (mode == ProbeMode.EXTENDED) {
+            /**
+             * Recipe
+             */
+            String total = ElementProgress.format(farm.recipeTotalPower, NumberFormat.COMPACT, "RF");
+            String perTick = ElementProgress.format(farm.recipePowerPerTick, NumberFormat.COMPACT, "RF/tick");
+
+            probeInfo.text(TextFormatting.GREEN + total + " @ " + perTick);
+            probeInfo.text(TextFormatting.GREEN + Integer.toString(farm.recipeTotalTime) + " ticks");
+
+            /**
+             * Ingredients
+             */
+            if (!farm.ingredientsItems.isEmpty() || !farm.ingredientsFluids.isEmpty()) {
+                IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+                IProbeInfo horizontal = null;
+                int rows = 0;
+                int idx = 0;
+                for (ItemStack itemStack : farm.ingredientsItems) {
+                    if (idx % 10 == 0) {
+                        horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
+                        rows++;
+                        if (rows > 4)
+                            break;
+                        }
+
+                    horizontal.item(itemStack);
+                    idx++;
                 }
 
-                horizontal.item(itemStack);
-                idx++;
-            }
+                for (FluidStack fluidStack : farm.ingredientsFluids) {
 
-            for (FluidStack fluidStack : farm.ingredientsFluids) {
-
-                int contents = fluidStack.amount;
-                probeInfo.text("Liquid: " + fluidStack.getLocalizedName());
-                probeInfo.progress(contents, fluidStack.amount,
+                    int contents = fluidStack.amount;
+                    probeInfo.text("Liquid: " + fluidStack.getLocalizedName());
+                    probeInfo.progress(contents, fluidStack.amount,
                         probeInfo.defaultProgressStyle()
                         .filledColor(0xff0000dd)
                         .alternateFilledColor(0xff000043)
                         .borderColor(0xff555555)
                         .numberFormat(NumberFormat.FULL));
-            }
-        }
-
-        /**
-         * Drops
-         */
-        if (mode == ProbeMode.EXTENDED && !farm.drops.isEmpty()) {
-
-            IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
-            IProbeInfo horizontal = null;
-            int rows = 0;
-            int idx = 0;
-            for (ItemStack itemStack : farm.drops) {
-                if (idx % 10 == 0) {
-                    horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
-                    rows++;
-                    if (rows > 4)
-                        break;
                 }
+            }
 
-                horizontal.item(itemStack);
-                idx++;
+            /**
+             * Drops
+             */
+            if (!farm.drops.isEmpty()) {
+
+                IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
+                IProbeInfo horizontal = null;
+                int rows = 0;
+                int idx = 0;
+                for (ItemStack itemStack : farm.drops) {
+                    if (idx % 10 == 0) {
+                        horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
+                        rows++;
+                        if (rows > 4)
+                            break;
+                    }
+
+                    horizontal.item(itemStack);
+                    idx++;
+                }
             }
         }
-
     }
 }

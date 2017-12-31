@@ -52,10 +52,13 @@ public class FactoryHeartContainer extends Container {
             this.te.guiProgress = data;
         else if (id == 1)
             this.te.guiStoredPower = data;
+        else if (id == 2)
+            this.te.guiRunning = data;
     }
 
     private int prevGuiProgress;
     private int prevGuiStoredPower;
+    private int prevGuiRunning;
     @Override
     public void detectAndSendChanges() {
 
@@ -68,10 +71,13 @@ public class FactoryHeartContainer extends Container {
                 listener.sendWindowProperty(this, 0, this.te.getRecipeProgress());
             if (this.prevGuiStoredPower != this.te.getStoredPower())
                 listener.sendWindowProperty(this, 1, this.te.getStoredPower());
+            if (this.prevGuiRunning != this.te.getRunning())
+                listener.sendWindowProperty(this, 2, this.te.getRunning());
 
         }
 
         this.prevGuiProgress = this.te.getRecipeProgress();
         this.prevGuiStoredPower = this.te.getStoredPower();
+        this.prevGuiRunning = this.te.getRunning();
     }
 }

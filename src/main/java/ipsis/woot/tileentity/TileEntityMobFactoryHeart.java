@@ -114,6 +114,15 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         return power;
     }
 
+    public int getRunning() {
+
+        int running = 0;
+        if (farmStructure != null && farmStructure.isFormed() && isPowered())
+            running = 1;
+
+        return running;
+    }
+
     @Override
     public void update() {
 
@@ -267,4 +276,5 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     }
     public int guiProgress;
     public int guiStoredPower;
+    public int guiRunning;
 }

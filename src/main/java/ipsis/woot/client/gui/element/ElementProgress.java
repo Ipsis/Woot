@@ -9,53 +9,68 @@ import java.util.Map;
 
 public class ElementProgress extends ElementBase {
 
-    public ElementProgress(GuiContainerWoot guiContainerWoot, FontRenderer fontRenderer, String header, int baseX, int baseY, int sizeX, int sizeY) {
+    private int tagX;
+    private int tagY;
+    private int barX;
+    private int barY;
+    private int barWidth;
+    private int curr;
+    private int max;
+    private int color;
+    private String tag;
+    private int type; // 0 - %, 1 = curr/max
+
+    private final int PAD = 1;
+
+    public ElementProgress(GuiContainerWoot guiContainerWoot, FontRenderer fontRenderer, String header, String tag, int type, int color, int baseX, int baseY, int sizeX, int sizeY) {
 
         super(guiContainerWoot, fontRenderer, header, baseX, baseY, sizeX, sizeY);
+
+        this.tag = tag;
+        this.type = type;
+        this.color = color;
+        this.curr = 0;
+
+        int tagLen = fontRenderer.getStringWidth(tag);
+
+        tagX = contentX;
+        tagY = contentY;
+        barX = contentX + tagLen + (2 * WidgetText.TEXT_X_MARGIN) + PAD;
+        barY = contentY;
+        barWidth = contentSizeX - contentX - tagLen - (2 * WidgetText.TEXT_X_MARGIN) - (2 * PAD);
     }
 
     @Override
     public void drawBackground(int mouseX, int mouseY) {
 
         super.drawBackground(mouseX, mouseY);
+
+        int percentage = (int)((100.0F / max) * curr);
+        WidgetBar.draw(gui,
+                gui.getGuiLeft() + barX, gui.getGuiTop() + barY, barWidth, percentage, color);
     }
 
     @Override
     public void drawForeground(int mouseX, int mouseY) {
 
         super.drawForeground(mouseX, mouseY);
+        WidgetText.draw(fontRenderer, tag, tagX, tagY, Color.white.getRGB());
+        String s = curr + "%";
+        if (type == 1)
+            s = curr + "/" + max;
 
-        int n = 0;
-        for (Progress p : widgets.values()) {
-            fontRenderer.drawString(p.name + ": " + p.curr + "/" + p.max, baseX + X_MARGIN, contentY + (n * TXT_HEIGHT) + 1, Color.white.getRGB());
-            n++;
-        }
+        int textX = barX + (barWidth / 2) - (fontRenderer.getStringWidth(s) / 2);
+        int textY = barY + 1;
+
+        WidgetText.draw(fontRenderer, s, textX, textY, Color.white.getRGB());
     }
 
-    private Map<Integer, Progress> widgets = new HashMap<>();
-
-    public void addProgress(int id, String name, int max) {
-
-        widgets.put(id, new Progress(name, max));
+    public void setMax(int max) {
+        this.max = max;
     }
 
-    public void updateProgress(int id, int curr) {
+    public void updateProgress(int curr) {
 
-        if (widgets.keySet().contains(id))
-            widgets.get(id).curr = curr;
-    }
-
-    private class Progress {
-
-        String name;
-        int max;
-        int curr;
-
-        public Progress(String name, int max) {
-
-            this.name = name;
-            this.max = max;
-            this.curr = 0;
-        }
+        this.curr = curr;
     }
 }

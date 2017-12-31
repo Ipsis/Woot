@@ -14,6 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,15 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
 
     private static final int WIDTH = 256;
     private static final int HEIGHT = 224;
+    private static final int GUI_X_MARGIN = 4;
+    private static final int GUI_Y_MARGIN = 4;
     private TileEntityMobFactoryHeart te;
 
     private static final ResourceLocation bg = new ResourceLocation(Reference.MOD_ID, "textures/gui/heart.png");
     private List<ElementBase> elementBaseList = new ArrayList<>();
     private ElementTextBox recipeElement;
-    private ElementProgress progressElement;
+    private ElementProgress progressElementPower;
+    private ElementProgress progressElementRecipe;
     private ElementStackBox ingredientElement;
     private ElementStackBox dropsElement;
     private boolean populated = false;
@@ -37,34 +41,57 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
 
         requestFarmInfo();
 
+        /**
+         *
+         * Recipe
+         * Margin
+         * Progress - Power
+         * Progress - Recipe
+         * Margin
+         * Ingredients
+         * Margin
+         * Drops
+         */
+
+        int panelWidth = WIDTH - (GUI_X_MARGIN * 2);
+        int panelMargin = 4;
         int recipeHeight = 55;
-        int progressHeight = 45;
-        int ingredientHeight = 45;
-        int margin = 4;
-        int dropsHeight = HEIGHT - (margin * 4) - recipeHeight - progressHeight - ingredientHeight - (margin * 2);
+        int progressHeight0 = 18;
+        int progressHeight1 = 18;
+        int ingredientHeight = 40;
+        int dropsHeight = HEIGHT - (GUI_Y_MARGIN * 2) - recipeHeight - progressHeight0 - progressHeight1 - ingredientHeight - (4 * panelMargin);
 
         recipeElement = new ElementTextBox(
                 this, fontRenderer,
                 "Configuration",
-                4, margin,
-                248, recipeHeight);
-        progressElement = new ElementProgress(
+                GUI_X_MARGIN, GUI_Y_MARGIN,
+                panelWidth, recipeHeight);
+
+        progressElementPower = new ElementProgress(
                 this, fontRenderer,
-                "Progress",
-                4, margin + recipeHeight + margin,
-                248, progressHeight);
+                null,
+                "Power", 1, Color.red.getRGB(),
+                GUI_X_MARGIN, GUI_Y_MARGIN + recipeHeight + panelMargin,
+                panelWidth, progressHeight0);
+        progressElementRecipe = new ElementProgress(
+                this, fontRenderer,
+                null,
+                "Spawning", 0, Color.orange.getRGB(),
+                GUI_X_MARGIN, GUI_Y_MARGIN + recipeHeight + progressHeight0 + (panelMargin * 2),
+                panelWidth, progressHeight0);
         ingredientElement = new ElementStackBox(
                 this, fontRenderer,
                 "Ingredients",
-                4, margin + recipeHeight + margin + progressHeight + margin,
-                248, ingredientHeight);
+                GUI_X_MARGIN, GUI_Y_MARGIN + recipeHeight + progressHeight0 + progressHeight1 + (panelMargin * 3),
+                panelWidth, ingredientHeight);
         dropsElement = new ElementStackBox(this, fontRenderer,
                 "Drops",
-                4, margin + recipeHeight + margin + progressHeight + margin + ingredientHeight + margin,
-                248, dropsHeight);
+                GUI_X_MARGIN, GUI_Y_MARGIN + recipeHeight + progressHeight0 + progressHeight1 + ingredientHeight + (panelMargin * 4),
+                panelWidth, dropsHeight);
 
         elementBaseList.add(recipeElement);
-        elementBaseList.add(progressElement);
+        elementBaseList.add(progressElementPower);
+        elementBaseList.add(progressElementRecipe);
         elementBaseList.add(ingredientElement);
         elementBaseList.add(dropsElement);
     }
@@ -88,12 +115,6 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 s += " " + info.mobName + " * " + info.mobCount;
                 recipeElement.addString(s);
 
-                /*
-                if (info.isRunning)
-                    recipeElement.addString("Running");
-                else
-                    recipeElement.addString(TextFormatting.RED + "Stopped"); */
-
                 recipeElement.addString(TextFormatting.GREEN + "Power: " + info.recipeTotalPower + "RF @ " + info.recipePowerPerTick + "RF/tick");
                 recipeElement.addString(TextFormatting.GREEN + "Time: " + info.recipeTotalTime + " ticks");
 
@@ -108,22 +129,22 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 }
 
                 // Padding out the drops for testing
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 5; i++) {
                     for (ItemStack itemStack : info.drops) {
                         DisplayItemStack displayItemStack = dropsElement.addItemStack(itemStack);
                         displayItemStack.appendTooltip(itemStack.getCount() + "%");
                     }
                 }
 
-                progressElement.addProgress(0, "Power", info.powerCapacity);
-                progressElement.addProgress(1, "Spawning", 100);
+                progressElementPower.setMax(info.powerCapacity);
+                progressElementRecipe.setMax(100);
 
                 populated = true;
             }
         }
 
-        progressElement.updateProgress(0, te.guiStoredPower);
-        progressElement.updateProgress(1, te.guiProgress);
+        progressElementPower.updateProgress(te.guiStoredPower);
+        progressElementRecipe.updateProgress(te.guiProgress);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

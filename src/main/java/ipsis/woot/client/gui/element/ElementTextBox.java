@@ -24,7 +24,7 @@ public class ElementTextBox extends ElementBase {
 
         for (int n = 0; n < entries.size(); n++) {
             String s = entries.get(n);
-            fontRenderer.drawString(s, baseX + X_MARGIN, contentY + (n * TXT_HEIGHT) + 1, Color.white.getRGB());
+            WidgetText.draw(fontRenderer, s, contentX, contentY + (n * WidgetText.getHeight()), Color.WHITE.getRGB());
         }
     }
 

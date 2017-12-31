@@ -14,11 +14,13 @@ public class ElementBase {
     protected GuiContainerWoot gui;
     protected FontRenderer fontRenderer;
     protected String header;
+    protected int contentX;
     protected int contentY;
+    protected int contentSizeX;
+    protected int contentSizeY;
 
-    protected final int X_MARGIN = 2;
-    protected final int Y_MARGIN = 2;
-    protected final int TXT_HEIGHT = 12;
+    protected final int PANEL_X_MARGIN = 2;
+    protected final int PANEL_Y_MARGIN = 2;
 
     public ElementBase(GuiContainerWoot guiContainer, FontRenderer fontRenderer, String header, int baseX, int baseY, int sizeX, int sizeY) {
 
@@ -29,8 +31,15 @@ public class ElementBase {
         this.gui = guiContainer;
         this.fontRenderer = fontRenderer;
         this.header = header;
+        this.contentX = baseX + PANEL_X_MARGIN;
+        this.contentY = baseY + PANEL_Y_MARGIN;
+        this.contentSizeX = sizeX - (2 * PANEL_X_MARGIN);
+        this.contentSizeY = sizeY - (2 * PANEL_Y_MARGIN);
 
-        this.contentY = baseY + (Y_MARGIN * 2) + TXT_HEIGHT;
+        if (header != null) {
+            this.contentY = baseY + PANEL_Y_MARGIN + WidgetText.getHeight();
+            this.contentSizeY = sizeY - (2 * PANEL_Y_MARGIN) - WidgetText.getHeight();
+        }
     }
 
     public void drawBackground(int mouseX, int mouseY) {
@@ -40,7 +49,8 @@ public class ElementBase {
 
     public void drawForeground(int mouseX, int mouseY) {
 
-        fontRenderer.drawString(header, baseX + X_MARGIN + 1, baseY + Y_MARGIN + 1, Color.yellow.getRGB());
+        if (header != null)
+            WidgetText.draw(fontRenderer, header, baseX, baseY, Color.yellow.getRGB());
     }
 
 }

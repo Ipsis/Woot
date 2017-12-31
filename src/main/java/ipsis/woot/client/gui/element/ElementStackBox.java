@@ -16,7 +16,7 @@ public class ElementStackBox extends ElementBase {
 
         super(guiContainerWoot, fontRenderer, header, baseX, baseY, sizeX, sizeY);
 
-        maxCol = (sizeX - 4) / 18;
+        maxCol = (sizeX - (2 * PANEL_X_MARGIN)) / WidgetItemStack.getWidth();
     }
 
     private int currRow = 0;
@@ -25,8 +25,8 @@ public class ElementStackBox extends ElementBase {
 
     public DisplayItemStack addItemStack(ItemStack itemStack) {
 
-        int x = baseX + X_MARGIN + (currCol * 18) + 1;
-        int y = contentY + (currRow * 18) + 1;
+        int x = contentX + (currCol * WidgetItemStack.getWidth());
+        int y = contentY + (currRow * WidgetItemStack.getHeight());
         DisplayItemStack displayItemStack = new DisplayItemStack(x, y, itemStack);
         stacks.add(displayItemStack);
 
@@ -41,8 +41,8 @@ public class ElementStackBox extends ElementBase {
 
     public DisplayFluidStack addFluidStack(FluidStack fluidStack) {
 
-        int x = baseX + X_MARGIN + (currCol * 18) + 1;
-        int y = contentY + (currRow * 18) + 1;
+        int x = contentX + (currCol * WidgetFluidStack.getWidth());
+        int y = contentY + (currRow * WidgetFluidStack.getHeight());
         DisplayFluidStack displayFluidStack = new DisplayFluidStack(x, y, fluidStack);
         stacks.add(displayFluidStack);
 
@@ -66,15 +66,16 @@ public class ElementStackBox extends ElementBase {
             DisplayStack stack = stacks.get(n);
             if (stack instanceof DisplayItemStack) {
                 DisplayItemStack displayStack = (DisplayItemStack)stack;
-                gui.drawItemStack(displayStack.itemStack,
+                WidgetItemStack.draw(gui,
+                        displayStack.itemStack,
                         gui.getGuiLeft() + displayStack.x,
-                        gui.getGuiTop() + displayStack.y, false, null);
+                        gui.getGuiTop() + displayStack.y, null);
             } else if (stack instanceof DisplayFluidStack) {
                 DisplayFluidStack displayStack = (DisplayFluidStack)stack;
-                gui.drawFluid(gui.getGuiLeft() + displayStack.x,
-                        gui.getGuiTop() + displayStack.y,
+                WidgetFluidStack.draw(gui,
                         displayStack.fluidStack,
-                        16, 16);
+                        gui.getGuiLeft() + displayStack.x,
+                        gui.getGuiTop() + displayStack.y);
             }
         }
     }

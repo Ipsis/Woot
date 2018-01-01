@@ -1,5 +1,6 @@
 package ipsis.woot.block;
 
+import ipsis.Woot;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.oss.ItemHelper;
 import ipsis.woot.oss.LogHelper;
@@ -121,8 +122,9 @@ public class BlockMobFactoryHeart extends BlockWoot implements ITooltipInfo, ITi
 
         if (heldItem.isEmpty()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof TileEntityMobFactoryHeart)
-                ((TileEntityMobFactoryHeart)te).dumpStatusToPlayer(playerIn);
+            if (te instanceof TileEntityMobFactoryHeart) {
+                playerIn.openGui(Woot.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            }
             return true;
         }
 

@@ -96,6 +96,33 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         return true;
     }
 
+    public int getRecipeProgress() {
+
+        int progress = 0;
+        if (farmStructure != null && farmStructure.isFormed())
+            progress = recipeProgressTracker.getProgress();
+
+        return progress;
+    }
+
+    public int getStoredPower() {
+
+        int power = 0;
+        if (farmStructure != null && farmStructure.isFormed() && farmSetup != null)
+            power = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
+
+        return power;
+    }
+
+    public int getRunning() {
+
+        int running = 0;
+        if (farmStructure != null && farmStructure.isFormed() && isPowered())
+            running = 1;
+
+        return running;
+    }
+
     @Override
     public void update() {
 
@@ -201,7 +228,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         if (!farmStructure.isFormed())
             return;
 
-        info.wootMob = farmSetup.getWootMob();
+        info.mobName = farmSetup.getWootMob().getDisplayName();
         info.isRunning = isPowered();
         info.recipeTotalPower = powerRecipe.getTotalPower();
         info.recipeTotalTime = powerRecipe.getTicks();
@@ -231,40 +258,23 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.setValid();
     }
 
-    public void dumpStatusToPlayer(EntityPlayer entityPlayer) {
+    public boolean canInteractWith(EntityPlayer entityPlayer) {
 
-        List<String> messages = new ArrayList<>();
+        if (!farmStructure.isFormed())
+            return false;
 
-        FarmUIInfo farm = new FarmUIInfo();
-        getUIInfo(farm);
-        if (!farm.isValid) {
-            messages.add(TextFormatting.RED + StringHelper.localize("info.woot.heart.unformed"));
-        } else {
-
-            int p = (int)((100.0F / (float)farm.recipeTotalPower) * (float)farm.consumedPower);
-            p = MathHelper.clamp(p, 0, 100);
-            messages.add((farm.isRunning ? TextFormatting.YELLOW : TextFormatting.RED) + StringHelper.localizeFormat("info.woot.heart.progress",
-                        p, farm.isRunning ? "Running" : "Stopped"));
-
-            messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.recipe",
-                    farm.wootMob.getDisplayName(), farm.mobCount));
-            messages.add(TextFormatting.GREEN + StringHelper.localizeFormat("info.woot.heart.cost",
-                    farm.recipeTotalPower, farm.recipePowerPerTick, farm.recipeTotalTime));
-
-            if (!farm.ingredientsItems.isEmpty()) {
-                for (ItemStack itemStack : farm.ingredientsItems)
-                    messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
-                            itemStack.getCount(), itemStack.getDisplayName()));
-            }
-
-            if (!farm.ingredientsFluids.isEmpty()) {
-                for (FluidStack fluidStack : farm.ingredientsFluids)
-                    messages.add(TextFormatting.BLUE + StringHelper.localizeFormat("info.woot.heart.ingredients",
-                            fluidStack.amount, fluidStack.getLocalizedName()));
-            }
-        }
-
-        for (String s : messages)
-            entityPlayer.sendStatusMessage(new TextComponentString(s), false);
+        return entityPlayer.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
+
+    // Client GUI sync only
+    private FarmUIInfo guiInfoOnly;
+    public void setGuiFarmInfo(FarmUIInfo info) {
+        this.guiInfoOnly = info;
+    }
+    public FarmUIInfo getGuiFarmInfo() {
+        return guiInfoOnly;
+    }
+    public int guiProgress;
+    public int guiStoredPower;
+    public int guiRunning;
 }

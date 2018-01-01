@@ -6,6 +6,7 @@ public interface IRecipeProgressTracker {
 
     void tick();
     boolean isComplete();
+    int getProgress();
     void reset();
     void setPowerRecipe(PowerRecipe powerRecipe);
     void setPowerStation(IPowerStation powerStation);

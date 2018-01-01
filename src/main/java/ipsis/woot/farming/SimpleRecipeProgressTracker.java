@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.storage.IPowerStation;
+import net.minecraft.util.math.MathHelper;
 
 public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
 
@@ -28,6 +29,13 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
     public boolean isComplete() {
 
         return consumedPower >= powerRecipe.getTotalPower();
+    }
+
+    @Override
+    public int getProgress() {
+
+        int p = (int)((100.0F/ (float)powerRecipe.getTotalPower()) * (float)consumedPower);
+        return MathHelper.clamp(p, 0, 100);
     }
 
     public void reset() {

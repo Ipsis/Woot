@@ -26,6 +26,7 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
     private static final int GUI_X_MARGIN = 4;
     private static final int GUI_Y_MARGIN = 4;
     private TileEntityMobFactoryHeart te;
+    private FactoryHeartContainer container;
 
     private static final ResourceLocation bg = new ResourceLocation(Reference.MOD_ID, "textures/gui/heart.png");
     private List<ElementBase> elementBaseList = new ArrayList<>();
@@ -34,7 +35,6 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
     private ElementProgress progressElementRecipe;
     private ElementStackBox ingredientElement;
     private ElementStackBox dropsElement;
-    private boolean populated = false;
 
     @Override
     public void initGui() {
@@ -102,13 +102,16 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
         super(container);
         xSize = WIDTH;
         ySize = HEIGHT;
+        this.container = container;
         this.te = te;
     }
+
+    private boolean init = false;
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
-        if (!populated) {
+        if (!init && container.hasServerSync()) {
             FarmUIInfo info = te.getGuiFarmInfo();
             if (info != null) {
 
@@ -137,7 +140,7 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 progressElementPower.setMax(info.powerCapacity);
                 progressElementRecipe.setMax(100);
 
-                populated = true;
+                init = true;
             }
         }
 

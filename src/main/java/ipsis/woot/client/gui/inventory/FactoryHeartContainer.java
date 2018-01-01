@@ -1,6 +1,7 @@
 package ipsis.woot.client.gui.inventory;
 
 import ipsis.woot.network.PacketHandler;
+import ipsis.woot.network.packets.PacketFarmInfo;
 import ipsis.woot.network.packets.PacketFixedProgressBar;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
@@ -41,10 +42,6 @@ public class FactoryHeartContainer extends Container {
         return te.canInteractWith(playerIn);
     }
 
-    public void handleFarmInfo(FarmUIInfo info) {
-
-        te.setGuiFarmInfo(info);
-    }
 
     /**
      * NB: This can only sync data as shorts :(
@@ -89,5 +86,16 @@ public class FactoryHeartContainer extends Container {
         this.prevGuiProgress = this.te.getRecipeProgress();
         this.prevGuiStoredPower = this.te.getStoredPower();
         this.prevGuiRunning = this.te.getRunning();
+    }
+
+    private boolean sync = false;
+    public void handleFarmInfo(FarmUIInfo info) {
+
+        te.setGuiFarmInfo(info);
+        sync = true;
+    }
+
+    public boolean hasServerSync() {
+        return sync;
     }
 }

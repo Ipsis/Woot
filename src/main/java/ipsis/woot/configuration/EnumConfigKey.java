@@ -24,7 +24,7 @@ public enum EnumConfigKey {
             "Dimension id of Tartarus",
             "tartarusId",
             Integer.class,
-            -1,
+            418,
             false),
     SAMPLE_SIZE(
             CATEGORY_GENERAL,

@@ -39,7 +39,7 @@ public class PacketFarmInfo implements IMessage {
 
         int itemIngredients = buf.readInt();
         for (int i = 0; i < itemIngredients; i++)
-            farmUIInfo.itemIngredients.add(NetworkTools.readItemStack(buf));
+            farmUIInfo.ingredientsItems.add(NetworkTools.readItemStack(buf));
     }
 
     @Override
@@ -59,8 +59,8 @@ public class PacketFarmInfo implements IMessage {
         for (ItemStack itemStack : farmUIInfo.drops)
             NetworkTools.writeItemStack(buf, itemStack);
 
-        buf.writeInt(farmUIInfo.itemIngredients.size());
-        for (ItemStack itemStack : farmUIInfo.itemIngredients)
+        buf.writeInt(farmUIInfo.ingredientsItems.size());
+        for (ItemStack itemStack : farmUIInfo.ingredientsItems)
             NetworkTools.writeItemStack(buf, itemStack);
     }
 

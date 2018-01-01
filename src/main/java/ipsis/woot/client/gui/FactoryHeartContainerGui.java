@@ -118,12 +118,12 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 recipeElement.addString(TextFormatting.GREEN + "Power: " + info.recipeTotalPower + "RF @ " + info.recipePowerPerTick + "RF/tick");
                 recipeElement.addString(TextFormatting.GREEN + "Time: " + info.recipeTotalTime + " ticks");
 
-                for (ItemStack itemStack : info.itemIngredients) {
+                for (ItemStack itemStack : info.ingredientsItems) {
                     DisplayItemStack displayItemStack = ingredientElement.addItemStack(itemStack);
                     displayItemStack.appendTooltip(itemStack.getCount() + " per mob");
                 }
 
-                for (FluidStack fluidStack : info.fluidIngredients) {
+                for (FluidStack fluidStack : info.ingredientsFluids) {
                     DisplayFluidStack displayFluidStack = ingredientElement.addFluidStack(fluidStack);
                     displayFluidStack.appendTooltip(fluidStack.amount + "mb per mob");
                 }

@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 public class TOPUIInfoConvertors {
 
@@ -55,12 +56,12 @@ public class TOPUIInfoConvertors {
         /**
          * Ingredients
          */
-        if (!farm.ingredients.isEmpty()) {
+        if (!farm.ingredientsItems.isEmpty() || !farm.ingredientsFluids.isEmpty()) {
             IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
             IProbeInfo horizontal = null;
             int rows = 0;
             int idx = 0;
-            for (ItemStack itemStack : farm.ingredients) {
+            for (ItemStack itemStack : farm.ingredientsItems) {
                 if (idx % 10 == 0) {
                     horizontal = vertical.horizontal(probeInfo.defaultLayoutStyle().spacing(0));
                     rows++;
@@ -70,6 +71,18 @@ public class TOPUIInfoConvertors {
 
                 horizontal.item(itemStack);
                 idx++;
+            }
+
+            for (FluidStack fluidStack : farm.ingredientsFluids) {
+
+                int contents = fluidStack.amount;
+                probeInfo.text("Liquid: " + fluidStack.getLocalizedName());
+                probeInfo.progress(contents, fluidStack.amount,
+                        probeInfo.defaultProgressStyle()
+                        .filledColor(0xff0000dd)
+                        .alternateFilledColor(0xff000043)
+                        .borderColor(0xff555555)
+                        .numberFormat(NumberFormat.FULL));
             }
         }
 

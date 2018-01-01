@@ -8,9 +8,12 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
 import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.WootMobName;
+import net.minecraft.client.util.JsonException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
+import net.minecraftforge.fluids.FluidStack;
 
+import static ipsis.woot.util.JsonHelper.getFluidStack;
 import static ipsis.woot.util.JsonHelper.getItemStack;
 
 public class FactoryIngredientsLoader {
@@ -62,7 +65,7 @@ public class FactoryIngredientsLoader {
             for (JsonElement ele2 : JsonUtils.getJsonArray(json, "items")) {
 
                 if (ele2 == null || !ele.isJsonObject())
-                    throw new JsonSyntaxException("Mob config must be object");
+                    throw new JsonSyntaxException("Recipe items must be object");
 
                 JsonObject json2 = (JsonObject) ele2;
                 ItemStack itemStack = getItemStack(json2);
@@ -72,7 +75,25 @@ public class FactoryIngredientsLoader {
                     recipe.addIngredient(itemStack);
             }
 
-            if (valid && !recipe.getItems().isEmpty() || !recipe.getFluids().isEmpty())
+            for (JsonElement ele2 : JsonUtils.getJsonArray(json, "fluids")) {
+
+                if (ele2 == null | !ele.isJsonObject())
+                    throw new JsonSyntaxException("Recipe fluids must be object");
+
+                JsonObject json2 = (JsonObject)ele2;
+                FluidStack fluidStack = getFluidStack(json2);
+                if (fluidStack == null) {
+                    valid = false;
+                } else {
+                    if (fluidStack.amount < 1)
+                        valid = false;
+                    else
+                        recipe.addIngredient(fluidStack);
+                }
+            }
+
+            // valid will be false if any item of fluid was not found
+            if (valid && (!recipe.getItems().isEmpty() || !recipe.getFluids().isEmpty()))
                 Woot.spawnRecipeRepository.add(wootMobName, recipe);
         }
     }

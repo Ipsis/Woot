@@ -61,7 +61,7 @@ public class PageFarmRecipe extends Page {
 
         uiTopOrigin = guiTop + 70;
         for (int i = 0; i < fluidIngredients.size(); i++) {
-            guiBase.drawCenteredString(fontRendererObj, fluidIngredients.get(i).getLocalizedName(), guiLeft + guiBase.xSize / 2, uiTopOrigin + (12 * i), 0);
+            guiBase.drawCenteredString(fontRendererObj, fluidIngredients.get(i).getLocalizedName() + " " + fluidIngredients.get(i).amount + "mb", guiLeft + guiBase.xSize / 2, uiTopOrigin + (12 * i), 0);
         }
 
         if (tooltip != null)

@@ -27,11 +27,14 @@ public class WidgetBar {
                 x + BAR_X_MARGIN + width,
                 y + BAR_Y_MARGIN + BAR_HEIGHT,
                 Color.black.getRGB());
-        gui.drawSizedModalRect(
-                x + BAR_X_MARGIN + 1,
-                y + BAR_Y_MARGIN + 1,
-                x + BAR_X_MARGIN + length -1,
-                y + BAR_Y_MARGIN + BAR_HEIGHT - 1,
-                color);
+
+        if (percentage > 0) {
+            gui.drawSizedModalRect(
+                    x + BAR_X_MARGIN + 1,
+                    y + BAR_Y_MARGIN + 1,
+                    x + BAR_X_MARGIN + length - 1,
+                    y + BAR_Y_MARGIN + BAR_HEIGHT - 1,
+                    color);
+        }
     }
 }

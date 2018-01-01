@@ -1,6 +1,7 @@
 package ipsis.woot.network;
 
 import ipsis.woot.network.packets.PacketFarmInfo;
+import ipsis.woot.network.packets.PacketFixedProgressBar;
 import ipsis.woot.network.packets.PacketGetFarmInfo;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -28,5 +29,6 @@ public class PacketHandler {
 
         INSTANCE.registerMessage(PacketFarmInfo.Handler.class, PacketFarmInfo.class, getNextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketGetFarmInfo.Handler.class, PacketGetFarmInfo.class, getNextId(), Side.SERVER);
+        INSTANCE.registerMessage(PacketFixedProgressBar.Handler.class, PacketFixedProgressBar.class, getNextId(), Side.CLIENT);
     }
 }

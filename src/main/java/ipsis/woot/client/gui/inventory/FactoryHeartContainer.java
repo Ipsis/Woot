@@ -1,9 +1,11 @@
 package ipsis.woot.client.gui.inventory;
 
-import ipsis.woot.oss.LogHelper;
+import ipsis.woot.network.PacketHandler;
+import ipsis.woot.network.packets.PacketFixedProgressBar;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
@@ -44,9 +46,14 @@ public class FactoryHeartContainer extends Container {
         te.setGuiFarmInfo(info);
     }
 
+    /**
+     * NB: This can only sync data as shorts :(
+     */
+
     @SideOnly(Side.CLIENT)
     @Override
     public void updateProgressBar(int id, int data) {
+
 
         if (id == 0)
             this.te.guiProgress = data;
@@ -56,9 +63,9 @@ public class FactoryHeartContainer extends Container {
             this.te.guiRunning = data;
     }
 
-    private int prevGuiProgress;
-    private int prevGuiStoredPower;
-    private int prevGuiRunning;
+    private int prevGuiProgress = -1;
+    private int prevGuiStoredPower = -1;
+    private int prevGuiRunning = -1;
     @Override
     public void detectAndSendChanges() {
 
@@ -67,12 +74,15 @@ public class FactoryHeartContainer extends Container {
         for (int i = 0; i < this.listeners.size(); i++) {
 
             IContainerListener listener = this.listeners.get(i);
-            if (this.prevGuiProgress != this.te.getRecipeProgress())
-                listener.sendWindowProperty(this, 0, this.te.getRecipeProgress());
-            if (this.prevGuiStoredPower != this.te.getStoredPower())
-                listener.sendWindowProperty(this, 1, this.te.getStoredPower());
-            if (this.prevGuiRunning != this.te.getRunning())
-                listener.sendWindowProperty(this, 2, this.te.getRunning());
+            if (listener instanceof EntityPlayerMP) {
+                EntityPlayerMP player = (EntityPlayerMP)listener;
+                if (this.prevGuiProgress != this.te.getRecipeProgress())
+                    listener.sendWindowProperty(this, 0, this.te.getRecipeProgress());
+                if (this.prevGuiStoredPower != this.te.getStoredPower())
+                    PacketHandler.INSTANCE.sendTo(new PacketFixedProgressBar(windowId, 1, this.te.getStoredPower()), player);
+                if (this.prevGuiRunning != this.te.getRunning())
+                    listener.sendWindowProperty(this, 2, this.te.getRunning());
+            }
 
         }
 

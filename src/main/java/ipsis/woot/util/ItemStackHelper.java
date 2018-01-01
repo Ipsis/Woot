@@ -28,7 +28,6 @@ public class ItemStackHelper {
             if (i > itemStack.getCount())
                 i = itemStack.getCount();
 
-            itemStack.shrink(i);
             EntityItem entityitem = new EntityItem(world, pos.getX() + (double)f, pos.getY() + (double)f1, pos.getZ() + (double)f2,
                     new ItemStack(itemStack.getItem(), i, itemStack.getMetadata()));
 
@@ -40,6 +39,9 @@ public class ItemStackHelper {
             entityitem.motionY = RANDOM.nextGaussian() * (double) f3 + 0.20000000298023224D;
             entityitem.motionZ = RANDOM.nextGaussian() * (double) f3;
             world.spawnEntity(entityitem);
+
+            // Shrink the stack AFTER it is spawned!
+            itemStack.shrink(i);
         }
     }
 

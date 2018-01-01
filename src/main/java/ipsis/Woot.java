@@ -9,17 +9,18 @@ import ipsis.woot.configuration.loaders.FactoryLootLoader;
 import ipsis.woot.crafting.AnvilManager;
 import ipsis.woot.crafting.AnvilManagerLoader;
 import ipsis.woot.crafting.IAnvilManager;
+import ipsis.woot.dimension.WootDimensionManager;
 import ipsis.woot.event.HandlerRegistryEvent;
 import ipsis.woot.farming.ISpawnRecipeRepository;
 import ipsis.woot.farming.SpawnRecipeRepository;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModFurnace;
-//import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.init.ModOreDictionary;
 import ipsis.woot.loot.*;
 import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
+import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -28,7 +29,6 @@ import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.multiblock.MobFactoryMultiblockLogic;
-import ipsis.woot.loot.schools.SkyBoxSchool;
 import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
@@ -53,7 +53,6 @@ public class Woot {
     public static Random RANDOM = new Random();
     public static IWootConfiguration wootConfiguration = new WootConfigurationManager();
     public static ILootGeneration lootGeneration = new LootGeneration();
-    public static ILootLearner lootLearner = new SkyBoxSchool();
     public static LootRepository lootRepository = new LootRepository();
     public static CustomDropsRepository customDropsRepository= new CustomDropsRepository();
     public static IMobCost mobCosting = new MobHealthManager();
@@ -62,6 +61,8 @@ public class Woot {
     public static IAnvilManager anvilManager = new AnvilManager();
     public static IPolicy policyRepository = new PolicyRepository();
     public static ISpawnRecipeRepository spawnRecipeRepository = new SpawnRecipeRepository();
+    public static TartarusManager tartarusManager = new TartarusManager();
+    public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
 
     // TODO fix this nonsense
     public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();
@@ -85,9 +86,8 @@ public class Woot {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
-        proxy.preInit();
         Files.init(event);
-        ConfigHandler.init(Files.configFile);
+        proxy.preInit();
     }
 
     @Mod.EventHandler

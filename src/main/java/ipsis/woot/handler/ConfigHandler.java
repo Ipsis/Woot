@@ -1,6 +1,7 @@
 package ipsis.woot.handler;
 
 import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.configuration.loaders.ConfigurationLoader;
 import net.minecraftforge.common.config.Configuration;
@@ -19,6 +20,15 @@ public class ConfigHandler {
             configuration = new Configuration(configFile);
             loadConfiguration();
         }
+    }
+
+    public static void saveDimensionId(int id) {
+
+        EnumConfigKey key = EnumConfigKey.TARTARUS_ID;
+        Woot.wootConfiguration.setInteger(key, id);
+        configuration.get(Configuration.CATEGORY_GENERAL, key.getText(), key.getDefaultBoolean(), key.getComment()).set(id);
+        configuration.save();
+
     }
 
     static void loadConfiguration() {

@@ -156,15 +156,6 @@ public enum EnumConfigKey {
     EFF_3_POWER_TICK(
             "Default power cost per tick of a Efficiency III upgrade",
             "eff3PowerTick", Integer.class, 4, true, 3),
-    BM_1_POWER_TICK(
-            "Default power cost per tick of a Blood Magic Life Essence I upgrade",
-            "bm1PowerTick", Integer.class, 80, true, 1),
-    BM_2_POWER_TICK(
-            "Default power cost per tick of a Blood Magic Life Essence II upgrade",
-            "bm2PowerTick", Integer.class, 160, true, 2),
-    BM_3_POWER_TICK(
-            "Default power cost per tick of a Blood Magic Life Essence III upgrade",
-            "bm3PowerTick", Integer.class, 240, true, 3),
     RATE_1_PARAM(
             "Percentage reduction in spawn time for Rate I upgrade",
             "rate1Param", Integer.class, 20, true, 1),
@@ -218,25 +209,7 @@ public enum EnumConfigKey {
             "eff2Param", Integer.class, 25, true, 2),
     EFF_3_PARAM(
             "Percentage of power saved for a Efficiency III upgrade",
-            "eff3Param", Integer.class, 30, true, 3),
-    BM_1_PARAM1(
-            "",
-            "bm1Param1", Integer.class, 10, true, 1),
-    BM_2_PARAM1(
-            "",
-            "bm2Param1", Integer.class, 20, true, 2),
-    BM_3_PARAM1(
-            "",
-            "bm3Param1", Integer.class, 30, true, 3),
-    BM_1_PARAM2(
-            "",
-            "bm1Param2", Integer.class, 20, true, 1),
-    BM_2_PARAM2(
-            "",
-            "bm2Param2", Integer.class, 30, true, 2),
-    BM_3_PARAM2(
-            "",
-            "bm3Param2", Integer.class, 40, true, 3);
+            "eff3Param", Integer.class, 30, true, 3);
 
     private String text;
     private Class clazz;
@@ -333,7 +306,6 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> DECAP_POWER_PER_TICK = EnumSet.of(DECAP_1_POWER_TICK, DECAP_2_POWER_TICK, DECAP_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> XP_POWER_PER_TICK = EnumSet.of(XP_1_POWER_TICK, XP_2_POWER_TICK, XP_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> EFF_POWER_PER_TICK = EnumSet.of(EFF_1_POWER_TICK, EFF_2_POWER_TICK, EFF_3_POWER_TICK);
-    public static EnumSet<EnumConfigKey> BM_POWER_PER_TICK = EnumSet.of(BM_1_POWER_TICK, BM_2_POWER_TICK, BM_3_POWER_TICK);
 
     public static EnumSet<EnumConfigKey> RATE_PARAM = EnumSet.of(RATE_1_PARAM, RATE_2_PARAM, RATE_3_PARAM);
     public static EnumSet<EnumConfigKey> MASS_PARAM = EnumSet.of(MASS_1_PARAM, MASS_2_PARAM, MASS_3_PARAM);
@@ -341,6 +313,4 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> DECAP_PARAM = EnumSet.of(DECAP_1_PARAM, DECAP_2_PARAM, DECAP_3_PARAM);
     public static EnumSet<EnumConfigKey> XP_PARAM = EnumSet.of(XP_1_PARAM, XP_2_PARAM, XP_3_PARAM);
     public static EnumSet<EnumConfigKey> EFF_PARAM = EnumSet.of(EFF_1_PARAM, EFF_2_PARAM, EFF_3_PARAM);
-    public static EnumSet<EnumConfigKey> BM_PARAM_1 = EnumSet.of(BM_1_PARAM1, BM_2_PARAM1, BM_3_PARAM1);
-    public static EnumSet<EnumConfigKey> BM_PARAM_2 = EnumSet.of(BM_1_PARAM2, BM_2_PARAM2, BM_3_PARAM2);
 }

@@ -6,12 +6,6 @@
     "active=true,variant=efficiency_iii": { "model":"woot:upgradeb_efficiency_iii_active" },
     "active=false,variant=efficiency_i": { "model":"woot:upgradeb_efficiency_i" },
     "active=false,variant=efficiency_ii": { "model":"woot:upgradeb_efficiency_ii" },
-    "active=false,variant=efficiency_iii": { "model":"woot:upgradeb_efficiency_iii" },
-    "active=true,variant=bloodmagic_i": { "model":"woot:upgradeb_bloodmagic_i_active" },
-    "active=true,variant=bloodmagic_ii": { "model":"woot:upgradeb_bloodmagic_ii_active" },
-    "active=true,variant=bloodmagic_iii": { "model":"woot:upgradeb_bloodmagic_iii_active" },
-    "active=false,variant=bloodmagic_i": { "model":"woot:upgradeb_bloodmagic_i" },
-    "active=false,variant=bloodmagic_ii": { "model":"woot:upgradeb_bloodmagic_ii" },
-    "active=false,variant=bloodmagic_iii": { "model":"woot:upgradeb_bloodmagic_iii" }
+    "active=false,variant=efficiency_iii": { "model":"woot:upgradeb_efficiency_iii" }
   }
 }

@@ -21,6 +21,7 @@ public enum EnumConfigKey {
             false,
             false),
     TARTARUS_ID(
+            CATEGORY_GENERAL,
             "Dimension id of Tartarus",
             "tartarusId",
             Integer.class,

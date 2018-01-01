@@ -1,6 +1,0 @@
-{
-  "parent": "woot:block/upgrade_t3_active",
-  "textures": {
-    "faces": "woot:blocks/upgrade_bloodmagic"
-  }
-}

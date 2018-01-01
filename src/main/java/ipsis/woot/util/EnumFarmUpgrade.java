@@ -7,8 +7,7 @@ public enum EnumFarmUpgrade {
     LOOTING,
     MASS,
     RATE,
-    XP,
-    LIFE_ESSENCE;
+    XP;
 
     public static EnumFarmUpgrade getFromEnumSpawnerUpgrade(EnumSpawnerUpgrade u) {
 
@@ -43,11 +42,6 @@ public enum EnumFarmUpgrade {
             case XP_II:
             case XP_III:
                 farmUpgrade = XP;
-                break;
-            case BLOODMAGIC_I:
-            case BLOODMAGIC_II:
-            case BLOODMAGIC_III:
-                farmUpgrade = LIFE_ESSENCE;
                 break;
             default:
                 farmUpgrade = XP; // Should never happen

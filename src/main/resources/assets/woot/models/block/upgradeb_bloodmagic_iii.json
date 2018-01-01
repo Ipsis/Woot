@@ -1,6 +1,0 @@
-{
-  "parent": "woot:block/small_cube_wrapped_iii",
-  "textures": {
-    "all": "woot:blocks/upgrade_bloodmagic"
-  }
-}

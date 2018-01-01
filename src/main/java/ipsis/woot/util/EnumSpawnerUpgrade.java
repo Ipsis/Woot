@@ -24,10 +24,7 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
     DECAPITATE_III(EnumConfigKey.DECAP_3_POWER_TICK, EnumConfigKey.DECAP_3_PARAM, 3),
     EFFICIENCY_I(EnumConfigKey.EFF_1_POWER_TICK, EnumConfigKey.EFF_1_PARAM, 1),
     EFFICIENCY_II(EnumConfigKey.EFF_2_POWER_TICK, EnumConfigKey.EFF_2_PARAM, 2),
-    EFFICIENCY_III(EnumConfigKey.EFF_3_POWER_TICK, EnumConfigKey.EFF_3_PARAM, 3),
-    BLOODMAGIC_I(EnumConfigKey.BM_1_POWER_TICK, EnumConfigKey.BM_1_PARAM1, EnumConfigKey.BM_1_PARAM2, 1),
-    BLOODMAGIC_II(EnumConfigKey.BM_2_POWER_TICK, EnumConfigKey.BM_2_PARAM1, EnumConfigKey.BM_2_PARAM2, 2),
-    BLOODMAGIC_III(EnumConfigKey.BM_3_POWER_TICK, EnumConfigKey.BM_3_PARAM1, EnumConfigKey.BM_3_PARAM2, 3);
+    EFFICIENCY_III(EnumConfigKey.EFF_3_POWER_TICK, EnumConfigKey.EFF_3_PARAM, 3);
 
     EnumSpawnerUpgrade() { }
 

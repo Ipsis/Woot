@@ -63,12 +63,6 @@ public class ConfigKeyHelper {
         return getEntryFromLevel(level, EnumConfigKey.EFF_POWER_PER_TICK);
     }
 
-    public static EnumConfigKey getBmPowerPerTick(int level) {
-
-        level = MathHelper.clamp(level, 1, 3);
-        return getEntryFromLevel(level, EnumConfigKey.BM_POWER_PER_TICK);
-    }
-
     /**
      * Param
      */
@@ -106,17 +100,5 @@ public class ConfigKeyHelper {
 
         level = MathHelper.clamp(level, 1, 3);
         return getEntryFromLevel(level, EnumConfigKey.EFF_PARAM);
-    }
-
-    public static EnumConfigKey getBmParam1(int level) {
-
-        level = MathHelper.clamp(level, 1, 3);
-        return getEntryFromLevel(level, EnumConfigKey.BM_PARAM_1);
-    }
-
-    public static EnumConfigKey getBmParam2(int level) {
-
-        level = MathHelper.clamp(level, 1, 3);
-        return getEntryFromLevel(level, EnumConfigKey.BM_PARAM_2);
     }
 }

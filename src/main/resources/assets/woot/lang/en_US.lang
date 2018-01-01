@@ -81,9 +81,6 @@ tile.woot.upgrade.decapitate_iii.name=Decapitate III Upgrade
 tile.woot.upgradeb.efficiency_i.name=Efficiency I Upgrade
 tile.woot.upgradeb.efficiency_ii.name=Efficiency II Upgrade
 tile.woot.upgradeb.efficiency_iii.name=Efficiency III Upgrade
-tile.woot.upgradeb.bloodmagic_i.name=Blood Magic I Upgrade
-tile.woot.upgradeb.bloodmagic_ii.name=Blood Magic II Upgrade
-tile.woot.upgradeb.bloodmagic_iii.name=Blood Magic III Upgrade
 
 ###########################################################
 # Tabs

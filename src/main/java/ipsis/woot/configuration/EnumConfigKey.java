@@ -20,6 +20,12 @@ public enum EnumConfigKey {
             Boolean.class,
             false,
             false),
+    TARTARUS_ID(
+            "Dimension id of Tartarus",
+            "tartarusId",
+            Integer.class,
+            -1,
+            false),
     SAMPLE_SIZE(
             CATEGORY_GENERAL,
             "Number of mobs to kill to learn from - higher is more accurate",

@@ -86,9 +86,8 @@ public class Woot {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
-        proxy.preInit();
         Files.init(event);
-        ConfigHandler.init(Files.configFile);
+        proxy.preInit();
     }
 
     @Mod.EventHandler

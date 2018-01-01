@@ -2,7 +2,9 @@ package ipsis.woot.dimension;
 
 import ipsis.Woot;
 import ipsis.woot.command.ITextStatus;
+import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.dimension.world.WootWorldProvider;
+import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.DebugSetup;
@@ -19,7 +21,7 @@ import java.util.List;
 
 public class WootDimensionManager implements ITextStatus {
 
-    private static int dimensionId;
+    private static int dimensionId = -1;
     private static DimensionType dimensionType;
     private boolean touched = false;
     public static final int CHUNK_X = 0;
@@ -27,7 +29,11 @@ public class WootDimensionManager implements ITextStatus {
 
     public void init() {
 
-        dimensionId = DimensionManager.getNextFreeDimId();
+        dimensionId = Woot.wootConfiguration.getInteger(EnumConfigKey.TARTARUS_ID);
+        if (dimensionId == -1) {
+            dimensionId = DimensionManager.getNextFreeDimId();
+            ConfigHandler.saveDimensionId(dimensionId);
+        }
         dimensionType = DimensionType.register("tartarus" , "_lootlearn", dimensionId, WootWorldProvider.class, false);
         DimensionManager.registerDimension(dimensionId, dimensionType);
     }

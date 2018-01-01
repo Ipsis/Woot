@@ -1,13 +1,14 @@
 package ipsis.woot.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.Woot;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.NetworkTools;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -38,8 +39,18 @@ public class PacketFarmInfo implements IMessage {
             farmUIInfo.drops.add(NetworkTools.readItemStack(buf));
 
         int itemIngredients = buf.readInt();
-        for (int i = 0; i < itemIngredients; i++)
-            farmUIInfo.ingredientsItems.add(NetworkTools.readItemStack(buf));
+        for (int i = 0; i < itemIngredients; i++) {
+            ItemStack itemStack = NetworkTools.readItemStack(buf);
+            if (!itemStack.isEmpty())
+                farmUIInfo.ingredientsItems.add(itemStack);
+        }
+
+        int fluidIngredients = buf.readInt();
+        for (int i = 0; i < fluidIngredients; i++) {
+            FluidStack fluidStack = ipsis.woot.util.NetworkTools.readFluidStack(buf);
+            if (fluidStack != null)
+                farmUIInfo.ingredientsFluids.add(fluidStack);
+        }
     }
 
     @Override
@@ -62,6 +73,10 @@ public class PacketFarmInfo implements IMessage {
         buf.writeInt(farmUIInfo.ingredientsItems.size());
         for (ItemStack itemStack : farmUIInfo.ingredientsItems)
             NetworkTools.writeItemStack(buf, itemStack);
+
+        buf.writeInt(farmUIInfo.ingredientsFluids.size());
+        for (FluidStack fluidStack : farmUIInfo.ingredientsFluids)
+            ipsis.woot.util.NetworkTools.writeFluidStack(buf, fluidStack);
     }
 
     public PacketFarmInfo() {

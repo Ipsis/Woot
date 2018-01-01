@@ -13,7 +13,7 @@ public class ConfigurationLoader {
 
             wootConfiguration.setBoolean(
                     key,
-                    config.get(Configuration.CATEGORY_GENERAL,
+                    config.get(key.getCategory(),
                             key.getText(),
                             key.getDefaultBoolean(),
                             key.getComment()).getBoolean(key.getDefaultBoolean()));
@@ -24,7 +24,7 @@ public class ConfigurationLoader {
 
             wootConfiguration.setInteger(
                     key,
-                    config.get(Configuration.CATEGORY_GENERAL,
+                    config.get(key.getCategory(),
                             key.getText(),
                             key.getDefaultInteger(),
                             key.getComment()).getInt(key.getDefaultInteger()));

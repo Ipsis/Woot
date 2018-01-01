@@ -128,12 +128,9 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                     displayFluidStack.appendTooltip(fluidStack.amount + "mb per mob");
                 }
 
-                // Padding out the drops for testing
-                for (int i = 0; i < 5; i++) {
-                    for (ItemStack itemStack : info.drops) {
-                        DisplayItemStack displayItemStack = dropsElement.addItemStack(itemStack);
-                        displayItemStack.appendTooltip(itemStack.getCount() + "%");
-                    }
+                for (ItemStack itemStack : info.drops) {
+                    DisplayItemStack displayItemStack = dropsElement.addItemStack(itemStack);
+                    displayItemStack.appendTooltip(itemStack.getCount() + "%");
                 }
 
                 progressElementPower.setMax(info.powerCapacity);

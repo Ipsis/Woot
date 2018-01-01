@@ -3,6 +3,7 @@ package ipsis.woot.power.calculation;
 import ipsis.Woot;
 import ipsis.woot.farmstructure.IFarmSetup;
 import ipsis.woot.util.ConfigKeyHelper;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
 
 public class UpgradePowerCalcDecapitate extends AbstractUpgradePowerCalc {
@@ -13,9 +14,11 @@ public class UpgradePowerCalcDecapitate extends AbstractUpgradePowerCalc {
         if (!farmSetup.hasUpgrade(EnumFarmUpgrade.DECAPITATE))
             return;
 
-        powerValues.upgradeCost +=
-                spawnTicks * Woot.wootConfiguration.getInteger(
-                                farmSetup.getWootMobName(),
-                                ConfigKeyHelper.getDecapPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
+        int cost = spawnTicks * Woot.wootConfiguration.getInteger(
+                        farmSetup.getWootMobName(),
+                        ConfigKeyHelper.getDecapPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
+        powerValues.upgradeCost += cost;
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateDecapitate", "cost:" + cost);
     }
 }

@@ -42,6 +42,10 @@ public class Calculator implements IPowerCalculator {
         int spawnUnits = Woot.wootConfiguration.getSpawnCost(world, wootMobName);
         int powerPerSpawnUnit = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.POWER_PER_UNIT);
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "####");
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
+                "tierPowerPerTick:" + tierPowerPerTick + " spawnUnits:" + spawnUnits +
+                      " powerPerSpawnUnit:" + powerPerSpawnUnit + " spawnTicks:" + spawnTicks);
 
         /**
          * Power calculation has multiple components
@@ -68,9 +72,6 @@ public class Calculator implements IPowerCalculator {
         int totalPower = powerValues.factoryCost +
                 powerValues.upgradeCost;
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
-                    "tierPowerPerTick:" + tierPowerPerTick + " spawnUnits:" + spawnUnits +
-                            " powerPerSpawnUnit:" + powerPerSpawnUnit + " spawnTicks:" + spawnTicks);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "PowerValues " + powerValues);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
@@ -114,7 +115,7 @@ public class Calculator implements IPowerCalculator {
         @Override
         public String toString() {
 
-            return "factoryCost:" + factoryCost + " mobCost:" + mobCost + " upgradeCost:" + upgradeCost + " efficiency:" + efficiency + " rate:" + rate;
+            return "factoryCost:" + factoryCost + " (base)mobCost:" + mobCost + " (with mobs)upgradeCost:" + upgradeCost + " efficiency:" + efficiency + " rate:" + rate;
         }
     }
 

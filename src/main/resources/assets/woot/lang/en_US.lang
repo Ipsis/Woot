@@ -128,11 +128,19 @@ chat.woot.endershard.success=Captured mob
 chat.woot.anvil.nomagma=Anvil must be sitting on a Magma Block
 chat.woot.anvil.emptyshard=Unprogrammed Ender Shard
 chat.woot.anvil.invalid=No matching recipe
+chat.woot.validate.power=Found Power Cell at %d,%d,%d
 chat.woot.validate.nopower=No Power Cell
+chat.woot.validate.importer=Found Importer at %d,%d,%d
 chat.woot.validate.noimporter=No Importer
+chat.woot.validate.exporter=Found Exporter at %d,%d,%d
 chat.woot.validate.noexporter=No Exporter
-chat.woot.validate.noblock=Block at %d,%d,%d should be a %s
-chat.woot.validate.validating=Validating factory for
+chat.woot.validate.missing=Expected %s at %d,%d,%d found nothing
+chat.woot.validate.incorrect=Expected %s at %d,%d,%d found %s
+chat.woot.validate.validating=Validating factory for %s
+chat.woot.validate.nocontroller=Expected controller at %d,%d,%d
+chat.woot.validate.invalidmob=Controller contains a blacklisted or unknown mob
+chat.woot.validate.invalidtier=Controller needs higher tier of factory
+chat.woot.validate.ok=Found valid %s factory
 
 ###########################################################
 # Commands

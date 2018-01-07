@@ -27,6 +27,9 @@ import java.util.Set;
 
 public class FarmScanner implements IFarmScanner {
 
+    /**
+     * Scan the farm and return a list of blocks that dont match this tier of the farm
+     */
     private List<BadFarmBlock> scanFarmTier(World world, BlockPos origin, EnumFacing facing, EnumMobFactoryTier tier) {
 
         List<BadFarmBlock> badFarmBlocks = new ArrayList<>();
@@ -62,6 +65,10 @@ public class FarmScanner implements IFarmScanner {
         return badFarmBlocks;
     }
 
+    /**
+     * Scan the farm tier and stopping at the first incorrect block
+     * Updates ScannedFarmBase with the blocks and tier if everything is correct
+     */
     private void scanFarmBaseTier(World world, BlockPos origin, EnumFacing facing, ScannedFarmBase base, EnumMobFactoryTier tier) {
 
         base.tier = null;

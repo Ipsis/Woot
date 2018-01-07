@@ -33,7 +33,7 @@ public class FarmScanner implements IFarmScanner {
 
         Set<BlockPos> blockPosList = new HashSet<>();
         BlockPos patternOrigin = origin;
-        for (MobFactoryModule module : tier.getStructureModules()) {
+        for (MobFactoryModule module : Woot.factoryPatternRepository.getAllModules(tier)) {
 
             BlockPos p = BlockPosHelper.rotateFromSouth(module.getOffset(), facing.getOpposite());
             p = patternOrigin.add(p);
@@ -69,7 +69,7 @@ public class FarmScanner implements IFarmScanner {
 
         Set<BlockPos> blockPosList = new HashSet<>();
         BlockPos patternOrigin = origin;
-        for (MobFactoryModule module : tier.getStructureModules()) {
+        for (MobFactoryModule module : Woot.factoryPatternRepository.getAllModules(tier)) {
 
             BlockPos p = BlockPosHelper.rotateFromSouth(module.getOffset(), facing.getOpposite());
             p = patternOrigin.add(p);

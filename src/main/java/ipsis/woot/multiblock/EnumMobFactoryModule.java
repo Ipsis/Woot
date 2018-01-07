@@ -70,4 +70,14 @@ public enum EnumMobFactoryModule implements IStringSerializable {
 
         return EnumMobFactoryModule.BLOCK_1;
     }
+
+    public static boolean isValidChar(char character) {
+
+        for (EnumMobFactoryModule m : values()) {
+            if (m.character == character)
+                return true;
+        }
+
+        return false;
+    }
 }

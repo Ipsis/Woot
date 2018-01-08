@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
 import java.util.Set;
 
 public class FarmScanner2 {
@@ -200,6 +199,21 @@ public class FarmScanner2 {
         return farm;
     }
 
+    public ScannedFarm2 scanFarm(World world, BlockPos origin, EnumFacing facing) {
+
+        ScannedFarm2 farm = new ScannedFarm2();
+        for (int i = EnumMobFactoryTier.values().length - 1; i >= 0; i--) {
+            ScannedFarm2 farm2 = scanFarm(world, origin, facing, EnumMobFactoryTier.values()[i]);
+            if (farm.isValidStructure() && farm.isValidCofiguration(world)) {
+                farm = farm2;
+                break;
+            }
+        }
+
+        return farm;
+    }
+
+
     public enum BadBlockReason {
         MISSING_BLOCK,          // No block at that position
         WRONG_BLOCK,            // Not a structure block
@@ -233,26 +247,6 @@ public class FarmScanner2 {
         public int getCorrectBlockMeta() { return correctBlockMeta; }
         public Block getInvalidBlock() { return invalidBlock; }
         public int getInvalidBlockMeta() { return invalidBlockMeta; }
-    }
-
-    public class ScannedFarm2 {
-
-        Set<BadFarmBlockInfo> badBlocks = new HashSet<>();
-
-        public ScannedFarmBase base = new ScannedFarmBase();
-        public ScannedFarmController controller = new ScannedFarmController();
-        public ScannedFarmRemote remote = new ScannedFarmRemote();
-        public ScannedFarmUpgrade upgrades = new ScannedFarmUpgrade();
-
-        public boolean isValidStructure() {
-            return base.tier != null && controller.isValid();
-        }
-
-        public Set<BadFarmBlockInfo> getBadBlocks() { return badBlocks; }
-
-        public boolean isValidCofiguration(World world) {
-            return isValidStructure() && controller.isTierValid(world, base.tier);
-        }
     }
 
 }

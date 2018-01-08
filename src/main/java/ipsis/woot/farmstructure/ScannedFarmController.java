@@ -54,8 +54,7 @@ public class ScannedFarmController {
 
     public boolean canCapture() {
 
-        return wootMob != null &&
-                Woot.policyRepository.canCapture(wootMob.getWootMobName());
+        return wootMob != null && Woot.policyRepository.canCapture(wootMob.getWootMobName());
     }
 
     public boolean isTierValid(World world, EnumMobFactoryTier tier) {

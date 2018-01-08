@@ -177,7 +177,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         EnumFacing facing = world.getBlockState(getPos()).getValue(BlockMobFactoryHeart.FACING);
         FarmScanner2 farmScanner = new FarmScanner2();
-        FarmScanner2.ScannedFarm2 scannedFarm = farmScanner.scanFarm(world, getPos(), facing, tier);
+        ScannedFarm2 scannedFarm = farmScanner.scanFarm(world, getPos(), facing, tier);
 
         if (!scannedFarm.remote.hasPower())
             player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.nopower")), false);

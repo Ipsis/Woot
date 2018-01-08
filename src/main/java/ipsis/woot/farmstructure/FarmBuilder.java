@@ -28,13 +28,13 @@ public class FarmBuilder implements IFarmStructure {
     private BlockPos origin;
 
     private boolean changed = false;
-    private ScannedFarm currFarm;
+    private ScannedFarm2 currFarm;
 
     public FarmBuilder() {
 
     }
 
-    private void disconnectOldFarm(@Nullable ScannedFarm oldFarm, ScannedFarm newFarm) {
+    private void disconnectOldFarm(@Nullable ScannedFarm2 oldFarm, ScannedFarm2 newFarm) {
 
         if (oldFarm == null)
             return;
@@ -65,7 +65,7 @@ public class FarmBuilder implements IFarmStructure {
         }
     }
 
-    private void connectNewFarm(ScannedFarm oldFarm, ScannedFarm newFarm) {
+    private void connectNewFarm(ScannedFarm2 oldFarm, ScannedFarm2 newFarm) {
 
         IFarmBlockMaster master = (IFarmBlockMaster)world.getTileEntity(origin);
         Set<BlockPos> oldBlocks = new HashSet<>();
@@ -95,6 +95,20 @@ public class FarmBuilder implements IFarmStructure {
                 }
             }
         }
+    }
+
+    private @Nullable ScannedFarm2 scanFarm() {
+
+        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING);
+        FarmScanner2 farmScanner = new FarmScanner2();
+        ScannedFarm2 scannedFarm = farmScanner.scanFarm(world, origin, facing);
+
+        if (!scannedFarm.isValidStructure() || !scannedFarm.isValidCofiguration(world)) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid farm", "");
+            return null;
+        }
+
+        return scannedFarm;
     }
 
     private @Nullable ScannedFarm scanFullFarm() {
@@ -137,7 +151,7 @@ public class FarmBuilder implements IFarmStructure {
 
     private void handleDirtyFarm() {
 
-        ScannedFarm scannedFarm = scanFullFarm();
+        ScannedFarm2 scannedFarm = scanFarm();
 
         if (currFarm == null && scannedFarm == null) {
             // NA
@@ -154,7 +168,7 @@ public class FarmBuilder implements IFarmStructure {
             currFarm = null;
         } else if (currFarm != null && scannedFarm != null) {
 
-            if (!ScannedFarm.areFarmsEqual(currFarm, scannedFarm)) {
+            if (!ScannedFarm2.areFarmsEqual(currFarm, scannedFarm)) {
                 Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "handleDirtyFarm: changed farm", "");
                 disconnectOldFarm(currFarm, scannedFarm);
                 connectNewFarm(currFarm, scannedFarm);

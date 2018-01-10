@@ -24,6 +24,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidStack;
@@ -190,6 +191,13 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.noimporter")), false);
         if (!badFarmInfo.hasExporter)
             player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.noexporter")), false);
+    }
+
+    public void showGui(EntityPlayer player, World world, int x, int y, int z) {
+
+        // Don't open the gui when the factory isn't formed as it is not valid
+        if (farmStructure != null && farmStructure.isFormed())
+            player.openGui(Woot.instance, 0, world, x, y, z);
     }
 
     /**

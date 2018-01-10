@@ -52,9 +52,11 @@ public class PacketGetFarmInfo implements IMessage {
             if (!(te instanceof TileEntityMobFactoryHeart))
                 return;
 
+            TileEntityMobFactoryHeart heart = (TileEntityMobFactoryHeart)te;
             FarmUIInfo info = new FarmUIInfo();
-            ((TileEntityMobFactoryHeart) te).getUIInfo(info);
-            PacketHandler.INSTANCE.sendTo(new PacketFarmInfo(info), ctx.getServerHandler().player);
+            heart.getUIInfo(info);
+            if (info.isValid)
+                PacketHandler.INSTANCE.sendTo(new PacketFarmInfo(info), ctx.getServerHandler().player);
         }
     }
 }

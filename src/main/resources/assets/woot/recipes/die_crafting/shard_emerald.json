@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "woot:shard",
+    "data": 1,
+    "count": 3
+  },
+  "pattern": [
+    "HD ",
+    " G ",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 3
+    },
+    "G": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

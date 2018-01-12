@@ -1,6 +1,8 @@
 package ipsis.woot.crafting;
 
 import com.google.gson.JsonObject;
+import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
 import net.minecraftforge.common.crafting.IConditionFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 
@@ -11,6 +13,6 @@ public class VanillaDieCraftingConditionFactory implements IConditionFactory {
     @Override
     public BooleanSupplier parse(JsonContext context, JsonObject json) {
 
-        return () -> false;
+        return () -> Woot.wootConfiguration.getBoolean(EnumConfigKey.ALLOW_ANVIL_VANILLA_CRAFTING);
     }
 }

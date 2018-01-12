@@ -1,5 +1,8 @@
 {
   "ingredients": {
     "enchanted_book": "ipsis.woot.crafting.ingredient.EnchantedBookIngredientFactory"
+  },
+  "conditions": {
+    "vanilla_die_crafting": "ipsis.woot.crafting.VanillaDieCraftingConditionFactory"
   }
 }

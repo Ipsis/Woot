@@ -1,0 +1,36 @@
+{
+  "conditions": [
+    {
+      "type": "woot:vanilla_die_crafting"
+    }
+  ],
+  "result": {
+    "item": "woot:factorycore",
+    "data": 4,
+    "count": 1
+  },
+  "pattern": [
+    "HD ",
+    " P ",
+    "R D"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 2
+    },
+    "P": {
+      "item": "woot:stygianironplate"
+    },
+    "R": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    }
+  }
+}

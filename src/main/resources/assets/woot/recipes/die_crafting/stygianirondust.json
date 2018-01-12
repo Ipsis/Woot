@@ -1,0 +1,35 @@
+{
+  "conditions": [
+    {
+      "type": "woot:vanilla_die_crafting"
+    }
+  ],
+  "result": {
+    "item": "woot:stygianirondust",
+    "count": 3
+  },
+  "pattern": [
+    "HD ",
+    "INS",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 0
+    },
+    "I": {
+      "item": "minecraft:iron_ore"
+    },
+    "N": {
+      "item": "minecraft:netherrack"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    }
+  }
+}

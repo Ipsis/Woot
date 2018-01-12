@@ -1,0 +1,36 @@
+{
+  "conditions": [
+    {
+      "type": "woot:vanilla_die_crafting"
+    }
+  ],
+  "result": {
+    "item": "woot:factorycore",
+    "data": 2,
+    "count": 1
+  },
+  "pattern": [
+    "HD ",
+    " P ",
+    "R I"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 2
+    },
+    "P": {
+      "item": "woot:stygianironplate"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "conditions": [
+    {
+      "type": "woot:vanilla_die_crafting"
+    }
+  ],
+  "result": {
+    "item": "woot:factorycore",
+    "data": 3,
+    "count": 1
+  },
+  "pattern": [
+    "HD ",
+    " P ",
+    "L G"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 2
+    },
+    "P": {
+      "item": "woot:stygianironplate"
+    },
+    "L": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    }
+  }
+}

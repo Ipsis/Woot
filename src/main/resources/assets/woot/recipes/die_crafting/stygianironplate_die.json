@@ -1,0 +1,28 @@
+{
+  "conditions": [
+    {
+      "type": "woot:vanilla_die_crafting"
+    }
+  ],
+  "result": {
+    "item": "woot:stygianironplate"
+  },
+  "pattern": [
+    "HD ",
+    " I ",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 1
+    },
+    "I": {
+      "item": "woot:stygianironingot"
+    }
+  }
+}

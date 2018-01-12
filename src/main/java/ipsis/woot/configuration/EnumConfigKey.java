@@ -27,6 +27,14 @@ public enum EnumConfigKey {
             Integer.class,
             418,
             false),
+    ALLOW_ANVIL_VANILLA_CRAFTING(
+            CATEGORY_GENERAL,
+            "Add vanilla recipes to duplicate most anvil ones",
+            "allowAnvilVanillaCrafting",
+            Boolean.class,
+            false,
+            false
+    ),
     SAMPLE_SIZE(
             CATEGORY_GENERAL,
             "Number of mobs to kill to learn from - higher is more accurate",

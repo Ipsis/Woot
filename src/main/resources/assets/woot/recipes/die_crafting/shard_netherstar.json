@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "woot:vanilla_die_crafting"
+    }
+  ],
+  "result": {
+    "item": "woot:shard",
+    "data": 3,
+    "count": 9
+  },
+  "pattern": [
+    "HD ",
+    " G ",
+    "   "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": {
+      "item": "woot:yahhammer"
+    },
+    "D": {
+      "item": "woot:die",
+      "data": 3
+    },
+    "G": {
+      "item": "minecraft:nether_star"
+    }
+  }
+}

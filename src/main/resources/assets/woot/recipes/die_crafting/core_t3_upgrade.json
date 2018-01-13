@@ -12,7 +12,7 @@
   "pattern": [
     "HD ",
     " P ",
-    "R D"
+    "R I"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
@@ -29,7 +29,7 @@
     "R": {
       "item": "minecraft:prismarine_shard"
     },
-    "D": {
+    "I": {
       "item": "minecraft:diamond_block"
     }
   }

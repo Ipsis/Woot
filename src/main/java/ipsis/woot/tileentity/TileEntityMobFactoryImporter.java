@@ -1,8 +1,6 @@
 package ipsis.woot.tileentity;
 
-import ipsis.woot.farmblocks.IFarmBlockConnection;
-import ipsis.woot.farmblocks.IFarmBlockMaster;
-import ipsis.woot.farmblocks.SimpleMasterLocator;
+import ipsis.woot.farmblocks.*;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,27 +9,35 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityMobFactoryImporter extends TileEntity implements IFarmBlockConnection {
+public class TileEntityMobFactoryImporter extends TileEntity implements IFactoryGlueProvider {
 
-    private IFarmBlockMaster farmBlockMaster = null;
+    private IFactoryGlue iFactoryGlue;
 
-    public boolean hasMaster() { return farmBlockMaster != null; }
+    public TileEntityMobFactoryImporter() {
 
-    public void blockAdded() {
+        iFactoryGlue = new FactoryGlue(IFactoryGlue.FactoryBlockType.IMPORTER, new SimpleMasterLocator(), this, this);
+    }
 
-        IFarmBlockMaster tmpMaster = new SimpleMasterLocator().findMaster(getWorld(), getPos(), this);
-        if (tmpMaster != null)
-            tmpMaster.interruptFarmStructure();
+    public void onBlockAdded() {
+
+        iFactoryGlue.onHello(getWorld(), getPos());
     }
 
     @Override
     public void invalidate() {
 
-        // Master will be set by the farm when it finds the block
-        if (hasMaster())
-            farmBlockMaster.interruptFarmStructure();
+        super.invalidate();
+        iFactoryGlue.onGoodbye();
+    }
+
+    @Override
+    public void onChunkUnload() {
+
+        super.onChunkUnload();
+        iFactoryGlue.onGoodbye();
     }
 
     /**
@@ -50,7 +56,7 @@ public class TileEntityMobFactoryImporter extends TileEntity implements IFarmBlo
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", farmBlockMaster != null);
+        nbtTagCompound.setBoolean("formed", iFactoryGlue.hasMaster());
         return nbtTagCompound;
     }
 
@@ -80,32 +86,10 @@ public class TileEntityMobFactoryImporter extends TileEntity implements IFarmBlo
         WorldHelper.updateClient(getWorld(), getPos());
     }
 
-
-    /**
-     * IFarmBlockConnection
-     */
-    public void clearMaster() {
-
-        if (farmBlockMaster != null) {
-            farmBlockMaster = null;
-
-            WorldHelper.updateClient(getWorld(), getPos());
-            WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockImporter);
-        }
-    }
-
-    public void setMaster(IFarmBlockMaster master) {
-
-        if (farmBlockMaster != master) {
-            farmBlockMaster = master;
-
-            WorldHelper.updateClient(getWorld(), getPos());
-            WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockImporter);
-        }
-    }
-
-    public BlockPos getStructurePos() {
-        return getPos();
+    @Nonnull
+    @Override
+    public IFactoryGlue getIFactoryGlue() {
+        return iFactoryGlue;
     }
 
 }

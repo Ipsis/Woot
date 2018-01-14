@@ -1,8 +1,10 @@
 package ipsis.woot.block;
 
+import ipsis.Woot;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.multiblock.EnumMobFactoryModule;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -52,9 +54,11 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.MULTIBLOCK, "BlockMobFactoryStructure:", "onBlockAdded");
+
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryStructure)
-            ((TileEntityMobFactoryStructure) te).blockAdded();
+            ((TileEntityMobFactoryStructure) te).onBlockAdded();
     }
 
     @Override

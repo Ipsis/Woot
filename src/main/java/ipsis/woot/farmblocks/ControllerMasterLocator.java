@@ -13,7 +13,7 @@ public class ControllerMasterLocator implements IFarmBlockMasterLocator {
 
     @Nullable
     @Override
-    public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
+    public IFarmBlockMaster findMaster(World world, BlockPos origin, IFactoryGlueProvider iFactoryGlueProvider) {
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "findMaster(Controller)", origin);
 
@@ -21,10 +21,10 @@ public class ControllerMasterLocator implements IFarmBlockMasterLocator {
 
         BlockPos blockPos = origin.down(1);
         TileEntity te = world.getTileEntity(blockPos);
-        if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection) {
+        if (te instanceof IFactoryGlueProvider && ((IFactoryGlueProvider) te).getIFactoryGlue().getType() == IFactoryGlue.FactoryBlockType.STRUCTURE) {
 
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "IFarmBlockStructre(Controller)", blockPos);
-            return structureMasterLocator.findMaster(world, blockPos, (IFarmBlockConnection) te);
+            return structureMasterLocator.findMaster(world, blockPos, (IFactoryGlueProvider) te);
         }
 
         return null;

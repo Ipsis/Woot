@@ -70,7 +70,7 @@ public class BlockMobFactoryCell extends BlockWoot implements ITileEntityProvide
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryCell)
-            ((TileEntityMobFactoryCell) te).blockAdded();
+            ((TileEntityMobFactoryCell) te).onBlockAdded();
     }
 
     @Override

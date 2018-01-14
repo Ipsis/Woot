@@ -2,14 +2,14 @@ package ipsis.woot.farmstructure;
 
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryHeart;
+import ipsis.woot.farmblocks.IFactoryGlue;
+import ipsis.woot.farmblocks.IFactoryGlueProvider;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.farming.ITickTracker;
-import ipsis.woot.farmblocks.IFarmBlockConnection;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
-import ipsis.woot.farmblocks.IFarmBlockUpgrade;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -57,9 +57,9 @@ public class FarmBuilder implements IFarmStructure {
         for (BlockPos pos : oldBlocks) {
             if (world.isBlockLoaded(pos)) {
                 TileEntity te = world.getTileEntity(pos);
-                if (te instanceof IFarmBlockConnection) {
+                if (te instanceof IFactoryGlueProvider) {
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "clearMaster", pos);
-                    ((IFarmBlockConnection) te).clearMaster();
+                    ((IFactoryGlueProvider) te).getIFactoryGlue().clearMaster();
                 }
             }
         }
@@ -87,11 +87,11 @@ public class FarmBuilder implements IFarmStructure {
         for (BlockPos pos : newBlocks) {
             if (world.isBlockLoaded(pos)) {
                 TileEntity te = world.getTileEntity(pos);
-                if (te instanceof IFarmBlockUpgrade)
+                if (te instanceof  IFactoryGlueProvider && ((IFactoryGlueProvider) te).getIFactoryGlue().getType() == IFactoryGlue.FactoryBlockType.UPGRADE)
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "connectNewFarm: connecting upgrade", "");
-                if (te instanceof IFarmBlockConnection) {
+                if (te instanceof IFactoryGlueProvider) {
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "setMaster", pos);
-                    ((IFarmBlockConnection) te).setMaster(master);
+                    ((IFactoryGlueProvider) te).getIFactoryGlue().setMaster(master);
                 }
             }
         }
@@ -276,9 +276,9 @@ public class FarmBuilder implements IFarmStructure {
         for (BlockPos pos : oldBlocks) {
             if (world.isBlockLoaded(pos)) {
                 TileEntity te = world.getTileEntity(pos);
-                if (te instanceof IFarmBlockConnection) {
+                if (te instanceof IFactoryGlueProvider) {
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "clearMaster", pos);
-                    ((IFarmBlockConnection) te).clearMaster();
+                    ((IFactoryGlueProvider) te).getIFactoryGlue().clearMaster();
                 }
             }
         }

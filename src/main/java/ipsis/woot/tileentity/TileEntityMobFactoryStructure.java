@@ -1,30 +1,28 @@
 package ipsis.woot.tileentity;
 
+import ipsis.Woot;
 import ipsis.woot.farmblocks.*;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBlockStructure, IFactoryGlueProvider {
 
-public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBlockConnection, IFarmBlockStructure {
+    private IFactoryGlue iFactoryGlue;
 
-    private IFarmBlockMaster farmBlockMaster = null;
+    public TileEntityMobFactoryStructure() {
 
-    @Override
-    public boolean hasMaster() {
-
-        return farmBlockMaster != null;
+        iFactoryGlue = new FactoryGlue(IFactoryGlue.FactoryBlockType.STRUCTURE, new StructureMasterLocator(), this, this);
     }
 
-    public void blockAdded() {
+    public void onBlockAdded() {
 
-        IFarmBlockMaster tmpMaster = new StructureMasterLocator().findMaster(getWorld(), getPos(), this);
-        if (tmpMaster != null)
-            tmpMaster.interruptFarmStructure();
+        iFactoryGlue.onHello(getWorld(), getPos());
     }
 
     @Override
@@ -42,9 +40,15 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
     @Override
     public void invalidate() {
 
-        // Master will be set by the farm when it finds the block
-        if (hasMaster())
-            farmBlockMaster.interruptFarmStructure();
+        super.invalidate();
+        iFactoryGlue.onGoodbye();
+    }
+
+    @Override
+    public void onChunkUnload() {
+
+        super.onChunkUnload();
+        iFactoryGlue.onGoodbye();
     }
 
     private boolean isClientFormed;
@@ -59,13 +63,14 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", farmBlockMaster != null);
+        nbtTagCompound.setBoolean("formed", iFactoryGlue.hasMaster());
         return nbtTagCompound;
     }
 
     @Override
     public void handleUpdateTag(NBTTagCompound tag) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "TileEntityMobFactoryStructure:", "handleUpdateTag");
         super.handleUpdateTag(tag);
         isClientFormed = tag.getBoolean("formed");
     }
@@ -89,31 +94,9 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
         WorldHelper.updateClient(getWorld(), getPos());
     }
 
-    /**
-     * IFarmBlockConnection
-     */
-    public void clearMaster() {
-
-        if (farmBlockMaster != null) {
-            farmBlockMaster = null;
-            WorldHelper.updateClient(getWorld(), getPos());
-        }
+    @Nonnull
+    @Override
+    public IFactoryGlue getIFactoryGlue() {
+        return iFactoryGlue;
     }
-
-    public void setMaster(IFarmBlockMaster master) {
-
-        if (farmBlockMaster != master) {
-            farmBlockMaster = master;
-            WorldHelper.updateClient(getWorld(), getPos());
-        }
-    }
-
-    public BlockPos getStructurePos() {
-        return getPos();
-    }
-
-    /**
-     * IFarmBlockStructure
-     */
-
 }

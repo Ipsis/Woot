@@ -45,6 +45,7 @@ public class DebugSetup {
         FARM_SCAN,
         FARM_CLIENT_SYNC,
         FARM_BUILD,
+        MULTIBLOCK,
         POWER_CALC,
         GEN_XP,
         GEN_ITEMS,

@@ -110,9 +110,6 @@ public class TileEntityLayout extends TileEntity {
         currLevel++;
         if (currLevel >= EnumMobFactoryTier.getTierHeight(tier))
             currLevel = -1; /* show all */
-
-        LogHelper.info("setNextLevel: curr:" + currLevel + " max:" + EnumMobFactoryTier.getTierHeight(tier));
-
     }
 
     @Override

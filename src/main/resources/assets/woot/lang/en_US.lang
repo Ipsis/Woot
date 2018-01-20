@@ -107,6 +107,9 @@ info.woot.heart.recipe=Spawning %s * %d
 info.woot.heart.cost=Power %dRF @ %dRF/tick for %d ticks
 info.woot.heart.ingredients=Ingredients Per Mob: %d * %s
 
+info.woot.guide.rclick=Right-click to change tiers
+info.woot.guide.srclick=Sneak Right-click to change levels
+
 ###########################################################
 # Enchantments
 ###########################################################

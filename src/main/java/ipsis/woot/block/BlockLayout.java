@@ -5,6 +5,7 @@ import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.reference.Lang;
 import ipsis.woot.tileentity.TileEntityLayout;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +22,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLayout extends BlockWoot implements ITileEntityProvider {
+import java.util.List;
+
+public class BlockLayout extends BlockWoot implements ITileEntityProvider, ITooltipInfo {
 
     public static final String BASENAME = "layout";
 
@@ -88,5 +91,12 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
 
         /* This stops the TESR rendering really dark! */
         return false;
+    }
+
+    @Override
+    public void getTooltip(List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {
+
+        toolTip.add(StringHelper.localize("info.woot.guide.rclick"));
+        toolTip.add(StringHelper.localize("info.woot.guide.srclick"));
     }
 }

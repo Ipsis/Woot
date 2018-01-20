@@ -61,6 +61,7 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
     @Override
     public NBTTagCompound getUpdateTag() {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "TileEntityMobFactoryStructure:", "getUpdateTag");
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
         nbtTagCompound.setBoolean("formed", iFactoryGlue.hasMaster());
@@ -70,9 +71,9 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
     @Override
     public void handleUpdateTag(NBTTagCompound tag) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "TileEntityMobFactoryStructure:", "handleUpdateTag");
         super.handleUpdateTag(tag);
         isClientFormed = tag.getBoolean("formed");
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_CLIENT_SYNC, "TileEntityMobFactoryStructure:", "handleUpdateTag formed:" + isClientFormed);
     }
 
     /**

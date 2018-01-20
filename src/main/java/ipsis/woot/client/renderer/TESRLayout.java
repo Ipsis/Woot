@@ -49,9 +49,15 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GlStateManager.color(1F, 1F, 1F, 0.9500F);
 
+                boolean showAll = te.getCurrLevel() == -1;
+                int validY = showAll ? 0 : te.getPos().getY() + 1 + te.getCurrLevel();
+
                 for (ILayoutBlockInfo pos : te.getLayoutBlockInfoList()) {
 
                     if (getWorld().getBlockState(pos.getPos()).isOpaqueCube())
+                        continue;
+
+                    if (!showAll && pos.getPos().getY() != validY)
                         continue;
 
                     if (pos instanceof StructureLayoutBlockInfo) {

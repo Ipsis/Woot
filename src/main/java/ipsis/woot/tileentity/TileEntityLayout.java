@@ -3,6 +3,7 @@ package ipsis.woot.tileentity;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.multiblock.MobFactoryMultiblockLogic;
+import ipsis.woot.oss.LogHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -22,6 +23,7 @@ public class TileEntityLayout extends TileEntity {
     List<ILayoutBlockInfo> layoutBlockInfoList;
     EnumFacing facing;
     EnumMobFactoryTier tier;
+    int currLevel = -1;
 
     public TileEntityLayout() {
 
@@ -88,6 +90,7 @@ public class TileEntityLayout extends TileEntity {
     public void setNextTier() {
 
         this.tier = this.tier.getNext();
+        this.currLevel = -1; /* show all */
         markDirty();
         refreshLayout();
     }
@@ -97,12 +100,28 @@ public class TileEntityLayout extends TileEntity {
         return this.tier;
     }
 
+    public int getCurrLevel() {
+
+        return currLevel;
+    }
+
+    public void setNextLevel() {
+
+        currLevel++;
+        if (currLevel >= EnumMobFactoryTier.getTierHeight(tier))
+            currLevel = -1; /* show all */
+
+        LogHelper.info("setNextLevel: curr:" + currLevel + " max:" + EnumMobFactoryTier.getTierHeight(tier));
+
+    }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
 
         compound.setInteger("facing", facing.ordinal());
         compound.setInteger("tier", tier.ordinal());
+        compound.setInteger("level", currLevel);
         return compound;
     }
 
@@ -112,6 +131,7 @@ public class TileEntityLayout extends TileEntity {
 
         facing = EnumFacing.getFront(compound.getInteger("facing"));
         tier = EnumMobFactoryTier.getTier(compound.getInteger("tier"));
+        currLevel = compound.getInteger("level");
 
         refreshLayout();
     }

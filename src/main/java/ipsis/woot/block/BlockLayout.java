@@ -55,14 +55,22 @@ public class BlockLayout extends BlockWoot implements ITileEntityProvider {
     }
 
     @Override
-
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+
+        /**
+         * Activate with redstone in creative - builds the factory
+         * Activate step through different tiers
+         * Activate while sneaking change y-level all->1->2->....->all
+         */
 
         if (!worldIn.isRemote) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te != null && te instanceof TileEntityLayout) {
                 if (playerIn.isCreative() && !playerIn.getHeldItem(hand).isEmpty() && playerIn.getHeldItem(hand).getItem() == Items.REDSTONE) {
                     ((TileEntityLayout) te).buildFactory();
+                } else if (playerIn.isSneaking()) {
+                    ((TileEntityLayout) te).setNextLevel();
+                    worldIn.notifyBlockUpdate(pos, state, state, 4);
                 } else {
                     ((TileEntityLayout) te).setNextTier();
                     EnumMobFactoryTier tier = ((TileEntityLayout) te).getTier();

@@ -15,7 +15,8 @@ import java.util.List;
 
 public enum EnumMobFactoryTier {
 
-    TIER_ONE() {
+
+    TIER_ONE(3) {
         @Override
         void buildStructureMap() {
 
@@ -45,7 +46,7 @@ public enum EnumMobFactoryTier {
             parsePattern(structureModules, pattern, 1, 2, 2);
         }
     },
-    TIER_TWO() {
+    TIER_TWO(5) {
         @Override
         void buildStructureMap() {
 
@@ -99,7 +100,7 @@ public enum EnumMobFactoryTier {
             parsePattern(structureModules, pattern, 1, 3, 3);
         }
     },
-    TIER_THREE() {
+    TIER_THREE(6) {
         @Override
         void buildStructureMap() {
 
@@ -174,7 +175,7 @@ public enum EnumMobFactoryTier {
             parsePattern(structureModules, pattern, 1, 4, 4);
         }
     },
-    TIER_FOUR() {
+    TIER_FOUR(7) {
         @Override
         void buildStructureMap() {
             String pattern[][] = {
@@ -275,6 +276,11 @@ public enum EnumMobFactoryTier {
         }
     };
 
+    private int height;
+    EnumMobFactoryTier(int height) {
+        this.height = height;
+    }
+
     public String getTranslated(String format) {
 
         return String.format(StringHelper.localize(format),
@@ -366,6 +372,11 @@ public enum EnumMobFactoryTier {
             v = 0;
 
         return values()[v];
+    }
+
+    public static int getTierHeight(EnumMobFactoryTier tier) {
+
+        return tier.height;
     }
 
     public static boolean isLessThanOrEqual(EnumMobFactoryTier a, EnumMobFactoryTier b) {

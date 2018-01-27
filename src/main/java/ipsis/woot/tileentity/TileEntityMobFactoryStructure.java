@@ -1,9 +1,6 @@
 package ipsis.woot.tileentity;
 
-import ipsis.woot.farmblocks.IFarmBlockConnection;
-import ipsis.woot.farmblocks.IFarmBlockMaster;
-import ipsis.woot.farmblocks.IFarmBlockStructure;
-import ipsis.woot.farmblocks.StructureMasterLocator;
+import ipsis.woot.farmblocks.*;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -28,6 +25,18 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
         IFarmBlockMaster tmpMaster = new StructureMasterLocator().findMaster(getWorld(), getPos(), this);
         if (tmpMaster != null)
             tmpMaster.interruptFarmStructure();
+    }
+
+    @Override
+    public void validate() {
+
+        super.validate();
+        if (!getWorld().isRemote) {
+            // This MUST use the non-te version
+            IFarmBlockMaster tmpMaster = new StructureBlockMasterLocator().findMaster(getWorld(), getPos());
+            if (tmpMaster != null)
+                tmpMaster.interruptFarmStructure();
+        }
     }
 
     @Override

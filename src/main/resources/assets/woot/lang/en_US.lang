@@ -32,6 +32,8 @@ item.woot.xpshard.name=XP Shard
 
 item.woot.yahhammer.name=Ya Hammer
 
+item.woot.fakemanual.name=Readme
+
 ###########################################################
 # Blocks
 ###########################################################
@@ -92,6 +94,9 @@ itemGroup.woot=Woot
 ###########################################################
 info.woot.xpshard.0=Use to gain experience
 info.woot.xpshard.1=Use while sneaking to use the full stack
+
+info.woot.fakemanual.0=Install Guide-API for access to the manual
+info.woot.fakemanual.1=Item is called Woot Guide
 
 info.woot.endershard.0=Captures mobs
 info.woot.endershard.1=Hit mob with shard to program

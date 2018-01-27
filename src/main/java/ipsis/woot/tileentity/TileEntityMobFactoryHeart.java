@@ -21,16 +21,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
@@ -206,7 +203,8 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     @Override
     public void interruptFarmStructure() {
 
-        farmStructure.setStructureDirty();
+        if (farmStructure != null)
+            farmStructure.setStructureDirty();
     }
 
     @Override

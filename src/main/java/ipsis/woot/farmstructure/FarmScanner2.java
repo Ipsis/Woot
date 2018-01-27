@@ -204,7 +204,7 @@ public class FarmScanner2 {
         ScannedFarm2 farm = new ScannedFarm2();
         for (int i = EnumMobFactoryTier.values().length - 1; i >= 0; i--) {
             ScannedFarm2 farm2 = scanFarm(world, origin, facing, EnumMobFactoryTier.values()[i]);
-            if (farm.isValidStructure() && farm.isValidCofiguration(world)) {
+            if (farm2.isValidStructure() && farm2.isValidCofiguration(world)) {
                 farm = farm2;
                 break;
             }

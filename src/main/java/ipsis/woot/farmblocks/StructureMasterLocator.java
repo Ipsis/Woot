@@ -27,12 +27,15 @@ public class StructureMasterLocator implements IFarmBlockMasterLocator {
 
             connected.add(curr);
             for (EnumFacing facing : EnumFacing.values()) {
-                TileEntity te = world.getTileEntity(curr.getStructurePos().offset(facing));
-                if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection && !connected.contains(te)) {
-                    traversing.add((IFarmBlockConnection) te);
-                } else if (te instanceof IFarmBlockMaster) {
-                    masterFound = true;
-                    tmpMaster = (IFarmBlockMaster)te;
+                BlockPos pos = curr.getStructurePos().offset(facing);
+                if (world.isBlockLoaded(pos)) {
+                    TileEntity te = world.getTileEntity(pos);
+                    if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection && !connected.contains(te)) {
+                        traversing.add((IFarmBlockConnection) te);
+                    } else if (te instanceof IFarmBlockMaster) {
+                        masterFound = true;
+                        tmpMaster = (IFarmBlockMaster) te;
+                    }
                 }
             }
         }

@@ -31,6 +31,14 @@ public class TileEntityMobFactoryStructure extends TileEntity implements IFarmBl
     }
 
     @Override
+    public void validate() {
+
+        super.validate();
+        if (!getWorld().isRemote)
+            blockAdded();
+    }
+
+    @Override
     public void invalidate() {
 
         // Master will be set by the farm when it finds the block

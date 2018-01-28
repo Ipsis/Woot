@@ -27,14 +27,18 @@ public class StructureMasterLocator implements IFarmBlockMasterLocator {
 
             connected.add(curr);
             for (EnumFacing facing : EnumFacing.values()) {
-                TileEntity te = world.getTileEntity(curr.getIFactoryGlue().getPos().offset(facing));
-                if (te instanceof IFactoryGlueProvider && !connected.contains(te)) {
-                    IFactoryGlueProvider provider = (IFactoryGlueProvider)te;
-                    if (provider.getIFactoryGlue().getType() == IFactoryGlue.FactoryBlockType.STRUCTURE)
-                        traversing.add((IFactoryGlueProvider) te);
-                } else if (te instanceof IFarmBlockMaster) {
-                    masterFound = true;
-                    tmpMaster = (IFarmBlockMaster)te;
+
+                BlockPos pos = curr.getIFactoryGlue().getPos().offset(facing);
+                if (world.isBlockLoaded(pos)) {
+                    TileEntity te = world.getTileEntity(curr.getIFactoryGlue().getPos().offset(facing));
+                    if (te instanceof IFactoryGlueProvider && !connected.contains(te)) {
+                        IFactoryGlueProvider provider = (IFactoryGlueProvider) te;
+                        if (provider.getIFactoryGlue().getType() == IFactoryGlue.FactoryBlockType.STRUCTURE)
+                            traversing.add((IFactoryGlueProvider) te);
+                    } else if (te instanceof IFarmBlockMaster) {
+                        masterFound = true;
+                        tmpMaster = (IFarmBlockMaster) te;
+                    }
                 }
             }
         }

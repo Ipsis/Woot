@@ -5,8 +5,8 @@ import net.minecraft.util.IStringSerializable;
 
 public enum EnumMobFactoryModule implements IStringSerializable {
 
-    BLOCK_1("block_1", WootColor.GRAY, 'g'),
-    BLOCK_2("block_2", WootColor.RED, 'r'),
+    BLOCK_1("block_1", WootColor.RED, 'g'),
+    BLOCK_2("block_2", WootColor.GRAY, 'r'),
     BLOCK_3("block_3", WootColor.ORANGE, 'o'),
     BLOCK_4("block_4", WootColor.GREEN, 'h'),
     BLOCK_5("block_5", WootColor.WHITE, 'w'),

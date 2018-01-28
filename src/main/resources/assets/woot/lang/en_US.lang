@@ -115,6 +115,17 @@ info.woot.heart.ingredients=Ingredients Per Mob: %d * %s
 info.woot.guide.rclick=Right-click to change tiers
 info.woot.guide.srclick=Sneak Right-click to change levels
 
+info.woot.structure.block_1=Red guide block
+info.woot.structure.block_2=Gray guide block
+info.woot.structure.block_3=Orange guide block
+info.woot.structure.block_4=Green guide block
+info.woot.structure.block_5=White guide block
+info.woot.structure.block_upgrade=Purple guide block
+info.woot.structure.tier_i_cap=Light Gray guide block
+info.woot.structure.tier_ii_cap=Yellow guide block
+info.woot.structure.tier_iii_cap=Cyan guide block
+info.woot.structure.tier_iv_cap=Lime guide block
+
 ###########################################################
 # Enchantments
 ###########################################################

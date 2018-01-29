@@ -7,5 +7,5 @@ import javax.annotation.Nullable;
 
 public interface IFarmBlockMasterLocator {
 
-    @Nullable  IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure);
+    @Nullable  IFarmBlockMaster findMaster(World world, BlockPos origin, IFactoryGlueProvider iFactoryGlueProvider);
 }

@@ -15,7 +15,7 @@ public class SimpleMasterLocator implements IFarmBlockMasterLocator {
 
     @Nullable
     @Override
-    public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
+    public IFarmBlockMaster findMaster(World world, BlockPos origin, IFactoryGlueProvider iFactoryGlueProvider) {
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "findMaster(Proxy)", origin);
 

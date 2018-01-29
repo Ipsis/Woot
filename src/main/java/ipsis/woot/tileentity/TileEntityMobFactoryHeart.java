@@ -90,6 +90,14 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             farmStructure.fullDisconnect();
     }
 
+    @Override
+    public void onChunkUnload() {
+
+        super.onChunkUnload();
+        if (farmStructure != null && farmStructure.isFormed())
+            farmStructure.fullDisconnect();
+    }
+
     private boolean isPowered() {
 
         // Getting a redstone signal STOPS the machine
@@ -256,12 +264,6 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         if (farmStructure != null)
             farmStructure.setStructureDirty();
-    }
-
-    @Override
-    public void interruptFarmUpgrade() {
-
-        farmStructure.setUpgradeDirty();
     }
 
     @Override

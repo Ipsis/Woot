@@ -1,26 +1,23 @@
 package ipsis.woot.tileentity;
 
 import ipsis.Woot;
+import ipsis.woot.farmblocks.*;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.tileentity.ui.ControllerUIInfo;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
-import ipsis.woot.farmblocks.ControllerMasterLocator;
-import ipsis.woot.farmblocks.IFarmBlockConnection;
-import ipsis.woot.farmblocks.IFarmBlockController;
-import ipsis.woot.farmblocks.IFarmBlockMaster;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController, IFarmBlockConnection {
+import javax.annotation.Nonnull;
 
+public class TileEntityMobFactoryController extends TileEntity implements IFarmBlockController, IFactoryGlueProvider {
+
+    private IFactoryGlue iFactoryGlue;
     private WootMob wootMob = new WootMob();
-    private IFarmBlockMaster farmBlockMaster = null;
-
-    public boolean hasMaster() { return farmBlockMaster != null; }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
@@ -28,6 +25,11 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         super.writeToNBT(compound);
         writeControllerToNBT(compound);
         return compound;
+    }
+
+    public TileEntityMobFactoryController() {
+
+        iFactoryGlue = new FactoryGlue(IFactoryGlue.FactoryBlockType.CONTROLLER, new ControllerMasterLocator(), this, this);
     }
 
     @Override
@@ -58,19 +60,23 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         return wootMob;
     }
 
-    public void blockAdded() {
+    public void onBlockAdded() {
 
-        IFarmBlockMaster tmpMaster = new ControllerMasterLocator().findMaster(getWorld(), getPos(), this);
-        if (tmpMaster != null)
-            tmpMaster.interruptFarmStructure();
+        iFactoryGlue.onHello(getWorld(), getPos());
     }
 
     @Override
     public void invalidate() {
 
-        // Master will be set by the farm when it finds the block
-        if (hasMaster())
-            farmBlockMaster.interruptFarmStructure();
+        super.invalidate();
+        iFactoryGlue.onGoodbye();
+    }
+
+    @Override
+    public void onChunkUnload() {
+
+        super.onChunkUnload();
+        iFactoryGlue.onGoodbye();
     }
 
     public ItemStack getDroppedItemStack() {
@@ -97,35 +103,6 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         return itemStack;
     }
 
-    /**
-     * IFarmBlockConnection
-     */
-
-    @Override
-    public void setMaster(IFarmBlockMaster master) {
-
-        if (farmBlockMaster != master) {
-            farmBlockMaster = master;
-
-            //WorldHelper.updateClient(getWorld(), getPos());
-        }
-    }
-
-    @Override
-    public void clearMaster() {
-
-        if (farmBlockMaster != null) {
-            farmBlockMaster = null;
-            //WorldHelper.updateClient(getWorld(), getPos());
-        }
-    }
-
-    @Override
-    public BlockPos getStructurePos() {
-
-        return getPos();
-    }
-
     public void getUIInfo(ControllerUIInfo info) {
 
         if (isProgrammed()) {
@@ -133,5 +110,12 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
             info.wootMob = wootMob;
             info.requiredTier = Woot.wootConfiguration.getFactoryTier(world, wootMob.getWootMobName());
         }
+    }
+
+    @Nonnull
+    @Override
+    public IFactoryGlue getIFactoryGlue() {
+
+        return iFactoryGlue;
     }
 }

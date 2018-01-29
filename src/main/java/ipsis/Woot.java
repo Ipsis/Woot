@@ -13,7 +13,6 @@ import ipsis.woot.dimension.WootDimensionManager;
 import ipsis.woot.event.HandlerRegistryEvent;
 import ipsis.woot.farming.ISpawnRecipeRepository;
 import ipsis.woot.farming.SpawnRecipeRepository;
-import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModFurnace;
 import ipsis.woot.init.ModOreDictionary;
@@ -21,6 +20,7 @@ import ipsis.woot.loot.*;
 import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.loot.schools.TartarusManager;
+import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -28,7 +28,6 @@ import ipsis.woot.policy.PolicyRepository;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
-import ipsis.woot.multiblock.MobFactoryMultiblockLogic;
 import ipsis.woot.spawning.EntitySpawner;
 import ipsis.woot.spawning.IEntitySpawner;
 import ipsis.woot.util.DebugSetup;
@@ -63,9 +62,7 @@ public class Woot {
     public static ISpawnRecipeRepository spawnRecipeRepository = new SpawnRecipeRepository();
     public static TartarusManager tartarusManager = new TartarusManager();
     public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
-
-    // TODO fix this nonsense
-    public static MobFactoryMultiblockLogic multiblockLogic = new MobFactoryMultiblockLogic();
+    public static FactoryPatternRepository factoryPatternRepository = new FactoryPatternRepository();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

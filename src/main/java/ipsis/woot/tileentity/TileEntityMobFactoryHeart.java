@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -172,22 +173,72 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
     public void manualFarmScan(EntityPlayer player, EnumMobFactoryTier tier) {
 
-        EnumFacing facing = world.getBlockState(getPos()).getValue(BlockMobFactoryHeart.FACING);
-        IFarmScanner farmScanner = new FarmScanner();
-        IFarmScanner.BadFarmInfo badFarmInfo = new IFarmScanner.BadFarmInfo();
-        farmScanner.scanFarmNoStop(world, getPos(), facing, tier, badFarmInfo);
-        player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.validating") + tier.getTranslated("info.woot.tier")), false);
-        for (IFarmScanner.BadFarmBlock badFarmBlock : badFarmInfo.badFarmBlocks) {
-            ItemStack itemStack = new ItemStack(badFarmBlock.getCorrectBlock(), 1, badFarmBlock.getCorrectBlockMeta());
-            player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.noblock", badFarmBlock.getPos().getX(), badFarmBlock.getPos().getY(), badFarmBlock.getPos().getZ(),  itemStack.getDisplayName())), false);
-        }
+        player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.validating", tier.getTranslated("info.woot.tier"))), false);
 
-        if (!badFarmInfo.hasCell)
+        EnumFacing facing = world.getBlockState(getPos()).getValue(BlockMobFactoryHeart.FACING);
+        FarmScanner2 farmScanner = new FarmScanner2();
+        ScannedFarm2 scannedFarm = farmScanner.scanFarm(world, getPos(), facing, tier);
+
+        if (!scannedFarm.remote.hasPower())
             player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.nopower")), false);
-        if (!badFarmInfo.hasImporter)
+        else
+            player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.power",
+                    scannedFarm.remote.getPowerPos().getX(),
+                    scannedFarm.remote.getPowerPos().getY(),
+                    scannedFarm.remote.getPowerPos().getZ())), false);
+
+        if (!scannedFarm.remote.hasImport())
             player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.noimporter")), false);
-        if (!badFarmInfo.hasExporter)
+        else
+            player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.importer",
+                scannedFarm.remote.getImportPos().getX(),
+                scannedFarm.remote.getImportPos().getY(),
+                scannedFarm.remote.getImportPos().getZ())), false);
+
+        if (!scannedFarm.remote.hasExport())
             player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.noexporter")), false);
+        else
+            player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.exporter",
+                scannedFarm.remote.getExportPos().getX(),
+                scannedFarm.remote.getExportPos().getY(),
+                scannedFarm.remote.getExportPos().getZ())), false);
+
+        // All blocks in place, have remote and valid controller
+        if (scannedFarm.isValidStructure() && scannedFarm.isValidCofiguration(world)) {
+            player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.ok",
+                    tier.getTranslated("info.woot.tier"))), false);
+        } else {
+            if (!scannedFarm.controller.isPresent()) {
+                // Controller missing
+                BlockPos pos = farmScanner.getControllerPos(world, getPos(), facing);
+                player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.nocontroller",
+                        pos.getX(), pos.getY(), pos.getZ())), false);
+            } else {
+                // Controller present but wrong
+                if (!scannedFarm.controller.canCapture())
+                    player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.invalidmob")), false);
+                else if (!scannedFarm.controller.isTierValid(world, tier))
+                    player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.invalidtier")), false);
+            }
+
+            for (FarmScanner2.BadFarmBlockInfo info : scannedFarm.getBadBlocks()) {
+                ItemStack itemStack = new ItemStack(info.getCorrectBlock(), 1, info.getCorrectBlockMeta());
+
+                if (info.getReason() == FarmScanner2.BadBlockReason.MISSING_BLOCK) {
+                    player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.missing",
+                            itemStack.getDisplayName(),
+                            info.getPos().getX(), info.getPos().getY(), info.getPos().getZ())),
+                            false);
+                } else if (info.getReason() == FarmScanner2.BadBlockReason.WRONG_BLOCK || info.getReason() == FarmScanner2.BadBlockReason.WRONG_STRUCTURE_TYPE) {
+                    ItemStack itemStack1 = new ItemStack(info.getInvalidBlock(), 1, info.getInvalidBlockMeta());
+                    player.sendStatusMessage(new TextComponentString(StringHelper.localizeFormat("chat.woot.validate.incorrect",
+                            itemStack.getDisplayName(),
+                            info.getPos().getX(), info.getPos().getY(), info.getPos().getZ(),
+                            itemStack1.getDisplayName())),
+                            false);
+                }
+            }
+        }
     }
 
     public void showGui(EntityPlayer player, World world, int x, int y, int z) {

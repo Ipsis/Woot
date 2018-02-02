@@ -59,7 +59,7 @@ public class StygianAnvilRecipeCategory implements IRecipeCategory {
     @Override
     public String getTitle() {
 
-        return "Stygian Anvil (WIP)";
+        return "Stygian Anvil";
     }
 
     @Override

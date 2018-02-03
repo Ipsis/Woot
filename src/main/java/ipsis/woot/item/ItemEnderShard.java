@@ -1,5 +1,6 @@
 package ipsis.woot.item;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.init.ModItems;
@@ -127,23 +128,33 @@ public class ItemEnderShard extends ItemWoot {
         if (!isEnderShard(stack))
             return;
 
+        if (isJEIEnderShard(stack)) {
+            tooltip.add(StringHelper.localize("info.woot.endershard.b.1"));
+            return;
+        }
+
         tooltip.add(StringHelper.getInfoText("info.woot.endershard.0"));
         tooltip.add(StringHelper.getInfoText("info.woot.endershard.1"));
+        tooltip.add(StringHelper.getInfoText("info.woot.endershard.2"));
 
         if (!isProgrammed(stack)) {
-            tooltip.add(StringHelper.getInfoText("info.woot.endershard.a.0"));
+            String out = StringHelper.getInfoText("info.woot.endershard.a.0");
+            tooltip.add(ChatFormatting.RED + out);
         } else {
             WootMob wootMob = WootMobBuilder.create(stack.getTagCompound());
             if (wootMob.isValid()) {
-                tooltip.add(wootMob.getDisplayName());
+                String name = wootMob.getDisplayName();
                 if (isFull(stack)) {
-                    tooltip.add(StringHelper.localize("info.woot.endershard.b.1"));
+                    String out = StringHelper.localizeFormat("info.woot.endershard.b.1", name);
+                    tooltip.add(ChatFormatting.BLUE + out);
                 } else {
                     int deaths = wootMob.getDeaths();
                     deaths = MathHelper.clamp(deaths, 0, Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT));
-                    tooltip.add(StringHelper.localizeFormat("info.woot.endershard.b.0",
+                    String out = StringHelper.localizeFormat("info.woot.endershard.b.0",
+                            name,
                             deaths,
-                            Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT)));
+                            Woot.wootConfiguration.getInteger(wootMob.getWootMobName(), EnumConfigKey.KILL_COUNT));
+                    tooltip.add(ChatFormatting.RED + out);
                 }
 
                 if (flagIn.isAdvanced())
@@ -186,9 +197,24 @@ public class ItemEnderShard extends ItemWoot {
         return true;
     }
 
+    public static boolean isJEIEnderShard(ItemStack itemStack) {
+
+        if (itemStack.hasTagCompound() == false || itemStack.getTagCompound().hasKey("nbt_jei_shard") == false)
+            return false;
+
+        return true;
+    }
+
+    public static void setJEIEnderShared(ItemStack itemStack) {
+
+        NBTTagCompound tagCompound = new NBTTagCompound();
+        tagCompound.setInteger("nbt_jei_shard", 1);
+        itemStack.setTagCompound(tagCompound);
+    }
+
     @Override
     public boolean hasEffect(ItemStack stack) {
 
-        return isProgrammed(stack) && isFull(stack);
+        return isJEIEnderShard(stack) || (isProgrammed(stack) && isFull(stack));
     }
 }

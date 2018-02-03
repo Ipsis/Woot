@@ -1,6 +1,8 @@
 package ipsis.woot.plugins.jei.anvil;
 
 import ipsis.woot.crafting.IAnvilRecipe;
+import ipsis.woot.init.ModItems;
+import ipsis.woot.item.ItemEnderShard;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
@@ -23,7 +25,12 @@ public class StygianAnvilRecipeJEI extends BlankRecipeWrapper {
         ingredients.setOutput(ItemStack.class, recipe.getCopyOutput());
 
         List<ItemStack> inputs = new ArrayList<>();
-        inputs.add(0, recipe.getBaseItem());
+
+        ItemStack baseItem = recipe.getBaseItem().copy();
+        if (ItemEnderShard.isEnderShard(baseItem))
+            ItemEnderShard.setJEIEnderShared(baseItem);
+
+        inputs.add(0, baseItem);
         inputs.addAll(recipe.getInputs());
         ingredients.setInputs(ItemStack.class, inputs);
     }

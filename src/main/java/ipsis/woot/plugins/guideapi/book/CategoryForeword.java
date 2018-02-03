@@ -34,6 +34,10 @@ public class CategoryForeword {
         category.addEntry(e, new Entry(keyBase + e, true));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".info"), GuideWoot.MAX_PAGE_LEN));
 
+        e = "sponge";
+        category.addEntry(e, new Entry(keyBase + e, true));
+        category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".info"), GuideWoot.MAX_PAGE_LEN));
+
         e = "credits";
         category.addEntry(e, new Entry(keyBase + e, true));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".info"), GuideWoot.MAX_PAGE_LEN));

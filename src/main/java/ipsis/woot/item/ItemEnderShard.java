@@ -129,7 +129,7 @@ public class ItemEnderShard extends ItemWoot {
             return;
 
         if (isJEIEnderShard(stack)) {
-            tooltip.add(StringHelper.localize("info.woot.endershard.b.1"));
+            tooltip.add(ChatFormatting.BLUE + StringHelper.localize("info.woot.endershard.a.1"));
             return;
         }
 

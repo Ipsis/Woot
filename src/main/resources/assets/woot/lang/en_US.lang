@@ -102,6 +102,7 @@ info.woot.endershard.0=Hit mob with shard to capture
 info.woot.endershard.1=Kill mobs to fully program
 info.woot.endershard.2=Shard must be in your hotbar
 info.woot.endershard.a.0=[Unprogrammed]
+info.woot.endershard.a.1=[Fully Programmed]
 info.woot.endershard.b.0=%s [Kills %d/%d]
 info.woot.endershard.b.1=%s [Fully programmed]
 

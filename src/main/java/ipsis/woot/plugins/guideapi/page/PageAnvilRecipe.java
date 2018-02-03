@@ -8,6 +8,7 @@ import amerifrance.guideapi.api.util.GuiHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.gui.GuiBase;
 import ipsis.woot.crafting.IAnvilRecipe;
+import ipsis.woot.item.ItemEnderShard;
 import ipsis.woot.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -26,7 +27,10 @@ public class PageAnvilRecipe extends Page {
     public PageAnvilRecipe(IAnvilRecipe recipe) {
 
         outputItem = recipe.getCopyOutput();
-        baseItem = recipe.getBaseItem();
+        baseItem = recipe.getBaseItem().copy();
+        if (ItemEnderShard.isEnderShard(baseItem))
+            ItemEnderShard.setJEIEnderShared(baseItem);
+
         inputItems.addAll(recipe.getInputs());
     }
 

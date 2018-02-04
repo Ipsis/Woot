@@ -8,7 +8,6 @@ import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Files;
 import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.WootMobName;
-import net.minecraft.client.util.JsonException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JsonUtils;
 import net.minecraftforge.fluids.FluidStack;

@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 
@@ -55,6 +54,7 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         return wootMob.isValid();
     }
 
+    @Nonnull
     public WootMob getWootMob() {
 
         return wootMob;

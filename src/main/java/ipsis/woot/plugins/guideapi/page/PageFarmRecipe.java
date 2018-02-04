@@ -10,12 +10,8 @@ import ipsis.woot.farming.SpawnRecipe;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.EntityList;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

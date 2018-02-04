@@ -3,6 +3,7 @@ package ipsis.woot.util;
 import com.mojang.authlib.GameProfile;
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.oss.LogHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
@@ -26,7 +27,7 @@ public class FakePlayerPool {
 
     static void init(WorldServer world) {
 
-        fakePlayerHashMap  = new HashMap<EnumEnchantKey, FakePlayer>();
+        fakePlayerHashMap  = new HashMap<>();
 
         FakePlayer fakePlayer = FakePlayerFactory.get(world, WOOT_GAME_PROFILE);
         FakePlayer fakePlayerI = FakePlayerFactory.get(world, WOOT_GAME_PROFILE_I);
@@ -37,9 +38,14 @@ public class FakePlayerPool {
         ItemStack swordII = new ItemStack(Items.DIAMOND_SWORD);
         ItemStack swordIII = new ItemStack(Items.DIAMOND_SWORD);
 
-        swordI.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_1_PARAM));
-        swordII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_2_PARAM));
-        swordIII.addEnchantment(Enchantment.getEnchantmentByLocation("looting"), Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_3_PARAM));
+        Enchantment enchantmentLooting = Enchantment.getEnchantmentByLocation("looting");
+        if (enchantmentLooting != null) {
+            swordI.addEnchantment(enchantmentLooting, Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_1_PARAM));
+            swordII.addEnchantment(enchantmentLooting, Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_2_PARAM));
+            swordIII.addEnchantment(enchantmentLooting, Woot.wootConfiguration.getInteger(EnumConfigKey.LOOTING_3_PARAM));
+        } else {
+            LogHelper.warn("FakePlayerPool - failed to find looting enchantment");
+        }
 
         fakePlayer.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
         fakePlayerI.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, swordI);

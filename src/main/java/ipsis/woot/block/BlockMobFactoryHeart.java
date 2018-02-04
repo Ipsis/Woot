@@ -1,9 +1,7 @@
 package ipsis.woot.block;
 
-import ipsis.Woot;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.oss.ItemHelper;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;

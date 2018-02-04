@@ -117,8 +117,6 @@ public class CommandDump extends CommandTreeBase {
             if (args.length != 0)
                 throw new WrongUsageException(getUsage(sender));
 
-            List<ITextStatus> status = new ArrayList<>();
-            status.add(Woot.lootRepository);
             for (String s : Woot.lootRepository.getStatus())
                 CommandHelper.display(sender, s);
         }

@@ -1,7 +1,5 @@
 package ipsis.woot.policy;
 
-import ipsis.Woot;
-import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.util.CompareUtils;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;

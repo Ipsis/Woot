@@ -22,7 +22,7 @@ public class HandlerLivingDeathEvent {
         if (world.isRemote || !(event.getSource().getTrueSource() instanceof EntityPlayer))
             return;
 
-        if (!(event.getEntityLiving() instanceof EntityLivingBase))
+        if (event.getEntityLiving() == null)
             return;
 
         EntityPlayer entityPlayer = (EntityPlayer)event.getSource().getTrueSource();

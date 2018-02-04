@@ -1,7 +1,6 @@
 package ipsis.woot.network.packets;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.Woot;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.oss.NetworkTools;

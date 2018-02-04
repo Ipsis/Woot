@@ -2,7 +2,6 @@ package ipsis.woot.farming;
 
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.power.storage.IPowerStation;
 import net.minecraft.util.math.MathHelper;
 

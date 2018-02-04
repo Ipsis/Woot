@@ -70,7 +70,7 @@ public class ItemGenerator implements ILootGenerator {
             }
 
             if (stackSize == 0)
-                continue;;
+                continue;
 
             ItemStack itemStack = drop.itemStack.copy();
             itemStack.setCount(stackSize);

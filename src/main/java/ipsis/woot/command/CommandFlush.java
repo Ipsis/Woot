@@ -1,9 +1,6 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
-import ipsis.woot.reference.Localization;
-import ipsis.woot.util.StringHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.command.CommandException;

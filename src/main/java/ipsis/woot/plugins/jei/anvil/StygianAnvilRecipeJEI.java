@@ -1,7 +1,6 @@
 package ipsis.woot.plugins.jei.anvil;
 
 import ipsis.woot.crafting.IAnvilRecipe;
-import ipsis.woot.init.ModItems;
 import ipsis.woot.item.ItemEnderShard;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;

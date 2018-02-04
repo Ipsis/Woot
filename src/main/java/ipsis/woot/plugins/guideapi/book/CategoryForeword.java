@@ -5,7 +5,6 @@ import amerifrance.guideapi.api.impl.Entry;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.category.CategoryItemStack;
-import ipsis.woot.init.ModBlocks;
 import ipsis.woot.init.ModItems;
 import ipsis.woot.plugins.guideapi.GuideWoot;
 import ipsis.woot.reference.Reference;

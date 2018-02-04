@@ -50,9 +50,10 @@ public class ScannedFarmRemote {
         return true;
     }
 
-    private final int IMPORT_Y_OFFSET = 1;
-    private final int EXPORT_Y_OFFSET = 2;
     public boolean isValid() {
+
+        final int IMPORT_Y_OFFSET = 1;
+        final int EXPORT_Y_OFFSET = 2;
 
         if (powerPos == null || exportPos == null || importPos == null)
             return false;

@@ -4,8 +4,6 @@ import ipsis.woot.client.gui.GuiContainerWoot;
 import net.minecraft.client.gui.FontRenderer;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ElementProgress extends ElementBase {
 

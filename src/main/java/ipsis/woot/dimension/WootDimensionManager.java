@@ -6,7 +6,6 @@ import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.dimension.world.WootWorldProvider;
 import ipsis.woot.handler.ConfigHandler;
 import ipsis.woot.oss.LogHelper;
-import ipsis.woot.reference.Reference;
 import ipsis.woot.util.DebugSetup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;

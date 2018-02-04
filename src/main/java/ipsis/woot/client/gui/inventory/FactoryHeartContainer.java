@@ -1,7 +1,6 @@
 package ipsis.woot.client.gui.inventory;
 
 import ipsis.woot.network.PacketHandler;
-import ipsis.woot.network.packets.PacketFarmInfo;
 import ipsis.woot.network.packets.PacketFixedProgressBar;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;

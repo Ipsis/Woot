@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public class CompareUtils {
 
@@ -16,7 +17,8 @@ public class CompareUtils {
 
     public static boolean isFromMod(ItemStack itemStack, String mod) {
 
-        return itemStack.getItem().getRegistryName().getResourceDomain().equalsIgnoreCase(mod);
+        ResourceLocation resourceLocation = itemStack.getItem().getRegistryName();
+        return resourceLocation != null &&  resourceLocation.getResourceDomain().equalsIgnoreCase(mod);
     }
 
     public static boolean isSameItem(ItemStack itemStackA, ItemStack itemStackB) {

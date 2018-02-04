@@ -21,5 +21,5 @@ public interface IFactoryGlue {
         CELL,
         IMPORTER,
         EXPORTER
-    };
+    }
 }

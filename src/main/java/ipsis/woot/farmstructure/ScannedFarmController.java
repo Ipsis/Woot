@@ -3,7 +3,6 @@ package ipsis.woot.farmstructure;
 import ipsis.Woot;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.WootMob;
-import ipsis.woot.util.WootMobName;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

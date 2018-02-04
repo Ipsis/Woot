@@ -2,7 +2,6 @@ package ipsis.woot.network.packets;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.network.PacketHandler;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import net.minecraft.tileentity.TileEntity;

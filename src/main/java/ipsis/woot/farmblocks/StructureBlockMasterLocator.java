@@ -2,7 +2,6 @@ package ipsis.woot.farmblocks;
 
 import ipsis.woot.block.BlockMobFactoryHeart;
 import ipsis.woot.block.BlockMobFactoryStructure;
-import ipsis.woot.oss.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

@@ -218,7 +218,7 @@ public class FarmScanner2 {
         MISSING_BLOCK,          // No block at that position
         WRONG_BLOCK,            // Not a structure block
         WRONG_STRUCTURE_TYPE    // Wrong structure block
-    };
+    }
 
     public class BadFarmBlockInfo {
 

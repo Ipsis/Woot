@@ -69,7 +69,7 @@ public class CommandDev extends CommandTreeBase {
             devTags.put("spawn", DebugSetup.EnumDebugType.SPAWN);
             devTags.put("learn", DebugSetup.EnumDebugType.LEARN);
             devTags.put("tartarus", DebugSetup.EnumDebugType.TARTARUS);
-        };
+        }
 
         @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {

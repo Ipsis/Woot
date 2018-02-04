@@ -4,7 +4,6 @@ import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryHeart;
 import ipsis.woot.farmblocks.IFactoryGlue;
 import ipsis.woot.farmblocks.IFactoryGlueProvider;
-import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.EnumFarmUpgrade;
@@ -105,44 +104,6 @@ public class FarmBuilder implements IFarmStructure {
 
         if (!scannedFarm.isValidStructure() || !scannedFarm.isValidCofiguration(world)) {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid farm", "");
-            return null;
-        }
-
-        return scannedFarm;
-    }
-
-    private @Nullable ScannedFarm scanFullFarm() {
-
-        EnumFacing facing = world.getBlockState(origin).getValue(BlockMobFactoryHeart.FACING);
-        ScannedFarm scannedFarm = new ScannedFarm();
-        IFarmScanner farmScanner = new FarmScanner();
-
-        scannedFarm.base = farmScanner.scanFarmStructure(world, origin, facing);
-        if (!scannedFarm.base.isValid()) {
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid base", "");
-            return null;
-        }
-
-        scannedFarm.controller = farmScanner.scanFarmController(world, origin, facing);
-        // Is the controller programmed
-        if (!scannedFarm.controller.isValid()) {
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid controller", "");
-            return null;
-        }
-
-        scannedFarm.remote = farmScanner.scanFarmRemote(world, origin);
-        if (!scannedFarm.remote.isValid()) {
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: invalid remote", "");
-            return null;
-        }
-
-        scannedFarm.upgrades = farmScanner.scanFarmUpgrades(world, origin, facing, scannedFarm.base.tier);
-
-        farmScanner.applyConfiguration(world, scannedFarm.controller, scannedFarm.upgrades, scannedFarm.base.tier);
-        // Is the programmed controller valid for this factory tier
-        EnumMobFactoryTier mobTier = Woot.wootConfiguration.getFactoryTier(world, scannedFarm.controller.wootMob.getWootMobName());
-        if (!EnumMobFactoryTier.isLessThanOrEqual(mobTier, scannedFarm.base.tier)) {
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_BUILD, "scanFullFarm: need higher tier for mob", "");
             return null;
         }
 

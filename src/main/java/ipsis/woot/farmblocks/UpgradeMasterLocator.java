@@ -17,29 +17,29 @@ public class UpgradeMasterLocator implements IFarmBlockMasterLocator {
 
     @Nullable
     @Override
-    public IFarmBlockMaster findMaster(World world, BlockPos origin, IFarmBlockConnection farmBlockStructure) {
+    public IFarmBlockMaster findMaster(World world, BlockPos origin, IFactoryGlueProvider iFactoryGlueProvider) {
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "findMaster(Upgrade)", origin);
 
-        List<IFarmBlockConnection> connected= new ArrayList<IFarmBlockConnection>();
-        Stack<IFarmBlockConnection> traversing= new Stack<IFarmBlockConnection>();
+        List<IFactoryGlueProvider> connected= new ArrayList<>();
+        Stack<IFactoryGlueProvider> traversing= new Stack<>();
 
         IFarmBlockMaster tmpMaster = null;
         boolean masterFound = false;
 
-        traversing.add(farmBlockStructure);
+        traversing.add(iFactoryGlueProvider);
         while (!masterFound && !traversing.isEmpty()) {
-            IFarmBlockConnection curr = traversing.pop();
+            IFactoryGlueProvider curr = traversing.pop();
 
             connected.add(curr);
             for (EnumFacing f : EnumFacing.values()) {
-                TileEntity te = world.getTileEntity(curr.getStructurePos().offset(f));
-                if (te instanceof IFarmBlockUpgrade && te instanceof IFarmBlockConnection && !connected.contains(te)) {
-                    traversing.add((IFarmBlockConnection) te);
-                } else if (te instanceof IFarmBlockStructure && te instanceof IFarmBlockConnection && !connected.contains(te)) {
-                    traversing.add((IFarmBlockConnection) te);
+                TileEntity te = world.getTileEntity(curr.getIFactoryGlue().getPos().offset(f));
+                if (te instanceof IFactoryGlueProvider && ((IFactoryGlueProvider) te).getIFactoryGlue().getType() == IFactoryGlue.FactoryBlockType.UPGRADE && !connected.contains(te)) {
+                    traversing.add((IFactoryGlueProvider) te);
+                } else if (te instanceof IFactoryGlueProvider && ((IFactoryGlueProvider) te).getIFactoryGlue().getType() == IFactoryGlue.FactoryBlockType.STRUCTURE && !connected.contains(te)) {
+                    traversing.add((IFactoryGlueProvider) te);
                 } else if (te instanceof IFarmBlockMaster) {
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "IFarmMaster", curr.getStructurePos().offset(f));
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.FARM_SCAN, "IFarmMaster", curr.getIFactoryGlue().getPos().offset(f));
                     masterFound = true;
                     tmpMaster = (IFarmBlockMaster) te;
                 }

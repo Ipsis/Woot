@@ -1,9 +1,7 @@
 package ipsis.woot.tileentity;
 
 import ipsis.woot.block.BlockMobFactoryCell;
-import ipsis.woot.farmblocks.IFarmBlockConnection;
-import ipsis.woot.farmblocks.IFarmBlockMaster;
-import ipsis.woot.farmblocks.SimpleMasterLocator;
+import ipsis.woot.farmblocks.*;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.power.storage.SinglePowerStation;
@@ -17,17 +15,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockConnection {
+public class TileEntityMobFactoryCell extends TileEntity implements IFactoryGlueProvider {
 
-    private IFarmBlockMaster farmBlockMaster = null;
+    private IFactoryGlue iFactoryGlue;
     private IPowerStation powerStation;
-
-    public boolean hasMaster() { return farmBlockMaster != null; }
 
     public TileEntityMobFactoryCell() {
 
+        iFactoryGlue = new FactoryGlue(IFactoryGlue.FactoryBlockType.CELL, new SimpleMasterLocator(), this, this);
         powerStation = new SinglePowerStation();
     }
 
@@ -36,11 +34,9 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
         powerStation.setTier(tier);
     }
 
-    public void blockAdded() {
+    public void onBlockAdded() {
 
-        IFarmBlockMaster tmpMaster = new SimpleMasterLocator().findMaster(getWorld(), getPos(), this);
-        if (tmpMaster != null)
-            tmpMaster.interruptFarmStructure();
+        iFactoryGlue.onHello(getWorld(), getPos());
     }
 
     public IPowerStation getPowerStation() {
@@ -50,9 +46,15 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
     @Override
     public void invalidate() {
 
-        // Master will be set by the farm when it finds the block
-        if (hasMaster())
-            farmBlockMaster.interruptFarmStructure();
+        super.invalidate();
+        iFactoryGlue.onGoodbye();
+    }
+
+    @Override
+    public void onChunkUnload() {
+
+        super.onChunkUnload();
+        iFactoryGlue.onGoodbye();
     }
 
     /**
@@ -86,7 +88,7 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
 
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setBoolean("formed", farmBlockMaster != null);
+        nbtTagCompound.setBoolean("formed", iFactoryGlue.hasMaster());
         return nbtTagCompound;
     }
 
@@ -118,44 +120,13 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
 
 
     /**
-     * IFarmBlockConnection
-     */
-    public void clearMaster() {
-
-        if (farmBlockMaster != null) {
-            farmBlockMaster = null;
-
-            WorldHelper.updateClient(getWorld(), getPos());
-            WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockCell);
-        }
-    }
-
-    public void setMaster(IFarmBlockMaster master) {
-
-        if (farmBlockMaster != master) {
-            farmBlockMaster = master;
-
-            WorldHelper.updateClient(getWorld(), getPos());
-            WorldHelper.updateNeighbors(getWorld(), getPos(), ModBlocks.blockCell);
-        }
-    }
-
-    public BlockPos getStructurePos() {
-        return getPos();
-    }
-
-    /**
      * Power connections
      */
     @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY) {
-            if (hasMaster())
-                return true;
-            else
-                return false;
-        }
+        if (capability == CapabilityEnergy.ENERGY)
+            return iFactoryGlue.hasMaster();
 
         return super.hasCapability(capability, facing);
     }
@@ -164,9 +135,15 @@ public class TileEntityMobFactoryCell extends TileEntity implements IFarmBlockCo
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 
-        if (capability == CapabilityEnergy.ENERGY && hasMaster())
+        if (capability == CapabilityEnergy.ENERGY && iFactoryGlue.hasMaster())
             return (T)powerStation.getEnergyStorage();
 
         return super.getCapability(capability, facing);
+    }
+
+    @Nonnull
+    @Override
+    public IFactoryGlue getIFactoryGlue() {
+        return iFactoryGlue;
     }
 }

@@ -32,7 +32,7 @@ public abstract class BlockMobFactoryUpgradeBase extends BlockWoot implements IT
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryUpgrade)
-            ((TileEntityMobFactoryUpgrade) te).blockAdded();
+            ((TileEntityMobFactoryUpgrade) te).onBlockAdded();
     }
 
     public void getUpgradeTooltip(EnumSpawnerUpgrade u, List<String> toolTip, boolean showAdvanced, int meta, boolean detail) {

@@ -4,7 +4,7 @@ import net.minecraft.world.World;
 
 public class SimpleTickTracker implements ITickTracker {
 
-    private long lastWorldTime = -1;
+    private long lastWorldTime;
     private int structureTicksTimeout;
     private int learnTicksTimeout;
     private int currStructureTicks;

@@ -1,7 +1,6 @@
 package ipsis.woot.network.packets;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.woot.oss.LogHelper;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;

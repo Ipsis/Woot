@@ -2,7 +2,6 @@ package ipsis.woot.tileentity;
 
 import ipsis.woot.block.BlockMobFactoryCell;
 import ipsis.woot.farmblocks.*;
-import ipsis.woot.init.ModBlocks;
 import ipsis.woot.power.storage.IPowerStation;
 import ipsis.woot.power.storage.SinglePowerStation;
 import ipsis.woot.util.WorldHelper;
@@ -11,7 +10,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 

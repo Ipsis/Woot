@@ -2,7 +2,6 @@ package ipsis.woot.block;
 
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.oss.client.ModelHelper;
-import ipsis.woot.reference.Lang;
 import ipsis.woot.tileentity.TileEntityLayout;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.util.StringHelper;

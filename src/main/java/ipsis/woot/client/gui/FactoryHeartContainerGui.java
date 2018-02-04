@@ -4,15 +4,12 @@ import ipsis.woot.client.gui.element.*;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.network.packets.PacketGetFarmInfo;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
-import ipsis.woot.util.StringHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.awt.*;

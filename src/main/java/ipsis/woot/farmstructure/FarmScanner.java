@@ -3,7 +3,6 @@ package ipsis.woot.farmstructure;
 import ipsis.Woot;
 import ipsis.woot.block.BlockMobFactoryStructure;
 import ipsis.woot.init.ModBlocks;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.multiblock.MobFactoryModule;
 import ipsis.woot.tileentity.TileEntityMobFactoryCell;

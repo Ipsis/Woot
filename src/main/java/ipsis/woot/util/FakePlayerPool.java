@@ -27,7 +27,7 @@ public class FakePlayerPool {
 
     static void init(WorldServer world) {
 
-        fakePlayerHashMap  = new HashMap<EnumEnchantKey, FakePlayer>();
+        fakePlayerHashMap  = new HashMap<>();
 
         FakePlayer fakePlayer = FakePlayerFactory.get(world, WOOT_GAME_PROFILE);
         FakePlayer fakePlayerI = FakePlayerFactory.get(world, WOOT_GAME_PROFILE_I);

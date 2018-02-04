@@ -26,7 +26,7 @@ public class TileEntityLayout extends TileEntity {
 
     public TileEntityLayout() {
 
-        layoutBlockInfoList = new ArrayList<ILayoutBlockInfo>();
+        layoutBlockInfoList = new ArrayList<>();
         facing = EnumFacing.SOUTH;
         tier = EnumMobFactoryTier.TIER_ONE;
     }

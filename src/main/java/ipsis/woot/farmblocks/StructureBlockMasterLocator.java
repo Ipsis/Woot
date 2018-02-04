@@ -19,9 +19,6 @@ import java.util.Stack;
  * The only blocks that can find the master will be those on the edge next to a loaded chunk.
  */
 
-/**
- * TODO rewrite using the IFarmBlockMasterLocation interface
- */
 public class StructureBlockMasterLocator {
 
     public IFarmBlockMaster findMaster(World world, BlockPos origin) {

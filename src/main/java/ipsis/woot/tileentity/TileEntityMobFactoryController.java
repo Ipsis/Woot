@@ -54,6 +54,7 @@ public class TileEntityMobFactoryController extends TileEntity implements IFarmB
         return wootMob.isValid();
     }
 
+    @Nonnull
     public WootMob getWootMob() {
 
         return wootMob;

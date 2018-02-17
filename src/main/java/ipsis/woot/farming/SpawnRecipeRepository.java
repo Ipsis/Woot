@@ -46,6 +46,8 @@ public class SpawnRecipeRepository implements ISpawnRecipeRepository {
             return;
         }
 
+        LogHelper.info("Add spawn recipe ingredients for " + wootMobName + "->" + recipe);
+
         recipes.put(wootMobName, recipe);
     }
 

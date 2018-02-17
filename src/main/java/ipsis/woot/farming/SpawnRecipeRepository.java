@@ -59,11 +59,21 @@ public class SpawnRecipeRepository implements ISpawnRecipeRepository {
     public void addDefaultItem(ItemStack itemStack) {
 
         defaultSpawnRecipe.addIngredient(itemStack);
+        LogHelper.info("Add default spawn recipe ingredient " + itemStack.getDisplayName() + "x" + itemStack.getCount());
     }
 
     @Override
     public void addDefaultFluid(FluidStack fluidStack) {
 
         defaultSpawnRecipe.addIngredient(fluidStack);
+        LogHelper.info("Add default spawn recipe fluid " + fluidStack.getLocalizedName() + "x" + fluidStack.amount + "mb");
+    }
+
+    @Override
+    public void setDefaultEfficiency(boolean efficiency) {
+
+        defaultSpawnRecipe.setEfficiency(efficiency);
+        LogHelper.info("Setting default spawn recipe efficiency support " + efficiency);
+
     }
 }

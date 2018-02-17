@@ -15,4 +15,5 @@ public interface ISpawnRecipeRepository {
 
     void addDefaultItem(ItemStack itemStack);
     void addDefaultFluid(FluidStack fluidStack);
+    void setDefaultEfficiency(boolean efficiency);
 }

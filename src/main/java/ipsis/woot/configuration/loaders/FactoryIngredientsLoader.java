@@ -56,6 +56,9 @@ public class FactoryIngredientsLoader {
 
         JsonObject json = (JsonObject)ele;
 
+        boolean efficiency = JsonUtils.getBoolean(json, "efficiency", true);
+        Woot.spawnRecipeRepository.setDefaultEfficiency(efficiency);
+
         for (JsonElement ele2 : JsonUtils.getJsonArray(json, "items")) {
 
             if (ele2 == null || !ele.isJsonObject())

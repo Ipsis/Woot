@@ -2,20 +2,35 @@ package ipsis.woot.farming;
 
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class SpawnRecipeRepository implements ISpawnRecipeRepository {
 
     HashMap<WootMobName, SpawnRecipe> recipes = new HashMap<>();
 
+    private SpawnRecipe defaultSpawnRecipe = new SpawnRecipe();
+
+    public SpawnRecipeRepository() {
+
+        defaultSpawnRecipe.setEfficiency(true);
+    }
+
     @Nullable
     @Override
     public SpawnRecipe get(WootMobName wootMobName) {
 
-        return recipes.get(wootMobName);
+        if (recipes.containsKey(wootMobName))
+            return recipes.get(wootMobName);
+
+        return defaultSpawnRecipe;
     }
 
     @Override
@@ -38,5 +53,17 @@ public class SpawnRecipeRepository implements ISpawnRecipeRepository {
     public Set<WootMobName> getAllMobs() {
 
         return recipes.keySet();
+    }
+
+    @Override
+    public void addDefaultItem(ItemStack itemStack) {
+
+        defaultSpawnRecipe.addIngredient(itemStack);
+    }
+
+    @Override
+    public void addDefaultFluid(FluidStack fluidStack) {
+
+        defaultSpawnRecipe.addIngredient(fluidStack);
     }
 }

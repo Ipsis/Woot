@@ -28,6 +28,10 @@ public class CategoryIngredients {
         category.addEntry("intro", new Entry(keyBase + "intro", true));
         category.getEntry("intro").addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + "intro.info"), GuideWoot.MAX_PAGE_LEN));
 
+        /**
+         * Although there can be default recipes, this will not add them to the book as only
+         * those with unique recipes are retrieved
+         */
         for (WootMobName wootMobName : Woot.spawnRecipeRepository.getAllMobs()) {
             String name = EntityList.getTranslationName(wootMobName.getResourceLocation());
             category.addEntry(name, new Entry(name, true));

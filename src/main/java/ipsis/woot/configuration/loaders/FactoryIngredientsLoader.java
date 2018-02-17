@@ -41,8 +41,41 @@ public class FactoryIngredientsLoader {
         if (version == -1 || version != 1)
             throw new JsonSyntaxException("Invalid version");
 
+        if (JsonUtils.hasField(json, "default"))
+            parseDefaultIngredients(JsonUtils.getJsonObject(json, "default"));
+
         for (JsonElement ele : JsonUtils.getJsonArray(json, "ingredients")) {
             parseIngredients(ele);
+        }
+    }
+
+    private void parseDefaultIngredients(JsonObject ele) {
+
+        if (ele == null || !ele.isJsonObject())
+            throw new JsonSyntaxException("Default ingredients must be objects");
+
+        JsonObject json = (JsonObject)ele;
+
+        for (JsonElement ele2 : JsonUtils.getJsonArray(json, "items")) {
+
+            if (ele2 == null || !ele.isJsonObject())
+                throw new JsonSyntaxException("Recipe items must be object");
+
+            JsonObject json2 = (JsonObject) ele2;
+            ItemStack itemStack = getItemStack(json2);
+            if (!itemStack.isEmpty())
+                Woot.spawnRecipeRepository.addDefaultItem(itemStack);
+        }
+
+        for (JsonElement ele2 : JsonUtils.getJsonArray(json, "fluids")) {
+
+            if (ele2 == null | !ele.isJsonObject())
+                throw new JsonSyntaxException("Recipe fluids must be object");
+
+            JsonObject json2 = (JsonObject)ele2;
+            FluidStack fluidStack = getFluidStack(json2);
+            if (fluidStack != null && fluidStack.amount > 0)
+                Woot.spawnRecipeRepository.addDefaultFluid(fluidStack);
         }
     }
 

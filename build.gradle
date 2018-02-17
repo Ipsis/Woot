@@ -78,7 +78,7 @@ minecraft {
 dependencies {
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
-    //deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
+    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
     deobfCompile "cofh:RedstoneFlux:${config.rf_version}"
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-${config.guideapi_version}"
 }

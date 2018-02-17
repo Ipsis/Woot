@@ -3,6 +3,7 @@
     "enchanted_book": "ipsis.woot.crafting.ingredient.EnchantedBookIngredientFactory"
   },
   "conditions": {
-    "vanilla_die_crafting": "ipsis.woot.crafting.VanillaDieCraftingConditionFactory"
+    "vanilla_die_crafting": "ipsis.woot.crafting.VanillaDieCraftingConditionFactory",
+    "xp_upgrade": "ipsis.woot.crafting.XpUpgradeConditionFactory"
   }
 }

@@ -44,4 +44,18 @@ public class SpawnRecipe implements ISpawnRecipe {
 
         fluids.add(fluidStack.copy());
     }
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("efficiency:").append(efficiency);
+        for (ItemStack itemStack : items)
+            sb.append(":").append(itemStack.getDisplayName()).append("x").append(itemStack.getCount());
+
+        for (FluidStack fluidStack : fluids)
+            sb.append(":").append(fluidStack.getLocalizedName()).append("x").append(fluidStack.amount).append("mb");
+
+        return sb.toString();
+    }
 }

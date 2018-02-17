@@ -1,4 +1,9 @@
 {
+  "conditions": [
+    {
+      "type": "woot:xp_upgrade"
+    }
+  ],
   "result": {
     "item": "woot:upgrade",
     "data": 7

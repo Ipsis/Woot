@@ -178,6 +178,9 @@ public class FarmSetup implements IFarmSetup {
     public List<IFluidHandler> getConnectedImportTanks() {
         List<IFluidHandler> tanks = new ArrayList<>();
 
+        if (importBlockPos == null)
+            return tanks;
+
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
             if (world.isBlockLoaded(importBlockPos.offset(f))) {
                 TileEntity te = world.getTileEntity(importBlockPos.offset(f));
@@ -193,6 +196,10 @@ public class FarmSetup implements IFarmSetup {
     @Override
     public List<IFluidHandler> getConnectedExportTanks() {
         List<IFluidHandler> tanks = new ArrayList<>();
+
+        if (exportBlockPos == null)
+            return tanks;
+
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
             if (world.isBlockLoaded(exportBlockPos.offset(f))) {
                 TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
@@ -209,6 +216,9 @@ public class FarmSetup implements IFarmSetup {
     public List<IItemHandler> getConnectedExportChests() {
 
         List<IItemHandler> chests = new ArrayList<>();
+
+        if (exportBlockPos == null)
+            return chests;
 
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
             if (world.isBlockLoaded(exportBlockPos.offset(f))) {
@@ -227,6 +237,9 @@ public class FarmSetup implements IFarmSetup {
     public List<IItemHandler> getConnectedImportChests() {
 
         List<IItemHandler> chests = new ArrayList<>();
+
+        if (importBlockPos == null)
+            return chests;
 
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
             if (world.isBlockLoaded(importBlockPos.offset(f))) {

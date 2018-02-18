@@ -16,7 +16,7 @@ public class ScannedFarm2 {
     public ScannedFarmUpgrade upgrades = new ScannedFarmUpgrade();
 
     public boolean isValidStructure() {
-        return base.tier != null && controller.isValid();
+        return base.tier != null && controller.isValid() && remote.isValid();
     }
 
     public Set<FarmScanner2.BadFarmBlockInfo> getBadBlocks() { return badBlocks; }

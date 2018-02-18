@@ -155,6 +155,9 @@ public class FarmSetup implements IFarmSetup {
     @Override
     public void setPowerCellBlockPos(BlockPos blockPos) {
 
+        if (blockPos == null)
+            powerStation = null;
+
         TileEntity te = world.getTileEntity(blockPos);
         if (te instanceof TileEntityMobFactoryCell) {
             powerStation = ((TileEntityMobFactoryCell) te).getPowerStation();

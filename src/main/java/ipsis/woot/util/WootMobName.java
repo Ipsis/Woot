@@ -66,6 +66,11 @@ public class WootMobName {
         return this.entityKey.equalsIgnoreCase("minecraft:ender_dragon");
     }
 
+    public boolean isChaosGuardian() {
+
+        return this.entityKey.equalsIgnoreCase("draconicevolution:chaosguardian");
+    }
+
     public ResourceLocation getResourceLocation() {
 
         return new ResourceLocation(entityKey);

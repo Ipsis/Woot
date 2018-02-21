@@ -164,7 +164,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
     private static boolean hasCustomDropsOnly(WootMobName wootMobName) {
 
-        if (wootMobName.isEnderDragon())
+        if (wootMobName.isEnderDragon() || wootMobName.isChaosGuardian())
             return true;
 
         return false;

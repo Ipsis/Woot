@@ -17,7 +17,6 @@ public class InternalPolicyLoader {
     private static final String[] BLACKLIST_ENTITIES_FROM_MODS = {
             "cyberware",
             "withercrumbs",
-            "draconicevolution"
     };
 
     // Entities that don't work well with Woot

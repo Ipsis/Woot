@@ -1,6 +1,9 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
+import ipsis.woot.multiblock.EnumMobFactoryModule;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.util.CommandHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -22,6 +25,7 @@ public class CommandDump extends CommandTreeBase {
         addSubcommand(new CommandDumpTartarus());
         addSubcommand(new CommandDumpLearning());
         addSubcommand(new CommandDumpPolicy());
+        addSubcommand(new CommandDumpStructure());
     }
 
     @Override
@@ -61,6 +65,40 @@ public class CommandDump extends CommandTreeBase {
             mobs = Woot.customDropsRepository.getAllMobs();
             for (String mob : mobs)
                 CommandHelper.display(sender, mob);
+        }
+    }
+
+    public static class CommandDumpStructure extends CommandBase {
+
+        @Override
+        public String getName() {
+
+            return "structure";
+        }
+
+        @Override
+        public String getUsage(ICommandSender sender) {
+
+            return "commands.woot.dump.structure.usage";
+        }
+
+        @Override
+        public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
+
+            for (EnumMobFactoryTier tier : EnumMobFactoryTier.VALID_TIERS) {
+                StringBuilder sb = new StringBuilder();
+                for (EnumMobFactoryModule m : EnumMobFactoryModule.VALUES) {
+
+                    int c = Woot.factoryPatternRepository.getBlockCount(tier, m);
+                    if (c > 0) {
+                        String s = m.getName() + ":" + c + " ";
+                        sb.append(s);
+                    }
+                }
+
+                String s = tier.getTranslated("%s") + " " + sb.toString();
+                CommandHelper.display(sender, s);
+            }
         }
     }
 

@@ -177,6 +177,10 @@ public class FactoryPatternRepository {
         return tiers.get(tier).getHeight();
     }
 
+    public int getBlockCount(EnumMobFactoryTier tier, EnumMobFactoryModule m) {
+
+        return tiers.get(tier).getBlockCount(m);
+    }
 
     private class FactoryTierPattern {
 

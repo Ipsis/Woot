@@ -79,6 +79,43 @@
       ]
     },
     {
+      "mobName": "draconicevolution:chaosguardian",
+      "configs": [
+        {
+          "tag": "death_xp",
+          "value": 5000
+        },
+        {
+          "tag": "spawn_units",
+          "value": 5000
+        },
+        {
+          "tag": "factory_tier",
+          "value": 4
+        },
+        {
+          "tag": "spawn_ticks",
+          "value": 12000
+        },
+        {
+          "tag": "mass_1_param",
+          "value": 1
+        },
+        {
+          "tag": "mass_2_param",
+          "value": 1
+        },
+        {
+          "tag": "mass_3_param",
+          "value": 2
+        },
+        {
+          "tag": "mass_fx",
+          "value": 2
+        }
+      ]
+    },
+    {
       "mobName": "minecraft:wither",
       "configs": [
         {

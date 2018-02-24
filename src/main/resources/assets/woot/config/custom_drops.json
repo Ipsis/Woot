@@ -33,6 +33,33 @@
           "chances": [ 20, 40, 60, 80 ]
         }
       ]
+    },
+    {
+      "mobName": "draconicevolution:chaosguardian",
+      "drops": [
+        {
+          "drop": {
+            "item": "draconicevolution:chaos_shard",
+            "data": 0
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 10, 20, 30, 40 ]
+        },
+        {
+          "drop": {
+            "item": "draconicevolution:dragon_heart"
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 10, 20, 33, 66 ]
+        },
+        {
+          "drop": {
+            "item": "draconicevolution:draconium_dust"
+          },
+          "sizes": [ 50, 50, 50, 100 ],
+          "chances": [ 10, 15, 20, 25 ]
+        }
+      ]
     }
   ]
 }

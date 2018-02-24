@@ -25,6 +25,16 @@
         }
       ],
       "fluids": []
+    },
+    {
+      "mobName": "draconicevolution:chaosguardian",
+      "items": [
+        {
+          "item": "draconicevolution:awakened_core",
+          "count": 1
+        }
+      ],
+      "fluids": [ ]
     }
   ]
 }

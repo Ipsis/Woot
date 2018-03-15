@@ -39,6 +39,11 @@ public class ElementStackBox extends ElementBase {
         return displayItemStack;
     }
 
+    public void setHeader(String header) {
+
+        this.header = header;
+    }
+
     public DisplayFluidStack addFluidStack(FluidStack fluidStack) {
 
         int x = contentX + (currCol * WidgetFluidStack.getWidth());

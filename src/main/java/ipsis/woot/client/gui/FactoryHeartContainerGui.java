@@ -123,6 +123,9 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 recipeElement.addString(TextFormatting.GREEN + "Power: " + s1 + " @ " +  s2);
                 recipeElement.addString(TextFormatting.GREEN + "Time: " + info.recipeTotalTime + " ticks");
 
+                if (info.missingIngredients)
+                    ingredientElement.setHeader("Ingredients - missing");
+
                 for (ItemStack itemStack : info.ingredientsItems) {
                     DisplayItemStack displayItemStack = ingredientElement.addItemStack(itemStack);
                     displayItemStack.appendTooltip(itemStack.getCount() + " per mob");
@@ -135,7 +138,7 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
 
                 for (ItemStack itemStack : info.drops) {
                     DisplayItemStack displayItemStack = dropsElement.addItemStack(itemStack);
-                    displayItemStack.appendTooltip(itemStack.getCount() + "%");
+                    displayItemStack.appendTooltip("Chance: " + itemStack.getCount() + "%");
                 }
 
                 progressElementPower.setMax(info.powerCapacity);

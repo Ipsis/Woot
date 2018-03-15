@@ -174,7 +174,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 lootLearner.tick(tickTracker, getWorld(), getPos(), farmSetup);
                 recipeProgressTracker.tick();
                 if (recipeProgressTracker.isComplete()) {
-                    if (spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs())) {
+                    if (spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs(), false)) {
                         Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
                         storedXp = farmSetup.getStoredXp();
                     }
@@ -320,7 +320,10 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
             for (FluidStack fluidStack : spawnRecipe.getFluids())
                 info.ingredientsFluids.add(fluidStack.copy());
+
+            info.missingIngredients = !spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs(), false);
         }
+
 
         // Say everything is okay
         info.setValid();

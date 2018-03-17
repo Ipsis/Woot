@@ -129,6 +129,13 @@ info.woot.structure.tier_ii_cap=Yellow guide block
 info.woot.structure.tier_iii_cap=Cyan guide block
 info.woot.structure.tier_iv_cap=Lime guide block
 
+info.woot.hammer.mode_0=Validate Tier I
+info.woot.hammer.mode_1=Validate Tier II
+info.woot.hammer.mode_2=Validate Tier III
+info.woot.hammer.mode_3=Validate Tier IV
+info.woot.hammer.mode_4=Validate imports
+info.woot.hammer.mode_5=Validate exports
+
 ###########################################################
 # Enchantments
 ###########################################################

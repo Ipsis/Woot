@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -180,8 +181,9 @@ public class FarmSetup implements IFarmSetup {
 
     @Nonnull
     @Override
-    public List<IFluidHandler> getConnectedImportTanks() {
-        List<IFluidHandler> tanks = new ArrayList<>();
+    public List<TileEntity> getConnectedImportTanksTiles() {
+
+        List<TileEntity> tanks = new ArrayList<>();
 
         if (importBlockPos == null)
             return tanks;
@@ -189,8 +191,63 @@ public class FarmSetup implements IFarmSetup {
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
             if (world.isBlockLoaded(importBlockPos.offset(f))) {
                 TileEntity te = world.getTileEntity(importBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
-                    tanks.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
+                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite())) {
+                    IFluidHandler iFluidHandler =  te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite());
+                    IFluidTankProperties[] tankProperties = iFluidHandler.getTankProperties();
+                    if (tankProperties != null) {
+                        for (IFluidTankProperties p : tankProperties) {
+                            if (p.canDrain()) {
+                                tanks.add(te);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        return tanks;
+    }
+
+    @Nonnull
+    @Override
+    public List<IFluidHandler> getConnectedImportTanks() {
+
+        List<TileEntity> tiles = getConnectedImportTanksTiles();
+        List<IFluidHandler> tanks = new ArrayList<>();
+
+        if (!tiles.isEmpty()) {
+            for (TileEntity te : tiles)
+                tanks.add((IFluidHandler) te);
+        }
+
+        return tanks;
+    }
+
+    @Nonnull
+    @Override
+    public List<TileEntity> getConnectedExportTanksTiles() {
+
+        List<TileEntity> tanks = new ArrayList<>();
+
+        if (exportBlockPos == null)
+            return tanks;
+
+        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+            if (world.isBlockLoaded(exportBlockPos.offset(f))) {
+                TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
+                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite())) {
+                    IFluidHandler iFluidHandler =  te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite());
+                    IFluidTankProperties[] tankProperties = iFluidHandler.getTankProperties();
+                    if (tankProperties != null) {
+                        for (IFluidTankProperties p : tankProperties) {
+                            if (p.canFill()) {
+                                tanks.add(te);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
 
         }
@@ -200,27 +257,23 @@ public class FarmSetup implements IFarmSetup {
     @Nonnull
     @Override
     public List<IFluidHandler> getConnectedExportTanks() {
+
+        List<TileEntity> tiles = getConnectedExportTanksTiles();
         List<IFluidHandler> tanks = new ArrayList<>();
 
-        if (exportBlockPos == null)
-            return tanks;
-
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            if (world.isBlockLoaded(exportBlockPos.offset(f))) {
-                TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
-                    tanks.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
-            }
-
+        if (!tiles.isEmpty()) {
+            for (TileEntity te : tiles)
+                tanks.add((IFluidHandler) te);
         }
+
         return tanks;
     }
 
     @Nonnull
     @Override
-    public List<IItemHandler> getConnectedExportChests() {
+    public List<TileEntity> getConnectedExportChestsTiles() {
 
-        List<IItemHandler> chests = new ArrayList<>();
+        List<TileEntity> chests = new ArrayList<>();
 
         if (exportBlockPos == null)
             return chests;
@@ -228,8 +281,49 @@ public class FarmSetup implements IFarmSetup {
         for (EnumFacing f : EnumFacing.HORIZONTALS) {
             if (world.isBlockLoaded(exportBlockPos.offset(f))) {
                 TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
-                    chests.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
+                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
+                    IItemHandler iItemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
+                    if (iItemHandler != null)
+                        chests.add(te);
+                }
+            }
+        }
+
+        return chests;
+    }
+
+    @Nonnull
+    @Override
+    public List<IItemHandler> getConnectedExportChests() {
+
+        List<TileEntity> tiles = getConnectedExportChestsTiles();
+        List<IItemHandler> chests = new ArrayList<>();
+
+        if (!tiles.isEmpty()) {
+            for (TileEntity te : tiles)
+                chests.add((IItemHandler)te);
+        }
+
+        return chests;
+    }
+
+    @Nonnull
+    @Override
+    public List<TileEntity> getConnectedImportChestsTiles() {
+
+        List<TileEntity> chests = new ArrayList<>();
+
+        if (importBlockPos == null)
+            return chests;
+
+        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+            if (world.isBlockLoaded(importBlockPos.offset(f))) {
+                TileEntity te = world.getTileEntity(importBlockPos.offset(f));
+                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
+                    IItemHandler iItemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
+                    if (iItemHandler != null)
+                        chests.add(te);
+                }
             }
 
         }
@@ -241,18 +335,12 @@ public class FarmSetup implements IFarmSetup {
     @Override
     public List<IItemHandler> getConnectedImportChests() {
 
+        List<TileEntity> tiles = getConnectedImportChestsTiles();
         List<IItemHandler> chests = new ArrayList<>();
 
-        if (importBlockPos == null)
-            return chests;
-
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            if (world.isBlockLoaded(importBlockPos.offset(f))) {
-                TileEntity te = world.getTileEntity(importBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
-                    chests.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
-            }
-
+        if (!tiles.isEmpty()) {
+            for (TileEntity te : tiles)
+                chests.add((IItemHandler)te);
         }
 
         return chests;

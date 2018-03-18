@@ -61,7 +61,7 @@ public class Calculator implements IPowerCalculator {
          * Rate decreases the real time to spawn
          */
         powerValues.factoryCost = tierPowerPerTick * spawnTicks;
-        powerValues.mobCost = spawnUnits * powerPerSpawnUnit * spawnTicks;
+        powerValues.mobCost = (long)spawnUnits * (long)powerPerSpawnUnit * (long)spawnTicks;
 
         for (AbstractUpgradePowerCalc calc : powerCalcList)
             calc.calculate(farmSetup, powerValues, spawnTicks);

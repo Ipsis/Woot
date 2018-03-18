@@ -34,6 +34,7 @@ public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "mobs:" + mobCount + " @ cost:" + mobCost);
 
         if (!farmSetup.hasUpgrade(EnumFarmUpgrade.MASS)) {
+            // This is because we use this calculator for spawning a single mob, even when the upgrade isn't present
             powerValues.upgradeCost += mobCost;
             return;
         }

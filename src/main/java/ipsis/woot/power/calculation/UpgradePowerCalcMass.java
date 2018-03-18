@@ -30,7 +30,7 @@ public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
     public void calculate(IFarmSetup farmSetup, Calculator.PowerValues powerValues, int spawnTicks) {
 
         int mobCount = farmSetup.getNumMobs();
-        int mobCost = powerValues.mobCost;
+        long mobCost = powerValues.mobCost;
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "mobs:" + mobCount + " @ cost:" + mobCost);
 
         if (!farmSetup.hasUpgrade(EnumFarmUpgrade.MASS)) {
@@ -39,7 +39,7 @@ public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
         }
 
         // Add the cost of running the upgrade
-        int upgrade = spawnTicks * Woot.wootConfiguration.getInteger(
+        long upgrade = spawnTicks * Woot.wootConfiguration.getInteger(
                         farmSetup.getWootMobName(),
                         ConfigKeyHelper.getRatePowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE)));
         powerValues.upgradeCost += upgrade;
@@ -47,7 +47,7 @@ public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "upgrade:" + upgrade);
 
         // Add the impact of spawning more mobs
-        int cost = 0;
+        long cost = 0;
         EnumMassScalar scalar = EnumMassScalar.getFromIndex(Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), EnumConfigKey.MASS_FX));
         if (scalar == EnumMassScalar.LINEAR) {
             cost = (mobCost * mobCount);

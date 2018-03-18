@@ -14,7 +14,7 @@ public class UpgradePowerCalcEfficiency extends  AbstractUpgradePowerCalc {
         if (!farmSetup.hasUpgrade(EnumFarmUpgrade.EFFICIENCY))
             return;
 
-        int cost = spawnTicks * Woot.wootConfiguration.getInteger(
+        long cost = spawnTicks * Woot.wootConfiguration.getInteger(
                 farmSetup.getWootMobName(),
                 ConfigKeyHelper.getEffPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.EFFICIENCY)));
         powerValues.upgradeCost += cost;

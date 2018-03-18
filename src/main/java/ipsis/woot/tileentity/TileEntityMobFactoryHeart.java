@@ -321,7 +321,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             for (FluidStack fluidStack : spawnRecipe.getFluids())
                 info.ingredientsFluids.add(fluidStack.copy());
 
-            info.missingIngredients = !spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs(), false);
+            info.missingIngredients = !spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs(), true);
         }
 
 

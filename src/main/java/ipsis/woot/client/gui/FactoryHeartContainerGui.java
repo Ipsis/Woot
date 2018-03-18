@@ -4,6 +4,7 @@ import ipsis.woot.client.gui.element.*;
 import ipsis.woot.client.gui.inventory.FactoryHeartContainer;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.network.packets.PacketGetFarmInfo;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
@@ -123,8 +124,10 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 recipeElement.addString(TextFormatting.GREEN + "Power: " + s1 + " @ " +  s2);
                 recipeElement.addString(TextFormatting.GREEN + "Time: " + info.recipeTotalTime + " ticks");
 
-                if (info.missingIngredients)
-                    ingredientElement.setHeader("Ingredients - missing");
+                if (info.missingIngredients) {
+                    LogHelper.info("Missing ingredients");
+                    ingredientElement.setShowFlag(true);
+                }
 
                 for (ItemStack itemStack : info.ingredientsItems) {
                     DisplayItemStack displayItemStack = ingredientElement.addItemStack(itemStack);

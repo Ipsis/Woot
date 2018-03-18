@@ -14,7 +14,7 @@ public class UpgradePowerCalcDecapitate extends AbstractUpgradePowerCalc {
         if (!farmSetup.hasUpgrade(EnumFarmUpgrade.DECAPITATE))
             return;
 
-        int cost = spawnTicks * Woot.wootConfiguration.getInteger(
+        long cost = spawnTicks * Woot.wootConfiguration.getInteger(
                         farmSetup.getWootMobName(),
                         ConfigKeyHelper.getDecapPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
         powerValues.upgradeCost += cost;

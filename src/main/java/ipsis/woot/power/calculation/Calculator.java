@@ -61,7 +61,7 @@ public class Calculator implements IPowerCalculator {
          * Rate decreases the real time to spawn
          */
         powerValues.factoryCost = tierPowerPerTick * spawnTicks;
-        powerValues.mobCost = spawnUnits * powerPerSpawnUnit * spawnTicks;
+        powerValues.mobCost = (long)spawnUnits * (long)powerPerSpawnUnit * (long)spawnTicks;
 
         for (AbstractUpgradePowerCalc calc : powerCalcList)
             calc.calculate(farmSetup, powerValues, spawnTicks);
@@ -69,7 +69,7 @@ public class Calculator implements IPowerCalculator {
         /**
          * The calculator converts mobCost into upgradeCost as it has to handle the mass upgrade
          */
-        int totalPower = powerValues.factoryCost +
+        long totalPower = powerValues.factoryCost +
                 powerValues.upgradeCost;
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
@@ -81,7 +81,7 @@ public class Calculator implements IPowerCalculator {
          * Efficiency saves you a percentage of the total
          */
         if (powerValues.efficiency != 0)
-            totalPower -= ((int) ((totalPower / 100.0F) * powerValues.efficiency));
+            totalPower -= ((long) ((totalPower / 100.0F) * powerValues.efficiency));
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
             "efficiency:" + powerValues.efficiency  +  "=" + totalPower);
@@ -99,18 +99,27 @@ public class Calculator implements IPowerCalculator {
         if (finalSpawnTicks <= 0)
             finalSpawnTicks = 1;
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
-                "ticks:" + finalSpawnTicks + " total:" + totalPower);
-        return new PowerRecipe(finalSpawnTicks, totalPower);
+        // Internal power is 32-bit so cap it
+        int totalPower32;
+        if (totalPower > Integer.MAX_VALUE)
+            totalPower32 = Integer.MAX_VALUE;
+        else
+            totalPower32 = (int)totalPower;
+
+        PowerRecipe powerRecipe = new PowerRecipe(finalSpawnTicks, totalPower32);
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "recipe: " + powerRecipe);
+
+        return powerRecipe;
     }
 
     public class PowerValues {
 
-        public int factoryCost = 0;
-        public int mobCost = 0;
-        public int upgradeCost = 0;
-        public int efficiency = 0; /* default to no saving */
-        public int rate = 0; /* default to no saving */
+        public long factoryCost = 0;
+        public long mobCost = 0;
+        public long upgradeCost = 0;
+        public long efficiency = 0; /* default to no saving */
+        public long rate = 0; /* default to no saving */
 
         @Override
         public String toString() {

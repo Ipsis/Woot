@@ -99,14 +99,7 @@ public class Calculator implements IPowerCalculator {
         if (finalSpawnTicks <= 0)
             finalSpawnTicks = 1;
 
-        // Internal power is 32-bit so cap it
-        int totalPower32;
-        if (totalPower > Integer.MAX_VALUE)
-            totalPower32 = Integer.MAX_VALUE;
-        else
-            totalPower32 = (int)totalPower;
-
-        PowerRecipe powerRecipe = new PowerRecipe(finalSpawnTicks, totalPower32);
+        PowerRecipe powerRecipe = new PowerRecipe(finalSpawnTicks, totalPower);
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "recipe: " + powerRecipe);
 

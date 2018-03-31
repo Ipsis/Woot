@@ -65,19 +65,21 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
        super.writeToNBT(compound);
 
        if (farmStructure != null && farmStructure.isFormed())
-           compound.setInteger("wootConsumedPower", recipeProgressTracker.getConsumedPower());
+           compound.setLong("wootConsumedPowerLong", recipeProgressTracker.getConsumedPower());
 
        compound.setInteger("storedXp", storedXp);
        return compound;
     }
 
-    private int nbtConsumedPower = 0;
+    private long nbtConsumedPower = 0;
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         if (compound.hasKey("wootConsumedPower"))
             nbtConsumedPower = compound.getInteger("wootConsumedPower");
+        else if (compound.hasKey("wootConsumedPowerLong"))
+            nbtConsumedPower = compound.getLong("wootConsumedPowerLong");
 
         storedXp = compound.getInteger("storedXp");
     }

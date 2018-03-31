@@ -47,11 +47,16 @@ public class TOPUIInfoConvertors {
             /**
              * Recipe
              */
-            String total = ElementProgress.format(farm.recipeTotalPower, NumberFormat.COMPACT, "RF");
+            NumberFormat f = NumberFormat.COMPACT;
+            if (farm.recipeTotalPower > Integer.MAX_VALUE)
+                f = NumberFormat.COMMAS;
+
+            String total = ElementProgress.format(farm.recipeTotalPower, f, "RF");
             String perTick = ElementProgress.format(farm.recipePowerPerTick, NumberFormat.COMPACT, "RF/tick");
 
-            probeInfo.text(TextFormatting.GREEN + total + " @ " + perTick);
-            probeInfo.text(TextFormatting.GREEN + Integer.toString(farm.recipeTotalTime) + " ticks");
+            probeInfo.text(TextFormatting.GREEN + "Total: " + total);
+            probeInfo.text(TextFormatting.GREEN + "Per Tick: " + perTick);
+            probeInfo.text(TextFormatting.GREEN + "Time: " + Integer.toString(farm.recipeTotalTime) + " ticks");
 
             /**
              * Ingredients

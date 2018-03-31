@@ -12,10 +12,10 @@ public class FarmUIInfo {
     public EnumMobFactoryTier tier;
     public String mobName;
     public boolean isRunning;
-    public int recipeTotalPower;
+    public long recipeTotalPower;
     public int recipeTotalTime;
     public int recipePowerPerTick;
-    public int consumedPower;
+    public long consumedPower;
     public boolean isValid = false;
     public int powerStored;
     public int powerCapacity;

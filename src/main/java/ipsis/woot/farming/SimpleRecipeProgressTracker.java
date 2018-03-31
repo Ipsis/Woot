@@ -9,7 +9,7 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
 
     private IPowerStation powerStation;
     private PowerRecipe powerRecipe;
-    private int consumedPower = 0;
+    private long consumedPower = 0;
 
     /**
      * IRecipeProgressTracker
@@ -33,7 +33,7 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
     @Override
     public int getProgress() {
 
-        int p = (int)((100.0F/ (float)powerRecipe.getTotalPower()) * (float)consumedPower);
+        int p = (int)((100.0F/ (double)powerRecipe.getTotalPower()) * (double) consumedPower);
         return MathHelper.clamp(p, 0, 100);
     }
 
@@ -54,13 +54,13 @@ public class SimpleRecipeProgressTracker implements IRecipeProgressTracker {
     }
 
     @Override
-    public int getConsumedPower() {
+    public long getConsumedPower() {
 
         return consumedPower;
     }
 
     @Override
-    public void setConsumedPower(int power) {
+    public void setConsumedPower(long power) {
 
         this.consumedPower = power;
     }

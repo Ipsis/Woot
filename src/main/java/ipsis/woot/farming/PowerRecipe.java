@@ -8,22 +8,25 @@ public class PowerRecipe {
 
     private int ticks;
 
-    public int getTotalPower() {
+    public long getTotalPower() {
         return totalPower;
     }
 
-    private int totalPower;
+    private long totalPower;
 
     public int getPowerPerTick() {
 
-        int perTick = totalPower / ticks;
+        long perTick = totalPower / ticks;
         if (totalPower % ticks > 0)
             perTick++;
 
-        return perTick;
+        if (perTick > Integer.MAX_VALUE)
+            perTick = Integer.MAX_VALUE;
+
+        return (int)perTick;
     }
 
-    public PowerRecipe(int ticks, int totalPower) {
+    public PowerRecipe(int ticks, long totalPower) {
 
         this.ticks = ticks;
         this.totalPower = totalPower;

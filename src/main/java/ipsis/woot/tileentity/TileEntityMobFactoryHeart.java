@@ -10,7 +10,7 @@ import ipsis.woot.loot.ILootLearner;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.loot.schools.TartarusSchool;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.power.calculation.Calculator;
+import ipsis.woot.power.calculation.BigIntegerCalculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import ipsis.woot.util.LootHelper;
@@ -55,7 +55,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         spawnRecipeConsumer = new SpawnRecipeConsumer();
         spawnRecipe = new SpawnRecipe();
-        powerCalculator = new Calculator();
+        powerCalculator = new BigIntegerCalculator();
         recipeProgressTracker = new SimpleRecipeProgressTracker();
         lootLearner = new TartarusSchool();
     }
@@ -65,19 +65,21 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
        super.writeToNBT(compound);
 
        if (farmStructure != null && farmStructure.isFormed())
-           compound.setInteger("wootConsumedPower", recipeProgressTracker.getConsumedPower());
+           compound.setLong("wootConsumedPowerLong", recipeProgressTracker.getConsumedPower());
 
        compound.setInteger("storedXp", storedXp);
        return compound;
     }
 
-    private int nbtConsumedPower = 0;
+    private long nbtConsumedPower = 0;
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
         if (compound.hasKey("wootConsumedPower"))
             nbtConsumedPower = compound.getInteger("wootConsumedPower");
+        else if (compound.hasKey("wootConsumedPowerLong"))
+            nbtConsumedPower = compound.getLong("wootConsumedPowerLong");
 
         storedXp = compound.getInteger("storedXp");
     }

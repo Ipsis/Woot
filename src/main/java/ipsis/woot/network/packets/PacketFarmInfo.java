@@ -23,7 +23,7 @@ public class PacketFarmInfo implements IMessage {
 
         farmUIInfo = new FarmUIInfo();
         farmUIInfo.isValid = true;
-        farmUIInfo.recipeTotalPower = buf.readInt();
+        farmUIInfo.recipeTotalPower = buf.readLong();
         farmUIInfo.recipePowerPerTick = buf.readInt();
         farmUIInfo.recipeTotalTime = buf.readInt();
         farmUIInfo.mobCount = buf.readInt();
@@ -55,7 +55,7 @@ public class PacketFarmInfo implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
 
-        buf.writeInt(farmUIInfo.recipeTotalPower);
+        buf.writeLong(farmUIInfo.recipeTotalPower);
         buf.writeInt(farmUIInfo.recipePowerPerTick);
         buf.writeInt(farmUIInfo.recipeTotalTime);
         buf.writeInt(farmUIInfo.mobCount);

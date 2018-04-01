@@ -39,12 +39,14 @@ public class BigIntegerCalculator implements IPowerCalculator {
         int spawnTicks = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.SPAWN_TICKS);
         int spawnUnits = Woot.wootConfiguration.getSpawnCost(world, wootMobName);
         int powerPerSpawnUnit = Woot.wootConfiguration.getInteger(wootMobName, EnumConfigKey.POWER_PER_UNIT);
+        int mobCount = farmSetup.getNumMobs();
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "####");
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "tierPowerPerTick: " + tierPowerPerTick);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "spawnUnits: " + spawnUnits);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "powerPerSpawnUnit: " + powerPerSpawnUnit);
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "spawnTicks: " + spawnTicks);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "number of mobs: " + mobCount);
 
         /**
          * Power calculation has multiple components
@@ -82,7 +84,6 @@ public class BigIntegerCalculator implements IPowerCalculator {
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "single mob: " + mobCost);
 
         // Initial mob cost
-        int mobCount = farmSetup.getNumMobs();
         BigInteger totalMobCost = BigInteger.ZERO;
         if (v.mass == EnumMassMultiplier.X_BASE_2) {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "2^(count - 1)");
@@ -106,7 +107,7 @@ public class BigIntegerCalculator implements IPowerCalculator {
 
         } else { // LINEAR
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "linear");
-            totalMobCost = mobCost.multiply(mobCost);
+            totalMobCost = mobCost.multiply(BigInteger.valueOf(mobCount));
         }
 
         factoryCost = factoryCost.add(totalMobCost);

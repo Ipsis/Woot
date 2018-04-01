@@ -25,6 +25,7 @@ import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
 import ipsis.woot.policy.PolicyRepository;
+import ipsis.woot.power.calculation.upgrades.CalculatorRepository;
 import ipsis.woot.proxy.CommonProxy;
 import ipsis.woot.reference.Files;
 import ipsis.woot.reference.Reference;
@@ -63,6 +64,7 @@ public class Woot {
     public static TartarusManager tartarusManager = new TartarusManager();
     public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
     public static FactoryPatternRepository factoryPatternRepository = new FactoryPatternRepository();
+    public static CalculatorRepository calculatorRepository = new CalculatorRepository();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;

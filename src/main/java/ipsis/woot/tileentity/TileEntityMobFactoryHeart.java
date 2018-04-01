@@ -10,7 +10,7 @@ import ipsis.woot.loot.ILootLearner;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.loot.schools.TartarusSchool;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.power.calculation.Calculator;
+import ipsis.woot.power.calculation.BigIntegerCalculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import ipsis.woot.util.LootHelper;
@@ -55,7 +55,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         spawnRecipeConsumer = new SpawnRecipeConsumer();
         spawnRecipe = new SpawnRecipe();
-        powerCalculator = new Calculator();
+        powerCalculator = new BigIntegerCalculator();
         recipeProgressTracker = new SimpleRecipeProgressTracker();
         lootLearner = new TartarusSchool();
     }

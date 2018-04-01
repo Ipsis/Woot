@@ -18,7 +18,7 @@ public class UpgradePowerCalcRate extends AbstractUpgradePowerCalc {
                         farmSetup.getWootMobName(),
                         ConfigKeyHelper.getRatePowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE)));
 
-        powerValues.upgradeCost += cost;
+        updateCost(cost, powerValues);
         powerValues.rate = Woot.wootConfiguration.getInteger(
                         farmSetup.getWootMobName(),
                         ConfigKeyHelper.getRateParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE)));

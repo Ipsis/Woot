@@ -9,6 +9,7 @@ import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.world.World;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,17 +61,25 @@ public class Calculator implements IPowerCalculator {
          * Efficiency decreases the total power needed
          * Rate decreases the real time to spawn
          */
-        powerValues.factoryCost = tierPowerPerTick * spawnTicks;
-        powerValues.mobCost = (long)spawnUnits * (long)powerPerSpawnUnit * (long)spawnTicks;
+        BigInteger factoryCost = BigInteger.valueOf(tierPowerPerTick);
+        factoryCost = factoryCost.multiply(BigInteger.valueOf(spawnTicks));
 
+        BigInteger mobCost = BigInteger.valueOf(spawnUnits);
+        mobCost = mobCost.multiply(BigInteger.valueOf(powerPerSpawnUnit));
+        mobCost = mobCost.multiply(BigInteger.valueOf(spawnTicks));
+
+        powerValues.factoryCost = factoryCost.longValue();
+        powerValues.mobCost = mobCost.longValue();
         for (AbstractUpgradePowerCalc calc : powerCalcList)
             calc.calculate(farmSetup, powerValues, spawnTicks);
 
         /**
          * The calculator converts mobCost into upgradeCost as it has to handle the mass upgrade
          */
-        long totalPower = powerValues.factoryCost +
-                powerValues.upgradeCost;
+        BigInteger bigTotalPower = BigInteger.valueOf(powerValues.factoryCost);
+        bigTotalPower.add(BigInteger.valueOf(powerValues.upgradeCost));
+
+        long totalPower = bigTotalPower.longValue();
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate",
                 "PowerValues " + powerValues);

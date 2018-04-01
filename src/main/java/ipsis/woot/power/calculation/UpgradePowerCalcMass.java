@@ -7,6 +7,8 @@ import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
 
+import java.math.BigInteger;
+
 public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
 
     enum EnumMassScalar {
@@ -43,27 +45,46 @@ public class UpgradePowerCalcMass extends AbstractUpgradePowerCalc{
         long upgrade = spawnTicks * Woot.wootConfiguration.getInteger(
                         farmSetup.getWootMobName(),
                         ConfigKeyHelper.getRatePowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE)));
-        powerValues.upgradeCost += upgrade;
+        updateCost(upgrade, powerValues);
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "upgrade:" + upgrade);
 
         // Add the impact of spawning more mobs
-        long cost = 0;
+
         EnumMassScalar scalar = EnumMassScalar.getFromIndex(Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), EnumConfigKey.MASS_FX));
         if (scalar == EnumMassScalar.LINEAR) {
-            cost = (mobCost * mobCount);
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "linear cost:" + cost);
+            BigInteger cost = BigInteger.valueOf(mobCost);
+            cost = cost.multiply(BigInteger.valueOf(mobCount));
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "linear cost:" + cost.longValue());
+            cost = cost.add(BigInteger.valueOf(powerValues.upgradeCost));
+            powerValues.upgradeCost = cost.longValue();
         } else if (scalar == EnumMassScalar.X_BASE_2) {
-            for (int i = 0; i < mobCount; i++)
-                cost += mobCost * (int) Math.pow(2, i);
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "base2 cost:" + cost);
+
+            BigInteger totalCost = BigInteger.valueOf(0);
+            for (int i = 0; i < mobCount; i++) {
+                BigInteger cost = BigInteger.valueOf(mobCost);
+                cost = cost.multiply(BigInteger.valueOf((int)Math.pow(2,i)));
+                totalCost = totalCost.add(cost);
+            }
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "base2 cost:" + totalCost.longValue());
+            totalCost = totalCost.add(BigInteger.valueOf(powerValues.upgradeCost));
+            powerValues.upgradeCost = totalCost.longValue();
+
         } else if (scalar == EnumMassScalar.X_BASE_3) {
-            for (int i = 0; i < mobCount; i++)
-                cost += mobCost * (int) Math.pow(3, i);
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "base3 cost:" + cost);
+
+            BigInteger totalCost = BigInteger.valueOf(0);
+            for (int i = 0; i < mobCount; i++) {
+                BigInteger cost = BigInteger.valueOf(mobCost);
+                cost = cost.multiply(BigInteger.valueOf((int)Math.pow(3,i)));
+                totalCost = totalCost.add(cost);
+            }
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "base3 cost:" + totalCost.longValue());
+            totalCost = totalCost.add(BigInteger.valueOf(powerValues.upgradeCost));
+            powerValues.upgradeCost = totalCost.longValue();
         }
 
-        powerValues.upgradeCost += cost;
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateMass", "cost:" + cost);
     }
 }

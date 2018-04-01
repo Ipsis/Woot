@@ -17,7 +17,7 @@ public class UpgradePowerCalcLooting extends AbstractUpgradePowerCalc {
         long cost = spawnTicks * Woot.wootConfiguration.getInteger(
                         farmSetup.getWootMobName(),
                         ConfigKeyHelper.getLootingPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.LOOTING)));
-        powerValues.upgradeCost += cost;
+        updateCost(cost, powerValues);
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculateLooting", "cost:" + cost);
     }

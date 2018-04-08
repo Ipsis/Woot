@@ -13,6 +13,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +105,7 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
     }
 
     private boolean init = false;
+    private static DecimalFormat dfCommas = new DecimalFormat("###,###");
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -116,7 +118,9 @@ public class FactoryHeartContainerGui extends GuiContainerWoot {
                 s += " " + info.mobName + " * " + info.mobCount;
                 recipeElement.addString(s);
 
-                recipeElement.addString(TextFormatting.GREEN + "Power: " + info.recipeTotalPower + "RF @ " + info.recipePowerPerTick + "RF/tick");
+                String s1 = dfCommas.format(info.recipeTotalPower) + "RF";
+                String s2 = dfCommas.format(info.recipePowerPerTick) + "RF/tick";
+                recipeElement.addString(TextFormatting.GREEN + "Power: " + s1 + " @ " +  s2);
                 recipeElement.addString(TextFormatting.GREEN + "Time: " + info.recipeTotalTime + " ticks");
 
                 for (ItemStack itemStack : info.ingredientsItems) {

@@ -2,6 +2,7 @@ package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModItems;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
@@ -29,6 +30,8 @@ public class XpGenerator implements ILootGenerator {
             return;
 
         int storedXp = farmSetup.getStoredXp();
+        // This is to catch older factories
+        storedXp %= XP_CHUNKS;
 
         int deathXp = Woot.wootConfiguration.getDeathCost(world, farmSetup.getWootMobName());
         float increase = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getXpParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
@@ -67,6 +70,8 @@ public class XpGenerator implements ILootGenerator {
             }
         }
 
-        farmSetup.setStoredXp(totalXp - (generate * XP_CHUNKS));
+        storedXp = totalXp - (generate * XP_CHUNKS);
+        storedXp %= XP_CHUNKS;
+        farmSetup.setStoredXp(storedXp);
     }
 }

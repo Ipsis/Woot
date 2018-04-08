@@ -20,6 +20,7 @@ public class FarmUIInfo {
     public int powerStored;
     public int powerCapacity;
     public int mobCount;
+    public boolean missingIngredients = false;
 
     // Filtered list of drops with the stackSize == drop chance
     public List<ItemStack> drops = new ArrayList<>();

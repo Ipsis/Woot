@@ -10,5 +10,8 @@ import java.util.List;
 
 public interface ISpawnRecipeConsumer {
 
-    boolean consume(World world, BlockPos pos, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, @Nullable ISpawnRecipe spawnRecipe, int mobCount);
+    /**
+     * Simulate == true does not remove any items or fluids
+     */
+    boolean consume(World world, BlockPos pos, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, @Nullable ISpawnRecipe spawnRecipe, int mobCount, boolean simulate);
 }

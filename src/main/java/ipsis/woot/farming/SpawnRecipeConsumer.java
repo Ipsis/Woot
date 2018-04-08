@@ -106,7 +106,7 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
         return drainStack.amount;
     }
 
-    private boolean processItems(List<IItemHandler> itemHandlerList, @Nonnull ISpawnRecipe spawnRecipe, int mobCount) {
+    private boolean processItems(List<IItemHandler> itemHandlerList, @Nonnull ISpawnRecipe spawnRecipe, int mobCount, boolean simulate) {
 
         if (spawnRecipe.getItems().isEmpty())
             return true;
@@ -126,6 +126,9 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
             }
         }
 
+        if (simulate)
+            return allItemsPresent;
+
         if (allItemsPresent) {
             // Consume all the items which we have already checked are present
             for (ItemStack itemStack : spawnRecipe.getItems())
@@ -137,7 +140,7 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
         return false;
     }
 
-    private boolean processFluids(List<IFluidHandler> fluidHandlerList, @Nonnull ISpawnRecipe spawnRecipe, int mobCount) {
+    private boolean processFluids(List<IFluidHandler> fluidHandlerList, @Nonnull ISpawnRecipe spawnRecipe, int mobCount, boolean simulate) {
 
         if (spawnRecipe.getFluids().isEmpty())
             return true;
@@ -156,6 +159,9 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
             }
         }
 
+        if (simulate)
+            return allFluidPresent;
+
         if (allFluidPresent) {
             // Consume all the fluids which we have already checked are present
             for (FluidStack fluidStack : spawnRecipe.getFluids())
@@ -168,12 +174,12 @@ public class SpawnRecipeConsumer implements ISpawnRecipeConsumer {
     }
 
     @Override
-    public boolean consume(World world, BlockPos pos, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, @Nullable ISpawnRecipe spawnRecipe, int mobCount) {
+    public boolean consume(World world, BlockPos pos, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, @Nullable ISpawnRecipe spawnRecipe, int mobCount, boolean simulate) {
 
         if (spawnRecipe == null)
             return true;
 
-        if (!processItems(itemHandlerList, spawnRecipe, mobCount) || !processFluids(fluidHandlerList, spawnRecipe, mobCount))
+        if (!processItems(itemHandlerList, spawnRecipe, mobCount, simulate) || !processFluids(fluidHandlerList, spawnRecipe, mobCount, simulate))
             return false;
 
         return true;

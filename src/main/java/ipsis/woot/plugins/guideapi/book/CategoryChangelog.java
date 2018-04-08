@@ -22,14 +22,16 @@ public class CategoryChangelog {
         category.withKeyBase(keyBase);
 
         // New entry per release
+        String[] versions = {
+                "1_0_0",
+                "1_0_1",
+                "1_1_0"
+        };
 
-        String e = "1_0_0";
-        category.addEntry(e, new Entry(keyBase + e, true));
-        category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".info"), GuideWoot.MAX_PAGE_LEN));
-
-        e = "1_0_1";
-        category.addEntry(e, new Entry(keyBase + e, true));
-        category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".info"), GuideWoot.MAX_PAGE_LEN));
+        for (String version : versions) {
+            category.addEntry(version, new Entry(keyBase + version, true));
+            category.getEntry(version).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + version + ".info"), GuideWoot.MAX_PAGE_LEN));
+        }
 
         CategoryUtils.toUnicodeAndBeyond(category.entries);
 

@@ -136,6 +136,7 @@ public class ItemEnderShard extends ItemWoot {
         tooltip.add(StringHelper.getInfoText("info.woot.endershard.0"));
         tooltip.add(StringHelper.getInfoText("info.woot.endershard.1"));
         tooltip.add(StringHelper.getInfoText("info.woot.endershard.2"));
+        tooltip.add(StringHelper.getInfoText("info.woot.endershard.3"));
 
         if (!isProgrammed(stack)) {
             String out = StringHelper.getInfoText("info.woot.endershard.a.0");

@@ -194,6 +194,7 @@ guide.woot.category.factory=Factory
 guide.woot.category.anvil=Stygian Anvil
 guide.woot.category.ingredients=Mob Spawning Ingredients
 guide.woot.category.upgrades=Factory Upgrades
+guide.woot.category.changelog=Changelog
 
 # Foreward Entries
 guide.woot.entry.foreword.intro=Introduction
@@ -289,5 +290,10 @@ guide.woot.entry.ingredients.recipes=Recipes
 # Ingredients Text
 guide.woot.entry.ingredients.intro.info=Some mobs require you to provide the factory with extra ingredients for each mob that you want to process. Those ingredients can be items or fluid or both. You feed the factory by using the Importer.\n\nThe following pages list the mobs that require extra ingredients and what those ingredients are.
 
-
-
+# Changelog Text
+guide.woot.entry.changelog.1_0_0=Version 1.0.0
+guide.woot.entry.changelog.1_0_0.info=First release for 1.12.2
+guide.woot.entry.changelog.1_0_1=Version 1.0.1
+guide.woot.entry.changelog.1_0_1.info=Fixes\n\n[#329]Fix missing sneak-click consume xp shard stack feature.\n[#335]Fix power calc exceeding Integer.MAX_VALUE if you set high power costs\n\nFeatures\n\n[----]Added de_DE.lang from Thalaan.
+guide.woot.entry.changelog.1_1_0=Version 1.1.0
+guide.woot.entry.changelog.1_1_0.info=Fixes\n\n[----]None.\n\nFeatures\n\n[#331]Added a changelog.

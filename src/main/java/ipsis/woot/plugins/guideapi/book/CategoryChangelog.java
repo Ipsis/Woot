@@ -30,7 +30,7 @@ public class CategoryChangelog {
 
         for (String version : versions) {
             category.addEntry(version, new Entry(keyBase + version, true));
-            category.getEntry(version).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + version + ".info"), GuideWoot.MAX_PAGE_LEN));
+            category.getEntry(version).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + version + ".info"), GuideWoot.MAX_CHANGELOG_PAGE_LEN));
         }
 
         CategoryUtils.toUnicodeAndBeyond(category.entries);

@@ -22,6 +22,7 @@ public class GuideWoot implements IGuideBook {
 
     public static final Book GUIDE_BOOK = new Book();
     public static final int MAX_PAGE_LEN = 360;
+    public static final int MAX_CHANGELOG_PAGE_LEN = 240;
 
     @Nullable
     @Override

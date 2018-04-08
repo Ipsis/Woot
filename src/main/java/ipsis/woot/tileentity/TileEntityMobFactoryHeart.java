@@ -82,6 +82,9 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             nbtConsumedPower = compound.getLong("wootConsumedPowerLong");
 
         storedXp = compound.getInteger("storedXp");
+
+        if (storedXp < 0)
+            storedXp = 0;
     }
 
     @Override

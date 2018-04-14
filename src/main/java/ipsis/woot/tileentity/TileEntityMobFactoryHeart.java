@@ -15,6 +15,7 @@ import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
 import ipsis.woot.util.LootHelper;
 import ipsis.woot.util.StringHelper;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -181,6 +184,56 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                     recipeProgressTracker.reset();
                 }
             }
+        }
+    }
+
+    public void outputFarmScan(EntityPlayer player) {
+
+        if (farmStructure == null)
+            return;
+
+        player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.outputs")), false);
+
+        List<TileEntity> tanks = farmSetup.getConnectedExportTanksTiles();
+        List<TileEntity> chests = farmSetup.getConnectedExportChestsTiles();
+
+        for (TileEntity te : tanks) {
+            Block b = te.getWorld().getBlockState(te.getPos()).getBlock();
+            player.sendStatusMessage(new TextComponentString(
+                String.format("Found output tank [%s @ %d, %d, %d]",
+                            b.getLocalizedName(), te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())), false);
+        }
+
+        for (TileEntity te : chests) {
+            Block b = te.getWorld().getBlockState(te.getPos()).getBlock();
+            player.sendStatusMessage(new TextComponentString(
+                    String.format("Found output inventory [%s @ %d, %d, %d]",
+                        b.getLocalizedName(), te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())), false);
+        }
+    }
+
+    public void inputFarmScan(EntityPlayer player) {
+
+        if (farmStructure == null)
+            return;
+
+        player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.inputs")), false);
+
+        List<TileEntity> tanks = farmSetup.getConnectedImportTanksTiles();
+        List<TileEntity> chests = farmSetup.getConnectedImportChestsTiles();
+
+        for (TileEntity te : tanks) {
+            Block b = te.getWorld().getBlockState(te.getPos()).getBlock();
+            player.sendStatusMessage(new TextComponentString(
+                    String.format("Found input tank [%s @ %d, %d, %d]",
+                            b.getLocalizedName(), te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())), false);
+        }
+
+        for (TileEntity te : chests) {
+            Block b = te.getWorld().getBlockState(te.getPos()).getBlock();
+            player.sendStatusMessage(new TextComponentString(
+                    String.format("Found input inventory [%s @ %d, %d, %d]",
+                            b.getLocalizedName(), te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())), false);
         }
     }
 

@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -178,63 +179,152 @@ public class FarmSetup implements IFarmSetup {
         this.importBlockPos = blockPos;
     }
 
+    /**
+     * Import/export utils
+     */
+    private class InventoryInfo {
+
+        TileEntity te;
+        IItemHandler iItemHandler;
+
+        public InventoryInfo(TileEntity te, IItemHandler iItemHandler) {
+            this.te = te;
+            this.iItemHandler = iItemHandler;
+        }
+    }
+
+    @Nonnull
+    private List<InventoryInfo> getConnectedChests(BlockPos origin) {
+
+        List<InventoryInfo> chests = new ArrayList<>();
+
+        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+            if (world.isBlockLoaded(origin.offset(f))) {
+                TileEntity te = world.getTileEntity(origin.offset(f));
+                if (te == null)
+                    continue;
+
+                if (!te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
+                    continue;
+
+                IItemHandler iItemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());
+                if (iItemHandler == null)
+                    continue;
+
+                chests.add(new InventoryInfo(te, iItemHandler));
+            }
+        }
+
+        return chests;
+    }
+
+    private class TankInfo {
+
+        TileEntity te;
+        IFluidHandler iFluidHandler;
+
+        public TankInfo(TileEntity te, IFluidHandler iFluidHandler) {
+            this.te = te;
+            this.iFluidHandler = iFluidHandler;
+        }
+    }
+
+    @Nonnull
+    private List<TankInfo> getConnectedTanks(BlockPos origin, boolean drain) {
+
+        List<TankInfo> tanks = new ArrayList<>();
+
+        for (EnumFacing f : EnumFacing.HORIZONTALS) {
+            if (world.isBlockLoaded(origin.offset(f))) {
+                TileEntity te = world.getTileEntity(origin.offset(f));
+                if (te == null)
+                    continue;
+
+                if (!te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
+                    continue;
+
+                IFluidHandler iFluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite());
+                if (iFluidHandler == null)
+                    continue;
+
+                IFluidTankProperties[] properties = iFluidHandler.getTankProperties();
+                if (properties == null)
+                    continue;
+
+                for (IFluidTankProperties p : properties) {
+                    if ((drain && p.canDrain()) || (!drain && p.canFill())) {
+                        tanks.add(new TankInfo(te, iFluidHandler));
+                        break;
+                    }
+                }
+            }
+        }
+
+        return tanks;
+    }
+
+    @Nonnull
+    @Override
+    public List<TileEntity> getConnectedImportTanksTiles() {
+
+        List<TileEntity> tanks = new ArrayList<>();
+
+        if (importBlockPos == null)
+            return tanks;
+
+        List<TankInfo> connected = getConnectedTanks(importBlockPos, true);
+        for (TankInfo i : connected)
+            tanks.add(i.te);
+
+        return tanks;
+    }
+
+    @Nonnull
+    @Override
+    public List<TileEntity> getConnectedExportTanksTiles() {
+
+        List<TileEntity> tanks = new ArrayList<>();
+
+        if (exportBlockPos == null)
+            return tanks;
+
+        List<TankInfo> connected = getConnectedTanks(exportBlockPos, false);
+        for (TankInfo i : connected)
+            tanks.add(i.te);
+
+        return tanks;
+    }
+
     @Nonnull
     @Override
     public List<IFluidHandler> getConnectedImportTanks() {
+
         List<IFluidHandler> tanks = new ArrayList<>();
 
         if (importBlockPos == null)
             return tanks;
 
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            if (world.isBlockLoaded(importBlockPos.offset(f))) {
-                TileEntity te = world.getTileEntity(importBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
-                    tanks.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
-            }
+        List<TankInfo> connected = getConnectedTanks(importBlockPos, true);
+        for (TankInfo i : connected)
+            tanks.add(i.iFluidHandler);
 
-        }
         return tanks;
     }
 
     @Nonnull
     @Override
     public List<IFluidHandler> getConnectedExportTanks() {
+
         List<IFluidHandler> tanks = new ArrayList<>();
 
         if (exportBlockPos == null)
             return tanks;
 
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            if (world.isBlockLoaded(exportBlockPos.offset(f))) {
-                TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()))
-                    tanks.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f.getOpposite()));
-            }
+        List<TankInfo> connected = getConnectedTanks(exportBlockPos, false);
+        for (TankInfo i : connected)
+            tanks.add(i.iFluidHandler);
 
-        }
         return tanks;
-    }
-
-    @Nonnull
-    @Override
-    public List<IItemHandler> getConnectedExportChests() {
-
-        List<IItemHandler> chests = new ArrayList<>();
-
-        if (exportBlockPos == null)
-            return chests;
-
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            if (world.isBlockLoaded(exportBlockPos.offset(f))) {
-                TileEntity te = world.getTileEntity(exportBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
-                    chests.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
-            }
-
-        }
-
-        return chests;
     }
 
     @Nonnull
@@ -246,14 +336,58 @@ public class FarmSetup implements IFarmSetup {
         if (importBlockPos == null)
             return chests;
 
-        for (EnumFacing f : EnumFacing.HORIZONTALS) {
-            if (world.isBlockLoaded(importBlockPos.offset(f))) {
-                TileEntity te = world.getTileEntity(importBlockPos.offset(f));
-                if (te != null && te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()))
-                    chests.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite()));
-            }
+        List<InventoryInfo> connected = getConnectedChests(importBlockPos);
+        for (InventoryInfo i : connected)
+            chests.add(i.iItemHandler);
 
-        }
+        return chests;
+    }
+
+
+    @Nonnull
+    @Override
+    public List<IItemHandler> getConnectedExportChests() {
+
+        List<IItemHandler> chests = new ArrayList<>();
+
+        if (exportBlockPos == null)
+            return chests;
+
+        List<InventoryInfo> connected = getConnectedChests(exportBlockPos);
+        for (InventoryInfo i : connected)
+            chests.add(i.iItemHandler);
+
+        return chests;
+    }
+
+    @Nonnull
+    @Override
+    public List<TileEntity> getConnectedImportChestsTiles() {
+
+        List<TileEntity> chests = new ArrayList<>();
+
+        if (importBlockPos == null)
+            return chests;
+
+        List<InventoryInfo> connected = getConnectedChests(importBlockPos);
+        for (InventoryInfo i : connected)
+            chests.add(i.te);
+
+        return chests;
+    }
+
+    @Nonnull
+    @Override
+    public List<TileEntity> getConnectedExportChestsTiles() {
+
+        List<TileEntity> chests = new ArrayList<>();
+
+        if (exportBlockPos == null)
+            return chests;
+
+        List<InventoryInfo> connected = getConnectedChests(exportBlockPos);
+        for (InventoryInfo i : connected)
+            chests.add(i.te);
 
         return chests;
     }

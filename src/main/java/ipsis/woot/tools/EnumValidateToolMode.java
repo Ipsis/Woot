@@ -1,6 +1,7 @@
 package ipsis.woot.tools;
 
 import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.reference.Reference;
 import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nullable;
@@ -45,5 +46,10 @@ public enum EnumValidateToolMode {
     public boolean isValidateTierMode() {
 
         return this == VALIDATE_T1 || this == VALIDATE_T2 || this == VALIDATE_T3 || this == VALIDATE_T4;
+    }
+
+    public String getUnlocalisedName() {
+
+        return "info." + Reference.MOD_ID + ".hammer.mode." + this.name().toLowerCase();
     }
 }

@@ -73,8 +73,9 @@ public class ItemYahHammer extends ItemWoot implements IValidateTool {
             if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK)
                 return new ActionResult<>(EnumActionResult.PASS, itemStack);
 
-            if (!worldIn.isRemote)
-                ValidateToolUtils.cycleMode(itemStack);
+            if (!worldIn.isRemote) {
+                ValidateToolUtils.cycleMode(itemStack, playerIn);
+            }
 
             return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
         }

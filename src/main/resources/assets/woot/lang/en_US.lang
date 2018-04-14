@@ -129,12 +129,19 @@ info.woot.structure.tier_ii_cap=Yellow guide block
 info.woot.structure.tier_iii_cap=Cyan guide block
 info.woot.structure.tier_iv_cap=Lime guide block
 
-info.woot.hammer.mode_0=Validate Tier I
-info.woot.hammer.mode_1=Validate Tier II
-info.woot.hammer.mode_2=Validate Tier III
-info.woot.hammer.mode_3=Validate Tier IV
-info.woot.hammer.mode_4=Validate imports
-info.woot.hammer.mode_5=Validate exports
+info.woot.hammer.mode.validate_t1=Validate Tier I
+info.woot.hammer.mode.validate_t1.desc=Checks that the structure and controller are valid for Tier I
+info.woot.hammer.mode.validate_t2=Validate Tier II
+info.woot.hammer.mode.validate_t2.desc=Checks that the structure and controller are valid for Tier II
+info.woot.hammer.mode.validate_t3=Validate Tier III
+info.woot.hammer.mode.validate_t3.desc=Validate Tier 3 desc
+info.woot.hammer.mode.validate_t3.desc=Checks that the structure and controller are valid for Tier III
+info.woot.hammer.mode.validate_t4=Validate Tier IV
+info.woot.hammer.mode.validate_t4.desc=Checks that the structure and controller are valid for Tier IV
+info.woot.hammer.mode.validate_import=Validate imports
+info.woot.hammer.mode.validate_import.desc=Checks that tanks and inventories and valid import blocks
+info.woot.hammer.mode.validate_export=Validate exports
+info.woot.hammer.mode.validate_export.desc=Checks that tanks and inventories and valid export blocks
 
 ###########################################################
 # Enchantments

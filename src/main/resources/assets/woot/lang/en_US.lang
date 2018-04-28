@@ -83,6 +83,12 @@ tile.woot.upgrade.decapitate_iii.name=Decapitate III Upgrade
 tile.woot.upgradeb.efficiency_i.name=Efficiency I Upgrade
 tile.woot.upgradeb.efficiency_ii.name=Efficiency II Upgrade
 tile.woot.upgradeb.efficiency_iii.name=Efficiency III Upgrade
+tile.woot.upgradeb.bm_le_tank_i.name=Blood Magic Life Essence Tank I Upgrade
+tile.woot.upgradeb.bm_le_tank_ii.name=Blood Magic Life Essence Tank II Upgrade
+tile.woot.upgradeb.bm_le_tank_iii.name=Blood Magic Life Essence Tank III Upgrade
+tile.woot.upgradeb.bm_le_altar_i.name=Blood Magic Life Essence Altar I Upgrade
+tile.woot.upgradeb.bm_le_altar_ii.name=Blood Magic Life Essence Altar II Upgrade
+tile.woot.upgradeb.bm_le_altar_iii.name=Blood Magic Life Essence Altar III Upgrade
 
 ###########################################################
 # Tabs

@@ -1,0 +1,10 @@
+{
+  "parent": "woot:block/upgradeb_bm_le_altar_iii_active",
+  "display": {
+    "thirdperson": {
+      "rotation": [ 10, -45, 170 ],
+      "translation": [ 0, 1.5, -2.75 ],
+      "scale": [ 0.375, 0.375, 0.375 ]
+    }
+  }
+}

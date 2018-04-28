@@ -1,7 +1,7 @@
 package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
-import ipsis.woot.farmstructure.IFarmSetup;
+import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.LootHelper;
@@ -10,11 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,18 +90,19 @@ public class ItemGenerator implements ILootGenerator {
         return drops;
     }
 
-    public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup, DifficultyInstance difficulty) {
+    @Override
+    public void generate(World world, LootGenerationFarmInfo farmInfo) {
 
-        if (itemHandlerList.size() == 0)
+        if (farmInfo.itemHandlerList.size() == 0)
             return;
 
-        List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", farmSetup.getNumMobs() + "*" + farmSetup.getWootMobName());
-        for (int i = 0; i < farmSetup.getNumMobs(); i++) {
+        List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmInfo.farmSetup.getWootMobName(), farmInfo.farmSetup.getEnchantKey());
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", farmInfo.farmSetup.getNumMobs() + "*" + farmInfo.farmSetup.getWootMobName());
+        for (int i = 0; i < farmInfo.farmSetup.getNumMobs(); i++) {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", "Generating loot for mob " + i);
-            List<ItemStack> mobLoot = calculateDrops(loot, difficulty);
+            List<ItemStack> mobLoot = calculateDrops(loot, farmInfo.difficultyInstance);
 
-            for (IItemHandler hdlr : itemHandlerList) {
+            for (IItemHandler hdlr : farmInfo.itemHandlerList) {
                 for (ItemStack itemStack : mobLoot) {
 
                     if (itemStack.isEmpty())

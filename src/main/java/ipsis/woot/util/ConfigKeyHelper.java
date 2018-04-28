@@ -101,4 +101,16 @@ public class ConfigKeyHelper {
         level = MathHelper.clamp(level, 1, 3);
         return getEntryFromLevel(level, EnumConfigKey.EFF_PARAM);
     }
+
+    public static EnumConfigKey getBmLeTankParam(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.BM_LE_TANK_PARAM);
+    }
+
+    public static EnumConfigKey getBmLeAltarParam(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.BM_LE_ALTAR_PARAM);
+    }
 }

@@ -2,40 +2,38 @@ package ipsis.woot.loot.generators;
 
 import ipsis.Woot;
 import ipsis.woot.init.ModItems;
-import ipsis.woot.oss.LogHelper;
+import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumFarmUpgrade;
-import ipsis.woot.farmstructure.IFarmSetup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-
-import javax.annotation.Nonnull;
-import java.util.List;
 
 public class XpGenerator implements ILootGenerator {
 
     private static final int XP_CHUNKS = 16;
 
-    public void generate(World world, @Nonnull List<IFluidHandler> fluidHandlerList, @Nonnull List<IItemHandler> itemHandlerList, @Nonnull IFarmSetup farmSetup, DifficultyInstance difficulty) {
+    @Override
+    public void generate(World world, LootGenerationFarmInfo farmInfo) {
 
-        if (itemHandlerList.size() == 0)
+        if (farmInfo == null)
             return;
 
-        if (!farmSetup.hasUpgrade(EnumFarmUpgrade.XP))
+        if (farmInfo.itemHandlerList.size() == 0)
             return;
 
-        int storedXp = farmSetup.getStoredXp();
+        if (!farmInfo.farmSetup.hasUpgrade(EnumFarmUpgrade.XP))
+            return;
+
+        int storedXp = farmInfo.farmSetup.getStoredXp();
         // This is to catch older factories
         storedXp %= XP_CHUNKS;
 
-        int deathXp = Woot.wootConfiguration.getDeathCost(world, farmSetup.getWootMobName());
-        float increase = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getXpParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
-        deathXp *= farmSetup.getNumMobs();
+        int deathXp = Woot.wootConfiguration.getDeathCost(world, farmInfo.farmSetup.getWootMobName());
+        float increase = Woot.wootConfiguration.getInteger(farmInfo.farmSetup.getWootMobName(), ConfigKeyHelper.getXpParam(farmInfo.farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
+        deathXp *= farmInfo.farmSetup.getNumMobs();
         int totalXp = storedXp + deathXp;
         float extraXp = ((increase - 100.0F) / 100.0F) * totalXp;
         totalXp += (int)extraXp;
@@ -47,7 +45,7 @@ public class XpGenerator implements ILootGenerator {
 
         if (generate != 0) {
             ItemStack itemStack = new ItemStack(ModItems.itemXpShard, generate);
-            for (IItemHandler hdlr : itemHandlerList) {
+            for (IItemHandler hdlr : farmInfo.itemHandlerList) {
                 if (itemStack.isEmpty())
                     continue;
 
@@ -72,6 +70,6 @@ public class XpGenerator implements ILootGenerator {
 
         storedXp = totalXp - (generate * XP_CHUNKS);
         storedXp %= XP_CHUNKS;
-        farmSetup.setStoredXp(storedXp);
+        farmInfo.farmSetup.setStoredXp(storedXp);
     }
 }

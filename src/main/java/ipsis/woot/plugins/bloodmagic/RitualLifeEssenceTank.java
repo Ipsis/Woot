@@ -1,30 +1,31 @@
 package ipsis.woot.plugins.bloodmagic;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
-import WayofTime.bloodmagic.ritual.data.AreaDescriptor;
-import WayofTime.bloodmagic.ritual.data.IMasterRitualStone;
-import WayofTime.bloodmagic.ritual.data.Ritual;
-import WayofTime.bloodmagic.ritual.data.RitualComponent;
+import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
+import ipsis.Woot;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
+import ipsis.woot.util.DebugSetup;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
- * This is the Well Of Suffering, except the mobs come from the factory, no the surrounding areas.
+ * This is the Well Of Suffering, except the mobs come from the factory, not the surrounding areas.
  */
-public class RitualA extends Ritual {
+public class RitualLifeEssenceTank extends Ritual {
 
-    private static final String RITUAL_NAME = "ritualA";
+    private static final String RITUAL_NAME = "ritualLifeEssenceTank";
     private static final int CRYSTAL_LEVEL = 0;
     private static final int ACTIVATION_COST = 40000;
     private static final int REFRESH_COST = 2;
     private static final int REFRESH_TIME = 40;
+
+    // TODO doesn't need the altar
 
     /**
      * Same range as the well of suffering
@@ -35,34 +36,12 @@ public class RitualA extends Ritual {
     private BlockPos altarOffsetPos = new BlockPos(0, 0, 0);
     private BlockPos heartOffsetPos = new BlockPos(0, 0, 0);
 
-    public RitualA() {
+    public RitualLifeEssenceTank() {
         super(RITUAL_NAME, CRYSTAL_LEVEL, ACTIVATION_COST, "ritual." + Reference.MOD_ID + "." + RITUAL_NAME);
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(HEART_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
     }
 
-    private TileAltar findAltar(World world, BlockPos pos) {
-
-        BlockPos altarPos = pos.add(altarOffsetPos);
-        TileEntity tile = world.getTileEntity(altarPos);
-
-        AreaDescriptor altarRange = getBlockRange(ALTAR_RANGE);
-
-        if (!altarRange.isWithinArea(altarOffsetPos) || !(tile instanceof TileAltar)) {
-
-            for (BlockPos newPos : altarRange.getContainedPositions(pos)) {
-                TileEntity nextTile = world.getTileEntity(newPos);
-                if (nextTile instanceof TileAltar) {
-                    tile = nextTile;
-                    altarOffsetPos = newPos.subtract(pos);
-                    altarRange.resetCache();
-                    break;
-                }
-            }
-        }
-
-        return tile instanceof TileAltar ? (TileAltar)tile : null;
-    }
 
     private boolean isValidFactory(TileEntity te) {
 
@@ -73,7 +52,7 @@ public class RitualA extends Ritual {
         return heart.getRunning() == 1;
     }
 
-    private TileEntityMobFactoryHeart findHeart(World world, BlockPos pos) {
+    private IBloodMagicHandler findHandler(World world, BlockPos pos) {
 
         BlockPos heartPos = pos.add(heartOffsetPos);
         TileEntity te = world.getTileEntity(heartPos);
@@ -84,7 +63,7 @@ public class RitualA extends Ritual {
 
             for (BlockPos newPos : heartRange.getContainedPositions(pos)) {
                 TileEntity nextTile = world.getTileEntity(newPos);
-                if (nextTile instanceof TileEntityMobFactoryHeart) {
+                if (nextTile instanceof IBloodMagicHandler) {
                     te = nextTile;
                     heartOffsetPos = newPos.subtract(pos);
                     heartRange.resetCache();
@@ -93,26 +72,27 @@ public class RitualA extends Ritual {
              }
         }
 
-        return isValidFactory(te) ? (TileEntityMobFactoryHeart)te : null;
+        return isValidFactory(te) && te instanceof IBloodMagicHandler ? (IBloodMagicHandler) te : null;
     }
 
 
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
 
-        World world = masterRitualStone.getWorldObj();
-        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
-        int currentEssence = network.getCurrentEssence();
-        int maxEffects = currentEssence / getRefreshCost();
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceTank", "");
 
-        if (currentEssence < getRefreshCost()) {
-            network.causeNausea();
+        if (!BloodMagicHelper.canPerformRitual(masterRitualStone, getRefreshCost()))
             return;
+        World world = masterRitualStone.getWorldObj();
+        IBloodMagicHandler iBloodMagicHandler = findHandler(world, masterRitualStone.getBlockPos());
+        if (iBloodMagicHandler != null) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceTank", "keepAlive");
+            iBloodMagicHandler.keepAliveTankRitual();
         }
 
-        int effects = 1;
-
-        network.syphon(getRefreshCost() * effects);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceTank", "syphon:" + getRefreshCost());
+        SoulNetwork network = NetworkHelper.getSoulNetwork(masterRitualStone.getOwner());
+        network.syphon(getRefreshCost());
 
     }
 
@@ -127,17 +107,14 @@ public class RitualA extends Ritual {
     }
 
     @Override
-    public ArrayList<RitualComponent> getComponents() {
+    public void gatherComponents(Consumer<RitualComponent> components) {
 
-        ArrayList<RitualComponent> components = new ArrayList<>();
-
-        return components;
+        this.addCornerRunes(components, 1, 0, EnumRuneType.WATER);
     }
 
     @Override
     public Ritual getNewCopy() {
 
-
-        return new RitualA();
+        return new RitualLifeEssenceTank();
     }
 }

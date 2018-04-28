@@ -1,0 +1,6 @@
+{
+  "parent": "woot:block/small_cube_wrapped_i",
+  "textures": {
+    "all": "woot:blocks/upgrade_bm_le_tank"
+  }
+}

@@ -7,14 +7,16 @@ import ipsis.woot.farmstructure.*;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
 import ipsis.woot.loot.ILootLearner;
+import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.loot.schools.TartarusSchool;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
+import ipsis.woot.plugins.bloodmagic.BloodMagicTracker;
+import ipsis.woot.plugins.bloodmagic.IBloodMagicHandler;
 import ipsis.woot.power.calculation.BigIntegerCalculator;
 import ipsis.woot.power.calculation.IPowerCalculator;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
-import ipsis.woot.util.LootHelper;
-import ipsis.woot.util.StringHelper;
+import ipsis.woot.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,13 +30,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm {
+public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, IFarmBlockMaster, IMobFarm, IBloodMagicHandler {
 
     private ITickTracker tickTracker;
     private IFarmStructure farmStructure;
@@ -178,8 +178,20 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                 recipeProgressTracker.tick();
                 if (recipeProgressTracker.isComplete()) {
                     if (spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs(), false)) {
-                        Woot.lootGeneration.generate(getWorld(), farmSetup.getConnectedExportTanks(), farmSetup.getConnectedExportChests(), farmSetup, world.getDifficultyForLocation(getPos()));
+                        LootGenerationFarmInfo info = new LootGenerationFarmInfo();
+                        info.keepAliveTankRitual = bloodMagicTracker.isTankAlive();
+                        info.itemHandlerList = farmSetup.getConnectedExportChests();
+                        info.fluidHandlerList = farmSetup.getConnectedExportTanks();
+                        info.farmSetup = farmSetup;
+                        info.difficultyInstance = world.getDifficultyForLocation(getPos());
+                        Woot.lootGeneration.generate(getWorld(), info);
                         storedXp = farmSetup.getStoredXp();
+
+                        // Tank filling is processed by generators
+                        // Altar filling is processed by the next tick of the ritual
+                        bloodMagicTracker.clearTank();
+                        bloodMagicTracker.setAltarMobCount(farmSetup.getNumMobs());
+                        bloodMagicTracker.setWootMobName(farmSetup.getWootMobName());
                     }
                     recipeProgressTracker.reset();
                 }
@@ -401,4 +413,54 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     public int guiProgress;
     public int guiStoredPower;
     public int guiRunning;
+
+    private BloodMagicTracker bloodMagicTracker = new BloodMagicTracker();
+
+    // IBloodMagicHandler
+    @Override
+    public void keepAliveTankRitual() {
+
+        if (farmStructure.isFormed())
+            bloodMagicTracker.tickTank();
+    }
+
+    @Override
+    public void keepAliveWillRitual() {
+
+    }
+
+    @Override
+    public int getNumMobs() {
+
+        int mobs = 0;
+        if (farmStructure.isFormed())
+            mobs = bloodMagicTracker.getAltarMobCount();
+
+        return mobs;
+    }
+
+    @Override
+    public void clearMobs() {
+
+        bloodMagicTracker.clearAltarMobCount();
+    }
+
+    @Override
+    public int getAltarSacrificePercentage() {
+
+        int p = 0;
+        if (farmStructure.isFormed())
+            p = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getBmLeAltarParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_ALTAR)));
+
+        return p;
+    }
+
+    @Override
+    public @Nullable WootMobName getWootMobName() {
+
+        WootMobName wootMobName = null;
+        if (farmStructure.isFormed())
+            wootMobName = farmSetup.getWootMobName();
+        return wootMobName;
+    }
 }

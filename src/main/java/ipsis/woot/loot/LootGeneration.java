@@ -26,9 +26,10 @@ public class LootGeneration implements ILootGeneration {
         generatorList.add(new BloodMagicWillGenerator());
     }
 
-    public void generate(World world, List<IFluidHandler> fluidHandlerList, List<IItemHandler> itemHandlerList, IFarmSetup farmSetup, DifficultyInstance difficulty) {
+    @Override
+    public void generate(World world, LootGenerationFarmInfo farmInfo) {
 
         for (ILootGenerator lootGenerator : generatorList)
-            lootGenerator.generate(world, fluidHandlerList, itemHandlerList, farmSetup, difficulty);
+            lootGenerator.generate(world, farmInfo);
     }
 }

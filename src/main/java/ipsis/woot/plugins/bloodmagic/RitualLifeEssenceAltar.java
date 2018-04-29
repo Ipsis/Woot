@@ -90,6 +90,9 @@ public class RitualLifeEssenceAltar extends Ritual {
         super(RITUAL_NAME, CRYSTAL_LEVEL, ACTIVATION_COST, "ritual." + Reference.MOD_ID + "." + RITUAL_NAME);
         addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(HEART_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
+
+        setMaximumVolumeAndDistanceOfRange(ALTAR_RANGE, 0, 10, 15);
+        setMaximumVolumeAndDistanceOfRange(HEART_RANGE, 0, 15, 15);
     }
 
     @Override
@@ -149,7 +152,12 @@ public class RitualLifeEssenceAltar extends Ritual {
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
 
-        this.addCornerRunes(components, 1, 0, EnumRuneType.FIRE);
+        addCornerRunes(components, 4, -1, EnumRuneType.EARTH);
+        addCornerRunes(components, 3,  0, EnumRuneType.FIRE);
+        addCornerRunes(components, 2,  1, EnumRuneType.AIR);
+        addCornerRunes(components, 1,  2, EnumRuneType.WATER);
+        addParallelRunes(components, 1, 1, EnumRuneType.DUSK);
+        addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
     }
 
     @Override

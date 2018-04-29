@@ -2,7 +2,6 @@ package ipsis.woot.plugins.bloodmagic;
 
 import WayofTime.bloodmagic.core.data.SoulNetwork;
 import WayofTime.bloodmagic.ritual.*;
-import WayofTime.bloodmagic.tile.TileAltar;
 import WayofTime.bloodmagic.util.helper.NetworkHelper;
 import ipsis.Woot;
 import ipsis.woot.reference.Reference;
@@ -14,9 +13,6 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
-/**
- * This is the Well Of Suffering, except the mobs come from the factory, not the surrounding areas.
- */
 public class RitualLifeEssenceTank extends Ritual {
 
     private static final String RITUAL_NAME = "ritualLifeEssenceTank";
@@ -25,20 +21,15 @@ public class RitualLifeEssenceTank extends Ritual {
     private static final int REFRESH_COST = 2;
     private static final int REFRESH_TIME = 40;
 
-    // TODO doesn't need the altar
-
     /**
      * Same range as the well of suffering
      */
-    private static final String ALTAR_RANGE = "altar";
     private static final String HEART_RANGE = "heart";
 
-    private BlockPos altarOffsetPos = new BlockPos(0, 0, 0);
     private BlockPos heartOffsetPos = new BlockPos(0, 0, 0);
 
     public RitualLifeEssenceTank() {
         super(RITUAL_NAME, CRYSTAL_LEVEL, ACTIVATION_COST, "ritual." + Reference.MOD_ID + "." + RITUAL_NAME);
-        addBlockRange(ALTAR_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-5, -10, -5), 11, 21, 11));
         addBlockRange(HEART_RANGE, new AreaDescriptor.Rectangle(new BlockPos(-10, -10, -10), 21));
     }
 
@@ -109,7 +100,13 @@ public class RitualLifeEssenceTank extends Ritual {
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
 
-        this.addCornerRunes(components, 1, 0, EnumRuneType.WATER);
+        addCornerRunes(components, 1, 0, EnumRuneType.DUSK);
+        addParallelRunes(components, 2, -1, EnumRuneType.FIRE);
+        addParallelRunes(components, 2, 0, EnumRuneType.EARTH);
+        addCornerRunes(components, 1, -1, EnumRuneType.WATER);
+        addCornerRunes(components, 1, 1, EnumRuneType.WATER);
+        addParallelRunes(components, 2, 1, EnumRuneType.AIR);
+        addParallelRunes(components, 1, -2, EnumRuneType.WATER);
     }
 
     @Override

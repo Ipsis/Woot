@@ -299,8 +299,8 @@ guide.woot.entry.bloodmagic.altar=Ritual Of The Mechanical Urn
 
 # BloodMagic Entry Text
 guide.woot.entry.bloodmagic.intro.info=The factory can support upgrades to assist with Blood Magic. Primarily these are for generating Life Essence. They are available at the same time as the traditional Well Of Suffering ritual.
-guide.woot.entry.bloodmagic.tank.info=This ritual will generate Life Essence into export tanks. The different tiers change the number of sacrifice runes used when killing the mobs.\n\nThe ritual will look for the Factory Heart in a 10 block radius, both horizontally and vertically.
-guide.woot.entry.bloodmagic.altar.info=This ritual will generate Life Essence directly into an altar. The different tiers change the sacrifice amount per mob. This ritual uses the standard altar mechanics for determining the amount of Life Essence (eg. altar rune setup)\n\nThe ritual will look for the Factory Heart in a 10 block radius, both horizontally and vertically.\n\nThe ritual will look for an altar in a 5 block radius and 10 blocks vertically.
+guide.woot.entry.bloodmagic.tank.info=Using the Tank Upgrades and this ritual will generate Life Essence into export tanks. The different tiers change the number of sacrifice runes used when killing the mobs.\n\nThe ritual will look for the Factory Heart in a 10 block radius, both horizontally and vertically.
+guide.woot.entry.bloodmagic.altar.info=Using the Altar Upgrades and this ritual will generate Life Essence directly into an altar. The different tiers change the sacrifice amount per mob. This ritual uses the standard altar mechanics for determining the amount of Life Essence (eg. altar rune setup)\n\nThe ritual will look for the Factory Heart in a 10 block radius, both horizontally and vertically.\n\nThe ritual will look for an altar in a 5 block radius and 10 blocks vertically.
 
 # Anvil Entries
 guide.woot.entry.anvil.intro=Introduction

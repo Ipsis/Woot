@@ -350,7 +350,7 @@ public enum EnumConfigKey {
     ALLOW_BM_LE_ALTAR(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support BloodMagic Ritual Of The Mechanical Altar",
-            "allowBmLeTank", Boolean.class, true, false);
+            "allowBmLeAltar", Boolean.class, true, false);
 
     private String text;
     private Class clazz;

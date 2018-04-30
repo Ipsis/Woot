@@ -1,6 +1,9 @@
 package ipsis.woot.plugins.bloodmagic;
 
 import WayofTime.bloodmagic.ritual.RitualRegistry;
+import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
+import ipsis.woot.oss.LogHelper;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -22,8 +25,14 @@ public class BloodMagic {
 
     private static void registerRituals() {
 
-        RitualRegistry.registerRitual(new RitualLifeEssenceTank());
-        RitualRegistry.registerRitual(new RitualLifeEssenceAltar());
+        if (Woot.wootConfiguration.getBoolean(EnumConfigKey.ALLOW_BM_LE_TANK)) {
+            LogHelper.info("Adding Ritual of the Sanguine Urn");
+            RitualRegistry.registerRitual(new RitualLifeEssenceTank());
+        }
+        if (Woot.wootConfiguration.getBoolean(EnumConfigKey.ALLOW_BM_LE_ALTAR)) {
+            LogHelper.info("Adding Ritual of the Mechanical Altar");
+            RitualRegistry.registerRitual(new RitualLifeEssenceAltar());
+        }
     }
 
     private static void setupLifeEssence() {

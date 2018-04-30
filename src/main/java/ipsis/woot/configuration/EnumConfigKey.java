@@ -342,7 +342,15 @@ public enum EnumConfigKey {
     BM_LE_ALTAR_3_PARAM(
             CATEGORY_UPGRADES,
             "Percentage of sacrifice amount for a BloodMagic LifeEssence Altar III upgrade",
-                    "bmLeAltar3Param", Integer.class, 100, true, 3);
+                    "bmLeAltar3Param", Integer.class, 100, true, 3),
+    ALLOW_BM_LE_TANK(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support BloodMagic Ritual Of The Sanguine Urn",
+             "allowBmLeTank", Boolean.class, true, false),
+    ALLOW_BM_LE_ALTAR(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support BloodMagic Ritual Of The Mechanical Altar",
+            "allowBmLeTank", Boolean.class, true, false);
 
     private String text;
     private Class clazz;

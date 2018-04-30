@@ -1,0 +1,25 @@
+{
+  "conditions": [
+    {
+      "type": "woot:bm_le_tank"
+    }
+  ],
+  "result": {
+    "item": "woot:upgradeb",
+    "data": 3
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "woot:factorycore",
+      "data": 2
+    },
+    {
+      "item": "bloodmagic:blood_tank",
+      "data": 0
+    }
+  ]
+}

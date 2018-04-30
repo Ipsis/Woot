@@ -217,6 +217,7 @@ guide.woot.category.factory=Factory
 guide.woot.category.anvil=Stygian Anvil
 guide.woot.category.ingredients=Mob Spawning Ingredients
 guide.woot.category.upgrades=Factory Upgrades
+guide.woot.category.bloodmagic=Blood Magic
 guide.woot.category.changelog=Changelog
 
 # Foreward Entries
@@ -290,6 +291,16 @@ guide.woot.entry.upgrades.looting.info=This upgrade applies different levels of 
 guide.woot.entry.upgrades.mass.info=This upgrade spawns more mobs at a time. Higher tiers of this upgrade increases the number of mobs.
 guide.woot.entry.upgrades.rate.info=This upgrade decreases the time between mob spawns. Higher tiers of this upgrade decrease the time further.
 guide.woot.entry.upgrades.xp.info=By default the factory does not generate XP when a mob is killed. This upgrade causes XP shards to be generated with higher tiers generating extra XP.
+
+# BloodMagic Entries
+guide.woot.entry.bloodmagic.intro=Introduction
+guide.woot.entry.bloodmagic.tank=Ritual Of The Sanguine Urn
+guide.woot.entry.bloodmagic.altar=Ritual Of The Mechanical Urn
+
+# BloodMagic Entry Text
+guide.woot.entry.bloodmagic.intro.info=The factory can support upgrades to assist with Blood Magic. Primarily these are for generating Life Essence. They are available at the same time as the traditional Well Of Suffering ritual.
+guide.woot.entry.bloodmagic.tank.info=This ritual will generate Life Essence into export tanks. The different tiers change the number of sacrifice runes used when killing the mobs.\n\nThe ritual will look for the Factory Heart in a 10 block radius, both horizontally and vertically.
+guide.woot.entry.bloodmagic.altar.info=This ritual will generate Life Essence directly into an altar. The different tiers change the sacrifice amount per mob. This ritual uses the standard altar mechanics for determining the amount of Life Essence (eg. altar rune setup)\n\nThe ritual will look for the Factory Heart in a 10 block radius, both horizontally and vertically.\n\nThe ritual will look for an altar in a 5 block radius and 10 blocks vertically.
 
 # Anvil Entries
 guide.woot.entry.anvil.intro=Introduction

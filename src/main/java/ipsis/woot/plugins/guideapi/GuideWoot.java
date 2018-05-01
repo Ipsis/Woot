@@ -50,6 +50,7 @@ public class GuideWoot implements IGuideBook {
         CategoryIngredients.buildCategory(GUIDE_BOOK);
         CategoryUpgrades.buildCategory(GUIDE_BOOK);
         CategoryBloodMagic.buildCategory(GUIDE_BOOK);
+        CategoryEvilCraft.buildCategory(GUIDE_BOOK);
         CategoryChangelog.buildCategory(GUIDE_BOOK);
     }
 

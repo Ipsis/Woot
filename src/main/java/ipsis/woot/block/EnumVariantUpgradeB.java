@@ -12,7 +12,10 @@ public enum EnumVariantUpgradeB implements IStringSerializable {
     BM_LE_TANK_III,
     BM_LE_ALTAR_I,
     BM_LE_ALTAR_II,
-    BM_LE_ALTAR_III;
+    BM_LE_ALTAR_III,
+    EC_BLOOD_I,
+    EC_BLOOD_II,
+    EC_BLOOD_III;
 
     public int getMetadata() {
 

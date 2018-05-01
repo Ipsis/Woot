@@ -18,6 +18,12 @@
     "active=true,variant=bm_le_altar_iii": { "model":"woot:upgradeb_bm_le_altar_iii_active" },
     "active=false,variant=bm_le_altar_i": { "model":"woot:upgradeb_bm_le_altar_i" },
     "active=false,variant=bm_le_altar_ii": { "model":"woot:upgradeb_bm_le_altar_ii" },
-    "active=false,variant=bm_le_altar_iii": { "model":"woot:upgradeb_bm_le_altar_iii" }
+    "active=false,variant=bm_le_altar_iii": { "model":"woot:upgradeb_bm_le_altar_iii" },
+    "active=true,variant=ec_blood_i": { "model":"woot:upgradeb_ec_blood_i_active" },
+    "active=true,variant=ec_blood_ii": { "model":"woot:upgradeb_ec_blood_ii_active" },
+    "active=true,variant=ec_blood_iii": { "model":"woot:upgradeb_ec_blood_iii_active" },
+    "active=false,variant=ec_blood_i": { "model":"woot:upgradeb_ec_blood_i" },
+    "active=false,variant=ec_blood_ii": { "model":"woot:upgradeb_ec_blood_ii" },
+    "active=false,variant=ec_blood_iii": { "model":"woot:upgradeb_ec_blood_iii" }
   }
 }

@@ -24,6 +24,7 @@ public class LootGeneration implements ILootGeneration {
         generatorList.add(new DecapitationGenerator());
         generatorList.add(new BloodMagicLifeEssenceGenerator());
         generatorList.add(new BloodMagicWillGenerator());
+        generatorList.add(new EvilCraftBloodGenerator());
     }
 
     @Override

@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "woot:upgradeb",
+    "data": 9
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "woot:factorycore",
+      "data": 2
+    },
+    {
+      "item": "evilcraft:sanguinary_pedestal",
+      "data": 0
+    },
+    {
+      "item": "evilcraft:spiked_plate",
+      "data": 0
+    }
+  ]
+}

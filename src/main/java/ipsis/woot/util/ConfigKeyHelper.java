@@ -113,4 +113,10 @@ public class ConfigKeyHelper {
         level = MathHelper.clamp(level, 1, 3);
         return getEntryFromLevel(level, EnumConfigKey.BM_LE_ALTAR_PARAM);
     }
+
+    public static EnumConfigKey getEcBloodParam(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.EC_BLOOD_PARAM);
+    }
 }

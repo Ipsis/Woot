@@ -52,6 +52,7 @@ public class DebugSetup {
         GEN_BM_LE,
         GEN_BM_WILL,
         GEN_HEADS,
+        GEN_EC,
         SPAWN,
         LEARN,
         TARTARUS

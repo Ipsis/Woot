@@ -1,0 +1,6 @@
+{
+  "parent": "woot:block/upgrade_t1_active",
+  "textures": {
+    "faces": "woot:blocks/upgrade_ec_blood"
+  }
+}

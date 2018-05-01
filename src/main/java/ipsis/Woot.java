@@ -22,6 +22,7 @@ import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
+import ipsis.woot.plugins.evilcraft.EvilCraft;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -114,6 +115,9 @@ public class Woot {
 
         if (Loader.isModLoaded(BloodMagic.BM_MODID))
             BloodMagic.init();
+
+        if (Loader.isModLoaded(EvilCraft.EC_MODID))
+            EvilCraft.init();
     }
 
     @Mod.EventHandler

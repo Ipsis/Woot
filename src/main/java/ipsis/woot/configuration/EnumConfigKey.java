@@ -223,6 +223,30 @@ public enum EnumConfigKey {
             CATEGORY_UPGRADES,
             "Default power cost per tick of a Efficiency III upgrade",
             "eff3PowerTick", Integer.class, 4, true, 3),
+    BM_LE_TANK_1_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic LifeEssence Tank I upgrade",
+            "bmLeTank1PowerTick", Integer.class, 1, true, 1),
+    BM_LE_TANK_2_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic LifeEssence Tank II upgrade",
+            "bmLeTank1PowerTick", Integer.class, 2, true, 2),
+    BM_LE_TANK_3_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic LifeEssence Tank III upgrade",
+            "bmLeTank1PowerTick", Integer.class, 4, true, 3),
+    BM_LE_ALTAR_1_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic LifeEssence Altar I upgrade",
+            "bmLeAltar1PowerTick", Integer.class, 1, true, 1),
+    BM_LE_ALTAR_2_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic LifeEssence Altar II upgrade",
+            "bmLeAltar2PowerTick", Integer.class, 2, true, 2),
+    BM_LE_ALTAR_3_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic LifeEssence Altar III upgrade",
+            "bmLeAltar3PowerTick", Integer.class, 4, true, 3),
     RATE_1_PARAM(
             CATEGORY_UPGRADES,
             "Percentage reduction in spawn time for Rate I upgrade",
@@ -294,7 +318,39 @@ public enum EnumConfigKey {
     EFF_3_PARAM(
             CATEGORY_UPGRADES,
             "Percentage of power saved for a Efficiency III upgrade",
-            "eff3Param", Integer.class, 30, true, 3);
+            "eff3Param", Integer.class, 30, true, 3),
+    BM_LE_TANK_1_PARAM(
+            CATEGORY_UPGRADES,
+            "Number of sacrifice runes for a BloodMagic LifeEssence Tank I upgrade",
+            "bmLeTank1Param", Integer.class, 4, true, 1),
+    BM_LE_TANK_2_PARAM(
+            CATEGORY_UPGRADES,
+            "Number of sacrifice runes for a BloodMagic LifeEssence Tank II upgrade",
+            "bmLeTank2Param", Integer.class, 16, true, 2),
+    BM_LE_TANK_3_PARAM(
+            CATEGORY_UPGRADES,
+            "Number of sacrifice runes for a BloodMagic LifeEssence Tank III upgrade",
+            "bmLeTank13Param", Integer.class, 24, true, 3),
+    BM_LE_ALTAR_1_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of sacrifice amount for a BloodMagic LifeEssence Altar I upgrade",
+                    "bmLeAltar1Param", Integer.class, 50, true, 1),
+    BM_LE_ALTAR_2_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of sacrifice amount for a BloodMagic LifeEssence Altar II upgrade",
+                    "bmLeAltar2Param", Integer.class, 75, true, 2),
+    BM_LE_ALTAR_3_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of sacrifice amount for a BloodMagic LifeEssence Altar III upgrade",
+                    "bmLeAltar3Param", Integer.class, 100, true, 3),
+    ALLOW_BM_LE_TANK(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support BloodMagic Ritual Of The Sanguine Urn",
+             "allowBmLeTank", Boolean.class, true, false),
+    ALLOW_BM_LE_ALTAR(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support BloodMagic Ritual Of The Mechanical Altar",
+            "allowBmLeAltar", Boolean.class, true, false);
 
     private String text;
     private Class clazz;
@@ -404,4 +460,6 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> DECAP_PARAM = EnumSet.of(DECAP_1_PARAM, DECAP_2_PARAM, DECAP_3_PARAM);
     public static EnumSet<EnumConfigKey> XP_PARAM = EnumSet.of(XP_1_PARAM, XP_2_PARAM, XP_3_PARAM);
     public static EnumSet<EnumConfigKey> EFF_PARAM = EnumSet.of(EFF_1_PARAM, EFF_2_PARAM, EFF_3_PARAM);
+    public static EnumSet<EnumConfigKey> BM_LE_TANK_PARAM = EnumSet.of(BM_LE_TANK_1_PARAM, BM_LE_TANK_2_PARAM, BM_LE_TANK_3_PARAM);
+    public static EnumSet<EnumConfigKey> BM_LE_ALTAR_PARAM = EnumSet.of(BM_LE_ALTAR_1_PARAM, BM_LE_ALTAR_2_PARAM, BM_LE_ALTAR_3_PARAM);
 }

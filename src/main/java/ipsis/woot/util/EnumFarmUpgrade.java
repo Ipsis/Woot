@@ -7,7 +7,9 @@ public enum EnumFarmUpgrade {
     LOOTING,
     MASS,
     RATE,
-    XP;
+    XP,
+    BM_LE_TANK,
+    BM_LE_ALTAR;
 
     public static EnumFarmUpgrade getFromEnumSpawnerUpgrade(EnumSpawnerUpgrade u) {
 
@@ -42,6 +44,16 @@ public enum EnumFarmUpgrade {
             case XP_II:
             case XP_III:
                 farmUpgrade = XP;
+                break;
+            case BM_LE_TANK_I:
+            case BM_LE_TANK_II:
+            case BM_LE_TANK_III:
+                farmUpgrade = BM_LE_TANK;
+                break;
+            case BM_LE_ALTAR_I:
+            case BM_LE_ALTAR_II:
+            case BM_LE_ALTAR_III:
+                farmUpgrade = BM_LE_ALTAR;
                 break;
             default:
                 farmUpgrade = XP; // Should never happen

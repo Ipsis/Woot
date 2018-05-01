@@ -24,7 +24,13 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
     DECAPITATE_III(EnumConfigKey.DECAP_3_POWER_TICK, EnumConfigKey.DECAP_3_PARAM, 3),
     EFFICIENCY_I(EnumConfigKey.EFF_1_POWER_TICK, EnumConfigKey.EFF_1_PARAM, 1),
     EFFICIENCY_II(EnumConfigKey.EFF_2_POWER_TICK, EnumConfigKey.EFF_2_PARAM, 2),
-    EFFICIENCY_III(EnumConfigKey.EFF_3_POWER_TICK, EnumConfigKey.EFF_3_PARAM, 3);
+    EFFICIENCY_III(EnumConfigKey.EFF_3_POWER_TICK, EnumConfigKey.EFF_3_PARAM, 3),
+    BM_LE_TANK_I(EnumConfigKey.BM_LE_TANK_1_POWER_TICK, EnumConfigKey.BM_LE_TANK_1_PARAM, 1),
+    BM_LE_TANK_II(EnumConfigKey.BM_LE_TANK_2_POWER_TICK, EnumConfigKey.BM_LE_TANK_2_PARAM, 2),
+    BM_LE_TANK_III(EnumConfigKey.BM_LE_TANK_3_POWER_TICK, EnumConfigKey.BM_LE_TANK_3_PARAM, 3),
+    BM_LE_ALTAR_I(EnumConfigKey.BM_LE_ALTAR_1_POWER_TICK, EnumConfigKey.BM_LE_ALTAR_1_PARAM, 1),
+    BM_LE_ALTAR_II(EnumConfigKey.BM_LE_ALTAR_2_POWER_TICK, EnumConfigKey.BM_LE_ALTAR_2_PARAM, 2),
+    BM_LE_ALTAR_III(EnumConfigKey.BM_LE_ALTAR_3_POWER_TICK, EnumConfigKey.BM_LE_ALTAR_3_PARAM, 3);
 
     EnumSpawnerUpgrade() { }
 

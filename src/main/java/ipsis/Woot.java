@@ -21,6 +21,7 @@ import ipsis.woot.loot.customdrops.CustomDropsRepository;
 import ipsis.woot.loot.repository.LootRepository;
 import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.multiblock.FactoryPatternRepository;
+import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.imc.EnderIO;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -37,6 +38,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
@@ -110,8 +112,8 @@ public class Woot {
 
         FMLInterModComms.sendMessage("Waila", "register", "ipsis.woot.plugins.waila.WailaDataProviderWoot.callbackRegister");
 
-//        if (Loader.isModLoaded(BloodMagic.BM_MODID))
-//            BloodMagic.init();
+        if (Loader.isModLoaded(BloodMagic.BM_MODID))
+            BloodMagic.init();
     }
 
     @Mod.EventHandler

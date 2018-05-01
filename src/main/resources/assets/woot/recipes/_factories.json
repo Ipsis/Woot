@@ -4,6 +4,8 @@
   },
   "conditions": {
     "vanilla_die_crafting": "ipsis.woot.crafting.VanillaDieCraftingConditionFactory",
-    "xp_upgrade": "ipsis.woot.crafting.XpUpgradeConditionFactory"
+    "xp_upgrade": "ipsis.woot.crafting.XpUpgradeConditionFactory",
+    "bm_le_tank": "ipsis.woot.crafting.BmLeTankUpgradeConditionFactory",
+    "bm_le_altar": "ipsis.woot.crafting.BmLeAltarUpgradeConditionFactory"
   }
 }

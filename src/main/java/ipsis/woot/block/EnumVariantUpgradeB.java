@@ -6,7 +6,13 @@ public enum EnumVariantUpgradeB implements IStringSerializable {
 
     EFFICIENCY_I,
     EFFICIENCY_II,
-    EFFICIENCY_III;
+    EFFICIENCY_III,
+    BM_LE_TANK_I,
+    BM_LE_TANK_II,
+    BM_LE_TANK_III,
+    BM_LE_ALTAR_I,
+    BM_LE_ALTAR_II,
+    BM_LE_ALTAR_III;
 
     public int getMetadata() {
 

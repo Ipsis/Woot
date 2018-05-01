@@ -221,6 +221,7 @@ guide.woot.category.anvil=Stygian Anvil
 guide.woot.category.ingredients=Mob Spawning Ingredients
 guide.woot.category.upgrades=Factory Upgrades
 guide.woot.category.bloodmagic=Blood Magic
+guide.woot.category.evilcraft=EvilCraft
 guide.woot.category.changelog=Changelog
 
 # Foreward Entries
@@ -314,6 +315,13 @@ guide.woot.entry.anvil.shards=Shards
 guide.woot.entry.anvil.dusts=Dusts
 guide.woot.entry.anvil.cores=Cores
 guide.woot.entry.anvil.controller=Programmed Controller
+
+# EvilCraft Entries
+guide.woot.entry.evilcraft.intro=Introduction
+guide.woot.entry.evilcraft.tank=Blood Tank Upgrades
+
+guide.woot.entry.evilcraft.intro.info=The factory can support upgrades to assist with Evil Craft.\n\nTo produce blood for this mod you create a mob farm, therefore Woot provides an alternative method.
+guide.woot.entry.evilcraft.tank.info=Using the Blood Tank upgrades you can generate EvilCraft blood in directory attached export tanks. The higher the level of upgrade, then the more mB per mob HP that is generated.
 
 # Anvil Text
 guide.woot.entry.anvil.intro.info=The anvil serves two purposes. The first is to create some of the items used for crafting, such as the cores. The second is to reduce the cost of creating some items.\n\nThe anvil must be placed on top of a magma block.

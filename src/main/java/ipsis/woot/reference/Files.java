@@ -15,6 +15,7 @@ public class Files {
     public static final String CUSTOM_LOOT_FILENAME = "custom_drops.json";
     public static final String FACTORY_ING_FILENAME = "factory_ingredients.json";
     public static final String FACTORY_CFG_FILENAME = "factory_config.json";
+    public static final String CHANGELOG_FILENAME = "changelog.json";
     private static final String CONFIG_FILENAME = "woot.cfg";
 
     public static void init(FMLPreInitializationEvent event) {

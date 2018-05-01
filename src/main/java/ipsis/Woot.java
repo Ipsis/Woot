@@ -2,10 +2,7 @@ package ipsis;
 
 import ipsis.woot.command.WootCommand;
 import ipsis.woot.configuration.*;
-import ipsis.woot.configuration.loaders.CustomDropsLoader;
-import ipsis.woot.configuration.loaders.FactoryConfigLoader;
-import ipsis.woot.configuration.loaders.FactoryIngredientsLoader;
-import ipsis.woot.configuration.loaders.FactoryLootLoader;
+import ipsis.woot.configuration.loaders.*;
 import ipsis.woot.crafting.AnvilManager;
 import ipsis.woot.crafting.AnvilManagerLoader;
 import ipsis.woot.crafting.IAnvilManager;
@@ -68,6 +65,7 @@ public class Woot {
     public static WootDimensionManager wootDimensionManager = new WootDimensionManager();
     public static FactoryPatternRepository factoryPatternRepository = new FactoryPatternRepository();
     public static CalculatorRepository calculatorRepository = new CalculatorRepository();
+    public static ChangeLog changeLog = new ChangeLog();
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
@@ -101,6 +99,7 @@ public class Woot {
         proxy.init();
 
         new InternalPolicyLoader().load(policyRepository);
+        new ChangelogLoader().load();
         new FactoryConfigLoader().loadConfig(wootConfiguration);
         new FactoryIngredientsLoader().loadConfig();
         new CustomDropsLoader().loadConfig();

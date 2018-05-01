@@ -247,6 +247,18 @@ public enum EnumConfigKey {
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar III upgrade",
             "bmLeAltar3PowerTick", Integer.class, 4, true, 3),
+    EC_BLOOD_1_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a EvilCraft Blood Tank I upgrade",
+            "ecBlood1PowerTick", Integer.class, 1, true, 1),
+    EC_BLOOD_2_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a EvilCraft Blood Tank II upgrade",
+            "ecBlood2PowerTick", Integer.class, 2, true, 2),
+    EC_BLOOD_3_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a EvilCraft Blood Tank III upgrade",
+            "ecBlood3PowerTick", Integer.class, 4, true, 3),
     RATE_1_PARAM(
             CATEGORY_UPGRADES,
             "Percentage reduction in spawn time for Rate I upgrade",
@@ -343,6 +355,18 @@ public enum EnumConfigKey {
             CATEGORY_UPGRADES,
             "Percentage of sacrifice amount for a BloodMagic LifeEssence Altar III upgrade",
                     "bmLeAltar3Param", Integer.class, 100, true, 3),
+    EC_BLOOD_1_PARAM(
+            CATEGORY_UPGRADES,
+            "mb per HP for the EvilCraft Blood Tank I upgrade",
+                "ecBlood1Param", Integer.class, 20, true, 1),
+    EC_BLOOD_2_PARAM(
+            CATEGORY_UPGRADES,
+            "mb per HP for the EvilCraft Blood Tank II upgrade",
+                "ecBlood2Param", Integer.class, 40, true, 2),
+    EC_BLOOD_3_PARAM(
+            CATEGORY_UPGRADES,
+            "mb per HP for the EvilCraft Blood Tank III upgrade",
+            "ecBlood3Param", Integer.class, 60, true, 3),
     ALLOW_BM_LE_TANK(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support BloodMagic Ritual Of The Sanguine Urn",
@@ -350,7 +374,11 @@ public enum EnumConfigKey {
     ALLOW_BM_LE_ALTAR(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support BloodMagic Ritual Of The Mechanical Altar",
-            "allowBmLeAltar", Boolean.class, true, false);
+            "allowBmLeAltar", Boolean.class, true, false),
+    ALLOW_EC_BLOOD(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support EvilCraft Blood Generation",
+                    "allowEcBlood", Boolean.class, true, false);
 
     private String text;
     private Class clazz;
@@ -462,4 +490,5 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> EFF_PARAM = EnumSet.of(EFF_1_PARAM, EFF_2_PARAM, EFF_3_PARAM);
     public static EnumSet<EnumConfigKey> BM_LE_TANK_PARAM = EnumSet.of(BM_LE_TANK_1_PARAM, BM_LE_TANK_2_PARAM, BM_LE_TANK_3_PARAM);
     public static EnumSet<EnumConfigKey> BM_LE_ALTAR_PARAM = EnumSet.of(BM_LE_ALTAR_1_PARAM, BM_LE_ALTAR_2_PARAM, BM_LE_ALTAR_3_PARAM);
+    public static EnumSet<EnumConfigKey> EC_BLOOD_PARAM = EnumSet.of(EC_BLOOD_1_PARAM, EC_BLOOD_2_PARAM, EC_BLOOD_3_PARAM);
 }

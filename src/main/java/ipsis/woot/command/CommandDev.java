@@ -66,6 +66,7 @@ public class CommandDev extends CommandTreeBase {
             devTags.put("genbmle", DebugSetup.EnumDebugType.GEN_BM_LE);
             devTags.put("genbmwill", DebugSetup.EnumDebugType.GEN_BM_WILL);
             devTags.put("genheads", DebugSetup.EnumDebugType.GEN_HEADS);
+            devTags.put("genec", DebugSetup.EnumDebugType.GEN_EC);
             devTags.put("spawn", DebugSetup.EnumDebugType.SPAWN);
             devTags.put("learn", DebugSetup.EnumDebugType.LEARN);
             devTags.put("tartarus", DebugSetup.EnumDebugType.TARTARUS);

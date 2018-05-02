@@ -1,0 +1,77 @@
+{
+  "versions": [
+    {
+      "version": "1.12.2-1.2.0",
+      "features": [
+        {
+          "id": 315,
+          "desc": "Added two Blood Magic rituals for Life Essence generation"
+        },
+        {
+          "id": 333,
+          "desc": "Added EvilCraft blood generation"
+        }
+      ],
+      "fixes": [
+
+      ]
+    },
+    {
+      "version": "1.12.2-1.1.0",
+      "features": [
+        {
+          "id": 337,
+          "desc": "Allow clear of Ender Shards in crafting table"
+        },
+        {
+          "id": 335,
+          "desc": "Added support for recipes up to Long.MAX_VALUE total, Integer.MAX_VALUE per tick"
+        },
+        {
+          "id": 331,
+          "desc": "Add a changelog to the manual"
+        },
+        {
+          "id": 326,
+          "desc": "Add missing ingredients indicator to gui"
+        }
+      ],
+      "fixes": [
+        {
+          "id": 335,
+          "desc": "Fixed processing finish issues with very large power usage"
+        },
+        {
+          "id": 338,
+          "desc": "Respect stack size when generating items from the anvil"
+        }
+      ]
+    },
+    {
+      "version": "1.12.2-1.0.1",
+      "features": [
+        {
+          "id": -1,
+          "desc": "Added de_DE.lang from Thalaan"
+        }
+      ],
+      "fixes": [
+        {
+          "id": 329,
+          "desc": "Fix missing sneak-click consume xp shard stack feature"
+        }
+      ]
+    },
+    {
+      "version": "1.12.2-1.0.0",
+      "features": [
+        {
+          "id": -1,
+          "desc": "First release for 1.12.2"
+        }
+      ],
+      "fixes": [
+      ]
+    }
+  ]
+}

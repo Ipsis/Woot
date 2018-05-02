@@ -19,6 +19,9 @@ public class CalculatorRepository {
         calculators.add(new Mass());
         calculators.add(new Rate());
         calculators.add(new Xp());
+        calculators.add(new BloodMagicAltar());
+        calculators.add(new BloodMagicTank());
+        calculators.add(new EvilCraftBlood());
     }
 
     public List<IUpgradePowerCalculator> getAllCalculators() {

@@ -14,7 +14,12 @@
         {
           "id": 345,
           "desc": "Modify gui display of skulls when using the decapitate upgrades"
+        },
+        {
+          "id": -1,
+          "desc": "Updated to Forge 1.12.2-14.23.3.2655"
         }
+
       ],
       "fixes": [
 

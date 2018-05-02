@@ -338,11 +338,3 @@ guide.woot.entry.ingredients.intro.info=Some mobs require you to provide the fac
 # BloodMagic
 ritual.woot.ritualLifeEssenceTank=Ritual of the Sanguine Urn
 ritual.woot.ritualLifeEssenceAltar=Ritual of the Mechanical Altar
-
-# Changelog Text
-guide.woot.entry.changelog.1_0_0=Version 1.0.0
-guide.woot.entry.changelog.1_0_0.info=First release for 1.12.2
-guide.woot.entry.changelog.1_0_1=Version 1.0.1
-guide.woot.entry.changelog.1_0_1.info=Fixes\n\n[#329]Fix missing sneak-click consume xp shard stack feature.\n[#335]Fix power calc exceeding Integer.MAX_VALUE if you set high power costs\n\nFeatures\n\n[----]Added de_DE.lang from Thalaan.
-guide.woot.entry.changelog.1_1_0=Version 1.1.0
-guide.woot.entry.changelog.1_1_0.info=Fixes\n\n[#335]Fixed processing finish issues with very large power usage.\n[#338]Respect stack size when generating items from the anvil.\n\nFeatures\n\n[#337]Allow clear of Ender Shard in crafting table.\n[#331]Added a changelog.\n[#335]Added support for recipe up to Long.MAX_VALUE total, Integer.MAX_VALUE per tick.\n[#327]Add validation support to hammer\n[#326]Add missing ingredients indicator to gui.

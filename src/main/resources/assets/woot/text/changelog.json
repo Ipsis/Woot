@@ -1,6 +1,22 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.2.0",
+      "features": [
+        {
+          "id": 315,
+          "desc": "Added two Blood Magic rituals for Life Essence generation"
+        },
+        {
+          "id": 333,
+          "desc": "Added EvilCraft blood generation"
+        }
+      ],
+      "fixes": [
+
+      ]
+    },
+    {
       "version": "1.12.2-1.1.0",
       "features": [
         {

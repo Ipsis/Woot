@@ -1,4 +1,9 @@
 {
+  "conditions": [
+    {
+      "type": "woot:ec_blood_tank"
+    }
+  ],
   "result": {
     "item": "woot:upgradeb",
     "data": 9

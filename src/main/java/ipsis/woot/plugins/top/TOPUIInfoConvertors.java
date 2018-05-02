@@ -71,6 +71,7 @@ public class TOPUIInfoConvertors {
              * Ingredients
              */
             if (!farm.ingredientsItems.isEmpty() || !farm.ingredientsFluids.isEmpty()) {
+                probeInfo.text(TextFormatting.GREEN + "Ingredients");
                 IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
                 IProbeInfo horizontal = null;
                 int rows = 0;
@@ -105,6 +106,7 @@ public class TOPUIInfoConvertors {
              */
             if (!farm.drops.isEmpty()) {
 
+                probeInfo.text(TextFormatting.GREEN + "Drop Chance");
                 IProbeInfo vertical = probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffffffff).spacing(0));
                 IProbeInfo horizontal = null;
                 int rows = 0;

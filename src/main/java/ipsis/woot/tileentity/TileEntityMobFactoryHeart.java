@@ -372,12 +372,35 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         info.powerStored = farmSetup.getPowerStation().getEnergyStorage().getEnergyStored();
         info.mobCount = farmSetup.getNumMobs();
 
+        boolean addedDropSkull = false;
+        boolean canDropSkull = false;
+        ItemStack skull = SkullHelper.getSkull(farmSetup.getWootMobName());
+        if (!skull.isEmpty() && farmSetup.hasUpgrade(EnumFarmUpgrade.DECAPITATE))
+            canDropSkull = true;
+
         List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {
             ItemStack itemStack = lootItemStack.itemStack.copy();
+
             itemStack.setCount(lootItemStack.dropChance);
+            if (canDropSkull && itemStack.isItemEqual(skull)) {
+                int decap = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getDecapParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
+                if (decap > itemStack.getCount())
+                    itemStack.setCount(decap);
+
+                addedDropSkull = true;
+            }
+
             info.drops.add(itemStack);
         }
+
+        if (canDropSkull && !addedDropSkull) {
+            int decap = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getDecapParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
+            ItemStack itemStack = skull.copy();
+            itemStack.setCount(decap);
+            info.drops.add(itemStack);
+        }
+
 
         if (spawnRecipe != null) {
             for (ItemStack itemStack : spawnRecipe.getItems())

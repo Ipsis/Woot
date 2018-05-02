@@ -481,6 +481,9 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> DECAP_POWER_PER_TICK = EnumSet.of(DECAP_1_POWER_TICK, DECAP_2_POWER_TICK, DECAP_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> XP_POWER_PER_TICK = EnumSet.of(XP_1_POWER_TICK, XP_2_POWER_TICK, XP_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> EFF_POWER_PER_TICK = EnumSet.of(EFF_1_POWER_TICK, EFF_2_POWER_TICK, EFF_3_POWER_TICK);
+    public static EnumSet<EnumConfigKey> BM_LE_TANK_POWER_PER_TICK = EnumSet.of(BM_LE_TANK_1_POWER_TICK, BM_LE_TANK_2_POWER_TICK, BM_LE_TANK_3_POWER_TICK);
+    public static EnumSet<EnumConfigKey> BM_LE_ALTAR_POWER_PER_TICK = EnumSet.of(BM_LE_ALTAR_1_POWER_TICK, BM_LE_ALTAR_2_POWER_TICK, BM_LE_ALTAR_3_POWER_TICK);
+    public static EnumSet<EnumConfigKey> EC_BLOOD_POWER_PER_TICK = EnumSet.of(EC_BLOOD_1_POWER_TICK, EC_BLOOD_2_POWER_TICK, EC_BLOOD_3_POWER_TICK);
 
     public static EnumSet<EnumConfigKey> RATE_PARAM = EnumSet.of(RATE_1_PARAM, RATE_2_PARAM, RATE_3_PARAM);
     public static EnumSet<EnumConfigKey> MASS_PARAM = EnumSet.of(MASS_1_PARAM, MASS_2_PARAM, MASS_3_PARAM);

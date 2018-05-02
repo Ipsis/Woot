@@ -63,6 +63,24 @@ public class ConfigKeyHelper {
         return getEntryFromLevel(level, EnumConfigKey.EFF_POWER_PER_TICK);
     }
 
+    public static EnumConfigKey getBmLeTankPowerPerTick(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.BM_LE_TANK_POWER_PER_TICK);
+    }
+
+    public static EnumConfigKey getBmLeAltarPowerPerTick(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.BM_LE_ALTAR_POWER_PER_TICK);
+    }
+
+    public static EnumConfigKey getEcBloodPowerPerTick(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.EC_BLOOD_POWER_PER_TICK);
+    }
+
     /**
      * Param
      */

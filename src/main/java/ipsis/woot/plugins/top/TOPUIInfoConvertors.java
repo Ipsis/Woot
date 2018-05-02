@@ -2,6 +2,7 @@ package ipsis.woot.plugins.top;
 
 import ipsis.woot.tileentity.ui.ControllerUIInfo;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
+import ipsis.woot.util.EnumFarmUpgrade;
 import ipsis.woot.util.StringHelper;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -54,9 +55,17 @@ public class TOPUIInfoConvertors {
             String total = ElementProgress.format(farm.recipeTotalPower, f, "RF");
             String perTick = ElementProgress.format(farm.recipePowerPerTick, NumberFormat.COMPACT, "RF/tick");
 
-            probeInfo.text(TextFormatting.GREEN + "Total: " + total);
-            probeInfo.text(TextFormatting.GREEN + "Per Tick: " + perTick);
+            probeInfo.text(TextFormatting.GREEN + "Power: " + total + " @ " + perTick);
             probeInfo.text(TextFormatting.GREEN + "Time: " + Integer.toString(farm.recipeTotalTime) + " ticks");
+
+            /**
+             * Upgrades
+             */
+            for (EnumFarmUpgrade u : EnumFarmUpgrade.values()) {
+                if (farm.upgradeUIInfo.isUpgradeEnabled(u)) {
+                    probeInfo.text(TextFormatting.YELLOW + farm.upgradeUIInfo.getUpgradeText(u));
+                }
+            }
 
             /**
              * Ingredients
@@ -112,6 +121,8 @@ public class TOPUIInfoConvertors {
                     idx++;
                 }
             }
+        } else {
+            probeInfo.text("Sneak for more info");
         }
     }
 }

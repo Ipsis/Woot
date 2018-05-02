@@ -21,6 +21,7 @@ public class FarmUIInfo {
     public int powerCapacity;
     public int mobCount;
     public boolean missingIngredients = false;
+    public UpgradeUIInfo upgradeUIInfo = new UpgradeUIInfo();
 
     // Filtered list of drops with the stackSize == drop chance
     public List<ItemStack> drops = new ArrayList<>();

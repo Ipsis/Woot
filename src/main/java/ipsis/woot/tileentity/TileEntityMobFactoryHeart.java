@@ -389,9 +389,133 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             info.missingIngredients = !spawnRecipeConsumer.consume(getWorld(), getPos(), farmSetup.getConnectedImportTanks(), farmSetup.getConnectedImportChests(), spawnRecipe, farmSetup.getNumMobs(), true);
         }
 
+        getUpgradeUIInfo(info);
 
         // Say everything is okay
         info.setValid();
+    }
+
+    private void getUpgradeUIInfo(FarmUIInfo info) {
+
+        // Decapitate
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.DECAPITATE)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.DECAPITATE, farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getDecapPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getDecapParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.DECAPITATE)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.DECAPITATE, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.DECAPITATE, param1);
+        }
+
+        // Efficiency
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.EFFICIENCY)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.EFFICIENCY, farmSetup.getUpgradeLevel(EnumFarmUpgrade.EFFICIENCY));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getEffPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.EFFICIENCY)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getEffParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.EFFICIENCY)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.EFFICIENCY, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.EFFICIENCY, param1);
+        }
+
+        // Looting
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.LOOTING)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.LOOTING, farmSetup.getUpgradeLevel(EnumFarmUpgrade.LOOTING));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getLootingPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.LOOTING)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getLootingParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.LOOTING)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.LOOTING, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.LOOTING, param1);
+        }
+
+        // Mass
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.MASS)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.MASS, farmSetup.getUpgradeLevel(EnumFarmUpgrade.MASS));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getMassPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.MASS)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getMassParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.MASS)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.MASS, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.MASS, param1);
+        }
+
+        // Rate
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.RATE)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.RATE, farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getRatePowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getRateParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.RATE)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.RATE, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.RATE, param1);
+        }
+
+         // XP
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.XP)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.XP, farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getXpPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getXpParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.XP)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.XP, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.XP, param1);
+        }
+
+        // Blood Magic Life Essence Tank
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_LE_TANK)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.BM_LE_TANK, farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_TANK));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmLeTankPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_TANK)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmLeTankPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_TANK)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.BM_LE_TANK, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_LE_TANK, param1);
+        }
+
+        // Blood Magic Life Essence Altar
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_LE_ALTAR)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.BM_LE_ALTAR, farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_ALTAR));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmLeAltarPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_ALTAR)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmLeAltarParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_ALTAR)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.BM_LE_ALTAR, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_LE_ALTAR, param1);
+        }
+
+        // EvilCraft Blood
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.EC_BLOOD)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.EC_BLOOD, farmSetup.getUpgradeLevel(EnumFarmUpgrade.EC_BLOOD));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getEcBloodPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.EC_BLOOD)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getEcBloodParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.EC_BLOOD)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.EC_BLOOD, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.EC_BLOOD, param1);
+        }
+
+
+
     }
 
     public boolean canInteractWith(EntityPlayer entityPlayer) {

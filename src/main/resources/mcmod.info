@@ -1,6 +1,6 @@
 [
 {
-  "modid": "Woot",
+  "modid": "woot",
   "name": "Woot",
   "description": "The alternative mob spawner/grinder system",
   "version": "${version}",

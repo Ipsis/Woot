@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.2.1",
+      "features": [],
+      "fixes": [
+        {
+          "id": 350,
+          "desc": "Only add BloodMagic/EvilCraft generators when the mods are loaded"
+        }
+
+      ]
+    },
+    {
       "version": "1.12.2-1.2.0",
       "features": [
         {

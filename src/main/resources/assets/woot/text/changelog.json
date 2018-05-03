@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.2.?",
+      "features": [],
+      "fixes": [
+        {
+          "id": -1,
+          "desc": "Add EnderIO XpShard->XpJuice VAT recipe"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.2.1",
       "features": [],
       "fixes": [

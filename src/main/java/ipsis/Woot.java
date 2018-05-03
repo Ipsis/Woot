@@ -21,6 +21,7 @@ import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.evilcraft.EvilCraft;
 import ipsis.woot.plugins.imc.EnderIO;
+import ipsis.woot.plugins.thermal.Thermal;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
 import ipsis.woot.policy.PolicyRepository;
@@ -117,6 +118,9 @@ public class Woot {
 
         if (Loader.isModLoaded(EvilCraft.EC_MODID))
             EvilCraft.init();
+
+        if (Loader.isModLoaded(Thermal.THERMAL_EXPANSION_MODID))
+            Thermal.init();
     }
 
     @Mod.EventHandler

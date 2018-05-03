@@ -12,6 +12,10 @@
         {
           "id": -1,
           "desc": "Fix EnderIO XpShard->XpJuice VAT recipe"
+        },
+        {
+          "id": -1,
+          "desc": "Fix mcmod.info file"
         }
       ]
     },

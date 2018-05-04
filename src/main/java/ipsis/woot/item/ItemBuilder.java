@@ -11,15 +11,20 @@ import ipsis.woot.multiblock.MobFactoryModule;
 import ipsis.woot.oss.ItemHelper;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
+import ipsis.woot.util.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,10 +50,59 @@ public class ItemBuilder extends ItemWoot {
         ModelHelper.registerItem(ModItems.itemBuilder, BASENAME.toLowerCase());
     }
 
+    private static String TIER_TAG = "tier";
+    private EnumMobFactoryTier getTierFromNbt(ItemStack itemStack) {
+
+        if (!itemStack.hasTagCompound()) {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger(TIER_TAG, EnumMobFactoryTier.TIER_ONE.ordinal());
+            itemStack.setTagCompound(tag);
+        }
+
+        NBTTagCompound tag = itemStack.getTagCompound();
+        return EnumMobFactoryTier.getTier(tag.getInteger(TIER_TAG));
+    }
+
+    private void cycleTier(ItemStack itemStack, EntityPlayer entityPlayer) {
+
+        if (!itemStack.hasTagCompound()) {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger(TIER_TAG, EnumMobFactoryTier.TIER_ONE.ordinal());
+            itemStack.setTagCompound(tag);
+        }
+
+        NBTTagCompound tag = itemStack.getTagCompound();
+        EnumMobFactoryTier next = EnumMobFactoryTier.getTier(tag.getInteger(TIER_TAG));
+        next = next.getNext();
+        tag.setInteger(TIER_TAG, next.ordinal());
+
+        entityPlayer.sendStatusMessage(new TextComponentString(StringHelper.localize(next.getTranslated("info.woot.tier"))), false);
+    }
+
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
         tooltip.add(TextFormatting.ITALIC + "Builds the factory for you");
+        tooltip.add(StringHelper.localize(getTierFromNbt(stack).getTranslated("info.woot.tier")));
+    }
+
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+
+        ItemStack itemStack = playerIn.getHeldItem(handIn);
+
+        // Sneak click, not on block, to cycle
+        if (playerIn.isSneaking()) {
+            RayTraceResult rayTraceResult = rayTrace(worldIn, playerIn, false);
+            if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK)
+                return new ActionResult<>(EnumActionResult.PASS, itemStack);
+
+            if (!worldIn.isRemote)
+                cycleTier(itemStack, playerIn);
+
+            return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
+        }
+
+        return new ActionResult<>(EnumActionResult.PASS, itemStack);
     }
 
     @Override
@@ -57,15 +111,12 @@ public class ItemBuilder extends ItemWoot {
         EnumActionResult result = EnumActionResult.PASS;
 
         ItemStack itemStack = player.getHeldItem(hand);
-        if (player.isSneaking()) {
-            LogHelper.info("Cycle tier");
-            result = EnumActionResult.SUCCESS;
-        } else {
 
+        if (!player.isSneaking()) {
             Block b = worldIn.getBlockState(pos).getBlock();
             if (b instanceof BlockMobFactoryHeart) {
                 EnumFacing factoryFacing = worldIn.getBlockState(pos).getValue(BlockMobFactoryHeart.FACING);
-                if (tryBuild(player, worldIn, pos, factoryFacing, EnumMobFactoryTier.TIER_ONE))
+                if (tryBuild(player, worldIn, pos, factoryFacing, getTierFromNbt(itemStack)))
                     result = EnumActionResult.SUCCESS;
             }
         }

@@ -2,8 +2,8 @@
   "parent": "block/block",
   "elements": [
     {
-      "from": [ 2, 2, 2 ],
-      "to": [ 14, 14, 14 ],
+      "from": [ 1, 1, 1 ],
+      "to": [ 15, 15, 15 ],
       "particle": "#all",
       "faces": {
         "down": {"uv": [ 0, 0, 16, 16 ], "texture": "#down", "cullface": "down" },

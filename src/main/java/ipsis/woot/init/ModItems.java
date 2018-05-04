@@ -18,6 +18,7 @@ public class ModItems {
     public static ItemWoot itemShard;
     public static ItemWoot itemXpShard;
     public static ItemWoot itemYahHammer;
+    public static ItemWoot itemBuilder;
     public static ItemWoot itemFakeManual;
 
 
@@ -40,6 +41,7 @@ public class ModItems {
         itemStygianIronIngot = new ItemStygianIronIngot();
         itemFactoryCore = new ItemFactoryCore();
         itemFakeManual = new ItemFakeManual();
+        itemBuilder = new ItemBuilder();
     }
 
     @SideOnly(Side.CLIENT)
@@ -58,6 +60,7 @@ public class ModItems {
         ModItems.itemStygianIronPlate.initModel();
         ModItems.itemFactoryCore.initModel();
         ModItems.itemFakeManual.initModel();
+        ModItems.itemBuilder.initModel();
     }
 
 }

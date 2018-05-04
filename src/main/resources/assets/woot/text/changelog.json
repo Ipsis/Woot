@@ -6,6 +6,10 @@
         {
           "id": 351,
           "desc": "Add Thermal Expansion crucible recipe for XP shard -> Essence Of Knowledge"
+        },
+        {
+          "id": 352,
+          "desc": "Added The Intern, which will build your factory for you"
         }
       ],
       "fixes": [

@@ -13,6 +13,8 @@ import org.lwjgl.opengl.GL11;
 
 public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
 
+    private static float SIZE = 0.3F;
+
     @Override
     public boolean isGlobalRenderer(TileEntityLayout te) {
 
@@ -103,7 +105,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                                     break;
                             }
 
-                            RenderUtils.drawTexturedCube(texture, 0.4F);
+                            RenderUtils.drawTexturedCube(texture, SIZE);
                         }
                         GlStateManager.popMatrix();
                     } else if (pos instanceof HeartLayoutBlockInfo) {
@@ -170,7 +172,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                                 ((StructureLayoutBlockInfo) pos).module.getColor().getRed(),
                                 ((StructureLayoutBlockInfo) pos).module.getColor().getGreen(),
                                 ((StructureLayoutBlockInfo) pos).module.getColor().getBlue(), RENDER_ALPHA);
-                        RenderUtils.drawShadedCube(0.4F);
+                        RenderUtils.drawShadedCube(SIZE);
                     }
                     GlStateManager.popMatrix();
                 } else if (pos instanceof HeartLayoutBlockInfo) {
@@ -181,7 +183,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                                 (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
                                 (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
                         GlStateManager.color(0.0F, 1.0F, 1.0F, RENDER_ALPHA);
-                        RenderUtils.drawShadedCube(0.4F);
+                        RenderUtils.drawShadedCube(SIZE);
                     }
                     GlStateManager.popMatrix();
                 } else if (pos instanceof ControllerLayoutBlockInfo) {
@@ -192,7 +194,7 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout>{
                                 (te.getPos().getY() - pos.getPos().getY()) * -1.0F,
                                 (te.getPos().getZ() - pos.getPos().getZ()) * -1.0F);
                         GlStateManager.color(0.0F, 1.0F, 0.0F, RENDER_ALPHA);
-                        RenderUtils.drawShadedCube(0.4F);
+                        RenderUtils.drawShadedCube(SIZE);
                     }
                     GlStateManager.popMatrix();
                 }

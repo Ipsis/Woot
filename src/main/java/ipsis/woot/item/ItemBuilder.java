@@ -83,7 +83,16 @@ public class ItemBuilder extends ItemWoot {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
         tooltip.add(TextFormatting.ITALIC + "Builds the factory for you");
-        tooltip.add(StringHelper.localize(getTierFromNbt(stack).getTranslated("info.woot.tier")));
+
+        EnumMobFactoryTier tier = getTierFromNbt(stack);
+        tooltip.add(StringHelper.localize(tier.getTranslated("info.woot.tier")));
+
+        for (EnumMobFactoryModule m : EnumMobFactoryModule.values()) {
+            int c = Woot.factoryPatternRepository.getBlockCount(tier, m);
+            if (c > 0)
+                tooltip.add(c + " " + StringHelper.localize("tile.woot.structure." + m.getName() + ".name"));
+
+        }
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

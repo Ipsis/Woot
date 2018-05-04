@@ -76,7 +76,8 @@ public class HandlerRegistryEvent {
                 new RegisterItem(ModItems.itemShard, ItemShard.BASENAME),
                 new RegisterItem(ModItems.itemYahHammer, ItemYahHammer.BASENAME),
                 new RegisterItem(ModItems.itemXpShard, ItemXpShard.BASENAME),
-                new RegisterItem(ModItems.itemFakeManual, ItemFakeManual.BASENAME)
+                new RegisterItem(ModItems.itemFakeManual, ItemFakeManual.BASENAME),
+                new RegisterItem(ModItems.itemBuilder, ItemBuilder.BASENAME)
         };
 
         for (RegisterItem item : items)

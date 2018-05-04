@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "woot:builder"
+  },
+  "pattern": [
+    " DZ",
+    "SBC",
+    "BS "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "Z": {
+      "item": "woot:layout"
+    },
+    "D": {
+      "item": "minecraft:dispenser"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    }
+  }
+}

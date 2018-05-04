@@ -23,4 +23,9 @@ public class MobFactoryModule {
 
     public EnumMobFactoryModule getModuleType() { return this.moduleType; }
     public BlockPos getOffset() { return this.offset; }
+
+    @Override
+    public String toString() {
+        return offset + " : " + moduleType;
+    }
 }

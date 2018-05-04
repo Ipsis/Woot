@@ -1,6 +1,7 @@
 package ipsis.woot.block;
 
 import ipsis.Woot;
+import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.multiblock.EnumMobFactoryModule;
@@ -104,6 +105,11 @@ public class BlockMobFactoryStructure extends BlockWoot implements ITileEntityPr
     public int getMetaFromState(IBlockState state) {
 
         return state.getValue(MODULE).getMetadata();
+    }
+
+    public ItemStack getItemStack(EnumMobFactoryModule m) {
+
+        return new ItemStack(this,  1, m.getMetadata());
     }
 
     @SideOnly(Side.CLIENT)

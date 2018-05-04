@@ -190,15 +190,19 @@ public class ItemBuilder extends ItemWoot {
             if (isBlockCorrect(currBlock, currState, m.getModuleType()))
                 continue;
 
-            if (!playerHasBlock(player, m.getModuleType()))
+            if (!playerHasBlock(player, m.getModuleType())) {
+                player.sendStatusMessage(new TextComponentString("Block not in inventory (" + StringHelper.localize("tile.woot.structure." + m.getModuleType().getName() + ".name") + ")"), false);
                 return false;
+            }
 
             if (currBlock.isAir(currState, world, placePos) || currBlock.isReplaceable(world, placePos)) {
-
                 int meta = m.getModuleType().getMetadata();
                 world.setBlockState(placePos, ModBlocks.blockStructure.getStateFromMeta(meta));
                 takePlayerBlock(player, m.getModuleType());
                 return true;
+            } else {
+                player.sendStatusMessage(new TextComponentString("Cannot replace block at " + placePos), false);
+                return false;
             }
         }
 

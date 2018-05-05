@@ -524,6 +524,15 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_LE_ALTAR, param1);
         }
 
+        // Blood Magic Crystal
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_CRYSTAL)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.BM_CRYSTAL, farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmCrystalPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.BM_CRYSTAL, perTick);
+        }
+
         // EvilCraft Blood
         if (farmSetup.hasUpgrade(EnumFarmUpgrade.EC_BLOOD)) {
             info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.EC_BLOOD, farmSetup.getUpgradeLevel(EnumFarmUpgrade.EC_BLOOD));

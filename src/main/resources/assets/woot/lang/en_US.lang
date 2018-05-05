@@ -351,3 +351,4 @@ ui.woot.xp.desc=XP %d: %dRF/tick, %d%% generation
 ui.woot.ec_blood.desc=EvilCraft Blood %d: %dRF/tick, %d mBperHP
 ui.woot.bm_le_tank.desc=Blood Magic Tank %d: %dRF/tick, %d sacrifice runes
 ui.woot.bm_le_altar.desc=Blood Magic Altar %d: %dRF/tick, %d%% sacrifice
+ui.woot.bm_crystal.desc=Blood Magic Crystal %d: %dRF/tick

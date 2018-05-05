@@ -82,6 +82,8 @@ public class UpgradeUIInfo {
             out = StringHelper.localizeFormat("ui.woot.bm_le_tank.desc", upgradeLevel[upgrade.ordinal()], powerPerTick[upgrade.ordinal()], param1[upgrade.ordinal()]);
         } else if (upgrade == EnumFarmUpgrade.BM_LE_ALTAR) {
             out = StringHelper.localizeFormat("ui.woot.bm_le_alter.desc", upgradeLevel[upgrade.ordinal()], powerPerTick[upgrade.ordinal()], param1[upgrade.ordinal()]);
+        } else if (upgrade == EnumFarmUpgrade.BM_CRYSTAL) {
+            out = StringHelper.localizeFormat("ui.woot.bm_crystal.desc", upgradeLevel[upgrade.ordinal()], powerPerTick[upgrade.ordinal()]);
         } else {
             out = upgrade.toString();
         }

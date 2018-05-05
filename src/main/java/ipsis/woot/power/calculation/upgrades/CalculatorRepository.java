@@ -21,6 +21,7 @@ public class CalculatorRepository {
         calculators.add(new Xp());
         calculators.add(new BloodMagicAltar());
         calculators.add(new BloodMagicTank());
+        calculators.add(new BloodMagicCrystal());
         calculators.add(new EvilCraftBlood());
     }
 

@@ -247,6 +247,18 @@ public enum EnumConfigKey {
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar III upgrade",
             "bmLeAltar3PowerTick", Integer.class, 4, true, 3),
+    BM_CRYSTAL_1_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic Crystal I upgrade",
+            "bmCrystal1PowerTick", Integer.class, 1, true, 1),
+    BM_CRYSTAL_2_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic Crystal II upgrade",
+            "bmCrystal2PowerTick", Integer.class, 2, true, 2),
+    BM_CRYSTAL_3_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic Crystal III upgrade",
+            "bmCrystal3PowerTick", Integer.class, 4, true, 3),
     EC_BLOOD_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank I upgrade",
@@ -483,6 +495,7 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> EFF_POWER_PER_TICK = EnumSet.of(EFF_1_POWER_TICK, EFF_2_POWER_TICK, EFF_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> BM_LE_TANK_POWER_PER_TICK = EnumSet.of(BM_LE_TANK_1_POWER_TICK, BM_LE_TANK_2_POWER_TICK, BM_LE_TANK_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> BM_LE_ALTAR_POWER_PER_TICK = EnumSet.of(BM_LE_ALTAR_1_POWER_TICK, BM_LE_ALTAR_2_POWER_TICK, BM_LE_ALTAR_3_POWER_TICK);
+    public static EnumSet<EnumConfigKey> BM_CRYSTAL_POWER_PER_TICK = EnumSet.of(BM_CRYSTAL_1_POWER_TICK, BM_CRYSTAL_2_POWER_TICK, BM_CRYSTAL_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> EC_BLOOD_POWER_PER_TICK = EnumSet.of(EC_BLOOD_1_POWER_TICK, EC_BLOOD_2_POWER_TICK, EC_BLOOD_3_POWER_TICK);
 
     public static EnumSet<EnumConfigKey> RATE_PARAM = EnumSet.of(RATE_1_PARAM, RATE_2_PARAM, RATE_3_PARAM);

@@ -33,6 +33,8 @@ public class BloodMagic {
             LogHelper.info("Adding Ritual of the Mechanical Altar");
             RitualRegistry.registerRitual(new RitualLifeEssenceAltar());
         }
+
+        RitualRegistry.registerRitual(new RitualClonedSoul());
     }
 
     private static void setupLifeEssence() {

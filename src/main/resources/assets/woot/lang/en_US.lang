@@ -339,6 +339,7 @@ guide.woot.entry.ingredients.intro.info=Some mobs require you to provide the fac
 # BloodMagic
 ritual.woot.ritualLifeEssenceTank=Ritual of the Sanguine Urn
 ritual.woot.ritualLifeEssenceAltar=Ritual of the Mechanical Altar
+ritual.woot.ritualClonedSoul=Ritual of the Cloned Soul
 
 # User Interface Upgrades
 ui.woot.mass.desc=Mass %d: %dRF/tick, %d mobs

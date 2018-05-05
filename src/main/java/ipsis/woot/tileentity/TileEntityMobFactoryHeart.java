@@ -191,6 +191,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                         // Altar filling is processed by the next tick of the ritual
                         bloodMagicTracker.clearTank();
                         bloodMagicTracker.setAltarMobCount(farmSetup.getNumMobs());
+                        bloodMagicTracker.setCrystalMobCount(farmSetup.getNumMobs());
                         bloodMagicTracker.setWootMobName(farmSetup.getWootMobName());
                     }
                     recipeProgressTracker.reset();
@@ -581,12 +582,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     }
 
     @Override
-    public void keepAliveWillRitual() {
-
-    }
-
-    @Override
-    public int getNumMobs() {
+    public int getAltarSacrificeNumMobs() {
 
         int mobs = 0;
         if (farmStructure.isFormed())
@@ -596,7 +592,23 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     }
 
     @Override
-    public void clearMobs() {
+    public int getCrystalNumMobs() {
+
+        int mobs = 0;
+        if (farmStructure.isFormed())
+            mobs = bloodMagicTracker.getCrystalMobCount();
+
+        return mobs;
+    }
+
+    @Override
+    public void clearCrystalNumMobs() {
+
+        bloodMagicTracker.clearCrystalMobCount();
+    }
+
+    @Override
+    public void clearAltarSacrificeNumMobs() {
 
         bloodMagicTracker.clearAltarMobCount();
     }

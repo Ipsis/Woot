@@ -11,6 +11,7 @@ public class BloodMagicTracker {
 
     private boolean kaTank = false;
     private int altarMobCount = 0;
+    private int crystalMobCount = 0;
     private WootMobName wootMobName = null;
 
     public void tickTank() {
@@ -29,13 +30,21 @@ public class BloodMagicTracker {
         return altarMobCount;
     }
 
+    public int getCrystalMobCount() {
+        return crystalMobCount;
+    }
+
     public void setAltarMobCount(int count) {
         altarMobCount = count;
     }
 
+    public void setCrystalMobCount(int count) { crystalMobCount = count; }
+
     public void clearAltarMobCount() {
         altarMobCount = 0;
     }
+
+    public void clearCrystalMobCount() { crystalMobCount = 0; }
 
     public void setWootMobName(WootMobName wootMobName) {
         this.wootMobName = wootMobName;

@@ -123,7 +123,7 @@ public class RitualClonedSoul extends Ritual {
         IBloodMagicHandler bloodMagicHandler = findHandler(world, masterRitualStone.getBlockPos());
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", bloodMagicHandler);
 
-        if (bloodMagicHandler != null && bloodMagicHandler.getNumMobs() > 0 && bloodMagicHandler.getWootMobName() != null && !BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(bloodMagicHandler.getWootMobName().getResourceLocation())) {
+        if (bloodMagicHandler != null && bloodMagicHandler.getCrystalNumMobs() > 0 && bloodMagicHandler.getWootMobName() != null && !BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(bloodMagicHandler.getWootMobName().getResourceLocation())) {
 
             List<TileDemonCrystal> crystalList = new ArrayList<>();
             AreaDescriptor crystalRange = getBlockRange(CRYSTAL_RANGE);
@@ -142,7 +142,7 @@ public class RitualClonedSoul extends Ritual {
             int health = Woot.mobCosting.getMobSpawnCost(world, bloodMagicHandler.getWootMobName());
             if (health > 0) {
 
-                for (int mob = 0; mob < bloodMagicHandler.getNumMobs(); mob++) {
+                for (int mob = 0; mob < bloodMagicHandler.getCrystalNumMobs(); mob++) {
 
                     feedWillAndCrystal(health);
                     totalEffects++;
@@ -158,7 +158,7 @@ public class RitualClonedSoul extends Ritual {
                 }
             }
 
-            bloodMagicHandler.clearMobs();
+            bloodMagicHandler.clearCrystalNumMobs();
         }
 
         masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);

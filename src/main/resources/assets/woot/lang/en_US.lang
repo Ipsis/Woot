@@ -93,6 +93,9 @@ tile.woot.upgradeb.bm_le_altar_iii.name=Blood Magic Life Essence Altar III Upgra
 tile.woot.upgradeb.ec_blood_i.name=EvilCraft Blood Tank I Upgrade
 tile.woot.upgradeb.ec_blood_ii.name=EvilCraft Blood Tank II Upgrade
 tile.woot.upgradeb.ec_blood_iii.name=EvilCraft Blood Tank III Upgrade
+tile.woot.upgradeb.bm_crystal_i.name=Blood Magic Crystal I Upgrade
+tile.woot.upgradeb.bm_crystal_ii.name=Blood Magic Crystal II Upgrade
+tile.woot.upgradeb.bm_crystal_iii.name=Blood Magic Crystal III Upgrade
 
 ###########################################################
 # Tabs

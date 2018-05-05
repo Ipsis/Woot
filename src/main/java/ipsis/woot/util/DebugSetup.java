@@ -50,7 +50,7 @@ public class DebugSetup {
         GEN_XP,
         GEN_ITEMS,
         GEN_BM_LE,
-        GEN_BM_WILL,
+        GEN_BM_CRYSTAL,
         GEN_HEADS,
         GEN_EC,
         SPAWN,

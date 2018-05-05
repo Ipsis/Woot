@@ -4,7 +4,6 @@ import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.ritual.*;
 import WayofTime.bloodmagic.tile.TileDemonCrystal;
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.util.DebugSetup;
@@ -22,6 +21,9 @@ import java.util.function.Consumer;
  * It is based off WayOfTime's BloodMagic code in
  * BloodMagic/src/main/java/WayofTime/bloodmagic/ritual/types/RitualForsakenSoul.java
  * BloodMagic/LICENSE
+ *
+ * The BloodMagic ritual supports the uniqueness of the mobs and can vary between 1-10
+ * This ritual has a uniqueness of 1.
  *
  */
 
@@ -105,7 +107,7 @@ public class RitualClonedSoul extends Ritual {
     @Override
     public void performRitual(IMasterRitualStone masterRitualStone) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_WILL, "performRitual - ClonedSoul", "");
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "");
 
         if (!BloodMagicHelper.canPerformRitual(masterRitualStone, getRefreshCost()))
             return;
@@ -119,7 +121,7 @@ public class RitualClonedSoul extends Ritual {
          * Find the factory
          */
         IBloodMagicHandler bloodMagicHandler = findHandler(world, masterRitualStone.getBlockPos());
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_WILL, "performRitual - ClonedSoul", bloodMagicHandler);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", bloodMagicHandler);
 
         if (bloodMagicHandler != null && bloodMagicHandler.getNumMobs() > 0 && bloodMagicHandler.getWootMobName() != null && !BloodMagicAPI.INSTANCE.getBlacklist().getSacrifice().contains(bloodMagicHandler.getWootMobName().getResourceLocation())) {
 
@@ -135,26 +137,14 @@ public class RitualClonedSoul extends Ritual {
                 TileEntity te = world.getTileEntity(nextPos);
                 if (te instanceof TileDemonCrystal)
                     crystalList.add((TileDemonCrystal) te);
-                else if (te != null)
-                    LogHelper.info("Te:" + te);
             }
-
-            // We do not support uniqueness
-            int uniqueness = 1;
-            double willForUniqueness = Math.max(50 - 15 * Math.sqrt(uniqueness), 0);
 
             int health = Woot.mobCosting.getMobSpawnCost(world, bloodMagicHandler.getWootMobName());
             if (health > 0) {
 
                 for (int mob = 0; mob < bloodMagicHandler.getNumMobs(); mob++) {
 
-                    // Update the will and crystal buffers
-                    double modifier = 1;
-                    willBuffer += modifier * willForUniqueness / HEALTH_THRESHOLD * health;
-                    crystalBuffer += modifier * health / HEALTH_THRESHOLD;
-
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_WILL, "performRitual - ClonedSoul", "willBuffer:" + willBuffer + " crystalBuffer:" + crystalBuffer);
-
+                    feedWillAndCrystal(health);
                     totalEffects++;
                     if (totalEffects >= maxEffects)
                         break;
@@ -162,30 +152,76 @@ public class RitualClonedSoul extends Ritual {
 
                 if (!crystalList.isEmpty() && crystalBuffer > 0) {
 
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_WILL, "performRitual - ClonedSoul", "crystals:" + crystalList.size());
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "crystals:" + crystalList.size());
                     TileDemonCrystal crystal = crystalList.get(world.rand.nextInt(crystalList.size()));
-
-                    double growth = Math.min(crystalBuffer, 1);
-                    double willSyphonAmount = growth * willBuffer / crystalBuffer;
-                    double willDrain = growth * willBuffer / crystalBuffer;
-                    double progressPercentage = growth;
-
-
-                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_WILL,
-                            "performRitual - ClonedSoul", "growth:" + growth + " willSyphonAmount:" + willSyphonAmount + " willDrain:" + willDrain + " progressPercentage:" + growth);
-
-                    double percentageGrown = crystal.growCrystalWithWillAmount(willDrain, progressPercentage);
-                    if (percentageGrown > 0) {
-                        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_WILL, "performRitual - ClonedSoul", "grew crystal " + percentageGrown);
-                        crystalBuffer -= percentageGrown;
-                        willBuffer -= percentageGrown * willSyphonAmount;
-                    }
+                    tryFeedTheCrystal(crystal);
                 }
             }
         }
 
         masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
+    }
 
+    /**
+     * The BloodMagic ritual does the following
+     *
+     * for each entity that it finds
+     *     int uniqueness = min(number of unique mobs, MAX_UNIQUENESS(10)) => range 1->10
+     *     double modifier = 1 (default) 4 (is an animal)
+     *
+     *     willForUniqueness = max(50 - 15 * sqrt(uniqueness), 0);
+     *
+     *     willBuffer += (((modifier * willForUniqueness) / HEALTH_THRESHOLD(20)) * entityMaxHealth)
+     *     crystalBuffer += ((modifier * entityMaxHealth) / HEALTH_THRESHOLD(20))
+     *
+     *
+     * if there are nearby crystals then pick one of them to grow
+     *     double growth = min(crystalbuffer, 1)
+     *     double willSyphonAmount = ((growth * willBuffer) / crystalBuffer)
+     *
+     *     double willDrain = ((growth * willBuffer) / crystalBuffer)
+     *     double progressPercentage = growth
+     *     double percentageGrowth = growCrystalWithWillAmount(willDrain, progressPercentage)
+     *     if (percentageGrowth > 0)
+     *         crystalBuffer -= percentageGrowth
+     *         willBuffer -= percentageGrowth * willSyphonAmount
+     *
+     *
+     * The Woot ritual will use the same mechanics, the only difference will be that there will be no uniqueness,
+     * There is only ever one mob type from the factory.
+     */
+    private void feedWillAndCrystal(int mobHealth) {
+
+        int uniqueness = 1;
+        double modifier = 1;
+        double willForUniqueness = Math.max(50 - 15 * Math.sqrt(uniqueness), 0);
+
+        double willBufferInc = ((modifier * willForUniqueness) / HEALTH_THRESHOLD) * mobHealth;
+        double crystalBufferInc = ((modifier * mobHealth) / HEALTH_THRESHOLD);
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "feedWillAndCrystal willInc:" + willBufferInc + " crystalInc:" + crystalBufferInc);
+
+        willBuffer += willBufferInc;
+        crystalBuffer += crystalBufferInc;
+    }
+
+    private void tryFeedTheCrystal(TileDemonCrystal crystal) {
+
+        if (crystal == null)
+            return;
+
+        double growth = Math.min(crystalBuffer, 1);
+        double willSyphonAmount = ((growth * willBuffer) / crystalBuffer);
+        double willDrain = ((growth * willBuffer) / crystalBuffer);
+        double progressPercentage = growth;
+
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "tryFeedTheCrystal willDrain:" + willDrain + " progress:" + progressPercentage);
+        double actualGrowthPercentage = crystal.growCrystalWithWillAmount(willDrain, progressPercentage);
+        if (actualGrowthPercentage > 0) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "tryFeedTheCrystal grew:" + actualGrowthPercentage);
+            crystalBuffer -= actualGrowthPercentage;
+            willBuffer -= actualGrowthPercentage * willSyphonAmount;
+        }
     }
 
     @Override

@@ -33,14 +33,14 @@ public class RitualClonedSoul extends Ritual {
     private static final int CRYSTAL_LEVEL = 0;
     private static final int ACTIVATION_COST = 40000;
     private static final int REFRESH_COST = 2;
-    private static final int REFRESH_TIME = 40;
+    private static final int REFRESH_TIME = 25;
     private static final int HEALTH_THRESHOLD = 20;
 
     private static final String HEART_RANGE = "heart";
     private static final String CRYSTAL_RANGE = "crystal";
 
-    double crystalBuffer = 0;
-    double willBuffer = 0;
+    private double crystalBuffer = 0;
+    private double willBuffer = 0;
 
     private BlockPos heartOffsetPos = new BlockPos(0, 0, 0);
 
@@ -157,6 +157,8 @@ public class RitualClonedSoul extends Ritual {
                     tryFeedTheCrystal(crystal);
                 }
             }
+
+            bloodMagicHandler.clearMobs();
         }
 
         masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);
@@ -199,7 +201,7 @@ public class RitualClonedSoul extends Ritual {
         double willBufferInc = ((modifier * willForUniqueness) / HEALTH_THRESHOLD) * mobHealth;
         double crystalBufferInc = ((modifier * mobHealth) / HEALTH_THRESHOLD);
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "feedWillAndCrystal willInc:" + willBufferInc + " crystalInc:" + crystalBufferInc);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "feedWillAndCrystal health:" + mobHealth + " willInc:" + willBufferInc + " crystalInc:" + crystalBufferInc);
 
         willBuffer += willBufferInc;
         crystalBuffer += crystalBufferInc;

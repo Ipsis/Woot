@@ -190,9 +190,13 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                         // Tank filling is processed by generators
                         // Altar filling is processed by the next tick of the ritual
                         bloodMagicTracker.clearTank();
-                        bloodMagicTracker.setAltarMobCount(farmSetup.getNumMobs());
-                        bloodMagicTracker.setCrystalMobCount(farmSetup.getNumMobs());
                         bloodMagicTracker.setWootMobName(farmSetup.getWootMobName());
+
+
+                        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_LE_ALTAR))
+                            bloodMagicTracker.setAltarMobCount(farmSetup.getNumMobs());
+                        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_CRYSTAL))
+                            bloodMagicTracker.setCrystalMobCount(farmSetup.getNumMobs());
                     }
                     recipeProgressTracker.reset();
                 }

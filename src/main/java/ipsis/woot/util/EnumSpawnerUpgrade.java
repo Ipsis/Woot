@@ -31,12 +31,12 @@ public enum EnumSpawnerUpgrade implements IStringSerializable {
     BM_LE_ALTAR_I(EnumConfigKey.BM_LE_ALTAR_1_POWER_TICK, EnumConfigKey.BM_LE_ALTAR_1_PARAM, 1),
     BM_LE_ALTAR_II(EnumConfigKey.BM_LE_ALTAR_2_POWER_TICK, EnumConfigKey.BM_LE_ALTAR_2_PARAM, 2),
     BM_LE_ALTAR_III(EnumConfigKey.BM_LE_ALTAR_3_POWER_TICK, EnumConfigKey.BM_LE_ALTAR_3_PARAM, 3),
-    BM_CRYSTAL_I(EnumConfigKey.BM_CRYSTAL_1_POWER_TICK, null, 1),
-    BM_CRYSTAL_II(EnumConfigKey.BM_CRYSTAL_2_POWER_TICK, null, 2),
-    BM_CRYSTAL_III(EnumConfigKey.BM_CRYSTAL_3_POWER_TICK, null, 3),
     EC_BLOOD_I(EnumConfigKey.EC_BLOOD_1_POWER_TICK, EnumConfigKey.EC_BLOOD_1_PARAM, 1),
     EC_BLOOD_II(EnumConfigKey.EC_BLOOD_2_POWER_TICK, EnumConfigKey.EC_BLOOD_2_PARAM, 2),
-    EC_BLOOD_III(EnumConfigKey.EC_BLOOD_3_POWER_TICK, EnumConfigKey.EC_BLOOD_3_PARAM, 3);
+    EC_BLOOD_III(EnumConfigKey.EC_BLOOD_3_POWER_TICK, EnumConfigKey.EC_BLOOD_3_PARAM, 3),
+    BM_CRYSTAL_I(EnumConfigKey.BM_CRYSTAL_1_POWER_TICK, null, 1),
+    BM_CRYSTAL_II(EnumConfigKey.BM_CRYSTAL_2_POWER_TICK, null, 2),
+    BM_CRYSTAL_III(EnumConfigKey.BM_CRYSTAL_3_POWER_TICK, null, 3);
 
     EnumSpawnerUpgrade() { }
 

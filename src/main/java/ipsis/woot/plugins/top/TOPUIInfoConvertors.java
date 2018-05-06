@@ -9,6 +9,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.NumberFormat;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
+import mcjty.theoneprobe.apiimpl.styles.ItemStyle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -119,7 +120,9 @@ public class TOPUIInfoConvertors {
                             break;
                     }
 
-                    horizontal.item(itemStack);
+                    int count = itemStack.getCount();
+                    itemStack.setCount(1);
+                    horizontal.item(itemStack, new ItemStyle().width(16).height(16)).text(count+ "%");
                     idx++;
                 }
             }

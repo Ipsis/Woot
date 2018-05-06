@@ -18,6 +18,10 @@
       ],
       "fixes": [
         {
+          "id": 354,
+          "desc": "Fix Headhunter enchant being processed incorrectly"
+        }
+        {
           "id": -1,
           "desc": "Fix EnderIO XpShard->XpJuice VAT recipe"
         },

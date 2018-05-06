@@ -14,7 +14,7 @@ public class HandlerLivingDropsEvent {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onLivingDropsEvent(LivingDropsEvent e) {
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, "onLivingDropsEvent", e);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, "onLivingDropsEvent", e.getEntity() + "/" + e.getSource());
 
         if (!(e.getEntity() instanceof EntityLiving))
             return;
@@ -23,8 +23,12 @@ public class HandlerLivingDropsEvent {
         if (damageSource == null)
             return;
 
-        if (!FakePlayerPool.isOurFakePlayer(damageSource.getTrueSource()))
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, "onLivingDropsEvent", damageSource.getTrueSource());
+        if (!FakePlayerPool.isOurFakePlayer(damageSource.getTrueSource())) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, "onLivingDropsEvent", "non-factory kill:");
+            EnchantmentHeadhunter.handleLivingDrops(e);
             return;
+        }
 
         // Cancel our fake spawns
         e.setCanceled(true);
@@ -39,8 +43,5 @@ public class HandlerLivingDropsEvent {
         } else {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.LOOT_EVENTS, "onLivingDropsEvent", "invalid mob " + e.getEntity());
         }
-
-
-        EnchantmentHeadhunter.handleLivingDrops(e);
     }
 }

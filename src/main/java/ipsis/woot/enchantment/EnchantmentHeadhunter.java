@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
+import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.SkullHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -81,9 +82,6 @@ public class EnchantmentHeadhunter extends Enchantment {
         return found;
     }
 
-    private static final float DECAPITATE_CHANCE_1 = 30.0F;
-    private static final float DECAPITATE_CHANCE_2 = 60.0F;
-    private static final float DECAPITATE_CHANCE_3 = 80.0F;
     private static boolean hasDecapitated(int level) {
 
         if (level < 1)
@@ -99,10 +97,10 @@ public class EnchantmentHeadhunter extends Enchantment {
         else
             return false;
 
-        LogHelper.info("Headhunter chance " +  chance);
+        float rolled = Woot.RANDOM.nextFloat();
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.DECAP, "EnchantmentHeadhunter:hasDecapitated", "rolled:" + rolled + " chance:" + (chance / 100.0F));
 
-
-        return Woot.RANDOM.nextFloat() <= chance / 100.0F;
+        return rolled <= chance / 100.0F;
     }
 
     private static Map<Enchantment, Integer> getEnchantMap(EntityPlayer entityPlayer) {
@@ -128,6 +126,8 @@ public class EnchantmentHeadhunter extends Enchantment {
 
     public static void handleLivingDrops(LivingDropsEvent e) {
 
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.DECAP, "EnchantmentHeadhunter:handleLivingDrops", e);
+
         // Only handle kills made by a player
         if (!(e.getSource().getTrueSource() instanceof EntityPlayer))
             return;
@@ -149,9 +149,12 @@ public class EnchantmentHeadhunter extends Enchantment {
 
         // Player must be holding a headhunter enchanted weapon
         int level = getHeadhunterLevel(getEnchantMap(entityPlayer));
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.DECAP, "EnchantmentHeadhunter:handleLivingDrops", "headhunterLevel:" + level);
+
         if (hasDecapitated(level) && !containsSkull(e.getDrops())) {
 
             ItemStack itemStack = SkullHelper.getSkull(entityLiving);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.DECAP, "EnchantmentHeadhunter:handleLivingDrops", "skull:" + itemStack);
             if (!itemStack.isEmpty()) {
                 EntityItem entityItem = createEntityItem(
                         e.getSource().getTrueSource().getEntityWorld(),

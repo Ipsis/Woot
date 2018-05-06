@@ -55,7 +55,8 @@ public class DebugSetup {
         GEN_EC,
         SPAWN,
         LEARN,
-        TARTARUS
+        TARTARUS,
+        DECAP
         ;
 
         public static final EnumSet<EnumDebugType> ALL_OPTS = EnumSet.allOf(EnumDebugType.class);

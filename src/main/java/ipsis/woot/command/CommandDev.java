@@ -70,6 +70,7 @@ public class CommandDev extends CommandTreeBase {
             devTags.put("spawn", DebugSetup.EnumDebugType.SPAWN);
             devTags.put("learn", DebugSetup.EnumDebugType.LEARN);
             devTags.put("tartarus", DebugSetup.EnumDebugType.TARTARUS);
+            devTags.put("decap", DebugSetup.EnumDebugType.DECAP);
         }
 
         @Override

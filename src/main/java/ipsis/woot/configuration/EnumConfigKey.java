@@ -226,39 +226,51 @@ public enum EnumConfigKey {
     BM_LE_TANK_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Tank I upgrade",
-            "bmLeTank1PowerTick", Integer.class, 1, true, 1),
+            "bmLeTank1PowerTick", Integer.class, 80, true, 1),
     BM_LE_TANK_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Tank II upgrade",
-            "bmLeTank1PowerTick", Integer.class, 2, true, 2),
+            "bmLeTank1PowerTick", Integer.class, 160, true, 2),
     BM_LE_TANK_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Tank III upgrade",
-            "bmLeTank1PowerTick", Integer.class, 4, true, 3),
+            "bmLeTank1PowerTick", Integer.class, 240, true, 3),
     BM_LE_ALTAR_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar I upgrade",
-            "bmLeAltar1PowerTick", Integer.class, 1, true, 1),
+            "bmLeAltar1PowerTick", Integer.class, 80, true, 1),
     BM_LE_ALTAR_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar II upgrade",
-            "bmLeAltar2PowerTick", Integer.class, 2, true, 2),
+            "bmLeAltar2PowerTick", Integer.class, 160, true, 2),
     BM_LE_ALTAR_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar III upgrade",
-            "bmLeAltar3PowerTick", Integer.class, 4, true, 3),
+            "bmLeAltar3PowerTick", Integer.class, 240, true, 3),
+    BM_CRYSTAL_1_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic Crystal I upgrade",
+            "bmCrystal1PowerTick", Integer.class, 80, true, 1),
+    BM_CRYSTAL_2_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic Crystal II upgrade",
+            "bmCrystal2PowerTick", Integer.class, 160, true, 2),
+    BM_CRYSTAL_3_POWER_TICK(
+            CATEGORY_UPGRADES,
+            "Default power cost per tick of a BloodMagic Crystal III upgrade",
+            "bmCrystal3PowerTick", Integer.class, 240, true, 3),
     EC_BLOOD_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank I upgrade",
-            "ecBlood1PowerTick", Integer.class, 1, true, 1),
+            "ecBlood1PowerTick", Integer.class, 80, true, 1),
     EC_BLOOD_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank II upgrade",
-            "ecBlood2PowerTick", Integer.class, 2, true, 2),
+            "ecBlood2PowerTick", Integer.class, 160, true, 2),
     EC_BLOOD_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank III upgrade",
-            "ecBlood3PowerTick", Integer.class, 4, true, 3),
+            "ecBlood3PowerTick", Integer.class, 240, true, 3),
     RATE_1_PARAM(
             CATEGORY_UPGRADES,
             "Percentage reduction in spawn time for Rate I upgrade",
@@ -367,6 +379,18 @@ public enum EnumConfigKey {
             CATEGORY_UPGRADES,
             "mb per HP for the EvilCraft Blood Tank III upgrade",
             "ecBlood3Param", Integer.class, 60, true, 3),
+    BM_CRYSTAL_1_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of mob health given to the BloodMagic Crystal I upgrade",
+            "bmCrystal1Param", Integer.class, 25, true, 1),
+    BM_CRYSTAL_2_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of mob health given to the BloodMagic Crystal II upgrade",
+            "bmCrystal2Param", Integer.class, 60, true, 2),
+    BM_CRYSTAL_3_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of mob health given to the BloodMagic Crystal III upgrade",
+            "bmCrystal3Param", Integer.class, 100, true, 3),
     ALLOW_BM_LE_TANK(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support BloodMagic Ritual Of The Sanguine Urn",
@@ -378,7 +402,11 @@ public enum EnumConfigKey {
     ALLOW_EC_BLOOD(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support EvilCraft Blood Generation",
-                    "allowEcBlood", Boolean.class, true, false);
+                    "allowEcBlood", Boolean.class, true, false),
+    ALLOW_BM_CRYSTAL(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support BloodMagic Ritual Of The Cloned Soul",
+            "allowBmCrystal", Boolean.class, true, false);
 
     private String text;
     private Class clazz;
@@ -483,6 +511,7 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> EFF_POWER_PER_TICK = EnumSet.of(EFF_1_POWER_TICK, EFF_2_POWER_TICK, EFF_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> BM_LE_TANK_POWER_PER_TICK = EnumSet.of(BM_LE_TANK_1_POWER_TICK, BM_LE_TANK_2_POWER_TICK, BM_LE_TANK_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> BM_LE_ALTAR_POWER_PER_TICK = EnumSet.of(BM_LE_ALTAR_1_POWER_TICK, BM_LE_ALTAR_2_POWER_TICK, BM_LE_ALTAR_3_POWER_TICK);
+    public static EnumSet<EnumConfigKey> BM_CRYSTAL_POWER_PER_TICK = EnumSet.of(BM_CRYSTAL_1_POWER_TICK, BM_CRYSTAL_2_POWER_TICK, BM_CRYSTAL_3_POWER_TICK);
     public static EnumSet<EnumConfigKey> EC_BLOOD_POWER_PER_TICK = EnumSet.of(EC_BLOOD_1_POWER_TICK, EC_BLOOD_2_POWER_TICK, EC_BLOOD_3_POWER_TICK);
 
     public static EnumSet<EnumConfigKey> RATE_PARAM = EnumSet.of(RATE_1_PARAM, RATE_2_PARAM, RATE_3_PARAM);
@@ -494,4 +523,5 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> BM_LE_TANK_PARAM = EnumSet.of(BM_LE_TANK_1_PARAM, BM_LE_TANK_2_PARAM, BM_LE_TANK_3_PARAM);
     public static EnumSet<EnumConfigKey> BM_LE_ALTAR_PARAM = EnumSet.of(BM_LE_ALTAR_1_PARAM, BM_LE_ALTAR_2_PARAM, BM_LE_ALTAR_3_PARAM);
     public static EnumSet<EnumConfigKey> EC_BLOOD_PARAM = EnumSet.of(EC_BLOOD_1_PARAM, EC_BLOOD_2_PARAM, EC_BLOOD_3_PARAM);
+    public static EnumSet<EnumConfigKey> BM_CRYSTAL_PARAM = EnumSet.of(BM_CRYSTAL_1_PARAM, BM_CRYSTAL_2_PARAM, BM_CRYSTAL_3_PARAM);
 }

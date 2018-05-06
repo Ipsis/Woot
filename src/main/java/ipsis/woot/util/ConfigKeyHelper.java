@@ -75,6 +75,12 @@ public class ConfigKeyHelper {
         return getEntryFromLevel(level, EnumConfigKey.BM_LE_ALTAR_POWER_PER_TICK);
     }
 
+    public static EnumConfigKey getBmCrystalPowerPerTick(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.BM_CRYSTAL_POWER_PER_TICK);
+    }
+
     public static EnumConfigKey getEcBloodPowerPerTick(int level) {
 
         level = MathHelper.clamp(level, 1, 3);
@@ -136,5 +142,11 @@ public class ConfigKeyHelper {
 
         level = MathHelper.clamp(level, 1, 3);
         return getEntryFromLevel(level, EnumConfigKey.EC_BLOOD_PARAM);
+    }
+
+    public static EnumConfigKey getBmCrystalParam(int level) {
+
+        level = MathHelper.clamp(level, 1, 3);
+        return getEntryFromLevel(level, EnumConfigKey.BM_CRYSTAL_PARAM);
     }
 }

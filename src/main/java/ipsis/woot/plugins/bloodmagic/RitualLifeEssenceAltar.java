@@ -112,7 +112,7 @@ public class RitualLifeEssenceAltar extends Ritual {
 
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceAltar", tileAltar + "/" + bloodMagicHandler);
 
-        if (tileAltar != null && bloodMagicHandler != null && bloodMagicHandler.getNumMobs() > 0 && bloodMagicHandler.getWootMobName() != null) {
+        if (tileAltar != null && bloodMagicHandler != null && bloodMagicHandler.getAltarSacrificeNumMobs() > 0 && bloodMagicHandler.getWootMobName() != null) {
 
             int lifeEssenceRatio = BloodMagicHelper.getLifeEssenceRatio(bloodMagicHandler.getWootMobName());
             if (lifeEssenceRatio > 0) {
@@ -121,9 +121,9 @@ public class RitualLifeEssenceAltar extends Ritual {
                 int p = bloodMagicHandler.getAltarSacrificePercentage();
                 int scaledLifeEssenceRatio = (int)(((float)lifeEssenceRatio / 100.0F) * p);
 
-                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceAltar", bloodMagicHandler.getWootMobName() + "*" + bloodMagicHandler.getNumMobs());
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceAltar", bloodMagicHandler.getWootMobName() + "*" + bloodMagicHandler.getAltarSacrificeNumMobs());
                 Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceAltar", "lifeEssenceRatio:" + lifeEssenceRatio + " scaledLifeEssenceRation:" + scaledLifeEssenceRatio + "/" + p);
-                for (int c = 0; c < bloodMagicHandler.getNumMobs(); c++) {
+                for (int c = 0; c < bloodMagicHandler.getAltarSacrificeNumMobs(); c++) {
 
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_LE, "performRitual - LifeEssenceAltar", "sacrificialDaggerCall:" + scaledLifeEssenceRatio);
                     tileAltar.sacrificialDaggerCall(scaledLifeEssenceRatio, true);
@@ -133,7 +133,7 @@ public class RitualLifeEssenceAltar extends Ritual {
                 }
             }
 
-            bloodMagicHandler.clearMobs();
+            bloodMagicHandler.clearAltarSacrificeNumMobs();
         }
 
         masterRitualStone.getOwnerNetwork().syphon(getRefreshCost() * totalEffects);

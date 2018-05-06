@@ -24,6 +24,12 @@
     "active=true,variant=ec_blood_iii": { "model":"woot:upgradeb_ec_blood_iii_active" },
     "active=false,variant=ec_blood_i": { "model":"woot:upgradeb_ec_blood_i" },
     "active=false,variant=ec_blood_ii": { "model":"woot:upgradeb_ec_blood_ii" },
-    "active=false,variant=ec_blood_iii": { "model":"woot:upgradeb_ec_blood_iii" }
+    "active=false,variant=ec_blood_iii": { "model":"woot:upgradeb_ec_blood_iii" },
+    "active=true,variant=bm_crystal_i": { "model":"woot:upgradeb_bm_crystal_i" },
+    "active=true,variant=bm_crystal_ii": { "model":"woot:upgradeb_bm_crystal_ii" },
+    "active=true,variant=bm_crystal_iii": { "model":"woot:upgradeb_bm_crystal_iii" },
+    "active=false,variant=bm_crystal_i": { "model":"woot:upgradeb_bm_crystal_i" },
+    "active=false,variant=bm_crystal_ii": { "model":"woot:upgradeb_bm_crystal_ii" },
+    "active=false,variant=bm_crystal_iii": { "model":"woot:upgradeb_bm_crystal_iii" }
   }
 }

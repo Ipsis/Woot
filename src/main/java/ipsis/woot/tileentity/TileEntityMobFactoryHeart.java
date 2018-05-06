@@ -190,8 +190,13 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                         // Tank filling is processed by generators
                         // Altar filling is processed by the next tick of the ritual
                         bloodMagicTracker.clearTank();
-                        bloodMagicTracker.setAltarMobCount(farmSetup.getNumMobs());
                         bloodMagicTracker.setWootMobName(farmSetup.getWootMobName());
+
+
+                        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_LE_ALTAR))
+                            bloodMagicTracker.setAltarMobCount(farmSetup.getNumMobs());
+                        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_CRYSTAL))
+                            bloodMagicTracker.setCrystalMobCount(farmSetup.getNumMobs());
                     }
                     recipeProgressTracker.reset();
                 }
@@ -524,6 +529,19 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_LE_ALTAR, param1);
         }
 
+        // Blood Magic Crystal
+        if (farmSetup.hasUpgrade(EnumFarmUpgrade.BM_CRYSTAL)) {
+            info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.BM_CRYSTAL, farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL));
+            int perTick = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmCrystalPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmCrystalParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
+            info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.BM_CRYSTAL, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_CRYSTAL, param1);
+        }
+
         // EvilCraft Blood
         if (farmSetup.hasUpgrade(EnumFarmUpgrade.EC_BLOOD)) {
             info.upgradeUIInfo.setUpgrade(EnumFarmUpgrade.EC_BLOOD, farmSetup.getUpgradeLevel(EnumFarmUpgrade.EC_BLOOD));
@@ -572,12 +590,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     }
 
     @Override
-    public void keepAliveWillRitual() {
-
-    }
-
-    @Override
-    public int getNumMobs() {
+    public int getAltarSacrificeNumMobs() {
 
         int mobs = 0;
         if (farmStructure.isFormed())
@@ -587,7 +600,23 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
     }
 
     @Override
-    public void clearMobs() {
+    public int getCrystalNumMobs() {
+
+        int mobs = 0;
+        if (farmStructure.isFormed())
+            mobs = bloodMagicTracker.getCrystalMobCount();
+
+        return mobs;
+    }
+
+    @Override
+    public void clearCrystalNumMobs() {
+
+        bloodMagicTracker.clearCrystalMobCount();
+    }
+
+    @Override
+    public void clearAltarSacrificeNumMobs() {
 
         bloodMagicTracker.clearAltarMobCount();
     }
@@ -598,6 +627,16 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         int p = 0;
         if (farmStructure.isFormed())
             p = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getBmLeAltarParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_ALTAR)));
+
+        return p;
+    }
+
+    @Override
+    public int getCrystalMobHealthPercentage() {
+
+        int p = 0;
+        if (farmStructure.isFormed())
+            p = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getBmCrystalParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
 
         return p;
     }

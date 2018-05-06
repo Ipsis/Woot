@@ -93,6 +93,9 @@ tile.woot.upgradeb.bm_le_altar_iii.name=Blood Magic Life Essence Altar III Upgra
 tile.woot.upgradeb.ec_blood_i.name=EvilCraft Blood Tank I Upgrade
 tile.woot.upgradeb.ec_blood_ii.name=EvilCraft Blood Tank II Upgrade
 tile.woot.upgradeb.ec_blood_iii.name=EvilCraft Blood Tank III Upgrade
+tile.woot.upgradeb.bm_crystal_i.name=Blood Magic Crystal I Upgrade
+tile.woot.upgradeb.bm_crystal_ii.name=Blood Magic Crystal II Upgrade
+tile.woot.upgradeb.bm_crystal_iii.name=Blood Magic Crystal III Upgrade
 
 ###########################################################
 # Tabs
@@ -339,6 +342,7 @@ guide.woot.entry.ingredients.intro.info=Some mobs require you to provide the fac
 # BloodMagic
 ritual.woot.ritualLifeEssenceTank=Ritual of the Sanguine Urn
 ritual.woot.ritualLifeEssenceAltar=Ritual of the Mechanical Altar
+ritual.woot.ritualClonedSoul=Ritual of the Cloned Soul
 
 # User Interface Upgrades
 ui.woot.mass.desc=Mass %d: %dRF/tick, %d mobs
@@ -350,3 +354,4 @@ ui.woot.xp.desc=XP %d: %dRF/tick, %d%% generation
 ui.woot.ec_blood.desc=EvilCraft Blood %d: %dRF/tick, %d mBperHP
 ui.woot.bm_le_tank.desc=Blood Magic Tank %d: %dRF/tick, %d sacrifice runes
 ui.woot.bm_le_altar.desc=Blood Magic Altar %d: %dRF/tick, %d%% sacrifice
+ui.woot.bm_crystal.desc=Blood Magic Crystal %d: %dRF/tick %d%% mob health

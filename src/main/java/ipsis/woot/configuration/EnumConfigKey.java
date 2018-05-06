@@ -226,51 +226,51 @@ public enum EnumConfigKey {
     BM_LE_TANK_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Tank I upgrade",
-            "bmLeTank1PowerTick", Integer.class, 1, true, 1),
+            "bmLeTank1PowerTick", Integer.class, 80, true, 1),
     BM_LE_TANK_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Tank II upgrade",
-            "bmLeTank1PowerTick", Integer.class, 2, true, 2),
+            "bmLeTank1PowerTick", Integer.class, 160, true, 2),
     BM_LE_TANK_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Tank III upgrade",
-            "bmLeTank1PowerTick", Integer.class, 4, true, 3),
+            "bmLeTank1PowerTick", Integer.class, 240, true, 3),
     BM_LE_ALTAR_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar I upgrade",
-            "bmLeAltar1PowerTick", Integer.class, 1, true, 1),
+            "bmLeAltar1PowerTick", Integer.class, 80, true, 1),
     BM_LE_ALTAR_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar II upgrade",
-            "bmLeAltar2PowerTick", Integer.class, 2, true, 2),
+            "bmLeAltar2PowerTick", Integer.class, 160, true, 2),
     BM_LE_ALTAR_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic LifeEssence Altar III upgrade",
-            "bmLeAltar3PowerTick", Integer.class, 4, true, 3),
+            "bmLeAltar3PowerTick", Integer.class, 240, true, 3),
     BM_CRYSTAL_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic Crystal I upgrade",
-            "bmCrystal1PowerTick", Integer.class, 1, true, 1),
+            "bmCrystal1PowerTick", Integer.class, 80, true, 1),
     BM_CRYSTAL_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic Crystal II upgrade",
-            "bmCrystal2PowerTick", Integer.class, 2, true, 2),
+            "bmCrystal2PowerTick", Integer.class, 160, true, 2),
     BM_CRYSTAL_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a BloodMagic Crystal III upgrade",
-            "bmCrystal3PowerTick", Integer.class, 4, true, 3),
+            "bmCrystal3PowerTick", Integer.class, 240, true, 3),
     EC_BLOOD_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank I upgrade",
-            "ecBlood1PowerTick", Integer.class, 1, true, 1),
+            "ecBlood1PowerTick", Integer.class, 80, true, 1),
     EC_BLOOD_2_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank II upgrade",
-            "ecBlood2PowerTick", Integer.class, 2, true, 2),
+            "ecBlood2PowerTick", Integer.class, 160, true, 2),
     EC_BLOOD_3_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a EvilCraft Blood Tank III upgrade",
-            "ecBlood3PowerTick", Integer.class, 4, true, 3),
+            "ecBlood3PowerTick", Integer.class, 240, true, 3),
     RATE_1_PARAM(
             CATEGORY_UPGRADES,
             "Percentage reduction in spawn time for Rate I upgrade",

@@ -20,7 +20,7 @@ import ipsis.woot.loot.schools.TartarusManager;
 import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.evilcraft.EvilCraft;
-import ipsis.woot.plugins.imc.EnderIO;
+import ipsis.woot.plugins.enderio.EnderIO;
 import ipsis.woot.plugins.thermal.Thermal;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;

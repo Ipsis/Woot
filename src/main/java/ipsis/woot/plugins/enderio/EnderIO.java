@@ -1,4 +1,4 @@
-package ipsis.woot.plugins.imc;
+package ipsis.woot.plugins.enderio;
 
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 

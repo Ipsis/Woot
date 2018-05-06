@@ -1,0 +1,112 @@
+###########################################################
+# Guide Book
+###########################################################
+guide.woot.title=Woot Anleitung
+guide.woot.display=Woot Anleitung
+guide.woot.author=Nico Di Angelo
+guide.woot.welcome=Woot
+
+# Page Information
+guide.woot.page.anvil=Dunkeleisenamboss Rezepte
+guide.woot.page.ingredient=Monsterzutaten
+
+# Categories
+guide.woot.category.foreword=Vorwort
+guide.woot.category.factory=Fabrik
+guide.woot.category.anvil=Dunkeleisenamboss
+guide.woot.category.ingredients=Monster Spawning Zutaten
+guide.woot.category.upgrades=Fabrik Upgrades
+
+# Foreward Entries
+guide.woot.entry.foreword.intro=Einleitung
+guide.woot.entry.foreword.purpose=Was tut es?
+guide.woot.entry.foreword.naming=Fabrik oder Farm?
+guide.woot.entry.foreword.sponge=SpongeForge Kompatibilität
+guide.woot.entry.foreword.credits=Verdienste
+
+# Foreward Entry Text
+guide.woot.entry.foreword.intro.info=Woot ist ein großer, magischer Multiblock. \n\nDu baust die Strucktur, fütterst sie mit viel Energie und es generiert Beute. \n\nWenn dich die Idee erschrickt, dann nutze Woot nicht. Bau statdessen eine schöne, sichere, interessante, kreative Monsterfarm.
+guide.woot.entry.foreword.purpose.info=Woot ist eine von vielen Lösungen für das uralte Minecraft Problem, viele Monsterdrops zu wollen. Die traditionelle Methode das zu tun, ist viele Monster zu spawnen, sie irgendwie zu töten und dann die ganze Beute einzusammeln. Wenn man nicht vorsichtig ist, kann es zu Leistungsproblemen führen. \n\nDeshalb macht Woot das anders. Es lernt welche Beute die Monster fallen lassen wenn sie sterben. Dann baust du die Woot Farm/Fabrik und programmierst sie mit dem Monster von dem du die Beute willst, gibst ihr\ngenug Energie und sie beginnt die entsprechende Beute in die angehschlossene Lagermöglichkeit zu legen. Es werden keine Monster in der Welt generiert, also gibt es "hoffentlich" weniger auswirkungen auf die Leistung. \n\nEs haut auch einen zweiten Zweck. Ich mag es nicht Monsterfarmen zu bauen, also ist das meine Lösung für mein Problem.
+guide.woot.entry.foreword.naming.info=Ist es eine Fabrik? Ist es eine Farm? Ich kann mich nie entscheiden, also beachtet es werden beide Begriffe im Handbuch verwendet
+guide.woot.entry.foreword.sponge.info=Es gibt Kompatibilitätsprobleme zwischen Woot und SpongeForge. Die folgenden Probleme wurden auf dem SpongeForge-Tracker erstellt. \n\nEs kann mit dem Endersplitter keine Bosse gefangen werden - Bug 1912 \n\nLooting Upgrades produzieren keine Ausgabe - Bug 1345.
+guide.woot.entry.foreword.credits.info=Dieses Handbuch ist nur aufgrund der Guide-API möglich. \n\nAlso danke an TeamAmeriFrance und natürlich an TehNut für die zusätzliche Arbeit die er für die BloodMagic Anleitung geleistet hat.
+
+# Factory Entries
+guide.woot.entry.factory.guide=Wie zu bauen
+guide.woot.entry.factory.structure=Ein Gebäude aus zwei Teilen
+guide.woot.entry.factory.importer=Der Importer
+guide.woot.entry.factory.exporter=Der Exporter
+guide.woot.entry.factory.power=Energiezellen
+guide.woot.entry.factory.stygianiron=Dunkeleisen
+guide.woot.entry.factory.capturing=Monster Fangen
+guide.woot.entry.factory.programming=Monster Steuerung
+guide.woot.entry.factory.stygiananvil=Dunkeleisenamboss
+guide.woot.entry.factory.headhunter=Kopfjäger Verbesserung
+guide.woot.entry.factory.tiers=Stufen
+
+# Factory Entry Text
+guide.woot.entry.factory.guide.info=Um die Fabrik zu bauen, solltest du einen Fabrik Grundriss bauen. Dadurch kannst du in der Welt sehen wo du welche Blöcke platzieren musst, da die Strucktur groß werden kann.\n\nPlatziere den Grundriss auf dem Boden und er wird das Layout anzeigen. Du kannst den Fabrik Grundriss mit der rechten Maustaste anklicken um zwischen den verschiedenen Fabrikstufen zu wechseln. \n\nIm Kreativmodus wird durch Klicken mit Redstone sofort die Fabrik erstellt. \n\nWenn du eine Fabrik upgraden willst, kannst du den Grundriss Block einen Block unter das Fabrikherz setzen und er wird sich korrekt mit der aktuellen Fabrik ausrichten. \n\n\n\n\nNachdem die Fabrikstrucktur vorhanden ist, kannst du sie mit einem Stapel Fackeln bauen. Die Anzahl der Fackeln in der Hand bestimmen auf welche Stufe überprüft und gebaut werden soll.
+guide.woot.entry.factory.structure.info=Die Fabrik besteht aus zwei Struckturen. Die erste ist die Hauptstrucktur in der das Herz, Upgrades und die Steuerung stehen. Die zweite ist eine Remote Strucktur die den Strom und den Import und Export von Gegenständen und Flüssigkeiten regelt. Die Remote Strucktur darf sich höchstens 10 Blöcke unter dem Herz befunden. Die Remote Strucktur besteht aus einer Säule von drei Blöcken mit dem Exporter unten, dem Importer in der Mitte und der Energeizelle oben. \n\nDie Fabrik kann über ein Redstone Signal zum Herz ein und ausgeschaltet werden.
+guide.woot.entry.factory.importer.info=Der Importer ist dafür verantwortlich die Zutaten die für bestimmte Monster zum Spawnen erforderlich sind bereit zu stellen. Er wird die Gegenstände und Flüssigkeiten aus allen an ihn angrenzenden Inventaren entnehmen.
+guide.woot.entry.factory.exporter.info=Der Exporter ist dafür verantwortlich die erzeugte Beute (Fest und Flüssig) in angrenzende Inventare zu befördern.
+guide.woot.entry.factory.power.info=Die Energiezellen versorgen die Fabrik mit Energie. Dazu muss eine Stromquelle an sie angeschlossen sein. Jede Fabrikstufe kann jede Stufe an Energiezelle verwenden. Verschiedene Stufen an Energiezellen habe unterschiedliche Speicherkapazitäten und Übertragungsraten. Energiezellen behalten ihre Ladung beim abbauen. \n\n\n\nLeitungen verbinden sich erst, wenn die Fabrik vollständig geformt ist.
+guide.woot.entry.factory.stygianiron.info=Dunkeleisen ist das Haupterz in dieser Mod. Es wird nicht standardmäßig in der Welt generiert, sondern kann mit Eisenerzblöcken hergestellt werden.
+guide.woot.entry.factory.capturing.info=Monster werden über den Endersplitter gefangen und du brauchst einen vollständig programmierten um einen Kontrollkern für dieses Monster zu bauen. \n\nUm den Endersplitter mit einem Monster zu initialisieren, musst du dich ruhig deinem gewählten Monster nähern und ihn mit dem Endersplitter schlagen. Der Tooltip für diesen Splitter wird dir zeigen welches Monster du getroffen hast. \n\njetzt musst du diesen Splitter füllen, indem du diese Art von Monster tötest. während sich der Splitter in der Schnellzugriffsleiste befindet. Der Tooltip zeigt dir, wie viele du töten musst. Er leuchtet wenn du genug hast. \n\nTipp: nicht mehrere Splitter im Stapel verwenden sonst werden alle programmiert.
+guide.woot.entry.factory.programming.info=Um einen Kontrollkern zu erstellen, benötigst du einen leuchtenden Endersplitter. \n\nVerwende diesen an einem Dunkeleisenamboss um den Programmierten Kontrollkern zu erzeugen. \n\nFabrik Steuerungen behalten ihre Programmierung bei, wenn du sie abbaust. So kannst du verschiedene Steuerungen an der selben Fabrik benutzen.
+guide.woot.entry.factory.stygiananvil.info=Der Amboss dient zwei Zwecken. Die erste besteht darin, eineige der Gegenstände zu erstellen, die zum Basteln verwendet werden, wie zum Beispiel die Kerne. Die zweite Möglichkeit besteht darin, die Kosten für das Erstellen einiger Gegenstände zu reduzieren. \n\nDer Amboss muss auf einem Magmablock platziert werden. \n\nUm einen Gegenstand mit dem Amboss zu erstellen, klicke mit der rechten Maustaste mit einer Matritze in der Hand auf den Amboss, die wird dann darauf platziert. Dann wirf die anderen Zutaten auf den Amboss (ein bisschen tolleranz daneben zählt auch) und dann schlage mit dem Ya-Hammer zu. \n\nDie Matritzen werden auf die gleiche weise erstellt, mit der Ausnahme, dass der Gegenstand zuerst auf dem Amboss plaziert wird.
+guide.woot.entry.factory.headhunter.info=Um die Fabrik zu bauen, braucht man Monsterschädel. Um dich dabei zu unterstützen, gibt es eine Kopfjäger Verzauberung. Das erhöht die Chance auf einen Schädel wenn du ein Monster von Hand tötest. \n\nDas funktioniert nur bei Zombies, Skeletten und Creepern. Es hat keine Auswirkungen auf Wither Sklette.
+
+
+guide.woot.entry.factory.remote_io_structure=Remote I/O Struktur
+guide.woot.entry.factory.remote_io_connect=Im Folgenden siehst du die Verbindungen zu den Energiezellen, Importern und Exportern.
+guide.woot.entry.factory.remote_io_distance=Remote I/O Distanz
+
+guide.woot.entry.factory.tiers.info=Es gibt vier Stufen der Fabrik. Abhängig von dem Monster das du spawnen willst, hat jeder eine minimale Fabrikstufe als voraussetzung. Höhere Stufen können auch eine größere Anzahl an Upgrades und höhere Stufen an Upgrades unterstützen. \n\nAlle Stufen der Fabrik unterstützen alle Energiezellen.
+guide.woot.entry.factory.tiers.tieri=Stufe I Fabrik unterstützt\n - Bis zu zwei Tier I Upgrades\n\nStufe I Fabrik braucht\n - 2 Stufe I Begrenzungssteine\n - 14 Knochengehäuse\n - 10 Fleischgehäuse
+guide.woot.entry.factory.tiers.tierii=Stufe II Fabrik unterstützt\n - Bis zu 4 Stufe II Upgrades\n\nStufe II Fabrik braucht\n - 2 Stufe I Begrenzungssteine\n - 4 Stufe II Begrenzungssteine\n - 14 Knochengehäuse\n - 10 Fleischgehäuse\n - 35 Lohenhegäuse
+guide.woot.entry.factory.tiers.tieriii=Stufe III Fabrik unterstützt\n - Bis zu 4 Stufe III Upgrades\n\nStufe III Fabrik braucht\n - 2 Stufe I Begrenzungssteine\n - 4 Stufe II Begrenzungssteine\n - 5 Stufe III Begrenzungssteine\n - 14 Knochengehäuse\n - 10 Fleischgehäuse\n - 35 Lohenhegäuse\n - 60 Endergehäuse
+guide.woot.entry.factory.tiers.tieriv=Stufe IV Fabrik unterstützt\n - Bis zu 4 Stufe III Upgrades\n\nStufe IV Fabrik braucht\n - 2 Stufe I Begrenzungssteine\n - 4 Stufe II Begrenzungssteine\n - 5 Stufe III Begrenzungssteine\n - 7 Stufe IV Begrenzungssteine\n - 14 Knochengehäuse\n - 10 Fleischgehäuse\n - 35 Lohenhegäuse\n - 60 Endergehäuse\n - 95 Nethergehäuse
+
+# Upgrades Entries
+guide.woot.entry.upgrades.intro=Einführung
+guide.woot.entry.upgrades.totems=Stufen und Totems
+guide.woot.entry.upgrades.mobs=Upgrades und Monster
+guide.woot.entry.upgrades.decapitation=Enthaupten
+guide.woot.entry.upgrades.efficiency=Effizienz
+guide.woot.entry.upgrades.looting=Looting
+guide.woot.entry.upgrades.mass=Mass
+guide.woot.entry.upgrades.rate=Rate
+guide.woot.entry.upgrades.xp=XP
+
+# Upgrades Entry Text
+guide.woot.entry.upgrades.intro.info=Die Upgrades erlauben es dir, die Artu und Weise zu ändern, wie die Fabrik funktioniert, vielleicht mehr Monster zu generieren oder XP bei jedem Monster Tod zu generieren usw. Jedes Upgrade hat drei verschiedene Stufen. Je höher die Stufe, desto leistungsfähiger ist es. Natürlich kosten sie auch mehr Materialien und Energie.
+guide.woot.entry.upgrades.totems.info=Jede Upgrade Stufe benötigt die vorherige Stufe damit sie funktioniert. z.B. Um ein Upgrade der Stufe III zu verwenden, benötigst du sowohl die Stufe I als auch die Stufe II dieses Upgrades.\n\nDie Upgrades werden auf die vorhandenen Fabrik Upgrade Sockel platziert. Die Stufe I zuerst, dann die Stufe II und die Stufe III als letztes. Das erstellt ein Upgrade-Totem für dieses Upgrade.\n\nBeachte, jede Fabrikstufe unterstützt nur eine begrenzte Anzahl Upgrades und Upgrade-Stufen.
+guide.woot.entry.upgrades.mobs.info=Die Auswirkung eines Upgrades hängt von dem Monster in der Steuerung ab. Zum Beispiel kann das Masse II Upgrade vier zusätzliche Zombies hervorbringen, aber nur einen zusätzlichen Wither-Boss.
+guide.woot.entry.upgrades.decapitation.info=Dieses Upgrade erhöht die Chance, dass ein Monsterschädel dropt. Höhere Stufen dieses Upgrades erhöhen diese Drop-Chance.
+guide.woot.entry.upgrades.efficiency.info=Dieses Upgrade senkt die Energiekosten für den Betrieb der Fabrik. Höhere Stufen dieses Upgrades erhöhen diese Energieeinsparung.
+guide.woot.entry.upgrades.looting.info=Dieses Upgrade wendet verschiedene Level der Beute Verzauberung auf die Monster an. Das führt dazu, dass Monster mehr Beute fallen lassen können.
+guide.woot.entry.upgrades.mass.info=Dieses Upgrade erzeugt mehrere Monster zeitgleich. Höhere Stufen dieses Upgrades erhöhen die Anzahl der Monster.
+guide.woot.entry.upgrades.rate.info=Dieses Upgrade verringert die Zeit zwichen der Monster erzeugung. Höhere Stufen dieses Upgrades verringern die Zeit weiter.
+guide.woot.entry.upgrades.xp.info=Standartmäßig erzeugt die Fabrik keine XP wenn ein Monster getötet wird. Dieses Upgrade führt dazu, dass XP Splitter generiert werden. Höhere Stufen erhöhen die generierten XP.
+
+# Anvil Entries
+guide.woot.entry.anvil.intro=Einführung
+guide.woot.entry.anvil.usage=Den Amboss verwenden
+guide.woot.entry.anvil.dies=Matritzen
+guide.woot.entry.anvil.plate=Dunkeleisenplatten
+guide.woot.entry.anvil.shards=Splitter
+guide.woot.entry.anvil.dusts=Staub
+guide.woot.entry.anvil.cores=Kerne
+guide.woot.entry.anvil.controller=Fabrik Steuerung
+
+# Anvil Text
+guide.woot.entry.anvil.intro.info=Der Amboss dient zwei Zwecken. Die erste besteht darin, einige der Gegenstände zu erstellen, die zum Herstellen verwendet werden, wie zum Beispiel die Kerne. Die zweite Möglichkeit besteht darin, die Kosten für das Erstellen eineiger Gegenstände zu reduzieren.\n\nDer Amboss muss auf einem Magmablock platziert werden.
+guide.woot.entry.anvil.dies.info=Die meisten Gegenstände, die auf dem Amboss hergestellt werden erfordern, dass eine Matritze auf dem Amboss platziert wird. Diese Matritzen sind wiederverwendbar und werden auf dem Amboss erstellt.\n\nUm die Matritzen zu erstellen, rechtsklicke mit dem benötigten Gegenstand in der Hand auf den Amboss, dann wirf eine Dunkeleisenplatte auf den Amboss. Rechtsklicke mit dem Ya Hammer auf den Amboss und eine Matritze wird erzeugt.
+guide.woot.entry.anvil.usage.info=Um einen Gegenstand mithilfe des Ambosses zu erstellen, rechtsklicke mit einer Matritze auf den Amboss die daraufhin drauf Platziert wird.\n\nWirf dann die restlichen Zutaten auf den Amboss und rechtsklicke dann mit dem Ya Hammer auf den Amboss.\n\nDer Amboss ist der einzige Ort, an dem der Kontrollerkern hergestellt werden kann.
+
+# Ingredients Entries
+guide.woot.entry.ingredients.intro=Einführung
+guide.woot.entry.ingredients.recipes=Rezepte
+
+# Ingredients Text
+guide.woot.entry.ingredients.intro.info=Bei einigen Monstern musst du die Fabrik mit zusätzlichen Zutaten versorgen für jedes Monster, dass du erzeugen willst. Diese Zutaten können Gegenstände oder Flüssigkeiten oder beides sein. Du belieferst die Fabrik mit Hilfe des Importers\n\nDie folgenden Seiten listen die Monster auf, die zusätzliche Zutaten benötigen und was das für Zutaten sind.

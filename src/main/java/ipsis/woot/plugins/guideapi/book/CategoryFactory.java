@@ -41,27 +41,28 @@ public class CategoryFactory {
         }
 
 
-        ResourceLocation rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/remote_io.png");
+        String bookImages = "wootguide:";
+        ResourceLocation rs = new ResourceLocation(bookImages + "textures/gui/remote_io.png");
         category.getEntry("structure").addPage(new PageTextImage(keyBase + "remote_io_structure", rs, true));
-        rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/remote_connect.png");
+        rs = new ResourceLocation(bookImages + "textures/gui/remote_connect.png");
         category.getEntry("structure").addPage(new PageTextImage(keyBase + "remote_io_connect", rs, true));
-        rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/remote_distance.png");
+        rs = new ResourceLocation(bookImages + "textures/gui/remote_distance.png");
         category.getEntry("structure").addPage(new PageTextImage(keyBase + "remote_io_distance", rs, true));
 
         String e = "tiers";
         category.addEntry(e, new Entry(keyBase + e, true));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".info"), GuideWoot.MAX_PAGE_LEN));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".tieri"), GuideWoot.MAX_PAGE_LEN));
-        rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/tier_i.png");
+        rs = new ResourceLocation(bookImages + "textures/gui/tier_i.png");
         category.getEntry(e).addPage(new PageTextImage("Tier I", rs, true));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".tierii"), GuideWoot.MAX_PAGE_LEN));
-        rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/tier_ii.png");
+        rs = new ResourceLocation(bookImages + "textures/gui/tier_ii.png");
         category.getEntry(e).addPage(new PageTextImage("Tier II", rs, true));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".tieriii"), GuideWoot.MAX_PAGE_LEN));
-        rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/tier_iii.png");
+        rs = new ResourceLocation(bookImages + "textures/gui/tier_iii.png");
         category.getEntry(e).addPage(new PageTextImage("Tier III", rs, true));
         category.getEntry(e).addPageList(PageHelper.pagesForLongText(TextHelper.localize(keyBase + e + ".tieriv"), GuideWoot.MAX_PAGE_LEN));
-        rs = new ResourceLocation(Reference.MOD_ID, "textures/gui/tier_iv.png");
+        rs = new ResourceLocation(bookImages + "textures/gui/tier_iv.png");
         category.getEntry(e).addPage(new PageTextImage("Tier IV", rs, true));
 
         CategoryUtils.toUnicodeAndBeyond(category.entries);

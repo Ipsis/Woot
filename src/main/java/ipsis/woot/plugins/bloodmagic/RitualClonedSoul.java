@@ -142,6 +142,10 @@ public class RitualClonedSoul extends Ritual {
             int health = Woot.mobCosting.getMobSpawnCost(world, bloodMagicHandler.getWootMobName());
             if (health > 0) {
 
+                int realHealth = (int)(((float)health / 100.0F) * (float)bloodMagicHandler.getCrystalMobHealthPercentage());
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "health:" + health + "/" + realHealth);
+                health = realHealth;
+
                 for (int mob = 0; mob < bloodMagicHandler.getCrystalNumMobs(); mob++) {
 
                     feedWillAndCrystal(health);

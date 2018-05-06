@@ -535,7 +535,11 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             int perTick = Woot.wootConfiguration.getInteger(
                     farmSetup.getWootMobName(),
                     ConfigKeyHelper.getBmCrystalPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
+            int param1 = Woot.wootConfiguration.getInteger(
+                    farmSetup.getWootMobName(),
+                    ConfigKeyHelper.getBmCrystalParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
             info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.BM_CRYSTAL, perTick);
+            info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_CRYSTAL, param1);
         }
 
         // EvilCraft Blood
@@ -623,6 +627,16 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
         int p = 0;
         if (farmStructure.isFormed())
             p = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getBmLeAltarParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_ALTAR)));
+
+        return p;
+    }
+
+    @Override
+    public int getCrystalMobHealthPercentage() {
+
+        int p = 0;
+        if (farmStructure.isFormed())
+            p = Woot.wootConfiguration.getInteger(farmSetup.getWootMobName(), ConfigKeyHelper.getBmCrystalParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_CRYSTAL)));
 
         return p;
     }

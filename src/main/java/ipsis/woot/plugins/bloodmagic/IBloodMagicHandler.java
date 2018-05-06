@@ -8,6 +8,7 @@ public interface IBloodMagicHandler {
     void keepAliveTankRitual();
     int getAltarSacrificePercentage();
     int getAltarSacrificeNumMobs();
+    int getCrystalMobHealthPercentage();
     int getCrystalNumMobs();
     void clearAltarSacrificeNumMobs();
     void clearCrystalNumMobs();

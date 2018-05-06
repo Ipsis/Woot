@@ -379,6 +379,18 @@ public enum EnumConfigKey {
             CATEGORY_UPGRADES,
             "mb per HP for the EvilCraft Blood Tank III upgrade",
             "ecBlood3Param", Integer.class, 60, true, 3),
+    BM_CRYSTAL_1_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of mob health given to the BloodMagic Crystal I upgrade",
+            "bmCrystal1Param", Integer.class, 25, true, 1),
+    BM_CRYSTAL_2_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of mob health given to the BloodMagic Crystal II upgrade",
+            "bmCrystal2Param", Integer.class, 60, true, 2),
+    BM_CRYSTAL_3_PARAM(
+            CATEGORY_UPGRADES,
+            "Percentage of mob health given to the BloodMagic Crystal III upgrade",
+            "bmCrystal3Param", Integer.class, 100, true, 3),
     ALLOW_BM_LE_TANK(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support BloodMagic Ritual Of The Sanguine Urn",
@@ -390,7 +402,11 @@ public enum EnumConfigKey {
     ALLOW_EC_BLOOD(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support EvilCraft Blood Generation",
-                    "allowEcBlood", Boolean.class, true, false);
+                    "allowEcBlood", Boolean.class, true, false),
+    ALLOW_BM_CRYSTAL(
+            CATEGORY_FACTORY_MOD,
+            "Allow the factory to support BloodMagic Ritual Of The Cloned Soul",
+            "allowBmCrystal", Boolean.class, true, false);
 
     private String text;
     private Class clazz;
@@ -507,4 +523,5 @@ public enum EnumConfigKey {
     public static EnumSet<EnumConfigKey> BM_LE_TANK_PARAM = EnumSet.of(BM_LE_TANK_1_PARAM, BM_LE_TANK_2_PARAM, BM_LE_TANK_3_PARAM);
     public static EnumSet<EnumConfigKey> BM_LE_ALTAR_PARAM = EnumSet.of(BM_LE_ALTAR_1_PARAM, BM_LE_ALTAR_2_PARAM, BM_LE_ALTAR_3_PARAM);
     public static EnumSet<EnumConfigKey> EC_BLOOD_PARAM = EnumSet.of(EC_BLOOD_1_PARAM, EC_BLOOD_2_PARAM, EC_BLOOD_3_PARAM);
+    public static EnumSet<EnumConfigKey> BM_CRYSTAL_PARAM = EnumSet.of(BM_CRYSTAL_1_PARAM, BM_CRYSTAL_2_PARAM, BM_CRYSTAL_3_PARAM);
 }

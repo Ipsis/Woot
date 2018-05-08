@@ -19,7 +19,7 @@ public class MobEntitySlime extends AbstractMobEntity {
     @Override
     public void runSetup(Entity entity, WootMobName wootMobName, World world) {
 
-        if (!(entity instanceof EntityMagmaCube))
+        if (!(entity instanceof EntitySlime))
             return;
 
         try {

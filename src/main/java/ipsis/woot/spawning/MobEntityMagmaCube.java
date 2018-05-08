@@ -3,6 +3,7 @@ package ipsis.woot.spawning;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -17,7 +18,7 @@ public class MobEntityMagmaCube extends AbstractMobEntity {
     @Override
     public void runSetup(Entity entity, WootMobName wootMobName, World world) {
 
-        if (!(entity instanceof EntitySlime))
+        if (!(entity instanceof EntityMagmaCube))
             return;
 
         try {

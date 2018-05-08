@@ -19,12 +19,12 @@ public class MobEntitySlime extends AbstractMobEntity {
     @Override
     public void runSetup(Entity entity, WootMobName wootMobName, World world) {
 
-        if (!(entity instanceof EntityMagmaCube))
+        if (!(entity instanceof EntitySlime))
             return;
 
         try {
-            Method m = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class);
-            m.invoke(entity, 1);
+            Method m = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class, boolean.class);
+            m.invoke(entity, 1, false);
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }

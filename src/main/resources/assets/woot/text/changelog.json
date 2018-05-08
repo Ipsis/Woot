@@ -18,6 +18,10 @@
       ],
       "fixes": [
         {
+          "id": 355,
+          "desc": "Fix setSlimeSize method being int, bool - and I never noticed"
+        },
+        {
           "id": 354,
           "desc": "Fix Headhunter enchant being processed incorrectly"
         },

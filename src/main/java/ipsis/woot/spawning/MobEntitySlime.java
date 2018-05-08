@@ -23,8 +23,8 @@ public class MobEntitySlime extends AbstractMobEntity {
             return;
 
         try {
-            Method m = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class);
-            m.invoke(entity, 1);
+            Method m = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class, boolean.class);
+            m.invoke(entity, 1, false);
         } catch (Throwable e){
             LogHelper.warn("Reflection EntitySlime.setSlimeSize failed");
         }

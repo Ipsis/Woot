@@ -22,6 +22,9 @@ public class MobEntitySlime extends AbstractMobEntity {
         if (!(entity instanceof EntitySlime))
             return;
 
+        if (MobEntityPinkSlime.isIFPinkSlime(entity))
+            return;
+
         try {
             Method m = ReflectionHelper.findMethod(EntitySlime.class, "setSlimeSize", "func_70799_a", int.class, boolean.class);
             m.invoke(entity, 1, false);

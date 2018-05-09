@@ -18,6 +18,10 @@
       ],
       "fixes": [
         {
+          "id": 356,
+          "desc": "Set correct slime size for Pink Slime from Industrial Foregoing"
+        },
+        {
           "id": 355,
           "desc": "Fix setSlimeSize method being int, bool - and I never noticed"
         },

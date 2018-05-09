@@ -31,6 +31,7 @@ public class EntitySpawner implements IEntitySpawner {
         mobEntityList.add(new MobEntityMagmaCube());
         mobEntityList.add(new MobEntitySlime());
         mobEntityList.add(new MobEntityChargedCreeper());
+        mobEntityList.add(new MobEntityPinkSlime());
     }
 
     private void applyCustomConfig(Entity entity, WootMobName wootMobName, World world) {

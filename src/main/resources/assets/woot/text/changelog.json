@@ -18,6 +18,10 @@
       ],
       "fixes": [
         {
+          "id": 357,
+          "desc": "Fix generation of the EnderIO Enderman skull"
+        },
+        {
           "id": 356,
           "desc": "Set correct slime size for Pink Slime from Industrial Foregoing"
         },

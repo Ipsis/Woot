@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.enderio.EnderIO;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.*;
 import net.minecraft.init.Items;
@@ -27,11 +28,11 @@ public class SkullHelper {
         wootSkulls.put(WootMobNameBuilder.create("minecraft:zombie"), new ItemStack(Items.SKULL, 1, 2));
         wootSkulls.put(WootMobNameBuilder.create("minecraft:creeper"), new ItemStack(Items.SKULL, 1, 4));
 
-        Item i = Item.getByNameOrId("EnderIO:blockEndermanSkull");
-        if (i != null) {
+        ItemStack enderioSkull = EnderIO.getEndermanSkull();
+        if (!enderioSkull.isEmpty()) {
+            skulls.put(SkullType.ENDERIO_ENDERMAN, enderioSkull.copy());
+            wootSkulls.put(WootMobNameBuilder.create("minecraft:enderman"), enderioSkull.copy());
             LogHelper.info("Adding EnderIO enderman skull");
-            skulls.put(SkullType.ENDERIO_ENDERMAN, new ItemStack(i));
-            wootSkulls.put(WootMobNameBuilder.create("minecraft:enderman"), new ItemStack(i));
         }
     }
 

@@ -1,10 +1,13 @@
 package ipsis.woot.plugins.enderio;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public class EnderIO {
 
     static final String ENDERIO_MODID = "enderio";
+    static final String ENDERIO_ENDERMAN_SKULL = "block_enderman_skull";
 
     public static void loadRecipes() {
 
@@ -31,6 +34,16 @@ public class EnderIO {
                 "</recipe>" +
             "</recipes>";
 
+    public static ItemStack getEndermanSkull() {
+
+        Item i = Item.getByNameOrId(ENDERIO_MODID + ":" + ENDERIO_ENDERMAN_SKULL);
+        if (i == null) {
+            return ItemStack.EMPTY;
+        }
+
+        return new ItemStack(i);
+
+    }
 
 
 

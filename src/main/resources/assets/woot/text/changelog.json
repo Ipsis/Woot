@@ -18,6 +18,10 @@
       ],
       "fixes": [
         {
+          "id": 358,
+          "desc:": "Internally blacklist some incompatible Erebus mobs"
+        },
+        {
           "id": 357,
           "desc": "Fix generation of the EnderIO Enderman skull"
         },

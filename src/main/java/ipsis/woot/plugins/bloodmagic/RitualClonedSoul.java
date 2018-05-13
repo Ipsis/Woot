@@ -243,7 +243,17 @@ public class RitualClonedSoul extends Ritual {
     @Override
     public void gatherComponents(Consumer<RitualComponent> components) {
 
-        addCornerRunes(components, 4, -1, EnumRuneType.EARTH);
+
+        addCornerRunes(components, 1, 0, EnumRuneType.AIR);
+        addParallelRunes(components, 1, 0, EnumRuneType.DUSK);
+        addCornerRunes(components, 2, 0, EnumRuneType.EARTH);
+        addParallelRunes(components, 2, 0, EnumRuneType.FIRE);
+        addCornerRunes(components, 2, 1, EnumRuneType.FIRE);
+        addCornerRunes(components, 2, 2, EnumRuneType.EARTH);
+        addParallelRunes(components, 3, 1, EnumRuneType.FIRE);
+        addParallelRunes(components, 3, 2, EnumRuneType.FIRE);
+        addCornerRunes(components, 4, 2, EnumRuneType.EARTH);
+
     }
 
     @Override

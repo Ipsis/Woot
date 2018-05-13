@@ -33,7 +33,8 @@ public class CategoryFactory {
                 "capturing",
                 "programming",
                 "stygiananvil",
-                "headhunter" };
+                "headhunter",
+                "intern"};
 
         for (String e : entries) {
             category.addEntry(e, new Entry(keyBase + e, true));

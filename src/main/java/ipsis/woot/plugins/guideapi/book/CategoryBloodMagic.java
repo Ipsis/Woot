@@ -24,7 +24,8 @@ public class CategoryBloodMagic {
         String entries[] = {
                 "intro",
                 "tank",
-                "altar" };
+                "altar",
+                "crystal"};
 
         for (String e : entries) {
             category.addEntry(e, new Entry(keyBase + e, true));

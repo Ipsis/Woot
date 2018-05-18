@@ -3,6 +3,8 @@ package ipsis.woot.loot.generators;
 import ipsis.Woot;
 import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
+import ipsis.woot.plugins.thauncraft.Aspect;
+import ipsis.woot.plugins.thauncraft.Thaumcraft;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.LootHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -86,6 +88,10 @@ public class ItemGenerator implements ILootGenerator {
 
             drops.add(itemStack);
         }
+
+        ItemStack crystalStack = Thaumcraft.makeCrystal(Aspect.getAspect("lux"));
+        if (crystalStack != null)
+            drops.add(crystalStack);
 
         return drops;
     }

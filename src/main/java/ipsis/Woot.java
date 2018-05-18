@@ -21,6 +21,7 @@ import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.plugins.bloodmagic.BloodMagic;
 import ipsis.woot.plugins.evilcraft.EvilCraft;
 import ipsis.woot.plugins.enderio.EnderIO;
+import ipsis.woot.plugins.thauncraft.Thaumcraft;
 import ipsis.woot.plugins.thermal.Thermal;
 import ipsis.woot.policy.IPolicy;
 import ipsis.woot.policy.InternalPolicyLoader;
@@ -121,6 +122,9 @@ public class Woot {
 
         if (Loader.isModLoaded(Thermal.THERMAL_EXPANSION_MODID))
             Thermal.init();
+
+        if (Loader.isModLoaded(Thaumcraft.THAUMCRAFT_MODID))
+            Thaumcraft.init();
     }
 
     @Mod.EventHandler

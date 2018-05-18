@@ -9,6 +9,7 @@ import ipsis.woot.command.ITextStatus;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.ItemHelper;
 import ipsis.woot.oss.LogHelper;
+import ipsis.woot.plugins.thauncraft.Thaumcraft;
 import ipsis.woot.util.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -164,7 +165,7 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
     private static boolean hasCustomDropsOnly(WootMobName wootMobName) {
 
-        if (wootMobName.isEnderDragon() || wootMobName.isChaosGuardian())
+        if (wootMobName.isEnderDragon() || wootMobName.isChaosGuardian() || wootMobName.isThaumcraftWisp())
             return true;
 
         return false;

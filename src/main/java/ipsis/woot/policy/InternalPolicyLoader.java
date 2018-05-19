@@ -33,8 +33,7 @@ public class InternalPolicyLoader {
             "twilightforest:quest_ram",
             "forestry:butterflyge",
             "erebus:erebus.animated_block",
-            "erebus:erebus.umber_golem",
-            "erebus:erebus.antlion_boss",
+            "erebus:erebus.umber_golem"
     };
 
     // MODS where the drops don't work well with Woot

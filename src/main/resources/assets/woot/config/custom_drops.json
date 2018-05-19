@@ -60,6 +60,52 @@
           "chances": [ 10, 15, 20, 25 ]
         }
       ]
+    },
+    {
+      "mobName": "erebus:erebus.antlion_boss",
+      "drops": [
+        {
+          "drop": {
+            "item": "erebus:materials",
+            "data": 64
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 100, 100, 100, 100]
+        },
+        {
+          "drop": {
+            "item": "erebus:war_hammer"
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 100, 100, 100, 100]
+        },
+        {
+          "drop": {
+            "item": "erebus:antlion_egg"
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 100, 100, 100, 100]
+        }
+      ]
+    },
+    {
+      "mobName": "erebus:erebus.tarantula_mini_boss",
+      "drops": [
+        {
+          "drop": {
+            "item": "erebus:tarantula_egg"
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 100, 100, 100, 100]
+        },
+        {
+          "drop": {
+            "item": "erebus:spider_t_shirt"
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 100, 100, 100, 100]
+        }
+      ]
     }
   ]
 }

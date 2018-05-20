@@ -1,6 +1,7 @@
 package ipsis.woot.event;
 
 import ipsis.woot.item.ItemEnderShard;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.entity.EntityLiving;
@@ -15,6 +16,9 @@ public class HandlerLivingDeathEvent {
 
     @SubscribeEvent
     public void onLivingDeathEvent(LivingDeathEvent event) {
+
+        LogHelper.info("onLivingDeathEvent: " + event.getSource() + "/" + event.getEntity() + "/" + event.getEntity().isDead);
+        new Exception().printStackTrace();
 
         World world = event.getEntity().getEntityWorld();
 

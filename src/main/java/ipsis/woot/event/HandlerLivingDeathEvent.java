@@ -1,8 +1,10 @@
 package ipsis.woot.event;
 
 import ipsis.woot.item.ItemEnderShard;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,15 +13,40 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class HandlerLivingDeathEvent {
+
+    private final int MAX_UUID_CACHE_SIZE = 10;
+    private List<String> uuidList = new ArrayList<>();
+
+    private boolean ignoreDeathEvent(Entity entity) {
+
+        String uuid = entity.getCachedUniqueIdString();
+        if (uuidList.contains(uuid))
+            return true;
+
+        uuidList.add(uuid);
+        if (uuidList.size() > MAX_UUID_CACHE_SIZE) {
+            LogHelper.info("ignoreDeathEvent: flush oldest: " + uuidList.size() + "/" + uuidList);
+            uuidList.remove(0);
+            LogHelper.info("ignoreDeathEvent: " + uuidList.size());
+        }
+
+        return false;
+    }
 
     @SubscribeEvent
     public void onLivingDeathEvent(LivingDeathEvent event) {
 
         World world = event.getEntity().getEntityWorld();
+        if (world.isRemote)
+            return;
 
         // Only player kills
-        if (world.isRemote || !(event.getSource().getTrueSource() instanceof EntityPlayer))
+        if (!(event.getSource().getTrueSource() instanceof EntityPlayer))
             return;
 
         if (event.getEntityLiving() == null)
@@ -31,6 +58,15 @@ public class HandlerLivingDeathEvent {
         // player on player kill would cause invalid cast for this method
         if (!(entityLivingBase instanceof EntityLiving))
             return;
+
+        // Filter out possible extra death events from things like the EnderDragon
+        LogHelper.info("onLivingDeathEvent: " + event.getSource() + "/" + event.getEntity() + "/" + event.getEntity().isDead);
+        if (ignoreDeathEvent(event.getEntity())) {
+            LogHelper.info("onLivingDeathEvent: drop due to duplicate");
+            return;
+        }
+
+        LogHelper.info("onLivingDeathEvent: processing");
 
         WootMobName wootMobName = WootMobNameBuilder.create((EntityLiving)entityLivingBase);
         if (!wootMobName.isValid())

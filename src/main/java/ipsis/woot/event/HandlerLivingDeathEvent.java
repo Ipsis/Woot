@@ -29,11 +29,8 @@ public class HandlerLivingDeathEvent {
             return true;
 
         uuidList.add(uuid);
-        if (uuidList.size() > MAX_UUID_CACHE_SIZE) {
-            LogHelper.info("ignoreDeathEvent: flush oldest: " + uuidList.size() + "/" + uuidList);
+        if (uuidList.size() > MAX_UUID_CACHE_SIZE)
             uuidList.remove(0);
-            LogHelper.info("ignoreDeathEvent: " + uuidList.size());
-        }
 
         return false;
     }
@@ -60,13 +57,8 @@ public class HandlerLivingDeathEvent {
             return;
 
         // Filter out possible extra death events from things like the EnderDragon
-        LogHelper.info("onLivingDeathEvent: " + event.getSource() + "/" + event.getEntity() + "/" + event.getEntity().isDead);
-        if (ignoreDeathEvent(event.getEntity())) {
-            LogHelper.info("onLivingDeathEvent: drop due to duplicate");
+        if (ignoreDeathEvent(event.getEntity()))
             return;
-        }
-
-        LogHelper.info("onLivingDeathEvent: processing");
 
         WootMobName wootMobName = WootMobNameBuilder.create((EntityLiving)entityLivingBase);
         if (!wootMobName.isValid())

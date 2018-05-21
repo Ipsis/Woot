@@ -18,8 +18,12 @@
       ],
       "fixes": [
         {
+          "id": 360,
+          "desc": "Filter out duplicate death messages from Ender Dragon"
+        },
+        {
           "id": 358,
-          "desc:": "Internally blacklist some incompatible Erebus mobs"
+          "desc": "Add some Erebus compatibility with custom drops"
         },
         {
           "id": 357,

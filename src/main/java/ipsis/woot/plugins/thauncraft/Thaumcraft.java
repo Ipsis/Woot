@@ -69,8 +69,16 @@ public class Thaumcraft {
         Aspect aspect = null;
         ArrayList<Aspect> aspects = null;
 
-        // 90% chance of primal
-        if (Woot.RANDOM.nextInt(10) != 0)
+        int primalChance = 90;
+        if (key == EnumEnchantKey.LOOTING_I)
+            primalChance = 80;
+        else if (key == EnumEnchantKey.LOOTING_II)
+            primalChance = 60;
+        else if (key == EnumEnchantKey.LOOTING_III)
+            primalChance = 50;
+
+        int roll = Woot.RANDOM.nextInt(100) + 1;
+        if (roll <= primalChance)
             aspects = Aspect.getPrimalAspects();
         else
             aspects = Aspect.getCompoundAspects();

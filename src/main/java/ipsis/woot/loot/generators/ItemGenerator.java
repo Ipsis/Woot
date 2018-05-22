@@ -52,17 +52,17 @@ public class ItemGenerator implements ILootGenerator {
         itemStack.setItemDamage(dmg);
     }
 
-    private ItemStack generateItemStack(ItemStack itemStack) {
+    private ItemStack generateItemStack(ItemStack itemStack, EnumEnchantKey key) {
 
         ItemStack outStack = itemStack.copy();
 
         if (Thaumcraft.isThaumcraftCrystal(outStack))
-            outStack = Thaumcraft.getCrystal(EnumEnchantKey.NO_ENCHANT);
+            outStack = Thaumcraft.getCrystal(key);
 
         return outStack;
     }
 
-    private List<ItemStack> calculateDrops(List<ILootRepositoryLookup.LootItemStack> loot, DifficultyInstance difficulty) {
+    private List<ItemStack> calculateDrops(List<ILootRepositoryLookup.LootItemStack> loot, DifficultyInstance difficulty, EnumEnchantKey key) {
 
         boolean shouldEnchant = shouldEnchant(difficulty);
         List<ItemStack> drops = new ArrayList<>();
@@ -86,7 +86,7 @@ public class ItemGenerator implements ILootGenerator {
             /**
              * We have an item to drop
              */
-            ItemStack itemStack = generateItemStack(drop.itemStack);
+            ItemStack itemStack = generateItemStack(drop.itemStack, key);
 
             itemStack.setCount(stackSize);
             if (itemStack.isItemStackDamageable())
@@ -117,7 +117,7 @@ public class ItemGenerator implements ILootGenerator {
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", farmInfo.farmSetup.getNumMobs() + "*" + farmInfo.farmSetup.getWootMobName());
         for (int i = 0; i < farmInfo.farmSetup.getNumMobs(); i++) {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", "Generating loot for mob " + i);
-            List<ItemStack> mobLoot = calculateDrops(loot, farmInfo.difficultyInstance);
+            List<ItemStack> mobLoot = calculateDrops(loot, farmInfo.difficultyInstance, farmInfo.farmSetup.getEnchantKey());
 
             for (IItemHandler hdlr : farmInfo.itemHandlerList) {
                 for (ItemStack itemStack : mobLoot) {

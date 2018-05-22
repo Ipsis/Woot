@@ -6,6 +6,7 @@ import ipsis.woot.loot.repository.ILootRepositoryLookup;
 import ipsis.woot.plugins.thauncraft.Aspect;
 import ipsis.woot.plugins.thauncraft.Thaumcraft;
 import ipsis.woot.util.DebugSetup;
+import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.LootHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -51,6 +52,16 @@ public class ItemGenerator implements ILootGenerator {
         itemStack.setItemDamage(dmg);
     }
 
+    private ItemStack generateItemStack(ItemStack itemStack) {
+
+        ItemStack outStack = itemStack.copy();
+
+        if (Thaumcraft.isThaumcraftCrystal(outStack))
+            outStack = Thaumcraft.getCrystal(EnumEnchantKey.NO_ENCHANT);
+
+        return outStack;
+    }
+
     private List<ItemStack> calculateDrops(List<ILootRepositoryLookup.LootItemStack> loot, DifficultyInstance difficulty) {
 
         boolean shouldEnchant = shouldEnchant(difficulty);
@@ -72,7 +83,11 @@ public class ItemGenerator implements ILootGenerator {
             if (stackSize == 0)
                 continue;
 
-            ItemStack itemStack = drop.itemStack.copy();
+            /**
+             * We have an item to drop
+             */
+            ItemStack itemStack = generateItemStack(drop.itemStack);
+
             itemStack.setCount(stackSize);
             if (itemStack.isItemStackDamageable())
                 damageItem(itemStack);
@@ -88,10 +103,6 @@ public class ItemGenerator implements ILootGenerator {
 
             drops.add(itemStack);
         }
-
-        ItemStack crystalStack = Thaumcraft.makeCrystal(Aspect.getAspect("lux"));
-        if (crystalStack != null)
-            drops.add(crystalStack);
 
         return drops;
     }

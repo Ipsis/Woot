@@ -3,7 +3,10 @@ package ipsis.woot.loot.generators;
 import ipsis.Woot;
 import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
+import ipsis.woot.plugins.thauncraft.Aspect;
+import ipsis.woot.plugins.thauncraft.Thaumcraft;
 import ipsis.woot.util.DebugSetup;
+import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.LootHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -49,7 +52,17 @@ public class ItemGenerator implements ILootGenerator {
         itemStack.setItemDamage(dmg);
     }
 
-    private List<ItemStack> calculateDrops(List<ILootRepositoryLookup.LootItemStack> loot, DifficultyInstance difficulty) {
+    private ItemStack generateItemStack(ItemStack itemStack, EnumEnchantKey key) {
+
+        ItemStack outStack = itemStack.copy();
+
+        if (Thaumcraft.isThaumcraftCrystal(outStack))
+            outStack = Thaumcraft.getCrystal(key);
+
+        return outStack;
+    }
+
+    private List<ItemStack> calculateDrops(List<ILootRepositoryLookup.LootItemStack> loot, DifficultyInstance difficulty, EnumEnchantKey key) {
 
         boolean shouldEnchant = shouldEnchant(difficulty);
         List<ItemStack> drops = new ArrayList<>();
@@ -70,7 +83,11 @@ public class ItemGenerator implements ILootGenerator {
             if (stackSize == 0)
                 continue;
 
-            ItemStack itemStack = drop.itemStack.copy();
+            /**
+             * We have an item to drop
+             */
+            ItemStack itemStack = generateItemStack(drop.itemStack, key);
+
             itemStack.setCount(stackSize);
             if (itemStack.isItemStackDamageable())
                 damageItem(itemStack);
@@ -100,7 +117,7 @@ public class ItemGenerator implements ILootGenerator {
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", farmInfo.farmSetup.getNumMobs() + "*" + farmInfo.farmSetup.getWootMobName());
         for (int i = 0; i < farmInfo.farmSetup.getNumMobs(); i++) {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "generate", "Generating loot for mob " + i);
-            List<ItemStack> mobLoot = calculateDrops(loot, farmInfo.difficultyInstance);
+            List<ItemStack> mobLoot = calculateDrops(loot, farmInfo.difficultyInstance, farmInfo.farmSetup.getEnchantKey());
 
             for (IItemHandler hdlr : farmInfo.itemHandlerList) {
                 for (ItemStack itemStack : mobLoot) {

@@ -106,6 +106,18 @@
           "chances": [ 100, 100, 100, 100]
         }
       ]
+    },
+    {
+      "mobName": "thaumcraft:wisp",
+      "drops": [
+        {
+          "drop": {
+            "item": "thaumcraft:crystal_essence"
+          },
+          "sizes": [ 1, 1, 1, 1 ],
+          "chances": [ 100, 100, 100, 100 ]
+        }
+      ]
     }
   ]
 }

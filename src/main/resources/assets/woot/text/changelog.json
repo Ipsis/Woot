@@ -4,6 +4,10 @@
       "version": "1.12.2-1.3.?",
       "features": [
         {
+          "id": 359,
+          "desc": "Add Thaumcraft wisp support"
+        },
+        {
           "id": 351,
           "desc": "Add Thermal Expansion crucible recipe for XP shard -> Essence Of Knowledge"
         },

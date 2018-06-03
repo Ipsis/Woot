@@ -3,7 +3,6 @@ package ipsis.woot.command;
 import ipsis.Woot;
 import ipsis.woot.multiblock.EnumMobFactoryModule;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.multiblock.FactoryPatternRepository;
 import ipsis.woot.util.CommandHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

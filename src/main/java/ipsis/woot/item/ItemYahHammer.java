@@ -1,7 +1,6 @@
 package ipsis.woot.item;
 
 import ipsis.woot.init.ModItems;
-import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.tools.EnumValidateToolMode;
 import ipsis.woot.tools.IValidateTool;
@@ -11,9 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;

@@ -2,7 +2,6 @@ package ipsis.woot.enchantment;
 
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.SkullHelper;

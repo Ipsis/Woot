@@ -3,7 +3,6 @@ package ipsis.woot.loot.generators;
 import ipsis.Woot;
 import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
-import ipsis.woot.plugins.thauncraft.Aspect;
 import ipsis.woot.plugins.thauncraft.Thaumcraft;
 import ipsis.woot.util.DebugSetup;
 import ipsis.woot.util.EnumEnchantKey;

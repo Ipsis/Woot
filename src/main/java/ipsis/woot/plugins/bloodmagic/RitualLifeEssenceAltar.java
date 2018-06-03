@@ -5,7 +5,6 @@ import WayofTime.bloodmagic.tile.TileAltar;
 import ipsis.Woot;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
-import ipsis.woot.util.ConfigKeyHelper;
 import ipsis.woot.util.DebugSetup;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;

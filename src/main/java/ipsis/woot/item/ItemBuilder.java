@@ -9,7 +9,6 @@ import ipsis.woot.multiblock.EnumMobFactoryModule;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.multiblock.MobFactoryModule;
 import ipsis.woot.oss.ItemHelper;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.util.StringHelper;
 import net.minecraft.block.Block;

@@ -1,7 +1,6 @@
 package ipsis.woot.event;
 
 import ipsis.woot.item.ItemEnderShard;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
 import net.minecraft.entity.Entity;
@@ -15,7 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class HandlerLivingDeathEvent {
 

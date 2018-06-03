@@ -1,6 +1,5 @@
 package ipsis.woot.tools;
 
-import ipsis.woot.multiblock.EnumMobFactoryTier;
 import net.minecraft.item.ItemStack;
 
 public interface IValidateTool {

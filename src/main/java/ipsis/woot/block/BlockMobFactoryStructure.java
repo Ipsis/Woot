@@ -1,7 +1,6 @@
 package ipsis.woot.block;
 
 import ipsis.Woot;
-import ipsis.woot.init.ModItems;
 import ipsis.woot.reference.Reference;
 import ipsis.woot.tileentity.TileEntityMobFactoryStructure;
 import ipsis.woot.multiblock.EnumMobFactoryModule;

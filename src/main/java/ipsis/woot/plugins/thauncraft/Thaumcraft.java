@@ -1,9 +1,7 @@
 package ipsis.woot.plugins.thauncraft;
 
 import ipsis.Woot;
-import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.EnumEnchantKey;
-import ipsis.woot.util.WootMobName;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

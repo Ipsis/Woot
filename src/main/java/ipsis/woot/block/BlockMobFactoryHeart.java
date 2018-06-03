@@ -1,8 +1,6 @@
 package ipsis.woot.block;
 
-import ipsis.woot.init.ModItems;
 import ipsis.woot.multiblock.EnumMobFactoryTier;
-import ipsis.woot.oss.ItemHelper;
 import ipsis.woot.oss.client.ModelHelper;
 import ipsis.woot.init.ModBlocks;
 import ipsis.woot.plugins.top.ITOPInfoProvider;
@@ -10,7 +8,6 @@ import ipsis.woot.plugins.top.TOPUIInfoConvertors;
 import ipsis.woot.tileentity.IMobFarm;
 import ipsis.woot.tileentity.TileEntityMobFactoryHeart;
 import ipsis.woot.tileentity.ui.FarmUIInfo;
-import ipsis.woot.tools.EnumValidateToolMode;
 import ipsis.woot.tools.IValidateTool;
 import ipsis.woot.tools.ValidateToolUtils;
 import mcjty.theoneprobe.api.IProbeHitData;
@@ -24,8 +21,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;

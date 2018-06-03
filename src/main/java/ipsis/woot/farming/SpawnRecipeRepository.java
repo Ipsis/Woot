@@ -3,13 +3,10 @@ package ipsis.woot.farming;
 import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 public class SpawnRecipeRepository implements ISpawnRecipeRepository {

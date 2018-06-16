@@ -138,7 +138,7 @@ public class TileEntityAnvil extends TileEntity {
                 int count = recipeStack.getCount();
                 for (EntityItem entityItem : entityItemList) {
                     ItemStack itemStack = entityItem.getItem();
-                    if (ItemStack.areItemsEqual(itemStack, recipeStack) && ItemStack.areItemStackTagsEqual(itemStack, recipeStack)) {
+                    if (ItemStack.areItemsEqual(itemStack, recipeStack)) {
                         if (entityItem.getItem().getCount() >= count) {
                             entityItem.getItem().setCount(entityItem.getItem().getCount() - count);
                             count = 0;

@@ -1,5 +1,6 @@
 package ipsis.woot.plugins.enderio;
 
+import ipsis.woot.oss.LogHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
@@ -18,6 +19,7 @@ public class EnderIO {
          * => 16 * 20 = 320mB
          */
         String s = String.format(XML_MESSAGE_VAT, "Liquid XP", 20, "woot:xpshard", 1.0, "water", 0.32, "xpjuice");
+        LogHelper.info("EnderIO: " + s);
         FMLInterModComms.sendMessage(ENDERIO_MODID, "recipe:xml", s);
     }
 

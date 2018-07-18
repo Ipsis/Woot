@@ -1,6 +1,5 @@
 package ipsis.woot.plugins.bloodmagic;
 
-import WayofTime.bloodmagic.ritual.RitualRegistry;
 import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.LogHelper;
@@ -25,6 +24,7 @@ public class BloodMagic {
 
     private static void registerRituals() {
 
+        /*
         if (Woot.wootConfiguration.getBoolean(EnumConfigKey.ALLOW_BM_LE_TANK)) {
             LogHelper.info("Adding Ritual of the Sanguine Urn");
             RitualRegistry.registerRitual(new RitualLifeEssenceTank());
@@ -34,7 +34,7 @@ public class BloodMagic {
             RitualRegistry.registerRitual(new RitualLifeEssenceAltar());
         }
 
-        RitualRegistry.registerRitual(new RitualClonedSoul());
+        RitualRegistry.registerRitual(new RitualClonedSoul()); */
     }
 
     private static void setupLifeEssence() {

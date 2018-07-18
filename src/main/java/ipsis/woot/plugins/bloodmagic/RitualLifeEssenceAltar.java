@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("ritualLifeEssenceAltar")
 public class RitualLifeEssenceAltar extends Ritual {
 
     private static final String RITUAL_NAME = "ritualLifeEssenceAltar";

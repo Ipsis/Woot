@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 
 import java.util.function.Consumer;
 
+@RitualRegister("ritualLifeEssenceTank")
 public class RitualLifeEssenceTank extends Ritual {
 
     private static final String RITUAL_NAME = "ritualLifeEssenceTank";

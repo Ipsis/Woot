@@ -27,6 +27,7 @@ import java.util.function.Consumer;
  *
  */
 
+@RitualRegister("ritualClonedSoul")
 public class RitualClonedSoul extends Ritual {
 
     private static final String RITUAL_NAME = "ritualClonedSoul";

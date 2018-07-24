@@ -1,5 +1,7 @@
 package ipsis.woot.plugins.enderio;
 
+import ipsis.Woot;
+import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.oss.LogHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,6 +13,11 @@ public class EnderIO {
     static final String ENDERIO_ENDERMAN_SKULL = "block_enderman_skull";
 
     public static void loadRecipes() {
+
+        if (!Woot.wootConfiguration.getBoolean(EnumConfigKey.ENDERIO_IMC)) {
+            LogHelper.info("EnderIO IMC support disabled");
+            return;
+        }
 
         /**
          * 1 xp shard == 16 XP (ItemXpShard.XP_VALUE)

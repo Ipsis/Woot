@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.1",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 368,
+          "desc": "Allow disabling of EnderIO IMC and fix IMC crash"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.0",
       "features": [
         ],

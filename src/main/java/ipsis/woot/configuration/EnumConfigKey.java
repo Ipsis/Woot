@@ -51,6 +51,10 @@ public enum EnumConfigKey {
             CATEGORY_FACTORY_POWER,
             "Factory needs at least the power per tick or power is consumed and thrown away",
             "strictPower", Boolean.class, false, false),
+    ENDERIO_IMC(
+            CATEGORY_FACTORY_MOD,
+            "Pass the IMC recipe additions to EnderIO",
+            "EnderIOIMC", Boolean.class, true, false),
     HEADHUNTER_1_CHANCE(
             CATEGORY_GENERAL,
             "Percentage chance of headhunter I enchant dropping a skull",

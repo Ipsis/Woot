@@ -3,11 +3,15 @@
     {
       "version": "1.12.2-1.4.1",
       "features": [
+        {
+          "id": 368,
+          "desc": "Allow disabling of EnderIO IMC (EnderIOIMC)"
+        }
       ],
       "fixes": [
         {
           "id": 368,
-          "desc": "Allow disabling of EnderIO IMC and fix IMC crash"
+          "desc": "Fix IMC crash with EnderIO due to String.format floating point expansion"
         }
       ]
     },
@@ -18,7 +22,7 @@
       "fixes": [
         {
           "id": 369,
-          "desc": "Update to latest BloodMagic - Woot no longer supports ritual disabling"
+          "desc": "Update to latest BloodMagic"
         },
         {
           "id": 366,

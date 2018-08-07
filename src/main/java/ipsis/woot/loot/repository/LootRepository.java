@@ -266,23 +266,29 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
                     ILootRepositoryLookup.LootItemStack lootItemStack = new ILootRepositoryLookup.LootItemStack(curr.getItemStack().copy());
 
-                    int maxChance = 0;
+                    // How many times did we get the item regardless of stack size.
+                    int dropCount = 0;
+                    for (Integer s : looting.keySet()) {
+                        Integer d = looting.get(s);
+                        if (d > 0)
+                            dropCount += d;
+                    }
+                    int chance = Math.round(((float)dropCount/(float)sampleCount) * 100.0F);
+                    chance = MathHelper.clamp(chance, 1, 100);
+                    lootItemStack.dropChance = chance;
+
+                    // Set the drop chance per stack size
                     for (Integer s : looting.keySet()) {
                         Integer d = looting.get(s);
                         if (d > 0) {
-                            int chance = Math.round(((float)d/(float)sampleCount) * 100.0F);
+                            chance = Math.round(((float)d/(float)dropCount) * 100.0F);
                             chance = MathHelper.clamp(chance, 1, 100);
-
                             lootItemStack.sizes.put(s, chance);
-                            if (chance > maxChance)
-                                maxChance = chance;
                         }
                     }
 
-                    if (!lootItemStack.sizes.isEmpty()) {
-                        lootItemStack.dropChance = maxChance;
+                    if (!lootItemStack.sizes.isEmpty())
                         lootDrops.add(lootItemStack);
-                    }
                 }
             }
         }

@@ -73,14 +73,27 @@ public class ItemGenerator implements ILootGenerator {
 
             int chance = Woot.RANDOM.nextInt(101);
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " rolled:" + chance);
+
+            if (chance > drop.dropChance) {
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " failed");
+                continue;
+            }
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " succeed");
+
+            chance = Woot.RANDOM.nextInt(101);
             int stackSize = 0;
             for (int s : drop.sizes.keySet()) {
-                if (chance <= drop.sizes.get(s) && s > stackSize)
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " chance:" + chance + "-" + drop.sizes.get(s));
+                if (chance <= drop.sizes.get(s) && s > stackSize) {
                     stackSize = s;
+                }
             }
 
             if (stackSize == 0)
                 continue;
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " stacksize:" + stackSize);
 
             /**
              * We have an item to drop

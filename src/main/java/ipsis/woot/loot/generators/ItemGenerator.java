@@ -9,6 +9,7 @@ import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.LootHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -81,13 +82,17 @@ public class ItemGenerator implements ILootGenerator {
 
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " succeed");
 
-            chance = Woot.RANDOM.nextInt(101);
+            // Pick one of the sizes
+            // This needs to use weighted values
+            int i = Woot.RANDOM.nextInt(drop.sizes.size());
             int stackSize = 0;
+            int c = 0;
             for (int s : drop.sizes.keySet()) {
-                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " chance:" + chance + "-" + drop.sizes.get(s));
-                if (chance <= drop.sizes.get(s) && s > stackSize) {
+                if (c == i) {
                     stackSize = s;
+                    break;
                 }
+                c++;
             }
 
             if (stackSize == 0)

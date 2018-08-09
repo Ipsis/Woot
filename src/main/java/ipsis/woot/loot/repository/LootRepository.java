@@ -266,6 +266,8 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
                     ILootRepositoryLookup.LootItemStack lootItemStack = new ILootRepositoryLookup.LootItemStack(curr.getItemStack().copy());
 
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "getDrops", curr.getItemStack().getDisplayName());
+
                     // How many times did we get the item regardless of stack size.
                     int dropCount = 0;
                     for (Integer s : looting.keySet()) {
@@ -273,17 +275,24 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
                         if (d > 0)
                             dropCount += d;
                     }
-                    int chance = Math.round(((float)dropCount/(float)sampleCount) * 100.0F);
-                    chance = MathHelper.clamp(chance, 1, 100);
-                    lootItemStack.dropChance = chance;
+                    int dropChance = Math.round(((float)dropCount/(float)sampleCount) * 100.0F);
+                    dropChance = MathHelper.clamp(dropChance, 0, 100);
+                    lootItemStack.dropChance = dropChance;
+                    Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "getDrops", "dropCount: " + dropCount + "/" + sampleCount + " chance:" + dropChance);
 
-                    // Set the drop chance per stack size
+                    if (dropCount == 0)
+                        continue;
+
+                    // set the drop chance per stack size
                     for (Integer s : looting.keySet()) {
-                        Integer d = looting.get(s);
-                        if (d > 0) {
-                            chance = Math.round(((float)d/(float)dropCount) * 100.0F);
+                        Integer stackDropCount = looting.get(s);
+                        if (stackDropCount > 0)  {
+                            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "getDrops", "stack:" + s + " drops:" + stackDropCount);
+
+                            int chance = Math.round(((float)stackDropCount / (float)dropCount) * 100.0F);
                             chance = MathHelper.clamp(chance, 1, 100);
                             lootItemStack.sizes.put(s, chance);
+                            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "getDrops", "stack:" + s + " drops:" + stackDropCount + " chance:" + chance);
                         }
                     }
 

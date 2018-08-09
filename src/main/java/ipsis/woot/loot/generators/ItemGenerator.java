@@ -83,22 +83,28 @@ public class ItemGenerator implements ILootGenerator {
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " succeed");
 
             // Pick one of the sizes
-            // This needs to use weighted values
-            int i = Woot.RANDOM.nextInt(drop.sizes.size());
             int stackSize = 0;
-            int c = 0;
-            for (int s : drop.sizes.keySet()) {
-                if (c == i) {
-                    stackSize = s;
-                    break;
+            {
+                // https://stackoverflow.com/questions/6409652/random-weighted-selection-in-java/30362366
+                double completeWeight = 0.0;
+                for (int s : drop.sizes.keySet()) {
+                    completeWeight += drop.sizes.get(s);
                 }
-                c++;
+                double r = Math.random() * completeWeight;
+                double countWeight = 0.0;
+                for (int s : drop.sizes.keySet()) {
+                    countWeight += drop.sizes.get(s);
+                    if (countWeight >= r) {
+                        stackSize = s;
+                        break;
+                    }
+                }
             }
 
             if (stackSize == 0)
                 continue;
 
-            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " stacksize:" + stackSize);
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " *** stacksize:" + stackSize);
 
             /**
              * We have an item to drop

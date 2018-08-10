@@ -9,6 +9,7 @@ import ipsis.woot.util.EnumEnchantKey;
 import ipsis.woot.util.LootHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -73,14 +74,37 @@ public class ItemGenerator implements ILootGenerator {
 
             int chance = Woot.RANDOM.nextInt(101);
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " rolled:" + chance);
+
+            if (chance > drop.dropChance) {
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " failed");
+                continue;
+            }
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " succeed");
+
+            // Pick one of the sizes
             int stackSize = 0;
-            for (int s : drop.sizes.keySet()) {
-                if (chance <= drop.sizes.get(s) && s > stackSize)
-                    stackSize = s;
+            {
+                // https://stackoverflow.com/questions/6409652/random-weighted-selection-in-java/30362366
+                double completeWeight = 0.0;
+                for (int s : drop.sizes.keySet()) {
+                    completeWeight += drop.sizes.get(s);
+                }
+                double r = Math.random() * completeWeight;
+                double countWeight = 0.0;
+                for (int s : drop.sizes.keySet()) {
+                    countWeight += drop.sizes.get(s);
+                    if (countWeight >= r) {
+                        stackSize = s;
+                        break;
+                    }
+                }
             }
 
             if (stackSize == 0)
                 continue;
+
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " *** stacksize:" + stackSize);
 
             /**
              * We have an item to drop

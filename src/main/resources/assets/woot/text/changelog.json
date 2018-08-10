@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.2",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 375,
+          "desc": "Fix drop with multiple stack sizes"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.1",
       "features": [
         {

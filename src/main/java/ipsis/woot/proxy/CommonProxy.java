@@ -1,48 +1,37 @@
 package ipsis.woot.proxy;
 
 import ipsis.Woot;
-import ipsis.woot.client.gui.GuiProxy;
-import ipsis.woot.event.HandlerLivingDeathEvent;
-import ipsis.woot.event.HandlerLivingDropsEvent;
-import ipsis.woot.handler.ConfigHandler;
-import ipsis.woot.init.ModBlocks;
-import ipsis.woot.init.ModItems;
 import ipsis.woot.network.PacketHandler;
-import ipsis.woot.plugins.top.TOPCompat;
-import ipsis.woot.reference.Files;
-import ipsis.woot.reference.Reference;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Mod.EventBusSubscriber(modid = Woot.MODID)
 public class CommonProxy {
 
-    public void preInit() {
-
-        ModBlocks.preInit();
-        ModItems.preInit();
-        ModBlocks.registerTileEntities();
-        PacketHandler.registerMessages(Reference.MOD_ID);
-
-        MinecraftForge.EVENT_BUS.register(new HandlerLivingDropsEvent());
-        MinecraftForge.EVENT_BUS.register(new HandlerLivingDeathEvent());
-        MinecraftForge.EVENT_BUS.register(new ConfigHandler());
-
-        ConfigHandler.init(Files.configFile);
-
-        if (Loader.isModLoaded("theoneprobe"))
-            TOPCompat.register();
-
-        Woot.wootDimensionManager.init();
+    public void preInit(FMLPreInitializationEvent event) {
+        PacketHandler.registerMessages();
     }
 
-    public void init() {
-
-        NetworkRegistry.INSTANCE.registerGuiHandler(Woot.instance, new GuiProxy());
-    }
-
-    public void postInit() {
+    public void init(FMLInitializationEvent event) {
 
     }
 
+    public void postInit(FMLPostInitializationEvent event) {
+    }
+
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+
+    }
 }

@@ -1,6 +1,0 @@
-{
-  "parent": "woot:block/small_cube_wrapped_all",
-  "textures": {
-    "wrap": "blocks/gold_block"
-  }
-}

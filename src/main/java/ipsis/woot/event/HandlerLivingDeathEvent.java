@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -49,6 +50,10 @@ public class HandlerLivingDeathEvent {
 
         EntityPlayer entityPlayer = (EntityPlayer)event.getSource().getTrueSource();
         EntityLivingBase entityLivingBase = event.getEntityLiving();
+
+        // ignore FakePlayer kills
+        if (entityPlayer instanceof FakePlayer)
+            return;
 
         // player on player kill would cause invalid cast for this method
         if (!(entityLivingBase instanceof EntityLiving))

@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "woot:upgradeb",
+    "data": 12
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "woot:factorycore",
+      "data": 2
+    },
+    {
+      "item": "bloodmagic:demon_crystallizer"
+    }
+  ]
+}

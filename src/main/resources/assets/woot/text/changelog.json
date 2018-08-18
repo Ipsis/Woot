@@ -1,6 +1,21 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.3",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 377,
+          "desc": "Add recipes for BloodMagic Crystal upgrades"
+        },
+        {
+          "id": 378,
+          "desc": "Dont process LivingDeathEvents for FakePlayer"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.2",
       "features": [
       ],

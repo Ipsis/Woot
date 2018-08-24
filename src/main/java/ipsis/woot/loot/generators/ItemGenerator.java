@@ -72,6 +72,11 @@ public class ItemGenerator implements ILootGenerator {
             if (drop.itemStack.isEmpty())
                 continue;
 
+            if (!Woot.policyRepository.canDrop(drop.itemStack)) {
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", "policy removed " + drop.itemStack);
+                continue;
+            }
+
             int chance = Woot.RANDOM.nextInt(101);
             Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "calculateDrops", drop + " rolled:" + chance);
 

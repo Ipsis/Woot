@@ -385,6 +385,10 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
 
         List<ILootRepositoryLookup.LootItemStack> loot =  LootHelper.getDrops(farmSetup.getWootMobName(), farmSetup.getEnchantKey());
         for (ILootRepositoryLookup.LootItemStack lootItemStack : loot) {
+
+            if (!Woot.policyRepository.canDrop(lootItemStack.itemStack))
+                continue;
+
             ItemStack itemStack = lootItemStack.itemStack.copy();
 
             itemStack.setCount(lootItemStack.dropChance);

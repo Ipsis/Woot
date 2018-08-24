@@ -77,26 +77,46 @@ public class PolicyRepository implements IPolicy {
        return true;
     }
 
+    private boolean isItemBlacklisted(ItemStack itemStack) {
+
+        /**
+         * Internal
+         */
+        for (String modName : internalItemModBlacklist) {
+            if (CompareUtils.isFromMod(itemStack, modName))
+                return true;
+        }
+
+        for (ItemStack itemStack1 : internalItemBlacklist) {
+            if (CompareUtils.isSameItem(itemStack, itemStack1))
+                return true;
+        }
+
+        /**
+         * External
+         */
+        for (String modName : externalItemModBlacklist) {
+            if (CompareUtils.isFromMod(itemStack, modName))
+                return true;
+        }
+
+        for (ItemStack itemStack1 : externalItemBlacklist) {
+            if (CompareUtils.isSameItem(itemStack, itemStack1))
+                return true;
+        }
+
+        return false;
+    }
+
     @Override
     public boolean canLearnDrop(ItemStack itemStack) {
-        return true;
+        return !isItemBlacklisted(itemStack);
     }
 
     @Override
     public boolean canDrop(ItemStack itemStack) {
-       /*
-        for (String modName : internalModItemBlacklist)
-            if (CompareUtils.isFromMod(itemStack, modName))
-                return false;
 
-        // Internal item blacklist
-        for (String itemName : internalItemBlacklist)
-            if (CompareUtils.isSameItem(itemStack, itemName))
-                if (name.equalsIgnoreCase(itemName))
-                    return false;
-                    */
-
-        return true;
+        return !isItemBlacklisted(itemStack);
     }
 
     @Override

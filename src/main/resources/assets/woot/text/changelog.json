@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.4",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 380,
+          "desc": "Hookup the item blacklist"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.3",
       "features": [
       ],

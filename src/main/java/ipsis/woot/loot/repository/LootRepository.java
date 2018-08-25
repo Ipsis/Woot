@@ -276,7 +276,8 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
                             dropCount += d;
                     }
                     int dropChance = Math.round(((float)dropCount/(float)sampleCount) * 100.0F);
-                    dropChance = MathHelper.clamp(dropChance, 0, 100);
+                    // the minimum drop chance we have is 1%
+                    dropChance = MathHelper.clamp(dropChance, 1, 100);
                     lootItemStack.dropChance = dropChance;
                     Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_ITEMS, "getDrops", "dropCount: " + dropCount + "/" + sampleCount + " chance:" + dropChance);
 

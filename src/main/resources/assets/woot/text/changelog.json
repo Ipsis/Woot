@@ -3,6 +3,10 @@
     {
       "version": "1.12.2-1.4.4",
       "features": [
+        {
+          "id": 379,
+          "desc": "New low power config option to limit power to 1 RF/tick - default to off"
+        }
       ],
       "fixes": [
         {

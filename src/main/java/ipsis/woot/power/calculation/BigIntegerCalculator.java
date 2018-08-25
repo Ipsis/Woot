@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farming.PowerRecipe;
 import ipsis.woot.farmstructure.IFarmSetup;
+import ipsis.woot.multiblock.EnumMobFactoryTier;
 import ipsis.woot.power.calculation.upgrades.EnumMassMultiplier;
 import ipsis.woot.power.calculation.upgrades.IUpgradePowerCalculator;
 import ipsis.woot.util.ConfigKeyHelper;
@@ -140,9 +141,30 @@ public class BigIntegerCalculator implements IPowerCalculator {
         }
 
         PowerRecipe powerRecipe = new PowerRecipe(finalSpawnTicks, totalCost);
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "recipe: " + powerRecipe);
+        if (isLowPowerMode(farmSetup.getFarmTier())) {
+            Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "low power mode 1RF/tick");
+            powerRecipe = new PowerRecipe(finalSpawnTicks, finalSpawnTicks);
+        }
+
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.POWER_CALC, "calculate", "####");
         return powerRecipe;
+    }
+
+    private boolean isLowPowerMode(EnumMobFactoryTier tier) {
+
+        if (tier == EnumMobFactoryTier.TIER_ONE && Woot.wootConfiguration.getBoolean(EnumConfigKey.TIER_I_LOW_POWER_MODE))
+            return true;
+
+        if (tier == EnumMobFactoryTier.TIER_TWO && Woot.wootConfiguration.getBoolean(EnumConfigKey.TIER_II_LOW_POWER_MODE))
+            return true;
+
+        if (tier == EnumMobFactoryTier.TIER_THREE && Woot.wootConfiguration.getBoolean(EnumConfigKey.TIER_III_LOW_POWER_MODE))
+            return true;
+
+        if (tier == EnumMobFactoryTier.TIER_FOUR && Woot.wootConfiguration.getBoolean(EnumConfigKey.TIER_IV_LOW_POWER_MODE))
+            return true;
+
+        return false;
     }
 
     public class CalculatorValues {

@@ -35,6 +35,22 @@ public enum EnumConfigKey {
             false,
             false
     ),
+    TIER_I_LOW_POWER_MODE(
+            CATEGORY_FACTORY_POWER,
+            "Limit the power requirements of Tier I to be 1 RF/tick",
+            "tier1lowpower", Boolean.class, false, false),
+    TIER_II_LOW_POWER_MODE(
+            CATEGORY_FACTORY_POWER,
+            "Limit the power requirements of Tier II to be 1 RF/tick",
+            "tier2lowpower", Boolean.class, false, false),
+    TIER_III_LOW_POWER_MODE(
+            CATEGORY_FACTORY_POWER,
+            "Limit the power requirements of Tier III to be 1 RF/tick",
+            "tier3lowpower", Boolean.class, false, false),
+    TIER_IV_LOW_POWER_MODE(
+            CATEGORY_FACTORY_POWER,
+            "Limit the power requirements of Tier IV to be 1 RF/tick",
+            "tier4lowpower", Boolean.class, false, false),
     SAMPLE_SIZE(
             CATEGORY_GENERAL,
             "Number of mobs to kill to learn from - higher is more accurate",

@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "up": "woot:blocks/heart_base",
+    "down": "woot:blocks/heart_base",
+    "front": "woot:blocks/heart",
+    "side": "woot:blocks/heart_base"
+  }
+}

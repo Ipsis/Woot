@@ -2,10 +2,7 @@ package ipsis.woot.server.command;
 
 import ipsis.woot.loot.LootManager;
 import ipsis.woot.loot.MobDropData;
-import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.FakeMobFactory;
-import ipsis.woot.util.FakeMobKey;
-import ipsis.woot.util.FakeMobKeyFactory;
+import ipsis.woot.util.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -47,6 +44,12 @@ public class CommandLoot extends CommandBase {
         FakeMob fakeMob = FakeMobFactory.create(args[0], args[1]);
         if (fakeMob.isValid()) {
             MobDropData drops = LootManager.getDrops(fakeMob.getFakeMobKey(), lootLevel);
+
+            LogHelper.info("loot: " + fakeMob.getFakeMobKey());
+            for (MobDropData.DropEntry dropEntry : drops.drops) {
+                LogHelper.info(dropEntry.toString());
+
+            }
         }
     }
 

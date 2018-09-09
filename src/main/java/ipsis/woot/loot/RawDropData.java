@@ -62,6 +62,7 @@ public class RawDropData {
             i = map.get(size) + 1;
         map.put(size, i);
 
+        dropMob.incDropCount(looting);
     }
 
     public ItemStack getItemStack() {
@@ -87,8 +88,20 @@ public class RawDropData {
         private Map<Integer, Integer> looting2 = new HashMap<>();
         private Map<Integer, Integer> looting3 = new HashMap<>();
 
+        private int[] dropCounts = { 0, 0, 0, 0};
+
         public DropMob(FakeMobKey fakeMobKey) {
             this.fakeMobKey = fakeMobKey;
+        }
+
+        public int getDropCount(int looting) {
+            looting = MiscUtils.clampLooting(looting);
+            return dropCounts[looting];
+        }
+
+        public void incDropCount(int looting) {
+            looting = MiscUtils.clampLooting(looting);
+            dropCounts[looting]++;
         }
 
         public FakeMobKey getFakeMobKey() { return this.fakeMobKey; }
@@ -111,6 +124,7 @@ public class RawDropData {
         public String toString() {
 
             StringBuilder sb = new StringBuilder(fakeMobKey.toString());
+            sb.append(" Counts : " + dropCounts[0] + " " + dropCounts[1] + " " + dropCounts[2] + " " + dropCounts[3]);
             sb.append(" Looting 0: ");
             for (Integer i : looting0.keySet())
                 sb.append(i + "/" + looting0.get(i) + " ");

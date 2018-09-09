@@ -96,16 +96,19 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
             for (RawDropData.DropMob dropMob : rawDropData.getDropMobs()) {
                 if (dropMob.getFakeMobKey().equals(fakeMobKey)) {
 
+                    int sampleCount = getSampleCount(fakeMobKey, looting);
                     Map<Integer, Integer> lootingMap = dropMob.getLooting(looting);
                     if (lootingMap.keySet().size() > 0) {
                         MobDropData.DropEntry dropEntry = new MobDropData.DropEntry(rawDropData.getItemStack());
                         for (Integer size : lootingMap.keySet()) {
 
                             int dropCount = lootingMap.get(size);
-                            int sampleCount = getSampleCount(fakeMobKey, looting);
                             float chance = ((100.0F / (float)sampleCount) * (float)dropCount);
                             dropEntry.addStackChance(size, chance);
                         }
+
+                        float dropChance = ((100.0F / (float)sampleCount) * (float)dropMob.getDropCount(looting));
+                        dropEntry.setDropChance(dropChance);
                         drops.addDropEntry(dropEntry);
                     }
                 }

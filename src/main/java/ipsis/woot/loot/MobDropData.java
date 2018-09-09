@@ -39,6 +39,7 @@ public class MobDropData {
     public static class DropEntry {
 
         private ItemStack itemStack;
+        private float chance;
         private Map<Integer, Float> chanceMap = new HashMap<>();
 
         private DropEntry() {}
@@ -52,12 +53,17 @@ public class MobDropData {
             chanceMap.put(stackSize, chance);
         }
 
+        public void setDropChance(float chance) {
+
+            this.chance = chance;
+        }
+
         @Override
         public String toString() {
 
-            StringBuilder sb = new StringBuilder(itemStack.getDisplayName());
+            StringBuilder sb = new StringBuilder(itemStack.getDisplayName() + " " + chance + "% ");
             for (Integer i : chanceMap.keySet())
-                sb.append(i + "/" + chanceMap.get(i) + " ");
+                sb.append(i + "/" + chanceMap.get(i) + "% ");
             return sb.toString();
         }
     }

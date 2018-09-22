@@ -1,28 +1,25 @@
-package ipsis.woot.loot;
+package ipsis.woot.drops;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import ipsis.woot.Files;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.LogHelper;
+import ipsis.woot.util.SerializationHelper;
 
-import java.io.File;
 import java.util.Map;
 
-public class LearnedDropJson implements ILearnedDropReader, ILearnedDropWriter {
+public class LearnedDropJson {
 
     private static final int VERSION = 1;
 
-    // ILearnedDropReader
-    @Override
-    public void load(LearnedDropRepository repository) {
+    public static void load(LearnedDropRepository repository) {
 
     }
 
-    // ILearnedDropWriter
-    @Override
-    public void write(LearnedDropRepository repository) {
-
-        File file;
+    public static void save(LearnedDropRepository repository) {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("version", VERSION);
@@ -48,6 +45,16 @@ public class LearnedDropJson implements ILearnedDropReader, ILearnedDropWriter {
         }
         jsonObject.add("mobCounts", mobCounts);
 
-        LogHelper.info(jsonObject.toString());
+        JsonArray dropsArray = new JsonArray();
+        {
+            for (LearnedDropRepository.RawDropData dropData : repository.getRawDropData()) {
+                if (dropData.hasModData())
+                    dropsArray.add(dropData.toJsonObject());
+            }
+        }
+
+        jsonObject.add("drops", dropsArray);
+        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        SerializationHelper.writeJsonFile(Files.lootFile, GSON.toJson(jsonObject));
     }
 }

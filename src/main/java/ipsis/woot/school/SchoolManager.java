@@ -2,7 +2,6 @@ package ipsis.woot.school;
 
 import ipsis.Woot;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
-import ipsis.woot.loot.LootManager;
 import ipsis.woot.util.*;
 import net.minecraft.item.ItemStack;
 
@@ -23,7 +22,7 @@ public class SchoolManager {
 
     public static void teachMob(FakeMobKey fakeMobKey, int looting) {
 
-        if (LootManager.isFull(fakeMobKey, looting)) {
+        if (Woot.DROP_MANAGER.isLearningComplete(fakeMobKey, looting)) {
             // already taught
             if (Woot.debugging.isEnabled(Debug.Group.LEARN))
                 Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob already taught + %s/%s", fakeMobKey, looting);
@@ -68,10 +67,10 @@ public class SchoolManager {
 
                 // Hoover up the last spawn drops
                 List<ItemStack> drops = TartarusManager.getLoot(pupil.getCellId());
-                LootManager.learnSilent(pupil.getFakeMobKey(), pupil.getLooting(), drops);
+                Woot.DROP_MANAGER.learnSilent(pupil.getFakeMobKey(), pupil.getLooting(), drops);
 
 
-                boolean isFull = LootManager.isFull(pupil.getFakeMobKey(), pupil.getLooting());
+                boolean isFull = Woot.DROP_MANAGER.isLearningComplete(pupil.getFakeMobKey(), pupil.getLooting());
                 if (isFull) {
 
                     /**

@@ -1,16 +1,17 @@
-package ipsis.woot.loot;
+package ipsis.woot.drops;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.MiscUtils;
-import ipsis.woot.util.StackUtils;
+import it.unimi.dsi.fastutil.Hash;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.*;
 
-import static ipsis.woot.util.MiscUtils.clampLooting;
-
-public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
+public class LearnedDropRepository implements IDropProvider {
 
     private static final int SAMPLE_COUNT = 25;
 
@@ -40,7 +41,7 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
 
         RawDropData drop = null;
         for (RawDropData d : learnedDrops) {
-            if (StackUtils.isEqualForLearning(d.itemStack, itemStack)) {
+            if (DropManager.isEqualForLearning(d.itemStack, itemStack)) {
                 drop = d;
                 break;
             }
@@ -55,32 +56,22 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
     }
 
 
-    // ILootDropProvider
-    @Override
     public void init() {
-
-        new LearnedDropJson().load(this);
+        LearnedDropJson.load(this);
     }
 
-    @Override
     public void shutdown() {
-
-        new LearnedDropJson().write(this);
+        LearnedDropJson.save(this);
     }
 
-    // ILootLearning
-    @Override
     public void learn(@Nonnull FakeMobKey fakeMobKey, int looting, @Nonnull List<ItemStack> drops) {
-
-        looting = clampLooting(looting);
+        looting = MiscUtils.clampLooting(looting);
         updateSampleCount(fakeMobKey, looting);
         learnSilent(fakeMobKey, looting, drops);
     }
 
-    @Override
     public void learnSilent(@Nonnull FakeMobKey fakeMobKey, int looting, @Nonnull List<ItemStack> drops) {
-
-        looting = clampLooting(looting);
+        looting = MiscUtils.clampLooting(looting);
 
         for (ItemStack itemStack : drops) {
 
@@ -90,50 +81,21 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
         }
     }
 
-    public boolean isFull(@Nonnull FakeMobKey fakeMobKey, int looting) {
-
-        looting = clampLooting(looting);
-        return getSampleCount(fakeMobKey, looting) >= SAMPLE_COUNT;
+    public boolean isLearningComplete(@Nonnull FakeMobKey fakeMobKey, int looting) {
+        looting = MiscUtils.clampLooting(looting);
+        return false;
     }
 
-
-    // save/load access
-    public Map<FakeMobKey, Integer[]> getSampleCounts() {
-        return Collections.unmodifiableMap(samples);
-    }
-
-    public List<RawDropData> getRawDropData() {
-        return Collections.unmodifiableList(learnedDrops);
-    }
-
-    public void getStatus(@Nonnull List<String> status, String[] args) {
-
-        status.add("LearnedDropRepository");
-        status.add("Max Samples: " + SAMPLE_COUNT);
-
-        for (FakeMobKey fakeMobKey : samples.keySet()) {
-            Integer[] s = samples.get(fakeMobKey);
-            status.add(fakeMobKey + " " + s[0] + "/" + s[1] + "/" + s[2] + "/" + s[3]);
-        }
-
-        for (RawDropData rawDropData : learnedDrops)
-            status.add(rawDropData.toString());
-    }
-
+    /**
+     * IDropProvider
+     */
     @Nonnull
     @Override
-    public MobDropData getDrops(@Nonnull FakeMobKey fakeMobKey, int looting) {
-
-        looting = MiscUtils.clampLooting(looting);
-        return getDropData(fakeMobKey, looting, getSampleCount(fakeMobKey, looting));
-    }
-
-    private MobDropData getDropData(FakeMobKey fakeMobKey, int looting, int sampleCount) {
-
+    public MobDropData getMobDropData(@Nonnull FakeMobKey fakeMobKey, int looting) {
         looting = MiscUtils.clampLooting(looting);
 
+        int sampleCount = getSampleCount(fakeMobKey, looting);
         MobDropData mobDropData = new MobDropData(fakeMobKey, looting);
-
         for (RawDropData rawDropData : learnedDrops) {
             for (RawDropMobData rawDropMobData : rawDropData.mobData) {
                 if (rawDropMobData.fakeMobKey.equals(fakeMobKey)) {
@@ -150,13 +112,26 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
         return mobDropData;
     }
 
-    private class RawDropData {
+    /**
+     * Sava/load access only
+     */
+    public Map<FakeMobKey, Integer[]> getSampleCounts() {
+        return Collections.unmodifiableMap(samples);
+    }
 
-        ItemStack itemStack;
-        List<RawDropMobData> mobData = new ArrayList<>();
+    public List<RawDropData> getRawDropData() {
+        return Collections.unmodifiableList(learnedDrops);
+    }
+
+    protected class RawDropData {
+
+        private ItemStack itemStack;
+        private List<RawDropMobData> mobData = new ArrayList<>();
 
         private RawDropData() { }
         public RawDropData(ItemStack itemStack) { this.itemStack = itemStack.copy(); }
+
+        public boolean hasModData() { return !mobData.isEmpty(); }
 
         private void update(FakeMobKey fakeMobKey, int looting, int stackSize) {
 
@@ -178,9 +153,25 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
             rawDropMobData.update(looting, stackSize);
         }
 
+        public JsonObject toJsonObject() {
+
+            JsonObject jsonObject = new JsonObject();
+            {
+                JsonObject itemStackObject = JsonHelper.toJsonObject(itemStack);
+                jsonObject.add("drop", itemStackObject);
+
+                JsonArray mobsArray = new JsonArray();
+                for (RawDropMobData rawDropMobData : mobData)
+                    mobsArray.add(rawDropMobData.toJsonObject());
+
+                jsonObject.add("mobs", mobsArray);
+            }
+
+            return jsonObject;
+        }
     }
 
-    private class RawDropMobData {
+    protected class RawDropMobData {
 
         private FakeMobKey fakeMobKey;
         private int[] dropCounts = new int[4];
@@ -193,6 +184,32 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
             lootingData.put(1, new HashMap<>());
             lootingData.put(2, new HashMap<>());
             lootingData.put(3, new HashMap<>());
+        }
+
+        public JsonObject toJsonObject() {
+
+            JsonObject jsonObject = new JsonObject();
+            {
+                jsonObject.addProperty("mob", "bob");
+                JsonArray array = new JsonArray();
+
+                for (int i = 0; i < 4; i++) {
+
+                    HashMap<Integer, Integer> map = lootingData.get(i);
+                    if (map.isEmpty())
+                        continue;
+
+                    for (Integer s : map.keySet()) {
+                        JsonObject jsonObject1 = new JsonObject();
+                        jsonObject1.addProperty("looting", i);
+                        jsonObject1.addProperty("stackSize", s);
+                        jsonObject1.addProperty("dropCount", map.get(s));
+                        array.add(jsonObject1);
+                    }
+                }
+                jsonObject.add("sizes", array);
+            }
+            return jsonObject;
         }
 
         public void updateDropCount(int looting) {
@@ -234,6 +251,5 @@ public class LearnedDropRepository implements ILootDropProvider, ILootLearning {
 
             return 0.0F;
         }
-
     }
 }

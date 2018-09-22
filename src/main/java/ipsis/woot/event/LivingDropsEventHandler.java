@@ -1,7 +1,6 @@
 package ipsis.woot.event;
 
 import ipsis.Woot;
-import ipsis.woot.loot.LootManager;
 import ipsis.woot.util.*;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -47,7 +46,7 @@ public class LivingDropsEventHandler {
             List<ItemStack> drops = new ArrayList<>();
             for (EntityItem entityItem : event.getDrops())
                 drops.add(entityItem.getItem().copy());
-            LootManager.learn(fakeMobKey, looting, drops);
+            Woot.DROP_MANAGER.learn(fakeMobKey, looting, drops);
         }
     }
 }

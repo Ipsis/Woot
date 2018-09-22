@@ -1,10 +1,11 @@
 package ipsis;
 
+import ipsis.woot.Files;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.ModWorlds;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
+import ipsis.woot.drops.DropManager;
 import ipsis.woot.event.ServerTickEventHandler;
-import ipsis.woot.loot.LootManager;
 import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.proxy.CommonProxy;
@@ -46,6 +47,8 @@ public class Woot {
 
     public static Logger logger;
 
+    public static DropManager DROP_MANAGER = new DropManager();
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
@@ -54,6 +57,7 @@ public class Woot {
         MinecraftForge.EVENT_BUS.register(new LivingDropsEventHandler());
         MinecraftForge.EVENT_BUS.register(new ServerTickEventHandler());
         ModWorlds.preInit();
+        Files.init(event);
     }
 
     @Mod.EventHandler
@@ -77,7 +81,7 @@ public class Woot {
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
 
-        LootManager.shutdown();
+        Woot.DROP_MANAGER.shutdown();
     }
 
 }

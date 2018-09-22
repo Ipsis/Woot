@@ -1,7 +1,7 @@
 package ipsis.woot.server.command;
 
+import ipsis.Woot;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
-import ipsis.woot.loot.LootManager;
 import ipsis.woot.school.SchoolManager;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -36,8 +36,8 @@ public class CommandStatus extends CommandBase {
                 TartarusManager.getStatus(status, args);
             else if (args[0].equalsIgnoreCase("school"))
                 SchoolManager.getStatus(status, args);
-            else if (args[0].equalsIgnoreCase("lootrepo"))
-                LootManager.getStatus(status, args);
+            else if (args[0].equalsIgnoreCase("droprepo"))
+                Woot.DROP_MANAGER.getStatus(status, args);
 
             for (String s : status)
                 sender.sendMessage(new TextComponentString(s));

@@ -1,4 +1,4 @@
-package ipsis.woot.loot;
+package ipsis.woot.drops;
 
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.MiscUtils;

@@ -5,15 +5,10 @@ import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.BlockHeart;
 import ipsis.woot.blocks.BlockLayout;
-import ipsis.woot.dimensions.tartarus.TartarusManager;
-import ipsis.woot.dimensions.tartarus.WorldProviderTartarus;
-import ipsis.woot.loot.LootManager;
 import ipsis.woot.network.PacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.world.DimensionType;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,8 +29,6 @@ public class CommonProxy {
         File directory = event.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "woot.cfg"));
         Config.readConfig();
-
-
     }
 
     public void init(FMLInitializationEvent event) {
@@ -44,7 +37,6 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent event) {
 
-        LootManager.init();
     }
 
     @SubscribeEvent

@@ -43,13 +43,11 @@ public class CommandLoot extends CommandBase {
 
         FakeMob fakeMob = FakeMobFactory.create(args[0], args[1]);
         if (fakeMob.isValid()) {
-            MobDropData drops = LootManager.getDrops(fakeMob.getFakeMobKey(), lootLevel);
+            MobDropData mobDropData = LootManager.getDrops(fakeMob.getFakeMobKey(), lootLevel);
 
             LogHelper.info("loot: " + fakeMob.getFakeMobKey());
-            for (MobDropData.DropEntry dropEntry : drops.drops) {
-                LogHelper.info(dropEntry.toString());
-
-            }
+            for (MobDropData.DropData dropData : mobDropData.getDrops())
+                LogHelper.info(dropData.toString());
         }
     }
 

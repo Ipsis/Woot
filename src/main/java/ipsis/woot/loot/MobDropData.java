@@ -1,70 +1,57 @@
 package ipsis.woot.loot;
 
 import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.MiscUtils;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-/**
- * What the mob can drop at a specific looting level
- */
 public class MobDropData {
 
-    public FakeMobKey fakeMobKey;
-    public int looting;
-    public List<DropEntry> drops = new ArrayList<>();
+    private FakeMobKey fakeMobKey;
+    private int looting;
+    private List<DropData> drops = new ArrayList<>();
 
-
-    private MobDropData() {}
+    private MobDropData() { }
     public MobDropData(FakeMobKey fakeMobKey, int looting) {
 
+        this.looting = MiscUtils.clampLooting(looting);
         this.fakeMobKey = fakeMobKey;
-        this.looting = looting;
     }
 
-    public void addDropEntry(DropEntry dropEntry) {
+    public List<DropData> getDrops() {
 
-        drops.add(dropEntry);
+        return Collections.unmodifiableList(drops);
     }
 
-    @Override
-    public String toString() {
+    public int getLooting() { return this.looting; }
+    public FakeMobKey getFakeMobKey() { return this.fakeMobKey; }
 
-        return fakeMobKey.toString() + "#" + looting;
-    }
+    public void addDropData(DropData dropData) { drops.add(dropData); }
 
-    public static class DropEntry {
+    public static class DropData {
 
         private ItemStack itemStack;
-        private float chance;
-        private Map<Integer, Float> chanceMap = new HashMap<>();
+        private float dropChance;
+        private HashMap<Integer, Float> sizeChances = new HashMap<>();
 
-        private DropEntry() {}
-        public DropEntry(ItemStack itemStack) {
-
+        private DropData() { }
+        public DropData(ItemStack itemStack) {
             this.itemStack = itemStack.copy();
+            this.dropChance = 0.0F;
         }
 
-        public void addStackChance(int stackSize, float chance) {
-
-            chanceMap.put(stackSize, chance);
-        }
-
-        public void setDropChance(float chance) {
-
-            this.chance = chance;
+        public void setDropChance(float dropChance) { this.dropChance = dropChance; }
+        public void addSizeDropChance(int stackSize, float dropChance) {
+            sizeChances.put(stackSize, dropChance);
         }
 
         @Override
         public String toString() {
-
-            StringBuilder sb = new StringBuilder(itemStack.getDisplayName() + " " + chance + "% ");
-            for (Integer i : chanceMap.keySet())
-                sb.append(i + "/" + chanceMap.get(i) + "% ");
-            return sb.toString();
+            return itemStack.getUnlocalizedName() + "/" + dropChance + "%";
         }
     }
 }

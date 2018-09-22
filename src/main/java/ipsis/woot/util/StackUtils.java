@@ -2,12 +2,10 @@ package ipsis.woot.util;
 
 import net.minecraft.item.ItemStack;
 
-public class LootUtils {
+public class StackUtils {
 
-    public static boolean isIdenticalForLearning(ItemStack itemStackA, ItemStack itemStackB) {
+    public static boolean isEqualForLearning(ItemStack itemStackA, ItemStack itemStackB) {
 
         return ItemStack.areItemsEqualIgnoreDurability(itemStackA, itemStackB);
     }
-
-
 }

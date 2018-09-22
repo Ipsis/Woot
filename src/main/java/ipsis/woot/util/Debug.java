@@ -1,5 +1,8 @@
 package ipsis.woot.util;
 
+import ipsis.Woot;
+import org.apache.logging.log4j.Level;
+
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Map;
@@ -69,6 +72,12 @@ public class Debug {
     public void trace(Group g,  Object object) {
         if (flags.contains(g))
             LogHelper.info(object);
+    }
+
+    public void trace(Group g, String message, Object... params) {
+
+        if (flags.contains(g))
+            Woot.logger.log(Level.INFO, message, params);
     }
 
     @Override

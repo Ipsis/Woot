@@ -30,14 +30,14 @@ public class CommandStatus extends CommandBase {
 
         if (args.length == 0) {
             sender.sendMessage(new TextComponentString("Valid objects: tartarus, school, lootrepo"));
-        } else if (args.length == 1) {
+        } else if (args.length >= 1) {
             List<String> status = new ArrayList<>();
             if (args[0].equalsIgnoreCase("tartarus"))
-                TartarusManager.getStatus(status);
+                TartarusManager.getStatus(status, args);
             else if (args[0].equalsIgnoreCase("school"))
-                SchoolManager.getStatus(status);
+                SchoolManager.getStatus(status, args);
             else if (args[0].equalsIgnoreCase("lootrepo"))
-                LootManager.getStatus(status);
+                LootManager.getStatus(status, args);
 
             for (String s : status)
                 sender.sendMessage(new TextComponentString(s));

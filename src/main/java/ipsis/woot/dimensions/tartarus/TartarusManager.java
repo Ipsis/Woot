@@ -126,7 +126,7 @@ public class TartarusManager {
         return ret;
     }
 
-    public static void getStatus(@Nonnull List<String> status) {
+    public static void getStatus(@Nonnull List<String> status, String []args) {
 
         status.add("Tartarus");
         status.add("Spawn box built: " + cellsBuilt);

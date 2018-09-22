@@ -26,7 +26,7 @@ public class SchoolManager {
         if (LootManager.isFull(fakeMobKey, looting)) {
             // already taught
             if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob already taught " + fakeMobKey + "/" + looting);
+                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob already taught + %s/%s", fakeMobKey, looting);
             return;
         }
 
@@ -34,7 +34,7 @@ public class SchoolManager {
         if (pupils.containsKey(key)) {
             // currently teaching
             if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob currently teaching " + fakeMobKey + "/" + looting);
+                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob currently teaching %s/%s", fakeMobKey, looting);
             return;
         }
 
@@ -78,7 +78,7 @@ public class SchoolManager {
                      * No more learning needed
                      */
                     if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick free " + key);
+                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick free %s", key);
 
                     TartarusManager.freeCell(pupil.getCellId());
                     pupil.cellId = INVALID_CELL_ID;
@@ -88,7 +88,7 @@ public class SchoolManager {
                      * Continue learning
                       */
                     if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick spawnKill " + key + "@cell" + pupil.getCellId());
+                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick spawnKill %s@cell%d", key, pupil.getCellId());
 
                     TartarusManager.spawnKill(pupil.getCellId());
                 }
@@ -98,7 +98,7 @@ public class SchoolManager {
         pupils.values().removeIf(schoolPupil -> schoolPupil.cellId == INVALID_CELL_ID);
     }
 
-    public static void getStatus(@Nonnull List<String> status) {
+    public static void getStatus(@Nonnull List<String> status, String[] args) {
 
         status.add("SchoolManager");
         for (String key : pupils.keySet())

@@ -4,6 +4,7 @@ import ipsis.woot.ModBlocks;
 import ipsis.woot.ModWorlds;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.event.ServerTickEventHandler;
+import ipsis.woot.loot.LootManager;
 import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.proxy.CommonProxy;
@@ -75,6 +76,8 @@ public class Woot {
 
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
+
+        LootManager.shutdown();
     }
 
 }

@@ -3,6 +3,7 @@ package ipsis.woot.loot;
 import ipsis.Woot;
 import ipsis.woot.util.Debug;
 import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.MiscUtils;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -31,22 +32,25 @@ public class LootManager {
         customDropsProvider.shutdown();
     }
 
-    public static @Nonnull MobDropData getDrops(@Nonnull FakeMobKey fakeMobKey, int looting) {
+    public static @Nonnull
+    MobDropData getDrops(@Nonnull FakeMobKey fakeMobKey, int looting) {
 
+        looting = MiscUtils.clampLooting(looting);
 
         MobDropData mobDropData = new MobDropData(fakeMobKey, looting);
 
         MobDropData customDrops = customDropsProvider.getDrops(fakeMobKey, looting);
         MobDropData learnedDrops = learnedDropsProvider.getDrops(fakeMobKey, looting);
 
-        mobDropData.drops.addAll(learnedDrops.drops);
+        for (MobDropData.DropData dropData : learnedDrops.getDrops())
+            mobDropData.addDropData(dropData);
         return mobDropData;
     }
 
     public static void learn(@Nonnull FakeMobKey fakeMobKey, int looting, @Nonnull List<ItemStack> drops) {
 
         if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-            Woot.debugging.trace(Debug.Group.LEARN, "LootManager:learn " + fakeMobKey + "/l" + looting + "/" + drops);
+            Woot.debugging.trace(Debug.Group.LEARN, "LootManager:learn %s/%d/%s",fakeMobKey, looting, drops);
 
         ((ILootLearning)learnedDropsProvider).learn(fakeMobKey, looting, drops);
     }
@@ -54,7 +58,7 @@ public class LootManager {
     public static void learnSilent(@Nonnull FakeMobKey fakeMobKey, int looting, @Nonnull List<ItemStack> drops) {
 
         if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-            Woot.debugging.trace(Debug.Group.LEARN, "LootManager:learnSilent " + fakeMobKey + "/l" + looting + "/" + drops);
+            Woot.debugging.trace(Debug.Group.LEARN, "LootManager:learnSilent %s/%d/%s",fakeMobKey, looting, drops);
 
         ((ILootLearning)learnedDropsProvider).learnSilent(fakeMobKey, looting, drops);
     }
@@ -64,9 +68,9 @@ public class LootManager {
         return learnedDropsProvider.isFull(fakeMobKey, looting);
     }
 
-    public static void getStatus(@Nonnull List<String> status) {
+    public static void getStatus(@Nonnull List<String> status, String[] args) {
 
         status.add("LootManager");
-        learnedDropsProvider.getStatus(status);
+        learnedDropsProvider.getStatus(status, args);
     }
 }

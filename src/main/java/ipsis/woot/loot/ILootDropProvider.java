@@ -10,7 +10,8 @@ public interface ILootDropProvider {
     void init();
     void shutdown();
     boolean isFull(@Nonnull FakeMobKey fakeMobKey, int looting);
-    void getStatus(@Nonnull List<String> status);
-    @Nonnull MobDropData getDrops(@Nonnull FakeMobKey fakeMobKey, int looting);
+    void getStatus(@Nonnull List<String> status, String[] args);
+    @Nonnull
+    MobDropData getDrops(@Nonnull FakeMobKey fakeMobKey, int looting);
 
 }

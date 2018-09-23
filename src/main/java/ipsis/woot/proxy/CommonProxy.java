@@ -36,7 +36,7 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent event) {
-
+        Woot.DROP_MANAGER.init();
     }
 
     @SubscribeEvent

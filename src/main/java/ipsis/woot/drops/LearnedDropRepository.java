@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.MiscUtils;
-import it.unimi.dsi.fastutil.Hash;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -83,7 +82,7 @@ public class LearnedDropRepository implements IDropProvider {
 
     public boolean isLearningComplete(@Nonnull FakeMobKey fakeMobKey, int looting) {
         looting = MiscUtils.clampLooting(looting);
-        return false;
+        return getSampleCount(fakeMobKey, looting) >= SAMPLE_COUNT;
     }
 
     /**
@@ -105,11 +104,27 @@ public class LearnedDropRepository implements IDropProvider {
                     for (Integer stackSize : rawDropMobData.getValidSizes(looting)) {
                         dropData.addSizeDropChance(stackSize, rawDropMobData.getSizeDropChance(looting, stackSize, sampleCount));
                     }
+
+                    mobDropData.addDropData(dropData);
                 }
             }
         }
 
         return mobDropData;
+    }
+
+    public void getStatus(@Nonnull List<String> status, String[] args) {
+        status.add(">>> LearnedDropRepository");
+        status.add("Max Samples: " + SAMPLE_COUNT);
+
+        for (FakeMobKey fakeMobKey : samples.keySet()) {
+            Integer[] s = samples.get(fakeMobKey);
+            status.add(fakeMobKey + " " + s[0] + "/" + s[1] + "/" + s[2] + "/" + s[3] + "\n");
+        }
+
+        for (RawDropData raw : learnedDrops)
+            status.add(raw.toString());
+        status.add("<<< LearnedDropRepository");
     }
 
     /**
@@ -132,6 +147,16 @@ public class LearnedDropRepository implements IDropProvider {
         public RawDropData(ItemStack itemStack) { this.itemStack = itemStack.copy(); }
 
         public boolean hasModData() { return !mobData.isEmpty(); }
+
+        @Override
+        public String toString() {
+
+            StringBuilder sb = new StringBuilder(itemStack.getDisplayName() + "\n");
+            for (RawDropMobData dropMob : mobData)
+                sb.append(dropMob.toString());
+
+            return sb.toString();
+        }
 
         private void update(FakeMobKey fakeMobKey, int looting, int stackSize) {
 
@@ -249,7 +274,26 @@ public class LearnedDropRepository implements IDropProvider {
 
         public float getSizeDropChance(int looting, int stackSize, int sampleCount) {
 
-            return 0.0F;
+            looting = MiscUtils.clampLooting(looting);
+            HashMap<Integer, Integer> data = lootingData.get(looting);
+            int count = 0;
+            if (data.keySet().contains(stackSize))
+                count = data.get(stackSize);
+
+            return (100.0F / (float)sampleCount) * (float)count;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder(fakeMobKey.toString() + "\n");
+            for (Integer looting : lootingData.keySet()) {
+                sb.append("Looting " + looting);
+                HashMap<Integer, Integer> data = lootingData.get(looting);
+                for (Integer size : data.keySet())
+                    sb.append(" " + size + "/" + data.get(size) + "%");
+                sb.append("\n");
+            }
+            return sb.toString();
         }
     }
 }

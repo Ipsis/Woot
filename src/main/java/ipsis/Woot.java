@@ -47,7 +47,7 @@ public class Woot {
 
     public static Logger logger;
 
-    public static DropManager DROP_MANAGER = new DropManager();
+    public static final DropManager DROP_MANAGER = new DropManager();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -74,13 +74,14 @@ public class Woot {
     public void serverStart(FMLServerStartingEvent event) {
         event.registerServerCommand(new WootCommand());
 
+        Woot.DROP_MANAGER.init();
+
         // TODO - not sure about this!
         TartarusManager.setWorld(event.getServer().getWorld(ModWorlds.tartarus_id));
     }
 
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
-
         Woot.DROP_MANAGER.shutdown();
     }
 

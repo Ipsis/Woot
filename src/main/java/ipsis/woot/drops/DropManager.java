@@ -24,8 +24,7 @@ public class DropManager implements IDropProvider, IDropLearning {
     }
 
     public static boolean isEqualForLearning(ItemStack a, ItemStack b) {
-
-        return true;
+        return ItemStack.areItemsEqualIgnoreDurability(a, b);
     }
 
     /**
@@ -77,7 +76,14 @@ public class DropManager implements IDropProvider, IDropLearning {
     }
 
     public void getStatus(@Nonnull List<String> status, String[] args) {
-        status.add("DropManager");
+        status.add(">>> DropManager");
+        if (args.length == 2) {
+            if (args[1].equalsIgnoreCase("learned"))
+                learnedDrops.getStatus(status, args);
+            else if (args[1].equalsIgnoreCase("custom"))
+                customDrops.getStatus(status, args);
+        }
+        status.add("<<< DropManager");
     }
 
 }

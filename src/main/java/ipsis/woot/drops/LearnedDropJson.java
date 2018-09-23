@@ -6,7 +6,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import ipsis.woot.Files;
 import ipsis.woot.util.FakeMobKey;
-import ipsis.woot.util.LogHelper;
 import ipsis.woot.util.SerializationHelper;
 
 import java.util.Map;

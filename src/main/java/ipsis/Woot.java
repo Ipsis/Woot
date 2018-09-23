@@ -6,6 +6,7 @@ import ipsis.woot.ModWorlds;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.drops.DropManager;
 import ipsis.woot.event.ServerTickEventHandler;
+import ipsis.woot.policy.PolicyManager;
 import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.proxy.CommonProxy;
@@ -48,6 +49,7 @@ public class Woot {
     public static Logger logger;
 
     public static final DropManager DROP_MANAGER = new DropManager();
+    public static final PolicyManager POLICY_MANAGER = new PolicyManager();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -75,6 +77,7 @@ public class Woot {
         event.registerServerCommand(new WootCommand());
 
         Woot.DROP_MANAGER.init();
+        Woot.POLICY_MANAGER.init();
 
         // TODO - not sure about this!
         TartarusManager.setWorld(event.getServer().getWorld(ModWorlds.tartarus_id));

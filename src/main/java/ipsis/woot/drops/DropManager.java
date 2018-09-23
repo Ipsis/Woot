@@ -24,7 +24,16 @@ public class DropManager implements IDropProvider, IDropLearning {
     }
 
     public static boolean isEqualForLearning(ItemStack a, ItemStack b) {
-        return ItemStack.areItemsEqualIgnoreDurability(a, b);
+
+        /**
+         * We are planning for 1.13
+         * No more metadata so just an item match.
+         * TODO what about NBT?
+         */
+        if (a == null || b == null)
+            return false;
+
+        return a != null && b != null && a.getItem() == b.getItem();
     }
 
     /**

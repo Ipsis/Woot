@@ -12,13 +12,14 @@ public class Debug {
 
     // All debug disabled by default
     //private EnumSet<Group> flags = EnumSet.noneOf(Group.class);
-    private EnumSet<Group> flags = EnumSet.of(Group.TARTARUS);
+    private EnumSet<Group> flags = EnumSet.of(Group.POLICY);
 
     public enum Group {
         LEARN,
         GEN_ITEMS,
         TARTARUS,
-        EVENT;
+        EVENT,
+        POLICY;
 
         private String name;
 

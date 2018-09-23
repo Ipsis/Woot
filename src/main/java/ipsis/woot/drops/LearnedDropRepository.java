@@ -2,6 +2,7 @@ package ipsis.woot.drops;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import ipsis.Woot;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.JsonHelper;
 import ipsis.woot.util.MiscUtils;
@@ -73,10 +74,10 @@ public class LearnedDropRepository implements IDropProvider {
         looting = MiscUtils.clampLooting(looting);
 
         for (ItemStack itemStack : drops) {
-
-            // TODO check if we dont want to learn
-            RawDropData rawDropData = getRawDropForLearning(itemStack);
-            rawDropData.update(fakeMobKey, looting, itemStack.getCount());
+            if (Woot.POLICY_MANAGER.canLearnItem(itemStack)) {
+                RawDropData rawDropData = getRawDropForLearning(itemStack);
+                rawDropData.update(fakeMobKey, looting, itemStack.getCount());
+            }
         }
     }
 

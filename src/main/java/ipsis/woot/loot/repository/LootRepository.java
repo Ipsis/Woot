@@ -213,6 +213,11 @@ public class LootRepository implements ILootRepositoryLoad, ILootRepositoryLearn
 
         for (ItemStack itemStack : flattenedDrops) {
 
+            if (itemStack.isEmpty()) {
+                Woot.debugSetup.trace(DebugSetup.EnumDebugType.LEARN, "learn", "dropping empty stack");
+                continue;
+            }
+
             if (!Woot.policyRepository.canLearnDrop(itemStack)) {
                 Woot.debugSetup.trace(DebugSetup.EnumDebugType.LEARN, "learn", "policy removed " + itemStack);
                 continue;

@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.5",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 383,
+          "desc": "Ignore invalid drop picked up in Tartarus"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.4",
       "features": [
         {

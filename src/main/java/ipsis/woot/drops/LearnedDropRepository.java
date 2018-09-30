@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import ipsis.Woot;
 import ipsis.woot.util.FakeMobKey;
-import ipsis.woot.util.JsonHelper;
+import ipsis.woot.util.helpers.JsonHelper;
 import ipsis.woot.util.MiscUtils;
 import net.minecraft.item.ItemStack;
 

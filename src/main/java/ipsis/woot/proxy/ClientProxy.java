@@ -2,6 +2,7 @@ package ipsis.woot.proxy;
 
 import ipsis.Woot;
 import ipsis.woot.ModBlocks;
+import ipsis.woot.ModItems;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -27,5 +28,6 @@ public class ClientProxy extends CommonProxy {
 
         ModBlocks.layoutBlock.initModel();
         ModBlocks.heartBlock.initModel();
+        ModItems.enderShard.initModel();
     }
 }

@@ -1,4 +1,4 @@
-package ipsis.woot.util;
+package ipsis.woot.util.helpers;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

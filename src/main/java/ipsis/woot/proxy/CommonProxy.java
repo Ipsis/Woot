@@ -3,8 +3,10 @@ package ipsis.woot.proxy;
 import ipsis.Woot;
 import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
+import ipsis.woot.ModItems;
 import ipsis.woot.blocks.BlockHeart;
 import ipsis.woot.blocks.BlockLayout;
+import ipsis.woot.items.ItemEnderShard;
 import ipsis.woot.network.PacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -51,6 +53,7 @@ public class CommonProxy {
 
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.heartBlock).setRegistryName(ModBlocks.heartBlock.getRegistryName()));
+        event.getRegistry().register(new ItemEnderShard());
 
     }
 }

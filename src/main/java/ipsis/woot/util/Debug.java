@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 import ipsis.Woot;
+import ipsis.woot.util.helpers.LogHelper;
 import org.apache.logging.log4j.Level;
 
 import java.util.Collections;

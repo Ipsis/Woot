@@ -4,6 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.ModWorlds;
 import ipsis.woot.spawning.SpawnManager;
 import ipsis.woot.util.*;
+import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;

@@ -18,4 +18,13 @@ commands.woot.unknownentity=Unknown entity
 tile.woot.layout.name=Layout
 tile.woot.heart.name=Heart
 
-
+#################################
+# Items
+#################################
+item.woot.endershard.name=Ender Shard
+info.woot.endershard.empty=Unprogrammed
+info.woot.endershard.full=Fully Programmed
+info.woot.endershard.state=Kills %d/%d
+chat.woot.endershard.nocapture=Cannot capture mob
+chat.woot.endershard.inuse=Shard is already programmed
+chat.woot.endershard.captured=Programmed shard

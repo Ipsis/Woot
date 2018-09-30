@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 public class FakeMob {
 
+    // TODO do we ACTUALLY need this?
     private static final String UNKNOWN_MOB = "Unknown Mob";
 
     private FakeMobKey fakeMobKey;

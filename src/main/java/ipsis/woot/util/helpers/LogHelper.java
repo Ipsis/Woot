@@ -1,4 +1,4 @@
-package ipsis.woot.util;
+package ipsis.woot.util.helpers;
 
 import ipsis.Woot;
 import org.apache.logging.log4j.Level;

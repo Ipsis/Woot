@@ -3,6 +3,7 @@ package ipsis.woot.server.command;
 import ipsis.Woot;
 import ipsis.woot.drops.MobDropData;
 import ipsis.woot.util.*;
+import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

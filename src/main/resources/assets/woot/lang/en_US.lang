@@ -4,9 +4,9 @@
 commands.woot.usage=Use /woot <subcommand>
 commands.woot.debug.usage=Use /woot debug [{set|clear} <group>]
 commands.woot.teleport.usage=Use /woot teleport {tartarus|<dim> <x> <y> <z>}
-commands.woot.learn.usage=/Use /woot learn <entity> <name> <looting level>
+commands.woot.learn.usage=/Use /woot learn <entity> <looting level>
 commands.woot.flush.usage=/Use /woot flush <entity> <looting level>
-commands.woot.give.usage=/Use /woot give <player> <entity> <name>
+commands.woot.give.usage=/Use /woot give <player> <entity>
 commands.woot.status.usage=/Use /woot status <object>
 commands.woot.loot.usage=/Use /woot loot <entity> <looting level>
 

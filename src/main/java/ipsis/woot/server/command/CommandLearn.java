@@ -1,8 +1,8 @@
 package ipsis.woot.server.command;
 
 import ipsis.woot.school.SchoolManager;
-import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.FakeMobFactory;
+import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.FakeMobKeyFactory;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -31,7 +31,7 @@ public class CommandLearn extends CommandBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException  {
 
-        if (args.length != 3)
+        if (args.length != 2)
             throw new WrongUsageException(getUsage(sender));
 
         if (!EntityList.isRegistered(new ResourceLocation(args[0])))
@@ -39,7 +39,7 @@ public class CommandLearn extends CommandBase {
 
         int lootLevel = 0;
         try {
-            lootLevel = Integer.parseInt(args[2]);
+            lootLevel = Integer.parseInt(args[1]);
             if (lootLevel < 0 || lootLevel > 3)
                 throw new WrongUsageException(getUsage(sender));
         } catch (NumberFormatException e) {
@@ -47,10 +47,10 @@ public class CommandLearn extends CommandBase {
         }
 
         // start learning from entity/looting
-        FakeMob fakeMob = FakeMobFactory.create(args[0], args[1]);
-        if (fakeMob.isValid()) {
-            sender.sendMessage(new TextComponentString("Learning " + fakeMob.getFakeMobKey() + " at looting " + lootLevel));
-            SchoolManager.teachMob(fakeMob.getFakeMobKey(), lootLevel);
+        FakeMobKey fakeMobKey = FakeMobKeyFactory.createFromString(args[0]);
+        if (fakeMobKey.isValid()) {
+            sender.sendMessage(new TextComponentString("Learning " + fakeMobKey + " at looting " + lootLevel));
+            SchoolManager.teachMob(fakeMobKey, lootLevel);
         }
     }
 

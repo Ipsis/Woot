@@ -27,7 +27,7 @@ public class CommandLoot extends CommandBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
-        if (args.length != 3)
+        if (args.length != 2)
             throw new WrongUsageException(getUsage(sender));
 
         if (!EntityList.isRegistered(new ResourceLocation(args[0])))
@@ -35,18 +35,17 @@ public class CommandLoot extends CommandBase {
 
         int lootLevel = 0;
         try {
-            lootLevel = Integer.parseInt(args[2]);
+            lootLevel = Integer.parseInt(args[1]);
             if (lootLevel < 0 || lootLevel > 3)
                 throw new WrongUsageException(getUsage(sender));
         } catch (NumberFormatException e) {
             throw new WrongUsageException(getUsage(sender));
         }
 
-        FakeMob fakeMob = FakeMobFactory.create(args[0], args[1]);
-        if (fakeMob.isValid()) {
-            MobDropData mobDropData = Woot.DROP_MANAGER.getMobDropData(fakeMob.getFakeMobKey(), lootLevel);
-
-            LogHelper.info("loot: " + fakeMob.getFakeMobKey());
+        FakeMobKey fakeMobKey = FakeMobKeyFactory.createFromString(args[0]);
+        if (fakeMobKey.isValid()) {
+            MobDropData mobDropData = Woot.DROP_MANAGER.getMobDropData(fakeMobKey, lootLevel);
+            LogHelper.info("loot: " + fakeMobKey);
             for (MobDropData.DropData dropData : mobDropData.getDrops())
                 LogHelper.info(dropData.toString());
         }

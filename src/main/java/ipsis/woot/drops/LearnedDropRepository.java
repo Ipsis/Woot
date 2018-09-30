@@ -145,7 +145,7 @@ public class LearnedDropRepository implements IDropProvider {
         private List<RawDropMobData> mobData = new ArrayList<>();
 
         private RawDropData() { }
-        public RawDropData(ItemStack itemStack) { this.itemStack = itemStack.copy(); }
+        public RawDropData(ItemStack itemStack) { this.itemStack = itemStack.copy(); this.itemStack.setCount(1);}
 
         public boolean hasModData() { return !mobData.isEmpty(); }
 

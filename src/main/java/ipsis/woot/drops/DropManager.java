@@ -29,11 +29,29 @@ public class DropManager implements IDropProvider, IDropLearning {
          * We are planning for 1.13
          * No more metadata so just an item match.
          * TODO what about NBT?
+         * TODO remove the metadata match
          */
+
         if (a == null || b == null)
             return false;
 
+        /*
         return a != null && b != null && a.getItem() == b.getItem();
+         */
+
+        if (a.isEmpty() || b.isEmpty())
+            return false;
+
+        if (a.getItem() == null || b.getItem() == null)
+            return false;
+
+        if (!a.getItem().equals(b.getItem()))
+            return false;
+
+        if (a.getHasSubtypes() && a.getItemDamage() != b.getItemDamage())
+            return false;
+
+        return true;
     }
 
     /**

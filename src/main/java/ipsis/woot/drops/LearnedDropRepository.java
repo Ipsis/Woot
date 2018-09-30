@@ -7,6 +7,7 @@ import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helpers.JsonHelper;
 import ipsis.woot.util.MiscUtils;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -280,6 +281,9 @@ public class LearnedDropRepository implements IDropProvider {
             int count = 0;
             if (data.keySet().contains(stackSize))
                 count = data.get(stackSize);
+
+            // Should never happen but ...
+            count = MathHelper.clamp(count, 0, sampleCount);
 
             return (100.0F / (float)sampleCount) * (float)count;
         }

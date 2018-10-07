@@ -17,6 +17,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -72,17 +73,14 @@ public class BlockMobFactoryController extends BlockWoot implements ITileEntityP
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof TileEntityMobFactoryController) {
-            TileEntityMobFactoryController tec = (TileEntityMobFactoryController)te;
-            List<ItemStack> ret = new ArrayList<>();
-            ret.add(tec.getDroppedItemStack());
-            return ret;
-
+            TileEntityMobFactoryController controller = (TileEntityMobFactoryController)te;
+            drops.add(controller.getDroppedItemStack());
         } else {
-            return super.getDrops(world, pos, state, fortune);
+            super.getDrops(drops, world, pos, state, fortune);
         }
     }
 

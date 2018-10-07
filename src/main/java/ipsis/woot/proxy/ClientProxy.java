@@ -3,7 +3,13 @@ package ipsis.woot.proxy;
 import ipsis.Woot;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.ModItems;
+import ipsis.woot.blocks.TileEntityLayout;
+import ipsis.woot.client.TESRLayout;
+import ipsis.woot.event.TextureStitchEventHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -16,6 +22,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        MinecraftForge.EVENT_BUS.register(new TextureStitchEventHandler());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLayout.class, new TESRLayout());
     }
 
     @Override
@@ -28,6 +36,12 @@ public class ClientProxy extends CommonProxy {
 
         ModBlocks.layoutBlock.initModel();
         ModBlocks.heartBlock.initModel();
+        ModBlocks.controllerBlock.initModel();
+        ModBlocks.boneStructureBlock.initModel();
+        ModBlocks.fleshStructureBlock.initModel();
+        ModBlocks.blazeStructureBlock.initModel();
+        ModBlocks.enderStructureBlock.initModel();
+
         ModItems.enderShard.initModel();
     }
 }

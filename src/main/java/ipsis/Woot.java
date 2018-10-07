@@ -6,6 +6,7 @@ import ipsis.woot.ModWorlds;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.drops.DropManager;
 import ipsis.woot.event.ServerTickEventHandler;
+import ipsis.woot.factory.structure.pattern.FactoryPatternRepository;
 import ipsis.woot.policy.PolicyManager;
 import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.event.LivingDropsEventHandler;
@@ -50,11 +51,14 @@ public class Woot {
 
     public static final DropManager DROP_MANAGER = new DropManager();
     public static final PolicyManager POLICY_MANAGER = new PolicyManager();
+    public static final FactoryPatternRepository PATTERN_REPOSITORY = new FactoryPatternRepository();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         proxy.preInit(event);
+
+        PATTERN_REPOSITORY.load();
 
         MinecraftForge.EVENT_BUS.register(new LivingDropsEventHandler());
         MinecraftForge.EVENT_BUS.register(new ServerTickEventHandler());

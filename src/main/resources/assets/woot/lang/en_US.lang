@@ -17,6 +17,11 @@ commands.woot.unknownentity=Unknown entity
 #################################
 tile.woot.layout.name=Layout
 tile.woot.heart.name=Heart
+tile.woot.controller.name=Controller
+tile.woot.bone_structure.name=Bone Structure
+tile.woot.flesh_structure.name=Flesh Structure
+tile.woot.blaze_structure.name=Blaze Structure
+tile.woot.ender_structure.name=Ender Structure
 
 #################################
 # Items

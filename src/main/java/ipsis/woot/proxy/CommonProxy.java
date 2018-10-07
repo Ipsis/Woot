@@ -3,11 +3,10 @@ package ipsis.woot.proxy;
 import ipsis.Woot;
 import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
-import ipsis.woot.ModItems;
-import ipsis.woot.blocks.BlockHeart;
-import ipsis.woot.blocks.BlockLayout;
+import ipsis.woot.blocks.*;
 import ipsis.woot.items.ItemEnderShard;
 import ipsis.woot.network.PacketHandler;
+import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -18,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.File;
 
@@ -46,6 +46,18 @@ public class CommonProxy {
 
         event.getRegistry().register(new BlockLayout());
         event.getRegistry().register(new BlockHeart());
+        event.getRegistry().register(new BlockController());
+
+        event.getRegistry().register(new BlockStructure(FactoryBlock.BONE));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.FLESH));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.BLAZE));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.ENDER));
+
+        // TODO different event for TEs in 1.13 ?
+        GameRegistry.registerTileEntity(TileEntityHeart.class, Woot.MODID + ":heart");
+        GameRegistry.registerTileEntity(TileEntityController.class, Woot.MODID + ":controller");
+        GameRegistry.registerTileEntity(TileEntityLayout.class, Woot.MODID + ":layout");
+
     }
 
     @SubscribeEvent
@@ -53,6 +65,11 @@ public class CommonProxy {
 
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.heartBlock).setRegistryName(ModBlocks.heartBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.controllerBlock).setRegistryName(ModBlocks.controllerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.boneStructureBlock).setRegistryName(ModBlocks.boneStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.fleshStructureBlock).setRegistryName(ModBlocks.fleshStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.blazeStructureBlock).setRegistryName(ModBlocks.blazeStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.enderStructureBlock).setRegistryName(ModBlocks.enderStructureBlock.getRegistryName()));
         event.getRegistry().register(new ItemEnderShard());
 
     }

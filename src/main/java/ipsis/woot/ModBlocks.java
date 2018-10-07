@@ -25,5 +25,19 @@ public class ModBlocks {
     public static final BlockStructure blazeStructureBlock = null;
     @GameRegistry.ObjectHolder("woot:ender_structure")
     public static final BlockStructure enderStructureBlock = null;
+    @GameRegistry.ObjectHolder("woot:nether_structure")
+    public static final BlockStructure netherStructureBlock = null;
+    @GameRegistry.ObjectHolder("woot:redstone_structure")
+    public static final BlockStructure redstoneStructureBlock = null;
+    @GameRegistry.ObjectHolder("woot:upgrade_structure")
+    public static final BlockStructure upgradeStructureBlock = null;
+    @GameRegistry.ObjectHolder("woot:cap1")
+    public static final BlockStructure cap1Block = null;
+    @GameRegistry.ObjectHolder("woot:cap2")
+    public static final BlockStructure cap2Block = null;
+    @GameRegistry.ObjectHolder("woot:cap3")
+    public static final BlockStructure cap3Block = null;
+    @GameRegistry.ObjectHolder("woot:cap4")
+    public static final BlockStructure cap4Block = null;
 
 }

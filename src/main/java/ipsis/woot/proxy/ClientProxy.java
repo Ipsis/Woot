@@ -41,6 +41,13 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.fleshStructureBlock.initModel();
         ModBlocks.blazeStructureBlock.initModel();
         ModBlocks.enderStructureBlock.initModel();
+        ModBlocks.netherStructureBlock.initModel();
+        ModBlocks.redstoneStructureBlock.initModel();
+        ModBlocks.upgradeStructureBlock.initModel();
+        ModBlocks.cap1Block.initModel();
+        ModBlocks.cap2Block.initModel();
+        ModBlocks.cap3Block.initModel();
+        ModBlocks.cap4Block.initModel();
 
         ModItems.enderShard.initModel();
     }

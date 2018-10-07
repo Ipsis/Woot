@@ -8,7 +8,7 @@ public enum FactoryBlock {
     ENDER("ender_structure", WootColor.GREEN),
     NETHER("nether_structure", WootColor.LIGHTGRAY),
     REDSTONE("redstone_structure", WootColor.RED),
-    UPGRADE("upgrade_base", WootColor.PURPLE),
+    UPGRADE("upgrade_structure", WootColor.PURPLE),
     CAP_1("cap1", WootColor.CYAN),
     CAP_2("cap2", WootColor.CYAN),
     CAP_3("cap3", WootColor.CYAN),

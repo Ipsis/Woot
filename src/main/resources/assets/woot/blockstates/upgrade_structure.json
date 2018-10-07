@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "woot:upgrade_structure" }
+  }
+}

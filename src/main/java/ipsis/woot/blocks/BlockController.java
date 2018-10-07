@@ -21,6 +21,8 @@ public class BlockController extends Block {
         setRegistryName(BASENAME);
     }
 
+    public static String getBasename() { return BASENAME; }
+
     @SideOnly(Side.CLIENT)
     public void initModel() {
         ModelLoader.setCustomModelResourceLocation(

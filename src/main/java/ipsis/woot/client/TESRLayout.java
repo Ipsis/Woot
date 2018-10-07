@@ -37,6 +37,15 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout> {
             case FLESH: sprite = WootTextures.BASE_FLESH; break;
             case BLAZE: sprite = WootTextures.BASE_BLAZE; break;
             case ENDER: sprite = WootTextures.BASE_ENDER; break;
+            case NETHER: sprite = WootTextures.BASE_NETHER; break;
+            case REDSTONE: sprite = WootTextures.BASE_REDSTONE; break;
+            case UPGRADE: sprite = WootTextures.BASE_UPGRADE; break;
+            case CAP_1: sprite = WootTextures.CAP_1; break;
+            case CAP_2: sprite = WootTextures.CAP_2; break;
+            case CAP_3: sprite = WootTextures.CAP_3; break;
+            case CAP_4: sprite = WootTextures.CAP_4; break;
+            case HEART: sprite = WootTextures.HEART; break;
+            case CONTROLLER: sprite = WootTextures.CONTROLLER; break;
             default: break;
         }
 

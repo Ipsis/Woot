@@ -22,6 +22,13 @@ tile.woot.bone_structure.name=Bone Structure
 tile.woot.flesh_structure.name=Flesh Structure
 tile.woot.blaze_structure.name=Blaze Structure
 tile.woot.ender_structure.name=Ender Structure
+tile.woot.nether_structure.name=Nether Structure
+tile.woot.redstone_structure.name=Redstone Structure
+tile.woot.upgrade_structure.name=Upgrade Structure
+tile.woot.cap1.name=Tier 1 Cap
+tile.woot.cap2.name=Tier 2 Cap
+tile.woot.cap3.name=Tier 3 Cap
+tile.woot.cap4.name=Tier 4 Cap
 
 #################################
 # Items

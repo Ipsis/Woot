@@ -52,12 +52,18 @@ public class CommonProxy {
         event.getRegistry().register(new BlockStructure(FactoryBlock.FLESH));
         event.getRegistry().register(new BlockStructure(FactoryBlock.BLAZE));
         event.getRegistry().register(new BlockStructure(FactoryBlock.ENDER));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.NETHER));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.REDSTONE));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.UPGRADE));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_1));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_2));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_3));
+        event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_4));
 
         // TODO different event for TEs in 1.13 ?
         GameRegistry.registerTileEntity(TileEntityHeart.class, Woot.MODID + ":heart");
         GameRegistry.registerTileEntity(TileEntityController.class, Woot.MODID + ":controller");
         GameRegistry.registerTileEntity(TileEntityLayout.class, Woot.MODID + ":layout");
-
     }
 
     @SubscribeEvent
@@ -70,6 +76,13 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(ModBlocks.fleshStructureBlock).setRegistryName(ModBlocks.fleshStructureBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.blazeStructureBlock).setRegistryName(ModBlocks.blazeStructureBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.enderStructureBlock).setRegistryName(ModBlocks.enderStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.netherStructureBlock).setRegistryName(ModBlocks.netherStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.redstoneStructureBlock).setRegistryName(ModBlocks.redstoneStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.upgradeStructureBlock).setRegistryName(ModBlocks.upgradeStructureBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap1Block).setRegistryName(ModBlocks.cap1Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap2Block).setRegistryName(ModBlocks.cap2Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap3Block).setRegistryName(ModBlocks.cap3Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap4Block).setRegistryName(ModBlocks.cap4Block.getRegistryName()));
         event.getRegistry().register(new ItemEnderShard());
 
     }

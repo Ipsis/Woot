@@ -1,29 +1,37 @@
 package ipsis.woot.util;
 
+import ipsis.woot.blocks.BlockController;
+import ipsis.woot.blocks.BlockHeart;
+import ipsis.woot.blocks.BlockStructure;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+
 public enum FactoryBlock {
 
-    BONE("bone_structure", WootColor.WHITE),
-    FLESH("flesh_structure", WootColor.BROWN),
-    BLAZE("blaze_structure", WootColor.ORANGE),
-    ENDER("ender_structure", WootColor.GREEN),
-    NETHER("nether_structure", WootColor.LIGHTGRAY),
-    REDSTONE("redstone_structure", WootColor.RED),
-    UPGRADE("upgrade_structure", WootColor.PURPLE),
-    CAP_1("cap1", WootColor.CYAN),
-    CAP_2("cap2", WootColor.CYAN),
-    CAP_3("cap3", WootColor.CYAN),
-    CAP_4("cap4", WootColor.CYAN),
-    TOTEM("totem", WootColor.LIME),
-    CONTROLLER("controller", WootColor.YELLOW),
-    HEART("heart", WootColor.PINK),
-    POWER("power", WootColor.YELLOW),
-    IMPORT("import", WootColor.YELLOW),
-    EXPORT("export", WootColor.YELLOW);
+    BONE("bone_structure", WootColor.WHITE, BlockStructure.class),
+    FLESH("flesh_structure", WootColor.BROWN, BlockStructure.class),
+    BLAZE("blaze_structure", WootColor.ORANGE, BlockStructure.class),
+    ENDER("ender_structure", WootColor.GREEN, BlockStructure.class),
+    NETHER("nether_structure", WootColor.LIGHTGRAY, BlockStructure.class),
+    REDSTONE("redstone_structure", WootColor.RED, BlockStructure.class),
+    UPGRADE("upgrade_structure", WootColor.PURPLE, BlockStructure.class),
+    CAP_1("cap1", WootColor.CYAN, BlockStructure.class),
+    CAP_2("cap2", WootColor.CYAN, BlockStructure.class),
+    CAP_3("cap3", WootColor.CYAN, BlockStructure.class),
+    CAP_4("cap4", WootColor.CYAN, BlockStructure.class),
+    TOTEM("totem", WootColor.LIME, null),
+    CONTROLLER("controller", WootColor.YELLOW, BlockController.class),
+    HEART("heart", WootColor.PINK, BlockHeart.class),
+    POWER("power", WootColor.YELLOW, null),
+    IMPORT("import", WootColor.YELLOW, null),
+    EXPORT("export", WootColor.YELLOW, null);
 
     private String name;
-    FactoryBlock(String name, WootColor color) {
+    private Class clazz;
+    FactoryBlock(String name, WootColor color, Class clazz) {
         this.name = name;
         this.color = color;
+        this.clazz = clazz;
     }
     public String getName() {
         return this.name;
@@ -31,4 +39,19 @@ public enum FactoryBlock {
 
     private WootColor color;
     public WootColor getColor() { return this.color; }
+
+    public static boolean isSameBlock(FactoryBlock factoryBlock, Block b) {
+
+        boolean equal = false;
+        if (factoryBlock.clazz != null && b.getClass() == factoryBlock.clazz) {
+            if (factoryBlock.clazz == BlockStructure.class) {
+                BlockStructure blockStructure = (BlockStructure)b;
+                equal = blockStructure.getFactoryBlockType() == factoryBlock;
+            } else {
+                equal = true;
+            }
+        }
+
+        return equal;
+    }
 }

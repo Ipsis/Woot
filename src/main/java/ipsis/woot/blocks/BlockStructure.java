@@ -13,17 +13,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockStructure extends Block {
 
     private final String basename;
-    private final FactoryBlock blockType;
+    private final FactoryBlock factoryBlock;
 
-    public BlockStructure(FactoryBlock blockType) {
+    public BlockStructure(FactoryBlock factoryBlock) {
 
         super(Material.ROCK);
-        this.blockType = blockType;
-        this.basename = blockType.getName();
+        this.factoryBlock = factoryBlock;
+        this.basename = factoryBlock.getName();
         setCreativeTab(Woot.tab);
         setUnlocalizedName(Woot.MODID + "." + this.basename);
         setRegistryName(this.basename);
     }
+
+    public FactoryBlock getFactoryBlockType() { return this.factoryBlock; }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {

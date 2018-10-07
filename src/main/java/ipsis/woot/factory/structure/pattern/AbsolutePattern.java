@@ -2,9 +2,12 @@ package ipsis.woot.factory.structure.pattern;
 
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.FactoryTier;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,15 +28,6 @@ public class AbsolutePattern {
         return Collections.unmodifiableList(blocks);
     }
 
-    public void offsetInY(int offset) {
-        for (AbsoluteBlock block : blocks) {
-            if (offset >= 1)
-                block.pos = block.pos.up(Math.abs(offset));
-            else if (offset <= -1)
-                block.pos = block.pos.down(Math.abs(offset));
-        }
-    }
-
     /**
      * Compare this pattern with the world state
      * Reports all incorrect blocks
@@ -46,10 +40,27 @@ public class AbsolutePattern {
     /**
      * Compare this pattern with the world state
      * Returns the minute a bad block is found and doesn't report incorrect block positions
+     * ie. All the blocks have to be present
      */
-    public ScannedPattern compareToWorldQuick() {
+    public @Nullable ScannedPattern compareToWorldQuick(@Nonnull World world) {
 
-        return new ScannedPattern(factoryTier);
+        boolean valid = true;
+        for (AbsoluteBlock absoluteBlock : blocks)
+        {
+            // Don't load an unloaded chunk
+            if (!world.isBlockLoaded(absoluteBlock.pos)) {
+                valid = false;
+                break;
+            }
+
+            Block block = world.getBlockState(absoluteBlock.pos).getBlock();
+            if (FactoryBlock.isSameBlock(absoluteBlock.getFactoryBlock(), block)) {
+                valid = false;
+                break;
+            }
+        }
+
+        return valid ? new ScannedPattern(factoryTier) : null;
     }
 
     public class AbsoluteBlock {

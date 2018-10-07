@@ -17,10 +17,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -68,6 +65,34 @@ public class BlockWootAnvil extends BlockWoot implements ITileEntityProvider {
 
         EnumFacing enumFacing = state.getValue(FACING);
         return enumFacing.getAxis() == EnumFacing.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+
+        // Get the main block
+        super.getDrops(drops, world, pos, state, fortune);
+
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof TileEntityAnvil) {
+            // Add any items that were in the anvil
+            TileEntityAnvil anvil = (TileEntityAnvil)te;
+            ItemStack itemStack = anvil.getBaseItem();
+            if (!itemStack.isEmpty())
+                drops.add(itemStack.copy());
+        }
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+
+        // From TinkersConstruct to allow the TE exist while processing the getDrops
+        this.onBlockDestroyedByPlayer(world, pos, state);
+        if (willHarvest)
+            this.harvestBlock(world, player, pos, state, world.getTileEntity(pos), player.getHeldItemMainhand());
+
+        world.setBlockToAir(pos);
+        return false;
     }
 
     @SideOnly(Side.CLIENT)

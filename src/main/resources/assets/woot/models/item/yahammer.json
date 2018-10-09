@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "woot:items/endershard"
+    "layer0": "woot:items/yahammer"
   },
   "display": {
     "thirdperson_righthand": {

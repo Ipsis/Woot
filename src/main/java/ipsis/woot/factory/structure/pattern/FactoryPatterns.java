@@ -89,7 +89,7 @@ public class FactoryPatterns {
                 "-----",
                 "-----",
                 "-----",
-                "-TCT-",
+                "--C--",
                 "-----",
             }
     };

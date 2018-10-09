@@ -40,3 +40,5 @@ info.woot.endershard.state=Kills %d/%d
 chat.woot.endershard.nocapture=Cannot capture mob
 chat.woot.endershard.inuse=Shard is already programmed
 chat.woot.endershard.captured=Programmed shard
+
+item.woot.yahammer.name=Ya Hammer

@@ -1,10 +1,12 @@
 package ipsis.woot.util;
 
+import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.BlockController;
 import ipsis.woot.blocks.BlockHeart;
 import ipsis.woot.blocks.BlockStructure;
 import net.minecraft.block.Block;
-import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public enum FactoryBlock {
 
@@ -40,18 +42,12 @@ public enum FactoryBlock {
     private WootColor color;
     public WootColor getColor() { return this.color; }
 
-    public static boolean isSameBlock(FactoryBlock factoryBlock, Block b) {
+    public static @Nullable FactoryBlock getFactoryBlock(Block b) {
 
-        boolean equal = false;
-        if (factoryBlock.clazz != null && b.getClass() == factoryBlock.clazz) {
-            if (factoryBlock.clazz == BlockStructure.class) {
-                BlockStructure blockStructure = (BlockStructure)b;
-                equal = blockStructure.getFactoryBlockType() == factoryBlock;
-            } else {
-                equal = true;
-            }
+        for (FactoryBlock curr : FactoryBlock.values()) {
+            if (curr.clazz != null && curr.clazz == b.getClass())
+                return curr.clazz == BlockStructure.class ? ((BlockStructure)b).getFactoryBlockType() : curr;
         }
-
-        return equal;
+        return null;
     }
 }

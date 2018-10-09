@@ -5,6 +5,7 @@ import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
 import ipsis.woot.items.ItemEnderShard;
+import ipsis.woot.items.ItemYaHammer;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
@@ -47,6 +48,9 @@ public class CommonProxy {
         event.getRegistry().register(new BlockLayout());
         event.getRegistry().register(new BlockHeart());
         event.getRegistry().register(new BlockController());
+        event.getRegistry().register(new BlockPower());
+        event.getRegistry().register(new BlockImport());
+        event.getRegistry().register(new BlockExport());
 
         event.getRegistry().register(new BlockStructure(FactoryBlock.BONE));
         event.getRegistry().register(new BlockStructure(FactoryBlock.FLESH));
@@ -72,6 +76,9 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.heartBlock).setRegistryName(ModBlocks.heartBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.controllerBlock).setRegistryName(ModBlocks.controllerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.powerBlock).setRegistryName(ModBlocks.powerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.importBlock).setRegistryName(ModBlocks.importBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.exportBlock).setRegistryName(ModBlocks.exportBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.boneStructureBlock).setRegistryName(ModBlocks.boneStructureBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.fleshStructureBlock).setRegistryName(ModBlocks.fleshStructureBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.blazeStructureBlock).setRegistryName(ModBlocks.blazeStructureBlock.getRegistryName()));
@@ -84,6 +91,7 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(ModBlocks.cap3Block).setRegistryName(ModBlocks.cap3Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cap4Block).setRegistryName(ModBlocks.cap4Block.getRegistryName()));
         event.getRegistry().register(new ItemEnderShard());
+        event.getRegistry().register(new ItemYaHammer());
 
     }
 }

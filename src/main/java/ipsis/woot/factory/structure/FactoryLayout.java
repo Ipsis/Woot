@@ -29,7 +29,9 @@ public class FactoryLayout {
 
     private void handleDirtyLayout() {
 
-        
+        /**
+         * Rescan the factory and compare against the current
+         */
 
     }
 

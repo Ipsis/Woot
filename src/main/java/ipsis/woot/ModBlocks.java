@@ -1,9 +1,6 @@
 package ipsis.woot;
 
-import ipsis.woot.blocks.BlockHeart;
-import ipsis.woot.blocks.BlockLayout;
-import ipsis.woot.blocks.BlockController;
-import ipsis.woot.blocks.BlockStructure;
+import ipsis.woot.blocks.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
@@ -16,6 +13,15 @@ public class ModBlocks {
 
     @GameRegistry.ObjectHolder("woot:controller")
     public static final BlockController controllerBlock = null;
+
+    @GameRegistry.ObjectHolder("woot:power")
+    public static final BlockPower powerBlock = null;
+
+    @GameRegistry.ObjectHolder("woot:import")
+    public static final BlockImport importBlock = null;
+
+    @GameRegistry.ObjectHolder("woot:export")
+    public static final BlockExport exportBlock = null;
 
     @GameRegistry.ObjectHolder("woot:bone_structure")
     public static final BlockStructure boneStructureBlock = null;

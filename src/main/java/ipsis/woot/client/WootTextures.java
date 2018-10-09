@@ -1,9 +1,7 @@
 package ipsis.woot.client;
 
 import ipsis.Woot;
-import ipsis.woot.ModBlocks;
-import ipsis.woot.blocks.BlockController;
-import ipsis.woot.blocks.BlockHeart;
+import ipsis.woot.blocks.*;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -34,6 +32,9 @@ public class WootTextures {
         CAP_4 = register(BLOCKS + FactoryBlock.CAP_4.getName());
         CONTROLLER = register(BLOCKS + BlockController.getBasename());
         HEART = register(BLOCKS + BlockHeart.getBasename());
+        POWER = register(BLOCKS + BlockPower.getBasename());
+        IMPORT = register(BLOCKS + BlockImport.getBasename());
+        EXPORT = register(BLOCKS + BlockExport.getBasename());
     }
 
     private static TextureAtlasSprite register(String sprite) {
@@ -54,8 +55,8 @@ public class WootTextures {
     public static TextureAtlasSprite CAP_3;
     public static TextureAtlasSprite CAP_4;
     public static TextureAtlasSprite POWER;
-    public static TextureAtlasSprite IMPORTER;
-    public static TextureAtlasSprite EXPORTER;
+    public static TextureAtlasSprite IMPORT;
+    public static TextureAtlasSprite EXPORT;
     public static TextureAtlasSprite CONTROLLER;
     public static TextureAtlasSprite HEART;
 }

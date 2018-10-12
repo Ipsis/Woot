@@ -1,9 +1,7 @@
 package ipsis.woot.util;
 
 import ipsis.woot.ModBlocks;
-import ipsis.woot.blocks.BlockController;
-import ipsis.woot.blocks.BlockHeart;
-import ipsis.woot.blocks.BlockStructure;
+import ipsis.woot.blocks.*;
 import net.minecraft.block.Block;
 
 import javax.annotation.Nullable;
@@ -24,9 +22,11 @@ public enum FactoryBlock {
     TOTEM("totem", WootColor.LIME, null),
     CONTROLLER("controller", WootColor.YELLOW, BlockController.class),
     HEART("heart", WootColor.PINK, BlockHeart.class),
-    POWER("power", WootColor.YELLOW, null),
-    IMPORT("import", WootColor.YELLOW, null),
-    EXPORT("export", WootColor.YELLOW, null);
+    POWER_1("power1", WootColor.YELLOW, BlockPower.class),
+    POWER_2("power2", WootColor.YELLOW, BlockPower.class),
+    POWER_3("power3", WootColor.YELLOW, BlockPower.class),
+    IMPORT("import", WootColor.YELLOW, BlockImport.class),
+    EXPORT("export", WootColor.YELLOW, BlockExport.class);
 
     private String name;
     private Class clazz;
@@ -45,9 +45,20 @@ public enum FactoryBlock {
     public static @Nullable FactoryBlock getFactoryBlock(Block b) {
 
         for (FactoryBlock curr : FactoryBlock.values()) {
-            if (curr.clazz != null && curr.clazz == b.getClass())
-                return curr.clazz == BlockStructure.class ? ((BlockStructure)b).getFactoryBlockType() : curr;
+            if (curr.clazz != null && curr.clazz == b.getClass()) {
+                if (curr.clazz == BlockStructure.class)
+                    return ((BlockStructure)b).getFactoryBlockType();
+                else if (curr.clazz == BlockPower.class)
+                    return ((BlockPower)b).getFactoryBlockType();
+                else
+                    return curr;
+            }
         }
         return null;
+    }
+
+    public static boolean isPowerFactoryBlock(FactoryBlock factoryBlock) {
+
+        return factoryBlock == POWER_1 || factoryBlock == POWER_2 || factoryBlock == POWER_3;
     }
 }

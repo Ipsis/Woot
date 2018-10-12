@@ -46,7 +46,9 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout> {
             case CAP_4: sprite = WootTextures.CAP_4; break;
             case HEART: sprite = WootTextures.HEART; break;
             case CONTROLLER: sprite = WootTextures.CONTROLLER; break;
-            case POWER: sprite = WootTextures.POWER; break;
+            case POWER_1: sprite = WootTextures.POWER_1; break;
+            case POWER_2: sprite = WootTextures.POWER_2; break;
+            case POWER_3: sprite = WootTextures.POWER_3; break;
             case IMPORT: sprite = WootTextures.IMPORT; break;
             case EXPORT: sprite = WootTextures.EXPORT; break;
             default: break;

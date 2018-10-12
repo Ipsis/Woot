@@ -1,6 +1,7 @@
 package ipsis.woot.blocks;
 
 import ipsis.Woot;
+import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -11,17 +12,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPower extends Block {
 
-    private static final String BASENAME = "power";
+    private final String basename;
+    private final FactoryBlock factoryBlock;
 
-    public BlockPower() {
+    public BlockPower(FactoryBlock factoryBlock) {
 
         super(Material.ROCK);
+        this.factoryBlock = factoryBlock;
+        this.basename = factoryBlock.getName();
         setCreativeTab(Woot.tab);
-        setUnlocalizedName(Woot.MODID + "." + BASENAME);
-        setRegistryName(BASENAME);
+        setUnlocalizedName(Woot.MODID + "." + this.basename);
+        setRegistryName(this.basename);
     }
 
-    public static String getBasename() { return BASENAME; }
+    public FactoryBlock getFactoryBlockType() { return this.factoryBlock; }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {

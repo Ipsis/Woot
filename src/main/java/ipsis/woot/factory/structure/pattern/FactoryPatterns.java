@@ -28,7 +28,7 @@ public class FactoryPatterns {
         PATTERN_MAPPINGS.put(HEART_CHAR, FactoryBlock.CONTROLLER);
         PATTERN_MAPPINGS.put('I', FactoryBlock.IMPORT);
         PATTERN_MAPPINGS.put('E', FactoryBlock.EXPORT);
-        PATTERN_MAPPINGS.put('P', FactoryBlock.POWER);
+        PATTERN_MAPPINGS.put('P', FactoryBlock.POWER_1);
     }
 
     public static @Nullable FactoryBlock getFactoryBlock(char c) {

@@ -23,7 +23,7 @@ public class ScannedPattern {
 
         if (factoryBlock == FactoryBlock.CONTROLLER)
             controllerPos = new BlockPos(pos);
-        else if (factoryBlock == FactoryBlock.POWER)
+        else if (FactoryBlock.isPowerFactoryBlock(factoryBlock))
             powerPos = new BlockPos(pos);
         else if (factoryBlock == FactoryBlock.IMPORT)
             importPos = new BlockPos(pos);

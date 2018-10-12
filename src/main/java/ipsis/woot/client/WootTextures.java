@@ -32,7 +32,9 @@ public class WootTextures {
         CAP_4 = register(BLOCKS + FactoryBlock.CAP_4.getName());
         CONTROLLER = register(BLOCKS + BlockController.getBasename());
         HEART = register(BLOCKS + BlockHeart.getBasename());
-        POWER = register(BLOCKS + BlockPower.getBasename());
+        POWER_1 = register(BLOCKS + FactoryBlock.POWER_1.getName());
+        POWER_2 = register(BLOCKS + FactoryBlock.POWER_2.getName());
+        POWER_3 = register(BLOCKS + FactoryBlock.POWER_3.getName());
         IMPORT = register(BLOCKS + BlockImport.getBasename());
         EXPORT = register(BLOCKS + BlockExport.getBasename());
     }
@@ -54,7 +56,9 @@ public class WootTextures {
     public static TextureAtlasSprite CAP_2;
     public static TextureAtlasSprite CAP_3;
     public static TextureAtlasSprite CAP_4;
-    public static TextureAtlasSprite POWER;
+    public static TextureAtlasSprite POWER_1;
+    public static TextureAtlasSprite POWER_2;
+    public static TextureAtlasSprite POWER_3;
     public static TextureAtlasSprite IMPORT;
     public static TextureAtlasSprite EXPORT;
     public static TextureAtlasSprite CONTROLLER;

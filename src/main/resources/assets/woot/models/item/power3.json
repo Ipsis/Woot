@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/power",
+  "parent": "woot:block/power3",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

@@ -14,8 +14,12 @@ public class ModBlocks {
     @GameRegistry.ObjectHolder("woot:controller")
     public static final BlockController controllerBlock = null;
 
-    @GameRegistry.ObjectHolder("woot:power")
-    public static final BlockPower powerBlock = null;
+    @GameRegistry.ObjectHolder("woot:power1")
+    public static final BlockPower power1Block = null;
+    @GameRegistry.ObjectHolder("woot:power2")
+    public static final BlockPower power2Block = null;
+    @GameRegistry.ObjectHolder("woot:power3")
+    public static final BlockPower power3Block = null;
 
     @GameRegistry.ObjectHolder("woot:import")
     public static final BlockImport importBlock = null;

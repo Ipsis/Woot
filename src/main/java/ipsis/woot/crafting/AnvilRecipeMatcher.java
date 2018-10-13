@@ -13,12 +13,14 @@ public class AnvilRecipeMatcher {
             return false;
 
         int recipeSize = recipe.getRecipeSize();
-        if (recipeSize != items.size())
-            return false;
 
-        for (ItemStack itemStack : items) {
-            if (recipe.isIngredient(itemStack))
-                recipeSize--;
+        for (ItemStack itemStack : recipe.getInputs()) {
+            for (ItemStack itemStack1 : items) {
+                if (isItemStackMatch(itemStack, itemStack1)) {
+                    recipeSize--;
+                    break;
+                }
+            }
         }
 
         return  recipeSize == 0;

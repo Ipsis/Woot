@@ -1,5 +1,6 @@
 package ipsis.woot.command;
 
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.tileentity.TileEntityMobFactoryController;
 import ipsis.woot.util.WootMob;
 import ipsis.woot.util.WootMobBuilder;
@@ -34,6 +35,11 @@ public class CommandGive extends CommandTreeBase {
     public String getUsage(ICommandSender sender) {
 
         return "commands.woot.give.usage";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return WootCommand.WOOT_COMMAND_PERM_LEVEL;
     }
 
     @Override

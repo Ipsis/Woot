@@ -24,6 +24,11 @@ public class CommandFlush extends CommandTreeBase {
     }
 
     @Override
+    public int getRequiredPermissionLevel() {
+        return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+    }
+
+    @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length < 1)

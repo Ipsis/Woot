@@ -39,6 +39,11 @@ public class CommandDump extends CommandTreeBase {
         return "commands.woot.dump.usage";
     }
 
+    @Override
+    public int getRequiredPermissionLevel() {
+        return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+    }
+
     public static class CommandDumpMobs extends CommandBase {
 
         @Override
@@ -82,6 +87,11 @@ public class CommandDump extends CommandTreeBase {
         }
 
         @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+        }
+
+        @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
 
             for (EnumMobFactoryTier tier : EnumMobFactoryTier.VALID_TIERS) {
@@ -113,6 +123,11 @@ public class CommandDump extends CommandTreeBase {
         public String getUsage(ICommandSender sender) {
 
             return "commands.woot.dump.tartarus.usage";
+        }
+
+        @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
         }
 
         @Override
@@ -149,6 +164,11 @@ public class CommandDump extends CommandTreeBase {
         }
 
         @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+        }
+
+        @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
             if (args.length != 0)
@@ -174,6 +194,11 @@ public class CommandDump extends CommandTreeBase {
         }
 
         @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+        }
+
+        @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
         }
@@ -191,6 +216,11 @@ public class CommandDump extends CommandTreeBase {
         public String getUsage(ICommandSender sender) {
 
             return "commands.woot.dump.policy.usage";
+        }
+
+        @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
         }
 
         @Override

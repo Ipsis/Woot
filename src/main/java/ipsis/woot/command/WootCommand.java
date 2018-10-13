@@ -6,6 +6,8 @@ import net.minecraftforge.server.command.CommandTreeBase;
 
 public class WootCommand extends CommandTreeBase {
 
+    public static final int WOOT_COMMAND_PERM_LEVEL = 2;
+
     public WootCommand() {
 
         addSubcommand(new CommandDev());
@@ -23,7 +25,7 @@ public class WootCommand extends CommandTreeBase {
          * 3 - ops can use ban, deop, kick, op
          * 4 - ops can use stop
          */
-        return 2;
+        return WOOT_COMMAND_PERM_LEVEL;
     }
 
     @Override

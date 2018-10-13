@@ -35,6 +35,11 @@ public class CommandDev extends CommandTreeBase {
         return "commands.woot.dev.usage";
     }
 
+    @Override
+    public int getRequiredPermissionLevel() {
+        return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+    }
+
     public static class CommandDevDebug extends CommandBase {
 
 
@@ -48,6 +53,11 @@ public class CommandDev extends CommandTreeBase {
         public String getUsage(ICommandSender sender) {
 
             return "commands.woot.dev.debug.usage";
+        }
+
+        @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
         }
 
         // This needs to be in sync with getUsage so people know what they can type in!
@@ -119,6 +129,11 @@ public class CommandDev extends CommandTreeBase {
         }
 
         @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
+        }
+
+        @Override
         public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
             if (args.length < 1)
@@ -144,6 +159,11 @@ public class CommandDev extends CommandTreeBase {
         public String getUsage(ICommandSender sender) {
 
             return "commands.woot.dev.teleport.usage";
+        }
+
+        @Override
+        public int getRequiredPermissionLevel() {
+            return WootCommand.WOOT_COMMAND_PERM_LEVEL;
         }
 
         @Override

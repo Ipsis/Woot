@@ -25,7 +25,7 @@ public class FactoryPatterns {
         PATTERN_MAPPINGS.put('%', FactoryBlock.CAP_4);
         PATTERN_MAPPINGS.put('T', FactoryBlock.TOTEM);
         PATTERN_MAPPINGS.put(CONTROLLER_CHAR, FactoryBlock.CONTROLLER);
-        PATTERN_MAPPINGS.put(HEART_CHAR, FactoryBlock.CONTROLLER);
+        PATTERN_MAPPINGS.put(HEART_CHAR, FactoryBlock.HEART);
         PATTERN_MAPPINGS.put('I', FactoryBlock.IMPORT);
         PATTERN_MAPPINGS.put('E', FactoryBlock.EXPORT);
         PATTERN_MAPPINGS.put('P', FactoryBlock.POWER_1);

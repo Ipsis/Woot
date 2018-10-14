@@ -1,6 +1,29 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.6",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 391,
+          "desc": "Fix exploit for Anvil recipe matching"
+        },
+        {
+          "id": 392,
+          "desc": "Ensure all Woot commands have permission level 2"
+        },
+        {
+          "id": 389,
+          "desc": "Fix anvil not dropping base item when broken"
+        },
+        {
+          "id": -1,
+          "desc": "Update way that controller drops when broken"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.5",
       "features": [
       ],

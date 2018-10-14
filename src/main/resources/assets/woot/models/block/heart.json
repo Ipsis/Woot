@@ -1,9 +1,12 @@
 {
   "parent": "block/orientable",
   "textures": {
+    "particle": "woot:blocks/heart",
     "up": "woot:blocks/heart_base",
     "down": "woot:blocks/heart_base",
-    "front": "woot:blocks/heart",
-    "side": "woot:blocks/heart_base"
+    "north": "woot:blocks/heart",
+    "south": "woot:blocks/heart_base",
+    "east": "woot:blocks/heart_base",
+    "west": "woot:blocks/heart_base"
   }
 }

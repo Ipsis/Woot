@@ -50,6 +50,10 @@ public class ScannedPattern {
     public BlockPos getImportPos() { return importPos; }
     public FakeMobKey getControllerMob() { return controllerMob; }
 
+    public boolean isComplete() {
+        return !hasBadBlocks() && hasController() && hasPower() && hasImport() && hasExport();
+    }
+
 
     /**
      * Bad Blocks
@@ -64,7 +68,10 @@ public class ScannedPattern {
     public enum BadBlockReason {
         MISSING_BLOCK,
         INCORRECT_BLOCK,
-        INCORRECT_TYPE;
+        INCORRECT_TYPE,
+        INVALID_MOB,
+        MISSING_MOB,
+        WRONG_TIER
     }
 
     public class BadLayoutBlockInfo {

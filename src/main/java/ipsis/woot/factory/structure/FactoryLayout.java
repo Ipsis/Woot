@@ -1,6 +1,11 @@
 package ipsis.woot.factory.structure;
 
+import ipsis.Woot;
+import ipsis.woot.blocks.BlockHeart;
 import ipsis.woot.factory.SimpleTickTracker;
+import ipsis.woot.factory.structure.pattern.ScannedPattern;
+import ipsis.woot.util.Debug;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -8,14 +13,15 @@ public class FactoryLayout {
 
     private World world;
     private BlockPos pos;
+    private EnumFacing facing = EnumFacing.SOUTH;
     private boolean dirtyLayout = false;
+    private ScannedPattern scanned = null;
+    private boolean changed = false;
 
-    public void setWorld(World world) {
+    public void setWorldPos(World world, BlockPos pos) {
         this.world = world;
-    }
-
-    public void setPos(BlockPos pos) {
-        this.pos = new BlockPos(pos);
+        this.pos = pos;
+        this.facing = world.getBlockState(pos).getValue(BlockHeart.FACING);
     }
 
     public void setDirtyLayout() {
@@ -23,15 +29,41 @@ public class FactoryLayout {
     }
 
     public boolean isFormed() {
-        // TODO
-        return true;
+        return scanned != null;
     }
+
+    public boolean hasChanged() { return this.changed; }
+    public void clearChanged() { this.changed = false; }
+    public void setChanged() { this.changed = true; }
 
     private void handleDirtyLayout() {
 
         /**
          * Rescan the factory and compare against the current
          */
+        Woot.debugging.trace(Debug.Group.BUILDING, "Scan factory " + pos + " " + facing);
+        ScannedPattern rescanned = FactoryScanner.scan(world, pos, facing);
+        if (scanned == null && rescanned == null) {
+            // was nothing and there still is nothing
+        } else if (scanned == null && rescanned != null) {
+            // was nothing and now there is something
+            Woot.debugging.trace(Debug.Group.BUILDING, "Hello new factory");
+            FactoryBuilder.connectNew();
+            setChanged();
+        } else if (scanned != null && rescanned == null) {
+            // was something and now there is nothing
+            Woot.debugging.trace(Debug.Group.BUILDING, "Goodbye factory");
+            FactoryBuilder.disconnectOld();
+            scanned = null;
+            setChanged();
+        } else if ((scanned != null && rescanned != null)) {
+           // was something and there still is something but it might be different
+            Woot.debugging.trace(Debug.Group.BUILDING, "Factory changed");
+            FactoryBuilder.disconnectOld();
+            FactoryBuilder.connectNew();
+            scanned = rescanned;
+            setChanged();
+        }
 
     }
 

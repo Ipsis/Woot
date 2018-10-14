@@ -82,13 +82,9 @@ public class ItemEnderShard extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
 
-        String entityName = "info.woot.endershard.empty";
-        if (ProgrammedMobHelper.isEntityProgrammed(stack)) {
-            FakeMobKey fakeMobKey = ProgrammedMobHelper.getProgrammedEntity(stack);
-            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(fakeMobKey.getResourceLocation());
-            if (entityEntry != null)
-                entityName = "entity." + entityEntry.getName() + ".name";
-        }
+        String entityName = ProgrammedMobHelper.getItemStackDisplayName(stack);
+        if (entityName.equalsIgnoreCase(""))
+            entityName = "info.woot.endershard.empty";
 
         return super.getItemStackDisplayName(stack) + " - " + StringHelper.localise(entityName);
     }

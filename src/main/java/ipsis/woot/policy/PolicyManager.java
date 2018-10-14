@@ -95,8 +95,7 @@ public class PolicyManager implements IPolicy {
      * IPolicy
      */
     @Override
-    public boolean canCaptureMob(EntityLiving entityLiving) {
-
+    public boolean canCaptureMob(ResourceLocation resourceLocation) {
         /**
          * Highest priority
          * Internal
@@ -105,10 +104,6 @@ public class PolicyManager implements IPolicy {
          * Repeat for external
          */
 
-        if (entityLiving == null)
-            return false;
-
-        ResourceLocation resourceLocation = EntityList.getKey(entityLiving);
         if (resourceLocation == null)
             return false;
 
@@ -137,6 +132,19 @@ public class PolicyManager implements IPolicy {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean canCaptureMob(EntityLiving entityLiving) {
+
+        if (entityLiving == null)
+            return false;
+
+        ResourceLocation resourceLocation = EntityList.getKey(entityLiving);
+        if (resourceLocation == null)
+            return false;
+
+        return canCaptureMob(resourceLocation);
     }
 
     @Override

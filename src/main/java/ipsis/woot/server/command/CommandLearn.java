@@ -51,6 +51,8 @@ public class CommandLearn extends CommandBase {
         if (fakeMobKey.isValid()) {
             sender.sendMessage(new TextComponentString("Learning " + fakeMobKey + " at looting " + lootLevel));
             SchoolManager.teachMob(fakeMobKey, lootLevel);
+        } else {
+            throw new WrongUsageException("commands.woot.invalidmob");
         }
     }
 

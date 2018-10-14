@@ -6,7 +6,7 @@ commands.woot.debug.usage=Use /woot debug [{set|clear} <group>]
 commands.woot.teleport.usage=Use /woot teleport {tartarus|<dim> <x> <y> <z>}
 commands.woot.learn.usage=/Use /woot learn <entity> <looting level>
 commands.woot.flush.usage=/Use /woot flush <entity> <looting level>
-commands.woot.give.usage=/Use /woot give <player> <entity>
+commands.woot.give.usage=/Use /woot give <player> {shard|controller} <entity>
 commands.woot.status.usage=/Use /woot status <object>
 commands.woot.loot.usage=/Use /woot loot <entity> <looting level>
 
@@ -45,5 +45,7 @@ info.woot.endershard.state=Kills %d/%d
 chat.woot.endershard.nocapture=Cannot capture mob
 chat.woot.endershard.inuse=Shard is already programmed
 chat.woot.endershard.captured=Programmed shard
+
+info.woot.controller.empty=Unprogrammed
 
 item.woot.yahammer.name=Ya Hammer

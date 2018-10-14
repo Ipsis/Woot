@@ -20,7 +20,9 @@ public class Debug {
         GEN_ITEMS,
         TARTARUS,
         EVENT,
-        POLICY;
+        POLICY,
+        BUILDING
+        ;
 
         private String name;
 

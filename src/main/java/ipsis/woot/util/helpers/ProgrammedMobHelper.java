@@ -5,6 +5,8 @@ import ipsis.woot.util.FakeMobKeyFactory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -79,5 +81,19 @@ public class ProgrammedMobHelper {
 
         curr += delta;
         nbtTagCompound.setInteger(NBT_DEATH_COUNT, MathHelper.clamp(curr, 0, FULLY_PROGRAMMED_COUNT));
+    }
+
+    public static @Nonnull String getItemStackDisplayName(ItemStack itemStack) {
+
+        String displayName = "";
+        if (isEntityProgrammed(itemStack)) {
+            FakeMobKey fakeMobKey = getProgrammedEntity(itemStack);
+            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(fakeMobKey.getResourceLocation());
+            if (entityEntry != null)
+                displayName =  "entity." + entityEntry.getName() + ".name";
+        }
+
+        return displayName;
+
     }
 }

@@ -9,6 +9,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class FactoryScanner {
 
     /**
@@ -17,33 +19,24 @@ public class FactoryScanner {
     public static ScannedPattern scanTier(World world, FactoryTier tier, BlockPos origin, EnumFacing facing) {
 
         AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, FactoryPattern.FactoryPatternType.BASE, origin, facing);
-        ScannedPattern scannedTierPattern = absolutePattern.compareToWorld(world);
-
-
-
-        // TODO controller, remote and upgrades
-        return scannedTierPattern;
+        return absolutePattern.compareToWorld(world);
     }
 
     /**
      * Scan each possible tier looking for a match
      */
-    public static void scan(World world, BlockPos origin, EnumFacing facing) {
+    public static @Nullable ScannedPattern scan(World world, BlockPos origin, EnumFacing facing) {
 
-        // Find the first tier that matches
-        /*
-        ScannedPattern scannedTierPattern = null;
-        for (FactoryTier factoryTier : FactoryTier.values()) {
-            AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, factoryTier, origin, facing);
-            ScannedPattern tempPattern = absolutePattern.compareToWorldQuick();
-            if (!tempPattern.hasBadBlocks()) {
-                scannedTierPattern = tempPattern;
+        ScannedPattern scannedPattern = null;
+        for (FactoryTier tier : FactoryTier.values()) {
+            AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, FactoryPattern.FactoryPatternType.BASE, origin, facing);
+            ScannedPattern tempPattern = absolutePattern.compareToWorldQuick(world);
+            if (tempPattern != null) {
+                scannedPattern = tempPattern;
                 break;
             }
         }
 
-        if (scannedTierPattern != null) {
-            // TODO controller, remote and upgrades
-        } */
+        return scannedPattern;
     }
 }

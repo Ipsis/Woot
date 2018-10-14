@@ -32,8 +32,7 @@ public class TileEntityHeart extends TileEntity implements ITickable {
         // Cannot set this on create as the world may not be set
         if (factoryLayout == null) {
             factoryLayout = new FactoryLayout();
-            factoryLayout.setWorld(getWorld());
-            factoryLayout.setPos(getPos());
+            factoryLayout.setWorldPos(getWorld(), getPos());
             factoryLayout.setDirtyLayout();
         }
 
@@ -44,6 +43,11 @@ public class TileEntityHeart extends TileEntity implements ITickable {
         factoryLayout.tick(tickTracker);
 
         if (factoryLayout.isFormed()) {
+
+            if (factoryLayout.hasChanged()) {
+                // TODO reset the factory and handle the changed configuration
+                factoryLayout.clearChanged();
+            }
 
             // Redstone signal STOPS the machine
             if (world.isBlockPowered(getPos())) {

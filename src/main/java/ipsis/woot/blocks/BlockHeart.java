@@ -13,6 +13,8 @@ import ipsis.woot.util.helpers.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,12 +37,15 @@ public class BlockHeart extends Block implements ITileEntityProvider {
 
     private static final String BASENAME = "heart";
 
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+
     public BlockHeart() {
 
         super(Material.ROCK);
         setCreativeTab(Woot.tab);
         setUnlocalizedName(Woot.MODID + "." + BASENAME);
         setRegistryName(BASENAME);
+        setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 
     public static String getBasename() { return BASENAME; }
@@ -60,6 +65,33 @@ public class BlockHeart extends Block implements ITileEntityProvider {
     }
 
     @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        worldIn.setBlockState(pos, state.withProperty(FACING, getFacingFromEntity(pos, placer)), 2);
+    }
+
+    private static EnumFacing getFacingFromEntity(BlockPos clickedBlock, EntityLivingBase entityLivingBase) {
+        return EnumFacing.getFacingFromVector(
+                (float)(entityLivingBase.posX - clickedBlock.getX()),
+                (float)(entityLivingBase.posY - clickedBlock.getY()),
+                (float)(entityLivingBase.posZ - clickedBlock.getZ()));
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(FACING).getIndex();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING);
+    }
+
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
         if (WorldHelper.isClientWorld(worldIn))
@@ -76,9 +108,10 @@ public class BlockHeart extends Block implements ITileEntityProvider {
             }
 
             if (heldItem.getItem() instanceof ItemYaHammer) {
-                ScannedPattern scannedPattern = FactoryScanner.scanTier(worldIn, FactoryTier.TIER_1, pos, EnumFacing.SOUTH);
+                EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
 
-                PlayerHelper.sendChatMessage(playerIn, "Validating tier " + FactoryTier.TIER_1.toString());
+                PlayerHelper.sendChatMessage(playerIn, "Validating tier " + FactoryTier.TIER_1.toString() + " facing " + heartFacing);
+                ScannedPattern scannedPattern = FactoryScanner.scanTier(worldIn, FactoryTier.TIER_1, pos, heartFacing);
                 if (scannedPattern.hasBadBlocks()) {
                     for (ScannedPattern.BadLayoutBlockInfo info : scannedPattern.getBadBlocks()) {
                         if (info.reason == ScannedPattern.BadBlockReason.MISSING_BLOCK)
@@ -87,7 +120,13 @@ public class BlockHeart extends Block implements ITileEntityProvider {
                             PlayerHelper.sendChatMessage(playerIn, "Wrong block " + info.pos + " " + info.incorrectBlock + "->" + info.correctBlock);
                         else if (info.reason == ScannedPattern.BadBlockReason.INCORRECT_TYPE)
                             PlayerHelper.sendChatMessage(playerIn, "Wrong type " + info.pos + " " + info.incorrectBlock + "->" + info.correctBlock);
+                        else if (info.reason == ScannedPattern.BadBlockReason.INVALID_MOB)
+                            PlayerHelper.sendChatMessage(playerIn, "Controller has an invalid mob");
+                        else if (info.reason == ScannedPattern.BadBlockReason.MISSING_MOB)
+                            PlayerHelper.sendChatMessage(playerIn, "Controller is not programmed");
                     }
+                } else {
+                    PlayerHelper.sendChatMessage(playerIn, "Valid factory");
                 }
             }
         }

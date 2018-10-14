@@ -1,10 +1,13 @@
 package ipsis.woot.factory.structure.pattern;
 
+import ipsis.Woot;
+import ipsis.woot.blocks.TileEntityController;
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.FactoryTier;
-import ipsis.woot.util.helpers.LogHelper;
+import ipsis.woot.util.FakeMobKey;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -55,21 +58,47 @@ public class AbsolutePattern {
                 valid = false;
                 scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.INCORRECT_BLOCK, absoluteBlock.getFactoryBlock(), block);
                 continue;
-            }
-
-            if (factoryBlock != absoluteBlock.getFactoryBlock()) {
+            } else if (factoryBlock != absoluteBlock.getFactoryBlock()) {
                 valid = false;
                 scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.INCORRECT_TYPE, absoluteBlock.getFactoryBlock(), block);
                 continue;
             }
 
-            scanned.addGoodBlock(absoluteBlock.pos, absoluteBlock.getFactoryBlock());
             if (factoryBlock == FactoryBlock.CONTROLLER) {
-                // TODO set the mob
+                valid = compareController(world, absoluteBlock, scanned, block);
+            } else {
+                scanned.addGoodBlock(absoluteBlock.pos, absoluteBlock.getFactoryBlock());
             }
         }
 
         return scanned;
+    }
+
+    private boolean compareController(World world, AbsoluteBlock absoluteBlock, ScannedPattern scanned, Block block) {
+
+        boolean valid = true;
+        TileEntity te = world.getTileEntity(absoluteBlock.pos);
+        if (te instanceof TileEntityController) {
+            TileEntityController controller = (TileEntityController)te;
+            FakeMobKey fakeMobKey = controller.getFakeMobKey();
+            if (!fakeMobKey.isValid()) {
+                scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.MISSING_MOB, absoluteBlock.getFactoryBlock(), block);
+                valid = false;
+            } else if (!Woot.POLICY_MANAGER.canCaptureMob(fakeMobKey.getResourceLocation())) {
+                scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.INVALID_MOB, absoluteBlock.getFactoryBlock(), block);
+                valid = false;
+            } else {
+                // TODO INVALID_TIER
+                //scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.WRONG_TIER, absoluteBlock.getFactoryBlock(), block);
+                scanned.addGoodBlock(absoluteBlock.pos, absoluteBlock.getFactoryBlock());
+                scanned.setControllerMob(fakeMobKey);
+            }
+        } else {
+            scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.MISSING_BLOCK, absoluteBlock.getFactoryBlock(), Blocks.AIR);
+            valid = false;
+        }
+
+        return valid;
     }
 
     /**
@@ -80,6 +109,7 @@ public class AbsolutePattern {
     public @Nullable ScannedPattern compareToWorldQuick(@Nonnull World world) {
 
         boolean valid = true;
+        ScannedPattern scanned = new ScannedPattern(factoryTier);
         for (AbsoluteBlock absoluteBlock : blocks) {
             // Don't load an unloaded chunk
             if (!world.isBlockLoaded(absoluteBlock.pos)) {
@@ -94,9 +124,15 @@ public class AbsolutePattern {
                 valid = false;
                 break;
             }
+
+            scanned.addGoodBlock(absoluteBlock.pos, absoluteBlock.getFactoryBlock());
+            if (factoryBlock == FactoryBlock.CONTROLLER) {
+                if (!(valid = compareController(world, absoluteBlock, scanned, block)))
+                    break;
+            }
         }
 
-        return valid ? new ScannedPattern(factoryTier) : null;
+        return valid ? scanned : null;
     }
 
     public class AbsoluteBlock {

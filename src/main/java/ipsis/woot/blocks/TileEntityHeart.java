@@ -3,10 +3,11 @@ package ipsis.woot.blocks;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryLayout;
+import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
-public class TileEntityHeart extends TileEntity implements ITickable {
+public class TileEntityHeart extends TileEntity implements ITickable, IMultiBlockMaster {
 
     private SimpleTickTracker tickTracker;
     private FactoryLayout factoryLayout;
@@ -60,5 +61,12 @@ public class TileEntityHeart extends TileEntity implements ITickable {
                 }
             }
         }
+    }
+
+    /**
+     * IMultiBlockMaster
+     */
+    public void interrupt() {
+
     }
 }

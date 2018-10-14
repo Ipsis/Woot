@@ -48,19 +48,20 @@ public class FactoryLayout {
         } else if (scanned == null && rescanned != null) {
             // was nothing and now there is something
             Woot.debugging.trace(Debug.Group.BUILDING, "Hello new factory");
-            FactoryBuilder.connectNew();
+            FactoryBuilder.connectNew(rescanned);
+            scanned = rescanned;
             setChanged();
         } else if (scanned != null && rescanned == null) {
             // was something and now there is nothing
             Woot.debugging.trace(Debug.Group.BUILDING, "Goodbye factory");
-            FactoryBuilder.disconnectOld();
+            FactoryBuilder.disconnectOld(scanned);
             scanned = null;
             setChanged();
         } else if ((scanned != null && rescanned != null)) {
            // was something and there still is something but it might be different
             Woot.debugging.trace(Debug.Group.BUILDING, "Factory changed");
-            FactoryBuilder.disconnectOld();
-            FactoryBuilder.connectNew();
+            FactoryBuilder.disconnectOld(scanned);
+            FactoryBuilder.connectNew(rescanned);
             scanned = rescanned;
             setChanged();
         }

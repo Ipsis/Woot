@@ -71,6 +71,7 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileEntityHeart.class, Woot.MODID + ":heart");
         GameRegistry.registerTileEntity(TileEntityController.class, Woot.MODID + ":controller");
         GameRegistry.registerTileEntity(TileEntityLayout.class, Woot.MODID + ":layout");
+        GameRegistry.registerTileEntity(TileEntityStructure.class, Woot.MODID + ":structure");
     }
 
     @SubscribeEvent

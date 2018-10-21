@@ -1,9 +1,6 @@
 package ipsis.woot.blocks;
 
-import ipsis.woot.factory.structure.locator.Glue;
-import ipsis.woot.factory.structure.locator.IMultiBlockGlue;
-import ipsis.woot.factory.structure.locator.IMultiBlockGlueProvider;
-import ipsis.woot.factory.structure.locator.LocatorHelper;
+import ipsis.woot.factory.structure.locator.*;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 
@@ -22,7 +19,7 @@ public class TileEntityStructure extends TileEntity implements IMultiBlockGluePr
         super.validate();
         if (WorldHelper.isServerWorld(getWorld())) {
             // This must NOT use the TE version
-            TileEntityHeart master = LocatorHelper.findMasterNoTE(getWorld(), getPos());
+            IMultiBlockMaster master = LocatorHelper.findMasterNoTE(getWorld(), getPos());
             if (master != null)
                 master.interrupt();
         }

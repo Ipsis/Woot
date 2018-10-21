@@ -3,6 +3,9 @@ package ipsis.woot.util;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
 
@@ -55,6 +58,23 @@ public enum FactoryBlock {
             }
         }
         return null;
+    }
+
+    public static boolean isFactoryBlock(ItemStack itemStack) {
+
+        for (FactoryBlock curr : FactoryBlock.values()) {
+            ItemStack factoryStack = ModBlocks.getItemStackForFactoryBlock(curr);
+            if (factoryStack.getItem() == itemStack.getItem())
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean isSameFactoryBlock(FactoryBlock factoryBlock, ItemStack itemStack) {
+
+        ItemStack factoryStack = ModBlocks.getItemStackForFactoryBlock(factoryBlock);
+        return factoryStack.getItem() == itemStack.getItem();
     }
 
     public static boolean isPowerFactoryBlock(FactoryBlock factoryBlock) {

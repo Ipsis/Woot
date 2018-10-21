@@ -6,6 +6,7 @@ import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
 import ipsis.woot.items.ItemBlockController;
 import ipsis.woot.items.ItemEnderShard;
+import ipsis.woot.items.ItemIntern;
 import ipsis.woot.items.ItemYaHammer;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.util.FactoryBlock;
@@ -98,6 +99,7 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(ModBlocks.cap4Block).setRegistryName(ModBlocks.cap4Block.getRegistryName()));
         event.getRegistry().register(new ItemEnderShard());
         event.getRegistry().register(new ItemYaHammer());
+        event.getRegistry().register(new ItemIntern());
 
     }
 }

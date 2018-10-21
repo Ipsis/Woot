@@ -2,7 +2,6 @@ package ipsis.woot.factory.structure;
 
 import ipsis.Woot;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
-import ipsis.woot.factory.structure.pattern.FactoryPattern;
 import ipsis.woot.factory.structure.pattern.ScannedPattern;
 import ipsis.woot.util.FactoryTier;
 import net.minecraft.util.EnumFacing;
@@ -18,7 +17,7 @@ public class FactoryScanner {
      */
     public static ScannedPattern scanTier(World world, FactoryTier tier, BlockPos origin, EnumFacing facing) {
 
-        AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, FactoryPattern.FactoryPatternType.BASE, origin, facing);
+        AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, origin, facing);
         return absolutePattern.compareToWorld(world);
     }
 
@@ -29,7 +28,7 @@ public class FactoryScanner {
 
         ScannedPattern scannedPattern = null;
         for (FactoryTier tier : FactoryTier.values()) {
-            AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, FactoryPattern.FactoryPatternType.BASE, origin, facing);
+            AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, origin, facing);
             ScannedPattern tempPattern = absolutePattern.compareToWorldQuick(world);
             if (tempPattern != null) {
                 scannedPattern = tempPattern;

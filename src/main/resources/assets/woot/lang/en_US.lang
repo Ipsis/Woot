@@ -49,3 +49,24 @@ chat.woot.endershard.captured=Programmed shard
 info.woot.controller.empty=Unprogrammed
 
 item.woot.yahammer.name=Ya Hammer
+item.woot.intern.name=The Intern
+
+#################################
+# Chat
+#################################
+chat.woot.build.missing=Cannot find %s in inventory
+chat.woot.build.noreplace=Cannot replace %s at %s with %s
+chat.woot.validate.tier=Validating factory with tier %s facing %s
+chat.woot.validate.missing=Missing block %s at %s
+chat.woot.validate.wrongblock=Block %s at %s should be a %s
+chat.woot.validate.invalidmob=Controller is for mob %s which is not valid
+chat.woot.validate.missingmob=Controller is not programmed
+chat.woot.validate.ok=Valid %s factory
+
+#################################
+# Misc
+#################################
+misc.woot.tier_1=Tier 1
+misc.woot.tier_2=Tier 2
+misc.woot.tier_3=Tier 3
+misc.woot.tier_4=Tier 4

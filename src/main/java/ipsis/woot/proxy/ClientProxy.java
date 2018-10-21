@@ -56,5 +56,6 @@ public class ClientProxy extends CommonProxy {
 
         ModItems.enderShard.initModel();
         ModItems.yaHammer.initModel();
+        ModItems.intern.initModel();
     }
 }

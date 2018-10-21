@@ -1,15 +1,21 @@
 package ipsis.woot.blocks;
 
 import ipsis.Woot;
+import ipsis.woot.ModBlocks;
 import ipsis.woot.ModItems;
+import ipsis.woot.factory.structure.Factory;
+import ipsis.woot.factory.structure.FactoryBuilder;
 import ipsis.woot.factory.structure.FactoryScanner;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
 import ipsis.woot.factory.structure.pattern.ScannedPattern;
+import ipsis.woot.items.IBuilderItem;
+import ipsis.woot.items.ItemIntern;
 import ipsis.woot.items.ItemYaHammer;
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.FactoryTier;
 import ipsis.woot.util.WorldHelper;
 import ipsis.woot.util.helpers.PlayerHelper;
+import ipsis.woot.util.helpers.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -26,6 +32,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -110,24 +117,31 @@ public class BlockHeart extends Block implements ITileEntityProvider {
             if (heldItem.getItem() instanceof ItemYaHammer) {
                 EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
 
-                PlayerHelper.sendChatMessage(playerIn, "Validating tier " + FactoryTier.TIER_1.toString() + " facing " + heartFacing);
-                ScannedPattern scannedPattern = FactoryScanner.scanTier(worldIn, FactoryTier.TIER_1, pos, heartFacing);
+                // TODO get the tier
+                FactoryTier tier = FactoryTier.TIER_1;
+
+                PlayerHelper.sendChatMessage(playerIn, StringHelper.localise("chat.woot.validate.tier", tier.getLocalisedName(), heartFacing.getName()));
+                ScannedPattern scannedPattern = FactoryScanner.scanTier(worldIn, tier, pos, heartFacing);
                 if (scannedPattern.hasBadBlocks()) {
                     for (ScannedPattern.BadLayoutBlockInfo info : scannedPattern.getBadBlocks()) {
-                        if (info.reason == ScannedPattern.BadBlockReason.MISSING_BLOCK)
-                            PlayerHelper.sendChatMessage(playerIn, "Missing block " + info.pos);
-                        else if (info.reason == ScannedPattern.BadBlockReason.INCORRECT_BLOCK)
-                            PlayerHelper.sendChatMessage(playerIn, "Wrong block " + info.pos + " " + info.incorrectBlock + "->" + info.correctBlock);
-                        else if (info.reason == ScannedPattern.BadBlockReason.INCORRECT_TYPE)
-                            PlayerHelper.sendChatMessage(playerIn, "Wrong type " + info.pos + " " + info.incorrectBlock + "->" + info.correctBlock);
-                        else if (info.reason == ScannedPattern.BadBlockReason.INVALID_MOB)
-                            PlayerHelper.sendChatMessage(playerIn, "Controller has an invalid mob");
-                        else if (info.reason == ScannedPattern.BadBlockReason.MISSING_MOB)
-                            PlayerHelper.sendChatMessage(playerIn, "Controller is not programmed");
+                        if (info.reason == ScannedPattern.BadBlockReason.MISSING_BLOCK) {
+                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.missing", ModBlocks.getBlockFromFactoryBlock(info.correctBlock).getLocalizedName(), info.pos));
+                        } else if (info.reason == ScannedPattern.BadBlockReason.INCORRECT_BLOCK || info.reason == ScannedPattern.BadBlockReason.INCORRECT_TYPE) {
+                            Block c = ModBlocks.getBlockFromFactoryBlock(info.correctBlock);
+                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.wrongblock", info.incorrectBlock.getLocalizedName(), info.pos, c.getLocalizedName()));
+                        } else if (info.reason == ScannedPattern.BadBlockReason.INVALID_MOB) {
+                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.invalidmod", "TODO"));
+                        } else if (info.reason == ScannedPattern.BadBlockReason.MISSING_MOB) {
+                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.missingmob"));
+                        }
                     }
                 } else {
-                    PlayerHelper.sendChatMessage(playerIn, "Valid factory");
+                    PlayerHelper.sendChatMessage(TextFormatting.GREEN, playerIn, StringHelper.localise("chat.woot.validate.ok", tier.getLocalisedName()));
                 }
+            } else if (heldItem.getItem() instanceof IBuilderItem) {
+                EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
+                AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(worldIn, ((IBuilderItem)heldItem.getItem()).getTier(), pos, heartFacing);
+                FactoryBuilder.autoBuildSingleBlock(playerIn, worldIn, absolutePattern);
             }
         }
 

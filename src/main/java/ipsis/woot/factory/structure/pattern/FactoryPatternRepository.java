@@ -127,7 +127,7 @@ public class FactoryPatternRepository {
     }
 
 
-    public AbsolutePattern createAbsolutePattern(World world, FactoryTier factoryTier, FactoryPattern.FactoryPatternType factoryPatternType , BlockPos origin, EnumFacing facing) {
+    public AbsolutePattern createAbsolutePattern(World world, FactoryTier factoryTier, BlockPos origin, EnumFacing facing) {
 
         FactoryPattern factoryPattern = patterns.get(factoryTier);
         AbsolutePattern absolutePattern = new AbsolutePattern(factoryTier);

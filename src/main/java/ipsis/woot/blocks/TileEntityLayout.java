@@ -2,7 +2,6 @@ package ipsis.woot.blocks;
 
 import ipsis.Woot;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
-import ipsis.woot.factory.structure.pattern.FactoryPattern;
 import ipsis.woot.util.FactoryTier;
 import ipsis.woot.util.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
@@ -32,7 +31,7 @@ public class TileEntityLayout extends TileEntity {
 
         // Now offset the layout by 1 so the factory display is BELOW the guide block
         BlockPos pos = getPos().down(1);
-        absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(getWorld(), FactoryTier.TIER_1, FactoryPattern.FactoryPatternType.BASE, pos, facing);
+        absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(getWorld(), FactoryTier.TIER_1, pos, facing);
     }
 
     public AbsolutePattern getAbsolutePattern() { return this.absolutePattern; }

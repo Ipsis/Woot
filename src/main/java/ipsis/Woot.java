@@ -92,4 +92,7 @@ public class Woot {
         Woot.DROP_MANAGER.shutdown();
     }
 
+    @Mod.EventHandler
+    public void onFMLModIdMappingEvent(FMLModIdMappingEvent event) { ModBlocks.setupFactoryBlockMapping(); }
+
 }

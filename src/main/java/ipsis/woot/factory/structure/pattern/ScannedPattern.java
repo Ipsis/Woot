@@ -60,7 +60,7 @@ public class ScannedPattern {
      */
     private List<BadLayoutBlockInfo> badBlocks = new ArrayList<>();
     public List<BadLayoutBlockInfo> getBadBlocks() { return this.badBlocks; }
-    public boolean hasBadBlocks() { return !this.badBlocks.isEmpty(); }
+    private boolean hasBadBlocks() { return !this.badBlocks.isEmpty(); }
     public void addBadBlock(BlockPos pos, BadBlockReason reason, FactoryBlock correctBlock, Block incorrectBlock) {
         badBlocks.add(new BadLayoutBlockInfo(new BlockPos(pos), reason, correctBlock, incorrectBlock));
     }

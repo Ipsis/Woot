@@ -51,6 +51,15 @@ info.woot.controller.empty=Unprogrammed
 item.woot.yahammer.name=Ya Hammer
 item.woot.intern.name=The Intern
 
+item.woot.builder.mode.build_1=Build Tier 1
+item.woot.builder.mode.build_2=Build Tier 2
+item.woot.builder.mode.build_3=Build Tier 3
+item.woot.builder.mode.build_4=Build Tier 4
+item.woot.builder.mode.validate_1=Validate Tier 1
+item.woot.builder.mode.validate_2=Validate Tier 2
+item.woot.builder.mode.validate_3=Validate Tier 3
+item.woot.builder.mode.validate_4=Validate Tier 4
+
 #################################
 # Chat
 #################################
@@ -61,7 +70,7 @@ chat.woot.validate.missing=Missing block %s at %s
 chat.woot.validate.wrongblock=Block %s at %s should be a %s
 chat.woot.validate.invalidmob=Controller is for mob %s which is not valid
 chat.woot.validate.missingmob=Controller is not programmed
-chat.woot.validate.ok=Valid %s factory
+chat.woot.validate.ok=Valid %s %s factory
 
 #################################
 # Misc

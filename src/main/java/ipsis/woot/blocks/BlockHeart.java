@@ -14,6 +14,7 @@ import ipsis.woot.items.ItemYaHammer;
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.FactoryTier;
 import ipsis.woot.util.WorldHelper;
+import ipsis.woot.util.helpers.BuilderHelper;
 import ipsis.woot.util.helpers.PlayerHelper;
 import ipsis.woot.util.helpers.StringHelper;
 import net.minecraft.block.Block;
@@ -35,6 +36,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -107,41 +110,47 @@ public class BlockHeart extends Block implements ITileEntityProvider {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TileEntityHeart) {
             TileEntityHeart heart = (TileEntityHeart)te;
-            ItemStack heldItem = playerIn.getHeldItemMainhand();
+            ItemStack heldItemStack = playerIn.getHeldItemMainhand();
+            Item heldItem = heldItemStack.getItem();
 
-            if (heldItem.isEmpty()) {
+            if (heldItemStack.isEmpty()) {
                 // TODO show gui
                 return true;
             }
 
-            if (heldItem.getItem() instanceof ItemYaHammer) {
-                EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
+            if (heldItem instanceof IBuilderItem) {
 
-                // TODO get the tier
-                FactoryTier tier = FactoryTier.TIER_1;
-
-                PlayerHelper.sendChatMessage(playerIn, StringHelper.localise("chat.woot.validate.tier", tier.getLocalisedName(), heartFacing.getName()));
-                ScannedPattern scannedPattern = FactoryScanner.scanTier(worldIn, tier, pos, heartFacing);
-                if (scannedPattern.hasBadBlocks()) {
-                    for (ScannedPattern.BadLayoutBlockInfo info : scannedPattern.getBadBlocks()) {
-                        if (info.reason == ScannedPattern.BadBlockReason.MISSING_BLOCK) {
-                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.missing", ModBlocks.getBlockFromFactoryBlock(info.correctBlock).getLocalizedName(), info.pos));
-                        } else if (info.reason == ScannedPattern.BadBlockReason.INCORRECT_BLOCK || info.reason == ScannedPattern.BadBlockReason.INCORRECT_TYPE) {
-                            Block c = ModBlocks.getBlockFromFactoryBlock(info.correctBlock);
-                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.wrongblock", info.incorrectBlock.getLocalizedName(), info.pos, c.getLocalizedName()));
-                        } else if (info.reason == ScannedPattern.BadBlockReason.INVALID_MOB) {
-                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.invalidmod", "TODO"));
-                        } else if (info.reason == ScannedPattern.BadBlockReason.MISSING_MOB) {
-                            PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.missingmob"));
+                IBuilderItem iBuilderItem = (IBuilderItem)heldItem;
+                FactoryTier tier = iBuilderItem.getTier(heldItemStack);
+                if (iBuilderItem.getBuilderMode(heldItemStack).isValidateMode()) {
+                    EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
+                    PlayerHelper.sendChatMessage(playerIn, StringHelper.localise("chat.woot.validate.tier", tier.getLocalisedName(), heartFacing.getName()));
+                    ScannedPattern scannedPattern = FactoryScanner.scanTier(worldIn, tier, pos, heartFacing);
+                    if (!scannedPattern.isComplete()) {
+                        for (ScannedPattern.BadLayoutBlockInfo info : scannedPattern.getBadBlocks()) {
+                            if (info.reason == ScannedPattern.BadBlockReason.MISSING_BLOCK) {
+                                PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.missing", ModBlocks.getBlockFromFactoryBlock(info.correctBlock).getLocalizedName(), info.pos));
+                            } else if (info.reason == ScannedPattern.BadBlockReason.INCORRECT_BLOCK || info.reason == ScannedPattern.BadBlockReason.INCORRECT_TYPE) {
+                                Block c = ModBlocks.getBlockFromFactoryBlock(info.correctBlock);
+                                PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.wrongblock", info.incorrectBlock.getLocalizedName(), info.pos, c.getLocalizedName()));
+                            } else if (info.reason == ScannedPattern.BadBlockReason.INVALID_MOB) {
+                                PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.invalidmod", "TODO"));
+                            } else if (info.reason == ScannedPattern.BadBlockReason.MISSING_MOB) {
+                                PlayerHelper.sendChatMessage(TextFormatting.RED, playerIn, StringHelper.localise("chat.woot.validate.missingmob"));
+                            }
                         }
+                    } else {
+                        String displayName = "";
+                        EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(scannedPattern.getControllerMob().getResourceLocation());
+                        if (entityEntry != null)
+                            displayName = "entity." + entityEntry.getName() + ".name";
+                        PlayerHelper.sendChatMessage(TextFormatting.GREEN, playerIn, StringHelper.localise("chat.woot.validate.ok", tier.getLocalisedName(), StringHelper.localise(displayName)));
                     }
-                } else {
-                    PlayerHelper.sendChatMessage(TextFormatting.GREEN, playerIn, StringHelper.localise("chat.woot.validate.ok", tier.getLocalisedName()));
+                } else if (iBuilderItem.getBuilderMode(heldItemStack).isBuildMode()) {
+                    EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
+                    AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(worldIn, tier, pos, heartFacing);
+                    FactoryBuilder.autoBuildSingleBlock(playerIn, worldIn, absolutePattern);
                 }
-            } else if (heldItem.getItem() instanceof IBuilderItem) {
-                EnumFacing heartFacing = worldIn.getBlockState(pos).getValue(FACING);
-                AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(worldIn, ((IBuilderItem)heldItem.getItem()).getTier(), pos, heartFacing);
-                FactoryBuilder.autoBuildSingleBlock(playerIn, worldIn, absolutePattern);
             }
         }
 

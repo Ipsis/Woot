@@ -9,6 +9,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class FactoryLayout {
 
     private World world;
@@ -36,6 +38,8 @@ public class FactoryLayout {
     public void clearChanged() { this.changed = false; }
     public void setChanged() { this.changed = true; }
 
+    public @Nullable ScannedPattern getScanned() { return this.scanned; }
+
     private void handleDirtyLayout() {
 
         /**
@@ -48,20 +52,20 @@ public class FactoryLayout {
         } else if (scanned == null && rescanned != null) {
             // was nothing and now there is something
             Woot.debugging.trace(Debug.Group.BUILDING, "Hello new factory");
-            FactoryBuilder.connectNew(rescanned);
+            FactoryBuilder.connectNew(world, pos, rescanned);
             scanned = rescanned;
             setChanged();
         } else if (scanned != null && rescanned == null) {
             // was something and now there is nothing
             Woot.debugging.trace(Debug.Group.BUILDING, "Goodbye factory");
-            FactoryBuilder.disconnectOld(scanned);
+            FactoryBuilder.disconnectOld(world, pos, scanned);
             scanned = null;
             setChanged();
         } else if ((scanned != null && rescanned != null)) {
            // was something and there still is something but it might be different
             Woot.debugging.trace(Debug.Group.BUILDING, "Factory changed");
-            FactoryBuilder.disconnectOld(scanned);
-            FactoryBuilder.connectNew(rescanned);
+            FactoryBuilder.disconnectOld(world, pos, scanned);
+            FactoryBuilder.connectNew(world, pos, rescanned);
             scanned = rescanned;
             setChanged();
         }
@@ -75,7 +79,7 @@ public class FactoryLayout {
 
         if (dirtyLayout) {
             handleDirtyLayout();
-            tickTracker.resetStructureTickCount();;
+            tickTracker.resetStructureTickCount();
             dirtyLayout = false;
         }
     }

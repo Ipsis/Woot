@@ -2,7 +2,7 @@ package ipsis.woot.items;
 
 import ipsis.Woot;
 import ipsis.woot.util.FactoryTier;
-import ipsis.woot.util.WorldHelper;
+import ipsis.woot.util.helpers.WorldHelper;
 import ipsis.woot.util.helpers.BuilderHelper;
 import ipsis.woot.util.helpers.PlayerHelper;
 import ipsis.woot.util.helpers.StringHelper;

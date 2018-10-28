@@ -109,25 +109,25 @@ public class PolicyManager implements IPolicy {
 
         if (internalPolicy.captureFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod %s blacklisted (internal)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod {} blacklisted (internal)", resourceLocation.getResourceDomain());
             return false;
         }
 
         if (internalPolicy.captureEntityBlacklist.contains(resourceLocation.getResourcePath())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity %s blacklisted (internal)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity {} blacklisted (internal)", resourceLocation.getResourcePath());
             return false;
         }
 
         if (externalPolicy.captureFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod %s blacklisted (external)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod {} blacklisted (external)", resourceLocation.getResourceDomain());
             return false;
         }
 
         if (externalPolicy.captureEntityBlacklist.contains(resourceLocation.getResourcePath())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity %s blacklisted (external)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity {} blacklisted (external)", resourceLocation.getResourcePath());
             return false;
         }
 
@@ -159,25 +159,25 @@ public class PolicyManager implements IPolicy {
 
         if (internalPolicy.learnFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod %s blacklisted (internal)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod {} blacklisted (internal)", resourceLocation.getResourceDomain());
             return false;
         }
 
         if (internalPolicy.learnItemBlacklist.contains(resourceLocation.getResourcePath())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item %s blacklisted (internal)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item {} blacklisted (internal)", resourceLocation.getResourcePath());
             return false;
         }
 
         if (externalPolicy.learnFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod %s blacklisted (external)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod {} blacklisted (external)", resourceLocation.getResourceDomain());
             return false;
         }
 
         if (externalPolicy.learnItemBlacklist.contains(resourceLocation.getResourcePath())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item %s blacklisted (external)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item {} blacklisted (external)", resourceLocation.getResourcePath());
             return false;
         }
 
@@ -187,7 +187,7 @@ public class PolicyManager implements IPolicy {
     @Override
     public boolean canDropItem(ItemStack itemStack) {
 
-        if (itemStack == null)
+        if (itemStack == null || itemStack.isEmpty())
             return false;
 
         ResourceLocation resourceLocation = itemStack.getItem().getRegistryName();
@@ -196,16 +196,16 @@ public class PolicyManager implements IPolicy {
 
         if (externalPolicy.dropFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: mod %s blacklisted (external)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: mod {} blacklisted (external)", resourceLocation.getResourceDomain());
             return false;
         }
 
         if (externalPolicy.dropItemBlacklist.contains(resourceLocation.getResourcePath())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: item %s blacklisted (external)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: item {} blacklisted (external)", resourceLocation.getResourcePath());
             return false;
         }
 
-        return false;
+        return true;
     }
 }

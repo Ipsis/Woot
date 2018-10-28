@@ -61,7 +61,7 @@ public class DropManager implements IDropProvider, IDropLearning {
     public void learnSilent(@Nonnull FakeMobKey fakeMobKey, int looting, @Nonnull List<ItemStack> drops) {
 
         if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-            Woot.debugging.trace(Debug.Group.LEARN, "DropManager:learnSilent %s/%d/%s",fakeMobKey, looting, drops);
+            Woot.debugging.trace(Debug.Group.LEARN, "DropManager:learnSilent {}/{}/{}",fakeMobKey, looting, drops);
 
         looting = MiscUtils.clampLooting(looting);
         learnedDrops.learnSilent(fakeMobKey, looting, drops);
@@ -71,7 +71,7 @@ public class DropManager implements IDropProvider, IDropLearning {
     public void learn(@Nonnull FakeMobKey fakeMobKey, int looting, @Nonnull List<ItemStack> drops) {
 
         if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-            Woot.debugging.trace(Debug.Group.LEARN, "DropManager:learn %s/%d/%s",fakeMobKey, looting, drops);
+            Woot.debugging.trace(Debug.Group.LEARN, "DropManager:learn {}/{}/{}",fakeMobKey, looting, drops);
 
         looting = MiscUtils.clampLooting(looting);
         learnedDrops.learn(fakeMobKey, looting, drops);

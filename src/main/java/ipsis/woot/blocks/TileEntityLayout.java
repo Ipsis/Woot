@@ -3,7 +3,7 @@ package ipsis.woot.blocks;
 import ipsis.Woot;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
 import ipsis.woot.util.FactoryTier;
-import ipsis.woot.util.WorldHelper;
+import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;

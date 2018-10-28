@@ -1,10 +1,19 @@
 package ipsis.woot.util;
 
+import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
+/**
+ * This class represents a Minecraft mob that can be spawned in a Woot factory.
+ * Each mob is stored as its "mod:mob[,tag]" name eg. "minecraft:creeper"
+ * A tag is also allowed to be used to add extra information. This used to be used for the Wither skeleton
+ * which wasn't a unique entity so became "minecraft:skeleton,wither".
+ *
+ * There is no guarantee that the FakeMobKey is a valid entity, as that depends on the main EntityList.
+ */
 public class FakeMobKey {
 
     private static final String INVALID_ENTITY_KEY = "INVALID";
@@ -41,9 +50,13 @@ public class FakeMobKey {
     public String getEntityKey() { return entityKey; }
     public String getTag() { return tag; }
     public String getName() { return name; }
+
+    /**
+     * This does not guarantee that an entity can be created from this FakeMobKey
+     */
     public boolean isValid() { return !this.entityKey.equals(INVALID_ENTITY_KEY); }
 
-    public ResourceLocation getResourceLocation() { return new ResourceLocation(entityKey); }
+    public @Nonnull ResourceLocation getResourceLocation() { return new ResourceLocation(entityKey); }
 
     @Override
     public boolean equals(Object obj) {
@@ -83,6 +96,16 @@ public class FakeMobKey {
             tagCompound.setString(NBT_FAKE_MOB_KEY_ENTITY, fakeMobKey.getEntityKey());
             tagCompound.setString(NBT_FAKE_MOB_KEY_TAG, fakeMobKey.getTag());
         }
+    }
+
+    /**
+     * Checks to see if the key represents a valid entity in the entity list.
+     * NB the entity list contains mobs and other world entities such as lightning bolts
+     * @return true if the key is in the EntityList
+     */
+    public static boolean isInEntityList(FakeMobKey fakeMobKey) {
+
+        return EntityList.isRegistered(fakeMobKey.getResourceLocation());
     }
 
 }

@@ -1,6 +1,8 @@
 package ipsis.woot.factory.structure;
 
 import ipsis.woot.ModBlocks;
+import ipsis.woot.factory.structure.locator.IMultiBlockGlueProvider;
+import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
 import ipsis.woot.factory.structure.pattern.ScannedPattern;
 import ipsis.woot.util.FactoryBlock;
@@ -9,6 +11,8 @@ import ipsis.woot.util.helpers.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -16,14 +20,28 @@ import javax.annotation.Nonnull;
 
 public class FactoryBuilder {
 
-    public static void disconnectOld(ScannedPattern scannedPattern) {
+    public static void disconnectOld(World world, BlockPos origin, ScannedPattern scannedPattern) {
 
+        for (BlockPos pos : scannedPattern.getBlocks()) {
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof IMultiBlockGlueProvider)
+                    ((IMultiBlockGlueProvider)te).getIMultiBlockGlue().clearMaster();
+            }
+        }
     }
 
-    public static void connectNew(ScannedPattern scannedPattern) {
+    public static void connectNew(World world, BlockPos origin, ScannedPattern scannedPattern) {
 
+        IMultiBlockMaster master = (IMultiBlockMaster)world.getTileEntity(origin);
 
-
+        for (BlockPos pos : scannedPattern.getBlocks()) {
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof IMultiBlockGlueProvider)
+                    ((IMultiBlockGlueProvider)te).getIMultiBlockGlue().setMaster(master);
+            }
+        }
     }
 
     /**

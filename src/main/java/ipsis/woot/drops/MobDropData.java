@@ -48,6 +48,8 @@ public class MobDropData {
         public void addSizeDropChance(int stackSize, float dropChance) {
             sizeChances.put(stackSize, dropChance);
         }
+        public ItemStack getItemStack() { return this.itemStack.copy(); }
+        public float getDropChance() { return this.dropChance; }
 
         @Override
         public String toString() {

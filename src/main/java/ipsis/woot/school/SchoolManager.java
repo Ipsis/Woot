@@ -25,7 +25,7 @@ public class SchoolManager {
         if (Woot.DROP_MANAGER.isLearningComplete(fakeMobKey, looting)) {
             // already taught
             if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob already taught + %s/%s", fakeMobKey, looting);
+                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob already taught + {}/{}", fakeMobKey, looting);
             return;
         }
 
@@ -33,7 +33,7 @@ public class SchoolManager {
         if (pupils.containsKey(key)) {
             // currently teaching
             if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob currently teaching %s/%s", fakeMobKey, looting);
+                Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:teachMob currently teaching {}/{}", fakeMobKey, looting);
             return;
         }
 
@@ -77,7 +77,7 @@ public class SchoolManager {
                      * No more learning needed
                      */
                     if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick free %s", key);
+                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick free {}", key);
 
                     TartarusManager.freeCell(pupil.getCellId());
                     pupil.cellId = INVALID_CELL_ID;
@@ -87,7 +87,7 @@ public class SchoolManager {
                      * Continue learning
                       */
                     if (Woot.debugging.isEnabled(Debug.Group.LEARN))
-                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick spawnKill %s@cell%d", key, pupil.getCellId());
+                        Woot.debugging.trace(Debug.Group.LEARN, "SchoolManager:tick spawnKill {}@cell{}", key, pupil.getCellId());
 
                     TartarusManager.spawnKill(pupil.getCellId());
                 }

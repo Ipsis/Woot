@@ -19,7 +19,7 @@ public class LivingDropsEventHandler {
     public void onLivingDropsEvent(LivingDropsEvent event) {
 
         if (Woot.debugging.isEnabled(Debug.Group.EVENT))
-            Woot.debugging.trace(Debug.Group.EVENT, "onLivingDropsEvent %s %s %d", event.getEntity(), event.getSource(), event.getLootingLevel());
+            Woot.debugging.trace(Debug.Group.EVENT, "onLivingDropsEvent {} {} {}", event.getEntity(), event.getSource(), event.getLootingLevel());
 
         if (!(event.getEntity() instanceof EntityLiving))
             return;

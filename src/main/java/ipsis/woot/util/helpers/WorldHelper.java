@@ -1,4 +1,4 @@
-package ipsis.woot.util;
+package ipsis.woot.util.helpers;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

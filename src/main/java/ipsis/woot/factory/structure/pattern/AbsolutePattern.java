@@ -33,13 +33,13 @@ public class AbsolutePattern {
         return Collections.unmodifiableList(blocks);
     }
 
-    /**
-     * Compare this pattern with the world state
-     * Reports all incorrect blocks
-     * ALWAYS returns the scanned information
-     */
     boolean valid = true;
-    public ScannedPattern compareToWorld(@Nonnull World world) {
+
+    /**
+     * Compares the full pattern to the current world state and reports all incorrect blocks.
+     * @return the scanned pattern which may not be complete
+     */
+    public @Nonnull ScannedPattern compareToWorld(@Nonnull World world) {
 
         ScannedPattern scanned = new ScannedPattern(factoryTier);
 
@@ -88,8 +88,6 @@ public class AbsolutePattern {
                 scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.INVALID_MOB, absoluteBlock.getFactoryBlock(), block);
                 valid = false;
             } else {
-                // TODO INVALID_TIER
-                //scanned.addBadBlock(absoluteBlock.pos, ScannedPattern.BadBlockReason.WRONG_TIER, absoluteBlock.getFactoryBlock(), block);
                 scanned.addGoodBlock(absoluteBlock.pos, absoluteBlock.getFactoryBlock());
                 scanned.setControllerMob(fakeMobKey);
             }
@@ -105,6 +103,12 @@ public class AbsolutePattern {
      * Compare this pattern with the world state
      * Returns the minute a bad block is found and doesn't report incorrect block positions
      * ie. All the blocks have to be present
+     */
+
+    /**
+     * Compare this pattern with the world state
+     * Will return on the first bad block is found and doesn't report incorrect block positions
+     * @return the scanned pattern if everything is present or null on the first incorrect block.
      */
     public @Nullable ScannedPattern compareToWorldQuick(@Nonnull World world) {
 

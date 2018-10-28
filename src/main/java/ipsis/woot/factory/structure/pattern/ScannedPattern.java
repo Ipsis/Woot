@@ -9,6 +9,14 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The result of scanning an area for a specific tier
+ *
+ * The scan can be successful or unsuccessful.
+ * When it is successful then isComplete will be true.
+ * When it is unsuccessful then there will be entries in the bad blocks list and you must check with the hasX methods
+ * before accessing anything other than the methods getBlocks or getBadBlocks.
+ */
 public class ScannedPattern {
 
     // The tier we failed or succeeded to validate
@@ -70,8 +78,7 @@ public class ScannedPattern {
         INCORRECT_BLOCK,
         INCORRECT_TYPE,
         INVALID_MOB,
-        MISSING_MOB,
-        WRONG_TIER
+        MISSING_MOB;
     }
 
     public class BadLayoutBlockInfo {

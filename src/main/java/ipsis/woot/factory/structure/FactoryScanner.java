@@ -8,21 +8,23 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class FactoryScanner {
 
     /**
-     * Scan for the specific tier and report and errors
+     * Scan for the specific tier. The will always return a scanned pattern, however it may or may not be complete.
      */
-    public static ScannedPattern scanTier(World world, FactoryTier tier, BlockPos origin, EnumFacing facing) {
+    public static @Nonnull ScannedPattern scanTier(World world, FactoryTier tier, BlockPos origin, EnumFacing facing) {
 
         AbsolutePattern absolutePattern = Woot.PATTERN_REPOSITORY.createAbsolutePattern(world, tier, origin, facing);
         return absolutePattern.compareToWorld(world);
     }
 
     /**
-     * Scan each possible tier looking for a match
+     * Scans each possible tier looking for an exact match.
+     * @return the scanned blocks or null if no match was found
      */
     public static @Nullable ScannedPattern scan(World world, BlockPos origin, EnumFacing facing) {
 

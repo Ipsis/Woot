@@ -14,9 +14,8 @@ import static ipsis.woot.util.FakeMobKey.NBT_FAKE_MOB_KEY_TAG;
 public class FakeMobKeyFactory {
 
     /**
-     * Create a new FakeMobKey from an existing entity
-     * @param entityLiving
-     * @return
+     * Create a new FakeMobKey from an existing EntityLiving
+     * @return valid FakeMobKey or invalid FakeMobKey if EntityLiving not present in the EntityList
      */
     public static @Nonnull FakeMobKey createFromEntity(@Nonnull EntityLiving entityLiving) {
 
@@ -32,28 +31,28 @@ public class FakeMobKeyFactory {
 
     /**
      * Create a new FakeMobKey from a token string
-     * The token string must be valid, but the entity does not have to be present
-     * @param pattern "entity" or "entity,key"
+     * No check is made against the EntityList
+     * @param entityName "entity" or "entity,key"
+     * @return valid FakeMobKey or invalid FakeMobKey if pattern not valid
      */
-    public static @Nonnull FakeMobKey createFromPattern(@Nonnull String pattern) {
-
-       FakeMobKey fakeMobKey;
-       String[] parts = pattern.split(Pattern.quote(","));
-       if (parts.length == 1)
-           fakeMobKey = new FakeMobKey(parts[0]);
-       else if (parts.length == 2)
-           fakeMobKey = new FakeMobKey(parts[0], parts[1]);
-       else
-           fakeMobKey = new FakeMobKey();
-
-       return fakeMobKey;
-    }
-
     public static @Nonnull FakeMobKey createFromString(@Nonnull String entityName) {
 
-        return new FakeMobKey(entityName);
+        FakeMobKey fakeMobKey;
+        String[] parts = entityName.split(Pattern.quote(","));
+        if (parts.length == 1)
+            fakeMobKey = new FakeMobKey(parts[0]);
+        else if (parts.length == 2)
+            fakeMobKey = new FakeMobKey(parts[0], parts[1]);
+        else
+            fakeMobKey = new FakeMobKey();
+
+        return fakeMobKey;
     }
 
+    /**
+     * Create a new FakeMobKey from NBT data
+     * @return valid FakeMobKey or invalid FakeMobKey if NBT not present
+     */
     public static @Nonnull FakeMobKey createFromNBT(NBTTagCompound tagCompound) {
 
         if (tagCompound == null || !tagCompound.hasKey(NBT_FAKE_MOB_KEY_ENTITY) || !tagCompound.hasKey(NBT_FAKE_MOB_KEY_TAG))

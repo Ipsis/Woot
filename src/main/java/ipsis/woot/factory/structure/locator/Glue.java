@@ -1,6 +1,6 @@
 package ipsis.woot.factory.structure.locator;
 
-import ipsis.woot.util.WorldHelper;
+import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

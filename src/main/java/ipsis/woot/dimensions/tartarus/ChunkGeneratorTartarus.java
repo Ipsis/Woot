@@ -31,7 +31,7 @@ public class ChunkGeneratorTartarus implements IChunkGenerator {
     public Chunk generateChunk(int x, int z) {
 
         if (Woot.debugging.isEnabled(Debug.Group.TARTARUS))
-            Woot.debugging.trace(Debug.Group.TARTARUS, "ChunkGeneratorTartarus:generateChunk %d:%d", x, z);
+            Woot.debugging.trace(Debug.Group.TARTARUS, "ChunkGeneratorTartarus:generateChunk {}:{}", x, z);
 
         ChunkPrimer primer = new ChunkPrimer();
         this.biomes = this.world.getBiomeProvider().getBiomes(this.biomes, x * 16, z * 16, 16, 16);
@@ -68,7 +68,7 @@ public class ChunkGeneratorTartarus implements IChunkGenerator {
     public void populate(int x, int z) {
 
         if (Woot.debugging.isEnabled(Debug.Group.TARTARUS))
-            Woot.debugging.trace(Debug.Group.TARTARUS, "ChunkGeneratorTartarus:populate %d:%d", x, z);
+            Woot.debugging.trace(Debug.Group.TARTARUS, "ChunkGeneratorTartarus:populate {}:{}", x, z);
 
         TartarusManager.build(this.world, x, z);
     }

@@ -1,7 +1,7 @@
 package ipsis.woot.blocks;
 
 import ipsis.woot.factory.structure.locator.*;
-import ipsis.woot.util.WorldHelper;
+import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 
 import javax.annotation.Nonnull;

@@ -5,6 +5,7 @@ import ipsis.woot.ModBlocks;
 import ipsis.woot.ModWorlds;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.drops.DropManager;
+import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.event.ServerTickEventHandler;
 import ipsis.woot.factory.structure.pattern.FactoryPatternRepository;
 import ipsis.woot.policy.PolicyManager;
@@ -52,6 +53,7 @@ public class Woot {
     public static final DropManager DROP_MANAGER = new DropManager();
     public static final PolicyManager POLICY_MANAGER = new PolicyManager();
     public static final FactoryPatternRepository PATTERN_REPOSITORY = new FactoryPatternRepository();
+    public static final LootGenerator LOOT_GENERATOR = new LootGenerator();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -69,6 +71,7 @@ public class Woot {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
+        LOOT_GENERATOR.initialise();
     }
 
     @Mod.EventHandler

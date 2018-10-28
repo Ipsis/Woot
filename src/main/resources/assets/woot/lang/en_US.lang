@@ -50,6 +50,7 @@ info.woot.controller.empty=Unprogrammed
 
 item.woot.yahammer.name=Ya Hammer
 item.woot.intern.name=The Intern
+item.woot.debug.name=Debug Tool
 
 item.woot.builder.mode.build_1=Build Tier 1
 item.woot.builder.mode.build_2=Build Tier 2

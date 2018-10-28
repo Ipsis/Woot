@@ -1,5 +1,6 @@
 package ipsis.woot;
 
+import ipsis.woot.items.ItemDebug;
 import ipsis.woot.items.ItemEnderShard;
 import ipsis.woot.items.ItemIntern;
 import ipsis.woot.items.ItemYaHammer;
@@ -15,4 +16,7 @@ public class ModItems {
 
     @GameRegistry.ObjectHolder("woot:intern")
     public static final ItemIntern intern = null;
+
+    @GameRegistry.ObjectHolder("woot:debug")
+    public static final ItemDebug debug = null;
 }

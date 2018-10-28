@@ -11,12 +11,15 @@ import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryConfigBuilder;
 import ipsis.woot.factory.structure.FactoryLayout;
 import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
+import ipsis.woot.util.IDebug;
 import ipsis.woot.util.helpers.ConnectedCapHelper;
 import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
-public class TileEntityHeart extends TileEntity implements ITickable, IMultiBlockMaster {
+import java.util.List;
+
+public class TileEntityHeart extends TileEntity implements ITickable, IMultiBlockMaster, IDebug {
 
     private SimpleTickTracker tickTracker;
     private FactoryLayout factoryLayout; // The factory blocks and where they are
@@ -96,5 +99,21 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
     public void interrupt() {
         if (factoryLayout != null)
             factoryLayout.setDirtyLayout();
+    }
+
+    /**
+     * IDebug
+     */
+    @Override
+    public void getDebugText(List<String> debug) {
+
+        if (factoryLayout != null && factoryLayout.isFormed()) {
+            debug.add("Formed:" + factoryLayout.isFormed());
+            debug.add(String.format("Config: %s looting %d", factoryConfig.getFakeMobKey(), factoryConfig.getLooting()));
+            debug.add(String.format("Exporter:%s Importer:%s Power:%s", factoryConfig.getExportPos(), factoryConfig.getImportPos(), factoryConfig.getPowerCellPos()));
+            debug.add("Tracking xp:" + trackingState.storedXp);
+        } else {
+            debug.add("Unformed");
+        }
     }
 }

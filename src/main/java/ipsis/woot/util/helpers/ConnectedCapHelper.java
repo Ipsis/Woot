@@ -70,7 +70,7 @@ public class ConnectedCapHelper {
      * Returns a list of connected tiles TEs with FLUID_HANDLER_CAPABILITY and the specific drain/fill
      * Only checks in the horizontal plane
      */
-    public static List<ConnectedFluidHandler> getConnectedFluidHandlers(@Nullable World world, @Nonnull BlockPos pos, boolean drain) {
+    private static List<ConnectedFluidHandler> getConnectedFluidHandlers(@Nullable World world, @Nonnull BlockPos pos, boolean drain) {
 
         if (world == null)
             return Collections.EMPTY_LIST;
@@ -105,6 +105,13 @@ public class ConnectedCapHelper {
         }
 
         return tiles;
+    }
 
+    public static List<ConnectedFluidHandler> getConnectedDrainableFluidHandlers(@Nullable World world, @Nonnull BlockPos pos) {
+        return getConnectedFluidHandlers(world, pos, true);
+    }
+
+    public static List<ConnectedFluidHandler> getConnectedFillableFluidHandlers(@Nullable World world, @Nonnull BlockPos pos) {
+        return getConnectedFluidHandlers(world, pos, false);
     }
 }

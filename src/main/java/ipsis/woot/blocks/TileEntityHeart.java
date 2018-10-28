@@ -76,7 +76,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
                                 factoryConfig.getFakeMobKey(), factoryConfig.getLooting(),
                                 1, getWorld().getDifficultyForLocation(getPos()));
                         setup.itemHandlers.addAll(ConnectedCapHelper.getConnectedItemHandlers(getWorld(), factoryConfig.getExportPos()));
-                        setup.fuildHandlers.addAll(ConnectedCapHelper.getConnectedFluidHandlers(getWorld(), factoryConfig.getExportPos(), false));
+                        setup.fuildHandlers.addAll(ConnectedCapHelper.getConnectedFillableFluidHandlers(getWorld(), factoryConfig.getExportPos());
                         Woot.LOOT_GENERATOR.generate(getWorld(), setup);
                     }
                     recipeProgressTracker.reset();

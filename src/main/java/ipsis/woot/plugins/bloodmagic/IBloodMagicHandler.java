@@ -1,7 +1,8 @@
 package ipsis.woot.plugins.bloodmagic;
 
 import ipsis.woot.util.WootMobName;
-import jline.internal.Nullable;
+
+import javax.annotation.Nullable;
 
 public interface IBloodMagicHandler {
 
@@ -12,7 +13,8 @@ public interface IBloodMagicHandler {
     int getCrystalNumMobs();
     void clearAltarSacrificeNumMobs();
     void clearCrystalNumMobs();
-    @Nullable WootMobName getWootMobName();
+    @Nullable
+    WootMobName getWootMobName();
 
     /**
      * TODO

@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.7",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": 384,
+          "desc": "Guide-API based book as woot_guide to fix conflict with Deep Mob Learning"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.6",
       "features": [
       ],

@@ -83,10 +83,13 @@ dependencies {
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
-    deobfCompile "cofh:RedstoneFlux:${config.rf_version}"
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-${config.guideapi_version}"
-    // deobfCompile "cofh:ThermalFoundation:${config.minecraft_version}-${config.tf_version}:deobf"
+
+    deobfCompile "cofh:RedstoneFlux:${config.rf_minecraft_version}-${config.rf_version}:deobf"
+    deobfCompile "cofh:ThermalFoundation:${config.minecraft_version}-${config.tf_version}:deobf"
     deobfCompile "cofh:ThermalExpansion:${config.minecraft_version}-${config.te_version}:deobf"
+    deobfCompile "cofh:CoFHCore:${config.minecraft_version}-${config.cofh_core_version}:deobf"
+    deobfCompile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.ccl_version}:deobf"
 }
 
 processResources

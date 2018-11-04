@@ -3,7 +3,8 @@
   "textures": {
     "base": "blocks/obsidian",
     "body": "woot:blocks/anvil",
-    "top": "woot:blocks/anvil"
+    "top": "woot:blocks/anvil",
+    "particle": "woot:blocks/anvil"
   },
   "display": {
     "fixed": {

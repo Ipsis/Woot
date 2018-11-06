@@ -1,6 +1,6 @@
 {
-  "parent": "woot:block/upgrade_t2_active",
+  "parent": "woot:block/small_cube_wrapped_ii",
   "textures": {
-    "faces": "woot:blocks/upgrade_bm_crystal"
+    "all": "woot:blocks/upgrade_bm_crystal"
   }
 }

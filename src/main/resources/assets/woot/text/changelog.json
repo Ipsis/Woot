@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.8",
+      "features": [
+      ],
+      "fixes": [
+        {
+          "id": -1,
+          "desc": "Fix anvil particle and B.M Crystal upgrade models [thanks joaoh1]"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.7",
       "features": [
       ],

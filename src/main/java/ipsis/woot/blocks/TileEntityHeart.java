@@ -3,10 +3,7 @@ package ipsis.woot.blocks;
 import ipsis.Woot;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
-import ipsis.woot.factory.progress.IProgessRecipe;
-import ipsis.woot.factory.progress.MockRecipeUnitProvider;
-import ipsis.woot.factory.progress.PowerRecipe;
-import ipsis.woot.factory.progress.RFRecipeProgressTracker;
+import ipsis.woot.factory.progress.*;
 import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryConfigBuilder;
 import ipsis.woot.factory.structure.FactoryLayout;
@@ -36,6 +33,10 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
         spawnRecipeConsumer = new SpawnRecipeConsumer();
     }
 
+    private boolean isRunning() {
+        return getWorld() != null && !getWorld().isBlockPowered(getPos());
+    }
+
     @Override
     public void update() {
 
@@ -60,6 +61,8 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
 
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfigBuilder.create(factoryLayout);
+
+                RecipeManager.FactoryRecipe factoryRecipe = Woot.RECIPE_MANAGER.getFactoryRecipe(factoryConfig.getFakeMobKey(), factoryConfig.getLooting());
                 IProgessRecipe iProgessRecipe = new PowerRecipe();
                 iProgessRecipe.setRecipe(120, 120);
                 recipeProgressTracker = new RFRecipeProgressTracker(iProgessRecipe, new MockRecipeUnitProvider());
@@ -67,7 +70,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
             }
 
             // Redstone signal STOPS the machine
-            if (!world.isBlockPowered(getPos())) {
+            if (isRunning()) {
                 recipeProgressTracker.tick(tickTracker);
                 if (recipeProgressTracker.isComplete()) {
                     if (spawnRecipeConsumer.consume()) {
@@ -76,7 +79,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
                                 factoryConfig.getFakeMobKey(), factoryConfig.getLooting(),
                                 1, getWorld().getDifficultyForLocation(getPos()));
                         setup.itemHandlers.addAll(ConnectedCapHelper.getConnectedItemHandlers(getWorld(), factoryConfig.getExportPos()));
-                        setup.fuildHandlers.addAll(ConnectedCapHelper.getConnectedFillableFluidHandlers(getWorld(), factoryConfig.getExportPos());
+                        setup.fuildHandlers.addAll(ConnectedCapHelper.getConnectedFillableFluidHandlers(getWorld(), factoryConfig.getExportPos()));
                         Woot.LOOT_GENERATOR.generate(getWorld(), setup);
                     }
                     recipeProgressTracker.reset();

@@ -6,6 +6,10 @@
       ],
       "fixes": [
         {
+          "id": 398,
+          "desc": "Fix flush and give commands failing with permission denied."
+        },
+        {
           "id": -1,
           "desc": "Fix anvil particle and B.M Crystal upgrade models [thanks joaoh1]"
         }

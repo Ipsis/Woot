@@ -1,15 +1,17 @@
 package ipsis.woot.command;
 
 import ipsis.Woot;
+import ipsis.woot.oss.LogHelper;
 import ipsis.woot.util.WootMobName;
 import ipsis.woot.util.WootMobNameBuilder;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.server.command.CommandTreeBase;
 
-public class CommandFlush extends CommandTreeBase {
+public class CommandFlush extends CommandBase {
 
     @Override
     public String getName() {

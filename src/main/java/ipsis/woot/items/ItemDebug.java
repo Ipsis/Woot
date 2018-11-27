@@ -2,6 +2,7 @@ package ipsis.woot.items;
 
 import ipsis.Woot;
 import ipsis.woot.util.IDebug;
+import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helpers.PlayerHelper;
 import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -21,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDebug extends Item {
+public class ItemDebug extends WootItem {
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
@@ -29,8 +30,7 @@ public class ItemDebug extends Item {
     }
 
     public ItemDebug() {
-        setRegistryName("debug");
-        setTranslationKey(Woot.MODID + ".debug");
+        super("debug");
         setMaxStackSize(1);
     }
 

@@ -1,14 +1,13 @@
 package ipsis.woot.items;
 
-import ipsis.Woot;
+import ipsis.woot.util.WootItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemYaHammer extends Item {
+public class ItemYaHammer extends WootItem {
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
@@ -16,8 +15,7 @@ public class ItemYaHammer extends Item {
     }
 
     public ItemYaHammer() {
-        setRegistryName("yahammer");
-        setTranslationKey(Woot.MODID + ".yahammer");
+        super("yahammer");
         setMaxStackSize(1);
     }
 

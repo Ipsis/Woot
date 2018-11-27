@@ -2,6 +2,7 @@ package ipsis.woot.items;
 
 import ipsis.Woot;
 import ipsis.woot.util.FactoryTier;
+import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helpers.WorldHelper;
 import ipsis.woot.util.helpers.BuilderHelper;
 import ipsis.woot.util.helpers.PlayerHelper;
@@ -24,11 +25,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemIntern extends Item implements IBuilderItem {
+public class ItemIntern extends WootItem implements IBuilderItem {
 
     public ItemIntern() {
-        setRegistryName("intern");
-        setTranslationKey(Woot.MODID + ".intern");
+        super("intern");
         setMaxStackSize(1);
     }
 

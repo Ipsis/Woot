@@ -3,6 +3,7 @@ package ipsis.woot.items;
 import ipsis.Woot;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.FakeMobKeyFactory;
+import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helpers.LogHelper;
 import ipsis.woot.util.helpers.PlayerHelper;
 import ipsis.woot.util.helpers.ProgrammedMobHelper;
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemEnderShard extends Item {
+public class ItemEnderShard extends WootItem {
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
@@ -34,8 +35,7 @@ public class ItemEnderShard extends Item {
     }
 
     public ItemEnderShard() {
-        setRegistryName("endershard");
-        setTranslationKey(Woot.MODID + ".endershard");
+        super("endershard");
     }
 
     @Override

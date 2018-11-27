@@ -45,6 +45,10 @@ repositories {
         name = "ChickenBones Maven"
         url = "http://chickenbones.net/maven/"
     }
+    maven {
+        name = "BlameJared"
+        url = "http://maven.blamejared.com"
+    }
 }
 
 // Properties file
@@ -84,6 +88,8 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
     // deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
     // deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-${config.guideapi_version}"
+    
+    deobfCompile "vazkii.patchouli:Patchouli:${config.patchouli_version}"
 
 
     deobfCompile "cofh:RedstoneFlux:${config.rf_minecraft_version}-${config.rf_version}:deobf"

@@ -1,7 +1,6 @@
 package ipsis.woot.blocks;
 
-import ipsis.Woot;
-import net.minecraft.block.Block;
+import ipsis.woot.util.WootBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -9,16 +8,13 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockExport extends Block {
+public class BlockExport extends WootBlock {
 
     private static final String BASENAME = "export";
 
     public BlockExport() {
 
-        super(Material.ROCK);
-        setCreativeTab(Woot.tab);
-        setTranslationKey(Woot.MODID + "." + BASENAME);
-        setRegistryName(BASENAME);
+        super(Material.ROCK, BASENAME);
     }
 
     public static String getBasename() { return BASENAME; }

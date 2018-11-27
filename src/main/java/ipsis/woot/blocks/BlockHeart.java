@@ -8,6 +8,7 @@ import ipsis.woot.factory.structure.pattern.AbsolutePattern;
 import ipsis.woot.factory.structure.pattern.ScannedPattern;
 import ipsis.woot.items.IBuilderItem;
 import ipsis.woot.util.FactoryTier;
+import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.helpers.WorldHelper;
 import ipsis.woot.util.helpers.PlayerHelper;
 import ipsis.woot.util.helpers.StringHelper;
@@ -36,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockHeart extends Block implements ITileEntityProvider {
+public class BlockHeart extends WootBlock implements ITileEntityProvider {
 
     private static final String BASENAME = "heart";
 
@@ -44,10 +45,7 @@ public class BlockHeart extends Block implements ITileEntityProvider {
 
     public BlockHeart() {
 
-        super(Material.ROCK);
-        setCreativeTab(Woot.tab);
-        setTranslationKey(Woot.MODID + "." + BASENAME);
-        setRegistryName(BASENAME);
+        super(Material.ROCK, BASENAME);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 

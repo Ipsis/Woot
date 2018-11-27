@@ -1,8 +1,7 @@
 package ipsis.woot.blocks;
 
-import ipsis.Woot;
 import ipsis.woot.util.FactoryBlock;
-import net.minecraft.block.Block;
+import ipsis.woot.util.WootBlock;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -13,19 +12,16 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStructure extends Block implements ITileEntityProvider {
+public class BlockStructure extends WootBlock implements ITileEntityProvider {
 
     private final String basename;
     private final FactoryBlock factoryBlock;
 
     public BlockStructure(FactoryBlock factoryBlock) {
 
-        super(Material.ROCK);
+        super(Material.ROCK, factoryBlock.getName());
         this.factoryBlock = factoryBlock;
         this.basename = factoryBlock.getName();
-        setCreativeTab(Woot.tab);
-        setTranslationKey(Woot.MODID + "." + this.basename);
-        setRegistryName(this.basename);
     }
 
     public FactoryBlock getFactoryBlockType() { return this.factoryBlock; }

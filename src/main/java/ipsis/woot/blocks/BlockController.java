@@ -1,9 +1,8 @@
 package ipsis.woot.blocks;
 
-import ipsis.Woot;
 import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.helpers.ProgrammedMobHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -20,16 +19,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockController extends Block implements ITileEntityProvider {
+public class BlockController extends WootBlock implements ITileEntityProvider {
 
     private static final String BASENAME = "controller";
 
     public BlockController() {
 
-        super(Material.ROCK);
-        setCreativeTab(Woot.tab);
-        setTranslationKey(Woot.MODID + "." + BASENAME);
-        setRegistryName(BASENAME);
+        super(Material.ROCK, BASENAME);
     }
 
     @Override

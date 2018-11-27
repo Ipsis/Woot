@@ -1,7 +1,6 @@
 package ipsis.woot.blocks;
 
-import ipsis.Woot;
-import net.minecraft.block.Block;
+import ipsis.woot.util.WootBlock;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,16 +18,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class BlockLayout extends Block implements ITileEntityProvider {
+public class BlockLayout extends WootBlock implements ITileEntityProvider {
 
     private static final String BASENAME = "layout";
 
     public BlockLayout() {
 
-        super(Material.ROCK);
-        setCreativeTab(Woot.tab);
-        setTranslationKey(Woot.MODID + "." + BASENAME);
-        setRegistryName(BASENAME);
+        super(Material.ROCK, BASENAME);
     }
 
     @SideOnly(Side.CLIENT)

@@ -17,7 +17,7 @@ public class ItemYaHammer extends Item {
 
     public ItemYaHammer() {
         setRegistryName("yahammer");
-        setUnlocalizedName(Woot.MODID + ".yahammer");
+        setTranslationKey(Woot.MODID + ".yahammer");
         setMaxStackSize(1);
     }
 

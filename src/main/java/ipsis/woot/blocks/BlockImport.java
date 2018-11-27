@@ -17,7 +17,7 @@ public class BlockImport extends Block {
 
         super(Material.ROCK);
         setCreativeTab(Woot.tab);
-        setUnlocalizedName(Woot.MODID + "." + BASENAME);
+        setTranslationKey(Woot.MODID + "." + BASENAME);
         setRegistryName(BASENAME);
     }
 

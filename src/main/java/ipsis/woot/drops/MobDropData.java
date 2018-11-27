@@ -53,7 +53,7 @@ public class MobDropData {
 
         @Override
         public String toString() {
-            return itemStack.getUnlocalizedName() + "/" + dropChance + "%";
+            return itemStack.getTranslationKey() + "/" + dropChance + "%";
         }
     }
 }

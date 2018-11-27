@@ -46,7 +46,7 @@ public class BlockHeart extends Block implements ITileEntityProvider {
 
         super(Material.ROCK);
         setCreativeTab(Woot.tab);
-        setUnlocalizedName(Woot.MODID + "." + BASENAME);
+        setTranslationKey(Woot.MODID + "." + BASENAME);
         setRegistryName(BASENAME);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
@@ -81,7 +81,7 @@ public class BlockHeart extends Block implements ITileEntityProvider {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
+        return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta & 7));
     }
 
     @Override

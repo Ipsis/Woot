@@ -10,6 +10,7 @@ import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -66,10 +67,10 @@ public class CommonProxy {
         event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_4));
 
         // TODO different event for TEs in 1.13 ?
-        GameRegistry.registerTileEntity(TileEntityHeart.class, Woot.MODID + ":heart");
-        GameRegistry.registerTileEntity(TileEntityController.class, Woot.MODID + ":controller");
-        GameRegistry.registerTileEntity(TileEntityLayout.class, Woot.MODID + ":layout");
-        GameRegistry.registerTileEntity(TileEntityStructure.class, Woot.MODID + ":structure");
+        GameRegistry.registerTileEntity(TileEntityHeart.class, new ResourceLocation(Woot.MODID, "heart"));
+        GameRegistry.registerTileEntity(TileEntityController.class, new ResourceLocation(Woot.MODID, "controller"));
+        GameRegistry.registerTileEntity(TileEntityLayout.class, new ResourceLocation(Woot.MODID, "layout"));
+        GameRegistry.registerTileEntity(TileEntityStructure.class, new ResourceLocation(Woot.MODID, "structure"));
     }
 
     @SubscribeEvent

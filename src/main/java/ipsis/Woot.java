@@ -39,9 +39,9 @@ public class Woot {
     public static CommonProxy proxy;
 
     public static CreativeTabs tab = new CreativeTabs(Woot.MODID) {
+
         @Override
-        @SideOnly(Side.CLIENT)
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(Item.getItemFromBlock(ModBlocks.heartBlock));
         }
     };

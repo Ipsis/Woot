@@ -35,7 +35,7 @@ public class ItemEnderShard extends Item {
 
     public ItemEnderShard() {
         setRegistryName("endershard");
-        setUnlocalizedName(Woot.MODID + ".endershard");
+        setTranslationKey(Woot.MODID + ".endershard");
     }
 
     @Override

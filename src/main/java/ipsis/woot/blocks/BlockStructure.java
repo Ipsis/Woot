@@ -24,7 +24,7 @@ public class BlockStructure extends Block implements ITileEntityProvider {
         this.factoryBlock = factoryBlock;
         this.basename = factoryBlock.getName();
         setCreativeTab(Woot.tab);
-        setUnlocalizedName(Woot.MODID + "." + this.basename);
+        setTranslationKey(Woot.MODID + "." + this.basename);
         setRegistryName(this.basename);
     }
 

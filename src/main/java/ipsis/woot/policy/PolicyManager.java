@@ -107,27 +107,27 @@ public class PolicyManager implements IPolicy {
         if (resourceLocation == null)
             return false;
 
-        if (internalPolicy.captureFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
+        if (internalPolicy.captureFromModBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod {} blacklisted (internal)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod {} blacklisted (internal)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (internalPolicy.captureEntityBlacklist.contains(resourceLocation.getResourcePath())) {
+        if (internalPolicy.captureEntityBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity {} blacklisted (internal)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity {} blacklisted (internal)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (externalPolicy.captureFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
+        if (externalPolicy.captureFromModBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod {} blacklisted (external)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: mod {} blacklisted (external)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (externalPolicy.captureEntityBlacklist.contains(resourceLocation.getResourcePath())) {
+        if (externalPolicy.captureEntityBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity {} blacklisted (external)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canCaptureMob: entity {} blacklisted (external)", resourceLocation.getNamespace());
             return false;
         }
 
@@ -157,27 +157,27 @@ public class PolicyManager implements IPolicy {
         if (resourceLocation == null)
             return false;
 
-        if (internalPolicy.learnFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
+        if (internalPolicy.learnFromModBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod {} blacklisted (internal)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod {} blacklisted (internal)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (internalPolicy.learnItemBlacklist.contains(resourceLocation.getResourcePath())) {
+        if (internalPolicy.learnItemBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item {} blacklisted (internal)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item {} blacklisted (internal)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (externalPolicy.learnFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
+        if (externalPolicy.learnFromModBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod {} blacklisted (external)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: mod {} blacklisted (external)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (externalPolicy.learnItemBlacklist.contains(resourceLocation.getResourcePath())) {
+        if (externalPolicy.learnItemBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item {} blacklisted (external)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canLearnItem: item {} blacklisted (external)", resourceLocation.getNamespace());
             return false;
         }
 
@@ -194,15 +194,15 @@ public class PolicyManager implements IPolicy {
         if (resourceLocation == null)
             return false;
 
-        if (externalPolicy.dropFromModBlacklist.contains(resourceLocation.getResourceDomain())) {
+        if (externalPolicy.dropFromModBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: mod {} blacklisted (external)", resourceLocation.getResourceDomain());
+                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: mod {} blacklisted (external)", resourceLocation.getNamespace());
             return false;
         }
 
-        if (externalPolicy.dropItemBlacklist.contains(resourceLocation.getResourcePath())) {
+        if (externalPolicy.dropItemBlacklist.contains(resourceLocation.getNamespace())) {
             if (Woot.debugging.isEnabled(Debug.Group.POLICY))
-                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: item {} blacklisted (external)", resourceLocation.getResourcePath());
+                Woot.debugging.trace(Debug.Group.POLICY, "canDropItem: item {} blacklisted (external)", resourceLocation.getNamespace());
             return false;
         }
 

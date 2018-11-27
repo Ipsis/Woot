@@ -28,7 +28,7 @@ public class ItemIntern extends Item implements IBuilderItem {
 
     public ItemIntern() {
         setRegistryName("intern");
-        setUnlocalizedName(Woot.MODID + ".intern");
+        setTranslationKey(Woot.MODID + ".intern");
         setMaxStackSize(1);
     }
 

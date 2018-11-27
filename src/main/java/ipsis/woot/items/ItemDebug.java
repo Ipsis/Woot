@@ -30,7 +30,7 @@ public class ItemDebug extends Item {
 
     public ItemDebug() {
         setRegistryName("debug");
-        setUnlocalizedName(Woot.MODID + ".debug");
+        setTranslationKey(Woot.MODID + ".debug");
         setMaxStackSize(1);
     }
 

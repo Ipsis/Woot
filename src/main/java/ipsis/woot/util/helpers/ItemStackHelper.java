@@ -18,6 +18,6 @@ public class ItemStackHelper {
         if (resourceLocation == null)
             return "";
 
-        return resourceLocation.getResourceDomain();
+        return resourceLocation.getNamespace();
     }
 }

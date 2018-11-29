@@ -2,6 +2,7 @@ package ipsis.woot.util;
 
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
+import ipsis.woot.blocks.generators.BlockGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -29,7 +30,8 @@ public enum FactoryBlock {
     POWER_2("power2", WootColor.YELLOW, BlockPower.class),
     POWER_3("power3", WootColor.YELLOW, BlockPower.class),
     IMPORT("import", WootColor.YELLOW, BlockImport.class),
-    EXPORT("export", WootColor.YELLOW, BlockExport.class);
+    EXPORT("export", WootColor.YELLOW, BlockExport.class),
+    GENERATOR("generator", WootColor.YELLOW, BlockGenerator.class);
 
     private String name;
     private Class clazz;
@@ -79,6 +81,6 @@ public enum FactoryBlock {
 
     public static boolean isPowerFactoryBlock(FactoryBlock factoryBlock) {
 
-        return factoryBlock == POWER_1 || factoryBlock == POWER_2 || factoryBlock == POWER_3;
+        return factoryBlock == GENERATOR;
     }
 }

@@ -28,6 +28,7 @@ public class FactoryPatterns {
         PATTERN_MAPPINGS.put(HEART_CHAR, FactoryBlock.HEART);
         PATTERN_MAPPINGS.put('I', FactoryBlock.IMPORT);
         PATTERN_MAPPINGS.put('E', FactoryBlock.EXPORT);
+        PATTERN_MAPPINGS.put('G', FactoryBlock.GENERATOR);
         PATTERN_MAPPINGS.put('P', FactoryBlock.POWER_1);
     }
 
@@ -53,7 +54,7 @@ public class FactoryPatterns {
             {
                 "-----",
                 "-----",
-                "--P--",
+                "--G--",
                 "-----",
                 "-----",
             },

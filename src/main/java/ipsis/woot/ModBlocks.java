@@ -1,6 +1,7 @@
 package ipsis.woot;
 
 import ipsis.woot.blocks.*;
+import ipsis.woot.blocks.generators.BlockGenerator;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -26,6 +27,11 @@ public class ModBlocks {
     public static final BlockPower power2Block = null;
     @GameRegistry.ObjectHolder("woot:power3")
     public static final BlockPower power3Block = null;
+
+    @GameRegistry.ObjectHolder("woot:generator_tick")
+    public static final BlockGenerator generatorTickBlock = null;
+    @GameRegistry.ObjectHolder("woot:generator_rf")
+    public static final BlockGenerator generatorRFBlock = null;
 
     @GameRegistry.ObjectHolder("woot:import")
     public static final BlockImport importBlock = null;
@@ -168,6 +174,7 @@ public class ModBlocks {
         factoryBlockToBlockMap.put(FactoryBlock.POWER_3, power3Block);
         factoryBlockToBlockMap.put(FactoryBlock.IMPORT, importBlock);
         factoryBlockToBlockMap.put(FactoryBlock.EXPORT, exportBlock);
+        factoryBlockToBlockMap.put(FactoryBlock.GENERATOR, generatorTickBlock);
     }
 
     public static Block getBlockFromFactoryBlock(FactoryBlock factoryBlock) {

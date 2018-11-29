@@ -22,7 +22,7 @@ public class FactoryConfigBuilder {
         factoryConfig.setFactoryTier(scannedPattern.getFactoryTier());
         factoryConfig.setFakeMobKey(scannedPattern.getControllerMob());
 
-        factoryConfig.setPowerCellPos(scannedPattern.getPowerPos());
+        factoryConfig.setGeneratorPos(scannedPattern.getPowerPos());
         factoryConfig.setImportPos(scannedPattern.getImportPos());
         factoryConfig.setExportPos(scannedPattern.getExportPos());
 

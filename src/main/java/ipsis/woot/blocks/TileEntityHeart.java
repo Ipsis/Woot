@@ -3,16 +3,18 @@ package ipsis.woot.blocks;
 import ipsis.Woot;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
-import ipsis.woot.factory.progress.*;
+import ipsis.woot.factory.recipes.IWootUnitProvider;
 import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryConfigBuilder;
 import ipsis.woot.factory.structure.FactoryLayout;
 import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
 import ipsis.woot.util.IDebug;
 import ipsis.woot.util.helpers.ConnectedCapHelper;
+import ipsis.woot.util.helpers.LogHelper;
 import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -23,7 +25,9 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
     private FactoryConfig factoryConfig; // The configuration of the factory
     private SpawnRecipeConsumer spawnRecipeConsumer;
     private TrackingState trackingState = new TrackingState();
-    private RFRecipeProgressTracker recipeProgressTracker;
+    private int consumedWootUnits = 0;
+    private int recipeWootUnits = 0;
+    private int recipeTicks = 0;
 
     public TileEntityHeart() {
 
@@ -61,20 +65,17 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
 
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfigBuilder.create(factoryLayout);
-
-                RecipeManager.FactoryRecipe factoryRecipe = Woot.RECIPE_MANAGER.getFactoryRecipe(factoryConfig.getFakeMobKey(), factoryConfig.getLooting());
-                IProgessRecipe iProgessRecipe = new PowerRecipe();
-                iProgessRecipe.setRecipe(120, 120);
-                recipeProgressTracker = new RFRecipeProgressTracker(iProgessRecipe, new MockRecipeUnitProvider());
-                factoryLayout.clearChanged();
+                // TODO get the recipe from elsewhere
+                recipeTicks = 200;
+                recipeWootUnits = 200;
             }
 
             // Redstone signal STOPS the machine
             if (isRunning()) {
-                recipeProgressTracker.tick(tickTracker);
-                if (recipeProgressTracker.isComplete()) {
+                tickRecipe();
+                if (isRecipeComplete()) {
+                    LogHelper.info("Generate ze loots");
                     if (spawnRecipeConsumer.consume()) {
-
                         LootGenerator.Setup setup = Woot.LOOT_GENERATOR.getNewSetup(
                                 factoryConfig.getFakeMobKey(), factoryConfig.getLooting(),
                                 1, getWorld().getDifficultyForLocation(getPos()));
@@ -82,10 +83,39 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
                         setup.fuildHandlers.addAll(ConnectedCapHelper.getConnectedFillableFluidHandlers(getWorld(), factoryConfig.getExportPos()));
                         Woot.LOOT_GENERATOR.generate(getWorld(), setup);
                     }
-                    recipeProgressTracker.reset();
+
+                    resetRecipe();
                 }
             }
         }
+    }
+
+    /**
+     * Progress
+     */
+    private boolean isRecipeComplete() {
+        return consumedWootUnits >= recipeWootUnits;
+    }
+
+    private void tickRecipe() {
+
+        if (factoryLayout.isFormed()) {
+
+            TileEntity generatorTE = getWorld().getTileEntity(factoryConfig.getGeneratorPos());
+            if (generatorTE instanceof IWootUnitProvider) {
+                IWootUnitProvider iWootUnitProvider = (IWootUnitProvider)generatorTE;
+                consumedWootUnits += iWootUnitProvider.consume(getRecipeWootUnitsPerTick());
+                LogHelper.info("tickRecipe: " + consumedWootUnits);
+            }
+        }
+    }
+
+    private void resetRecipe() {
+        consumedWootUnits = 0;
+    }
+
+    private int getRecipeWootUnitsPerTick() {
+        return MathHelper.clamp(1, recipeWootUnits /  recipeTicks, Integer.MAX_VALUE);
     }
 
     /**
@@ -113,7 +143,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
         if (factoryLayout != null && factoryLayout.isFormed()) {
             debug.add("Formed:" + factoryLayout.isFormed());
             debug.add(String.format("Config: %s looting %d", factoryConfig.getFakeMobKey(), factoryConfig.getLooting()));
-            debug.add(String.format("Exporter:%s Importer:%s Power:%s", factoryConfig.getExportPos(), factoryConfig.getImportPos(), factoryConfig.getPowerCellPos()));
+            debug.add(String.format("Exporter:%s Importer:%s Generator:%s", factoryConfig.getExportPos(), factoryConfig.getImportPos(), factoryConfig.getGeneratorPos()));
             debug.add("Tracking xp:" + trackingState.storedXp);
         } else {
             debug.add("Unformed");

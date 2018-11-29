@@ -17,13 +17,13 @@ public class FactoryConfig {
     public int getLooting() { return this.looting; }
     public FactoryTier getFactoryTier() { return this.factoryTier; }
 
-    private BlockPos powerCellPos;
+    private BlockPos generatorPos;
     private BlockPos exportPos;
     private BlockPos importPos;
-    public void setPowerCellPos(BlockPos pos) { this.powerCellPos = new BlockPos(pos); }
+    public void setGeneratorPos(BlockPos pos) { this.generatorPos = new BlockPos(pos); }
     public void setExportPos(BlockPos pos) { this.exportPos = new BlockPos(pos); }
     public void setImportPos(BlockPos pos) { this.importPos = new BlockPos(pos); }
-    public BlockPos getPowerCellPos() { return this.powerCellPos; }
+    public BlockPos getGeneratorPos() { return this.generatorPos; }
     public BlockPos getExportPos() { return this.exportPos; }
     public BlockPos getImportPos() { return this.importPos; }
 

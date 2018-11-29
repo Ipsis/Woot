@@ -3,6 +3,7 @@ package ipsis.woot.blocks;
 import ipsis.Woot;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.recipes.FactoryRecipe;
 import ipsis.woot.factory.recipes.IWootUnitProvider;
 import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryConfigBuilder;
@@ -26,8 +27,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
     private SpawnRecipeConsumer spawnRecipeConsumer;
     private TrackingState trackingState = new TrackingState();
     private int consumedWootUnits = 0;
-    private int recipeWootUnits = 0;
-    private int recipeTicks = 0;
+    private FactoryRecipe factoryRecipe = new FactoryRecipe(1, 1);
 
     public TileEntityHeart() {
 
@@ -66,8 +66,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfigBuilder.create(factoryLayout);
                 // TODO get the recipe from elsewhere
-                recipeTicks = 200;
-                recipeWootUnits = 200;
+                factoryRecipe = new FactoryRecipe(200, 200);
             }
 
             // Redstone signal STOPS the machine
@@ -94,7 +93,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
      * Progress
      */
     private boolean isRecipeComplete() {
-        return consumedWootUnits >= recipeWootUnits;
+        return consumedWootUnits >= factoryRecipe.getNumUnits();
     }
 
     private void tickRecipe() {
@@ -115,7 +114,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
     }
 
     private int getRecipeWootUnitsPerTick() {
-        return MathHelper.clamp(1, recipeWootUnits /  recipeTicks, Integer.MAX_VALUE);
+        return MathHelper.clamp(1, factoryRecipe.getNumUnits() /  factoryRecipe.getNumTicks(), Integer.MAX_VALUE);
     }
 
     /**

@@ -1,6 +1,7 @@
 package ipsis.woot.blocks;
 
 import ipsis.Woot;
+import ipsis.woot.configuration.FactoryCostManager;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.recipes.FactoryRecipe;
@@ -65,8 +66,9 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
 
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfigBuilder.create(factoryLayout);
-                // TODO get the recipe from elsewhere
-                factoryRecipe = new FactoryRecipe(200, 200);
+                factoryRecipe = FactoryCostManager.INSTANCE.createFactoryRecipe(factoryConfig.getFakeMobKey(), factoryConfig, getWorld());
+                factoryLayout.clearChanged();
+                LogHelper.info(factoryRecipe);
             }
 
             // Redstone signal STOPS the machine
@@ -104,7 +106,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
             if (generatorTE instanceof IWootUnitProvider) {
                 IWootUnitProvider iWootUnitProvider = (IWootUnitProvider)generatorTE;
                 consumedWootUnits += iWootUnitProvider.consume(getRecipeWootUnitsPerTick());
-                LogHelper.info("tickRecipe: " + consumedWootUnits);
+                LogHelper.info("tickRecipe@ " + getRecipeWootUnitsPerTick() + "->" + consumedWootUnits);
             }
         }
     }

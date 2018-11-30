@@ -3,6 +3,7 @@ package ipsis;
 import ipsis.woot.Files;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.ModWorlds;
+import ipsis.woot.configuration.FactoryCostManager;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.drops.DropManager;
 import ipsis.woot.drops.generation.LootGenerator;
@@ -91,6 +92,7 @@ public class Woot {
     @Mod.EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
         Woot.DROP_MANAGER.shutdown();
+        FactoryCostManager.INSTANCE.clear();
     }
 
     @Mod.EventHandler

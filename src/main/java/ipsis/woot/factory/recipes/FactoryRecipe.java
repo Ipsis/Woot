@@ -33,4 +33,9 @@ public class FactoryRecipe {
             this.numTicks = this.numUnits = 1;
         }
     }
+
+    @Override
+    public String toString() {
+        return "units:" + numUnits + "/ticks:" + numTicks;
+    }
 }

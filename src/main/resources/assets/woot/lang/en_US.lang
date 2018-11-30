@@ -2,13 +2,15 @@
 # Commands
 ################################
 commands.woot.usage=Use /woot <subcommand>
+
+commands.woot.cost.usage=Use /woot cost <entity>
 commands.woot.debug.usage=Use /woot debug [{set|clear} <group>]
-commands.woot.teleport.usage=Use /woot teleport {tartarus|<dim> <x> <y> <z>}
-commands.woot.learn.usage=/Use /woot learn <entity> <looting level>
 commands.woot.flush.usage=/Use /woot flush <entity> <looting level>
 commands.woot.give.usage=/Use /woot give <player> {shard|controller} <entity>
-commands.woot.status.usage=/Use /woot status <object>
+commands.woot.learn.usage=/Use /woot learn <entity> <looting level>
 commands.woot.loot.usage=/Use /woot loot <entity> <looting level>
+commands.woot.status.usage=/Use /woot status <object>
+commands.woot.teleport.usage=Use /woot teleport {tartarus|<dim> <x> <y> <z>}
 
 commands.woot.unknownentity=Unknown entity
 

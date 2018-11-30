@@ -41,7 +41,7 @@ public class CommandFlush extends CommandBase {
             throw new WrongUsageException(getUsage(sender));
         }
 
-        // start learning from entity/looting
+        // TODO hook up the flush routines
     }
 
     @Override

@@ -8,8 +8,10 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +27,18 @@ public class CommandStatus extends CommandBase {
         return "commands.woot.status.usage";
     }
 
+    private static final List<String> validObjects = new ArrayList<>();
+    static
+    {
+        validObjects.add("tartarus");
+        validObjects.add("school");
+        validObjects.add("droprepo");
+    }
+
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
-        if (args.length == 0) {
-            sender.sendMessage(new TextComponentString("Valid objects: tartarus, school, lootrepo"));
-        } else if (args.length >= 1) {
+        if (args.length >= 1) {
             List<String> status = new ArrayList<>();
             if (args[0].equalsIgnoreCase("tartarus"))
                 TartarusManager.getStatus(status, args);
@@ -45,5 +53,14 @@ public class CommandStatus extends CommandBase {
         } else {
             throw new WrongUsageException(getUsage(sender));
         }
+    }
+
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+
+        if (args.length == 1)
+            return validObjects;
+
+        return super.getTabCompletions(server, sender, args, targetPos);
     }
 }

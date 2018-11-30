@@ -14,7 +14,7 @@ import java.util.*;
 
 public class LearnedDropRepository implements IDropProvider {
 
-    private static final int SAMPLE_COUNT = 25;
+    private static final int SAMPLE_COUNT = 500;
 
     // Map of mob -> [no looting][looting 1][looting 2][looting 3]
     private static final HashMap<FakeMobKey, Integer[]> samples = new HashMap<>();
@@ -295,7 +295,7 @@ public class LearnedDropRepository implements IDropProvider {
                 sb.append("Looting " + looting);
                 HashMap<Integer, Integer> data = lootingData.get(looting);
                 for (Integer size : data.keySet())
-                    sb.append(" " + size + "/" + data.get(size) + "%");
+                    sb.append(" " + size + "/" + data.get(size));
                 sb.append("\n");
             }
             return sb.toString();

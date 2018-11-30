@@ -2,6 +2,7 @@ package ipsis.woot.blocks.generators;
 
 
 import ipsis.woot.util.WootEnergyStorage;
+import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -15,9 +16,13 @@ public class TileEntityGeneratorRF extends TileEntityGenerator {
         super();
     }
 
+    private static final int WU_TO_RF = 1;
+
     @Override
     public int consume(int units) {
-        return super.consume(units);
+
+        int rf_cost = units * WU_TO_RF;
+        return energyStorage.consumeInternal(rf_cost);
     }
 
     private WootEnergyStorage energyStorage = new WootEnergyStorage(10000, 100);

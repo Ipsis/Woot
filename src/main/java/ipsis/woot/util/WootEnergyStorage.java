@@ -1,6 +1,5 @@
 package ipsis.woot.util;
 
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.energy.EnergyStorage;
 
 /**
@@ -16,8 +15,10 @@ public class WootEnergyStorage extends EnergyStorage {
         this.energy = energy;
     }
 
-    public void consume(int energy) {
-        this.energy -= energy;
-        MathHelper.clamp(this.energy, 0, Integer.MAX_VALUE);
+    public int consumeInternal(int energy) {
+
+        int energyExtracted = Math.min(this.energy, energy);
+        this.energy -= energyExtracted;
+        return energyExtracted;
     }
 }

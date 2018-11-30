@@ -10,6 +10,7 @@ import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryConfigBuilder;
 import ipsis.woot.factory.structure.FactoryLayout;
 import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
+import ipsis.woot.school.SchoolManager;
 import ipsis.woot.util.IDebug;
 import ipsis.woot.util.helpers.ConnectedCapHelper;
 import ipsis.woot.util.helpers.LogHelper;
@@ -67,6 +68,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfigBuilder.create(factoryLayout);
                 factoryRecipe = FactoryCostManager.INSTANCE.createFactoryRecipe(factoryConfig.getFakeMobKey(), factoryConfig, getWorld());
+                SchoolManager.teachMob(factoryConfig.getFakeMobKey(), factoryConfig.getLooting());
                 factoryLayout.clearChanged();
                 LogHelper.info(factoryRecipe);
             }
@@ -106,7 +108,6 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
             if (generatorTE instanceof IWootUnitProvider) {
                 IWootUnitProvider iWootUnitProvider = (IWootUnitProvider)generatorTE;
                 consumedWootUnits += iWootUnitProvider.consume(getRecipeWootUnitsPerTick());
-                LogHelper.info("tickRecipe@ " + getRecipeWootUnitsPerTick() + "->" + consumedWootUnits);
             }
         }
     }

@@ -1,6 +1,7 @@
 package ipsis.woot;
 
 import ipsis.woot.blocks.*;
+import ipsis.woot.blocks.generators.BlockCreativeRF;
 import ipsis.woot.blocks.generators.BlockGenerator;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
@@ -32,6 +33,9 @@ public class ModBlocks {
     public static final BlockGenerator generatorTickBlock = null;
     @GameRegistry.ObjectHolder("woot:generator_rf")
     public static final BlockGenerator generatorRFBlock = null;
+
+    @GameRegistry.ObjectHolder("woot:creative_rf")
+    public static final BlockCreativeRF creativeRFBlock = null;
 
     @GameRegistry.ObjectHolder("woot:import")
     public static final BlockImport importBlock = null;

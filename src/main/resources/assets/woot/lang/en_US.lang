@@ -35,8 +35,9 @@ tile.woot.power1.name=Simple Power Cell
 tile.woot.power2.name=Advanced Power Cell
 tile.woot.power3.name=Ultimate Power Cell
 
-tile.woot.generator_tick.name=Tick Generator
-tile.woot.generator_rf.name=RF Generator
+tile.woot.generator_tick.name=Tick Convertor
+tile.woot.generator_rf.name=RF Convertor
+tile.woot.creative_rf.name=Creative RF Generator
 
 #################################
 # Items

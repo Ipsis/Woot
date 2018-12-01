@@ -1,6 +1,7 @@
 package ipsis.woot.school;
 
 import ipsis.Woot;
+import ipsis.woot.configuration.vanilla.GeneralConfig;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.util.*;
 import net.minecraft.item.ItemStack;
@@ -106,7 +107,6 @@ public class SchoolManager {
 
     private static class SchoolPupil {
 
-        private static final int LEARN_TICKS = 20;
         private FakeMobKey fakeMobKey;
         private int looting;
         private int learnTicks;
@@ -121,7 +121,7 @@ public class SchoolManager {
 
         public FakeMobKey getFakeMobKey() { return this.fakeMobKey; }
         public int getLooting() { return this.looting; }
-        public boolean hasLearnTimeoutExpired() { return this.learnTicks >= LEARN_TICKS; }
+        public boolean hasLearnTimeoutExpired() { return this.learnTicks >= GeneralConfig.LEARN_TICKS; }
         public void tick() { this.learnTicks++; }
         public void resetLearnTimeout() { this.learnTicks = 0; }
         public int getCellId() { return this.cellId; }

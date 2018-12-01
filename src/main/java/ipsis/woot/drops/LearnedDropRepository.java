@@ -3,6 +3,7 @@ package ipsis.woot.drops;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import ipsis.Woot;
+import ipsis.woot.configuration.vanilla.GeneralConfig;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helpers.JsonHelper;
 import ipsis.woot.util.MiscUtils;
@@ -13,8 +14,6 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class LearnedDropRepository implements IDropProvider {
-
-    private static final int SAMPLE_COUNT = 500;
 
     // Map of mob -> [no looting][looting 1][looting 2][looting 3]
     private static final HashMap<FakeMobKey, Integer[]> samples = new HashMap<>();
@@ -84,7 +83,7 @@ public class LearnedDropRepository implements IDropProvider {
 
     public boolean isLearningComplete(@Nonnull FakeMobKey fakeMobKey, int looting) {
         looting = MiscUtils.clampLooting(looting);
-        return getSampleCount(fakeMobKey, looting) >= SAMPLE_COUNT;
+        return getSampleCount(fakeMobKey, looting) >= GeneralConfig.LEARN_MOB_COUNT;
     }
 
     /**
@@ -117,7 +116,7 @@ public class LearnedDropRepository implements IDropProvider {
 
     public void getStatus(@Nonnull List<String> status, String[] args) {
         status.add(">>> LearnedDropRepository");
-        status.add("Max Samples: " + SAMPLE_COUNT);
+        status.add("Max Samples: " + GeneralConfig.LEARN_MOB_COUNT);
 
         for (FakeMobKey fakeMobKey : samples.keySet()) {
             Integer[] s = samples.get(fakeMobKey);

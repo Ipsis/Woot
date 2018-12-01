@@ -1,6 +1,7 @@
 package ipsis.woot.server.command;
 
 import ipsis.woot.ModWorlds;
+import ipsis.woot.configuration.vanilla.GeneralConfig;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.oss.CustomTeleporter;
 import net.minecraft.command.CommandBase;
@@ -28,7 +29,7 @@ public class CommandTeleport extends CommandBase {
 
         int id, x, y, z;
         if (args.length == 1 & args[0].equalsIgnoreCase("tartarus")) {
-            id = ModWorlds.tartarus_id;
+            id = GeneralConfig.TARTARUS_ID;
             x = 18;
             y = 0;
             z = 18;

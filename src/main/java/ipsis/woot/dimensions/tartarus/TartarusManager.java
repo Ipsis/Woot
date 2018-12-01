@@ -2,6 +2,7 @@ package ipsis.woot.dimensions.tartarus;
 
 import ipsis.Woot;
 import ipsis.woot.ModWorlds;
+import ipsis.woot.configuration.vanilla.GeneralConfig;
 import ipsis.woot.spawning.SpawnManager;
 import ipsis.woot.util.*;
 import ipsis.woot.util.helpers.LogHelper;
@@ -107,7 +108,7 @@ public class TartarusManager {
         if (world == null)
             return false;
 
-        WorldServer worldServer = world.getMinecraftServer().getWorld(ModWorlds.tartarus_id);
+        WorldServer worldServer = world.getMinecraftServer().getWorld(GeneralConfig.TARTARUS_ID);
         if (worldServer == null)
             return false;
 

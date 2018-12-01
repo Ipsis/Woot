@@ -4,6 +4,7 @@ import ipsis.woot.Files;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.ModWorlds;
 import ipsis.woot.configuration.FactoryCostManager;
+import ipsis.woot.configuration.vanilla.GeneralConfig;
 import ipsis.woot.dimensions.tartarus.TartarusManager;
 import ipsis.woot.drops.DropManager;
 import ipsis.woot.drops.generation.LootGenerator;
@@ -86,7 +87,7 @@ public class Woot {
         Woot.POLICY_MANAGER.init();
 
         // TODO - not sure about this!
-        TartarusManager.setWorld(event.getServer().getWorld(ModWorlds.tartarus_id));
+        TartarusManager.setWorld(event.getServer().getWorld(GeneralConfig.TARTARUS_ID));
     }
 
     @Mod.EventHandler

@@ -1,13 +1,11 @@
 package ipsis.woot.items;
 
-import ipsis.Woot;
 import ipsis.woot.util.IDebug;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helpers.PlayerHelper;
 import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;

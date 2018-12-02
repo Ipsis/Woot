@@ -1,5 +1,5 @@
 {
-  "parent": "woot:block/restone_structure",
+  "parent": "woot:block/redstone_structure",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

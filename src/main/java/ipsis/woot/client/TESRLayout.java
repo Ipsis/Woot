@@ -1,6 +1,7 @@
 package ipsis.woot.client;
 
 import ipsis.woot.blocks.TileEntityLayout;
+import ipsis.woot.configuration.vanilla.ClientConfig;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.RenderUtils;
@@ -25,8 +26,10 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout> {
         if (te.getAbsolutePattern() == null)
             te.refreshLayout();
 
-        //simpleRender(te, x, y, z, partialTicks, destroyStage, alpha);
-        textureRender(te, x, y, z, partialTicks, destroyStage, alpha);
+        if (ClientConfig.SIMPLE_LAYOUT)
+            simpleRender(te, x, y, z, partialTicks, destroyStage, alpha);
+        else
+            textureRender(te, x, y, z, partialTicks, destroyStage, alpha);
     }
 
     private TextureAtlasSprite getTexture(FactoryBlock factoryBlock) {

@@ -1,5 +1,6 @@
 package ipsis.woot.configuration;
 
+import ipsis.woot.configuration.vanilla.FactoryConfig;
 import ipsis.woot.configuration.vanilla.UpgradeConfig;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helpers.LogHelper;
@@ -18,7 +19,7 @@ public class ConfigRegistry {
 
     public static final ConfigRegistry INSTANCE = new ConfigRegistry();
 
-    private static HashMap<String, Integer> integerConfigMap = new HashMap<>();
+    private HashMap<Key, HashMap<String, Integer>> integerMobConfigMap = new HashMap<>();
 
     public enum Key {
         HEADHUNTER_1_DROP,
@@ -32,7 +33,11 @@ public class ConfigRegistry {
         RATE_3_REDUCTION,
         XP_1_AMOUNT,
         XP_2_AMOUNT,
-        XP_3_AMOUNT
+        XP_3_AMOUNT,
+
+        NUM_MOBS,
+        SPAWN_TIME,
+        UNITS_PER_HEALTH
     }
 
     public int getIntegerConfig(Key key) {
@@ -40,7 +45,13 @@ public class ConfigRegistry {
     }
 
     public int getIntegerConfig(Key key, FakeMobKey fakeMobKey) {
-        return 1;
+
+        if (integerMobConfigMap.containsKey(key)) {
+            if (integerMobConfigMap.get(key).containsKey(fakeMobKey))
+                return integerMobConfigMap.get(key).get(fakeMobKey);
+        }
+
+        return getIntegerConfig(key);
     }
 
     private int getIntegerDefault(Key key) {
@@ -70,10 +81,32 @@ public class ConfigRegistry {
                 return UpgradeConfig.XP_2_AMOUNT;
             case XP_3_AMOUNT:
                 return UpgradeConfig.XP_3_AMOUNT;
+            case NUM_MOBS:
+                return FactoryConfig.NUM_MOBS;
+            case SPAWN_TIME:
+                return FactoryConfig.SPAWN_TIME;
+            case UNITS_PER_HEALTH:
+                return FactoryConfig.UNITS_PER_HEALTH;
             default:
                 LogHelper.error("ConfigRegistry unhandled key " + key);
                 return 1;
         }
+    }
+
+    public int getFactoryTier(FakeMobKey fakeMobKey, int mobHealth) {
+        // TODO mob specific override
+
+        /**
+         * If there is no mob override then we return the lowest tier than can handle the health
+         */
+        if (mobHealth <= FactoryConfig.TIER_1_MAX_MOB_HEALTH)
+            return 1;
+        if (mobHealth <= FactoryConfig.TIER_2_MAX_MOB_HEALTH)
+            return 2;
+        if (mobHealth <= FactoryConfig.TIER_3_MAX_MOB_HEALTH)
+            return 3;
+        return 4;
+
     }
 
 }

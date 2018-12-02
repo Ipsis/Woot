@@ -1,0 +1,28 @@
+The end result of the costing, is a number of units required to run the factory.
+And that results in a total number of units and a total number of ticks.
+
+
+TIER_UNITS_PER_TICK = base unit cost per tick to operate the factory
+RAW_SPAWN_TICKS = number of ticks to spawn the specific mob IGNORING the rate upgrade
+MOB_HEALTH = number of health points for the mob
+UNITS_PER_HEALTH = number of units for each health point
+NUM_MOBS = number of that are spawned INCLUDING the mass upgrade
+
+
+BASE_FACTORY_COST = RAW_SPAWN_TICKS * TIER_UNITS_PER_TICK
+RAW_MOB_COST = RAW_SPAWN_TICKS * (MOB_HEALTH * UNITS_PER_HEALTH)
+
+for each upgrade
+    UPGRADE_COST = RAW_SPAWN_TICKS * UPGRADE_UNITS_PER_TICK
+
+By default each mob costs the same as the last one so the cost scales linearly with number of mobs.
+The option will be here to scale that differently, where each subsequent mob gets more expensive.
+However this can really ramp up the costs.
+
+FINAL_SPAWN_TICK = number of ticks to spawn the specific mode INCLUDING the rate upgrade
+
+Efficiency is applied last and is used to reduce the total unit cost
+
+
+
+

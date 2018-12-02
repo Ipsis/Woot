@@ -1,7 +1,7 @@
 package ipsis.woot.blocks;
 
 import ipsis.Woot;
-import ipsis.woot.configuration.FactoryCostManager;
+import ipsis.woot.costing.FactoryRecipeManager;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.recipes.FactoryRecipe;
@@ -67,7 +67,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
 
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfigBuilder.create(factoryLayout);
-                factoryRecipe = FactoryCostManager.INSTANCE.createFactoryRecipe(factoryConfig.getFakeMobKey(), factoryConfig, getWorld());
+                factoryRecipe = FactoryRecipeManager.INSTANCE.createFactoryRecipe(factoryConfig, getWorld());
                 SchoolManager.teachMob(factoryConfig.getFakeMobKey(), factoryConfig.getLooting());
                 factoryLayout.clearChanged();
                 LogHelper.info(factoryRecipe);
@@ -147,6 +147,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
             debug.add(String.format("Config: %s looting %d", factoryConfig.getFakeMobKey(), factoryConfig.getLooting()));
             debug.add(String.format("Exporter:%s Importer:%s Generator:%s", factoryConfig.getExportPos(), factoryConfig.getImportPos(), factoryConfig.getGeneratorPos()));
             debug.add("Tracking xp:" + trackingState.storedXp);
+            debug.add("Cost " + factoryRecipe);
         } else {
             debug.add("Unformed");
         }

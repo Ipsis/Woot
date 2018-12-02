@@ -1,6 +1,8 @@
 package ipsis.woot.blocks;
 
 import ipsis.Woot;
+import ipsis.woot.blocks.heart.ContainerHeart;
+import ipsis.woot.blocks.heart.GuiHeart;
 import ipsis.woot.costing.FactoryRecipeManager;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
@@ -12,16 +14,20 @@ import ipsis.woot.factory.structure.FactoryLayout;
 import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
 import ipsis.woot.school.SchoolManager;
 import ipsis.woot.util.IDebug;
+import ipsis.woot.util.IGuiTile;
 import ipsis.woot.util.helpers.ConnectedCapHelper;
 import ipsis.woot.util.helpers.LogHelper;
 import ipsis.woot.util.helpers.WorldHelper;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
-public class TileEntityHeart extends TileEntity implements ITickable, IMultiBlockMaster, IDebug {
+public class TileEntityHeart extends TileEntity implements ITickable, IMultiBlockMaster, IDebug, IGuiTile {
 
     private SimpleTickTracker tickTracker;
     private FactoryLayout factoryLayout; // The factory blocks and where they are
@@ -151,5 +157,22 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
         } else {
             debug.add("Unformed");
         }
+    }
+
+    /**
+     * IGuiTile
+     */
+    public boolean canInteractWith(EntityPlayer entityPlayer) {
+        return !isInvalid() && entityPlayer.getDistanceSq(getPos().add(0.5D, 0.5D, 0.5D)) <= 64D;
+    }
+
+    @Override
+    public Container createContainer(EntityPlayer entityPlayer) {
+        return new ContainerHeart(entityPlayer.inventory, this);
+    }
+
+    @Override
+    public GuiContainer createGui(EntityPlayer entityPlayer) {
+        return new GuiHeart(this, new ContainerHeart(entityPlayer.inventory, this));
     }
 }

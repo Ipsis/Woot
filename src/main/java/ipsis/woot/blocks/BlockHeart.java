@@ -92,7 +92,7 @@ public class BlockHeart extends WootBlock implements ITileEntityProvider {
             Item heldItem = heldItemStack.getItem();
 
             if (heldItemStack.isEmpty()) {
-                // TODO show gui
+                playerIn.openGui(Woot.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
                 return true;
             }
 

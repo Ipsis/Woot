@@ -86,7 +86,7 @@ public class CommonProxy {
 
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.heartBlock).setRegistryName(ModBlocks.heartBlock.getRegistryName()));
-        event.getRegistry().register(new ItemBlockController(ModBlocks.controllerBlock).setRegistryName(ModBlocks.controllerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.controllerBlock).setRegistryName(ModBlocks.controllerBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.power1Block).setRegistryName(ModBlocks.power1Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.power2Block).setRegistryName(ModBlocks.power2Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.power3Block).setRegistryName(ModBlocks.power3Block.getRegistryName()));

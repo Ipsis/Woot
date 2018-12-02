@@ -1,18 +1,17 @@
 package ipsis.woot.blocks;
 
-import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.helpers.ProgrammedMobHelper;
+import ipsis.woot.util.helpers.StringHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockController extends WootBlock implements ITileEntityProvider {
 
@@ -22,21 +21,6 @@ public class BlockController extends WootBlock implements ITileEntityProvider {
         super(Material.ROCK, BASENAME);
     }
 
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-
-        if (stack.isEmpty())
-            return;
-
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileEntityController) {
-            TileEntityController controller = (TileEntityController)te;
-            FakeMobKey fakeMobKey = ProgrammedMobHelper.getProgrammedEntity(stack);
-            if (fakeMobKey.isValid())
-                controller.setFakeMobKey(fakeMobKey);
-        }
-    }
-
     public static String getBasename() { return BASENAME; }
 
     @Nullable
@@ -44,5 +28,15 @@ public class BlockController extends WootBlock implements ITileEntityProvider {
     public TileEntity createNewTileEntity(World worldIn, int meta) {
 
         return new TileEntityController();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+
+        String entityName = ProgrammedMobHelper.getItemStackDisplayName(stack);
+        if (entityName.equalsIgnoreCase(""))
+            entityName = "info.woot.controller.empty";
+
+        tooltip.add(StringHelper.localise(entityName));
     }
 }

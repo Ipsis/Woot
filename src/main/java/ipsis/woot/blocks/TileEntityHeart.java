@@ -70,7 +70,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
                 factoryRecipe = FactoryRecipeManager.INSTANCE.createFactoryRecipe(factoryConfig, getWorld());
                 SchoolManager.teachMob(factoryConfig.getFakeMobKey(), factoryConfig.getLooting());
                 factoryLayout.clearChanged();
-                LogHelper.info(factoryRecipe);
+                LogHelper.info("Formed factory of " + factoryConfig.getFakeMobKey() + " " + factoryRecipe);
             }
 
             // Redstone signal STOPS the machine

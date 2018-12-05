@@ -1,4 +1,4 @@
-package ipsis.woot.blocks.heart;
+package ipsis.woot.heart;
 
 import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.entity.player.EntityPlayer;

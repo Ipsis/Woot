@@ -1,4 +1,4 @@
-package ipsis.woot.blocks.heart;
+package ipsis.woot.heart;
 
 import ipsis.Woot;
 import ipsis.woot.costing.FactoryRecipeManager;

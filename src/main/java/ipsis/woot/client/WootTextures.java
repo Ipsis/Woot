@@ -2,7 +2,7 @@ package ipsis.woot.client;
 
 import ipsis.Woot;
 import ipsis.woot.blocks.*;
-import ipsis.woot.blocks.heart.BlockHeart;
+import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;

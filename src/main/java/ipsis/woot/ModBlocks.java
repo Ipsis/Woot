@@ -3,7 +3,7 @@ package ipsis.woot;
 import ipsis.woot.blocks.*;
 import ipsis.woot.blocks.generators.BlockCreativeRF;
 import ipsis.woot.blocks.generators.BlockGenerator;
-import ipsis.woot.blocks.heart.BlockHeart;
+import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

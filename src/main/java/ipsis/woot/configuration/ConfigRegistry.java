@@ -5,6 +5,7 @@ import ipsis.woot.configuration.vanilla.UpgradeConfig;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helpers.LogHelper;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 /**
@@ -18,8 +19,11 @@ import java.util.HashMap;
 public class ConfigRegistry {
 
     public static final ConfigRegistry INSTANCE = new ConfigRegistry();
+    static {
+        INSTANCE.addOverride(Key.SPAWN_TIME, "minecraft:creeper", 1000);
+        INSTANCE.addOverride(Key.MOB_TIER, "minecraft:blaze", 4);
+    }
 
-    private HashMap<Key, HashMap<String, Integer>> integerMobConfigMap = new HashMap<>();
 
     public enum Key {
         HEADHUNTER_1_DROP,
@@ -37,7 +41,8 @@ public class ConfigRegistry {
 
         NUM_MOBS,
         SPAWN_TIME,
-        UNITS_PER_HEALTH
+        UNITS_PER_HEALTH,
+        MOB_TIER
     }
 
     public int getIntegerConfig(Key key) {
@@ -95,6 +100,9 @@ public class ConfigRegistry {
 
     public int getFactoryTier(FakeMobKey fakeMobKey, int mobHealth) {
         // TODO mob specific override
+        Integer override = getOverrideInteger(Key.MOB_TIER, fakeMobKey);
+        if (override != null)
+            return override;
 
         /**
          * If there is no mob override then we return the lowest tier than can handle the health
@@ -108,5 +116,29 @@ public class ConfigRegistry {
         return 4;
 
     }
+
+    /**
+     * Overrides
+     */
+    private HashMap<Key, HashMap<String, Integer>> integerMobConfigMap = new HashMap<>();
+    private HashMap<Key, HashMap<String, Boolean>> booleanMobConfigMap = new HashMap<>();
+    public void addOverride(Key key, String mob, int value) {
+        if (!integerMobConfigMap.containsKey(key))
+            integerMobConfigMap.put(key, new HashMap<>());
+        integerMobConfigMap.get(key).put(mob, value);
+    }
+
+    public @Nullable Integer getOverrideInteger(Key key, FakeMobKey fakeMobKey) {
+        if (!integerMobConfigMap.containsKey(key))
+            return null;
+        return integerMobConfigMap.get(key).get(fakeMobKey.getEntityKey());
+    }
+
+    public void addOverride(Key key, String mob, boolean value) {
+        if (!booleanMobConfigMap.containsKey(key))
+            booleanMobConfigMap.put(key, new HashMap<>());
+        booleanMobConfigMap.get(key).put(mob, value);
+    }
+
 
 }

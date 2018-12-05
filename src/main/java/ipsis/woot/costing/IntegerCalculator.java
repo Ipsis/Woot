@@ -12,10 +12,11 @@ public class IntegerCalculator {
         FakeMobKey fakeMobKey = factoryConfig.getFakeMobKey();
 
         // See costings.txt
+        int tier = ConfigRegistry.INSTANCE.getFactoryTier(fakeMobKey, mobHealth);
         int tierUnitsPerTick = 1;
-        int rawSpawnUnits = 1;
+        int rawSpawnUnits = ConfigRegistry.INSTANCE.getIntegerConfig(ConfigRegistry.Key.SPAWN_TIME, fakeMobKey);
         int rawMobCost = mobHealth * ConfigRegistry.INSTANCE.getIntegerConfig(ConfigRegistry.Key.UNITS_PER_HEALTH, fakeMobKey);
-        int ticks = ConfigRegistry.INSTANCE.getIntegerConfig(ConfigRegistry.Key.SPAWN_TIME, fakeMobKey);
+        int ticks = rawSpawnUnits;
         return new FactoryRecipe(ticks, rawMobCost);
     }
 

@@ -1,12 +1,10 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.woot.blocks.heart.ContainerHeart;
-import ipsis.woot.blocks.heart.HeartUIFixedInfo;
+import ipsis.woot.heart.ContainerHeart;
+import ipsis.woot.heart.HeartUIFixedInfo;
 import ipsis.woot.util.FactoryTier;
-import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.FakeMobKeyFactory;
-import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;

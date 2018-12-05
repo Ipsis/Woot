@@ -1,7 +1,7 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.woot.blocks.heart.TileEntityHeart;
+import ipsis.woot.heart.TileEntityHeart;
 import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;

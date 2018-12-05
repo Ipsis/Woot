@@ -1,4 +1,4 @@
-package ipsis.woot.blocks.heart;
+package ipsis.woot.heart;
 
 import ipsis.woot.util.FactoryTier;
 import ipsis.woot.util.FakeMobKey;

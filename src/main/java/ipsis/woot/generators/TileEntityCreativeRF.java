@@ -1,4 +1,4 @@
-package ipsis.woot.blocks.generators;
+package ipsis.woot.generators;
 
 import ipsis.woot.util.helpers.WorldHelper;
 import net.minecraft.tileentity.TileEntity;

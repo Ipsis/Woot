@@ -4,7 +4,7 @@ import ipsis.Woot;
 import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
-import ipsis.woot.blocks.generators.*;
+import ipsis.woot.generators.*;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.heart.TileEntityHeart;
 import ipsis.woot.items.*;

@@ -1,8 +1,7 @@
-package ipsis.woot.blocks.generators;
+package ipsis.woot.generators;
 
 
 import ipsis.woot.util.WootEnergyStorage;
-import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

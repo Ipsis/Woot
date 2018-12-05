@@ -1,4 +1,4 @@
-package ipsis.woot.blocks.generators;
+package ipsis.woot.generators;
 
 import ipsis.woot.factory.recipes.IWootUnitProvider;
 import ipsis.woot.factory.structure.locator.*;

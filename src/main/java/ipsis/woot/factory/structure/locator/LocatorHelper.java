@@ -1,6 +1,7 @@
 package ipsis.woot.factory.structure.locator;
 
 import ipsis.woot.blocks.*;
+import ipsis.woot.blocks.heart.BlockHeart;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

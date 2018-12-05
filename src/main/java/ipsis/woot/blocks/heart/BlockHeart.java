@@ -1,7 +1,8 @@
-package ipsis.woot.blocks;
+package ipsis.woot.blocks.heart;
 
 import ipsis.Woot;
 import ipsis.woot.ModBlocks;
+import ipsis.woot.blocks.heart.TileEntityHeart;
 import ipsis.woot.factory.structure.FactoryBuilder;
 import ipsis.woot.factory.structure.FactoryScanner;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;

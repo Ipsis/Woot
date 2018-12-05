@@ -3,9 +3,8 @@ package ipsis.woot.util;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
 import ipsis.woot.blocks.generators.BlockGenerator;
+import ipsis.woot.blocks.heart.BlockHeart;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;

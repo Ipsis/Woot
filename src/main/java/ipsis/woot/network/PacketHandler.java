@@ -1,21 +1,26 @@
 package ipsis.woot.network;
 
-import ipsis.Woot;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Woot.MODID);
+    public static SimpleNetworkWrapper INSTANCE;
 
     private static int id = 0;
     private static int getNextId() {
         return id++;
     }
 
-    public static void registerMessages() {
+    public static void registerMessages(String channelName) {
 
-        // Service side
+        INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(channelName);
 
-        // Client side
+        // Service -> Client
+        INSTANCE.registerMessage(PacketSyncStaticHeartData.Handler.class, PacketSyncStaticHeartData.class, getNextId(), Side.CLIENT);
+        INSTANCE.registerMessage(PacketWindowPropertyFixed.Handler.class, PacketWindowPropertyFixed.class, getNextId(), Side.CLIENT);
+
+        // Client -> Server
+        INSTANCE.registerMessage(PacketRequestServerData.Handler.class, PacketRequestServerData.class, getNextId(), Side.SERVER);
     }
 }

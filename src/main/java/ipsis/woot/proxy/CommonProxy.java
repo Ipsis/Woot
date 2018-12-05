@@ -5,6 +5,8 @@ import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
 import ipsis.woot.blocks.generators.*;
+import ipsis.woot.blocks.heart.BlockHeart;
+import ipsis.woot.blocks.heart.TileEntityHeart;
 import ipsis.woot.items.*;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.util.FactoryBlock;
@@ -30,7 +32,7 @@ public class CommonProxy {
 
 
     public void preInit(FMLPreInitializationEvent event) {
-        PacketHandler.registerMessages();
+        PacketHandler.registerMessages(Woot.MODID);
         File directory = event.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "woot.cfg"));
         Config.readConfig();
@@ -111,6 +113,5 @@ public class CommonProxy {
         event.getRegistry().register(new ItemYaHammer());
         event.getRegistry().register(new ItemIntern());
         event.getRegistry().register(new ItemDebug());
-
     }
 }

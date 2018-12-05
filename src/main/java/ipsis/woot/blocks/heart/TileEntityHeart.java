@@ -1,8 +1,6 @@
-package ipsis.woot.blocks;
+package ipsis.woot.blocks.heart;
 
 import ipsis.Woot;
-import ipsis.woot.blocks.heart.ContainerHeart;
-import ipsis.woot.blocks.heart.GuiHeart;
 import ipsis.woot.costing.FactoryRecipeManager;
 import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.factory.*;
@@ -24,18 +22,26 @@ import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
 public class TileEntityHeart extends TileEntity implements ITickable, IMultiBlockMaster, IDebug, IGuiTile {
 
-    private SimpleTickTracker tickTracker;
+    /**
+     * The factoryLayout will not exist until after the first update call
+     * The factoryConfig will only exist if factoryLayout.isFormed
+     * The factoryRecipe will always exist but only be valid is factoryLayout.isFormed
+     */
     private FactoryLayout factoryLayout; // The factory blocks and where they are
     private FactoryConfig factoryConfig; // The configuration of the factory
+    private FactoryRecipe factoryRecipe = new FactoryRecipe(1, 1);
+
+    private SimpleTickTracker tickTracker;
     private SpawnRecipeConsumer spawnRecipeConsumer;
     private TrackingState trackingState = new TrackingState();
     private int consumedWootUnits = 0;
-    private FactoryRecipe factoryRecipe = new FactoryRecipe(1, 1);
 
     public TileEntityHeart() {
 
@@ -45,7 +51,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
         spawnRecipeConsumer = new SpawnRecipeConsumer();
     }
 
-    private boolean isRunning() {
+    public boolean isRunning() {
         return getWorld() != null && !getWorld().isBlockPowered(getPos());
     }
 
@@ -104,6 +110,14 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
      */
     private boolean isRecipeComplete() {
         return consumedWootUnits >= factoryRecipe.getNumUnits();
+    }
+    public int getRecipeProgress() {
+        if (factoryLayout.isFormed()) {
+            float progress = ((float)consumedWootUnits / (float)factoryRecipe.getNumUnits()) * 100.0F;
+            return (int)progress;
+        }
+
+        return 0;
     }
 
     private void tickRecipe() {
@@ -175,4 +189,38 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
     public GuiContainer createGui(EntityPlayer entityPlayer) {
         return new GuiHeart(this, new ContainerHeart(entityPlayer.inventory, this));
     }
+
+
+    /**
+     * Client sync data
+     */
+    private int clientProgress = -1;
+    private int clientEnergy = -1;
+    private int clientRunning = -1;
+    public int getClientProgress() { return clientProgress; }
+    public void setClientProgress(int clientProgress) { this.clientProgress = clientProgress; }
+    public int getClientEnergy() { return clientEnergy; }
+    public void setClientEnergy(int clientEnergy) { this.clientEnergy = clientEnergy; }
+    public int getClientRunning() { return clientRunning; }
+    public void setClientRunning(int clientRunning) { this.clientRunning = clientRunning; }
+
+    @SideOnly(Side.CLIENT)
+    private HeartUIFixedInfo clientFixedInfo = new HeartUIFixedInfo();
+    public void setClientUIFixedInfo(HeartUIFixedInfo info) { clientFixedInfo = info; }
+    public HeartUIFixedInfo getClientUIFixedInfo() { return this.clientFixedInfo; }
+
+    public HeartUIFixedInfo getUIFixedInfo() {
+
+        HeartUIFixedInfo info = new HeartUIFixedInfo();
+        if (factoryLayout != null && factoryLayout.isFormed()) {
+            info.setFormed();
+
+            info.tier = factoryConfig.getFactoryTier();
+            info.fakeMobKey = factoryConfig.getFakeMobKey();
+            info.recipeTicks = factoryRecipe.getNumTicks();
+            info.recipeUnits = factoryRecipe.getNumUnits();
+        }
+        return info;
+    }
+
 }

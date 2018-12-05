@@ -1,7 +1,7 @@
 package ipsis.woot.factory.structure;
 
 import ipsis.Woot;
-import ipsis.woot.blocks.BlockHeart;
+import ipsis.woot.blocks.heart.BlockHeart;
 import ipsis.woot.factory.SimpleTickTracker;
 import ipsis.woot.factory.structure.pattern.ScannedPattern;
 import ipsis.woot.util.Debug;

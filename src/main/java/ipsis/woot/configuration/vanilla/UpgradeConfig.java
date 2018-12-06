@@ -9,12 +9,12 @@ public class UpgradeConfig {
     /**
      * Upgrade parameters
      */
-    @Config.Comment("Percentage chance of Headhunter 1 dropping a skull")
-    public static int HEADHUNTER_1_DROP = 30;
-    @Config.Comment("Percentage chance of Headhunter 2 dropping a skull")
-    public static int HEADHUNTER_2_DROP = 50;
-    @Config.Comment("Percentage chance of Headhunter 3 dropping a skull")
-    public static int HEADHUNTER_3_DROP = 80;
+    @Config.Comment("Percentage chance of Decapitate 1 dropping a skull")
+    public static int DECAPITATE_1_DROP = 30;
+    @Config.Comment("Percentage chance of Decapitate 2 dropping a skull")
+    public static int DECAPITATE_2_DROP = 50;
+    @Config.Comment("Percentage chance of Decapitate 3 dropping a skull")
+    public static int DECAPITATE_3_DROP = 80;
 
     @Config.Comment("Number of mobs to spawn for Mass 1")
     public static int MASS_1_NUM_MOBS = 2;

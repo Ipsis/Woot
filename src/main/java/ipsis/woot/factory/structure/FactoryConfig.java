@@ -1,5 +1,6 @@
 package ipsis.woot.factory.structure;
 
+import ipsis.woot.upgrades.FactoryUpgradeConfig;
 import ipsis.woot.util.FactoryTier;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.util.math.BlockPos;
@@ -8,6 +9,7 @@ public class FactoryConfig {
 
     private FakeMobKey fakeMobKey = new FakeMobKey();
     private FactoryTier factoryTier = FactoryTier.TIER_1;
+    private FactoryUpgradeConfig factoryUpgradeConfig = new FactoryUpgradeConfig();
     private int looting = 0;
 
     public FactoryConfig setLooting(int looting) { this.looting = looting; return this; }
@@ -16,6 +18,7 @@ public class FactoryConfig {
     public FakeMobKey getFakeMobKey() { return this.fakeMobKey; }
     public int getLooting() { return this.looting; }
     public FactoryTier getFactoryTier() { return this.factoryTier; }
+    public FactoryUpgradeConfig getFactoryUpgradeConfig() { return this.factoryUpgradeConfig; }
 
     private BlockPos generatorPos;
     private BlockPos exportPos;

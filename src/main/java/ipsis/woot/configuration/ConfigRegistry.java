@@ -1,6 +1,7 @@
 package ipsis.woot.configuration;
 
 import ipsis.woot.configuration.vanilla.FactoryConfig;
+import ipsis.woot.configuration.vanilla.GeneralConfig;
 import ipsis.woot.configuration.vanilla.UpgradeConfig;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helpers.LogHelper;
@@ -29,6 +30,9 @@ public class ConfigRegistry {
         HEADHUNTER_1_DROP,
         HEADHUNTER_2_DROP,
         HEADHUNTER_3_DROP,
+        DECAPITATE_1_DROP,
+        DECAPITATE_2_DROP,
+        DECAPITATE_3_DROP,
         MASS_1_NUM_MOBS,
         MASS_2_NUM_MOBS,
         MASS_3_NUM_MOBS,
@@ -62,12 +66,18 @@ public class ConfigRegistry {
     private int getIntegerDefault(Key key) {
 
         switch (key) {
+            case DECAPITATE_1_DROP:
+                return UpgradeConfig.DECAPITATE_1_DROP;
+            case DECAPITATE_2_DROP:
+                return UpgradeConfig.DECAPITATE_2_DROP;
+            case DECAPITATE_3_DROP:
+                return UpgradeConfig.DECAPITATE_3_DROP;
             case HEADHUNTER_1_DROP:
-                return UpgradeConfig.HEADHUNTER_1_DROP;
+                return GeneralConfig.HEADHUNTER_1_DROP;
             case HEADHUNTER_2_DROP:
-                return UpgradeConfig.HEADHUNTER_2_DROP;
+                return GeneralConfig.HEADHUNTER_2_DROP;
             case HEADHUNTER_3_DROP:
-                return UpgradeConfig.HEADHUNTER_3_DROP;
+                return GeneralConfig.HEADHUNTER_3_DROP;
             case MASS_1_NUM_MOBS:
                 return UpgradeConfig.MASS_1_NUM_MOBS;
             case MASS_2_NUM_MOBS:

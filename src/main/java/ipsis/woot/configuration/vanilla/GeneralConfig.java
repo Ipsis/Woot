@@ -18,4 +18,12 @@ public class GeneralConfig {
 
     @Config.Comment(value = "Allow the factory generate XP shard")
     public static boolean ALLOW_XP_GEN = true;
+
+    // Headhunter is the enchant
+    @Config.Comment("Percentage chance of Headhunter 1 dropping a skull")
+    public static int HEADHUNTER_1_DROP = 30;
+    @Config.Comment("Percentage chance of Headhunter 2 dropping a skull")
+    public static int HEADHUNTER_2_DROP = 50;
+    @Config.Comment("Percentage chance of Headhunter 3 dropping a skull")
+    public static int HEADHUNTER_3_DROP = 80;
 }

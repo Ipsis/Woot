@@ -84,7 +84,11 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
+    // compile against the JEI API but do not include it at runtime
+    deobfProvided "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}:api"
+    // at runtime use the full JEI jar
+    runtime "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
+    
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
     // deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
     // deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-${config.guideapi_version}"

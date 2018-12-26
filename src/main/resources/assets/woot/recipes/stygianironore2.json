@@ -3,7 +3,11 @@
   "ingredients": [
     {
       "type": "forge:ore_dict",
-      "ore": "oreIron"
+      "ore": "ingotIron"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
     },
     {
       "item": "minecraft:netherrack"

@@ -11,7 +11,8 @@
       "item": "minecraft:hopper"
     },
     {
-      "item": "minecraft:chest"
+      "type": "forge:ore_dict",
+      "ore":  "chest"
     },
     {
       "item": "minecraft:bucket"

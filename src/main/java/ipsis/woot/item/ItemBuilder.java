@@ -82,6 +82,8 @@ public class ItemBuilder extends ItemWoot {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
         tooltip.add(TextFormatting.ITALIC + "Builds the factory for you");
+        tooltip.add(TextFormatting.ITALIC + StringHelper.localize("info.woot.intern.0"));
+        tooltip.add(TextFormatting.ITALIC + StringHelper.localize("info.woot.intern.1"));
 
         EnumMobFactoryTier tier = getTierFromNbt(stack);
         tooltip.add(StringHelper.localize(tier.getTranslated("info.woot.tier")));

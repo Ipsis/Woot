@@ -1,6 +1,25 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.9",
+      "features": [
+        {
+          "id": 402,
+          "desc": "Iron ingot based alternative recipe for Stygian Iron Ore"
+        },
+        {
+          "id": 401,
+          "desc": "Ore dictionary chest in recipes"
+        }
+      ],
+      "fixes": [
+        {
+          "id": -1,
+          "desc": "Various small fixes to the manual and tooltips"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.8",
       "features": [
       ],

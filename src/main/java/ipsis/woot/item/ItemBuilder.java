@@ -86,14 +86,19 @@ public class ItemBuilder extends ItemWoot {
         tooltip.add("" + TextFormatting.RED + TextFormatting.ITALIC + StringHelper.localize("info.woot.intern.1"));
 
         EnumMobFactoryTier tier = getTierFromNbt(stack);
-        tooltip.add(StringHelper.localize(tier.getTranslated("info.woot.tier")));
+        tooltip.add(TextFormatting.BLUE + StringHelper.localize(tier.getTranslated("info.woot.tier")));
 
         for (EnumMobFactoryModule m : EnumMobFactoryModule.values()) {
             int c = Woot.factoryPatternRepository.getBlockCount(tier, m);
             if (c > 0)
-                tooltip.add(c + " " + StringHelper.localize("tile.woot.structure." + m.getName() + ".name"));
-
+                tooltip.add("" + TextFormatting.GREEN + c + " " + StringHelper.localize("tile.woot.structure." + m.getName() + ".name"));
         }
+
+        tooltip.add("" + TextFormatting.RED + TextFormatting.ITALIC + "1 " + StringHelper.localize("tile.woot.factory.name"));
+        tooltip.add("" + TextFormatting.RED + TextFormatting.ITALIC + "1 " + StringHelper.localize("tile.woot.controller.name"));
+        tooltip.add("" + TextFormatting.RED + TextFormatting.ITALIC + "1 " + StringHelper.localize("tile.woot.importer.name"));
+        tooltip.add("" + TextFormatting.RED + TextFormatting.ITALIC + "1 " + StringHelper.localize("tile.woot.exporter.name"));
+        tooltip.add("" + TextFormatting.RED + TextFormatting.ITALIC + "1 Basic/Advanced/Premium power cell");
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

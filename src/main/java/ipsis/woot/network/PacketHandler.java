@@ -19,6 +19,7 @@ public class PacketHandler {
         // Service -> Client
         INSTANCE.registerMessage(PacketSyncStaticHeartData.Handler.class, PacketSyncStaticHeartData.class, getNextId(), Side.CLIENT);
         INSTANCE.registerMessage(PacketWindowPropertyFixed.Handler.class, PacketWindowPropertyFixed.class, getNextId(), Side.CLIENT);
+        INSTANCE.registerMessage(PacketSyncSqueezerData.Handler.class, PacketSyncSqueezerData.class, getNextId(), Side.CLIENT);
 
         // Client -> Server
         INSTANCE.registerMessage(PacketRequestServerData.Handler.class, PacketRequestServerData.class, getNextId(), Side.SERVER);

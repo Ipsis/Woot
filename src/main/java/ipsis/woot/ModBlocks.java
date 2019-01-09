@@ -1,9 +1,13 @@
 package ipsis.woot;
 
 import ipsis.woot.blocks.*;
+import ipsis.woot.fluids.BlockPureDye;
+import ipsis.woot.fluids.BlockPureEnchant;
 import ipsis.woot.generators.BlockCreativeRF;
 import ipsis.woot.generators.BlockGenerator;
 import ipsis.woot.heart.BlockHeart;
+import ipsis.woot.machines.squeezer.BlockSqueezer;
+import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -44,6 +48,12 @@ public class ModBlocks {
     @GameRegistry.ObjectHolder("woot:export")
     public static final BlockExport exportBlock = null;
 
+    @GameRegistry.ObjectHolder("woot:squeezer")
+    public static final BlockSqueezer squeezerBlock = null;
+
+    @GameRegistry.ObjectHolder("woot:stamper")
+    public static final BlockStamper stamperBlock = null;
+
     @GameRegistry.ObjectHolder("woot:bone_structure")
     public static final BlockStructure boneStructureBlock = null;
     @GameRegistry.ObjectHolder("woot:flesh_structure")
@@ -66,6 +76,11 @@ public class ModBlocks {
     public static final BlockStructure cap3Block = null;
     @GameRegistry.ObjectHolder("woot:cap4")
     public static final BlockStructure cap4Block = null;
+
+    @GameRegistry.ObjectHolder("woot:puredye")
+    public static BlockPureDye blockPureDye = null;
+    @GameRegistry.ObjectHolder("woot:pureenchant")
+    public static BlockPureEnchant blockPureEnchant = null;
 
     /*
     public static Block getBlockFromFactoryBlock(FactoryBlock factoryBlock) {

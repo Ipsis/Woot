@@ -3,11 +3,18 @@ package ipsis.woot.proxy;
 import ipsis.Woot;
 import ipsis.woot.Config;
 import ipsis.woot.ModBlocks;
+import ipsis.woot.ModFluids;
 import ipsis.woot.blocks.*;
+import ipsis.woot.fluids.BlockPureDye;
 import ipsis.woot.generators.*;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.heart.TileEntityHeart;
 import ipsis.woot.items.*;
+import ipsis.woot.machines.squeezer.BlockSqueezer;
+import ipsis.woot.machines.squeezer.SqueezerManager;
+import ipsis.woot.machines.squeezer.TileEntitySqueezer;
+import ipsis.woot.machines.stamper.BlockStamper;
+import ipsis.woot.machines.stamper.TileEntityStamper;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
@@ -36,6 +43,7 @@ public class CommonProxy {
         File directory = event.getModConfigurationDirectory();
         config = new Configuration(new File(directory.getPath(), "woot.cfg"));
         Config.readConfig();
+        ModFluids.init();
     }
 
     public void init(FMLInitializationEvent event) {
@@ -44,6 +52,7 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent event) {
         Woot.DROP_MANAGER.init();
+        SqueezerManager.INSTANCE.init();
     }
 
     @SubscribeEvent
@@ -57,6 +66,9 @@ public class CommonProxy {
         event.getRegistry().register(new BlockPower(FactoryBlock.POWER_3));
         event.getRegistry().register(new BlockImport());
         event.getRegistry().register(new BlockExport());
+
+        event.getRegistry().register(new BlockSqueezer());
+        event.getRegistry().register(new BlockStamper());
 
         event.getRegistry().register(new BlockGenerator(BlockGenerator.GeneratorType.TICK));
         event.getRegistry().register(new BlockGenerator(BlockGenerator.GeneratorType.RF));
@@ -74,6 +86,8 @@ public class CommonProxy {
         event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_3));
         event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_4));
 
+        event.getRegistry().register(new BlockPureDye());
+
         // TODO different event for TEs in 1.13 ?
         GameRegistry.registerTileEntity(TileEntityHeart.class, new ResourceLocation(Woot.MODID, "heart"));
         GameRegistry.registerTileEntity(TileEntityController.class, new ResourceLocation(Woot.MODID, "controller"));
@@ -82,6 +96,8 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileEntityGeneratorTick.class, new ResourceLocation(Woot.MODID, "generator_tick"));
         GameRegistry.registerTileEntity(TileEntityGeneratorRF.class, new ResourceLocation(Woot.MODID, "generator_rf"));
         GameRegistry.registerTileEntity(TileEntityCreativeRF.class, new ResourceLocation(Woot.MODID, "creative_rf"));
+        GameRegistry.registerTileEntity(TileEntitySqueezer.class, new ResourceLocation(Woot.MODID, "squeezer"));
+        GameRegistry.registerTileEntity(TileEntityStamper.class, new ResourceLocation(Woot.MODID, "stamper"));
     }
 
     @SubscribeEvent
@@ -109,6 +125,8 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(ModBlocks.cap2Block).setRegistryName(ModBlocks.cap2Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cap3Block).setRegistryName(ModBlocks.cap3Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cap4Block).setRegistryName(ModBlocks.cap4Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.squeezerBlock).setRegistryName(ModBlocks.squeezerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.stamperBlock).setRegistryName(ModBlocks.stamperBlock.getRegistryName()));
         event.getRegistry().register(new ItemEnderShard());
         event.getRegistry().register(new ItemYaHammer());
         event.getRegistry().register(new ItemIntern());

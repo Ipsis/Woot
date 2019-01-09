@@ -41,6 +41,9 @@ tile.woot.generator_tick.name=Tick Convertor
 tile.woot.generator_rf.name=RF Convertor
 tile.woot.creative_rf.name=Creative RF Generator
 
+tile.woot.squeezer.name=Dye Squeezer
+tile.woot.stamper.name=Dye Stamper
+
 #################################
 # Items
 #################################
@@ -66,6 +69,17 @@ item.woot.builder.mode.validate_1=Validate Tier 1
 item.woot.builder.mode.validate_2=Validate Tier 2
 item.woot.builder.mode.validate_3=Validate Tier 3
 item.woot.builder.mode.validate_4=Validate Tier 4
+
+#################################
+# Items
+#################################
+tile.woot.puredye.name=Pure Dye
+item.woot.puredye_bucket.name=Pure Dye Bucket
+fluid.puredye=Pure Dye
+
+tile.woot.pureenchant.name=Liquid Enchantment
+item.woot.pureenchant_bucket.name=Liquid Enchant Bucket
+fluid.pureenchant=Liquid Enchant
 
 #################################
 # Chat

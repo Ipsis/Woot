@@ -1,0 +1,12 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "particle": "woot:blocks/squeezer",
+    "up": "woot:blocks/squeezer_base",
+    "down": "woot:blocks/squeezer_base",
+    "north": "woot:blocks/squeezer",
+    "south": "woot:blocks/squeezer_base",
+    "east": "woot:blocks/squeezer_base",
+    "west": "woot:blocks/squeezer_base"
+  }
+}

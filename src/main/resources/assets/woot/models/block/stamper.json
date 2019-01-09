@@ -1,0 +1,12 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "particle": "woot:blocks/stamper",
+    "up": "woot:blocks/stamper_base",
+    "down": "woot:blocks/stamper_base",
+    "north": "woot:blocks/stamper",
+    "south": "woot:blocks/stamper_base",
+    "east": "woot:blocks/stamper_base",
+    "west": "woot:blocks/stamper_base"
+  }
+}

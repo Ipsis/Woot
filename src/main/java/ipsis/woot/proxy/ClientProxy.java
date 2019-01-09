@@ -1,13 +1,11 @@
 package ipsis.woot.proxy;
 
-import com.google.common.util.concurrent.ListenableFuture;
 import ipsis.Woot;
 import ipsis.woot.ModBlocks;
 import ipsis.woot.ModItems;
 import ipsis.woot.blocks.TileEntityLayout;
 import ipsis.woot.client.TESRLayout;
 import ipsis.woot.event.TextureStitchEventHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -54,6 +52,12 @@ public class ClientProxy extends CommonProxy {
         ModBlocks.cap2Block.initModel();
         ModBlocks.cap3Block.initModel();
         ModBlocks.cap4Block.initModel();
+
+        ModBlocks.squeezerBlock.initModel();
+        ModBlocks.stamperBlock.initModel();
+
+        ModBlocks.blockPureDye.initModel();
+        ModBlocks.blockPureEnchant.initModel();
 
         ModBlocks.generatorTickBlock.initModel();
         ModBlocks.generatorRFBlock.initModel();

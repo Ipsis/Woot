@@ -18,7 +18,7 @@ public class BlockPureEnchant extends BlockFluidClassic {
     public static final ResourceLocation PUREENCHANT = new ResourceLocation(Woot.MODID, "pureenchant");
 
     public BlockPureEnchant() {
-        super(ModFluids.pureDye, Material.WATER);
+        super(ModFluids.pureEnchant, Material.WATER);
         setCreativeTab(Woot.tab);
         setTranslationKey(Woot.MODID + ".pureenchant");
         setRegistryName(PUREENCHANT);

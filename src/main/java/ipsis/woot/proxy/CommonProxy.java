@@ -6,6 +6,7 @@ import ipsis.woot.ModBlocks;
 import ipsis.woot.ModFluids;
 import ipsis.woot.blocks.*;
 import ipsis.woot.fluids.BlockPureDye;
+import ipsis.woot.fluids.BlockPureEnchant;
 import ipsis.woot.generators.*;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.heart.TileEntityHeart;
@@ -87,6 +88,7 @@ public class CommonProxy {
         event.getRegistry().register(new BlockStructure(FactoryBlock.CAP_4));
 
         event.getRegistry().register(new BlockPureDye());
+        event.getRegistry().register(new BlockPureEnchant());
 
         // TODO different event for TEs in 1.13 ?
         GameRegistry.registerTileEntity(TileEntityHeart.class, new ResourceLocation(Woot.MODID, "heart"));

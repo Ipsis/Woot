@@ -9,6 +9,6 @@ public class FluidPureEnchant extends Fluid {
     public FluidPureEnchant() {
         super("pureenchant",
                 new ResourceLocation(Woot.MODID, "blocks/pureenchant_still"),
-                new ResourceLocation(Woot.MODID, "blocks/pureenchant"));
+                new ResourceLocation(Woot.MODID, "blocks/pureenchant_flow"));
     }
 }

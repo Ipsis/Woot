@@ -32,11 +32,6 @@ public class ItemIntern extends WootItem implements IBuilderItem {
         setMaxStackSize(1);
     }
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
-
     @Override
     public FactoryTier getTier(ItemStack itemStack) {
         return BuilderHelper.getBuilderMode(itemStack).getFactoryTier();

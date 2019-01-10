@@ -29,11 +29,6 @@ import java.util.List;
 
 public class ItemEnderShard extends WootItem {
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
-
     public ItemEnderShard() {
         super("endershard");
     }

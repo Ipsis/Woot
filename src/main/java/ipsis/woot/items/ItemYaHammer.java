@@ -9,11 +9,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemYaHammer extends WootItem {
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
-
     public ItemYaHammer() {
         super("yahammer");
         setMaxStackSize(1);

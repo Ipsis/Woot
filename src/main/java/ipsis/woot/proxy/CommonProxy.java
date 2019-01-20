@@ -132,6 +132,16 @@ public class CommonProxy {
         event.getRegistry().register(new ItemEnderShard());
         event.getRegistry().register(new ItemYaHammer());
         event.getRegistry().register(new ItemIntern());
+        event.getRegistry().register(new ItemPrism());
+        event.getRegistry().register(new ItemStygianPlate());
+        event.getRegistry().register(new ItemDyeBlank());
         event.getRegistry().register(new ItemDebug());
+
+        event.getRegistry().register(new ItemEnchantedPlate(0, "basic_enchantedplate"));
+        event.getRegistry().register(new ItemEnchantedPlate(1, "enchantedplate"));
+        event.getRegistry().register(new ItemEnchantedPlate(2, "advanced_enchantedplate"));
+
+        event.getRegistry().register(new ItemDyePlate(SqueezerManager.DyeMakeup.BLACK, "black_dyeplate"));
+        event.getRegistry().register(new ItemDyePlate(SqueezerManager.DyeMakeup.RED, "red_dyeplate"));
     }
 }

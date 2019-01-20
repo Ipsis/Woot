@@ -67,8 +67,8 @@ public class ContainerStamper extends Container {
     private void addOwnSlots() {
 
         IItemHandler iItemHandler = this.stamper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        addSlotToContainer(new SlotItemHandler(iItemHandler, 0, 39, 40));
-        addSlotToContainer(new SlotItemHandler(iItemHandler, 1, 80, 40));
+        addSlotToContainer(new SlotItemHandler(iItemHandler, 0,82 , 40));
+        addSlotToContainer(new SlotItemHandler(iItemHandler, 1, 118, 40));
     }
 
     @Override

@@ -41,8 +41,8 @@ tile.woot.generator_tick.name=Tick Convertor
 tile.woot.generator_rf.name=RF Convertor
 tile.woot.creative_rf.name=Creative RF Generator
 
-tile.woot.squeezer.name=Dye Squeezer
-tile.woot.stamper.name=Dye Stamper
+tile.woot.squeezer.name=Squeezer
+tile.woot.stamper.name=Infuser
 
 #################################
 # Items
@@ -60,6 +60,9 @@ info.woot.controller.empty=Unprogrammed
 item.woot.yahammer.name=Ya Hammer
 item.woot.intern.name=The Intern
 item.woot.debug.name=Debug Tool
+item.woot.prism.name=Controller Prism
+item.woot.stygianplate.name=Stygian Iron Plate
+item.woot.dyeblank.name=Dye Blank
 
 item.woot.builder.mode.build_1=Build Tier 1
 item.woot.builder.mode.build_2=Build Tier 2
@@ -70,8 +73,25 @@ item.woot.builder.mode.validate_2=Validate Tier 2
 item.woot.builder.mode.validate_3=Validate Tier 3
 item.woot.builder.mode.validate_4=Validate Tier 4
 
+item.woot.black_dyeplate.name=Black Dye Plate
+item.woot.red_dyeplate.name=Red Dye Plate
+item.woot.dyeplate.green.name=Green Dye Plate
+item.woot.dyeplate.brown.name=Brown Dye Plate
+item.woot.dyeplate.blue.name=Blue Dye Plate
+item.woot.dyeplate.purple.name=Purple Dye Plate
+item.woot.dyeplate.cyan.name=Cyan Dye Plate
+item.woot.dyeplate.lightgray.name=Light Gray Dye Plate
+item.woot.dyeplate.gray.name=Gray Dye Plate
+item.woot.dyeplate.pink.name=Pink Dye Plate
+item.woot.dyeplate.lime.name=Lime Dye Plate
+item.woot.dyeplate.yellow.name=Yellow Dye Plate
+item.woot.dyeplate.lightblue.name=Light Blue Dye Plate
+item.woot.dyeplate.magenta.name=Magenta Dye Plate
+item.woot.dyeplate.orange.name=Orange Dye Plate
+item.woot.dyeplate.white.name=White Dye Plate
+
 #################################
-# Items
+# Fluids
 #################################
 tile.woot.puredye.name=Pure Dye
 item.woot.puredye_bucket.name=Pure Dye Bucket

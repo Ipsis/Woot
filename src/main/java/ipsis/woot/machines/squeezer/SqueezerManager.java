@@ -2,7 +2,6 @@ package ipsis.woot.machines.squeezer;
 
 import ipsis.woot.util.helpers.LogHelper;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraftforge.oredict.OreDictionary;
@@ -128,7 +127,7 @@ public class SqueezerManager {
     }
 
     private static final int LCM = 72;
-    enum DyeMakeup {
+    public enum DyeMakeup {
 
         BLACK("dyeBlack", LCM/3, LCM/3, LCM/3, 0),
         RED("dyeRed", LCM, 0, 0, 0),

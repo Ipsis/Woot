@@ -66,6 +66,14 @@ public class ClientProxy extends CommonProxy {
         ModItems.enderShard.initModel();
         ModItems.yaHammer.initModel();
         ModItems.intern.initModel();
+        ModItems.prism.initModel();
+        ModItems.dyeBlank.initModel();
+        ModItems.stygianPlate.initModel();
+        ModItems.basicEnchantedPlate.initModel();
+        ModItems.enchantedPlate.initModel();
+        ModItems.advancedEnchantedPlate.initModel();
         ModItems.debug.initModel();
+        ModItems.blackDyePlate.initModel();
+        ModItems.redDyePlate.initModel();
     }
 }

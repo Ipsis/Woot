@@ -18,6 +18,7 @@ import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.machines.stamper.TileEntityStamper;
 import ipsis.woot.network.PacketHandler;
 import ipsis.woot.power.BlockEffort;
+import ipsis.woot.power.BlockPower;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

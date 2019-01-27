@@ -9,6 +9,7 @@ import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.machines.squeezer.BlockSqueezer;
 import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.power.BlockEffort;
+import ipsis.woot.power.BlockPower;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;

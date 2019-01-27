@@ -4,6 +4,7 @@ import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
 import ipsis.woot.generators.BlockGenerator;
 import ipsis.woot.heart.BlockHeart;
+import ipsis.woot.power.BlockPower;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 

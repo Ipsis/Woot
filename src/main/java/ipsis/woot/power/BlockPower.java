@@ -1,4 +1,4 @@
-package ipsis.woot.blocks;
+package ipsis.woot.power;
 
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.WootBlock;

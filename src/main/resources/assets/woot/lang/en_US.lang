@@ -101,6 +101,10 @@ tile.woot.pureenchant.name=Liquid Enchantment
 item.woot.pureenchant_bucket.name=Liquid Enchant Bucket
 fluid.pureenchant=Liquid Enchant
 
+tile.woot.effort.name=Liquid Effort
+item.woot.effort_bucket.name=Bucket Of Liquid Effort
+fluid.effort=Liquid Effort
+
 #################################
 # Chat
 #################################

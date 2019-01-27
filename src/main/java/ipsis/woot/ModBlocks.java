@@ -8,6 +8,7 @@ import ipsis.woot.generators.BlockGenerator;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.machines.squeezer.BlockSqueezer;
 import ipsis.woot.machines.stamper.BlockStamper;
+import ipsis.woot.power.BlockEffort;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -81,6 +82,8 @@ public class ModBlocks {
     public static BlockPureDye blockPureDye = null;
     @GameRegistry.ObjectHolder("woot:pureenchant")
     public static BlockPureEnchant blockPureEnchant = null;
+    @GameRegistry.ObjectHolder("woot:effort")
+    public static BlockEffort blockEffort = null;
 
     /*
     public static Block getBlockFromFactoryBlock(FactoryBlock factoryBlock) {

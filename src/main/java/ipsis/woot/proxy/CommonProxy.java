@@ -17,6 +17,7 @@ import ipsis.woot.machines.squeezer.TileEntitySqueezer;
 import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.machines.stamper.TileEntityStamper;
 import ipsis.woot.network.PacketHandler;
+import ipsis.woot.power.BlockEffort;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -89,6 +90,7 @@ public class CommonProxy {
 
         event.getRegistry().register(new BlockPureDye());
         event.getRegistry().register(new BlockPureEnchant());
+        event.getRegistry().register(new BlockEffort());
 
         // TODO different event for TEs in 1.13 ?
         GameRegistry.registerTileEntity(TileEntityHeart.class, new ResourceLocation(Woot.MODID, "heart"));

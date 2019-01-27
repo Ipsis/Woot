@@ -58,6 +58,7 @@ public class ClientProxy extends CommonProxy {
 
         ModBlocks.blockPureDye.initModel();
         ModBlocks.blockPureEnchant.initModel();
+        ModBlocks.blockEffort.initModel();
 
         ModBlocks.generatorTickBlock.initModel();
         ModBlocks.generatorRFBlock.initModel();

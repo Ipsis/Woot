@@ -4,6 +4,7 @@ import ipsis.woot.factory.structure.locator.*;
 import ipsis.woot.util.IDebug;
 import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.helpers.WorldHelper;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,10 +20,14 @@ public class TileEntityCell extends TileEntity implements IMultiBlockGlueProvide
     private WootFluidTank fluidTank = new WootFluidTank(1000);
     private IMultiBlockGlue iMultiBlockGlue;
 
-    public TileEntityCell(int capacity) {
+    public TileEntityCell() {
         super();
-        fluidTank.setCapacity(capacity);
         iMultiBlockGlue = new Glue(this, this);
+    }
+
+    public TileEntityCell(int capacity) {
+        this();
+        fluidTank.setCapacity(capacity);
     }
 
     public int consume(int units) {
@@ -77,6 +82,18 @@ public class TileEntityCell extends TileEntity implements IMultiBlockGlueProvide
     @Override
     public IMultiBlockGlue getIMultiBlockGlue() {
         return iMultiBlockGlue;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        fluidTank.writeToNBT(compound);
+        return super.writeToNBT(compound);
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        fluidTank.readFromNBT(compound);
+        super.readFromNBT(compound);
     }
 
     /**

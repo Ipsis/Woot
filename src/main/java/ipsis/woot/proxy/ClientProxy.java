@@ -62,6 +62,7 @@ public class ClientProxy extends CommonProxy {
 
         ModBlocks.generatorTickBlock.initModel();
         ModBlocks.generatorRFBlock.initModel();
+        ModBlocks.generatorFluidBlock.initModel();
         ModBlocks.creativeRFBlock.initModel();
 
         ModItems.enderShard.initModel();

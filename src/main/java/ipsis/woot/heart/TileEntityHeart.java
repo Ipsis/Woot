@@ -10,6 +10,7 @@ import ipsis.woot.factory.structure.FactoryConfig;
 import ipsis.woot.factory.structure.FactoryConfigBuilder;
 import ipsis.woot.factory.structure.FactoryLayout;
 import ipsis.woot.factory.structure.locator.IMultiBlockMaster;
+import ipsis.woot.power.TileEntityCell;
 import ipsis.woot.school.SchoolManager;
 import ipsis.woot.util.IDebug;
 import ipsis.woot.util.IGuiTile;
@@ -44,7 +45,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
     private int consumedWootUnits = 0;
 
     public TileEntityHeart() {
-
+        super();
         // NOTE: this is called without a world on startup
         tickTracker = new SimpleTickTracker();
         tickTracker.setStructureTickCount(20);
@@ -124,10 +125,10 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
 
         if (factoryLayout.isFormed()) {
 
-            TileEntity generatorTE = getWorld().getTileEntity(factoryConfig.getGeneratorPos());
-            if (generatorTE instanceof IWootUnitProvider) {
-                IWootUnitProvider iWootUnitProvider = (IWootUnitProvider)generatorTE;
-                consumedWootUnits += iWootUnitProvider.consume(getRecipeWootUnitsPerTick());
+            TileEntity te = getWorld().getTileEntity(factoryConfig.getCellPos());
+            if (te instanceof TileEntityCell) {
+                TileEntityCell cell = (TileEntityCell)te;
+                consumedWootUnits += cell.consume(getRecipeWootUnitsPerTick());
             }
         }
     }
@@ -165,7 +166,7 @@ public class TileEntityHeart extends TileEntity implements ITickable, IMultiBloc
         if (factoryLayout != null && factoryLayout.isFormed()) {
             debug.add("Formed:" + factoryLayout.isFormed());
             debug.add(String.format("Config: %s looting %d", factoryConfig.getFakeMobKey(), factoryConfig.getLooting()));
-            debug.add(String.format("Exporter:%s Importer:%s Generator:%s", factoryConfig.getExportPos(), factoryConfig.getImportPos(), factoryConfig.getGeneratorPos()));
+            debug.add(String.format("Exporter:%s Importer:%s Generator:%s", factoryConfig.getExportPos(), factoryConfig.getImportPos(), factoryConfig.getCellPos()));
             debug.add("Tracking xp:" + trackingState.storedXp);
             debug.add("Cost " + factoryRecipe);
         } else {

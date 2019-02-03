@@ -2,7 +2,7 @@ package ipsis.woot.factory.structure.locator;
 
 import ipsis.woot.blocks.*;
 import ipsis.woot.heart.BlockHeart;
-import ipsis.woot.power.BlockPower;
+import ipsis.woot.power.BlockCell;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -16,7 +16,7 @@ import java.util.Stack;
 public class LocatorHelper {
 
     private static boolean isGlueBlock(Block b) {
-        return b instanceof BlockStructure || b instanceof BlockExport || b instanceof BlockImport || b instanceof BlockController || b instanceof BlockPower;
+        return b instanceof BlockStructure || b instanceof BlockExport || b instanceof BlockImport || b instanceof BlockController || b instanceof BlockCell;
     }
 
     private static boolean isMaster(Block b) {

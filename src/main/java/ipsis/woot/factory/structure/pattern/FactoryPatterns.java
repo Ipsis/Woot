@@ -29,7 +29,7 @@ public class FactoryPatterns {
         PATTERN_MAPPINGS.put('I', FactoryBlock.IMPORT);
         PATTERN_MAPPINGS.put('E', FactoryBlock.EXPORT);
         PATTERN_MAPPINGS.put('G', FactoryBlock.GENERATOR);
-        PATTERN_MAPPINGS.put('P', FactoryBlock.POWER_1);
+        PATTERN_MAPPINGS.put('X', FactoryBlock.POWER_1);
     }
 
     public static @Nullable FactoryBlock getFactoryBlock(char c) {
@@ -37,6 +37,13 @@ public class FactoryPatterns {
     }
 
     public static final String TIER_1[][] = {
+            {
+                "-----",
+                "-----",
+                "--X--",
+                "-----",
+                "-----",
+            },
             {
                 "-----",
                 "-----",
@@ -48,13 +55,6 @@ public class FactoryPatterns {
                 "-----",
                 "-----",
                 "--I--",
-                "-----",
-                "-----",
-            },
-            {
-                "-----",
-                "-----",
-                "--G--",
                 "-----",
                 "-----",
             },

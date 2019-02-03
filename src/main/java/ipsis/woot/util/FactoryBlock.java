@@ -2,9 +2,9 @@ package ipsis.woot.util;
 
 import ipsis.woot.ModBlocks;
 import ipsis.woot.blocks.*;
-import ipsis.woot.generators.BlockGenerator;
+import ipsis.woot.power.BlockConvertor;
 import ipsis.woot.heart.BlockHeart;
-import ipsis.woot.power.BlockPower;
+import ipsis.woot.power.BlockCell;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -26,12 +26,12 @@ public enum FactoryBlock {
     TOTEM("totem", WootColor.LIME, null),
     CONTROLLER("controller", WootColor.YELLOW, BlockController.class),
     HEART("heart", WootColor.PINK, BlockHeart.class),
-    POWER_1("power1", WootColor.YELLOW, BlockPower.class),
-    POWER_2("power2", WootColor.YELLOW, BlockPower.class),
-    POWER_3("power3", WootColor.YELLOW, BlockPower.class),
+    POWER_1("power1", WootColor.YELLOW, BlockCell.class),
+    POWER_2("power2", WootColor.YELLOW, BlockCell.class),
+    POWER_3("power3", WootColor.YELLOW, BlockCell.class),
     IMPORT("import", WootColor.YELLOW, BlockImport.class),
     EXPORT("export", WootColor.YELLOW, BlockExport.class),
-    GENERATOR("generator", WootColor.YELLOW, BlockGenerator.class);
+    GENERATOR("generator", WootColor.YELLOW, BlockConvertor.class);
 
     private String name;
     private Class clazz;
@@ -53,8 +53,8 @@ public enum FactoryBlock {
             if (curr.clazz != null && curr.clazz == b.getClass()) {
                 if (curr.clazz == BlockStructure.class)
                     return ((BlockStructure)b).getFactoryBlockType();
-                else if (curr.clazz == BlockPower.class)
-                    return ((BlockPower)b).getFactoryBlockType();
+                else if (curr.clazz == BlockCell.class)
+                    return ((BlockCell)b).getFactoryBlockType();
                 else
                     return curr;
             }
@@ -81,6 +81,6 @@ public enum FactoryBlock {
 
     public static boolean isPowerFactoryBlock(FactoryBlock factoryBlock) {
 
-        return factoryBlock == GENERATOR;
+        return factoryBlock == POWER_1 || factoryBlock == POWER_2 || factoryBlock == POWER_3;
     }
 }

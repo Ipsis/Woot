@@ -67,7 +67,7 @@ public class ConnectedCapHelper {
     }
 
     /**
-     * Returns a list of connected tiles TEs with FLUID_HANDLER_CAPABILITY and the specific drain/fill
+     * Returns a list of connected tiles TEs with FLUID_HANDLER_CAPABILITY and the specific drain/fillCellTank
      * Only checks in the horizontal plane
      */
     private static List<ConnectedFluidHandler> getConnectedFluidHandlers(@Nullable World world, @Nonnull BlockPos pos, boolean drain) {

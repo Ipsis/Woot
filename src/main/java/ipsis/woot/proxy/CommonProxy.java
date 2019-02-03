@@ -17,8 +17,7 @@ import ipsis.woot.machines.squeezer.TileEntitySqueezer;
 import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.machines.stamper.TileEntityStamper;
 import ipsis.woot.network.PacketHandler;
-import ipsis.woot.power.BlockEffort;
-import ipsis.woot.power.BlockPower;
+import ipsis.woot.power.*;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -64,17 +63,18 @@ public class CommonProxy {
         event.getRegistry().register(new BlockLayout());
         event.getRegistry().register(new BlockHeart());
         event.getRegistry().register(new BlockController());
-        event.getRegistry().register(new BlockPower(FactoryBlock.POWER_1));
-        event.getRegistry().register(new BlockPower(FactoryBlock.POWER_2));
-        event.getRegistry().register(new BlockPower(FactoryBlock.POWER_3));
+        event.getRegistry().register(new BlockCell(FactoryBlock.POWER_1));
+        event.getRegistry().register(new BlockCell(FactoryBlock.POWER_2));
+        event.getRegistry().register(new BlockCell(FactoryBlock.POWER_3));
         event.getRegistry().register(new BlockImport());
         event.getRegistry().register(new BlockExport());
 
         event.getRegistry().register(new BlockSqueezer());
         event.getRegistry().register(new BlockStamper());
 
-        event.getRegistry().register(new BlockGenerator(BlockGenerator.GeneratorType.TICK));
-        event.getRegistry().register(new BlockGenerator(BlockGenerator.GeneratorType.RF));
+        event.getRegistry().register(new BlockConvertor(BlockConvertor.GeneratorType.TICK));
+        event.getRegistry().register(new BlockConvertor(BlockConvertor.GeneratorType.RF));
+        event.getRegistry().register(new BlockConvertor(BlockConvertor.GeneratorType.FLUID));
         event.getRegistry().register(new BlockCreativeRF());
 
         event.getRegistry().register(new BlockStructure(FactoryBlock.BONE));
@@ -98,11 +98,13 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileEntityController.class, new ResourceLocation(Woot.MODID, "controller"));
         GameRegistry.registerTileEntity(TileEntityLayout.class, new ResourceLocation(Woot.MODID, "layout"));
         GameRegistry.registerTileEntity(TileEntityStructure.class, new ResourceLocation(Woot.MODID, "structure"));
-        GameRegistry.registerTileEntity(TileEntityGeneratorTick.class, new ResourceLocation(Woot.MODID, "generator_tick"));
-        GameRegistry.registerTileEntity(TileEntityGeneratorRF.class, new ResourceLocation(Woot.MODID, "generator_rf"));
+        GameRegistry.registerTileEntity(TileEntityConvertorTick.class, new ResourceLocation(Woot.MODID, "generator_tick"));
+        GameRegistry.registerTileEntity(TileEntityConvertorFluid.class, new ResourceLocation(Woot.MODID, "generator_fluid"));
+        GameRegistry.registerTileEntity(TileEntityConvertorRF.class, new ResourceLocation(Woot.MODID, "generator_rf"));
         GameRegistry.registerTileEntity(TileEntityCreativeRF.class, new ResourceLocation(Woot.MODID, "creative_rf"));
         GameRegistry.registerTileEntity(TileEntitySqueezer.class, new ResourceLocation(Woot.MODID, "squeezer"));
         GameRegistry.registerTileEntity(TileEntityStamper.class, new ResourceLocation(Woot.MODID, "stamper"));
+        GameRegistry.registerTileEntity(TileEntityCell.class, new ResourceLocation(Woot.MODID, "cell"));
     }
 
     @SubscribeEvent
@@ -116,6 +118,7 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(ModBlocks.power3Block).setRegistryName(ModBlocks.power3Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.generatorTickBlock).setRegistryName(ModBlocks.generatorTickBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.generatorRFBlock).setRegistryName(ModBlocks.generatorRFBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.generatorRFBlock).setRegistryName(ModBlocks.generatorFluidBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.creativeRFBlock).setRegistryName(ModBlocks.creativeRFBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.importBlock).setRegistryName(ModBlocks.importBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.exportBlock).setRegistryName(ModBlocks.exportBlock.getRegistryName()));

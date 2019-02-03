@@ -20,13 +20,13 @@ public class FactoryConfig {
     public FactoryTier getFactoryTier() { return this.factoryTier; }
     public FactoryUpgradeConfig getFactoryUpgradeConfig() { return this.factoryUpgradeConfig; }
 
-    private BlockPos generatorPos;
+    private BlockPos cellPos;
     private BlockPos exportPos;
     private BlockPos importPos;
-    public void setGeneratorPos(BlockPos pos) { this.generatorPos = new BlockPos(pos); }
+    public void setCellPos(BlockPos pos) { this.cellPos = new BlockPos(pos); }
     public void setExportPos(BlockPos pos) { this.exportPos = new BlockPos(pos); }
     public void setImportPos(BlockPos pos) { this.importPos = new BlockPos(pos); }
-    public BlockPos getGeneratorPos() { return this.generatorPos; }
+    public BlockPos getCellPos() { return this.cellPos; }
     public BlockPos getExportPos() { return this.exportPos; }
     public BlockPos getImportPos() { return this.importPos; }
 

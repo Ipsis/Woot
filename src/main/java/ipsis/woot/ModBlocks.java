@@ -4,12 +4,12 @@ import ipsis.woot.blocks.*;
 import ipsis.woot.fluids.BlockPureDye;
 import ipsis.woot.fluids.BlockPureEnchant;
 import ipsis.woot.generators.BlockCreativeRF;
-import ipsis.woot.generators.BlockGenerator;
+import ipsis.woot.power.BlockConvertor;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.machines.squeezer.BlockSqueezer;
 import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.power.BlockEffort;
-import ipsis.woot.power.BlockPower;
+import ipsis.woot.power.BlockCell;
 import ipsis.woot.util.FactoryBlock;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -30,16 +30,18 @@ public class ModBlocks {
     public static final BlockController controllerBlock = null;
 
     @GameRegistry.ObjectHolder("woot:power1")
-    public static final BlockPower power1Block = null;
+    public static final BlockCell power1Block = null;
     @GameRegistry.ObjectHolder("woot:power2")
-    public static final BlockPower power2Block = null;
+    public static final BlockCell power2Block = null;
     @GameRegistry.ObjectHolder("woot:power3")
-    public static final BlockPower power3Block = null;
+    public static final BlockCell power3Block = null;
 
     @GameRegistry.ObjectHolder("woot:generator_tick")
-    public static final BlockGenerator generatorTickBlock = null;
+    public static final BlockConvertor generatorTickBlock = null;
     @GameRegistry.ObjectHolder("woot:generator_rf")
-    public static final BlockGenerator generatorRFBlock = null;
+    public static final BlockConvertor generatorRFBlock = null;
+    @GameRegistry.ObjectHolder("woot:generator_fluid")
+    public static final BlockConvertor generatorFluidBlock = null;
 
     @GameRegistry.ObjectHolder("woot:creative_rf")
     public static final BlockCreativeRF creativeRFBlock = null;

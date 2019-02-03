@@ -33,12 +33,14 @@ tile.woot.cap1.name=Tier 1 Cap
 tile.woot.cap2.name=Tier 2 Cap
 tile.woot.cap3.name=Tier 3 Cap
 tile.woot.cap4.name=Tier 4 Cap
-tile.woot.power1.name=Simple Power Cell
-tile.woot.power2.name=Advanced Power Cell
-tile.woot.power3.name=Ultimate Power Cell
+tile.woot.power1.name=Simple Cell
+tile.woot.power2.name=Advanced Cell
+tile.woot.power3.name=Ultimate Cell
 
 tile.woot.generator_tick.name=Tick Convertor
 tile.woot.generator_rf.name=RF Convertor
+tile.woot.generator_fluid.name=Fluid Convertor
+
 tile.woot.creative_rf.name=Creative RF Generator
 
 tile.woot.squeezer.name=Squeezer

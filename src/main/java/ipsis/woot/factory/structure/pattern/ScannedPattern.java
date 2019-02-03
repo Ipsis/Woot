@@ -32,7 +32,7 @@ public class ScannedPattern {
         if (factoryBlock == FactoryBlock.CONTROLLER)
             controllerPos = new BlockPos(pos);
         else if (FactoryBlock.isPowerFactoryBlock(factoryBlock))
-            powerPos = new BlockPos(pos);
+            cellPos = new BlockPos(pos);
         else if (factoryBlock == FactoryBlock.IMPORT)
             importPos = new BlockPos(pos);
         else if (factoryBlock == FactoryBlock.EXPORT)
@@ -41,25 +41,25 @@ public class ScannedPattern {
 
     private BlockPos controllerPos;
     private FakeMobKey controllerMob;
-    private BlockPos powerPos;
+    private BlockPos cellPos;
     private BlockPos exportPos;
     private BlockPos importPos;
 
     public void setControllerMob(FakeMobKey fakeMobKey) { controllerMob = fakeMobKey; }
 
     public boolean hasController() { return controllerPos != null && controllerMob != null && controllerMob.isValid(); }
-    public boolean hasPower() { return powerPos != null; }
+    public boolean hasCell() { return cellPos != null; }
     public boolean hasExport() { return exportPos != null; }
     public boolean hasImport() { return importPos != null; }
 
     public BlockPos getControllerPos() { return controllerPos; }
-    public BlockPos getPowerPos() { return powerPos; }
+    public BlockPos getCellPos() { return cellPos; }
     public BlockPos getExportPos() { return exportPos; }
     public BlockPos getImportPos() { return importPos; }
     public FakeMobKey getControllerMob() { return controllerMob; }
 
     public boolean isComplete() {
-        return !hasBadBlocks() && hasController() && hasPower() && hasImport() && hasExport();
+        return !hasBadBlocks() && hasController() && hasCell() && hasImport() && hasExport();
     }
 
 

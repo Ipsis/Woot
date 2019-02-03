@@ -100,7 +100,7 @@ public class TileEntitySqueezer extends TileEntity implements IDebug, ITickable,
         for (int i = 0; i < INPUT_SLOTS; i++) {
             SqueezerManager.SqueezerRecipe recipe = SqueezerManager.INSTANCE.getRecipe(inputHandler.getStackInSlot(i));
             if (recipe != null) {
-                LogHelper.info("fill tanks with " + recipe.getDyeMakeup());
+                LogHelper.info("fillCellTank tanks with " + recipe.getDyeMakeup());
                 if (insertOutput(recipe.getDyeMakeup(), false)) {
                     inputHandler.extractItem(i, 1, false);
                     break;

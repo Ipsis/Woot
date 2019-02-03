@@ -18,6 +18,7 @@ public class TileEntityController extends TileEntity implements IDebug, IRestora
     private IMultiBlockGlue iMultiBlockGlue;
 
     public TileEntityController() {
+        super();
         iMultiBlockGlue = new Glue(this, this);
     }
 

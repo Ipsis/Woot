@@ -13,6 +13,7 @@ public class TileEntityStructure extends TileEntity implements IMultiBlockGluePr
     private IMultiBlockGlue iMultiBlockGlue;
 
     public TileEntityStructure() {
+        super();
         iMultiBlockGlue = new Glue(this, this);
     }
 

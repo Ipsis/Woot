@@ -1,5 +1,6 @@
 package ipsis.woot.power;
 
+import ipsis.Woot;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -32,8 +33,7 @@ public class TileEntityConvertorRF extends TileEntityConvertor implements IEnerg
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
 
-        // TODO actual conversion rate
-        int mb = maxReceive;
+        int mb = Woot.CONVERSION_REGISTRY.convertFromRF(maxReceive);
         return fillCellTank(mb, !simulate);
     }
 

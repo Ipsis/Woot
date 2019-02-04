@@ -7,7 +7,7 @@ public class TileEntityConvertorTick extends TileEntityConvertor implements ITic
     @Override
     public void update() {
 
-        int mb = 1;
+        int mb = Integer.MAX_VALUE;
         fillCellTank(mb, true);
     }
 }

@@ -11,6 +11,7 @@ import ipsis.woot.drops.generation.LootGenerator;
 import ipsis.woot.event.ServerTickEventHandler;
 import ipsis.woot.factory.structure.pattern.FactoryPatternRepository;
 import ipsis.woot.policy.PolicyManager;
+import ipsis.woot.power.ConversionRegistry;
 import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.proxy.CommonProxy;
@@ -55,6 +56,7 @@ public class Woot {
     public static final PolicyManager POLICY_MANAGER = new PolicyManager();
     public static final FactoryPatternRepository PATTERN_REPOSITORY = new FactoryPatternRepository();
     public static final LootGenerator LOOT_GENERATOR = new LootGenerator();
+    public static final ConversionRegistry CONVERSION_REGISTRY = new ConversionRegistry();
 
     public Woot() {
         FluidRegistry.enableUniversalBucket();
@@ -77,6 +79,7 @@ public class Woot {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
         LOOT_GENERATOR.initialise();
+        CONVERSION_REGISTRY.init();
     }
 
     @Mod.EventHandler

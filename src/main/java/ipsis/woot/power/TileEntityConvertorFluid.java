@@ -1,5 +1,6 @@
 package ipsis.woot.power;
 
+import ipsis.Woot;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
@@ -40,8 +41,7 @@ public class TileEntityConvertorFluid extends TileEntityConvertor implements IFl
     public int fill(FluidStack fluidStack, boolean doFill) {
 
         if (fluidStack != null) {
-            // TODO convert fluid to the correct one
-            int mb = fluidStack.amount;
+            int mb = Woot.CONVERSION_REGISTRY.convertFromFluid(fluidStack);
             return fillCellTank(mb, doFill);
         }
         return 0;

@@ -70,10 +70,12 @@ item.woot.builder.mode.build_1=Build Tier 1
 item.woot.builder.mode.build_2=Build Tier 2
 item.woot.builder.mode.build_3=Build Tier 3
 item.woot.builder.mode.build_4=Build Tier 4
+item.woot.builder.mode.build_5=Build Tier 5
 item.woot.builder.mode.validate_1=Validate Tier 1
 item.woot.builder.mode.validate_2=Validate Tier 2
 item.woot.builder.mode.validate_3=Validate Tier 3
 item.woot.builder.mode.validate_4=Validate Tier 4
+item.woot.builder.mode.validate_5=Validate Tier 5
 
 item.woot.black_dyeplate.name=Black Dye Plate
 item.woot.red_dyeplate.name=Red Dye Plate
@@ -126,3 +128,4 @@ misc.woot.tier_1=Tier 1
 misc.woot.tier_2=Tier 2
 misc.woot.tier_3=Tier 3
 misc.woot.tier_4=Tier 4
+misc.woot.tier_5=Tier 5

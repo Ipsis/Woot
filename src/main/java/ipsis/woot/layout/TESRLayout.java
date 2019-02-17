@@ -1,7 +1,8 @@
-package ipsis.woot.client;
+package ipsis.woot.layout;
 
-import ipsis.woot.blocks.TileEntityLayout;
+import ipsis.woot.client.WootTextures;
 import ipsis.woot.configuration.vanilla.ClientConfig;
+import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.factory.structure.pattern.AbsolutePattern;
 import ipsis.woot.util.FactoryBlock;
 import ipsis.woot.util.RenderUtils;
@@ -72,6 +73,11 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout> {
 
             for (AbsolutePattern.AbsoluteBlock block : layout.getAbsolutePattern().getBlocks()) {
 
+                boolean showAll = layout.getCurrLevel() == -1;
+                int validY = layout.getPos().getY() - 7 + layout.getCurrLevel();
+                if (!showAll && block.getPos().getY() != validY)
+                    continue;
+
                 GlStateManager.pushMatrix();
                 {
                     GlStateManager.translate(
@@ -123,7 +129,8 @@ public class TESRLayout extends TileEntitySpecialRenderer<TileEntityLayout> {
 
                     WootColor color = block.getFactoryBlock().getColor();
                     GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), RENDER_ALPHA);
-                    RenderUtils.drawShadedCube(0.3F);
+                    //RenderUtils.drawShadedCube(0.3F);
+                    RenderUtils.drawShadedCube(0.5F);
                 }
                 GlStateManager.popMatrix();
             }

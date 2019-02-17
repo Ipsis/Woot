@@ -28,13 +28,13 @@ public class FactoryPatternRepository {
     public int getMaxXZOffset() { return this.maxXZOffset; }
 
     public void load() {
-        loadBasePattern(FactoryTier.TIER_1, FactoryPatterns.TIER_1);
-        loadBasePattern(FactoryTier.TIER_2, FactoryPatterns.TIER_2);
-        loadBasePattern(FactoryTier.TIER_3, FactoryPatterns.TIER_3);
-        loadBasePattern(FactoryTier.TIER_4, FactoryPatterns.TIER_4);
 
-        loadTotemPattern(FactoryTier.TIER_1);
-        loadControllerPattern();
+        FactoryPatterns.createPatterns();
+        loadBasePattern(FactoryTier.TIER_1, FactoryPatterns.getPattern(FactoryTier.TIER_1));
+        loadBasePattern(FactoryTier.TIER_2, FactoryPatterns.getPattern(FactoryTier.TIER_2));
+        loadBasePattern(FactoryTier.TIER_3, FactoryPatterns.getPattern(FactoryTier.TIER_3));
+        loadBasePattern(FactoryTier.TIER_4, FactoryPatterns.getPattern(FactoryTier.TIER_4));
+        loadBasePattern(FactoryTier.TIER_5, FactoryPatterns.getPattern(FactoryTier.TIER_5));
     }
 
     private void loadBasePattern(FactoryTier factoryTier, String[][] pattern) {
@@ -118,14 +118,9 @@ public class FactoryPatternRepository {
             maxXZOffset = width;
     }
 
-    private void loadTotemPattern(FactoryTier factoryTier) {
-
+    public int getPatternHeight(FactoryTier factoryTier) {
+        return patterns.get(factoryTier).getHeight();
     }
-
-    private void loadControllerPattern() {
-        FactoryPattern factoryPattern = new FactoryPattern(FactoryPattern.FactoryPatternType.CONTROLLER);
-    }
-
 
     public AbsolutePattern createAbsolutePattern(World world, FactoryTier factoryTier, BlockPos origin, EnumFacing facing) {
 

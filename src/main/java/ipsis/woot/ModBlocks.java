@@ -4,6 +4,7 @@ import ipsis.woot.blocks.*;
 import ipsis.woot.fluids.BlockPureDye;
 import ipsis.woot.fluids.BlockPureEnchant;
 import ipsis.woot.generators.BlockCreativeRF;
+import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.power.BlockConvertor;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.machines.squeezer.BlockSqueezer;

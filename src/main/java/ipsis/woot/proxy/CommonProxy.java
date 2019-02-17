@@ -11,6 +11,8 @@ import ipsis.woot.generators.*;
 import ipsis.woot.heart.BlockHeart;
 import ipsis.woot.heart.TileEntityHeart;
 import ipsis.woot.items.*;
+import ipsis.woot.layout.BlockLayout;
+import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.machines.squeezer.BlockSqueezer;
 import ipsis.woot.machines.squeezer.SqueezerManager;
 import ipsis.woot.machines.squeezer.TileEntitySqueezer;

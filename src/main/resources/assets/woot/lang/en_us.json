@@ -2,5 +2,8 @@
   "item.woot.debug": "Debug",
   "item.woot.hammer": "Ya Hammer",
   "block.woot.layout": "Layout",
-  "itemGroup.woot": "Woot"
+  "itemGroup.woot": "Woot",
+
+  "info.woot.debug": "For internal debug only",
+  "info.woot.hammer": "For internal debug only hammer"
 }

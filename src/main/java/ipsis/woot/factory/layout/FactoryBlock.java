@@ -2,13 +2,13 @@ package ipsis.woot.factory.layout;
 
 public enum FactoryBlock {
 
-    BONE("bone_structure"),
-    FLESH("flesh_structure"),
-    BLAZE("blaze_structure"),
-    ENDER("ender_structure"),
-    NETHER("nether_structure"),
-    REDSTONE("redstone_structure"),
-    UPGRADE("upgrade_structure"),
+    BONE("factory_bone"),
+    FLESH("factory_flesh"),
+    BLAZE("factory_blaze"),
+    ENDER("factory_ender"),
+    NETHER("factory_nether"),
+    REDSTONE("factory_redstone"),
+    UPGRADE("factory_upgrade"),
     CAP_1("cap_1"),
     CAP_2("cap_2"),
     CAP_3("cap_3"),

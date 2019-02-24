@@ -1,5 +1,6 @@
 package ipsis.woot.layout;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.factory.layout.PatternBlock;
 import ipsis.woot.util.WootColor;
@@ -9,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -53,7 +55,13 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
         if (tileEntityIn.getAbsolutePattern() == null)
             tileEntityIn.refresh();
 
-        simpleRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
+        //simpleRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
+        textureRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
+    }
+
+    private TextureAtlasSprite getTextureAtlasSprite(FactoryBlock factoryBlock) {
+
+        return Minecraft.getInstance().getTextureMap().getSprite(new ResourceLocation(Woot.MODID, "blocks/" + factoryBlock.getName()));
     }
 
     private void textureRender(TileEntityLayout layout, double x, double y, double z, float partialTicks, int destroyStage) {
@@ -77,7 +85,7 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
                                 (origin.getY() - block.getBlockPos().getY()) * -1.0F,
                                 (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
 
-                        TextureAtlasSprite textureAtlasSprite = null;
+                        TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryBlock());
                         if (textureAtlasSprite != null)
                             RenderHelper.drawTexturedCube(textureAtlasSprite, 0.3F);
                     }

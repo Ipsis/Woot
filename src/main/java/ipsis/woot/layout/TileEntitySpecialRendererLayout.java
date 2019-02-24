@@ -70,6 +70,7 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
         GlStateManager.pushLightingAttrib();
         {
             GlStateManager.pushMatrix();
+            setLightmapDisabled(true);
             {
                 GlStateManager.translated(x + 0.5F, y + 0.5F, z + 0.5F);
                 GlStateManager.enableBlend();
@@ -94,6 +95,7 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
 
                 GlStateManager.disableBlend();
             }
+            setLightmapDisabled(false);
             GlStateManager.popMatrix();
         }
         GlStateManager.popAttrib();

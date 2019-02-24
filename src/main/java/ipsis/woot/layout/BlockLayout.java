@@ -78,6 +78,7 @@ public class BlockLayout extends WootBlock implements IWootDebug {
      */
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext context) {
+        debug.add("====> BlockLayout");
         TileEntity te = context.getWorld().getTileEntity(context.getPos());
         if (te instanceof IWootDebug)
             ((IWootDebug)te).getDebugText(debug, context);

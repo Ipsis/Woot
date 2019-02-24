@@ -144,6 +144,7 @@ public class TileEntityLayout extends TileEntity implements IWootDebug {
      */
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext context) {
+        debug.add("====> TileEntityLayout");
         debug.add("facing:" + facing);
         debug.add("level:" + level);
         debug.add("tier:" + tier);

@@ -1,8 +1,15 @@
 {
+  "itemGroup.woot": "Woot",
   "item.woot.debug": "Debug",
   "item.woot.hammer": "Ya Hammer",
   "block.woot.layout": "Layout",
-  "itemGroup.woot": "Woot",
+  "block.woot.factory_blaze": "Blaze Factory Block",
+  "block.woot.factory_bone": "Bone Factory Block",
+  "block.woot.factory_ender": "Ender Factory Block",
+  "block.woot.factory_flesh": "Flesh Factory Block",
+  "block.woot.factory_nether": "Nether Factory Block",
+  "block.woot.factory_redstone": "Redstone Factory Block",
+  "block.woot.factory_upgrade": "Upgrade Factory Block",
 
   "info.woot.debug": "§aFor internal debug only",
   "info.woot.hammer": "§aFor internal debug only hammer",

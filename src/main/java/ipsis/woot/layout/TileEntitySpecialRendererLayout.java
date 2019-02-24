@@ -88,7 +88,7 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
 
                         TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryBlock());
                         if (textureAtlasSprite != null)
-                            RenderHelper.drawTexturedCube(textureAtlasSprite, 0.3F);
+                            RenderHelper.drawTexturedCube(textureAtlasSprite, 0.45F);
                     }
                     GlStateManager.popMatrix();
                 }

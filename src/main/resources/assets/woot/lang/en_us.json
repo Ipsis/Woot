@@ -4,6 +4,7 @@
   "block.woot.layout": "Layout",
   "itemGroup.woot": "Woot",
 
-  "info.woot.debug": "For internal debug only",
-  "info.woot.hammer": "For internal debug only hammer"
+  "info.woot.debug": "§aFor internal debug only",
+  "info.woot.hammer": "§aFor internal debug only hammer"
+
 }

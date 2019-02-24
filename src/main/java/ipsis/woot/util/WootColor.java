@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 public enum WootColor {
+
     /**
      * Color code values taken from CoFHLib/ColorHelper.java
      */
@@ -21,23 +22,12 @@ public enum WootColor {
     ORANGE(0xF2B233),
     WHITE(0xFFFFFF);
 
-    public static WootColor[] VALID_COLORS = { BLACK, RED, GREEN, BROWN, BLUE, PURPLE, CYAN, LIGHTGRAY, GRAY, PINK, LIME, YELLOW, LIGHTBLUE, MAGENTA, ORANGE, WHITE };
-
-    public static WootColor getColor(int id) {
-
-        if (id >= 0 && id < VALID_COLORS.length)
-            return VALID_COLORS[id];
-
-        return WootColor.WHITE;
-    }
-
     private int v;
     private float red;
     private float green;
     private float blue;
 
     WootColor(int v) {
-
         this.v = v;
 
         this.red = ((v & 0xFF0000) >> 16) & 0xFF;
@@ -49,40 +39,8 @@ public enum WootColor {
         this.blue = this.blue / 255.0F;
     }
 
-    public float getRed() {
-
-        return this.red;
-    }
-
-    public float getGreen() {
-
-        return this.green;
-    }
-
-    public float getBlue() {
-
-        return this.blue;
-    }
-
-    public int getV() {
-
-        return this.v;
-    }
-
-    public WootColor getNext() {
-
-        int next = ordinal();
-        next++;
-
-        if (next < 0 || next >= VALID_COLORS.length)
-            next = 0;
-
-        return VALID_COLORS[next];
-    }
-
-    @Override
-    public String toString() {
-
-        return super.toString() + " " + this.v + " R:" + this.red + " G:" + this.getGreen() + " B:" + this.getBlue();
-    }
+    public float getRed() { return this.red; }
+    public float getGreen() { return this.green; }
+    public float getBlue() { return this.blue; }
+    public float getRaw() { return this.v; }
 }

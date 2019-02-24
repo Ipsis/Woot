@@ -2,10 +2,12 @@ package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
 import ipsis.woot.debug.ItemDebug;
+import ipsis.woot.enchantment.EnchantmentHeadhunter;
 import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.tools.ItemHammer;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntityType;
@@ -39,6 +41,13 @@ public class Registration {
         Woot.LOGGER.info("Register tile entities");
 
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityLayout::new).build(null).setRegistryName(Woot.MODID, BlockLayout.BASENAME));
+    }
+
+    @SubscribeEvent
+    public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
+        Woot.LOGGER.info("Register enchantments");
+
+        event.getRegistry().register(new EnchantmentHeadhunter());
     }
 
 }

@@ -8,6 +8,8 @@
   "info.woot.hammer": "§aFor internal debug only hammer",
 
   "chat.woot.layer": "Factory Layer %d",
-  "chat.woot.tier": "Factory Tier %d"
+  "chat.woot.tier": "Factory Tier %d",
+
+  "enchantment.woot.headhunter": "Headhunter"
 
 }

@@ -67,10 +67,10 @@ public class BlockLayout extends WootBlock implements IWootDebug {
 
                 if (player.isSneaking()) {
                     int layer = layout.setNextLevel();
-                    PlayerHelper.sendActionBarMessage(player, "Layer: " + Integer.toString(layer));
+                    PlayerHelper.sendActionBarMessage(player, StringHelper.translateFormat("chat.woot.layer", layer));
                 } else {
                     FactoryTier tier = layout.setNextTier();
-                    PlayerHelper.sendActionBarMessage(player, "Tier: " + Integer.toString(tier.ordinal()));
+                    PlayerHelper.sendActionBarMessage(player, StringHelper.translateFormat("chat.woot.tier", tier.getNum()));
                 }
                 WorldHelper.updateClient(worldIn, pos);
             }

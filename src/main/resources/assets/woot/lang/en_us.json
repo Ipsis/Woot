@@ -5,6 +5,9 @@
   "itemGroup.woot": "Woot",
 
   "info.woot.debug": "§aFor internal debug only",
-  "info.woot.hammer": "§aFor internal debug only hammer"
+  "info.woot.hammer": "§aFor internal debug only hammer",
+
+  "chat.woot.layer": "Factory Layer %d",
+  "chat.woot.tier": "Factory Tier %d"
 
 }

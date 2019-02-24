@@ -9,6 +9,6 @@ public class StringHelper {
     }
 
     public static String translateFormat(String key, Object... format) {
-        return LanguageMap.getInstance().translateKey(key);
+        return String.format(LanguageMap.getInstance().translateKey(key), format);
     }
 }

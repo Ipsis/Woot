@@ -66,7 +66,6 @@ public class TileEntityLayout extends TileEntity implements IWootDebug {
     public FactoryTier getTier() { return this.tier; }
     public FactoryTier setNextTier() {
         tier = tier.getNext();
-        Woot.LOGGER.info("setNextTier: " + tier);
         markDirty();
         refresh();
         return tier;

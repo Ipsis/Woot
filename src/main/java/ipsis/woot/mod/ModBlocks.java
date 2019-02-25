@@ -1,7 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
-import ipsis.woot.factory.BlockFactory;
+import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
 import net.minecraftforge.registries.ObjectHolder;
@@ -28,5 +28,31 @@ public class ModBlocks {
     public static final BlockFactory redstoneFactoryBlock = null;
     @ObjectHolder(Woot.MODID + ":factory_upgrade")
     public static final BlockFactory upgradeFactoryBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_cap_1")
+    public static final BlockFactory cap1FactoryBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_cap_2")
+    public static final BlockFactory cap2FactoryBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_cap_3")
+    public static final BlockFactory cap3FactoryBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_cap_4")
+    public static final BlockFactory cap4FactoryBlock = null;
+
+    /**
+     * Factory Misc
+     */
+    @ObjectHolder(Woot.MODID + ":factory_heart")
+    public static final BlockHeart heartBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_controller")
+    public static final BlockController controllerBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_import")
+    public static final BlockImport importBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_export")
+    public static final BlockExport exportBlock = null;
+    @ObjectHolder(Woot.MODID + ":factory_cell_1")
+    public static final BlockCell cell1Block = null;
+    @ObjectHolder(Woot.MODID + ":factory_cell_2")
+    public static final BlockCell cell2Block = null;
+    @ObjectHolder(Woot.MODID + ":factory_cell_3")
+    public static final BlockCell cell3Block = null;
 
 }

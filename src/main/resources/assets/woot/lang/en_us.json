@@ -3,6 +3,15 @@
   "item.woot.debug": "Debug",
   "item.woot.hammer": "Ya Hammer",
   "block.woot.layout": "Layout",
+
+  "block.woot.factory_heart": "Factory Heart",
+  "block.woot.factory_controller": "Factory Controller",
+  "block.woot.factory_import": "Factory Importer",
+  "block.woot.factory_export": "Factory Exporter",
+  "block.woot.factory_cell_1": "Simple Factory Cell",
+  "block.woot.factory_cell_2": "Advanced Factory Cell",
+  "block.woot.factory_cell_3": "Ultimate Factory Cell",
+
   "block.woot.factory_blaze": "Blaze Factory Block",
   "block.woot.factory_bone": "Bone Factory Block",
   "block.woot.factory_ender": "Ender Factory Block",
@@ -10,6 +19,10 @@
   "block.woot.factory_nether": "Nether Factory Block",
   "block.woot.factory_redstone": "Redstone Factory Block",
   "block.woot.factory_upgrade": "Upgrade Factory Block",
+  "block.woot.factory_cap_1": "Factory Cap 1",
+  "block.woot.factory_cap_2": "Factory Cap 2",
+  "block.woot.factory_cap_3": "Factory Cap 3",
+  "block.woot.factory_cap_4": "Factory Cap 4",
 
   "info.woot.debug": "§aFor internal debug only",
   "info.woot.hammer": "§aFor internal debug only hammer",

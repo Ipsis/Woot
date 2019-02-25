@@ -3,7 +3,7 @@ package ipsis.woot.mod;
 import ipsis.woot.Woot;
 import ipsis.woot.debug.ItemDebug;
 import ipsis.woot.enchantment.EnchantmentHeadhunter;
-import ipsis.woot.factory.BlockFactory;
+import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.layout.TileEntityLayout;
@@ -32,6 +32,17 @@ public class Registration {
         event.getRegistry().register(new BlockFactory(FactoryBlock.NETHER));
         event.getRegistry().register(new BlockFactory(FactoryBlock.REDSTONE));
         event.getRegistry().register(new BlockFactory(FactoryBlock.UPGRADE));
+        event.getRegistry().register(new BlockFactory(FactoryBlock.CAP_1));
+        event.getRegistry().register(new BlockFactory(FactoryBlock.CAP_2));
+        event.getRegistry().register(new BlockFactory(FactoryBlock.CAP_3));
+        event.getRegistry().register(new BlockFactory(FactoryBlock.CAP_4));
+        event.getRegistry().register(new BlockHeart());
+        event.getRegistry().register(new BlockController());
+        event.getRegistry().register(new BlockImport());
+        event.getRegistry().register(new BlockExport());
+        event.getRegistry().register(new BlockCell(FactoryBlock.CELL_1));
+        event.getRegistry().register(new BlockCell(FactoryBlock.CELL_2));
+        event.getRegistry().register(new BlockCell(FactoryBlock.CELL_3));
     }
 
     @SubscribeEvent
@@ -41,6 +52,7 @@ public class Registration {
         event.getRegistry().register(new ItemDebug());
         event.getRegistry().register(new ItemHammer());
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
+
         event.getRegistry().register(new ItemBlock(ModBlocks.blazeFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.blazeFactoryBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.boneFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.boneFactoryBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.enderFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.enderFactoryBlock.getRegistryName()));
@@ -48,6 +60,18 @@ public class Registration {
         event.getRegistry().register(new ItemBlock(ModBlocks.netherFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.netherFactoryBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.redstoneFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.redstoneFactoryBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.upgradeFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.upgradeFactoryBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap1FactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cap1FactoryBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap2FactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cap2FactoryBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap3FactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cap3FactoryBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cap4FactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cap4FactoryBlock.getRegistryName()));
+
+        event.getRegistry().register(new ItemBlock(ModBlocks.heartBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.heartBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.controllerBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.controllerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.importBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.importBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.exportBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.exportBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cell1Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell1Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cell2Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell2Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.cell3Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell3Block.getRegistryName()));
     }
 
     @SubscribeEvent

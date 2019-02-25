@@ -9,12 +9,12 @@ import net.minecraft.item.ItemUseContext;
 
 import java.util.List;
 
-public class BlockFactory extends WootBlock implements IWootDebug {
+public class BlockCell extends WootBlock implements IWootDebug {
 
     private final String basename;
     private final FactoryBlock factoryBlock;
 
-    public BlockFactory(FactoryBlock factoryBlock) {
+    public BlockCell(FactoryBlock factoryBlock) {
         super(Block.Properties.create(Material.ROCK), factoryBlock.getName());
         this.factoryBlock = factoryBlock;
         this.basename = factoryBlock.getName();
@@ -27,7 +27,7 @@ public class BlockFactory extends WootBlock implements IWootDebug {
      */
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add(String.format("====> BlockFactory {}", factoryBlock.getName()));
+        debug.add(String.format("====> BlockCell {}", factoryBlock.getName()));
         return debug;
     }
 }

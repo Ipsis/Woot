@@ -9,17 +9,17 @@ public enum FactoryBlock {
     NETHER("factory_nether"),
     REDSTONE("factory_redstone"),
     UPGRADE("factory_upgrade"),
-    CAP_1("cap_1"),
-    CAP_2("cap_2"),
-    CAP_3("cap_3"),
-    CAP_4("cap_4"),
-    CONTROLLER("controller"),
-    HEART("heart"),
-    CELL_1("cell_1"),
-    CELL_2("cell_2"),
-    CELL_3("cell_3"),
-    IMPORT("import"),
-    EXPORT("export");
+    CAP_1("factory_cap_1"),
+    CAP_2("factory_cap_2"),
+    CAP_3("factory_cap_3"),
+    CAP_4("factory_cap_4"),
+    CONTROLLER("factory_controller"),
+    HEART("factory_heart"),
+    CELL_1("factory_cell_1"),
+    CELL_2("factory_cell_2"),
+    CELL_3("factory_cell_3"),
+    IMPORT("factory_import"),
+    EXPORT("factory_export");
 
     private String name;
     FactoryBlock(String name) {

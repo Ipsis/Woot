@@ -16,12 +16,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -52,6 +50,7 @@ public class ItemIntern extends WootItem {
         public static ToolMode[] VALUES = values();
         private static EnumSet<ToolMode> BUILD_MODES = EnumSet.range(BUILD_1, BUILD_5);
         private static EnumSet<ToolMode> VALIDATE_MODES = EnumSet.range(VALID_1, VALID_EXPORT);
+        private static EnumSet<ToolMode> VALIDATE_TIERS = EnumSet.range(VALID_1, VALID_5);
 
         public ToolMode getNext() {
             return VALUES[(this.ordinal() + 1) % VALUES.length];
@@ -68,11 +67,8 @@ public class ItemIntern extends WootItem {
         public boolean isValidateMode() {
             return VALIDATE_MODES.contains(this);
         }
-
-        public FactoryTier getFactoryTier() {
-            return this.factoryTier;
-        }
-
+        public boolean isValidateTierMode() { return VALIDATE_TIERS.contains(this); }
+        public FactoryTier getFactoryTier() { return this.factoryTier; }
     }
 
     public static final String BASENAME = "intern";
@@ -115,13 +111,11 @@ public class ItemIntern extends WootItem {
                     EnumFacing facing = blockState.get(BlockHeart.FACING);
                     ToolMode toolMode = getToolModeFromStack(itemStack);
                     if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
-                        Woot.LOGGER.info("onItemUse: build " + toolMode.getFactoryTier() + "/" + facing);
-                        FactoryBuilder.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getFactoryTier());
+                        FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getFactoryTier());
                         result = EnumActionResult.SUCCESS;
-                    } else {
+                    } else if (toolMode.isValidateMode()) {
                         // Only build or validate just now
-                        Woot.LOGGER.info("onItemUse: validate " + toolMode.getFactoryTier() + "/" + facing);
-                        tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode);
+                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode);
                         result = EnumActionResult.SUCCESS;
                     }
                 }
@@ -132,14 +126,6 @@ public class ItemIntern extends WootItem {
         }
 
         return result;
-    }
-
-    /**
-     * Factory Validation
-     */
-    private boolean tryValidate(World world, BlockPos pos, EntityPlayer entityPlayer, EnumFacing facing, ToolMode toolMode) {
-
-        return false;
     }
 
     /**

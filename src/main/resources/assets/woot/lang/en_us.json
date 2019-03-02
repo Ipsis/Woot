@@ -1,10 +1,13 @@
 {
   "itemGroup.woot": "Woot",
+
+  # Item names
   "item.woot.debug": "Debug",
   "item.woot.hammer": "Ya Hammer",
   "item.woot.intern": "The Intern",
-  "block.woot.layout": "Layout",
 
+  # Block names
+  "block.woot.layout": "Layout",
   "block.woot.factory_heart": "Factory Heart",
   "block.woot.factory_controller": "Factory Controller",
   "block.woot.factory_import": "Factory Importer",
@@ -12,7 +15,6 @@
   "block.woot.factory_cell_1": "Simple Factory Cell",
   "block.woot.factory_cell_2": "Advanced Factory Cell",
   "block.woot.factory_cell_3": "Ultimate Factory Cell",
-
   "block.woot.factory_blaze": "Blaze Factory Block",
   "block.woot.factory_bone": "Bone Factory Block",
   "block.woot.factory_ender": "Ender Factory Block",
@@ -25,9 +27,10 @@
   "block.woot.factory_cap_3": "Factory Cap 3",
   "block.woot.factory_cap_4": "Factory Cap 4",
 
+  # Tooltips
   "info.woot.debug": "§aFor internal debug only",
   "info.woot.hammer": "§aFor internal debug only hammer",
-  "info.woot.intern": "§aUse on the factory heart to build or validate factory",
+  "info.woot.intern": "§aUse on the factory heart to build or validate a factory",
   "info.woot.intern.0": "§bSneak-right click to change modes",
   "info.woot.intern.mode.build_1": "Build Tier 1 Factory",
   "info.woot.intern.mode.build_2": "Build Tier 2 Factory",
@@ -42,11 +45,22 @@
   "info.woot.intern.mode.valid_import": "Validate Factory Importer",
   "info.woot.intern.mode.valid_export": "Validate Factory Exporter",
 
+  # Chat messages
   "chat.woot.layer": "Factory Layer %d",
   "chat.woot.tier": "Factory Tier %d",
   "chat.woot.intern.missingblock": "No %s in inventory",
   "chat.woot.intern.noreplace": "Cannot replace %s at %d,%d,%d",
+  "chat.woot.intern.validate.power": "Found power cell at %d,%d,%d",
+  "chat.woot.intern.validate.nopower": "No power cell at %d,%d,%d",
+  "chat.woot.intern.validate.importer": "Found importer at %d,%d,%d",
+  "chat.woot.intern.validate.noimported": "No importer at %d,%d,%d",
+  "chat.woot.intern.validate.exporter": "Found exporter at %d,%d,%d",
+  "chat.woot.intern.validate.noexported": "No exporter at %d,%d,%d",
+  "chat.woot.intern.validate.nocontroller": "No controller at %d,%d,%d",
+  "chat.woot.intern.validate.missing": "Expected %s at %d,%d,%d",
+  "chat.woot.intern.validate.incorrect": "Expected %s at %d,%d,%d but found %s",
 
+  # Enchantments
   "enchantment.woot.headhunter": "Headhunter"
 
 }

@@ -28,6 +28,7 @@ public enum FactoryBlock {
         this.name = name;
     }
     public String getName() { return this.name; }
+    public String getTranslationkey() { return "block.woot." + this.getName().toLowerCase(); }
 
     public boolean isCell() {
         return this == CELL_1 || this == CELL_2 || this == CELL_3;

@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
+import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class ModBlocks {
@@ -54,5 +55,29 @@ public class ModBlocks {
     public static final BlockCell cell2Block = null;
     @ObjectHolder(Woot.MODID + ":factory_cell_3")
     public static final BlockCell cell3Block = null;
+
+    public static IBlockState getFactoryBlockDefaultState(FactoryBlock factoryBlock) {
+        switch (factoryBlock) {
+            case BONE: return boneFactoryBlock.getDefaultState();
+            case FLESH: return fleshFactoryBlock.getDefaultState();
+            case BLAZE: return blazeFactoryBlock.getDefaultState();
+            case ENDER: return enderFactoryBlock.getDefaultState();
+            case NETHER: return netherFactoryBlock.getDefaultState();
+            case REDSTONE: return redstoneFactoryBlock.getDefaultState();
+            case UPGRADE: return upgradeFactoryBlock.getDefaultState();
+            case CAP_1: return cap1FactoryBlock.getDefaultState();
+            case CAP_2: return cap2FactoryBlock.getDefaultState();
+            case CAP_3: return cap3FactoryBlock.getDefaultState();
+            case CAP_4: return cap4FactoryBlock.getDefaultState();
+            case CONTROLLER: return controllerBlock.getDefaultState();
+            case HEART: return heartBlock.getDefaultState();
+            case CELL_1: return cell1Block.getDefaultState();
+            case CELL_2: return cell2Block.getDefaultState();
+            case CELL_3: return cell3Block.getDefaultState();
+            case IMPORT: return importBlock.getDefaultState();
+            case EXPORT: return exportBlock.getDefaultState();
+            default: return boneFactoryBlock.getDefaultState();
+        }
+    }
 
 }

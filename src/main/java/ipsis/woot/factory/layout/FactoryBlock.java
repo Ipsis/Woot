@@ -21,10 +21,16 @@ public enum FactoryBlock {
     IMPORT("factory_import"),
     EXPORT("factory_export");
 
+    public static FactoryBlock[] VALUES = values();
+
     private String name;
     FactoryBlock(String name) {
         this.name = name;
     }
     public String getName() { return this.name; }
+
+    public boolean isCell() {
+        return this == CELL_1 || this == CELL_2 || this == CELL_3;
+    }
 
 }

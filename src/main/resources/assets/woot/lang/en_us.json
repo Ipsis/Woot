@@ -2,6 +2,7 @@
   "itemGroup.woot": "Woot",
   "item.woot.debug": "Debug",
   "item.woot.hammer": "Ya Hammer",
+  "item.woot.intern": "The Intern",
   "block.woot.layout": "Layout",
 
   "block.woot.factory_heart": "Factory Heart",
@@ -26,9 +27,25 @@
 
   "info.woot.debug": "§aFor internal debug only",
   "info.woot.hammer": "§aFor internal debug only hammer",
+  "info.woot.intern": "§aUse on the factory heart to build or validate factory",
+  "info.woot.intern.0": "§bSneak-right click to change modes",
+  "info.woot.intern.mode.build_1": "Build Tier 1 Factory",
+  "info.woot.intern.mode.build_2": "Build Tier 2 Factory",
+  "info.woot.intern.mode.build_3": "Build Tier 3 Factory",
+  "info.woot.intern.mode.build_4": "Build Tier 4 Factory",
+  "info.woot.intern.mode.build_5": "Build Tier 5 Factory",
+  "info.woot.intern.mode.valid_1": "Validate Tier 1 Factory",
+  "info.woot.intern.mode.valid_2": "Validate Tier 2 Factory",
+  "info.woot.intern.mode.valid_3": "Validate Tier 3 Factory",
+  "info.woot.intern.mode.valid_4": "Validate Tier 4 Factory",
+  "info.woot.intern.mode.valid_5": "Validate Tier 5 Factory",
+  "info.woot.intern.mode.valid_import": "Validate Factory Importer",
+  "info.woot.intern.mode.valid_export": "Validate Factory Exporter",
 
   "chat.woot.layer": "Factory Layer %d",
   "chat.woot.tier": "Factory Tier %d",
+  "chat.woot.intern.missingblock": "No %s in inventory",
+  "chat.woot.intern.noreplace": "Cannot replace %s at %d,%d,%d",
 
   "enchantment.woot.headhunter": "Headhunter"
 

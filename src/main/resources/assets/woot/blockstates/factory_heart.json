@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "woot:block/factory_heart" }
+    "facing=north": { "model": "woot:block/factory_heart" },
+    "facing=south": { "model": "woot:block/factory_heart", "y": 180 },
+    "facing=west": { "model": "woot:block/factory_heart", "y": 270 },
+    "facing=east": { "model": "woot:block/factory_heart", "y": 90 }
   }
 }

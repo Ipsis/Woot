@@ -146,10 +146,7 @@ public class FactoryPatternRepository {
             int y = (originLayer - layer) * -1;
             int z = (originRow - row) * -1;
             blocks.add(new PatternBlock(factoryBlock, new BlockPos(x, y, z)));
-
-            int count = factoryBlockCounts.getOrDefault(factoryBlock, 0);
-            count++;
-            factoryBlockCounts.put(factoryBlock, count);
+            factoryBlockCounts.put(factoryBlock, factoryBlockCounts.getOrDefault(factoryBlock, 0) + 1);
         }
 
         public List<PatternBlock> getPatternBlocks() { return Collections.unmodifiableList(blocks); }

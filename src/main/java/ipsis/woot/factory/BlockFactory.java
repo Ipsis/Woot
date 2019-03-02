@@ -2,6 +2,7 @@ package ipsis.woot.factory;
 
 import ipsis.woot.debug.IWootDebug;
 import ipsis.woot.factory.layout.FactoryBlock;
+import ipsis.woot.factory.layout.IFactoryBlockProvider;
 import ipsis.woot.util.WootBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,7 +10,7 @@ import net.minecraft.item.ItemUseContext;
 
 import java.util.List;
 
-public class BlockFactory extends WootBlock implements IWootDebug {
+public class BlockFactory extends WootBlock implements IWootDebug, IFactoryBlockProvider {
 
     private final String basename;
     private final FactoryBlock factoryBlock;
@@ -20,7 +21,6 @@ public class BlockFactory extends WootBlock implements IWootDebug {
         this.basename = factoryBlock.getName();
     }
 
-    public FactoryBlock getFactoryBlock() { return this.factoryBlock; }
 
     /**
      * IWootDebug
@@ -30,4 +30,9 @@ public class BlockFactory extends WootBlock implements IWootDebug {
         debug.add(String.format("====> BlockFactory {}", factoryBlock.getName()));
         return debug;
     }
+
+    /**
+     * IFactoryBlockProvider
+     */
+    public FactoryBlock getFactoryBlock() { return this.factoryBlock; }
 }

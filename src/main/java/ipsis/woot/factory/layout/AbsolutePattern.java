@@ -3,9 +3,7 @@ package ipsis.woot.factory.layout;
 import ipsis.woot.factory.FactoryTier;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * A factory pattern located around a physical origin

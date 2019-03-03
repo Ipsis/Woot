@@ -2,7 +2,7 @@
   "parent": "block/orientable",
   "textures": {
     "top": "woot:blocks/factory_base",
-    "front": "woot:blocks/factory_heart",
+    "front": "woot:blocks/stamper",
     "side": "woot:blocks/factory_base"
   }
 }

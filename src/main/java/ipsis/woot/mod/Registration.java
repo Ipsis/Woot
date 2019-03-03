@@ -7,6 +7,8 @@ import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.layout.TileEntityLayout;
+import ipsis.woot.machines.squeezer.BlockSqueezer;
+import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.tools.ItemHammer;
 import ipsis.woot.tools.ItemIntern;
 import ipsis.woot.tools.ItemMobShard;
@@ -45,6 +47,8 @@ public class Registration {
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_1));
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_2));
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_3));
+        event.getRegistry().register(new BlockSqueezer());
+        event.getRegistry().register(new BlockStamper());
     }
 
     @SubscribeEvent
@@ -77,6 +81,9 @@ public class Registration {
         event.getRegistry().register(new ItemBlock(ModBlocks.cell1Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell1Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cell2Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell2Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cell3Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell3Block.getRegistryName()));
+
+        event.getRegistry().register(new ItemBlock(ModBlocks.squeezerBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.squeezerBlock.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.stamperBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.stamperBlock.getRegistryName()));
     }
 
     @SubscribeEvent

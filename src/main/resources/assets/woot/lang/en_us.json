@@ -27,6 +27,8 @@
   "block.woot.factory_cap_2": "Factory Cap 2",
   "block.woot.factory_cap_3": "Factory Cap 3",
   "block.woot.factory_cap_4": "Factory Cap 4",
+  "block.woot.squeezer": "Squeezer",
+  "block.woot.stamper": "Stamper",
 
   # Tooltips
   "info.woot.debug": "§aFor internal debug only",

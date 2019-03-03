@@ -4,6 +4,8 @@ import ipsis.woot.Woot;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
+import ipsis.woot.machines.squeezer.BlockSqueezer;
+import ipsis.woot.machines.stamper.BlockStamper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -55,6 +57,14 @@ public class ModBlocks {
     public static final BlockCell cell2Block = null;
     @ObjectHolder(Woot.MODID + ":factory_cell_3")
     public static final BlockCell cell3Block = null;
+
+    /**
+     * Machines
+     */
+    @ObjectHolder(Woot.MODID + ":squeezer")
+    public static final BlockSqueezer squeezerBlock = null;
+    @ObjectHolder(Woot.MODID + ":stamper")
+    public static final BlockStamper stamperBlock = null;
 
     public static IBlockState getFactoryBlockDefaultState(FactoryBlock factoryBlock) {
         switch (factoryBlock) {

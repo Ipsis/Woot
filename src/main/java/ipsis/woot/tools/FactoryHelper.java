@@ -43,7 +43,7 @@ public class FactoryHelper {
             }
 
             if (world.isBlockModifiable(entityPlayer, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
-                // todo block snapshot for intern
+                // @todo block snapshot for intern
                 BlockSnapshot blockSnapshot = BlockSnapshot.getBlockSnapshot(world, pb.getBlockPos());
                 world.setBlockState(pb.getBlockPos(), ModBlocks.getFactoryBlockDefaultState(pb.getFactoryBlock()));
 /*                if (ForgeEventFactory.onPlayerBlockPlace(entityPlayer, blockSnapshot, EnumFacing.UP, EnumHand.MAIN_HAND).isCancelable() ) {

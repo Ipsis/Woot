@@ -81,6 +81,7 @@ public class Registration {
         Woot.LOGGER.info("Register tile entities");
 
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityLayout::new).build(null).setRegistryName(Woot.MODID, BlockLayout.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityController::new).build(null).setRegistryName(Woot.MODID, BlockController.BASENAME));
     }
 
     @SubscribeEvent

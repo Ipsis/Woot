@@ -38,6 +38,9 @@ public class BlockController extends WootBlock implements IWootDebug, IFactoryBl
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> BlockController");
+        TileEntity te =itemUseContext.getWorld().getTileEntity(itemUseContext.getPos());
+        if (te instanceof IWootDebug)
+            ((IWootDebug)te).getDebugText(debug, itemUseContext);
         return debug;
     }
 

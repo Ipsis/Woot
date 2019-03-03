@@ -5,6 +5,7 @@
   "item.woot.debug": "Debug",
   "item.woot.hammer": "Ya Hammer",
   "item.woot.intern": "The Intern",
+  "item.woot.mobshard": "Ender Shard",
 
   # Block names
   "block.woot.layout": "Layout",
@@ -30,6 +31,13 @@
   # Tooltips
   "info.woot.debug": "§aFor internal debug only",
   "info.woot.hammer": "§aFor internal debug only hammer",
+  "info.woot.mobshard": "§aHit mobs with shard to program",
+  "info.woot.mobshard.0": "§bKill mobs to fully program",
+  "info.woot.mobshard.1": "§bShard must be in your hotbar",
+  "info.woot.mobshard.2": "§bCan be cleared in a crafting table",
+  "info.woot.mobshard.state.0": "[Fully Programmed]",
+  "info.woot.mobshard.state.1": "[Kills %d/%d]",
+  "info.woot.mobshard.state.2": "[Empty]",
   "info.woot.intern": "§aUse on the factory heart to build or validate a factory",
   "info.woot.intern.0": "§bSneak-right click to change modes",
   "info.woot.intern.mode.build_1": "Build Tier 1 Factory",
@@ -59,6 +67,8 @@
   "chat.woot.intern.validate.nocontroller": "No controller at %d,%d,%d",
   "chat.woot.intern.validate.missing": "Expected %s at %d,%d,%d",
   "chat.woot.intern.validate.incorrect": "Expected %s at %d,%d,%d but found %s",
+  "chat.woot.mobshard.used": "Shard is already programmed",
+  "chat.woot.mobshard.success": "Shard programmed with %s",
 
   # Enchantments
   "enchantment.woot.headhunter": "Headhunter"

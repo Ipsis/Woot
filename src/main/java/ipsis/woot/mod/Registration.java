@@ -9,6 +9,7 @@ import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.tools.ItemHammer;
 import ipsis.woot.tools.ItemIntern;
+import ipsis.woot.tools.ItemMobShard;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
@@ -53,6 +54,8 @@ public class Registration {
         event.getRegistry().register(new ItemDebug());
         event.getRegistry().register(new ItemHammer());
         event.getRegistry().register(new ItemIntern());
+        event.getRegistry().register(new ItemMobShard());
+
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
 
         event.getRegistry().register(new ItemBlock(ModBlocks.blazeFactoryBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.blazeFactoryBlock.getRegistryName()));

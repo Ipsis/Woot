@@ -1,9 +1,11 @@
 package ipsis.woot.factory;
 
+import ipsis.woot.debug.IWootDebug;
 import ipsis.woot.mod.ModTileEntities;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.IRestorableTileEntity;
 import ipsis.woot.util.helper.FakeMobKeyHelper;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -12,7 +14,7 @@ import net.minecraftforge.common.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityController extends TileEntity implements IRestorableTileEntity {
+public class TileEntityController extends TileEntity implements IRestorableTileEntity, IWootDebug {
 
     public TileEntityController() {
         super(ModTileEntities.controllerTileEntity);
@@ -65,5 +67,18 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
         }
 
         nbtTagCompound.setTag("keys", tagList);
+    }
+
+    /**
+     * IWootDebug
+     */
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> TileEntityController");
+        debug.add("mobs: " + fakeMobKeyList.size());
+        for (FakeMobKey key : fakeMobKeyList)
+            debug.add("mob: " + key);
+
+        return debug;
     }
 }

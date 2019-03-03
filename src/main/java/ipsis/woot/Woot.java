@@ -1,5 +1,7 @@
 package ipsis.woot;
 
+import ipsis.woot.event.LivingDeathEventHandler;
+import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.factory.layout.FactoryPatternRepository;
 import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.layout.TileEntitySpecialRendererLayout;
@@ -51,6 +53,8 @@ public class Woot {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
 
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new LivingDropsEventHandler());
+        MinecraftForge.EVENT_BUS.register(new LivingDeathEventHandler());
 
         FactoryPatternRepository.getInstance().load();
     }

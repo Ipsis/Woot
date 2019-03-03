@@ -79,6 +79,14 @@ public class ItemMobShard extends WootItem {
         return !itemStack.isEmpty() && itemStack.getItem() == ModItems.mobShardItem;
     }
 
+    public static boolean isMobEqual(ItemStack itemStack, FakeMobKey fakeMobKey) {
+        if (!isMobShard(itemStack))
+            return false;
+
+        FakeMobKey currFakeMobKey = ProgrammedMobHelper.getProgrammedEntity(itemStack);
+        return currFakeMobKey.equals(fakeMobKey);
+    }
+
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
 

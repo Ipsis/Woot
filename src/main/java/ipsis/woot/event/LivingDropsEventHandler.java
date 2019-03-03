@@ -1,6 +1,5 @@
 package ipsis.woot.event;
 
-import ipsis.woot.Woot;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;

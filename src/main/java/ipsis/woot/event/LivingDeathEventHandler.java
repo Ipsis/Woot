@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -37,7 +38,9 @@ public class LivingDeathEventHandler {
         EntityPlayer entityPlayer = (EntityPlayer)event.getSource().getTrueSource();
         EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-        // @todo ignore fake player kills
+        // ignore fake player kills
+        if (entityPlayer instanceof FakePlayer)
+            return;
 
         /**
          * EntityPlayer extends EntityLivingBase

@@ -1,5 +1,6 @@
 package ipsis.woot;
 
+import ipsis.woot.config.Config;
 import ipsis.woot.event.LivingDeathEventHandler;
 import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.factory.layout.FactoryPatternRepository;
@@ -15,13 +16,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,6 +53,9 @@ public class Woot {
     public Woot() {
         INSTANCE = this;
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::client);
 
@@ -57,6 +64,9 @@ public class Woot {
         MinecraftForge.EVENT_BUS.register(new LivingDeathEventHandler());
 
         FactoryPatternRepository.getInstance().load();
+
+        Config.load(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("woot-client.toml"));
+        Config.load(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("woot-server.toml"));
     }
 
     @SubscribeEvent

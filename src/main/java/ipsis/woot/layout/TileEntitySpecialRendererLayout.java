@@ -1,6 +1,8 @@
 package ipsis.woot.layout;
 
 import ipsis.woot.Woot;
+import ipsis.woot.config.Config;
+import ipsis.woot.config.LayoutConfig;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.factory.layout.PatternBlock;
 import ipsis.woot.util.WootColor;
@@ -55,8 +57,10 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
         if (tileEntityIn.getAbsolutePattern() == null)
             tileEntityIn.refresh();
 
-        //simpleRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
-        textureRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
+        if (LayoutConfig.TEXTURED_RENDER.get())
+            textureRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
+        else
+            simpleRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
     }
 
     private TextureAtlasSprite getTextureAtlasSprite(FactoryBlock factoryBlock) {
@@ -75,7 +79,7 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
                 GlStateManager.translated(x + 0.5F, y + 0.5F, z + 0.5F);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                GlStateManager.color4f(1F, 1F, 1F, 0.9500F);
+                GlStateManager.color4f(1F, 1F, 1F, LayoutConfig.LAYOUT_OPACITY.get().floatValue());
 
                 BlockPos origin = layout.getPos();
                 for (PatternBlock block : layout.getAbsolutePattern().getBlocks()) {
@@ -87,8 +91,9 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
                                 (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
 
                         TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryBlock());
-                        if (textureAtlasSprite != null)
-                            RenderHelper.drawTexturedCube(textureAtlasSprite, 0.45F);
+                        if (textureAtlasSprite != null) {
+                            RenderHelper.drawTexturedCube(textureAtlasSprite, LayoutConfig.LAYOUT_SIZE.get().floatValue());
+                        }
                     }
                     GlStateManager.popMatrix();
                 }
@@ -113,7 +118,6 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 
-            float RENDER_ALPHA = 1.0F;
             BlockPos origin = layout.getPos();
             for (PatternBlock block : layout.getAbsolutePattern().getBlocks()) {
                 GlStateManager.pushMatrix();
@@ -124,8 +128,8 @@ public class TileEntitySpecialRendererLayout extends TileEntityRenderer<TileEnti
                             (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
 
                     WootColor color = colors.get(block.getFactoryBlock());
-                    GlStateManager.color4f(color.getRed(), color.getGreen(), color.getBlue(), RENDER_ALPHA);
-                    RenderHelper.drawShadedCube(0.45F);
+                    GlStateManager.color4f(color.getRed(), color.getGreen(), color.getBlue(), LayoutConfig.LAYOUT_OPACITY.get().floatValue());
+                    RenderHelper.drawShadedCube(LayoutConfig.LAYOUT_SIZE.get().floatValue());
                 }
                 GlStateManager.popMatrix();
             }

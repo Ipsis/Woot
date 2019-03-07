@@ -73,6 +73,9 @@
   "chat.woot.mobshard.success": "Shard programmed with %s",
 
   # Enchantments
-  "enchantment.woot.headhunter": "Headhunter"
+  "enchantment.woot.headhunter": "Headhunter",
+
+  # Gui
+  "gui.woot.squeezer": "Squeezer"
 
 }

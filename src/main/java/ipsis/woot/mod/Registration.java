@@ -8,6 +8,7 @@ import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.machines.squeezer.BlockSqueezer;
+import ipsis.woot.machines.squeezer.TileEntitySqueezer;
 import ipsis.woot.machines.stamper.BlockStamper;
 import ipsis.woot.tools.ItemHammer;
 import ipsis.woot.tools.ItemIntern;
@@ -92,6 +93,7 @@ public class Registration {
 
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityLayout::new).build(null).setRegistryName(Woot.MODID, BlockLayout.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityController::new).build(null).setRegistryName(Woot.MODID, BlockController.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntitySqueezer::new).build(null).setRegistryName(Woot.MODID, BlockSqueezer.BASENAME));
     }
 
     @SubscribeEvent

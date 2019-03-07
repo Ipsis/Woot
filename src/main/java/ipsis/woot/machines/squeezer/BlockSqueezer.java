@@ -10,7 +10,9 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -24,6 +26,13 @@ public class BlockSqueezer extends WootBlock implements IWootDebug {
         super(Block.Properties.create(Material.ROCK), BASENAME);
         setDefaultState(getStateContainer().getBaseState().with(FACING, EnumFacing.NORTH));
     }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) { return true; }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(IBlockState state, IBlockReader world) { return new TileEntitySqueezer(); }
 
     @Nullable
     @Override

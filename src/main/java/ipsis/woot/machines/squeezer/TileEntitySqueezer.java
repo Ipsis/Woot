@@ -23,7 +23,7 @@ public class TileEntitySqueezer extends TileEntity implements IWootDebug, IGuiTi
     }
 
     public boolean canInteractWith(EntityPlayer entityPlayer) {
-        return !isRemoved() && entityPlayer.getDistanceSq(0.5D, 0.5D, 0.5D) <= 64D;
+        return !isRemoved() && entityPlayer.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
     /**

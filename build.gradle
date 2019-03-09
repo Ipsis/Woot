@@ -40,6 +40,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            
+            property 'forge.logging.noansi', 'false'
 
             mods {
                 woot {

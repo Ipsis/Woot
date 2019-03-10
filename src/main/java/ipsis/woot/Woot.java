@@ -6,6 +6,7 @@ import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.factory.layout.FactoryPatternRepository;
 import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.layout.TileEntitySpecialRendererLayout;
+import ipsis.woot.machines.squeezer.SqueezerRegistry;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.network.Messages;
 import ipsis.woot.proxy.ClientProxy;
@@ -13,10 +14,12 @@ import ipsis.woot.client.GuiHandler;
 import ipsis.woot.proxy.IProxy;
 import ipsis.woot.proxy.ServerProxy;
 import ipsis.woot.server.command.WootCommand;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -55,6 +58,8 @@ public class Woot {
     public Woot() {
         INSTANCE = this;
 
+        FluidRegistry.enableUniversalBucket();
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
@@ -82,6 +87,7 @@ public class Woot {
 
         Messages.registerMessages("woot");
         proxy.setup(event);
+        SqueezerRegistry.INSTANCE.loadRecipes();
     }
 
     private void client(final FMLClientSetupEvent event) {

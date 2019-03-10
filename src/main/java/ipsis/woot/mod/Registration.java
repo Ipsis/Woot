@@ -1,6 +1,8 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.creative.BlockCreativeRF;
+import ipsis.woot.creative.TileEntityCreativeRF;
 import ipsis.woot.debug.ItemDebug;
 import ipsis.woot.enchantment.EnchantmentHeadhunter;
 import ipsis.woot.factory.*;
@@ -50,6 +52,8 @@ public class Registration {
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_3));
         event.getRegistry().register(new BlockSqueezer());
         event.getRegistry().register(new BlockStamper());
+
+        event.getRegistry().register(new BlockCreativeRF());
     }
 
     @SubscribeEvent
@@ -85,6 +89,8 @@ public class Registration {
 
         event.getRegistry().register(new ItemBlock(ModBlocks.squeezerBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.squeezerBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.stamperBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.stamperBlock.getRegistryName()));
+
+        event.getRegistry().register(new ItemBlock(ModBlocks.creativeRFBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.creativeRFBlock.getRegistryName()));
     }
 
     @SubscribeEvent
@@ -94,6 +100,7 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityLayout::new).build(null).setRegistryName(Woot.MODID, BlockLayout.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityController::new).build(null).setRegistryName(Woot.MODID, BlockController.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntitySqueezer::new).build(null).setRegistryName(Woot.MODID, BlockSqueezer.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityCreativeRF::new).build(null).setRegistryName(Woot.MODID, BlockCreativeRF.BASENAME));
     }
 
     @SubscribeEvent

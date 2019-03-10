@@ -24,6 +24,7 @@ public class Config {
     static {
 
         LayoutConfig.init(SERVER_BUILDER, CLIENT_BUILDER);
+        MachineConfig.init(SERVER_BUILDER, CLIENT_BUILDER);
 
         SERVER_CONFIG = SERVER_BUILDER.build();
         CLIENT_CONFIG = CLIENT_BUILDER.build();

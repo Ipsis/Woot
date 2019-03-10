@@ -29,6 +29,7 @@
   "block.woot.factory_cap_4": "Factory Cap 4",
   "block.woot.squeezer": "Squeezer",
   "block.woot.stamper": "Stamper",
+  "block.woot.creative_rf": "Creative RF",
 
   # Tooltips
   "info.woot.debug": "§aFor internal debug only",

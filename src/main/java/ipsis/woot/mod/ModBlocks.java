@@ -1,6 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
@@ -65,6 +66,12 @@ public class ModBlocks {
     public static final BlockSqueezer squeezerBlock = null;
     @ObjectHolder(Woot.MODID + ":stamper")
     public static final BlockStamper stamperBlock = null;
+
+    /**
+     * Creative
+     */
+    @ObjectHolder(Woot.MODID + ":creative_rf")
+    public static final BlockCreativeRF creativeRFBlock = null;
 
     public static IBlockState getFactoryBlockDefaultState(FactoryBlock factoryBlock) {
         switch (factoryBlock) {

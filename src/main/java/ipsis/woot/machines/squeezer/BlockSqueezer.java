@@ -51,6 +51,9 @@ public class BlockSqueezer extends WootBlock implements IWootDebug {
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> BlockSqueezer - " + getStateContainer().getBaseState().get(FACING));
+        TileEntity te = itemUseContext.getWorld().getTileEntity(itemUseContext.getPos());
+        if (te instanceof IWootDebug)
+            ((IWootDebug)te).getDebugText(debug, itemUseContext);
         return debug;
     }
 }

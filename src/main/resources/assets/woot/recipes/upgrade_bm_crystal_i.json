@@ -1,4 +1,9 @@
 {
+  "conditions": [
+    {
+      "type": "woot:bm_crystal"
+    }
+  ],
   "result": {
     "item": "woot:upgradeb",
     "data": 12

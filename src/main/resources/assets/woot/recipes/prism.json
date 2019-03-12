@@ -8,39 +8,39 @@
     "WCB",
     "GLP"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "R": {
-      "item": "minecraft:dye",
-      "data": 1
+      "type": "forge:ore_dict",
+      "ore":  "dyeRed"
     },
     "O": {
-      "item": "minecraft:dye",
-      "data": 14
+      "type": "forge:ore_dict",
+      "ore":  "dyeOrange"
     },
     "Y": {
-      "item": "minecraft:dye",
-      "data": 11
+      "type": "forge:ore_dict",
+      "ore":  "dyeYellow"
     },
     "W": {
-      "item": "minecraft:dye",
-      "data": 15
+      "type": "forge:ore_dict",
+      "ore":  "dyeWhite"
     },
     "B": {
-      "item": "minecraft:dye",
-      "data": 0
+      "type": "forge:ore_dict",
+      "ore":  "dyeBlack"
     },
     "G": {
-      "item": "minecraft:dye",
-      "data": 2
+      "type": "forge:ore_dict",
+      "ore":  "dyeGreen"
     },
     "L": {
-      "item": "minecraft:dye",
-      "data": 4
+      "type": "forge:ore_dict",
+      "ore":  "dyeBlue"
     },
     "P": {
-      "item": "minecraft:dye",
-      "data":5
+      "type": "forge:ore_dict",
+      "ore":  "dyePurple"
     },
     "C": {
       "item": "minecraft:glass"

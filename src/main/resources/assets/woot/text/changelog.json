@@ -1,6 +1,21 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.10",
+      "features": [
+        {
+          "id": 405,
+          "desc": "Prism recipe now uses ore dictionary"
+        }
+      ],
+      "fixes": [
+        {
+          "id": 407,
+          "desc": "allowBmCrystal now correctly disables recipes"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.9",
       "features": [
         {

@@ -6,6 +6,7 @@ import ipsis.woot.farming.*;
 import ipsis.woot.farmstructure.*;
 import ipsis.woot.configuration.EnumConfigKey;
 import ipsis.woot.farmblocks.IFarmBlockMaster;
+import ipsis.woot.init.ModItems;
 import ipsis.woot.loot.ILootLearner;
 import ipsis.woot.loot.LootGenerationFarmInfo;
 import ipsis.woot.loot.repository.ILootRepositoryLookup;
@@ -408,6 +409,26 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
             ItemStack itemStack = skull.copy();
             itemStack.setCount(decap);
             info.drops.add(itemStack);
+        }
+
+        /**
+         * Add the shards
+         */
+        if (Woot.wootConfiguration.getBoolean(EnumConfigKey.ALLOW_SHARD_RECIPES)) {
+            ItemStack t2Stack = new ItemStack(ModItems.itemShard, Woot.wootConfiguration.getInteger(EnumConfigKey.T2_SHARD_GEN), 4);
+            ItemStack t3Stack = new ItemStack(ModItems.itemShard, Woot.wootConfiguration.getInteger(EnumConfigKey.T3_SHARD_GEN), 5);
+            ItemStack t4Stack = new ItemStack(ModItems.itemShard, Woot.wootConfiguration.getInteger(EnumConfigKey.T4_SHARD_GEN), 6);
+
+            if (farmSetup.getFarmTier() == EnumMobFactoryTier.TIER_ONE) {
+                info.drops.add(t2Stack);
+            } else if (farmSetup.getFarmTier() == EnumMobFactoryTier.TIER_TWO) {
+                info.drops.add(t2Stack);
+                info.drops.add(t3Stack);
+            } else if (farmSetup.getFarmTier() == EnumMobFactoryTier.TIER_THREE || farmSetup.getFarmTier() == EnumMobFactoryTier.TIER_FOUR) {
+                info.drops.add(t2Stack);
+                info.drops.add(t3Stack);
+                info.drops.add(t4Stack);
+            }
         }
 
 

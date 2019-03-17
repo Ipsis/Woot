@@ -21,6 +21,7 @@ public class LootGeneration implements ILootGeneration {
         generatorList.add(new ItemGenerator());
         generatorList.add(new XpGenerator());
         generatorList.add(new DecapitationGenerator());
+        generatorList.add(new TierShardGenerator());
 
 
         if (Loader.isModLoaded(BloodMagic.BM_MODID)) {

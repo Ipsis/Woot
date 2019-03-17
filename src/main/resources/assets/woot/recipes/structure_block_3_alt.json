@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "woot:shard_recipe"
+    }
+  ],
+  "result": {
+    "item": "woot:structure",
+    "data": 3
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "woot:factorybase"
+    },
+    {
+      "item": "woot:shard",
+      "data": 5
+    }
+  ]
+}

@@ -19,11 +19,20 @@ public class ItemShard extends ItemWoot {
             EnumShardType.DIAMOND.getName(),
             EnumShardType.EMERALD.getName(),
             EnumShardType.QUARTZ.getName(),
-            EnumShardType.NETHERSTAR.getName()
+            EnumShardType.NETHERSTAR.getName(),
+            EnumShardType.TIER_II.getName(),
+            EnumShardType.TIER_III.getName(),
+            EnumShardType.TIER_IV.getName()
     };
 
     public enum EnumShardType {
-        DIAMOND("diamond"), EMERALD("emerald"), QUARTZ("quartz"), NETHERSTAR("netherstar");
+        DIAMOND("diamond"),
+        EMERALD("emerald"),
+        QUARTZ("quartz"),
+        NETHERSTAR("netherstar"),
+        TIER_II("tier_ii"),
+        TIER_III("tier_iii"),
+        TIER_IV("tier_iv");
 
         public int getMeta() {
             return ordinal();

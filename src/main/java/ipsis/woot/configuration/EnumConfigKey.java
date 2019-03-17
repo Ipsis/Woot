@@ -171,6 +171,18 @@ public enum EnumConfigKey {
             CATEGORY_FACTORY_POWER,
             "Default power cost per tick of a Tier IV factory",
             "t4PowerTick", Integer.class, 320, true, 4),
+    T2_SHARD_GEN(
+            CATEGORY_FACTORY_GENERAL,
+            "Percentage drop rate of Tier II shard",
+            "r2ShardDrop", Integer.class, 15, false),
+    T3_SHARD_GEN(
+            CATEGORY_FACTORY_GENERAL,
+            "Percentage drop rate of Tier III shard",
+            "r3ShardDrop", Integer.class, 8, false),
+    T4_SHARD_GEN(
+            CATEGORY_FACTORY_GENERAL,
+            "Percentage drop rate of Tier IV shard",
+            "r4ShardDrop", Integer.class, 5, false),
     RATE_1_POWER_TICK(
             CATEGORY_UPGRADES,
             "Default power cost per tick of a Rate I upgrade",
@@ -426,7 +438,11 @@ public enum EnumConfigKey {
     ALLOW_BM_CRYSTAL(
             CATEGORY_FACTORY_MOD,
             "Allow the factory to support BloodMagic Ritual Of The Cloned Soul",
-            "allowBmCrystal", Boolean.class, true, false);
+            "allowBmCrystal", Boolean.class, true, false),
+    ALLOW_SHARD_RECIPES(
+            CATEGORY_FACTORY_GENERAL,
+            "Allow the shard based recipe to be used for factory block creation",
+                    "allowShardRecipe", Boolean.class, true, false);
 
     private String text;
     private Class clazz;

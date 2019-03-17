@@ -4,6 +4,10 @@
       "version": "1.12.2-1.4.10",
       "features": [
         {
+          "id": 411,
+          "desc": "Alternative factory block recipes based off factory generated shards (blame Mischief Of Mice)"
+        },
+        {
           "id": 405,
           "desc": "Prism recipe now uses ore dictionary"
         }

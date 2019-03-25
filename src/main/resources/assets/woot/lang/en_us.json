@@ -55,6 +55,7 @@
   "info.woot.intern.mode.valid_5": "Validate Tier 5 Factory",
   "info.woot.intern.mode.valid_import": "Validate Factory Importer",
   "info.woot.intern.mode.valid_export": "Validate Factory Exporter",
+  "info.woot.controller" : "%s / Tier %d",
 
   # Chat messages
   "chat.woot.layer": "Factory Layer %d",

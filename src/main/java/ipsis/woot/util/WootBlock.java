@@ -32,7 +32,6 @@ public class WootBlock extends Block {
 
     /**
      * Workaround for TE being null when broken.
-     * @todo Currently this is broken due to 5570
      */
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest, IFluidState fluid) {

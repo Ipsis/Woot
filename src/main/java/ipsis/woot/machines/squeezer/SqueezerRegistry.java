@@ -1,11 +1,20 @@
 package ipsis.woot.machines.squeezer;
 
 import ipsis.woot.Woot;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.item.crafting.ShapelessRecipe;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SqueezerRegistry {
@@ -14,12 +23,12 @@ public class SqueezerRegistry {
 
     private List<RecipeSqueezer> recipes = new ArrayList<>();
 
-    public void loadRecipes() {
-        loadVanilla();
+    public void loadRecipes(RecipeManager recipeManager) {
+        loadVanilla(recipeManager);
 
     }
 
-    private void loadVanilla() {
+    private void loadVanilla(RecipeManager recipeManager) {
 
         // @todo IItemProvider ????
         addRecipe(new ItemStack(Items.INK_SAC), DyeMakeup.BLACK);
@@ -39,10 +48,26 @@ public class SqueezerRegistry {
         addRecipe(new ItemStack(Items.ORANGE_DYE), DyeMakeup.ORANGE);
         addRecipe(new ItemStack(Items.BONE_MEAL), DyeMakeup.WHITE);
 
+        Collection<IRecipe> recipes = recipeManager.getRecipes();
+        for (IRecipe recipe : recipes) {
+            if (recipe instanceof ShapelessRecipe) {
+                ShapelessRecipe r = (ShapelessRecipe)recipe;
+                if (r.getIngredients().size() == 1) {
+                    ResourceLocation rs = new ResourceLocation("forge", "dyes");
+                    boolean isDye = ItemTags.getCollection().get(rs).contains(r.getRecipeOutput().getItem());
+                    if (isDye)
+                        Woot.LOGGER.info("loadVanilla: crafting output is a dye for " + r.getIngredients().get(0));
+
+
+                }
+            }
+        }
+
+
     }
 
     public void addRecipe(ItemStack itemStack, DyeMakeup dyeMakeup) {
-        Woot.LOGGER.info("addRecipe: {} -> {}", itemStack.getDisplayName(), dyeMakeup);
+        Woot.LOGGER.info("addRecipe: {} -> {}", itemStack.getTranslationKey(), dyeMakeup);
         recipes.add(new RecipeSqueezer(itemStack.copy(), dyeMakeup));
     }
 

@@ -1,6 +1,5 @@
 package ipsis.woot.event;
 
-import ipsis.woot.Woot;
 import ipsis.woot.tools.ItemMobShard;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.FakeMobKeyHelper;

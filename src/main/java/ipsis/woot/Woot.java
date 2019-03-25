@@ -14,7 +14,6 @@ import ipsis.woot.client.GuiHandler;
 import ipsis.woot.proxy.IProxy;
 import ipsis.woot.proxy.ServerProxy;
 import ipsis.woot.server.command.WootCommand;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -81,13 +80,13 @@ public class Woot {
     @SubscribeEvent
     public void serverStart(final FMLServerStartingEvent event) {
         new WootCommand(event.getCommandDispatcher());
+        SqueezerRegistry.INSTANCE.loadRecipes(event.getServer().getRecipeManager());
     }
 
     private void setup(final FMLCommonSetupEvent event) {
 
         Messages.registerMessages("woot");
         proxy.setup(event);
-        SqueezerRegistry.INSTANCE.loadRecipes();
     }
 
     private void client(final FMLClientSetupEvent event) {

@@ -20,6 +20,8 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
         super(ModTileEntities.controllerTileEntity);
         FakeMobKey fakeMobKey = new FakeMobKey("minecraft:pig");
         fakeMobKeyList.add(fakeMobKey);
+        fakeMobKey = new FakeMobKey("minecraft:cow");
+        fakeMobKeyList.add(fakeMobKey);
     }
 
     /**

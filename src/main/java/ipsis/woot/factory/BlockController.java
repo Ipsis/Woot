@@ -21,6 +21,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockController extends WootBlock implements IWootDebug, IFactoryBlockProvider {
@@ -64,13 +65,12 @@ public class BlockController extends WootBlock implements IWootDebug, IFactoryBl
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TextComponentString("block info!"));
         if (stack.hasTag()) {
             NBTTagCompound nbtTagCompound = stack.getTag();
             NBTTagList tagList = nbtTagCompound.getList("keys", Constants.NBT.TAG_COMPOUND);
             for (int i = 0; i < tagList.size(); i++) {
                 NBTTagCompound tags = tagList.getCompound(i);
-                FakeMobKey fakeMobKey = FakeMobKeyHelper.createFromNBT(tags);
+                FakeMobKey fakeMobKey = new FakeMobKey(tags);
                 tooltip.add(new TextComponentString(fakeMobKey.getName()));
             }
         }

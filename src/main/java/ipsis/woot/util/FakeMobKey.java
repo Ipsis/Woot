@@ -35,6 +35,17 @@ public class FakeMobKey {
 
     public FakeMobKey(String entityKey, String tag) {
 
+        setInfo(entityKey, tag);
+    }
+
+    public FakeMobKey(NBTTagCompound tagCompound) {
+
+        this();
+        if (tagCompound != null && tagCompound.hasKey(NBT_FAKE_MOB_KEY_ENTITY) && tagCompound.hasKey(NBT_FAKE_MOB_KEY_TAG))
+            setInfo(tagCompound.getString(NBT_FAKE_MOB_KEY_ENTITY), tagCompound.getString(NBT_FAKE_MOB_KEY_TAG));
+    }
+
+    private void setInfo(String entityKey, String tag) {
         this.entityKey = entityKey;
         this.tag = tag;
         this.name = entityKey;

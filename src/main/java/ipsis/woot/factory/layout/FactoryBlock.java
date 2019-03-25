@@ -19,7 +19,10 @@ public enum FactoryBlock {
     CELL_2("factory_cell_2"),
     CELL_3("factory_cell_3"),
     IMPORT("factory_import"),
-    EXPORT("factory_export");
+    EXPORT("factory_export"),
+    TOTEM_1("factory_totem_1"),
+    TOTEM_2("factory_totem_2"),
+    TOTEM_3("factory_totem_3");
 
     public static FactoryBlock[] VALUES = values();
 

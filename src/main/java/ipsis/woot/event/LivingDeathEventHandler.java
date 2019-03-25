@@ -3,7 +3,6 @@ package ipsis.woot.event;
 import ipsis.woot.tools.ItemMobShard;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.FakeMobKeyHelper;
-import ipsis.woot.util.helper.ProgrammedMobHelper;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -59,7 +58,7 @@ public class LivingDeathEventHandler {
         if (fakeMobKey.isValid()) {
             ItemStack itemStack = findShard(entityPlayer, fakeMobKey);
             if (!itemStack.isEmpty())
-                ProgrammedMobHelper.incrementDeathCount(itemStack, 1);
+                ItemMobShard.incrementDeathCount(itemStack, 1);
         }
     }
 

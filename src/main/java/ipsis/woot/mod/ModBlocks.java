@@ -58,6 +58,12 @@ public class ModBlocks {
     public static final BlockCell cell2Block = null;
     @ObjectHolder(Woot.MODID + ":factory_cell_3")
     public static final BlockCell cell3Block = null;
+    @ObjectHolder(Woot.MODID + ":factory_totem_1")
+    public static final BlockTotem totem1Block = null;
+    @ObjectHolder(Woot.MODID + ":factory_totem_2")
+    public static final BlockTotem totem2Block = null;
+    @ObjectHolder(Woot.MODID + ":factory_totem_3")
+    public static final BlockTotem totem3Block = null;
 
     /**
      * Machines

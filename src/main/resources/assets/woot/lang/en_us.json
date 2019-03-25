@@ -6,6 +6,15 @@
   "item.woot.hammer": "Ya Hammer",
   "item.woot.intern": "The Intern",
   "item.woot.mobshard": "Ender Shard",
+  "item.woot.upgrade_looting_1": "Looting 1 Upgrade",
+  "item.woot.upgrade_looting_2": "Looting 2 Upgrade",
+  "item.woot.upgrade_looting_3": "Looting 3 Upgrade",
+  "item.woot.upgrade_mass_1": "Mass 1 Upgrade",
+  "item.woot.upgrade_mass_2": "Mass 2 Upgrade",
+  "item.woot.upgrade_mass_3": "Mass 3 Upgrade",
+  "item.woot.upgrade_rate_1": "Rate 1 Upgrade",
+  "item.woot.upgrade_rate_2": "Rate 2 Upgrade",
+  "item.woot.upgrade_rate_3": "Rate 3 Upgrade",
 
   # Block names
   "block.woot.layout": "Layout",
@@ -30,6 +39,9 @@
   "block.woot.squeezer": "Squeezer",
   "block.woot.stamper": "Stamper",
   "block.woot.creative_rf": "Creative RF",
+  "block.woot.totem_1": "Factory Upgrade 1",
+  "block.woot.totem_2": "Factory Upgrade 2",
+  "block.woot.totem_3": "Factory Upgrade 3",
 
   # Tooltips
   "info.woot.debug": "§aFor internal debug only",

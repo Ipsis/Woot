@@ -51,16 +51,4 @@ public class FakeMobKeyHelper {
 
         return fakeMobKey;
     }
-
-    /**
-     * Create a new FakeMobKey from NBT data
-     * @return valid FakeMobKey or invalid FakeMobKey if NBT not present
-     */
-    public static @Nonnull FakeMobKey createFromNBT(NBTTagCompound tagCompound) {
-
-        if (tagCompound == null || !tagCompound.hasKey(NBT_FAKE_MOB_KEY_ENTITY) || !tagCompound.hasKey(NBT_FAKE_MOB_KEY_TAG))
-            return new FakeMobKey();
-
-        return new FakeMobKey(tagCompound.getString(NBT_FAKE_MOB_KEY_ENTITY), tagCompound.getString(NBT_FAKE_MOB_KEY_TAG));
-    }
 }

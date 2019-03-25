@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TileEntityController extends TileEntity implements IRestorableTileEntity, IWootDebug {
@@ -22,6 +23,10 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
         fakeMobKeyList.add(fakeMobKey);
         fakeMobKey = new FakeMobKey("minecraft:cow");
         fakeMobKeyList.add(fakeMobKey);
+    }
+
+    public List<FakeMobKey> getFakeMobKeyList() {
+        return Collections.unmodifiableList(fakeMobKeyList);
     }
 
     /**
@@ -54,7 +59,7 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
         NBTTagList tagList = nbtTagCompound.getList("keys", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.size(); i++) {
             NBTTagCompound tags = tagList.getCompound(i);
-            FakeMobKey fakeMobKey = FakeMobKeyHelper.createFromNBT(tags);
+            FakeMobKey fakeMobKey = new FakeMobKey(tags);
             fakeMobKeyList.add(fakeMobKey);
         }
     }

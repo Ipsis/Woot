@@ -50,6 +50,9 @@ public class Registration {
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_1));
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_2));
         event.getRegistry().register(new BlockCell(FactoryBlock.CELL_3));
+        event.getRegistry().register(new BlockTotem(FactoryBlock.TOTEM_1));
+        event.getRegistry().register(new BlockTotem(FactoryBlock.TOTEM_2));
+        event.getRegistry().register(new BlockTotem(FactoryBlock.TOTEM_3));
         event.getRegistry().register(new BlockSqueezer());
         event.getRegistry().register(new BlockStamper());
 
@@ -64,6 +67,16 @@ public class Registration {
         event.getRegistry().register(new ItemHammer());
         event.getRegistry().register(new ItemIntern());
         event.getRegistry().register(new ItemMobShard());
+
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.LOOTING_1));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.LOOTING_2));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.LOOTING_3));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.MASS_1));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.MASS_2));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.MASS_3));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.RATE_1));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.RATE_2));
+        event.getRegistry().register(new ItemUpgrade(ItemUpgrade.UpgradeType.RATE_3));
 
         event.getRegistry().register(new ItemBlock(ModBlocks.layoutBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.layoutBlock.getRegistryName()));
 
@@ -86,11 +99,15 @@ public class Registration {
         event.getRegistry().register(new ItemBlock(ModBlocks.cell1Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell1Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cell2Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell2Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.cell3Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.cell3Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.totem1Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem1Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.totem2Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem2Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.totem3Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem3Block.getRegistryName()));
 
         event.getRegistry().register(new ItemBlock(ModBlocks.squeezerBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.squeezerBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.stamperBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.stamperBlock.getRegistryName()));
 
         event.getRegistry().register(new ItemBlock(ModBlocks.creativeRFBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.creativeRFBlock.getRegistryName()));
+
     }
 
     @SubscribeEvent
@@ -101,6 +118,7 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityController::new).build(null).setRegistryName(Woot.MODID, BlockController.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntitySqueezer::new).build(null).setRegistryName(Woot.MODID, BlockSqueezer.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityCreativeRF::new).build(null).setRegistryName(Woot.MODID, BlockCreativeRF.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityTotem::new).build(null).setRegistryName(Woot.MODID, TileEntityTotem.BASENAME));
     }
 
     @SubscribeEvent

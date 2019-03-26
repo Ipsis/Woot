@@ -1,6 +1,7 @@
 package ipsis.woot.tools;
 
 import ipsis.woot.Woot;
+import ipsis.woot.config.PolicyConfig;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.WootItem;
@@ -13,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -61,7 +63,12 @@ public class ItemMobShard extends WootItem {
         EntityPlayer entityPlayer = (EntityPlayer)attacker;
         EntityLiving entityLiving = (EntityLiving)target;
 
-        //@todo can capture mob
+        ResourceLocation rl = ForgeRegistries.ENTITIES.getKey(entityLiving.getType());
+        if (rl != null && !PolicyConfig.canCapture(rl)) {
+            PlayerHelper.sendChatMessage(entityPlayer,
+                    StringHelper.translate("chat.woot.mobshard.blacklist"));
+            return false;
+        }
 
         if (isEntityProgrammed(stack)) {
             PlayerHelper.sendChatMessage(entityPlayer,

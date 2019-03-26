@@ -85,6 +85,7 @@
   "chat.woot.intern.validate.incorrect": "Expected %s at %d,%d,%d but found %s",
   "chat.woot.mobshard.used": "Shard is already programmed",
   "chat.woot.mobshard.success": "Shard programmed with %s",
+  "chat.woot.mobshard.blacklist": "Cannot capture mob",
 
   # Enchantments
   "enchantment.woot.headhunter": "Headhunter",

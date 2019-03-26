@@ -47,7 +47,7 @@ public class ItemMobShard extends WootItem {
                         StringHelper.translate("info.woot.mobshard.state.0")));
             else
                 tooltip.add(new TextComponentString(
-                        StringHelper.translateFormat("info.woot.mobshard.state.1", getDeathCount(stack), 10)));
+                        StringHelper.translateFormat("info.woot.mobshard.state.1", getDeathCount(stack), FULLY_PROGRAMMED_COUNT)));
         }
     }
 

@@ -1,10 +1,13 @@
 package ipsis.woot.factory;
 
 import ipsis.woot.debug.IWootDebug;
+import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModTileEntities;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.IRestorableTileEntity;
 import ipsis.woot.util.helper.FakeMobKeyHelper;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,12 +20,9 @@ import java.util.List;
 
 public class TileEntityController extends TileEntity implements IRestorableTileEntity, IWootDebug {
 
+    private static final int MAX_MOB_COUNT = 4;
     public TileEntityController() {
         super(ModTileEntities.controllerTileEntity);
-        FakeMobKey fakeMobKey = new FakeMobKey("minecraft:pig");
-        fakeMobKeyList.add(fakeMobKey);
-        fakeMobKey = new FakeMobKey("minecraft:cow");
-        fakeMobKeyList.add(fakeMobKey);
     }
 
     public List<FakeMobKey> getFakeMobKeyList() {
@@ -33,6 +33,10 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
      * Mobs
      */
     private List<FakeMobKey> fakeMobKeyList = new ArrayList<>();
+    public void addMob(FakeMobKey fakeMobKey) {
+        if (fakeMobKeyList.size() < MAX_MOB_COUNT)
+            fakeMobKeyList.add(fakeMobKey);
+    }
 
     /**
      * NBT
@@ -48,6 +52,48 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
     public void read(NBTTagCompound compound) {
         super.read(compound);
         readRestorableFromNBT(compound);
+    }
+
+    /**
+     * Returns an itemstack containing all the relevant NBT data
+     */
+    public ItemStack getItemStack() {
+
+        ItemStack itemStack = new ItemStack(ModBlocks.controllerBlock);
+        if (!fakeMobKeyList.isEmpty()) {
+            NBTTagCompound nbtTagCompound = new NBTTagCompound();
+            NBTTagList tagList = new NBTTagList();
+            for (int i = 0; i < fakeMobKeyList.size(); i++) {
+                NBTTagCompound itemTag = new NBTTagCompound();
+                FakeMobKey.writeToNBT(fakeMobKeyList.get(i), itemTag);
+                tagList.add(itemTag);
+            }
+
+            nbtTagCompound.setTag("keys", tagList);
+            itemStack.setTag(nbtTagCompound);
+        }
+
+        return itemStack;
+    }
+
+    public static ItemStack getItemStack(List<EntityLiving> mobs) {
+
+        ItemStack itemStack = new ItemStack(ModBlocks.controllerBlock);
+        if (!mobs.isEmpty()) {
+            NBTTagCompound nbtTagCompound = new NBTTagCompound();
+            NBTTagList tagList = new NBTTagList();
+            for (EntityLiving entityLiving : mobs) {
+                NBTTagCompound itemTag = new NBTTagCompound();
+                FakeMobKey fakeMobKey = FakeMobKeyHelper.createFromEntity(entityLiving);
+                if (fakeMobKey.isValid()) {
+                    FakeMobKey.writeToNBT(fakeMobKey, itemTag);
+                    tagList.add(itemTag);
+                }
+            }
+            nbtTagCompound.setTag("keys", tagList);
+            itemStack.setTag(nbtTagCompound);
+        }
+        return itemStack;
     }
 
     /**
@@ -69,7 +115,7 @@ public class TileEntityController extends TileEntity implements IRestorableTileE
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < fakeMobKeyList.size(); i++) {
             NBTTagCompound itemTag = new NBTTagCompound();
-            FakeMobKey.writeToNBT(fakeMobKeyList.get(0), itemTag);
+            FakeMobKey.writeToNBT(fakeMobKeyList.get(i), itemTag);
             tagList.add(itemTag);
         }
 

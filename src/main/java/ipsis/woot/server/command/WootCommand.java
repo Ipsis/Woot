@@ -10,6 +10,7 @@ public class WootCommand {
         dispatcher.register(
                 LiteralArgumentBuilder.<CommandSource>literal("woot")
                 .then(CommandStatus.register())
+                .then(CommandGive.register())
         );
     }
 }

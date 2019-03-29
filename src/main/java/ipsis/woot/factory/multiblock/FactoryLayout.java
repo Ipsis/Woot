@@ -68,4 +68,8 @@ public class FactoryLayout {
         }
     }
 
+    @Override
+    public String toString() {
+        return "facing:" +  facing + "changed: " + changed + "dirty: " + dirty +  "pattern:" + absolutePattern;
+    }
 }

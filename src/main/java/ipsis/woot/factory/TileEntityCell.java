@@ -13,6 +13,11 @@ public class TileEntityCell extends TileEntityMultiBlock implements IWootDebug {
         super(ModTileEntities.cellTileEntityType);
     }
 
+    public int consume(int units) {
+        // @todo cell contents processing
+        return units;
+    }
+
     /**
      * IWootDebug
      */

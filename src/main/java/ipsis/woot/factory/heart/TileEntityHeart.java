@@ -2,10 +2,12 @@ package ipsis.woot.factory.heart;
 
 import ipsis.woot.Woot;
 import ipsis.woot.debug.IWootDebug;
+import ipsis.woot.factory.TileEntityCell;
 import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.factory.multiblock.FactoryLayout;
 import ipsis.woot.factory.multiblock.IMultiBlockMaster;
 import ipsis.woot.mod.ModTileEntities;
+import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
@@ -22,6 +24,7 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
      */
     private FactoryLayout factoryLayout; // The factory blocks and where they are
     private FactoryConfig factoryConfig; // The configuration of the factory
+    private FactoryRecipe factoryRecipe = new FactoryRecipe();
 
     private TickTracker tickTracker = new TickTracker();
 
@@ -56,16 +59,41 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
         if (factoryLayout.isFormed()) {
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfig.createFromLayout(world, factoryLayout);
-                factoryLayout.clearChanged();
+                factoryRecipe = new FactoryRecipe(200, 10);
+                for (FakeMobKey key : factoryConfig.getValidMobs())
+                    Woot.LOGGER.info("Teach mob " + key);
                 Woot.LOGGER.info("Created factory for " + factoryConfig);
+                factoryLayout.clearChanged();
             }
 
             if (isRunning()) {
-
+                tickRecipe();
+                if (isRecipeComplete()) {
+                    Woot.LOGGER.info("Generate loot");
+                    resetRecipe();
+                }
             }
         }
-
     }
+
+    /**
+     * Recipe handling
+     */
+    private int consumedRecipeUnits = 0;
+    private void tickRecipe() {
+        TileEntity te = world.getTileEntity(factoryConfig.getCellPos());
+        if (te instanceof TileEntityCell) {
+            TileEntityCell cell = (TileEntityCell)te;
+            consumedRecipeUnits += cell.consume(factoryRecipe.getUnitsPerTick());
+        }
+    }
+    private boolean isRecipeComplete() {
+        return consumedRecipeUnits >= factoryRecipe.getNumUnits();
+    }
+    private void resetRecipe() {
+        consumedRecipeUnits = 0;
+    }
+
 
     /**
      * IMultiBlockMaster
@@ -83,6 +111,8 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("=====> TileEntityHeart");
+        debug.add("consumed:" + consumedRecipeUnits);
+        debug.add("layout:" + factoryLayout + " config:" + factoryConfig + " recipe:" + factoryRecipe);
         return debug;
     }
 }

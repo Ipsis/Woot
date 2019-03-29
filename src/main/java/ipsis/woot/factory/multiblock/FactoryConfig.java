@@ -3,6 +3,7 @@ package ipsis.woot.factory.multiblock;
 import ipsis.woot.config.PolicyConfig;
 import ipsis.woot.factory.FactoryTier;
 import ipsis.woot.factory.TileEntityController;
+import ipsis.woot.factory.TileEntityTotem;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.factory.layout.PatternBlock;
 import ipsis.woot.util.FakeMobKey;
@@ -98,6 +99,21 @@ public class FactoryConfig {
                     factoryConfig.mobs.add(new FactoryConfigMob(key, FactoryConfigMob.MobState.BLACKLISTED));
                 }
         }
+
+        /**
+         * Process the upgrades
+         */
+        for (PatternBlock patternBlock : layout.getAbsolutePattern().getBlocks()) {
+            if (patternBlock.getFactoryBlock() == FactoryBlock.UPGRADE) {
+                BlockPos pos = patternBlock.getBlockPos().up();
+                te = world.getTileEntity(pos);
+                if (te instanceof TileEntityTotem) {
+                    TileEntityTotem tileEntityTotem = (TileEntityTotem)te;
+
+                }
+            }
+        }
+
 
         return factoryConfig;
     }

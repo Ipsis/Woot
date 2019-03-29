@@ -1,8 +1,11 @@
 package ipsis.woot.factory;
 
 import ipsis.woot.debug.IWootDebug;
+import ipsis.woot.mod.ModItems;
 import ipsis.woot.mod.ModTileEntities;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.List;
@@ -22,9 +25,37 @@ public class TileEntityTotem extends TileEntity implements IWootDebug {
         markDirty();
     }
 
+    private ItemUpgrade.UpgradeType upgradeType = null;
+    public boolean addUpgrade(ItemUpgrade.UpgradeType upgradeType) {
+        if (this.upgradeType != null)
+            return false;
+
+        // @todo upgrade type must be of the correct level
+        this.upgradeType = upgradeType;
+        return true;
+    }
+
+    public ItemStack getDroppedItem() {
+        return ModItems.getItemUpgradeByType(upgradeType);
+    }
+
     /**
      * NBT
      */
+    @Override
+    public NBTTagCompound write(NBTTagCompound compound) {
+        super.write(compound);
+        if (upgradeType != null)
+            compound.setInt("upgrade", upgradeType.ordinal());
+        return compound;
+    }
+
+    @Override
+    public void read(NBTTagCompound compound) {
+        super.read(compound);
+        if (compound.hasKey("upgrade"))
+            upgradeType = ItemUpgrade.UpgradeType.byIndex(compound.getInt("upgrade"));
+    }
 
     /**
      * IWootDebug
@@ -32,7 +63,8 @@ public class TileEntityTotem extends TileEntity implements IWootDebug {
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> TileEntityTotem");
-        debug.add("level " + level);
+        debug.add("level:" + level);
+        debug.add("type:" + upgradeType);
         return debug;
     }
 }

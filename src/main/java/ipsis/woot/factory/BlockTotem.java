@@ -3,6 +3,7 @@ package ipsis.woot.factory;
 import ipsis.woot.Woot;
 import ipsis.woot.debug.IWootDebug;
 import ipsis.woot.factory.layout.FactoryBlock;
+import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -79,9 +81,27 @@ public class BlockTotem extends WootBlock implements IWootDebug {
         ItemStack itemStack = player.getHeldItem(hand);
         if (!itemStack.isEmpty() && itemStack.getItem() instanceof ItemUpgrade) {
             ItemUpgrade itemUpgrade = (ItemUpgrade)itemStack.getItem();
-            Woot.LOGGER.info("Trying to apply " + itemUpgrade);
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof TileEntityTotem) {
+                if (((TileEntityTotem) te).addUpgrade(itemUpgrade.getUpgradeType()))
+                    itemStack.shrink(1);
+            }
         }
 
         return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public void getDrops(IBlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune) {
+
+        // Make sure to get the block drop as well
+        super.getDrops(state, drops, world, pos, fortune);
+
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof TileEntityTotem) {
+            ItemStack itemStack = ((TileEntityTotem)te).getDroppedItem();
+            if (!itemStack.isEmpty())
+                drops.add(itemStack);
+        }
     }
 }

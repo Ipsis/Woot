@@ -3,7 +3,10 @@ package ipsis.woot.factory;
 import ipsis.woot.Woot;
 import ipsis.woot.util.WootItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class ItemUpgrade extends WootItem {
@@ -16,6 +19,8 @@ public class ItemUpgrade extends WootItem {
         this.basename = upgradeType.getName();
         this.upgradeType = upgradeType;
     }
+
+    public UpgradeType getUpgradeType() { return this.upgradeType; }
 
     public enum UpgradeType {
         LOOTING_1("upgrade_looting_1"),
@@ -42,6 +47,11 @@ public class ItemUpgrade extends WootItem {
         public static EnumSet<UpgradeType> TIER_1 = EnumSet.of(LOOTING_1, MASS_1, RATE_1);
         public static EnumSet<UpgradeType> TIER_2 = EnumSet.of(LOOTING_2, MASS_2, RATE_2);
         public static EnumSet<UpgradeType> TIER_3 = EnumSet.of(LOOTING_3, MASS_3, RATE_3);
+
+        public static UpgradeType byIndex(int index) {
+            index = MathHelper.clamp(index, 0, VALUES.length - 1);
+            return VALUES[index];
+        }
     }
 
 }

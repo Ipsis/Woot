@@ -22,4 +22,6 @@ public class AbsolutePattern {
     public void addAbsoluteBlock(FactoryBlock factoryBlock, BlockPos pos) {
         blocks.add(new PatternBlock(factoryBlock, pos));
     }
+
+    public FactoryTier getFactoryTier() { return this.factoryTier; }
 }

@@ -55,6 +55,9 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
 
         if (factoryLayout.isFormed()) {
             if (factoryLayout.hasChanged()) {
+                factoryConfig = FactoryConfig.createFromLayout(world, factoryLayout);
+                factoryLayout.clearChanged();
+                Woot.LOGGER.info("Created factory for " + factoryConfig);
             }
 
             if (isRunning()) {

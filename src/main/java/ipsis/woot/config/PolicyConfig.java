@@ -47,8 +47,6 @@ public class PolicyConfig {
      * Policy
      */
     private static Set<ResourceLocation> mobsInternalBlacklist = new HashSet<>(Arrays.asList(
-        new ResourceLocation("minecraft:cow"),
-        new ResourceLocation("minecraft:pig")
         ));
     private static Set<String> mobsFromModInternalBlacklist = new HashSet<>(Arrays.asList(
             "botania"));

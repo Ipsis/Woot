@@ -30,6 +30,7 @@ public class FactoryLayout {
 
     private boolean changed = false;
     public boolean hasChanged() { return this.changed; }
+    public void clearChanged() { this.changed = false; }
 
     private void handleDirty() {
 

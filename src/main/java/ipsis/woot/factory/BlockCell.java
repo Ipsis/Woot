@@ -6,8 +6,12 @@ import ipsis.woot.factory.layout.IFactoryBlockProvider;
 import ipsis.woot.util.WootBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockReader;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockCell extends WootBlock implements IWootDebug, IFactoryBlockProvider {
@@ -21,12 +25,26 @@ public class BlockCell extends WootBlock implements IWootDebug, IFactoryBlockPro
         this.basename = factoryBlock.getName();
     }
 
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
+        return new TileEntityCell();
+    }
+
     /**
      * IWootDebug
      */
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add(String.format("====> BlockCell {}", factoryBlock.getName()));
+        debug.add("====> BlockCell - " + factoryBlock.getName());
+        TileEntity te = itemUseContext.getWorld().getTileEntity(itemUseContext.getPos());
+        if (te instanceof IWootDebug)
+            ((IWootDebug)te).getDebugText(debug, itemUseContext);
         return debug;
     }
 

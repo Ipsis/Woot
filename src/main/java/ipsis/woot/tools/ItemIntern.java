@@ -1,7 +1,7 @@
 package ipsis.woot.tools;
 
 import ipsis.woot.Woot;
-import ipsis.woot.factory.BlockHeart;
+import ipsis.woot.factory.heart.BlockHeart;
 import ipsis.woot.factory.FactoryTier;
 import ipsis.woot.factory.layout.*;
 import ipsis.woot.util.WootItem;

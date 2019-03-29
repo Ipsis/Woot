@@ -1,13 +1,17 @@
 package ipsis.woot.tools;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryTier;
 import ipsis.woot.factory.layout.*;
+import ipsis.woot.factory.multiblock.IMultiBlockGlueProvider;
+import ipsis.woot.factory.multiblock.IMultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -102,5 +106,49 @@ public class FactoryHelper {
 
         }
         return false;
+    }
+
+    public static AbsolutePattern compareToWorldQuick(AbsolutePattern absolutePattern, World world) {
+
+        for (PatternBlock pb : absolutePattern.getBlocks()) {
+            // Don't load an unloaded chunk
+            if (!world.isBlockLoaded(pb.getBlockPos()))
+                return null;
+
+            IBlockState currState = world.getBlockState(pb.getBlockPos());
+            Block currBlock = currState.getBlock();
+
+            if (!(currBlock instanceof IFactoryBlockProvider))
+                return null;
+
+            if (!FactoryBlock.isSameBlockFuzzy(((IFactoryBlockProvider)currBlock).getFactoryBlock(), pb.getFactoryBlock()))
+                return null;
+
+            if (pb.getFactoryBlock() == FactoryBlock.CONTROLLER) {
+                // @todo check the controller
+            }
+        }
+
+        return absolutePattern;
+    }
+
+    public static void disconnectOld(World world, AbsolutePattern absolutePattern) {
+        for (PatternBlock pb : absolutePattern.getBlocks()) {
+            if (world.isBlockLoaded(pb.getBlockPos())) {
+                TileEntity te = world.getTileEntity(pb.getBlockPos());
+                if (te instanceof IMultiBlockGlueProvider)
+                    ((IMultiBlockGlueProvider)te).getIMultiBlockGlue().clearMaster();
+            }
+        }
+    }
+
+    public static void connectNew(World world, AbsolutePattern absolutePattern, IMultiBlockMaster master) {
+        for (PatternBlock pb : absolutePattern.getBlocks()) {
+            if (world.isBlockLoaded(pb.getBlockPos())) {
+                TileEntity te = world.getTileEntity(pb.getBlockPos());
+                if (te instanceof IMultiBlockGlueProvider)
+                    ((IMultiBlockGlueProvider)te).getIMultiBlockGlue().setMaster(master);
+            }
+        }
     }
 }

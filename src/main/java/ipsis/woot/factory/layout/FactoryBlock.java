@@ -37,4 +37,11 @@ public enum FactoryBlock {
         return this == CELL_1 || this == CELL_2 || this == CELL_3;
     }
 
+    public static boolean isSameBlockFuzzy(FactoryBlock factoryBlock1, FactoryBlock factoryBlock2) {
+        if (factoryBlock1.isCell() && factoryBlock2.isCell())
+            return true;
+
+        return factoryBlock1 == factoryBlock2;
+    }
+
 }

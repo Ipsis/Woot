@@ -3,10 +3,9 @@ package ipsis.woot.mod;
 import ipsis.woot.Woot;
 import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.creative.TileEntityCreativeRF;
-import ipsis.woot.factory.BlockController;
-import ipsis.woot.factory.BlockTotem;
-import ipsis.woot.factory.TileEntityController;
-import ipsis.woot.factory.TileEntityTotem;
+import ipsis.woot.factory.*;
+import ipsis.woot.factory.heart.BlockHeart;
+import ipsis.woot.factory.heart.TileEntityHeart;
 import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.layout.TileEntityLayout;
 import ipsis.woot.machines.squeezer.BlockSqueezer;
@@ -30,4 +29,19 @@ public class ModTileEntities {
 
     @ObjectHolder(Woot.MODID + ":" + TileEntityTotem.BASENAME)
     public static TileEntityType<TileEntityTotem> totemTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + TileEntityFactory.BASENAME)
+    public static TileEntityType<TileEntityFactory> factoryTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + BlockHeart.BASENAME)
+    public static TileEntityType<TileEntityHeart> heartTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + TileEntityCell.BASENAME)
+    public static TileEntityType<TileEntityCell> cellTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + BlockImport.BASENAME)
+    public static TileEntityType<TileEntityImport> importTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + BlockExport.BASENAME)
+    public static TileEntityType<TileEntityExport> exportTileEntityType;
 }

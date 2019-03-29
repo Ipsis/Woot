@@ -3,6 +3,7 @@ package ipsis.woot.mod;
 import ipsis.woot.Woot;
 import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.heart.BlockHeart;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.layout.BlockLayout;
 import ipsis.woot.machines.squeezer.BlockSqueezer;

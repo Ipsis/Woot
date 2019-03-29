@@ -1,4 +1,4 @@
-package ipsis.woot.factory;
+package ipsis.woot.factory.heart;
 
 import ipsis.woot.debug.IWootDebug;
 import ipsis.woot.factory.layout.FactoryBlock;
@@ -12,8 +12,9 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -39,12 +40,26 @@ public class BlockHeart extends WootBlock implements IWootDebug, IFactoryBlockPr
         builder.add(FACING);
     }
 
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
+        return new TileEntityHeart();
+    }
+
     /**
      * IWootDebug
      */
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> BlockHeart - " + getStateContainer().getBaseState().get(FACING));
+        TileEntity te =itemUseContext.getWorld().getTileEntity(itemUseContext.getPos());
+        if (te instanceof IWootDebug)
+            ((IWootDebug)te).getDebugText(debug, itemUseContext);
         return debug;
     }
 

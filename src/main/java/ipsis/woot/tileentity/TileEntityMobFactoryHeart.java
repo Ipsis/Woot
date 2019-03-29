@@ -536,7 +536,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                     ConfigKeyHelper.getBmLeTankPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_TANK)));
             int param1 = Woot.wootConfiguration.getInteger(
                     farmSetup.getWootMobName(),
-                    ConfigKeyHelper.getBmLeTankPowerPerTick(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_TANK)));
+                    ConfigKeyHelper.getBmLeTankParam(farmSetup.getUpgradeLevel(EnumFarmUpgrade.BM_LE_TANK)));
             info.upgradeUIInfo.setPowerPerTick(EnumFarmUpgrade.BM_LE_TANK, perTick);
             info.upgradeUIInfo.setParam1(EnumFarmUpgrade.BM_LE_TANK, param1);
         }

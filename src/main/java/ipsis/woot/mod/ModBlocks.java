@@ -1,6 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.anvil.BlockAnvil;
 import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.power.BlockCell;
@@ -67,6 +68,8 @@ public class ModBlocks {
     public static final BlockTotem totem2Block = null;
     @ObjectHolder(Woot.MODID + ":factory_totem_3")
     public static final BlockTotem totem3Block = null;
+    @ObjectHolder(Woot.MODID + ":anvil")
+    public static final BlockAnvil anvilBlock = null;
 
     /**
      * Machines

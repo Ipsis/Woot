@@ -1,6 +1,8 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.anvil.BlockAnvil;
+import ipsis.woot.anvil.TileEntityAnvil;
 import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.creative.TileEntityCreativeRF;
 import ipsis.woot.debug.ItemDebug;
@@ -59,6 +61,7 @@ public class Registration {
         event.getRegistry().register(new BlockSqueezer());
         event.getRegistry().register(new BlockStamper());
         event.getRegistry().register(new BlockConvertorTick());
+        event.getRegistry().register(new BlockAnvil());
 
         event.getRegistry().register(new BlockCreativeRF());
     }
@@ -106,6 +109,7 @@ public class Registration {
         event.getRegistry().register(new ItemBlock(ModBlocks.totem1Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem1Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.totem2Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem2Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.totem3Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem3Block.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.anvilBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.anvilBlock.getRegistryName()));
 
         event.getRegistry().register(new ItemBlock(ModBlocks.convertorTickBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.convertorTickBlock.getRegistryName()));
 
@@ -133,6 +137,7 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityImport::new).build(null).setRegistryName(Woot.MODID, BlockImport.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityExport::new).build(null).setRegistryName(Woot.MODID, BlockExport.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityConvertorTick::new).build(null).setRegistryName(Woot.MODID, BlockConvertorTick.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityAnvil::new).build(null).setRegistryName(Woot.MODID, BlockAnvil.BASENAME));
     }
 
     @SubscribeEvent

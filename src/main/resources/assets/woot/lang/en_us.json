@@ -43,6 +43,7 @@
   "block.woot.totem_2": "Factory Upgrade 2",
   "block.woot.totem_3": "Factory Upgrade 3",
   "block.woot.convertor_tick": "Tick Convertor",
+  "block.woot.anvil": "Stygian Anvil",
 
   # Tooltips
   "info.woot.debug": "§aFor internal debug only",

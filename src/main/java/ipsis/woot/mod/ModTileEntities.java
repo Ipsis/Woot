@@ -1,6 +1,8 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.anvil.BlockAnvil;
+import ipsis.woot.anvil.TileEntityAnvil;
 import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.creative.TileEntityCreativeRF;
 import ipsis.woot.factory.*;
@@ -52,4 +54,8 @@ public class ModTileEntities {
 
     @ObjectHolder(Woot.MODID + ":" + BlockConvertorTick.BASENAME)
     public static TileEntityType<TileEntityConvertorTick> convertorTickTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + BlockAnvil.BASENAME)
+    public static TileEntityType<TileEntityAnvil> anvilTileEntityType;
+
 }

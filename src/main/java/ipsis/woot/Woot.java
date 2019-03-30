@@ -1,6 +1,7 @@
 package ipsis.woot;
 
 import ipsis.woot.config.Config;
+import ipsis.woot.drops.DropRegistry;
 import ipsis.woot.event.LivingDeathEventHandler;
 import ipsis.woot.event.LivingDropsEventHandler;
 import ipsis.woot.factory.layout.FactoryPatternRepository;
@@ -38,6 +39,7 @@ public class Woot {
 
     public static Woot INSTANCE;
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final DropRegistry DROP_REGISTRY = new DropRegistry();
     public static final String MODID = "woot";
     //public static final String MODNAME = "Woot";
     //public static final String VERSION = "0.0.1";

@@ -1,5 +1,6 @@
 package ipsis.woot.config;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -65,6 +66,12 @@ public class PolicyConfig {
         if (getMobBlacklist().contains(resourceLocation))
             return false;
 
+        return true;
+    }
+
+    public static boolean canLearn(ItemStack itemStack) {
+        if (itemStack == null || itemStack.isEmpty())
+            return false;
         return true;
     }
 }

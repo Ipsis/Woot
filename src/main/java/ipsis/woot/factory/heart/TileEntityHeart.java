@@ -2,7 +2,7 @@ package ipsis.woot.factory.heart;
 
 import ipsis.woot.Woot;
 import ipsis.woot.debug.IWootDebug;
-import ipsis.woot.factory.TileEntityCell;
+import ipsis.woot.factory.power.TileEntityCell;
 import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.factory.multiblock.FactoryLayout;
 import ipsis.woot.factory.multiblock.IMultiBlockMaster;

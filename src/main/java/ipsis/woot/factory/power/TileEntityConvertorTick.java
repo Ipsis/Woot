@@ -1,6 +1,5 @@
-package ipsis.woot.factory.convertors;
+package ipsis.woot.factory.power;
 
-import ipsis.woot.factory.TileEntityCell;
 import ipsis.woot.mod.ModTileEntities;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.tileentity.TileEntity;

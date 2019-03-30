@@ -1,8 +1,9 @@
-package ipsis.woot.factory;
+package ipsis.woot.factory.power;
 
 import ipsis.woot.debug.IWootDebug;
 import ipsis.woot.factory.layout.FactoryBlock;
 import ipsis.woot.factory.layout.IFactoryBlockProvider;
+import ipsis.woot.factory.power.TileEntityCellSimple;
 import ipsis.woot.util.WootBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

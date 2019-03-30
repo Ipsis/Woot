@@ -1,7 +1,8 @@
-package ipsis.woot.factory;
+package ipsis.woot.factory.power;
 
 import ipsis.woot.Woot;
 import ipsis.woot.debug.IWootDebug;
+import ipsis.woot.factory.TileEntityMultiBlock;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityType;

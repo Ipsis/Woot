@@ -1,6 +1,7 @@
-package ipsis.woot.factory;
+package ipsis.woot.factory.power;
 
 import ipsis.woot.config.FactoryConfig;
+import ipsis.woot.factory.power.TileEntityCell;
 import ipsis.woot.mod.ModTileEntities;
 
 public class TileEntityCellAdvanced extends TileEntityCell {

@@ -2,6 +2,7 @@ package ipsis.woot.factory.multiblock;
 
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.heart.BlockHeart;
+import ipsis.woot.factory.power.BlockCell;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

@@ -1,4 +1,4 @@
-package ipsis.woot.factory.convertors;
+package ipsis.woot.factory.power;
 
 import ipsis.woot.util.WootBlock;
 import net.minecraft.block.Block;

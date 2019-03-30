@@ -42,6 +42,7 @@
   "block.woot.totem_1": "Factory Upgrade 1",
   "block.woot.totem_2": "Factory Upgrade 2",
   "block.woot.totem_3": "Factory Upgrade 3",
+  "block.woot.convertor_tick": "Tick Convertor",
 
   # Tooltips
   "info.woot.debug": "§aFor internal debug only",

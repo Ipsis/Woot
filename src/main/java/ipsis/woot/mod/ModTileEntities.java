@@ -4,6 +4,8 @@ import ipsis.woot.Woot;
 import ipsis.woot.creative.BlockCreativeRF;
 import ipsis.woot.creative.TileEntityCreativeRF;
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.convertors.BlockConvertorTick;
+import ipsis.woot.factory.convertors.TileEntityConvertorTick;
 import ipsis.woot.factory.heart.BlockHeart;
 import ipsis.woot.factory.heart.TileEntityHeart;
 import ipsis.woot.layout.BlockLayout;
@@ -36,12 +38,19 @@ public class ModTileEntities {
     @ObjectHolder(Woot.MODID + ":" + BlockHeart.BASENAME)
     public static TileEntityType<TileEntityHeart> heartTileEntityType;
 
-    @ObjectHolder(Woot.MODID + ":" + TileEntityCell.BASENAME)
-    public static TileEntityType<TileEntityCell> cellTileEntityType;
+    @ObjectHolder(Woot.MODID + ":" + TileEntityCellSimple.BASENAME)
+    public static TileEntityType<TileEntityCellSimple> cellSimpleTileEntityType;
+    @ObjectHolder(Woot.MODID + ":" + TileEntityCellAdvanced.BASENAME)
+    public static TileEntityType<TileEntityCellAdvanced> cellAdvancedTileEntityType;
+    @ObjectHolder(Woot.MODID + ":" + TileEntityCellUltimate.BASENAME)
+    public static TileEntityType<TileEntityCellUltimate> cellUltimateTileEntityType;
 
     @ObjectHolder(Woot.MODID + ":" + BlockImport.BASENAME)
     public static TileEntityType<TileEntityImport> importTileEntityType;
 
     @ObjectHolder(Woot.MODID + ":" + BlockExport.BASENAME)
     public static TileEntityType<TileEntityExport> exportTileEntityType;
+
+    @ObjectHolder(Woot.MODID + ":" + BlockConvertorTick.BASENAME)
+    public static TileEntityType<TileEntityConvertorTick> convertorTickTileEntityType;
 }

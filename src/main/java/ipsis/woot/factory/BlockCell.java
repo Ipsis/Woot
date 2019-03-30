@@ -33,7 +33,13 @@ public class BlockCell extends WootBlock implements IWootDebug, IFactoryBlockPro
     @Nullable
     @Override
     public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-        return new TileEntityCell();
+
+        if (factoryBlock == FactoryBlock.CELL_1)
+            return new TileEntityCellSimple();
+        else if (factoryBlock == FactoryBlock.CELL_2)
+            return new TileEntityCellSimple();
+        else
+            return new TileEntityCellSimple();
     }
 
     /**

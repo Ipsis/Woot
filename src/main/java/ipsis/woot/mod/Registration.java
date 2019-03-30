@@ -6,6 +6,8 @@ import ipsis.woot.creative.TileEntityCreativeRF;
 import ipsis.woot.debug.ItemDebug;
 import ipsis.woot.enchantment.EnchantmentHeadhunter;
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.convertors.BlockConvertorTick;
+import ipsis.woot.factory.convertors.TileEntityConvertorTick;
 import ipsis.woot.factory.heart.BlockHeart;
 import ipsis.woot.factory.heart.TileEntityHeart;
 import ipsis.woot.factory.layout.FactoryBlock;
@@ -57,6 +59,7 @@ public class Registration {
         event.getRegistry().register(new BlockTotem(FactoryBlock.TOTEM_3));
         event.getRegistry().register(new BlockSqueezer());
         event.getRegistry().register(new BlockStamper());
+        event.getRegistry().register(new BlockConvertorTick());
 
         event.getRegistry().register(new BlockCreativeRF());
     }
@@ -105,6 +108,8 @@ public class Registration {
         event.getRegistry().register(new ItemBlock(ModBlocks.totem2Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem2Block.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.totem3Block, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.totem3Block.getRegistryName()));
 
+        event.getRegistry().register(new ItemBlock(ModBlocks.convertorTickBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.convertorTickBlock.getRegistryName()));
+
         event.getRegistry().register(new ItemBlock(ModBlocks.squeezerBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.squeezerBlock.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.stamperBlock, new Item.Properties().group(Woot.TAB_WOOT)).setRegistryName(ModBlocks.stamperBlock.getRegistryName()));
 
@@ -123,9 +128,12 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityTotem::new).build(null).setRegistryName(Woot.MODID, TileEntityTotem.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityFactory::new).build(null).setRegistryName(Woot.MODID, TileEntityFactory.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityHeart::new).build(null).setRegistryName(Woot.MODID, BlockHeart.BASENAME));
-        event.getRegistry().register(TileEntityType.Builder.create(TileEntityCell::new).build(null).setRegistryName(Woot.MODID, TileEntityCell.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityCellSimple::new).build(null).setRegistryName(Woot.MODID, TileEntityCellSimple.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityCellAdvanced::new).build(null).setRegistryName(Woot.MODID, TileEntityCellAdvanced.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityCellUltimate::new).build(null).setRegistryName(Woot.MODID, TileEntityCellUltimate.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityImport::new).build(null).setRegistryName(Woot.MODID, BlockImport.BASENAME));
         event.getRegistry().register(TileEntityType.Builder.create(TileEntityExport::new).build(null).setRegistryName(Woot.MODID, BlockExport.BASENAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TileEntityConvertorTick::new).build(null).setRegistryName(Woot.MODID, BlockConvertorTick.BASENAME));
     }
 
     @SubscribeEvent

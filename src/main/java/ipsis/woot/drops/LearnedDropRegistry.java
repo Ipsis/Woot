@@ -53,6 +53,10 @@ public class LearnedDropRegistry {
         return drop;
     }
 
+    public void init() {
+        // @todo load from file
+    }
+
     /**
      * Learning
      */

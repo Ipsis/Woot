@@ -12,6 +12,11 @@ public class DropRegistry {
     private static final CustomDropRegistry CUSTOM_DROPS = new CustomDropRegistry();
     private static final LearnedDropRegistry LEARNED_DROPS = new LearnedDropRegistry();
 
+    public void init() {
+        CUSTOM_DROPS.init();
+        LEARNED_DROPS.init();
+    }
+
     /**
      * Learning
      */
@@ -34,9 +39,12 @@ public class DropRegistry {
         looting = MiscHelper.clampLooting(looting);
         MobDropData mobDropData = new MobDropData(fakeMobKey, looting);
 
-        //MobDropData custom = CUSTOM_DROPS.getMobDropData(fakeMobKey, looting);
-        MobDropData learned = LEARNED_DROPS.getMobDropData(fakeMobKey, looting);
 
+        MobDropData custom = CUSTOM_DROPS.getMobDropData(fakeMobKey, looting);
+        for (MobDropData.DropData d : custom.getDrops())
+            mobDropData.add(d);
+
+        MobDropData learned = LEARNED_DROPS.getMobDropData(fakeMobKey, looting);
         for (MobDropData.DropData d : learned.getDrops())
             mobDropData.add(d);
 

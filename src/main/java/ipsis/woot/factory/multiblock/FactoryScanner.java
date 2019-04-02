@@ -23,7 +23,10 @@ public class FactoryScanner {
 
     public static @Nullable
     AbsolutePattern scan(World world, BlockPos origin, EnumFacing facing) {
-        for (FactoryTier factoryTier : FactoryTier.values()) {
+
+        // Need to walk backwards to find the highest tier
+        for (int i = FactoryTier.values().length - 1; i >= 0; i--) {
+            FactoryTier factoryTier = FactoryTier.byIndex(i);
             AbsolutePattern absolutePattern = scanTier(world, factoryTier, origin, facing);
             if (absolutePattern != null)
                 return absolutePattern;

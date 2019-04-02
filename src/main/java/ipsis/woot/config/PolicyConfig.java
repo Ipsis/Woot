@@ -9,19 +9,21 @@ import java.util.*;
 
 public class PolicyConfig {
 
-    private static ForgeConfigSpec.ConfigValue<List<String>> MOB_BLACKLIST;
-    private static ForgeConfigSpec.ConfigValue<List<String>> MOBS_FROM_MOD_BLACKLIST;
+    private static ForgeConfigSpec.ConfigValue<List<? extends String>> MOB_BLACKLIST;
+    private static ForgeConfigSpec.ConfigValue<List<? extends String>> MOBS_FROM_MOD_BLACKLIST;
 
     public static void init(ForgeConfigSpec.Builder serverBuilder, ForgeConfigSpec.Builder clientBuilder) {
 
-        serverBuilder.comment("Policy");
+        serverBuilder.push("policy");
 
         MOB_BLACKLIST = serverBuilder
                 .comment("A list of mobs which cannot be captured or used in the factory")
-                .define("policy.mobBlacklist", Collections.emptyList());
+                .defineList("mobBlacklist", Collections.emptyList(), obj -> obj instanceof String);
         MOBS_FROM_MOD_BLACKLIST = serverBuilder
                 .comment("A list of mods whose mobs cannot be captured or used in the factory")
-                .define("policy.mobsFromMobBlacklist", Collections.emptyList());
+                .defineList("mobsFromModBlacklist", Collections.emptyList(), obj -> obj instanceof String);
+
+        serverBuilder.pop();
     }
 
     private static Set<ResourceLocation> mobsBlacklist = null;

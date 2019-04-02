@@ -10,18 +10,20 @@ public class LayoutConfig {
 
     public static void init(ForgeConfigSpec.Builder serverBuilder, ForgeConfigSpec.Builder clientBuilder) {
 
-        clientBuilder.comment("Layout");
+        clientBuilder.push("layout");
 
         TEXTURED_RENDER = clientBuilder
                 .comment("Render the factory layout with textures")
-                .define("layout.texturedRender", true);
+                .define("texturedRender", true);
 
         LAYOUT_OPACITY = clientBuilder
                 .comment("Opacity of the factory layout block")
-                .defineInRange("layout.opacity", 0.95D,0.3D, 1.0D);
+                .defineInRange("opacity", 0.95D,0.3D, 1.0D);
 
         LAYOUT_SIZE = clientBuilder
                 .comment("Size of a factory layout rendered block")
-                .defineInRange("layout.size", 0.45D, 0.1D, 1.0D);
+                .defineInRange("size", 0.45D, 0.1D, 1.0D);
+
+        clientBuilder.pop();
     }
 }

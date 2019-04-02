@@ -27,6 +27,7 @@ public class Config {
         MachineConfig.init(SERVER_BUILDER, CLIENT_BUILDER);
         PolicyConfig.init(SERVER_BUILDER, CLIENT_BUILDER);
         FactoryConfig.init(SERVER_BUILDER, CLIENT_BUILDER);
+        MobConfig.init(SERVER_BUILDER, CLIENT_BUILDER);
 
         SERVER_CONFIG = SERVER_BUILDER.build();
         CLIENT_CONFIG = CLIENT_BUILDER.build();

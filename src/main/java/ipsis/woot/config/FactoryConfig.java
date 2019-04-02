@@ -12,23 +12,25 @@ public class FactoryConfig {
 
     public static void init(ForgeConfigSpec.Builder serverBuilder, ForgeConfigSpec.Builder clientBuilder) {
 
-        serverBuilder.comment("Factory");
+        serverBuilder.push("factory");
 
         CELL_1_CAPACITY = serverBuilder
                 .comment("Capacity of the simple cell")
-                .defineInRange("factory.cell1Capacity", 10000, 1000, Integer.MAX_VALUE);
+                .defineInRange("cell1Capacity", 10000, 1000, Integer.MAX_VALUE);
         CELL_2_CAPACITY = serverBuilder
                 .comment("Capacity of the advanced cell")
-                .defineInRange("factory.cell2Capacity", 100000, 1000, Integer.MAX_VALUE);
+                .defineInRange("cell2Capacity", 100000, 1000, Integer.MAX_VALUE);
         CELL_3_CAPACITY = serverBuilder
                 .comment("Capacity of the ultimate cell")
-                .defineInRange("factory.cell3Capacity", 1000000, 1000, Integer.MAX_VALUE);
+                .defineInRange("cell3Capacity", 1000000, 1000, Integer.MAX_VALUE);
         LEARN_MOB_COUNT = serverBuilder
                 .comment("Number of mobs to learn from")
-                .defineInRange("factory.learnMobCount", 500, 100, 10000);
+                .defineInRange("learnMobCount", 500, 100, 10000);
         SPAWN_MOB_COUNT = serverBuilder
                 .comment("Number of mobs to spawn")
-                .defineInRange("factory.spawnMobCount", 1, 1, Integer.MAX_VALUE);
+                .defineInRange("spawnMobCount", 1, 1, Integer.MAX_VALUE);
+
+        serverBuilder.pop();
 
     }
 }

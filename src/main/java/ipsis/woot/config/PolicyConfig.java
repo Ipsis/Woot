@@ -18,10 +18,10 @@ public class PolicyConfig {
 
         MOB_BLACKLIST = serverBuilder
                 .comment("A list of mobs which cannot be captured or used in the factory")
-                .define("mobBlacklist", Collections.emptyList());
+                .define("policy.mobBlacklist", Collections.emptyList());
         MOBS_FROM_MOD_BLACKLIST = serverBuilder
                 .comment("A list of mods whose mobs cannot be captured or used in the factory")
-                .define("mobsFromMobBlacklist", Collections.emptyList());
+                .define("policy.mobsFromMobBlacklist", Collections.emptyList());
     }
 
     private static Set<ResourceLocation> mobsBlacklist = null;

@@ -35,7 +35,7 @@ public class DropRegistry {
         return LEARNED_DROPS.isLearningComplete(fakeMobKey, looting);
     }
 
-    @Nonnull MobDropData getMobDropData(@Nonnull FakeMobKey fakeMobKey, int looting) {
+    public @Nonnull MobDropData getMobDropData(@Nonnull FakeMobKey fakeMobKey, int looting) {
         looting = MiscHelper.clampLooting(looting);
         MobDropData mobDropData = new MobDropData(fakeMobKey, looting);
 

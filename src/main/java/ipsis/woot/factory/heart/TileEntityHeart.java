@@ -69,7 +69,9 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
             if (isRunning()) {
                 tickRecipe();
                 if (isRecipeComplete()) {
+                    // @todo check the recipe ingredients
                     Woot.LOGGER.info("Generate loot");
+                    Woot.LOOT_GENERATOR.generate(world, pos, factoryConfig);
                     resetRecipe();
                 }
             }

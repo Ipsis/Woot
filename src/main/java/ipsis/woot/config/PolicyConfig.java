@@ -74,4 +74,10 @@ public class PolicyConfig {
             return false;
         return true;
     }
+
+    public static boolean canDrop(ItemStack itemStack) {
+        if (itemStack == null || itemStack.isEmpty())
+            return false;
+        return true;
+    }
 }

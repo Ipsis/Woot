@@ -1,7 +1,9 @@
 package ipsis.woot.factory.multiblock;
 
+import ipsis.woot.Woot;
 import ipsis.woot.config.PolicyConfig;
 import ipsis.woot.factory.FactoryTier;
+import ipsis.woot.factory.ItemUpgrade;
 import ipsis.woot.factory.TileEntityController;
 import ipsis.woot.factory.TileEntityTotem;
 import ipsis.woot.factory.layout.FactoryBlock;
@@ -14,6 +16,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FactoryConfig {
@@ -25,6 +28,7 @@ public class FactoryConfig {
     private List<BlockPos> upgradePos = new ArrayList<>();
     private FactoryTier factoryTier = FactoryTier.TIER_1;
     private List<FactoryConfigMob> mobs = new ArrayList<>();
+    private FactoryConfigUpgrade factoryConfig = new FactoryConfigUpgrade();
 
     public BlockPos getCellPos() { return cellPos; }
     public BlockPos getExportPos() { return exportPos; }
@@ -39,10 +43,28 @@ public class FactoryConfig {
         return keys;
     }
 
+    public boolean hasUpgrade(FactoryConfigUpgrade.Upgrade upgrade) {
+        return factoryConfig.upgrades.containsKey(upgrade);
+    }
+
+    public int getUpgradeParam(FactoryConfigUpgrade.Upgrade upgrade) {
+        return factoryConfig.upgrades.getOrDefault(upgrade, 0);
+    }
+
+    public int getNumMobs() {
+        return 1;
+    }
+
+    public int getLooting() {
+        if (hasUpgrade(FactoryConfigUpgrade.Upgrade.LOOTING))
+            return getUpgradeParam(FactoryConfigUpgrade.Upgrade.LOOTING);
+        return 0;
+    }
+
     public static class FactoryConfigMob {
         enum MobState {
             VALID, BLACKLISTED, WRONG_TIER
-        };
+        }
 
         public FakeMobKey fakeMobKey;
         public MobState state;
@@ -54,6 +76,36 @@ public class FactoryConfig {
         @Override
         public String toString() {
             return fakeMobKey + "(" + state + ")";
+        }
+    }
+
+    public static class FactoryConfigUpgrade {
+        enum Upgrade {
+            LOOTING, MASS, RATE;
+        }
+
+        private HashMap<Upgrade, Integer> upgrades = new HashMap<>();
+        public void addUpgrade(ItemUpgrade.UpgradeType upgradeType) {
+            int tier = 1;
+            if (ItemUpgrade.UpgradeType.TIER_1.contains(upgradeType))
+                tier = 1;
+            else if (ItemUpgrade.UpgradeType.TIER_2.contains(upgradeType))
+                tier = 2;
+            else if (ItemUpgrade.UpgradeType.TIER_3.contains(upgradeType))
+                tier = 3;
+
+            if (ItemUpgrade.UpgradeType.LOOTING.contains(upgradeType))
+                addTierUpgrade(Upgrade.LOOTING, tier);
+            else if (ItemUpgrade.UpgradeType.MASS.contains(upgradeType))
+                addTierUpgrade(Upgrade.MASS, tier);
+            else if (ItemUpgrade.UpgradeType.RATE.contains(upgradeType))
+                addTierUpgrade(Upgrade.RATE, tier);
+        }
+
+        private void addTierUpgrade(Upgrade upgrade, int tier) {
+            int currTier = upgrades.getOrDefault(upgrade, 0);
+            if (currTier < tier)
+                upgrades.put(upgrade, tier);
         }
     }
 
@@ -101,7 +153,7 @@ public class FactoryConfig {
         }
 
         /**
-         * Process the upgrades
+         * Process the factoryConfig
          */
         for (PatternBlock patternBlock : layout.getAbsolutePattern().getBlocks()) {
             if (patternBlock.getFactoryBlock() == FactoryBlock.UPGRADE) {
@@ -109,7 +161,12 @@ public class FactoryConfig {
                 te = world.getTileEntity(pos);
                 if (te instanceof TileEntityTotem) {
                     TileEntityTotem tileEntityTotem = (TileEntityTotem)te;
-
+                    ItemUpgrade.UpgradeType upgradeType = tileEntityTotem.getUpgradeType();
+                    if (upgradeType != null) {
+                        // @todo has to be the correct tier
+                        Woot.LOGGER.info("Adding upgrade " + upgradeType);
+                        factoryConfig.factoryConfig.addUpgrade(upgradeType);
+                    }
                 }
             }
         }

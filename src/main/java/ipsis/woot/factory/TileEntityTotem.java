@@ -8,6 +8,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class TileEntityTotem extends TileEntity implements IWootDebug {
@@ -33,6 +34,10 @@ public class TileEntityTotem extends TileEntity implements IWootDebug {
         // @todo upgrade type must be of the correct level
         this.upgradeType = upgradeType;
         return true;
+    }
+
+    public @Nullable ItemUpgrade.UpgradeType getUpgradeType() {
+        return upgradeType;
     }
 
     public ItemStack getDroppedItem() {

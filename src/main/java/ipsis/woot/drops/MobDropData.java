@@ -38,7 +38,7 @@ public class MobDropData {
         public void setChance(float chance) { this.chance = chance; }
         public void addSize(int stackSize, float chance) { sizeChances.put(stackSize, chance); }
 
-        public ItemStack getItemStack() { return itemStack; }
+        public ItemStack getItemStack() { return itemStack.copy(); }
         public float getChance() { return chance; }
 
         @Override

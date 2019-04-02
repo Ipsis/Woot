@@ -4,7 +4,7 @@
     "base": "block/obsidian",
     "particle": "block/anvil",
     "body": "block/anvil",
-    "top": "woot:block/factory_bone"
+    "top": "woot:blocks/anvil"
   },
   "display": {
     "fixed": {

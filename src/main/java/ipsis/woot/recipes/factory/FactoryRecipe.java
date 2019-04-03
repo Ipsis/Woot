@@ -1,4 +1,4 @@
-package ipsis.woot.factory.heart;
+package ipsis.woot.recipes.factory;
 
 import net.minecraft.util.math.MathHelper;
 

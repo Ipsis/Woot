@@ -8,6 +8,8 @@ import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.factory.multiblock.FactoryLayout;
 import ipsis.woot.factory.multiblock.IMultiBlockMaster;
 import ipsis.woot.mod.ModTileEntities;
+import ipsis.woot.recipes.factory.FactoryRecipe;
+import ipsis.woot.recipes.factory.FactoryRecipeRegistry;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.item.ItemUseContext;
@@ -60,7 +62,7 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
         if (factoryLayout.isFormed()) {
             if (factoryLayout.hasChanged()) {
                 factoryConfig = FactoryConfig.createFromLayout(world, factoryLayout);
-                factoryRecipe = new FactoryRecipe(200, 10);
+                factoryRecipe = FactoryRecipeRegistry.REGISTRY.get(factoryConfig);
                 for (FakeMobKey key : factoryConfig.getValidMobs())
                     Woot.LOGGER.info("Teach mob " + key);
                 Woot.LOGGER.info("Created factory for " + factoryConfig);

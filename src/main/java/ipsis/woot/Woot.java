@@ -16,6 +16,7 @@ import ipsis.woot.proxy.ClientProxy;
 import ipsis.woot.client.GuiHandler;
 import ipsis.woot.proxy.IProxy;
 import ipsis.woot.proxy.ServerProxy;
+import ipsis.woot.recipes.factory.FactoryIngredientsRegistry;
 import ipsis.woot.server.command.WootCommand;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -78,8 +79,9 @@ public class Woot {
         Config.load(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("woot-server.toml"));
 
         FactoryPatternRepository.PATTERN_REPOSITORY.load();
-        DropRegistry.DROP_REGISTRY.init();
         ConfigRegistry.CONFIG_REGISTRY.loadFromConfig();
+        DropRegistry.DROP_REGISTRY.init();
+        FactoryIngredientsRegistry.REGISTRY.load();
     }
 
     @SubscribeEvent

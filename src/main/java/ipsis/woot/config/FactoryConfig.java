@@ -9,7 +9,7 @@ public class FactoryConfig {
     public static ForgeConfigSpec.IntValue CELL_3_CAPACITY;
     public static ForgeConfigSpec.IntValue LEARN_MOB_COUNT;
     public static ForgeConfigSpec.IntValue SPAWN_MOB_COUNT;
-    public static ForgeConfigSpec.IntValue SPAWN_RATE;
+    public static ForgeConfigSpec.IntValue SPAWN_TIME;
 
     public static void init(ForgeConfigSpec.Builder serverBuilder, ForgeConfigSpec.Builder clientBuilder) {
 
@@ -30,7 +30,7 @@ public class FactoryConfig {
         SPAWN_MOB_COUNT = serverBuilder
                 .comment("Number of mobs to spawn")
                 .defineInRange("spawnMobCount", 1, 1, Integer.MAX_VALUE);
-        SPAWN_RATE = serverBuilder
+        SPAWN_TIME = serverBuilder
                 .comment("Number of ticks between mob spawns")
                 .defineInRange("spawnRate", 200, 1, Integer.MAX_VALUE);
 

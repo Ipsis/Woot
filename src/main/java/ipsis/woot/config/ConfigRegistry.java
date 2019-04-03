@@ -57,7 +57,7 @@ public class ConfigRegistry {
                 mass = mappings.get(fakeMobKey).get(MASS_KEYS[tier]);
         }
 
-        return MathHelper.clamp(mass, 1, Integer.MAX_VALUE);
+        return MathHelper.clamp(mass, 1, 65535);
     }
 
     private static final String[] LOOTING_KEYS = { "LOOTING", "LOOTING_1", "LOOTING_2", "LOOTING_2" };
@@ -72,7 +72,7 @@ public class ConfigRegistry {
 
     private static final String[] RATE_KEYS = { "RATE", "RATE_1", "RATE_2", "RATE_3" };
     public int getRate(@Nonnull FakeMobKey fakeMobKey, int tier) {
-        int rate = FactoryConfig.SPAWN_RATE.get();
+        int rate = FactoryConfig.SPAWN_TIME.get();
         tier = MathHelper.clamp(tier, 0, RATE_KEYS.length - 1);
         if (mappings.containsKey(fakeMobKey)) {
             if (mappings.get(fakeMobKey).containsKey(RATE_KEYS[tier]))
@@ -80,5 +80,12 @@ public class ConfigRegistry {
         }
 
         return MathHelper.clamp(rate, 1, Integer.MAX_VALUE);
+    }
+
+    public int getSpawnTime(@Nonnull FakeMobKey fakeMobKey) {
+        int time = FactoryConfig.SPAWN_TIME.get();
+        if (mappings.containsKey(fakeMobKey))
+            time = mappings.get(fakeMobKey).get("SPAWN_TIME");
+        return MathHelper.clamp(time, 1, 65535);
     }
 }

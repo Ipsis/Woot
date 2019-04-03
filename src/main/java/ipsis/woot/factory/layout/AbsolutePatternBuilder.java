@@ -12,7 +12,7 @@ public class AbsolutePatternBuilder {
 
     public static AbsolutePattern createAbsolutePattern(@Nonnull World world, FactoryTier factoryTier, @Nonnull BlockPos origin, EnumFacing facing) {
 
-        FactoryPatternRepository.Pattern pattern = FactoryPatternRepository.getInstance().getPattern(factoryTier);
+        FactoryPatternRepository.Pattern pattern = FactoryPatternRepository.PATTERN_REPOSITORY.getPattern(factoryTier);
         AbsolutePattern absolute = new AbsolutePattern(factoryTier);
 
         EnumFacing opposite = facing.getOpposite();

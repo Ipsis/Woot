@@ -2,6 +2,7 @@ package ipsis.woot.factory.generators;
 
 import ipsis.woot.Woot;
 import ipsis.woot.config.PolicyConfig;
+import ipsis.woot.drops.DropRegistry;
 import ipsis.woot.drops.MobDropData;
 import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.util.FakeMobKey;
@@ -25,11 +26,11 @@ public class ItemGenerator implements ILootGenerator {
     public void generate(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull FactoryConfig factoryConfig) {
 
         for (FakeMobKey fakeMobKey : factoryConfig.getValidMobs()) {
-            MobDropData mobDropData = Woot.DROP_REGISTRY.getMobDropData(fakeMobKey, factoryConfig.getLooting());
+            MobDropData mobDropData = DropRegistry.DROP_REGISTRY.getMobDropData(fakeMobKey, factoryConfig.getLooting());
             if (mobDropData.getDrops().isEmpty())
                 continue;
 
-            int numMobs = factoryConfig.getNumMobs();
+            int numMobs = factoryConfig.getNumMobs(fakeMobKey);
             for (int mob = 0; mob < numMobs; mob++) {
                 List<ItemStack> drops = createDropList(mobDropData, world.getDifficultyForLocation(blockPos));
                 if (drops.isEmpty())

@@ -1,6 +1,7 @@
 package ipsis.woot;
 
 import ipsis.woot.config.Config;
+import ipsis.woot.config.ConfigRegistry;
 import ipsis.woot.drops.DropRegistry;
 import ipsis.woot.event.LivingDeathEventHandler;
 import ipsis.woot.event.LivingDropsEventHandler;
@@ -40,8 +41,6 @@ public class Woot {
 
     public static Woot INSTANCE;
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final DropRegistry DROP_REGISTRY = new DropRegistry();
-    public static final LootGenerator LOOT_GENERATOR = new LootGenerator();
     public static final String MODID = "woot";
     //public static final String MODNAME = "Woot";
     //public static final String VERSION = "0.0.1";
@@ -78,8 +77,9 @@ public class Woot {
         Config.load(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("woot-client.toml"));
         Config.load(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("woot-server.toml"));
 
-        FactoryPatternRepository.getInstance().load();
-        DROP_REGISTRY.init();
+        FactoryPatternRepository.PATTERN_REPOSITORY.load();
+        DropRegistry.DROP_REGISTRY.init();
+        ConfigRegistry.CONFIG_REGISTRY.loadFromConfig();
     }
 
     @SubscribeEvent

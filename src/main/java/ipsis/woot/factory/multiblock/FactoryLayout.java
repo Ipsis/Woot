@@ -1,5 +1,6 @@
 package ipsis.woot.factory.multiblock;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.heart.BlockHeart;
 import ipsis.woot.factory.heart.TickTracker;
 import ipsis.woot.factory.layout.AbsolutePattern;
@@ -36,19 +37,23 @@ public class FactoryLayout {
 
         AbsolutePattern rescannedPattern = FactoryScanner.scan(world, pos, facing);
         if (absolutePattern == null && rescannedPattern == null) {
+            Woot.LOGGER.info("was:nothing now:nothing");
             // was nothing and there is still nothing
         } else if (absolutePattern == null && rescannedPattern != null) {
             // there was nothing and now there is something
+            Woot.LOGGER.info("was:nothing now:something");
             FactoryHelper.connectNew(world, rescannedPattern, (IMultiBlockMaster)world.getTileEntity(pos));
             absolutePattern = rescannedPattern;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern == null) {
             // there was something and now this is nothing
+            Woot.LOGGER.info("was:something now:nothing");
             FactoryHelper.disconnectOld(world, absolutePattern);
             absolutePattern = null;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern != null)  {
             // was something but now there might be something different
+            Woot.LOGGER.info("was:something now:something different");
             FactoryHelper.disconnectOld(world, absolutePattern);
             FactoryHelper.connectNew(world, rescannedPattern, (IMultiBlockMaster)world.getTileEntity(pos));
             absolutePattern = rescannedPattern;

@@ -2,6 +2,7 @@ package ipsis.woot.factory.heart;
 
 import ipsis.woot.Woot;
 import ipsis.woot.debug.IWootDebug;
+import ipsis.woot.factory.generators.LootGenerator;
 import ipsis.woot.factory.power.TileEntityCell;
 import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.factory.multiblock.FactoryLayout;
@@ -70,8 +71,7 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
                 tickRecipe();
                 if (isRecipeComplete()) {
                     // @todo check the recipe ingredients
-                    Woot.LOGGER.info("Generate loot");
-                    Woot.LOOT_GENERATOR.generate(world, pos, factoryConfig);
+                    LootGenerator.LOOT_GENERATOR.generate(world, pos, factoryConfig);
                     resetRecipe();
                 }
             }

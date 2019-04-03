@@ -53,7 +53,7 @@ public class TileEntityLayout extends TileEntity implements IWootDebug {
     public int getLevel() { return this.level; }
     public int setNextLevel() {
         level++;
-        if (level >= FactoryPatternRepository.getInstance().getPattern(tier).getHeight())
+        if (level >= FactoryPatternRepository.PATTERN_REPOSITORY.getPattern(tier).getHeight())
             level = -1;
         markDirty();
         refresh();
@@ -134,8 +134,8 @@ public class TileEntityLayout extends TileEntity implements IWootDebug {
          */
         BlockPos pos = getPos();
         return new AxisAlignedBB(
-                pos.add(-FactoryPatternRepository.getInstance().getMaxXZOffset(), -1, -FactoryPatternRepository.getInstance().getMaxXZOffset()),
-                pos.add(FactoryPatternRepository.getInstance().getMaxXZOffset(), FactoryPatternRepository.getInstance().getMaxYOffset() - 1, FactoryPatternRepository.getInstance().getMaxXZOffset()));
+                pos.add(-FactoryPatternRepository.PATTERN_REPOSITORY.getMaxXZOffset(), -1, -FactoryPatternRepository.PATTERN_REPOSITORY.getMaxXZOffset()),
+                pos.add(FactoryPatternRepository.PATTERN_REPOSITORY.getMaxXZOffset(), FactoryPatternRepository.PATTERN_REPOSITORY.getMaxYOffset() - 1, FactoryPatternRepository.PATTERN_REPOSITORY.getMaxXZOffset()));
     }
 
     /**

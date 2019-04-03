@@ -9,6 +9,8 @@ import java.util.List;
 
 public class DropRegistry {
 
+    public static final DropRegistry DROP_REGISTRY = new DropRegistry();
+
     private static final CustomDropRegistry CUSTOM_DROPS = new CustomDropRegistry();
     private static final LearnedDropRegistry LEARNED_DROPS = new LearnedDropRegistry();
 

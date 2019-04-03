@@ -12,8 +12,7 @@ public class FactoryPatternRepository {
     /**
      * We only ever need one instance of the pattern repository
      */
-    private static final FactoryPatternRepository INSTANCE = new FactoryPatternRepository();
-    public static FactoryPatternRepository getInstance() { return INSTANCE; }
+    public static final FactoryPatternRepository PATTERN_REPOSITORY = new FactoryPatternRepository();
 
     public void load() {
         createRawPatterns();

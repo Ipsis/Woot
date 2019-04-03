@@ -1,6 +1,7 @@
 package ipsis.woot.factory.multiblock;
 
 import ipsis.woot.Woot;
+import ipsis.woot.config.ConfigRegistry;
 import ipsis.woot.config.PolicyConfig;
 import ipsis.woot.factory.FactoryTier;
 import ipsis.woot.factory.ItemUpgrade;
@@ -51,8 +52,9 @@ public class FactoryConfig {
         return factoryConfig.upgrades.getOrDefault(upgrade, 0);
     }
 
-    public int getNumMobs() {
-        return 1;
+    public int getNumMobs(@Nonnull FakeMobKey fakeMobKey) {
+        return ConfigRegistry.CONFIG_REGISTRY.getMass(fakeMobKey,
+                hasUpgrade(FactoryConfigUpgrade.Upgrade.MASS) ? getUpgradeParam(FactoryConfigUpgrade.Upgrade.MASS) : 0);
     }
 
     public int getLooting() {

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class LootGenerator {
 
+    public static final LootGenerator LOOT_GENERATOR = new LootGenerator();
+
     private List<ILootGenerator> generators = new LinkedList<>(Arrays.asList(
             new ItemGenerator()
     ));

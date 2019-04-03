@@ -164,7 +164,7 @@ public class ItemIntern extends WootItem {
         ToolMode toolMode = getToolModeFromStack(stack);
         tooltip.add(new TextComponentString(StringHelper.translate("info.woot.intern.mode." + getToolModeFromStack(stack).toString().toLowerCase())));
         if (toolMode.isBuildMode()) {
-            FactoryPatternRepository.Pattern pattern = FactoryPatternRepository.getInstance().getPattern(toolMode.getFactoryTier());
+            FactoryPatternRepository.Pattern pattern = FactoryPatternRepository.PATTERN_REPOSITORY.getPattern(toolMode.getFactoryTier());
             for (FactoryBlock factoryBlock : FactoryBlock.VALUES) {
                 int count = pattern.getFactoryBlockCount(factoryBlock);
                 if (count > 0)

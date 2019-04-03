@@ -44,12 +44,19 @@ public class FactoryConfig {
         return keys;
     }
 
-    public boolean hasUpgrade(FactoryConfigUpgrade.Upgrade upgrade) {
+    private boolean hasUpgrade(FactoryConfigUpgrade.Upgrade upgrade) {
         return factoryConfig.upgrades.containsKey(upgrade);
     }
 
-    public int getUpgradeParam(FactoryConfigUpgrade.Upgrade upgrade) {
+    private int getUpgradeParam(FactoryConfigUpgrade.Upgrade upgrade) {
         return factoryConfig.upgrades.getOrDefault(upgrade, 0);
+    }
+
+    private int getUpgradeTier(FactoryConfigUpgrade.Upgrade upgrade) {
+        if (hasUpgrade(upgrade))
+            return factoryConfig.upgrades.get(upgrade).intValue();
+
+        return 0;
     }
 
     public int getNumMobs(@Nonnull FakeMobKey fakeMobKey) {
@@ -61,6 +68,32 @@ public class FactoryConfig {
         if (hasUpgrade(FactoryConfigUpgrade.Upgrade.LOOTING))
             return getUpgradeParam(FactoryConfigUpgrade.Upgrade.LOOTING);
         return 0;
+    }
+
+    public class UpgradeInfo {
+        private boolean valid = false;
+        private int tier = 0;
+        private int param = 0;
+
+        public boolean isValid() { return valid; }
+        public int getTier() { return tier; }
+        public int getParam() { return param; }
+
+        public UpgradeInfo(int tier, int param) {
+            this.tier = tier;
+            this.param = param;
+            this.valid = true;
+        }
+
+        public UpgradeInfo() {
+            this.valid = false;
+        }
+    }
+
+    public UpgradeInfo getUpgradeInfo(FactoryConfigUpgrade.Upgrade upgrade) {
+        if (!hasUpgrade(upgrade))
+            return new UpgradeInfo();
+        return new UpgradeInfo(getUpgradeTier(upgrade), getUpgradeParam(upgrade));
     }
 
     public static class FactoryConfigMob {
@@ -82,7 +115,7 @@ public class FactoryConfig {
     }
 
     public static class FactoryConfigUpgrade {
-        enum Upgrade {
+        public enum Upgrade {
             LOOTING, MASS, RATE;
         }
 

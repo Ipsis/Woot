@@ -52,10 +52,8 @@ public class ConfigRegistry {
     public int getMass(@Nonnull FakeMobKey fakeMobKey, int tier) {
         int mass = FactoryConfig.SPAWN_MOB_COUNT.get();
         tier = MathHelper.clamp(tier, 0, MASS_KEYS.length - 1);
-        if (mappings.containsKey(fakeMobKey)) {
-            if (mappings.get(fakeMobKey).containsKey(MASS_KEYS[tier]))
+        if (mappings.containsKey(fakeMobKey) && mappings.get(fakeMobKey).containsKey(MASS_KEYS[tier]))
                 mass = mappings.get(fakeMobKey).get(MASS_KEYS[tier]);
-        }
 
         return MathHelper.clamp(mass, 1, 65535);
     }
@@ -74,17 +72,15 @@ public class ConfigRegistry {
     public int getRate(@Nonnull FakeMobKey fakeMobKey, int tier) {
         int rate = FactoryConfig.SPAWN_TIME.get();
         tier = MathHelper.clamp(tier, 0, RATE_KEYS.length - 1);
-        if (mappings.containsKey(fakeMobKey)) {
-            if (mappings.get(fakeMobKey).containsKey(RATE_KEYS[tier]))
+        if (mappings.containsKey(fakeMobKey) && mappings.get(fakeMobKey).containsKey(RATE_KEYS[tier]))
                 rate = mappings.get(fakeMobKey).get(RATE_KEYS[tier]);
-        }
 
         return MathHelper.clamp(rate, 1, Integer.MAX_VALUE);
     }
 
     public int getSpawnTime(@Nonnull FakeMobKey fakeMobKey) {
         int time = FactoryConfig.SPAWN_TIME.get();
-        if (mappings.containsKey(fakeMobKey))
+        if (mappings.containsKey(fakeMobKey) && mappings.get(fakeMobKey).containsKey("SPAWN_TIME"))
             time = mappings.get(fakeMobKey).get("SPAWN_TIME");
         return MathHelper.clamp(time, 1, 65535);
     }

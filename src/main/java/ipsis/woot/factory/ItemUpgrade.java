@@ -39,6 +39,12 @@ public class ItemUpgrade extends WootItem {
         }
         public String getName() { return this.name; }
         public String getTranslationkey() { return "item.woot." + this.getName().toLowerCase(); }
+        public int getUpgradeTier() {
+            if (TIER_1.contains(this)) return 1;
+            if (TIER_2.contains(this)) return 2;
+            if (TIER_3.contains(this)) return 3;
+            return 1; // Should never happen
+        }
 
         public static UpgradeType[] VALUES = values();
         public static EnumSet<UpgradeType> LOOTING = EnumSet.of(LOOTING_1, LOOTING_2, LOOTING_3);

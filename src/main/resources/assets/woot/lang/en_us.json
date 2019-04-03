@@ -88,6 +88,8 @@
   "chat.woot.mobshard.used": "Shard is already programmed",
   "chat.woot.mobshard.success": "Shard programmed with %s",
   "chat.woot.mobshard.blacklist": "Cannot capture mob",
+  "chat.woot.totem.upgrade.full": "Upgrade already applied",
+  "chat.woot.totem.upgrade.low_tier": "Upgrade tier is too high",
 
   # Enchantments
   "enchantment.woot.headhunter": "Headhunter",

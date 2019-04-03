@@ -83,7 +83,7 @@ public class BlockTotem extends WootBlock implements IWootDebug {
             ItemUpgrade itemUpgrade = (ItemUpgrade)itemStack.getItem();
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof TileEntityTotem) {
-                if (((TileEntityTotem) te).addUpgrade(itemUpgrade.getUpgradeType()))
+                if (((TileEntityTotem) te).addUpgrade(player, itemUpgrade.getUpgradeType()))
                     itemStack.shrink(1);
             }
         }

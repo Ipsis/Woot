@@ -8,6 +8,7 @@ import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.factory.multiblock.FactoryLayout;
 import ipsis.woot.factory.multiblock.IMultiBlockMaster;
 import ipsis.woot.mod.ModTileEntities;
+import ipsis.woot.recipes.factory.FactoryIngredientsRegistry;
 import ipsis.woot.recipes.factory.FactoryRecipe;
 import ipsis.woot.recipes.factory.FactoryRecipeRegistry;
 import ipsis.woot.util.FakeMobKey;
@@ -72,6 +73,7 @@ public class TileEntityHeart extends TileEntity implements IWootDebug, IMultiBlo
             if (isRunning()) {
                 tickRecipe();
                 if (isRecipeComplete()) {
+                    FactoryIngredientsRegistry.FactoryIngredients ingredients = FactoryIngredientsRegistry.REGISTRY.get(factoryConfig);
                     // @todo check the recipe ingredients
                     LootGenerator.LOOT_GENERATOR.generate(world, pos, factoryConfig);
                     resetRecipe();

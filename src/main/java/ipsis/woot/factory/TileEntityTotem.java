@@ -17,7 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityTotem extends TileEntity implements IWootDebug {
+public class TileEntityTotem extends TileEntityMultiBlock implements IWootDebug {
 
     public static final String BASENAME = "factory_totem";
 
@@ -31,6 +31,8 @@ public class TileEntityTotem extends TileEntity implements IWootDebug {
         this.level = level;
         markDirty();
     }
+
+    public int getLevel() { return this.level; }
 
     private ItemUpgrade.UpgradeType upgradeType = null;
     public boolean addUpgrade(EntityPlayer player, ItemUpgrade.UpgradeType upgradeType) {
@@ -57,6 +59,8 @@ public class TileEntityTotem extends TileEntity implements IWootDebug {
         }
 
         this.upgradeType = upgradeType;
+        iMultiBlockGlue.onHello(getWorld(), getPos());
+
         return true;
     }
 

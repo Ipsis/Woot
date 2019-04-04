@@ -190,6 +190,7 @@ public class FactoryConfig {
         /**
          * Process the factoryConfig
          */
+        int upgradeCount = 0;
         for (PatternBlock patternBlock : layout.getAbsolutePattern().getBlocks()) {
             if (patternBlock.getFactoryBlock() == FactoryBlock.UPGRADE) {
                 BlockPos pos = patternBlock.getBlockPos().up();
@@ -198,9 +199,35 @@ public class FactoryConfig {
                     TileEntityTotem tileEntityTotem = (TileEntityTotem)te;
                     ItemUpgrade.UpgradeType upgradeType = tileEntityTotem.getUpgradeType();
                     if (upgradeType != null) {
-                        // @todo has to be the correct tier
-                        Woot.LOGGER.info("Adding upgrade " + upgradeType);
-                        factoryConfig.factoryConfig.addUpgrade(upgradeType);
+                        int upgradeTier = tileEntityTotem.getLevel();
+                        FactoryTier factoryTier = factoryConfig.getFactoryTier();
+
+                        boolean shouldAdd = false;
+                        if (factoryTier == FactoryTier.TIER_1) {
+                            // no upgrades
+                        } else if (factoryTier == FactoryTier.TIER_2) {
+                            //  4 level ones
+                            if (upgradeTier == 1 && upgradeCount < 4)
+                                shouldAdd = true;
+                        } else if (factoryTier == FactoryTier.TIER_3) {
+                            //  4 level twos
+                            if (upgradeTier <= 2 && upgradeCount < 4)
+                                shouldAdd = true;
+                        } else if (factoryTier == FactoryTier.TIER_4) {
+                            //  4 level threes
+                            if (upgradeTier <= 3 && upgradeCount < 4)
+                                shouldAdd = true;
+                        } else if (factoryTier == FactoryTier.TIER_5) {
+                            //  4 level threes
+                            if (upgradeTier <= 3 && upgradeCount < 4)
+                                shouldAdd = true;
+                        }
+
+                        if (shouldAdd) {
+                            Woot.LOGGER.info("Adding upgrade " + upgradeType);
+                            factoryConfig.factoryConfig.addUpgrade(upgradeType);
+                            upgradeCount++;
+                        }
                     }
                 }
             }

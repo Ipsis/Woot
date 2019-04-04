@@ -3,6 +3,7 @@ package ipsis.woot.factory;
 import ipsis.woot.Woot;
 import ipsis.woot.debug.IWootDebug;
 import ipsis.woot.factory.layout.FactoryBlock;
+import ipsis.woot.factory.layout.IFactoryBlockProvider;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.helper.WorldHelper;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockTotem extends WootBlock implements IWootDebug {
+public class BlockTotem extends WootBlock implements IWootDebug, IFactoryBlockProvider {
 
     private final String basename;
     private final FactoryBlock factoryBlock;

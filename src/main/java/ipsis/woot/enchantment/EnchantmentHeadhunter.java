@@ -46,12 +46,12 @@ public class EnchantmentHeadhunter extends Enchantment {
 
     @Override
     public int getMinEnchantability(int enchantmentLevel) {
-        return 16;
+        return 15 + (enchantmentLevel - 1) * 9;
     }
 
     @Override
     public int getMaxEnchantability(int enchantmentLevel) {
-        return 60;
+        return getMinEnchantability(enchantmentLevel) + 50;
     }
 
     private static EntityItem createEntityItem(World world, ItemStack itemStack, double x, double y, double z) {
@@ -87,14 +87,18 @@ public class EnchantmentHeadhunter extends Enchantment {
             return false;
 
         float chance;
-        if (level == 1)
+        switch (level) {
+        case 1:
             chance = (float)Woot.wootConfiguration.getInteger(EnumConfigKey.HEADHUNTER_1_CHANCE);
-        else if (level == 2)
+        	break;
+        case 2:
             chance = (float)Woot.wootConfiguration.getInteger(EnumConfigKey.HEADHUNTER_2_CHANCE);
-        else if (level == 3)
+            break;
+        default:
+        case 3:
             chance = (float)Woot.wootConfiguration.getInteger(EnumConfigKey.HEADHUNTER_3_CHANCE);
-        else
-            return false;
+            break;
+        }
 
         float rolled = Woot.RANDOM.nextFloat();
         Woot.debugSetup.trace(DebugSetup.EnumDebugType.DECAP, "EnchantmentHeadhunter:hasDecapitated", "rolled:" + rolled + " chance:" + (chance / 100.0F));

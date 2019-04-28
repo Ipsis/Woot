@@ -8,4 +8,5 @@ import javax.annotation.Nonnull;
 public interface IMobCost {
 
     int getMobSpawnCost(@Nonnull World world, @Nonnull WootMobName wootMobName);
+    boolean isAnimal(@Nonnull World world, @Nonnull WootMobName wootMobName);
 }

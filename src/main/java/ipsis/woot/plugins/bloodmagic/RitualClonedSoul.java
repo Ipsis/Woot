@@ -141,6 +141,7 @@ public class RitualClonedSoul extends Ritual {
             }
 
             int health = Woot.mobCosting.getMobSpawnCost(world, bloodMagicHandler.getWootMobName());
+            boolean isAnimal = Woot.mobCosting.isAnimal(world, bloodMagicHandler.getWootMobName());
             if (health > 0) {
 
                 int realHealth = (int)(((float)health / 100.0F) * (float)bloodMagicHandler.getCrystalMobHealthPercentage());
@@ -149,7 +150,7 @@ public class RitualClonedSoul extends Ritual {
 
                 for (int mob = 0; mob < bloodMagicHandler.getCrystalNumMobs(); mob++) {
 
-                    feedWillAndCrystal(health);
+                    feedWillAndCrystal(health, isAnimal);
                     totalEffects++;
                     if (totalEffects >= maxEffects)
                         break;
@@ -197,16 +198,16 @@ public class RitualClonedSoul extends Ritual {
      * The Woot ritual will use the same mechanics, the only difference will be that there will be no uniqueness,
      * There is only ever one mob type from the factory.
      */
-    private void feedWillAndCrystal(int mobHealth) {
+    private void feedWillAndCrystal(int mobHealth, boolean isAnimal) {
 
         int uniqueness = 1;
-        double modifier = 1;
+        double modifier = isAnimal ? 4 : 1;
         double willForUniqueness = Math.max(50 - 15 * Math.sqrt(uniqueness), 0);
 
         double willBufferInc = ((modifier * willForUniqueness) / HEALTH_THRESHOLD) * mobHealth;
         double crystalBufferInc = ((modifier * mobHealth) / HEALTH_THRESHOLD);
 
-        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "feedWillAndCrystal health:" + mobHealth + " willInc:" + willBufferInc + " crystalInc:" + crystalBufferInc);
+        Woot.debugSetup.trace(DebugSetup.EnumDebugType.GEN_BM_CRYSTAL, "performRitual - ClonedSoul", "feedWillAndCrystal health:" + mobHealth + " willInc:" + willBufferInc + " crystalInc:" + crystalBufferInc + " modifier:" + modifier);
 
         willBuffer += willBufferInc;
         crystalBuffer += crystalBufferInc;

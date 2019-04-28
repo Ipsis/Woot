@@ -1,6 +1,25 @@
 {
   "versions": [
     {
+      "version": "1.12.2-1.4.11",
+      "features": [
+        {
+          "id": 406,
+          "desc": "Ender Dragon now 100% drops 1 Quark dragon scale"
+        }
+      ],
+      "fixes": [
+        {
+          "id": -1,
+          "desc": "Headhunter enchantability and overlevelling fixes by Lykrast"
+        },
+        {
+          "id": 413,
+          "desc": "Fix incorrect rune count displayed for Blood Magic LE tank upgrades - visual bug only"
+        }
+      ]
+    },
+    {
       "version": "1.12.2-1.4.10",
       "features": [
         {

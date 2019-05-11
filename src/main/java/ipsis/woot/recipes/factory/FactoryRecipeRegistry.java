@@ -4,6 +4,16 @@ import ipsis.woot.Woot;
 import ipsis.woot.config.ConfigRegistry;
 import ipsis.woot.factory.multiblock.FactoryConfig;
 import ipsis.woot.util.FakeMobKey;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.storage.AnvilChunkLoader;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FactoryRecipeRegistry {
 
@@ -38,6 +48,23 @@ public class FactoryRecipeRegistry {
 
         FactoryRecipe recipe = new FactoryRecipe(200, 200);
         return recipe;
-
     }
+
+    private Map<FakeMobKey, Integer> MOB_HEALTH = new HashMap<>();
+    public int getMobHealth(@Nonnull World world, @Nonnull FakeMobKey fakeMobKey) {
+        int health = 65535;
+        if (MOB_HEALTH.containsKey(fakeMobKey))
+            health = MOB_HEALTH.get(fakeMobKey);
+        else {
+            NBTTagCompound nbt = new NBTTagCompound();
+            nbt.setString("id", fakeMobKey.getResourceLocation().toString());
+            Entity entity = AnvilChunkLoader.readWorldEntity(nbt, world, false);
+            if (entity != null && entity instanceof EntityLiving) {
+                health = (int)((EntityLiving) entity).getHealth();
+                MOB_HEALTH.put(fakeMobKey, health);
+            }
+        }
+        return health;
+    }
+
 }

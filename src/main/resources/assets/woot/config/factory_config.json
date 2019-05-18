@@ -223,7 +223,6 @@
   "itemblacklist": [
   ],
   "entitygenerateonlylist": [
-    "minecraft:zombie"
   ]
 }
 

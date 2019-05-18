@@ -6,6 +6,10 @@
         {
           "id": 406,
           "desc": "Ender Dragon now 100% drops 1 Quark dragon scale"
+        },
+        {
+          "id": 415,
+          "desc": "Add entitygenerateonlylist - entity cannot be caputed by shard but can generate loot in factory"
         }
       ],
       "fixes": [

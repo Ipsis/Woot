@@ -299,7 +299,7 @@ public class TileEntityMobFactoryHeart extends TileEntity implements ITickable, 
                         pos.getX(), pos.getY(), pos.getZ())), false);
             } else {
                 // Controller present but wrong
-                if (!scannedFarm.controller.canCapture())
+                if (!scannedFarm.controller.canGenerateFrom())
                     player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.invalidmob")), false);
                 else if (!scannedFarm.controller.isTierValid(world, tier))
                     player.sendStatusMessage(new TextComponentString(StringHelper.localize("chat.woot.validate.invalidtier")), false);

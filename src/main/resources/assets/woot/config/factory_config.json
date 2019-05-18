@@ -221,7 +221,9 @@
   "itemmodblacklist": [
   ],
   "itemblacklist": [
-
+  ],
+  "entitygenerateonlylist": [
+    "minecraft:zombie"
   ]
 }
 

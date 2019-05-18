@@ -34,6 +34,7 @@ public class PolicyRepository implements IPolicy {
     private List<String> externalItemModBlacklist = new ArrayList<>();
     private List<ItemStack> externalItemBlacklist = new ArrayList<>();
     private List<WootMobName> externalEntityWhitelist = new ArrayList<>();
+    private List<WootMobName> externalGenerateOnlyList = new ArrayList<>();
 
 
 
@@ -42,6 +43,16 @@ public class PolicyRepository implements IPolicy {
      */
     @Override
     public boolean canCapture(WootMobName wootMobName) {
+
+        for (WootMobName name : externalGenerateOnlyList)
+            if (CompareUtils.isSameMob(wootMobName, name.getName()))
+                return false;
+
+        return canGenerateFrom(wootMobName);
+    }
+
+    @Override
+    public boolean canGenerateFrom(WootMobName wootMobName) {
 
         /**
          * Internal
@@ -74,7 +85,7 @@ public class PolicyRepository implements IPolicy {
             return false;
         }
 
-       return true;
+        return true;
     }
 
     private boolean isItemBlacklisted(ItemStack itemStack) {
@@ -137,6 +148,12 @@ public class PolicyRepository implements IPolicy {
         } else {
             externalEntityBlacklist.add(wootMobName);
         }
+    }
+
+    @Override
+    public void addEntityToGenerateOnlyList(WootMobName wootMobName) {
+
+        externalGenerateOnlyList.add(wootMobName);
     }
 
     @Override

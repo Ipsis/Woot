@@ -8,6 +8,7 @@ import java.util.List;
 public interface IPolicy {
 
     boolean canCapture(WootMobName wootMobName);
+    boolean canGenerateFrom(WootMobName wootMobName);
     boolean canLearnDrop(ItemStack itemStack);
     boolean canDrop(ItemStack itemStack);
 
@@ -30,4 +31,7 @@ public interface IPolicy {
 
     // Stop specific item
     void addItemToDropList(ItemStack itemStack, boolean internal);
+
+    // Allow generate but no capture of entity
+    void addEntityToGenerateOnlyList(WootMobName wootMobName);
 }

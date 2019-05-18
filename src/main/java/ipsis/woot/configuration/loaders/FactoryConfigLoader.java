@@ -71,6 +71,20 @@ public class FactoryConfigLoader {
                 LogHelper.warn("Entity blacklist: invalid mob name " + mob);
         }
 
+        // blacklist specific entity
+        ele = json.get("entitygenerateonlylist");
+        if (ele == null || !ele.isJsonArray())
+            throw new JsonSyntaxException("entitygenerateonly must a string list");
+
+        mobs = GSON.fromJson(ele, String[].class);
+        for (String mob : mobs) {
+            WootMobName wootMobName = WootMobNameBuilder.createFromConfigString(mob);
+            if (wootMobName.isValid())
+                Woot.policyRepository.addEntityToGenerateOnlyList(wootMobName);
+            else
+                LogHelper.warn("Generate only list: invalid mob name " + mob);
+        }
+
         // whitelist of mobs
         ele = json.get("entitywhitelist");
         if (ele == null || !ele.isJsonArray())

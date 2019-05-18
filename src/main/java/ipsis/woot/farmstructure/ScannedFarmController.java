@@ -45,15 +45,15 @@ public class ScannedFarmController {
         if (!EntityList.isRegistered(wootMob.getWootMobName().getResourceLocation()))
             return false;
 
-        if (!Woot.policyRepository.canCapture(wootMob.getWootMobName()))
+        if (!Woot.policyRepository.canGenerateFrom(wootMob.getWootMobName()))
             return false;
 
         return true;
     }
 
-    public boolean canCapture() {
+    public boolean canGenerateFrom() {
 
-        return wootMob != null && Woot.policyRepository.canCapture(wootMob.getWootMobName());
+        return wootMob != null && Woot.policyRepository.canGenerateFrom(wootMob.getWootMobName());
     }
 
     public boolean isTierValid(World world, EnumMobFactoryTier tier) {

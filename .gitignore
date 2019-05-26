@@ -1,19 +1,25 @@
-/.gradle
-/.settings
-/bin
-/build
-/eclipse
-/classes
-/.classpath
-/.project
-/libs
-/run
-Thumbs.db
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-## intellij
-/out
-/.idea
-/*.iml
-/*.ipr
-/*.iws
-/atlassian-ide-plugin.xml
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt

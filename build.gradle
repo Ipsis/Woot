@@ -1,124 +1,132 @@
-
-// For those who want the bleeding edge
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-/*
-// for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
-plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-}
-*/
+version = '0.1'
+group = 'ipsis.woot'
+archivesBaseName = 'woot'
 
-repositories {
-    maven { // The repo from which to get waila
-        name "Mobius Repo"
-        url "http://tehnut.info/maven"
-    }
-    maven { // JEI
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven { // JEI - new
-        url "http://modmaven.k-4u.nl"
-    }
-    maven { //TOP
-        name 'tterrag maven'
-        url "http://maven.tterrag.com/"
-    }
-    maven { // BloodMagic and GuideAPI
-        name 'Tehnut Maven'
-        url "http://tehnut.info/maven/"
-    }
-    maven { // CoFH
-        name 'CoFH Maven'
-        url "http://maven.covers1624.net"
-    }
-    maven {
-        name = "ChickenBones Maven"
-        url = "http://chickenbones.net/maven/"
-    }
-}
-
-// Properties file
-ext.configFile = file "build.properties"
-configFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
-}
-
-version = "${config.minecraft_version}-${config.mod_version}"
-group= "ipsis.woot" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "woot"
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    version = "${config.minecraft_version}-${config.forge_version}"
-    runDir = "run"
-    useDepAts = true
-
-    replaceIn "reference/Reference.java"
-    replace "@VERSION@",project.version
-    
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not allways work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "${config.minecraft_mappings}"
+    // The mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   Snapshot are built nightly.
+    // stable_#            Stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    mappings channel: 'snapshot', version: '20180921-1.13'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
+String forgeName = "${forge_base}:${mc_version}-${forge_version}"
 dependencies {
-    deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:${config.top_version}"
-    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${config.bm_version}"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-${config.guideapi_version}"
+    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+    minecraft forgeName
 
-    deobfCompile "cofh:RedstoneFlux:${config.rf_minecraft_version}-${config.rf_version}:deobf"
-    deobfCompile "cofh:ThermalFoundation:${config.minecraft_version}-${config.tf_version}:deobf"
-    deobfCompile "cofh:ThermalExpansion:${config.minecraft_version}-${config.te_version}:deobf"
-    deobfCompile "cofh:CoFHCore:${config.minecraft_version}-${config.cofh_core_version}:deobf"
-    deobfCompile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.ccl_version}:deobf"
+    // You may put jars on which you depend on in ./libs or you may define them like so..
+    // compile "some.group:artifact:version:classifier"
+    // compile "some.group:artifact:version"
 
-    runtime "mezz.jei:jei_${config.minecraft_version}:${config.jei_version}"
+    // Real examples
+    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+
+    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
+    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // These dependencies get remapped to your current MCP mappings
+    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+
+    // For more info...
+    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
 }
 
-processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
-
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
-        attributes 'FMLAT': 'woot_at.cfg'
+        attributes([
+            "Specification-Title": "examplemod",
+            "Specification-Vendor": "examplemodsareus",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish task
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
     }
 }

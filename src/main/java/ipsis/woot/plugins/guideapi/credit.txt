@@ -1,2 +1,0 @@
-The way that this guide book works, is based off the BloodMagic implementation that TehNut and WayOfTime did.
-In other words I just followed along with how they structured the book, pages, categories and filled it with my information.

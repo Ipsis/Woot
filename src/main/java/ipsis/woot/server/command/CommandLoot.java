@@ -4,7 +4,7 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class CommandLoot {
 
@@ -24,7 +24,7 @@ public class CommandLoot {
     }
 
     private static int sendDrops(CommandSource cs) throws CommandSyntaxException {
-        cs.sendFeedback(new TextComponentTranslation("commands.woot.loot.drops.summary", 1), true);
+        cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.drops.summary", 1), true);
         return 1;
     }
 
@@ -37,7 +37,7 @@ public class CommandLoot {
     }
 
     private static int sendCustom(CommandSource cs) throws CommandSyntaxException {
-        cs.sendFeedback(new TextComponentTranslation("commands.woot.loot.custom.summary", 1), true);
+        cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.custom.summary", 1), true);
         return 1;
     }
 
@@ -50,7 +50,7 @@ public class CommandLoot {
     }
 
     private static int sendLearned(CommandSource cs) throws CommandSyntaxException {
-        cs.sendFeedback(new TextComponentTranslation("commands.woot.loot.learned.summary", 1), true);
+        cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.learned.summary", 1), true);
         return 1;
     }
 }

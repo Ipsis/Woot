@@ -5,7 +5,7 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class CommandLearn {
 
@@ -19,7 +19,7 @@ public class CommandLearn {
 
     private static int learnEntity(CommandSource source, String entityName) throws CommandSyntaxException {
 
-        source.sendFeedback(new TextComponentString(entityName), false);
+        source.sendFeedback(new TranslationTextComponent(entityName), false);
         return 1;
     }
 }

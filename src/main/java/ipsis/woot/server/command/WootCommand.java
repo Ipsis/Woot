@@ -14,7 +14,7 @@ public class WootCommand {
         dispatcher.register(
                 LiteralArgumentBuilder.<CommandSource>literal("woot")
                 .then(CommandLoot.register())
-                .then(CommandLearn.register())
+                .then(CommandSimulation.register())
         );
     }
 }

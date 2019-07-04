@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import ipsis.woot.Woot;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.loot.MobDrop;
 import ipsis.woot.util.FakeMob;
@@ -40,8 +41,10 @@ public class CommandLoot {
         if (drops.isEmpty()) {
             cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.drops.none"), true);
         } else {
-            for (MobDrop drop : drops)
-                cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.drops.info", drop.getDroppedItem(), drop.getDropChance()), true);
+            for (MobDrop drop : drops) {
+                Woot.LOGGER.info("sendDrops: {}", drop);
+                cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.drops.info", drop.getDroppedItem().getTranslationKey(), drop.getDropChance()), true);
+            }
         }
 
         return 0;

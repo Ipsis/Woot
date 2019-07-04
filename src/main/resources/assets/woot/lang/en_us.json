@@ -1,0 +1,8 @@
+{
+  "commands.woot.loot.drops.list": "Entity: {0} Looting: {1}",
+  "commands.woot.loot.drops.none": "No drops found.",
+  "commands.woot.loot.drops.info": "Drop: {0} chance {1}",
+  "commands.woot.loot.learned.summary": "Drop Counts cap:{0} l0:{1} l1:{2} l2:{3} l3:{4}",
+  "commands.woot.learn.ok": "Starting learning Entity: {0} Looting: {1}",
+  "commands.woot.pupils": "Simulating {0}"
+}

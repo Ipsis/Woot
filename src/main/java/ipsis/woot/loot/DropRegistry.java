@@ -1,10 +1,12 @@
 package ipsis.woot.loot;
 
-import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,28 +17,35 @@ import java.util.List;
 
 public class DropRegistry {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Marker DROPMGR = MarkerManager.getMarker("WOOT_DROPS");
+
     static DropRegistry INSTANCE = new DropRegistry();
     public static DropRegistry get() { return INSTANCE; }
 
     HashMap<FakeMob, Mob> mobs = new HashMap<>();
 
     public void learnSilent(@Nonnull FakeMobKey fakeMobKey, @Nonnull List<ItemStack> drops) {
+        LOGGER.info(DROPMGR, "learnSilent {}", fakeMobKey);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         drops.forEach((drop)-> mob.addSimulatedDrop(fakeMobKey.getLooting(), drop));
     }
 
     public void learn(@Nonnull FakeMobKey fakeMobKey, @Nonnull List<ItemStack> drops) {
+        LOGGER.info(DROPMGR, "learn {}", fakeMobKey);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         mob.incrementSimulatedCount(fakeMobKey.getLooting());
         learnSilent(fakeMobKey, drops);
     }
 
     public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, float dropChance) {
+        LOGGER.info(DROPMGR, "learnCustomDrop {} {}", fakeMobKey, droppedItem.getItem());
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         mob.addCustomDrop(fakeMobKey.getLooting(), droppedItem, dropChance);
     }
 
     public void learnCustomDropStackSize(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, int stackSize, float dropChance) {
+        LOGGER.info(DROPMGR, "learnCustomDropStackSize {} {} {} {}", fakeMobKey, droppedItem, stackSize, dropChance);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         ItemStack itemStack = droppedItem.copy();
         itemStack.setCount(stackSize);
@@ -84,7 +93,6 @@ public class DropRegistry {
     private boolean isEqualForLearning(ItemStack itemStackA, ItemStack itemStackB) {
 
         boolean isEqual = ItemStack.areItemsEqualIgnoreDurability(itemStackA, itemStackB);
-        Woot.LOGGER.info("isEqualForLearning {} {} {}", isEqual, itemStackA, itemStackB);
         return isEqual;
     }
 
@@ -128,7 +136,7 @@ public class DropRegistry {
         }
 
         public void addSimulatedDrop(int looting, @Nonnull ItemStack itemStack) {
-            Woot.LOGGER.info("addSimulatedDrop l:{} {}", looting, itemStack);
+            LOGGER.info(DROPMGR, "addSimulatedDrop l:{} {}", looting, itemStack);
 
             Drop drop = getOrCreateDrop(itemStack);
             if (drop == null)
@@ -139,7 +147,7 @@ public class DropRegistry {
 
             drop.incrementSimulatedDropCount(looting);
             Integer count = drop.simulatedStackSizes.get(looting).getOrDefault(itemStack.getCount(), 0);
-            Woot.LOGGER.info("addSimulatedDrop stacksize:{} count:{}", itemStack.getCount(), count + 1);
+            LOGGER.info(DROPMGR, "addSimulatedDrop stacksize:{} count:{}", itemStack.getCount(), count + 1);
             drop.simulatedStackSizes.get(looting).put(itemStack.getCount(), count + 1);
         }
 

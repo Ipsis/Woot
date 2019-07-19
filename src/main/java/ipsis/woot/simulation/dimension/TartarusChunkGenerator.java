@@ -115,8 +115,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<GenerationSettings> {
     }
 
     @Override
-    public void func_222537_b(IWorld iWorld, IChunk iChunk) {
-        // makeBase
+    public void makeBase(IWorld iWorld, IChunk iChunk) {
     }
 
     @Override

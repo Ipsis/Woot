@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "woot:block/export",
+    "all": "woot:block/export"
+  }
+}

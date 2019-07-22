@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 import ipsis.woot.util.helper.MathHelper;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 public class FakeMobKey {
 
     private FakeMob mob;
-    private int looting;
+    private int looting = 0;
 
     public FakeMobKey(@Nonnull FakeMob fakeMob, int looting) {
         this.mob = fakeMob;

@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.stream.Collectors;
 
-public class CommandSimulation {
+public class SimulationCommand {
 
     // TODO use entitysummonargument style instead of string
     static ArgumentBuilder<CommandSource, ?> register() {

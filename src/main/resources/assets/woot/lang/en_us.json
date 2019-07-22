@@ -1,8 +1,32 @@
 {
+  "itemGroup.woot": "Woot",
+
+  # Commands
   "commands.woot.loot.drops.list": "Entity: {0} Looting: {1}",
   "commands.woot.loot.drops.none": "No drops found.",
   "commands.woot.loot.drops.info": "Drop: {0} chance {1}",
   "commands.woot.loot.learned.summary": "Drop Counts cap:{0} l0:{1} l1:{2} l2:{3} l3:{4}",
   "commands.woot.learn.ok": "Starting learning Entity: {0} Looting: {1}",
-  "commands.woot.pupils": "Simulating {0}"
+  "commands.woot.pupils": "Simulating {0}",
+  "commands.woot.give.ok": "Gave {0} controller for {1}",
+  "commands.woot.give.fail": "Invalid mob {0}",
+
+  # Block Names
+  "block.woot.factory_a": "Factory A",
+  "block.woot.factory_b": "Factory B",
+  "block.woot.factory_c": "Factory C",
+  "block.woot.factory_d": "Factory D",
+  "block.woot.factory_e": "Factory E",
+  "block.woot.factory_connect": "Factory Connector",
+  "block.woot.factory_ctr_base": "Factory Controller Base",
+  "block.woot.factory_upgrade": "Factory Upgrade",
+  "block.woot.heart": "Factory Heart",
+  "block.woot.layout": "Factory Layout Guide",
+  "block.woot.cap_a": "Factory Cap 1",
+  "block.woot.cap_b": "Factory Cap 2",
+  "block.woot.cap_c": "Factory Cap 3",
+  "block.woot.cap_d": "Factory Cap 4",
+  "block.woot.import": "Factory Importer",
+  "block.woot.export": "Factory Exporter",
+  "block.woot.controller": "Factory Controller"
 }

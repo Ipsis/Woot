@@ -15,7 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.List;
 
-public class CommandLoot {
+public class LootCommand {
 
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("loot")

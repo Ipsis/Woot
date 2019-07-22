@@ -33,9 +33,22 @@ public class WootConfig {
 
     public static class Client {
 
+        public final ForgeConfigSpec.DoubleValue layoutOpacity;
+        public final ForgeConfigSpec.DoubleValue layoutSize;
+
         Client(ForgeConfigSpec.Builder builder) {
             builder.comment("Client configuration settings")
                     .push("client");
+
+            layoutOpacity = builder
+                    .comment("Opacity of the layout blocks")
+                    .translation("woot.configgui.layoutOpacity")
+                    .defineInRange("layoutOpacity", 0.95D, 0.10D, 1.00D);
+
+            layoutSize = builder
+                    .comment("Size of the layout blocks")
+                    .translation("woot.configgui.layoutSize")
+                    .defineInRange("layoutSize", 0.45D, 0.10D, 1.0D);
 
             builder.pop();
         }

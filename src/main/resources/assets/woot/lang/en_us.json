@@ -31,5 +31,6 @@
   "block.woot.controller": "Factory Controller",
 
   # Item Names
-  "item.woot.debug": "Debug"
+  "item.woot.debug": "Debug",
+  "item.woot.intern": "Intern"
 }

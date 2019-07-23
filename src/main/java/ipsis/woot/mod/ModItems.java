@@ -7,4 +7,7 @@ public class ModItems {
 
     @ObjectHolder("woot:debug")
     public static DebugItem DEBUG_ITEM;
+
+    @ObjectHolder("woot:itern")
+    public static DebugItem INTERN_ITEM;
 }

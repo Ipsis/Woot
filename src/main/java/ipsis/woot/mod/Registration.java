@@ -5,6 +5,7 @@ import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.blocks.*;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
+import ipsis.woot.tools.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
@@ -52,6 +53,7 @@ public class Registration {
         Item.Properties properties = new Item.Properties().group(Woot.itemGroup);
 
         event.getRegistry().register(new DebugItem());
+        event.getRegistry().register(new InternItem());
 
         event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, "heart"));

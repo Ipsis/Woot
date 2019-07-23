@@ -1,4 +1,4 @@
-package ipsis.woot.factory;
+package ipsis.woot.factory.layout;
 
 import ipsis.woot.factory.blocks.HeartTileEntity;
 import ipsis.woot.factory.layout.AbsolutePattern;

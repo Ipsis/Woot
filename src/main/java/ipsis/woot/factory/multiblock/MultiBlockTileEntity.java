@@ -1,5 +1,6 @@
 package ipsis.woot.factory.multiblock;
 
+import ipsis.woot.Woot;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemUseContext;
@@ -20,12 +21,15 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     @Override
     public void validate() {
         super.validate();
+        /**
+         glue.onHello(world, pos);
+         * TODO this is causing some sort of hang on boot during the lower call to getBlockState
         if (!world.isRemote()) {
             // This must NOT use the TE version
             MultiBlockMaster master = GlueHelper.findMasterNoTE(world, pos);
             if (master != null)
                 master.interrupt();
-        }
+        } **/
     }
 
     @Override

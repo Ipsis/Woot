@@ -36,7 +36,7 @@ public class Glue implements MultiBlockGlue {
 
     @Override
     public void onHello(World world, BlockPos pos) {
-        MultiBlockMaster tmpMaster = GlueHelper.findMasterNoTE(world, pos);
+        MultiBlockMaster tmpMaster = GlueHelper.findMaster(world, iMultiBlockGlueProvider);
         if (tmpMaster != null)
             tmpMaster.interrupt();
     }

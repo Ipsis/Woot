@@ -1,16 +1,23 @@
 package ipsis.woot.factory.blocks;
 
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.FakeMobKey;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
 
     /**
      * Layout will not exist until after the first update call
@@ -23,6 +30,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
     public HeartTileEntity() {
         super(ModBlocks.HEART_BLOCK_TILE);
+        tickTracker.setStructureTickCount(20);
     }
 
     @Override
@@ -32,10 +40,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
        if (layout == null) {
            layout = new Layout();
-           recipe = new Recipe(1000, 2000);
-           FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob("minecraft:zombie"), 1);
-           setup = new Setup(fakeMobKey.getMob(), Tier.TIER_1);
-           MobSimulator.get().learn(fakeMobKey);
+           layout.setLocation(world,pos, world.getBlockState(pos).get(BlockStateProperties.HORIZONTAL_FACING));
+           layout.setDirty();
        }
 
        // Check for tick acceleration
@@ -45,18 +51,19 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        layout.tick(tickTracker, this);
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
+               setup = new Setup(new FakeMob("minecraft:cow"), Tier.TIER_1);
+               recipe = new Recipe(1000, 10);
                layout.clearChanged();
            }
-       }
 
-       if (world.isBlockPowered(pos))
-           return;
+           if (world.isBlockPowered(pos))
+               return;
 
-
-       tickRecipe();
-       if (consumedUnits >= recipe.getNumUnits()) {
-           // get and process the ingredients
-           consumedUnits = 0;
+           tickRecipe();
+           if (consumedUnits >= recipe.getNumUnits()) {
+               // get and process the ingredients
+               consumedUnits = 0;
+           }
        }
     }
 
@@ -65,6 +72,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     @Override
     public void interrupt() {
+        LOGGER.info(LAYOUT, "interrupt layout:" + layout);
         if (layout != null)
             layout.setDirty();
     }

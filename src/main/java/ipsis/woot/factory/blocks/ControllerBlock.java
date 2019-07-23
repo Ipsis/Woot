@@ -1,5 +1,7 @@
 package ipsis.woot.factory.blocks;
 
+import ipsis.woot.factory.FactoryComponent;
+import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootBlock;
 import net.minecraft.block.BlockState;
@@ -18,7 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ControllerBlock extends WootBlock {
+public class ControllerBlock extends WootBlock implements FactoryComponentProvider {
 
     public ControllerBlock() {
         super(Properties.create(Material.IRON) .sound(SoundType.METAL), "controller");
@@ -44,5 +46,13 @@ public class ControllerBlock extends WootBlock {
             FakeMob fakeMob = new FakeMob(compoundNBT);
             tooltip.add(new StringTextComponent(fakeMob.getName()));
         }
+    }
+
+    /**
+     * FactoryComponentProvider
+     */
+    @Override
+    public FactoryComponent getFactoryComponent() {
+        return FactoryComponent.CONTROLLER;
     }
 }

@@ -52,6 +52,32 @@ public class GlueHelper {
                 }
             }
         }
+        return master;
+    }
+
+    public static MultiBlockMaster findMaster(World world, MultiBlockGlueProvider iMultiBlockGlueProvider) {
+
+        List<MultiBlockGlueProvider> connected = new ArrayList<>();
+        Stack<MultiBlockGlueProvider> traversing = new Stack<>();
+
+        MultiBlockMaster master = null;
+
+        traversing.add(iMultiBlockGlueProvider);
+        while (master == null && !traversing.isEmpty()) {
+            MultiBlockGlueProvider curr = traversing.pop();
+            connected.add(curr);
+            for (Direction facing : Direction.values()) {
+                BlockPos pos = curr.getGlue().getPos().offset(facing);
+                if (world.isBlockLoaded(pos)) {
+                    TileEntity te = world.getTileEntity(curr.getGlue().getPos().offset(facing));
+                    if (te instanceof  MultiBlockGlueProvider && !connected.contains(te)) {
+                        traversing.add((MultiBlockGlueProvider)te);
+                    } else if (te instanceof MultiBlockMaster) {
+                        master = (MultiBlockMaster) te;
+                    }
+                }
+            }
+        }
 
         return master;
     }

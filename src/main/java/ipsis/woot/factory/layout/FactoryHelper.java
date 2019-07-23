@@ -1,5 +1,6 @@
 package ipsis.woot.factory.layout;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
@@ -22,12 +23,16 @@ public class FactoryHelper {
             BlockState currState = world.getBlockState(p.getBlockPos());
             Block currBlock = currState.getBlock();
 
-            if (!(currBlock instanceof FactoryComponentProvider))
+            if (!(currBlock instanceof FactoryComponentProvider)) {
+                Woot.LOGGER.info("compareToWorldQuick: not a component {}", currBlock);
                 return null;
+            }
 
             FactoryComponentProvider factoryComponent = (FactoryComponentProvider)currBlock;
-            if (!FactoryComponent.isSameComponentFuzzy(factoryComponent.getFactoryComponent(), p.getFactoryComponent()))
+            if (!FactoryComponent.isSameComponentFuzzy(factoryComponent.getFactoryComponent(), p.getFactoryComponent())) {
+                Woot.LOGGER.info("compareToWorldQuick: not same component {} {}", factoryComponent.getFactoryComponent(), p.getFactoryComponent());
                 return null;
+            }
 
             if (p.getFactoryComponent() == FactoryComponent.CONTROLLER) {
                 // TODO check the controller

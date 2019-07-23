@@ -1,5 +1,6 @@
 package ipsis.woot.factory.layout;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.Tier;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,7 @@ public class FactoryScanner {
             if (tier == Tier.UNKNOWN)
                 break;
 
+            Woot.LOGGER.info("scanForTier: {}", tier);
             AbsolutePattern absolutePattern = scanTier(world, tier, origin, facing);
             if (absolutePattern != null)
                 return absolutePattern;

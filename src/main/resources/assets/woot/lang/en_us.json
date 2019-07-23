@@ -28,5 +28,8 @@
   "block.woot.cap_d": "Factory Cap 4",
   "block.woot.import": "Factory Importer",
   "block.woot.export": "Factory Exporter",
-  "block.woot.controller": "Factory Controller"
+  "block.woot.controller": "Factory Controller",
+
+  # Item Names
+  "item.woot.debug": "Debug"
 }

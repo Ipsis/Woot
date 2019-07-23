@@ -12,6 +12,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
@@ -45,4 +46,5 @@ public class HeartBlock extends WootBlock {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new HeartTileEntity();
     }
+
 }

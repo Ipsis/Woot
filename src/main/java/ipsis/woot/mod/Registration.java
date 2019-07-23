@@ -1,8 +1,10 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.blocks.*;
+import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
@@ -47,8 +49,10 @@ public class Registration {
     public static void registerItems(final RegistryEvent.Register<Item> event) {
         Woot.LOGGER.info("registerItems");
 
-        Item.Properties properties = new Item.Properties()
-                .group(Woot.itemGroup);
+        Item.Properties properties = new Item.Properties().group(Woot.itemGroup);
+
+        event.getRegistry().register(new DebugItem());
+
         event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, "heart"));
         event.getRegistry().register(new BlockItem(ModBlocks.LAYOUT_BLOCK, properties).setRegistryName(Woot.MODID, "layout"));
@@ -75,6 +79,14 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, "heart"));
         event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, "layout"));
+        event.getRegistry().register(TileEntityType.Builder.create(
+                MultiBlockTileEntity::new,
+                ModBlocks.IMPORT_BLOCK, ModBlocks.EXPORT_BLOCK,
+                ModBlocks.FACTORY_A_BLOCK, ModBlocks.FACTORY_B_BLOCK, ModBlocks.FACTORY_C_BLOCK, ModBlocks.FACTORY_D_BLOCK, ModBlocks.FACTORY_E_BLOCK,
+                ModBlocks.CAP_A_BLOCK, ModBlocks.CAP_B_BLOCK, ModBlocks.CAP_C_BLOCK, ModBlocks.CAP_D_BLOCK,
+                ModBlocks.FACTORY_CONNECT_BLOCK,
+                ModBlocks.FACTORY_CTR_BASE_BLOCK)
+                .build(null).setRegistryName(Woot.MODID, "multiblock"));
     }
 
     @SubscribeEvent

@@ -1,6 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.factory.blocks.*;
+import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -20,6 +21,14 @@ public class ModBlocks {
     public static HeartBlock HEART_BLOCK;
     @ObjectHolder("woot:heart")
     public static TileEntityType<HeartTileEntity> HEART_BLOCK_TILE;
+
+    @ObjectHolder("woot:import")
+    public static FactoryBlock IMPORT_BLOCK;
+    @ObjectHolder("woot:multiblock")
+    public static TileEntityType<MultiBlockTileEntity> MULTIBLOCK_BLOCK_TILE;
+
+    @ObjectHolder("woot:export")
+    public static FactoryBlock EXPORT_BLOCK;
 
     @ObjectHolder("woot:factory_a")
     public static FactoryBlock FACTORY_A_BLOCK;
@@ -45,8 +54,4 @@ public class ModBlocks {
     public static FactoryBlock FACTORY_CTR_BASE_BLOCK;
     @ObjectHolder("woot:factory_upgrade")
     public static FactoryBlock FACTORY_UPGRADE_BLOCK;
-    @ObjectHolder("woot:import")
-    public static FactoryBlock IMPORT_BLOCK;
-    @ObjectHolder("woot:export")
-    public static FactoryBlock EXPORT_BLOCK;
 }

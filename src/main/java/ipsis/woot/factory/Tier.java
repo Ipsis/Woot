@@ -1,7 +1,5 @@
 package ipsis.woot.factory;
 
-import java.util.EnumSet;
-
 public enum Tier {
 
     UNKNOWN,
@@ -11,7 +9,6 @@ public enum Tier {
     TIER_4;
 
     public static Tier[] VALUES = values();
-    public static EnumSet<Tier> VALID_TIERS = EnumSet.complementOf(EnumSet.of(UNKNOWN));
 
     public static Tier byIndex(int index) {
         if (index < 0 && index >= Tier.values().length)

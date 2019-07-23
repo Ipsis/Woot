@@ -19,8 +19,10 @@ public class PatternRepository {
 
     public void load() {
         createRawPatterns();
-        for (Tier tier : Tier.VALID_TIERS)
-            createPattern(tier);
+        createPattern(Tier.TIER_1);
+        createPattern(Tier.TIER_2);
+        createPattern(Tier.TIER_3);
+        createPattern(Tier.TIER_4);
     }
 
     void createPattern(Tier tier) {

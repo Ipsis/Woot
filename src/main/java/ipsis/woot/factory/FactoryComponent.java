@@ -22,4 +22,8 @@ public enum FactoryComponent {
     public String getName() { return name().toLowerCase(); }
     public String getTranslationKey() { return "block.woot." + getName(); }
 
+    public static boolean isSameComponentFuzzy(FactoryComponent componentA, FactoryComponent componentB) {
+        return componentA == componentB;
+    }
+
 }

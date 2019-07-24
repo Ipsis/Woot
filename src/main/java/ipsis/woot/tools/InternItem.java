@@ -7,7 +7,6 @@ import ipsis.woot.factory.layout.FactoryHelper;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
-import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -142,7 +141,7 @@ public class InternItem extends WootItem {
                             ((HeartTileEntity) te).interrupt();
 
                     } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
-                        //FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getFactoryTier());
+                        FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
                         result = ActionResultType.SUCCESS;
                     } else if (toolMode.isValidateMode()) {
                         // Only build or validate just now

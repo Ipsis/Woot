@@ -11,6 +11,7 @@ import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -69,7 +70,7 @@ public class FactoryHelper {
         }
     }
 
-    private static boolean isCorrectBlock(FactoryComponentProvider provider, FactoryComponent component) {
+    static boolean isCorrectBlock(FactoryComponentProvider provider, FactoryComponent component) {
         return provider.getFactoryComponent() == component;
     }
 
@@ -101,7 +102,7 @@ public class FactoryHelper {
         return false;
     }
 
-    private static Block getComponentBlock(FactoryComponent component) {
+    static Block getComponentBlock(FactoryComponent component) {
         switch (component) {
             case FACTORY_A: return ModBlocks.FACTORY_A_BLOCK;
             case FACTORY_B: return ModBlocks.FACTORY_B_BLOCK;

@@ -1,5 +1,6 @@
 package ipsis.woot.tools;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.factory.blocks.HeartBlock;
 import ipsis.woot.factory.blocks.HeartTileEntity;
@@ -15,12 +16,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -127,7 +130,7 @@ public class InternItem extends WootItem {
     public ActionResultType onItemUse(ItemUseContext context) {
 
         ActionResultType result = ActionResultType.PASS;
-        if (!context.getWorld().isRemote) {
+        /*if (!context.getWorld().isRemote) */
             ItemStack itemStack = context.getItem();
             if (!context.getPlayer().isSneaking()) {
                 Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
@@ -141,7 +144,11 @@ public class InternItem extends WootItem {
                             ((HeartTileEntity) te).interrupt();
 
                     } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
-                        FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                        if (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier())) {
+                            if (context.getWorld().isRemote)
+                                spawnParticle(context.getWorld(), context.getPos().up(), 10);
+                        }
+
                         result = ActionResultType.SUCCESS;
                     } else if (toolMode.isValidateMode()) {
                         // Only build or validate just now
@@ -150,12 +157,33 @@ public class InternItem extends WootItem {
                     }
                 }
             }
+            /*
         } else {
             // So we swing
             result = ActionResultType.SUCCESS;
-        }
+        }*/
 
         return result;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    void spawnParticle(World world, BlockPos pos, int amount) {
+        BlockState blockState = world.getBlockState(pos);
+        Block b = world.getBlockState(pos).getBlock();
+
+        // Based off the BoneMealItem code
+        if (b.isAir(blockState, world, pos)) {
+            for(int i = 0; i < amount; ++i) {
+                double d0 = random.nextGaussian() * 0.02D;
+                double d1 = random.nextGaussian() * 0.02D;
+                double d2 = random.nextGaussian() * 0.02D;
+                world.addParticle(ParticleTypes.HAPPY_VILLAGER,
+                        (double)((float)pos.getX() + random.nextFloat()),
+                        (double)((float)pos.getY() + random.nextFloat()),
+                        (double)((float)pos.getZ() + random.nextFloat()),
+                        d0, d1, d2);
+            }
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

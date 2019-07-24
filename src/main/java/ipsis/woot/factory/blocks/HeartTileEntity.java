@@ -38,6 +38,20 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     @Override
+    public void remove() {
+        super.remove();
+        if (layout != null)
+            layout.fullDisconnect();
+    }
+
+    @Override
+    public void onChunkUnloaded() {
+        super.onChunkUnloaded();
+        if (layout != null)
+            layout.fullDisconnect();
+    }
+
+    @Override
     public void tick() {
        if (world.isRemote)
            return;

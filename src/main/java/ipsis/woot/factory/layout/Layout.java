@@ -77,4 +77,9 @@ public class Layout {
             dirty = false;
         }
     }
+
+    public void fullDisconnect() {
+        if (absolutePattern != null)
+            FactoryHelper.disconnectOld(world, absolutePattern);
+    }
 }

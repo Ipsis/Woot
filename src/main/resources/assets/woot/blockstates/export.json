@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "woot:block/export" }
+    "attached=true": { "model": "woot:block/export" },
+    "attached=false": { "model": "woot:block/export_alone" }
   }
 }

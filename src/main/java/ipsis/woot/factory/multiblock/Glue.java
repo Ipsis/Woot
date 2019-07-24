@@ -1,6 +1,9 @@
 package ipsis.woot.factory.multiblock;
 
+import ipsis.woot.Woot;
 import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.block.BlockState;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,6 +23,8 @@ public class Glue implements MultiBlockGlue {
     public void clearMaster() {
         if (hasMaster()) {
             master = null;
+            te.getWorld().setBlockState(te.getPos(),
+                    te.getBlockState().with(BlockStateProperties.ATTACHED, false), 3);
             WorldHelper.updateClient(te.getWorld(), te.getPos());
             // TODO update neighbours
         }
@@ -27,24 +32,25 @@ public class Glue implements MultiBlockGlue {
 
     @Override
     public void setMaster(MultiBlockMaster master) {
-        if (this.master != master) {
+        if (!master.equals(this.master)) {
             this.master = master;
+            te.getWorld().setBlockState(te.getPos(),
+                    te.getBlockState().with(BlockStateProperties.ATTACHED, true), 3);
             WorldHelper.updateClient(te.getWorld(), te.getPos());
             // TODO update neighbours
         }
     }
 
     @Override
-    public void onHello(World world, BlockPos pos) {
-        MultiBlockMaster tmpMaster = GlueHelper.findMaster(world, iMultiBlockGlueProvider);
-        if (tmpMaster != null)
-            tmpMaster.interrupt();
-    }
-
-    @Override
     public void onGoodbye() {
         if (hasMaster())
             master.interrupt();
+    }
+
+    @Override
+    public void onHello(World world, BlockPos pos) {
+        if (!hasMaster())
+            GlueHelper.findMaster(world, iMultiBlockGlueProvider);
     }
 
     @Override

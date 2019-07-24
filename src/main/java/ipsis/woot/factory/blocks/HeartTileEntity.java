@@ -14,6 +14,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+/**
+ * The factory is formed manually by the user via the intern -> interrupt
+ * When an attached block is removed or unloaded it should inform the heart -> interrupt
+ */
 public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster {
 
     private static final Logger LOGGER = LogManager.getLogger();

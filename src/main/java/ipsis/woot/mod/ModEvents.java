@@ -1,6 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.simulation.FakePlayerPool;
 import ipsis.woot.simulation.MobSimulator;
@@ -25,8 +26,6 @@ public class ModEvents {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onLivingDropsEvent(LivingDropsEvent event) {
-
-        Woot.LOGGER.info("onLivingDropsEvent {}", event);
 
         if (!(event.getEntity() instanceof LivingEntity))
             return;
@@ -55,9 +54,11 @@ public class ModEvents {
             return;
 
         Dimension dimension = event.world.getDimension();
-        if (dimension.getType() != ModDimensions.tartarusDimensionType)
-            return;
-
-        MobSimulator.get().tick(event.world);
+        if (dimension.getType() != ModDimensions.tartarusDimensionType) {
+            // TODO make this every 20 ticks
+            MultiBlockTracker.get().run(event.world);
+        } else {
+            MobSimulator.get().tick(event.world);
+        }
     }
 }

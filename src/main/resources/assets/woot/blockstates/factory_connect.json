@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "woot:block/factory_connect" }
+    "attached=true": { "model": "woot:block/factory_connect" },
+    "attached=false": { "model": "woot:block/factory_connect_alone" }
   }
 }

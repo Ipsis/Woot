@@ -2,6 +2,8 @@ package ipsis.woot.tools;
 
 import ipsis.woot.factory.Tier;
 import ipsis.woot.factory.blocks.HeartBlock;
+import ipsis.woot.factory.blocks.HeartTileEntity;
+import ipsis.woot.factory.layout.FactoryHelper;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
@@ -15,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -134,7 +137,9 @@ public class InternItem extends WootItem {
                     Direction facing = blockState.get(BlockStateProperties.HORIZONTAL_FACING);
                     ToolMode toolMode = getToolModeFromStack(itemStack);
                     if (toolMode == ToolMode.FORM) {
-
+                        TileEntity te = context.getWorld().getTileEntity(context.getPos());
+                        if (te instanceof HeartTileEntity)
+                            ((HeartTileEntity) te).interrupt();
 
                     } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
                         //FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getFactoryTier());

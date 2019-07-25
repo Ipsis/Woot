@@ -2,7 +2,6 @@ package ipsis.woot.factory.layout;
 
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.Tier;
-import ipsis.woot.factory.blocks.FactoryBlock;
 import net.minecraft.util.math.BlockPos;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -162,8 +161,8 @@ public class PatternRepository {
         }
 
         public List<PatternBlock> getPatternBlocks() { return Collections.unmodifiableList(blocks); }
-        public int getFactoryBlockCount(FactoryBlock factoryBlock) {
-            return componentCounts.getOrDefault(factoryBlock, 0);
+        public int getFactoryBlockCount(FactoryComponent component) {
+            return componentCounts.getOrDefault(component, 0);
         }
 
         private List<PatternBlock> blocks = new ArrayList<>();

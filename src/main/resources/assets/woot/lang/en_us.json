@@ -32,5 +32,18 @@
 
   # Item Names
   "item.woot.debug": "Debug",
-  "item.woot.intern": "Intern"
+  "item.woot.intern": "Intern",
+
+  # Tooltips,
+  "info.woot.intern": "§aUse on the factory heart to form, build or validate a factory",
+  "info.woot.intern.0": "§bSneak-right click to change modes",
+  "info.woot.intern.mode.form": "Form the factory",
+  "info.woot.intern.mode.build_1": "Build a Tier 1 factory",
+  "info.woot.intern.mode.build_2": "Build a Tier 2 factory",
+  "info.woot.intern.mode.build_3": "Build a Tier 3 factory",
+  "info.woot.intern.mode.build_4": "Build a Tier 4 factory",
+  "info.woot.intern.mode.validate_1": "Validate a Tier 1 factory",
+  "info.woot.intern.mode.validate_2": "Validate a Tier 2 factory",
+  "info.woot.intern.mode.validate_3": "Validate a Tier 3 factory",
+  "info.woot.intern.mode.validate_4": "Validate a Tier 4 factory"
 }

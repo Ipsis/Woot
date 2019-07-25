@@ -1,10 +1,12 @@
 package ipsis.woot.tools;
 
 import ipsis.woot.Woot;
+import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.factory.blocks.HeartBlock;
 import ipsis.woot.factory.blocks.HeartTileEntity;
 import ipsis.woot.factory.layout.FactoryHelper;
+import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
@@ -192,6 +194,19 @@ public class InternItem extends WootItem {
         tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.0")));
 
         ToolMode toolMode = getToolModeFromStack(stack);
-        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.mode." + getToolModeFromStack(stack).toString().toLowerCase())));
+        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.mode." + toolMode.toString().toLowerCase())));
+        if (toolMode.isBuildMode()) {
+            PatternRepository.Pattern pattern = PatternRepository.get().getPattern(toolMode.getTier());
+            if (pattern != null) {
+                for (FactoryComponent component : FactoryComponent.VALUES) {
+                    int count = pattern.getFactoryBlockCount((component));
+                    if (count > 0)
+                        tooltip.add(new StringTextComponent(
+                                String.format(
+                                "%2d * %s",
+                                 count, StringHelper.translate(component.getTranslationKey()))));
+                }
+            }
+        }
     }
 }

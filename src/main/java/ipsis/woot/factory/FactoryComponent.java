@@ -19,6 +19,7 @@ public enum FactoryComponent {
     EXPORT,
     CONTROLLER;
 
+    public static FactoryComponent[] VALUES = values();
     public String getName() { return name().toLowerCase(); }
     public String getTranslationKey() { return "block.woot." + getName(); }
 

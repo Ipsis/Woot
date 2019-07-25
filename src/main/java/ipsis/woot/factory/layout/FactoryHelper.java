@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
+import ipsis.woot.factory.blocks.ControllerBlock;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
@@ -22,6 +23,7 @@ public class FactoryHelper {
 
     public static AbsolutePattern compareToWorldQuick(AbsolutePattern absolutePattern, World world) {
 
+        int controllerCount = 0;
         for (PatternBlock p : absolutePattern.getBlocks()) {
 
             // Don't load an unloaded chunk
@@ -44,6 +46,8 @@ public class FactoryHelper {
 
             if (p.getFactoryComponent() == FactoryComponent.CONTROLLER) {
                 // TODO check the controller
+                ControllerBlock controllerBlock = (ControllerBlock)currBlock;
+
             }
         }
 

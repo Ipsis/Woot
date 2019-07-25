@@ -2,45 +2,69 @@ package ipsis.woot.factory.blocks;
 
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.RestorableTileEntity;
+import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
-public class ControllerTileEntity extends TileEntity implements RestorableTileEntity {
+import java.util.List;
+
+public class ControllerTileEntity extends TileEntity implements WootDebug {
 
     public ControllerTileEntity() {
         super(ModBlocks.CONTROLLER_BLOCK_TILE);
     }
 
+    private FakeMob fakeMob = new FakeMob();
+
     /**
      * NBT
      */
-    private FakeMob fakeMob = new FakeMob();
     @Override
-    public void readRestorableFromNBT(CompoundNBT compoundNBT) {
-        if (compoundNBT != null)
-            fakeMob = new FakeMob(compoundNBT);
+    public void read(CompoundNBT compoundNBT) {
+        super.read(compoundNBT);
+        if (compoundNBT.contains("mob")) {
+            CompoundNBT nbt = compoundNBT.getCompound("mob");
+            fakeMob = new FakeMob(nbt);
+        }
     }
 
     @Override
-    public void writeRestorableToNBT(CompoundNBT compoundNBT) {
-        if (compoundNBT == null)
-            compoundNBT = new CompoundNBT();
-
-        FakeMob.writeToNBT(fakeMob, compoundNBT);
+    public CompoundNBT write(CompoundNBT compoundNBT) {
+        super.write(compoundNBT);
+        CompoundNBT nbt = new CompoundNBT();
+        FakeMob.writeToNBT(fakeMob, nbt);
+        compoundNBT.put("mob", nbt);
+        return compoundNBT;
     }
 
-    public ItemStack getItemStack() {
-        return getItemStack(fakeMob);
-    }
-
+    /**
+     * Since we want to use the loottable NBT store/restore
+     * then we cannot do a give command anymore :(
+     * @param fakeMob
+     * @return
+     */
     public static ItemStack getItemStack(FakeMob fakeMob) {
         ItemStack itemStack = new ItemStack(ModBlocks.CONTROLLER_BLOCK);
-        CompoundNBT compoundNBT = new CompoundNBT();
-        FakeMob.writeToNBT(fakeMob, compoundNBT);
-        itemStack.setTag(compoundNBT);
-        itemStack.setCount(1);
+
+        /**
+         * setTileEntityNBT
+         */
+        CompoundNBT compoundNBT = itemStack.getOrCreateChildTag("BlockEntityTag");
+        CompoundNBT nbt = new CompoundNBT();
+        FakeMob.writeToNBT(fakeMob, nbt);
+        compoundNBT.put("mob", nbt);
         return itemStack;
+    }
+
+    /**
+     * WootDebug
+     */
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> ControllerTileEntity");
+        debug.add("      mob: " + fakeMob);
+        return debug;
     }
 }

@@ -71,7 +71,7 @@ public class FactoryBlock extends WootBlock implements FactoryComponentProvider,
      */
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add("====> FactoryBlock");
+        debug.add("====> FactoryBlock (" + component + ")");
         DebugItem.getTileEntityDebug(debug, itemUseContext);
         return debug;
     }

@@ -99,6 +99,7 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, "heart"));
         event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, "layout"));
+        event.getRegistry().register(TileEntityType.Builder.create(UpgradeTileEntity::new, ModBlocks.FACTORY_UPGRADE_BLOCK).build(null).setRegistryName(Woot.MODID, "factory_upgrade"));
         event.getRegistry().register(TileEntityType.Builder.create(
                 MultiBlockTileEntity::new,
                 ModBlocks.IMPORT_BLOCK, ModBlocks.EXPORT_BLOCK,

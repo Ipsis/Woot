@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class Setup {
 
     public Tier tier;
-    public HashMap<Upgrade, Integer> upgrades = new HashMap<>();
+    public HashMap<FactoryUpgradeType, Integer> upgrades = new HashMap<>();
     public FakeMob fakeMob;
 
     Setup() { };

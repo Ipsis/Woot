@@ -24,11 +24,16 @@ public class ModBlocks {
 
     @ObjectHolder("woot:import")
     public static FactoryBlock IMPORT_BLOCK;
+    @ObjectHolder("woot:export")
+    public static FactoryBlock EXPORT_BLOCK;
+
     @ObjectHolder("woot:multiblock")
     public static TileEntityType<MultiBlockTileEntity> MULTIBLOCK_BLOCK_TILE;
 
-    @ObjectHolder("woot:export")
-    public static FactoryBlock EXPORT_BLOCK;
+    @ObjectHolder("woot:factory_upgrade")
+    public static UpgradeBlock FACTORY_UPGRADE_BLOCK;
+    @ObjectHolder("woot:factory_upgrade")
+    public static TileEntityType<UpgradeTileEntity> FACTORY_UPGRADE_BLOCK_TILE;
 
     @ObjectHolder("woot:factory_a")
     public static FactoryBlock FACTORY_A_BLOCK;
@@ -52,6 +57,4 @@ public class ModBlocks {
     public static FactoryBlock FACTORY_CONNECT_BLOCK;
     @ObjectHolder("woot:factory_ctr_base")
     public static FactoryBlock FACTORY_CTR_BASE_BLOCK;
-    @ObjectHolder("woot:factory_upgrade")
-    public static UpgradeBlock FACTORY_UPGRADE_BLOCK;
 }

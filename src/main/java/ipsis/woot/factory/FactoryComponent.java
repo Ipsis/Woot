@@ -26,5 +26,4 @@ public enum FactoryComponent {
     public static boolean isSameComponentFuzzy(FactoryComponent componentA, FactoryComponent componentB) {
         return componentA == componentB;
     }
-
 }

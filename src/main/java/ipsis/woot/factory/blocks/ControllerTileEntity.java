@@ -39,6 +39,10 @@ public class ControllerTileEntity extends TileEntity implements WootDebug {
         return compoundNBT;
     }
 
+    public FakeMob getFakeMob() {
+        return fakeMob;
+    }
+
     /**
      * Since we want to use the loottable NBT store/restore
      * then we cannot do a give command anymore :(

@@ -1,5 +1,6 @@
 package ipsis.woot.factory.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
@@ -69,7 +70,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        layout.tick(tickTracker, this);
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
-               setup = new Setup(new FakeMob("minecraft:cow"), Tier.TIER_1);
+               setup = Setup.creatFromLayout(world, layout);
+               Woot.LOGGER.info("Setup {}", setup);
                recipe = new Recipe(1000, 10);
                layout.clearChanged();
            }

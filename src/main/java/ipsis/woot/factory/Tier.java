@@ -22,5 +22,4 @@ public enum Tier {
             next = VALUES[(UNKNOWN.ordinal() + 1) % VALUES.length];
         return next;
     }
-
 }

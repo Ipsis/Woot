@@ -59,7 +59,6 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
         for (int i = 1; i <= 3; i++) {
             if (i <= currLevel) {
                 FactoryUpgradeType type = FactoryUpgrade.getType(upgrade);
-                int level = FactoryUpgrade.getLevel(upgrade);
                 ItemStack itemStack = UpgradeItem.getItemStack(type, i);
                 if (!itemStack.isEmpty()) {
                     itemStack.setCount(1);

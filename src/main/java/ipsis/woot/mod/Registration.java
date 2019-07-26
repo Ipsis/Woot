@@ -3,7 +3,9 @@ package ipsis.woot.mod;
 import ipsis.woot.Woot;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
+import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.blocks.*;
+import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.tools.InternItem;
 import net.minecraft.block.Block;
@@ -41,9 +43,9 @@ public class Registration {
         event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_D));
         event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_CONNECT));
         event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_CTR_BASE));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_UPGRADE));
         event.getRegistry().register(new FactoryBlock(FactoryComponent.IMPORT));
         event.getRegistry().register(new FactoryBlock(FactoryComponent.EXPORT));
+        event.getRegistry().register(new UpgradeBlock(FactoryComponent.FACTORY_UPGRADE));
     }
 
     @SubscribeEvent
@@ -54,6 +56,22 @@ public class Registration {
 
         event.getRegistry().register(new DebugItem());
         event.getRegistry().register(new InternItem());
+
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_1));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_2));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_3));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_1));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_2));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_3));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_1));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_2));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_3));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_1));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_2));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_3));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_1));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_2));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_3));
 
         event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, "heart"));
@@ -70,9 +88,9 @@ public class Registration {
         event.getRegistry().register(new BlockItem(ModBlocks.CAP_D_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.CAP_D.getName()));
         event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_CONNECT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_CONNECT.getName()));
         event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_CTR_BASE_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_CTR_BASE.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_UPGRADE_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_UPGRADE.getName()));
         event.getRegistry().register(new BlockItem(ModBlocks.IMPORT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.IMPORT.getName()));
         event.getRegistry().register(new BlockItem(ModBlocks.EXPORT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.EXPORT.getName()));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_UPGRADE_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_UPGRADE.getName()));
     }
 
     @SubscribeEvent

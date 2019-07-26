@@ -53,5 +53,5 @@ public class ModBlocks {
     @ObjectHolder("woot:factory_ctr_base")
     public static FactoryBlock FACTORY_CTR_BASE_BLOCK;
     @ObjectHolder("woot:factory_upgrade")
-    public static FactoryBlock FACTORY_UPGRADE_BLOCK;
+    public static UpgradeBlock FACTORY_UPGRADE_BLOCK;
 }

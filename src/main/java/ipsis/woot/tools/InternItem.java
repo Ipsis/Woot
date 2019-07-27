@@ -153,7 +153,8 @@ public class InternItem extends WootItem {
 
                         result = ActionResultType.SUCCESS;
                     } else if (toolMode.isValidateMode()) {
-                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                        if (!context.getWorld().isRemote)
+                            FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
                         result = ActionResultType.SUCCESS;
                     }
                 }

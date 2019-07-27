@@ -1,11 +1,9 @@
 package ipsis.woot.factory.layout;
 
-import ipsis.woot.Woot;
 import ipsis.woot.common.WootConfig;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
-import ipsis.woot.factory.blocks.ControllerBlock;
 import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
@@ -16,65 +14,15 @@ import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.BlockSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FactoryHelper {
-
-    public static AbsolutePattern compareToWorldQuick(AbsolutePattern absolutePattern, World world) {
-
-        int controllerCount = 0;
-        for (PatternBlock p : absolutePattern.getBlocks()) {
-
-            // Don't load an unloaded chunk
-            if (!world.isBlockLoaded(p.getBlockPos()))
-                return null;
-
-            BlockState currState = world.getBlockState(p.getBlockPos());
-            Block currBlock = currState.getBlock();
-
-            if (!(currBlock instanceof FactoryComponentProvider)) {
-                Woot.LOGGER.info("compareToWorldQuick: not a component {}", currBlock);
-                return null;
-            }
-
-            FactoryComponentProvider factoryComponent = (FactoryComponentProvider)currBlock;
-            if (!FactoryComponent.isSameComponentFuzzy(factoryComponent.getFactoryComponent(), p.getFactoryComponent())) {
-                Woot.LOGGER.info("compareToWorldQuick: not same component {} {}", factoryComponent.getFactoryComponent(), p.getFactoryComponent());
-                return null;
-            }
-
-            /**
-             * Fails if the controller is not valid for the tier
-             */
-            if (p.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                TileEntity te = world.getTileEntity(p.getBlockPos());
-                if (te instanceof ControllerTileEntity) {
-                    FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
-                    Tier mobTier = WootConfig.get().getMobTier(fakeMob, world);
-                    if (!absolutePattern.getTier().isValidForTier(mobTier)) {
-                        Woot.LOGGER.info("compareToWorldQuick: mob {} not valid for {}",
-                                fakeMob, absolutePattern.getTier());
-                        return null;
-                    } else {
-                        controllerCount++;
-                    }
-                    // TODO blacklisted ???
-                }
-            }
-        }
-
-        if (controllerCount == 0) {
-            Woot.LOGGER.info("compareToWorldQuick: no valid controllers");
-            return null;
-        }
-
-        return absolutePattern;
-    }
 
     public static void disconnectOld(World world, AbsolutePattern absolutePattern) {
         for (PatternBlock pb : absolutePattern.getBlocks()) {
@@ -130,32 +78,16 @@ public class FactoryHelper {
 
     public static void tryValidate(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
 
-        AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
-        for (PatternBlock pb : absolutePattern.getBlocks()) {
-            BlockState currState = world.getBlockState(pb.getBlockPos());
-            Block currBlock = currState.getBlock();
+        PlayerHelper.sendChatMessage(playerEntity,
+                "Validating " + tier);
 
-            String found = StringHelper.translate(currBlock.getTranslationKey());
-            String expected = StringHelper.translate(pb.getFactoryComponent().getTranslationKey());
-            if (world.isAirBlock(pb.getBlockPos())) {
-                PlayerHelper.sendChatMessage(playerEntity,
-                        StringHelper.translateFormat(
-                                "chat.woot.intern.validate.missing",
-                                expected,
-                                pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()));
-            } else  if (currBlock instanceof FactoryComponentProvider) {
-                if (!isCorrectBlock((FactoryComponentProvider) currBlock, pb.getFactoryComponent())) {
-                    // Wrong type of block
-                    PlayerHelper.sendChatMessage(playerEntity,
-                            StringHelper.translateFormat("chat.woot.intern.validate.incorrect",
-                                    expected, pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getY(), found));
-                }
-            } else {
-                // Not a factory block
-                PlayerHelper.sendChatMessage(playerEntity,
-                        StringHelper.translateFormat("chat.woot.intern.validate.incorrect",
-                        expected, pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getY(), found));
-            }
+        List<String> feedback = new ArrayList<>();
+        AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
+        if (!FactoryScanner.compareToWorld(absolutePattern, world, feedback)) {
+            for (String s : feedback)
+                PlayerHelper.sendChatMessage(playerEntity, s);
+        } else {
+            PlayerHelper.sendChatMessage(playerEntity,"Found valid " + tier);
         }
     }
 

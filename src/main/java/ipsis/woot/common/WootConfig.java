@@ -41,7 +41,7 @@ public class WootConfig {
                 try {
                     int v = Integer.valueOf(parts[2]);
                     FakeMob fakeMob = new FakeMob(mob);
-                    Key key = Key.valueOf(param);
+                    Key key = Key.valueOf(param.toUpperCase());
 
                     if (fakeMob.isValid())
                         addIntMapping(fakeMob, key, v);
@@ -84,11 +84,11 @@ public class WootConfig {
             tier = Tier.byIndex(v);
         } else {
             int health = SpawnController.get().getMobHealth(fakeMob, world);
-            if (health <= Config.COMMON.tier1MaxUnits.get())
+            if (health <= Config.COMMON.TIER_1_MAX_UNITS.get())
                 tier = Tier.TIER_1;
-            else if (health <= Config.COMMON.tier2MaxUnits.get())
+            else if (health <= Config.COMMON.TIER_2_MAX_UNITS.get())
                 tier = Tier.TIER_2;
-            else if (health <= Config.COMMON.tier3MaxUnits.get())
+            else if (health <= Config.COMMON.TIER_3_MAX_UNITS.get())
                 tier = Tier.TIER_3;
             else
                 tier = Tier.TIER_4;
@@ -101,6 +101,8 @@ public class WootConfig {
         MASS_1,
         MASS_2,
         MASS_3,
-        TIER;
+        SPAWN_UNITS,
+        SPAWN_TICKS,
+        TIER
     }
 }

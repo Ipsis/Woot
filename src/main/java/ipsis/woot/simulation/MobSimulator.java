@@ -55,13 +55,13 @@ public class MobSimulator {
             Pupil pupil = (Pupil)pair.getValue();
             pupil.tick();
 
-            if (pupil.currentTicks > Config.COMMON.simulationTicks.get()) {
+            if (pupil.currentTicks > Config.COMMON.SIMULATION_TICKS.get()) {
                 pupil.resetTicks();
 
                 // Handle drops from previous kill
                 DropRegistry.get().learnSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
 
-                if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, Config.COMMON.simulationMobCount.get())) {
+                if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, Config.COMMON.SIMULATION_MOB_COUNT.get())) {
                     LOGGER.info(MOBSIM, "Finished simulating {}", pupil.fakeMobKey);
                     Tartarus.get().vacateCell(pupil.cellId);
                     iter.remove();

@@ -64,14 +64,15 @@
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",
-  "chat.woot.intern.noreplace": "Cannot replace %s at %d,%d,%d",
-  "chat.woot.intern.validate.power": "Found power cell at %d,%d,%d",
-  "chat.woot.intern.validate.nopower": "No power cell at %d,%d,%d",
-  "chat.woot.intern.validate.importer": "Found importer at %d,%d,%d",
-  "chat.woot.intern.validate.noimported": "No importer at %d,%d,%d",
-  "chat.woot.intern.validate.exporter": "Found exporter at %d,%d,%d",
-  "chat.woot.intern.validate.noexported": "No exporter at %d,%d,%d",
-  "chat.woot.intern.validate.nocontroller": "No controller at %d,%d,%d",
-  "chat.woot.intern.validate.missing": "Expected %s at %d,%d,%d",
-  "chat.woot.intern.validate.incorrect": "Expected %s at %d,%d,%d but found %s"
+  "chat.woot.intern.noreplace": "Cannot replace %s at (%d,%d,%d)",
+  "chat.woot.intern.validate.power": "Found power cell at (%d,%d,%d)",
+  "chat.woot.intern.validate.nopower": "No power cell at (%d,%d,%d)",
+  "chat.woot.intern.validate.importer": "Found importer at (%d,%d,%d)",
+  "chat.woot.intern.validate.noimported": "No importer at (%d,%d,%d)",
+  "chat.woot.intern.validate.exporter": "Found exporter at (%d,%d,%d)",
+  "chat.woot.intern.validate.noexported": "No exporter at (%d,%d,%d)",
+  "chat.woot.intern.validate.nocontroller": "No controller found",
+  "chat.woot.intern.validate.missing": "Expected %s at (%d,%d,%d)",
+  "chat.woot.intern.validate.incorrect": "Expected %s at (%d,%d,%d) but found %s",
+  "chat.woot.intern.validate.wrongtier": "Controller at (%d,%d,%d) not valid for %s"
 }

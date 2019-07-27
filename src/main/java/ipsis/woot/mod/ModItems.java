@@ -2,6 +2,7 @@ package ipsis.woot.mod;
 
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.items.UpgradeItem;
+import ipsis.woot.tools.InternItem;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class ModItems {
@@ -10,7 +11,7 @@ public class ModItems {
     public static DebugItem DEBUG_ITEM;
 
     @ObjectHolder("woot:intern")
-    public static DebugItem INTERN_ITEM;
+    public static InternItem INTERN_ITEM;
 
     /**
      * Upgrade items

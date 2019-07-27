@@ -1,5 +1,6 @@
 package ipsis.woot.simulation;
 
+import ipsis.woot.common.WootConfig;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;
@@ -71,10 +72,16 @@ public class SpawnController {
         if (!fakeMob.isValid())
             return -1;
 
+        // Configuration value has priority
+        if (WootConfig.get().hasMobValue(fakeMob, WootConfig.Key.SPAWN_UNITS))
+            return WootConfig.get().getIntValue(fakeMob, WootConfig.Key.SPAWN_UNITS);
+
+        // Check the cache
         String key = fakeMob.toString();
         if (mobHealthCache.containsKey(key))
             return mobHealthCache.get(key);
 
+        // Cache miss, create the entity
         Entity entity = createEntity(fakeMob, world, new BlockPos(0, 0, 0));
         if (entity == null || !(entity instanceof LivingEntity))
             return -1;

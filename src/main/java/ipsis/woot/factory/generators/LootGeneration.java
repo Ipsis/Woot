@@ -43,7 +43,7 @@ public class LootGeneration {
          */
         List<LazyOptional<IItemHandler>> itemHandlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
-            if (!heartTileEntity.getWorld().isBlockLoaded(heartTileEntity.getPos().offset(facing)))
+            if (!heartTileEntity.getWorld().isBlockLoaded(setup.getExportPos().offset(facing)))
                 continue;
 
             TileEntity te = heartTileEntity.getWorld().getTileEntity(heartTileEntity.getPos().offset(facing));

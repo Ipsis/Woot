@@ -1,11 +1,10 @@
 package ipsis.woot.factory.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.generators.LootGeneration;
 import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.util.FakeMob;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -21,17 +20,17 @@ import org.apache.logging.log4j.MarkerManager;
  */
 public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
+    static final Logger LOGGER = LogManager.getLogger();
+    static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
 
     /**
      * Layout will not exist until after the first update call
      * Setup will only exist if the layout is formed
      */
-    private Layout layout;
-    private Setup setup;
-    private Recipe recipe;
-    private TickTracker tickTracker = new TickTracker();
+    Layout layout;
+    Setup setup;
+    Recipe recipe;
+    TickTracker tickTracker = new TickTracker();
 
     public HeartTileEntity() {
         super(ModBlocks.HEART_BLOCK_TILE);
@@ -71,7 +70,6 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
                setup = Setup.creatFromLayout(world, layout);
-               Woot.LOGGER.info("Setup {}", setup);
                recipe = new Recipe(1000, 10);
                layout.clearChanged();
            }
@@ -83,6 +81,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
            if (consumedUnits >= recipe.getNumUnits()) {
                // get and process the ingredients
                consumedUnits = 0;
+
+               LootGeneration.get().generate(this, setup);
            }
        }
     }
@@ -100,8 +100,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     /**
      * Recipe handling
      */
-    private int consumedUnits = 0;
-    private void tickRecipe() {
+    int consumedUnits = 0;
+    void tickRecipe() {
         consumedUnits += recipe.getUnitsPerTick();
     }
 
@@ -109,9 +109,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      * Tick Tracker
      */
     public class TickTracker {
-        private long lastGameTime = -1;
-        private int structureTicksTimeout = 0;
-        private int currStructureTicks = 0;
+        long lastGameTime = -1;
+        int structureTicksTimeout = 0;
+        int currStructureTicks = 0;
 
         public boolean tick(World world) {
 

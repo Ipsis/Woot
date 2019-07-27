@@ -25,7 +25,8 @@ public class Setup {
     BlockPos importPos;
     BlockPos exportPos;
 
-    FakeMob fakeMob;
+    public List<FakeMob> getMobs() { return mobs; }
+    public HashMap<FactoryUpgradeType, Integer> getUpgrades() { return upgrades; }
 
     Setup() {}
 

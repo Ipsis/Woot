@@ -1,5 +1,6 @@
 package ipsis.woot.common;
 
+import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.simulation.SpawnController;
 import ipsis.woot.util.FakeMob;
@@ -96,7 +97,27 @@ public class WootConfig {
         return tier;
     }
 
+    public int getIntValue(FakeMob fakeMob, FactoryUpgradeType type, int level) {
+        Key key = getKey(type, level);
+        if (intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(key))
+            return intMappings.get(fakeMob).get(key);
+        return Config.getIntValue(key);
+    }
+
+    Key getKey(FactoryUpgradeType type, int level) {
+        Key key = Key.UNKNOWN;
+        switch (type) {
+            case MASS:
+                if (level == 1) key = Key.MASS_1;
+                else if (level == 2) key = Key.MASS_2;
+                else if (level == 3) key = Key.MASS_3;
+                break;
+        }
+        return key;
+    }
+
     public enum Key {
+        UNKNOWN,
         MASS,
         MASS_1,
         MASS_2,

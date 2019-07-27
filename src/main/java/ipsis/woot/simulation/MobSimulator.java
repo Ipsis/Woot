@@ -1,6 +1,6 @@
 package ipsis.woot.simulation;
 
-import ipsis.woot.common.WootConfig;
+import ipsis.woot.common.Config;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.world.World;
@@ -55,13 +55,13 @@ public class MobSimulator {
             Pupil pupil = (Pupil)pair.getValue();
             pupil.tick();
 
-            if (pupil.currentTicks > WootConfig.SERVER.simulationTicks.get()) {
+            if (pupil.currentTicks > Config.COMMON.simulationTicks.get()) {
                 pupil.resetTicks();
 
                 // Handle drops from previous kill
                 DropRegistry.get().learnSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
 
-                if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, WootConfig.SERVER.simulationMobCount.get())) {
+                if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, Config.COMMON.simulationMobCount.get())) {
                     LOGGER.info(MOBSIM, "Finished simulating {}", pupil.fakeMobKey);
                     Tartarus.get().vacateCell(pupil.cellId);
                     iter.remove();

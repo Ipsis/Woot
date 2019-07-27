@@ -1,14 +1,18 @@
 package ipsis.woot.factory.layout;
 
 import ipsis.woot.Woot;
+import ipsis.woot.common.WootConfig;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.factory.blocks.ControllerBlock;
+import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.PlayerHelper;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,11 +48,29 @@ public class FactoryHelper {
                 return null;
             }
 
+            /**
+             * Fails if the controller is not valid for the tier
+             */
             if (p.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                // TODO check the controller
-                ControllerBlock controllerBlock = (ControllerBlock)currBlock;
-
+                TileEntity te = world.getTileEntity(p.getBlockPos());
+                if (te instanceof ControllerTileEntity) {
+                    FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
+                    Tier mobTier = WootConfig.get().getMobTier(fakeMob, world);
+                    if (!absolutePattern.getTier().isValidForTier(mobTier)) {
+                        Woot.LOGGER.info("compareToWorldQuick: mob {} not valid for {}",
+                                fakeMob, absolutePattern.getTier());
+                        return null;
+                    } else {
+                        controllerCount++;
+                    }
+                    // TODO blacklisted ???
+                }
             }
+        }
+
+        if (controllerCount == 0) {
+            Woot.LOGGER.info("compareToWorldQuick: no valid controllers");
+            return null;
         }
 
         return absolutePattern;
@@ -104,6 +126,37 @@ public class FactoryHelper {
             }
         }
         return false;
+    }
+
+    public static void tryValidate(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
+
+        AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
+        for (PatternBlock pb : absolutePattern.getBlocks()) {
+            BlockState currState = world.getBlockState(pb.getBlockPos());
+            Block currBlock = currState.getBlock();
+
+            String found = StringHelper.translate(currBlock.getTranslationKey());
+            String expected = StringHelper.translate(pb.getFactoryComponent().getTranslationKey());
+            if (world.isAirBlock(pb.getBlockPos())) {
+                PlayerHelper.sendChatMessage(playerEntity,
+                        StringHelper.translateFormat(
+                                "chat.woot.intern.validate.missing",
+                                expected,
+                                pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()));
+            } else  if (currBlock instanceof FactoryComponentProvider) {
+                if (!isCorrectBlock((FactoryComponentProvider) currBlock, pb.getFactoryComponent())) {
+                    // Wrong type of block
+                    PlayerHelper.sendChatMessage(playerEntity,
+                            StringHelper.translateFormat("chat.woot.intern.validate.incorrect",
+                                    expected, pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getY(), found));
+                }
+            } else {
+                // Not a factory block
+                PlayerHelper.sendChatMessage(playerEntity,
+                        StringHelper.translateFormat("chat.woot.intern.validate.incorrect",
+                        expected, pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getY(), found));
+            }
+        }
     }
 
     static Block getComponentBlock(FactoryComponent component) {

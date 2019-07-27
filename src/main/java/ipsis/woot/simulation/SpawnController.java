@@ -1,5 +1,6 @@
 package ipsis.woot.simulation;
 
+import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,6 +14,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SpawnController {
 
@@ -31,7 +34,7 @@ public class SpawnController {
             return;
 
 
-        Entity entity = createEntity(fakeMobKey, world, spawnPos);
+        Entity entity = createEntity(fakeMobKey.getMob(), world, spawnPos);
         if (entity == null || !(entity instanceof LivingEntity))
             return;
 
@@ -47,9 +50,9 @@ public class SpawnController {
 
     }
 
-    private @Nullable Entity createEntity(@Nonnull FakeMobKey fakeMobKey, @Nonnull World world, @Nonnull BlockPos pos) {
+    private @Nullable Entity createEntity(@Nonnull FakeMob fakeMob, @Nonnull World world, @Nonnull BlockPos pos) {
 
-        ResourceLocation rl = fakeMobKey.getMob().getResourceLocation();
+        ResourceLocation rl = fakeMob.getResourceLocation();
         if (!ForgeRegistries.ENTITIES.containsKey(rl))
             return null;
 
@@ -61,5 +64,23 @@ public class SpawnController {
         });
 
         return entity;
+    }
+
+    Map<String, Integer> mobHealthCache = new HashMap<>();
+    public int getMobHealth(@Nonnull FakeMob fakeMob, @Nonnull World world) {
+        if (!fakeMob.isValid())
+            return -1;
+
+        String key = fakeMob.toString();
+        if (mobHealthCache.containsKey(key))
+            return mobHealthCache.get(key);
+
+        Entity entity = createEntity(fakeMob, world, new BlockPos(0, 0, 0));
+        if (entity == null || !(entity instanceof LivingEntity))
+            return -1;
+
+        int health = (int)((LivingEntity) entity).getMaxHealth();
+        mobHealthCache.put(key, health);
+        return health;
     }
 }

@@ -1,80 +1,106 @@
 package ipsis.woot.common;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
-import org.apache.commons.lang3.tuple.Pair;
+import ipsis.woot.factory.Tier;
+import ipsis.woot.simulation.SpawnController;
+import ipsis.woot.util.FakeMob;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
+import java.util.HashMap;
+
+/**
+ * This handles the fact that we can override lots of configuration
+ * based on the specific mob. It is populated by information pushed
+ * from the main config files
+ */
 public class WootConfig {
 
-    public static class Server {
+    static final Logger LOGGER = LogManager.getLogger();
+    static final Marker CONFIG = MarkerManager.getMarker("WOOT_CONFIG");
 
-        public final IntValue simulationTicks;
-        public final IntValue simulationMobCount;
+    public static WootConfig get() { return INSTANCE; }
+    static WootConfig INSTANCE;
+    static { INSTANCE = new WootConfig(); }
 
-        Server(ForgeConfigSpec.Builder builder) {
-            builder.comment("Server configuration settings")
-                    .push("server");
+    public void loadFromConfig() {
 
-            simulationTicks = builder
-                    .comment("Number of ticks between mob simulations")
-                    .translation("woot.configgui.simulationTicks")
-                    .defineInRange("simulationTicks", 200, 20, 20 * 60);
+        // Get rid of all the old mappings
+        intMappings = new HashMap<>();
 
-            simulationMobCount = builder
-                    .comment("Number of simulated mobs to learn from")
-                    .translation("woot.configgui.simulationMobCount")
-                    .defineInRange("simulationMobCount", 500,100, 5000);
+        for (String s : Config.COMMON.MOB_OVERRIDES.get()) {
+            String[] parts = s.split(",");
+            if (parts.length != 3) {
+                LOGGER.error(s + " == INVALID");
+            } else {
+                String mob = parts[0];
+                String param = parts[1];
+                try {
+                    int v = Integer.valueOf(parts[2]);
+                    FakeMob fakeMob = new FakeMob(mob);
+                    Key key = Key.valueOf(param);
 
-            builder.pop();
+                    if (fakeMob.isValid())
+                        addIntMapping(fakeMob, key, v);
+                    else
+                        LOGGER.error(s + " == INVALID (invalid mob)");
+                } catch (NumberFormatException e) {
+                    LOGGER.error(s + " == INVALID (invalid value)");
+                } catch (IllegalArgumentException e) {
+                    LOGGER.error(s + " == INVALID (unknown key");
+                }
+            }
         }
     }
 
-    public static class Client {
+    HashMap<FakeMob, HashMap<Key, Integer>> intMappings = new HashMap<>();
+    void addIntMapping(FakeMob fakeMob, Key key, int value) {
+        if (!intMappings.containsKey(fakeMob))
+            intMappings.put(fakeMob, new HashMap<>());
+        HashMap<Key, Integer> map = intMappings.get(fakeMob);
+        map.put(key, value);
+        LOGGER.info(CONFIG, "Added mapping {}:{} -> {}", fakeMob, key, value);
+    }
 
-        public final ForgeConfigSpec.DoubleValue layoutOpacity;
-        public final ForgeConfigSpec.DoubleValue layoutSize;
+    public int getIntValue(FakeMob fakeMob, Key key) {
+        if (intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(key))
+            return intMappings.get(fakeMob).get(key);
+        return Config.getIntValue(key);
+    }
 
-        Client(ForgeConfigSpec.Builder builder) {
-            builder.comment("Client configuration settings")
-                    .push("client");
+    public boolean hasMobValue(FakeMob fakeMob, Key key) {
+        return intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(key);
+    }
 
-            layoutOpacity = builder
-                    .comment("Opacity of the layout blocks")
-                    .translation("woot.configgui.layoutOpacity")
-                    .defineInRange("layoutOpacity", 0.95D, 0.10D, 1.00D);
+    public Tier getMobTier(FakeMob fakeMob, World world) {
+        Tier tier;
 
-            layoutSize = builder
-                    .comment("Size of the layout blocks")
-                    .translation("woot.configgui.layoutSize")
-                    .defineInRange("layoutSize", 0.45D, 0.10D, 1.0D);
-
-            builder.pop();
+        if (hasMobValue(fakeMob, Key.TIER)) {
+            int v = getIntValue(fakeMob, Key.TIER);
+            v = MathHelper.clamp(v, 1, Tier.getMaxTier());
+            tier = Tier.byIndex(v);
+        } else {
+            int health = SpawnController.get().getMobHealth(fakeMob, world);
+            if (health <= Config.COMMON.tier1MaxUnits.get())
+                tier = Tier.TIER_1;
+            else if (health <= Config.COMMON.tier2MaxUnits.get())
+                tier = Tier.TIER_2;
+            else if (health <= Config.COMMON.tier3MaxUnits.get())
+                tier = Tier.TIER_3;
+            else
+                tier = Tier.TIER_4;
         }
+        return tier;
     }
 
-    public static final ForgeConfigSpec clientSpec;
-    public static final Client CLIENT;
-    static {
-        final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
-        clientSpec = specPair.getRight();
-        CLIENT = specPair.getLeft();
-    }
-
-    public static final ForgeConfigSpec serverSpec;
-    public static final Server SERVER;
-    static {
-        final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
-        serverSpec = specPair.getRight();
-        SERVER = specPair.getLeft();
-    }
-
-    @SubscribeEvent
-    public static void onLoad(final ModConfig.Loading configEvent) {
-    }
-
-    @SubscribeEvent
-    public static void onFileChange(final ModConfig.ConfigReloading configEvent) {
+    public enum Key {
+        MASS,
+        MASS_1,
+        MASS_2,
+        MASS_3,
+        TIER;
     }
 }

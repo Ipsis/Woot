@@ -1,10 +1,13 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.common.WootConfig;
 import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.loot.DropRegistry;
+import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.simulation.FakePlayerPool;
 import ipsis.woot.simulation.MobSimulator;
+import ipsis.woot.simulation.Tartarus;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
@@ -12,10 +15,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.dimension.Dimension;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.MarkerManager;
@@ -60,5 +66,17 @@ public class ModEvents {
         } else {
             MobSimulator.get().tick(event.world);
         }
+    }
+
+    @SubscribeEvent
+    public static void onFileChange(final ModConfig.ConfigReloading configEvent) {
+    }
+
+    @SubscribeEvent
+    public void onServerStarting(final FMLServerStartingEvent event) {
+        new WootCommand(event.getCommandDispatcher());
+
+        // Force load the simulation world
+        Tartarus.get().setWorld(DimensionManager.getWorld(event.getServer(), ModDimensions.tartarusDimensionType, true, true));
     }
 }

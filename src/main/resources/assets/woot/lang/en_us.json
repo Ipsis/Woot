@@ -60,5 +60,18 @@
   "info.woot.intern.mode.validate_1": "Validate a Tier 1 factory",
   "info.woot.intern.mode.validate_2": "Validate a Tier 2 factory",
   "info.woot.intern.mode.validate_3": "Validate a Tier 3 factory",
-  "info.woot.intern.mode.validate_4": "Validate a Tier 4 factory"
+  "info.woot.intern.mode.validate_4": "Validate a Tier 4 factory",
+
+  # Chat
+  "chat.woot.intern.missingblock": "No %s in inventory",
+  "chat.woot.intern.noreplace": "Cannot replace %s at %d,%d,%d",
+  "chat.woot.intern.validate.power": "Found power cell at %d,%d,%d",
+  "chat.woot.intern.validate.nopower": "No power cell at %d,%d,%d",
+  "chat.woot.intern.validate.importer": "Found importer at %d,%d,%d",
+  "chat.woot.intern.validate.noimported": "No importer at %d,%d,%d",
+  "chat.woot.intern.validate.exporter": "Found exporter at %d,%d,%d",
+  "chat.woot.intern.validate.noexported": "No exporter at %d,%d,%d",
+  "chat.woot.intern.validate.nocontroller": "No controller at %d,%d,%d",
+  "chat.woot.intern.validate.missing": "Expected %s at %d,%d,%d",
+  "chat.woot.intern.validate.incorrect": "Expected %s at %d,%d,%d but found %s"
 }

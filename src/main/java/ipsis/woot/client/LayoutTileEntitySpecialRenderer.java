@@ -2,7 +2,7 @@ package ipsis.woot.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
-import ipsis.woot.common.WootConfig;
+import ipsis.woot.common.Config;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.layout.PatternBlock;
@@ -53,7 +53,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
                 GlStateManager.translated(x + 0.5F, y + 0.5F, z + 0.5F);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                GlStateManager.color4f(1F, 1F, 1F, WootConfig.CLIENT.layoutOpacity.get().floatValue());
+                GlStateManager.color4f(1F, 1F, 1F, Config.CLIENT.layoutOpacity.get().floatValue());
 
                 BlockPos origin = tileEntityIn.getPos();
                 for (PatternBlock block : tileEntityIn.getAbsolutePattern().getBlocks()) {
@@ -70,7 +70,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
                         TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryComponent());
                         if (textureAtlasSprite != null)
-                            RenderHelper.drawTexturedCube(textureAtlasSprite, WootConfig.CLIENT.layoutSize.get().floatValue());
+                            RenderHelper.drawTexturedCube(textureAtlasSprite, Config.CLIENT.layoutSize.get().floatValue());
                     }
                     GlStateManager.popMatrix();
                 }

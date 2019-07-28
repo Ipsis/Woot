@@ -90,4 +90,9 @@ public class SpawnController {
         mobHealthCache.put(key, health);
         return health;
     }
+
+    public boolean isLivingEntity(FakeMob fakeMob, World world) {
+        Entity entity = createEntity(fakeMob, world, new BlockPos(0, 0, 0));
+        return entity != null && entity instanceof MobEntity;
+    }
 }

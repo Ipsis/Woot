@@ -7,9 +7,9 @@
   "commands.woot.loot.drops.info": "Drop: {0} chance {1}",
   "commands.woot.loot.learned.summary": "Drop Counts cap:{0} l0:{1} l1:{2} l2:{3} l3:{4}",
   "commands.woot.learn.ok": "Starting learning Entity: {0} Looting: {1}",
-  "commands.woot.pupils": "Simulating {0}",
-  "commands.woot.give.ok": "Gave {0} controller for {1}",
-  "commands.woot.give.fail": "Invalid mob {0}",
+  "commands.woot.pupils": "Simulating %s",
+  "commands.woot.give.ok": "Gave %s controller for %s",
+  "commands.woot.give.fail": "Invalid mob %s",
 
   # Block Names
   "block.woot.factory_a": "Factory A",

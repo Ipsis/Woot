@@ -33,6 +33,9 @@
   # Item Names
   "item.woot.debug": "Debug",
   "item.woot.intern": "Intern",
+  "item.woot.capacity_1": "Capacity 1",
+  "item.woot.capacity_2": "Capacity 2",
+  "item.woot.capacity_3": "Capacity 3",
   "item.woot.efficiency_1": "Efficiency 1",
   "item.woot.efficiency_2": "Efficiency 2",
   "item.woot.efficiency_3": "Efficiency 3",

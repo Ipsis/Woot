@@ -21,6 +21,12 @@ public class UpgradeItem extends WootItem {
 
     public static ItemStack getItemStack(FactoryUpgrade upgrade1) {
 
+        if (upgrade1 == FactoryUpgrade.CAPACITY_1)
+            return new ItemStack(ModItems.CAPACITY_1_ITEM);
+        if (upgrade1 == FactoryUpgrade.CAPACITY_2)
+            return new ItemStack(ModItems.CAPACITY_2_ITEM);
+        if (upgrade1 == FactoryUpgrade.CAPACITY_3)
+            return new ItemStack(ModItems.CAPACITY_3_ITEM);
         if (upgrade1 == FactoryUpgrade.EFFICIENCY_1)
             return new ItemStack(ModItems.EFFICIENCY_1_ITEM);
         else if (upgrade1 == FactoryUpgrade.EFFICIENCY_2)
@@ -57,7 +63,13 @@ public class UpgradeItem extends WootItem {
 
     public static ItemStack getItemStack(FactoryUpgradeType type, int level) {
 
-        if (type == FactoryUpgradeType.EFFICIENCY && level == 1)
+        if (type == FactoryUpgradeType.CAPACITY && level == 1)
+            return new ItemStack(ModItems.CAPACITY_1_ITEM);
+        if (type == FactoryUpgradeType.CAPACITY && level == 2)
+            return new ItemStack(ModItems.CAPACITY_2_ITEM);
+        if (type == FactoryUpgradeType.CAPACITY && level == 3)
+            return new ItemStack(ModItems.CAPACITY_3_ITEM);
+        else if (type == FactoryUpgradeType.EFFICIENCY && level == 1)
             return new ItemStack(ModItems.EFFICIENCY_1_ITEM);
         else if (type == FactoryUpgradeType.EFFICIENCY && level == 2)
             return new ItemStack(ModItems.EFFICIENCY_2_ITEM);

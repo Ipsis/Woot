@@ -57,6 +57,9 @@ public class Registration {
         event.getRegistry().register(new DebugItem());
         event.getRegistry().register(new InternItem());
 
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_1));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_2));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_3));
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_1));
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_2));
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_3));

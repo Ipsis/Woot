@@ -16,6 +16,12 @@ public class ModItems {
     /**
      * Upgrade items
      */
+    @ObjectHolder("woot:capacity_1")
+    public static UpgradeItem CAPACITY_1_ITEM;
+    @ObjectHolder("woot:capacity_2")
+    public static UpgradeItem CAPACITY_2_ITEM;
+    @ObjectHolder("woot:capacity_3")
+    public static UpgradeItem CAPACITY_3_ITEM;
     @ObjectHolder("woot:efficiency_1")
     public static UpgradeItem EFFICIENCY_1_ITEM;
     @ObjectHolder("woot:efficiency_2")

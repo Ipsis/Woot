@@ -17,6 +17,7 @@ public class PatternRepository {
     static { INSTANCE = new PatternRepository(); }
 
     public void load() {
+        // TODO create a basic tier with one upgrade and one controller
         createRawPatterns();
         createPattern(Tier.TIER_1);
         createPattern(Tier.TIER_2);
@@ -232,27 +233,27 @@ public class PatternRepository {
     private final String LAYOUT[][] = {
             {
                     "-------",
-                    "-------",
-                    "-------",
                     "---E---",
+                    "-------",
+                    "-------",
                     "-------",
                     "-------",
                     "-------",
             },
             {
-                    "-------",
-                    "-------",
                     "-------",
                     "---I---",
                     "-------",
                     "-------",
                     "-------",
+                    "-------",
+                    "-------",
             },
             {
                     "-------",
-                    "-------",
-                    "-------",
                     "---z---",
+                    "-------",
+                    "-------",
                     "-------",
                     "-------",
                     "-------",

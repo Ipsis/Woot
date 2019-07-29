@@ -5,6 +5,9 @@ import ipsis.woot.factory.generators.LootGeneration;
 import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.simulation.MobSimulator;
+import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -75,6 +78,12 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
                setup = Setup.creatFromLayout(world, layout);
+
+               int looting = 0;
+               if (setup.getUpgrades().containsKey(FactoryUpgradeType.LOOTING))
+                   looting = setup.getUpgrades().get(FactoryUpgradeType.LOOTING);
+               for (FakeMob mob : setup.getMobs())
+                   MobSimulator.get().learn(new FakeMobKey(mob, looting));
                recipe = RecipeHelper.createRecipe(setup, world);
                layout.clearChanged();
            }

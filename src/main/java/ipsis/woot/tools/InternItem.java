@@ -36,6 +36,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This is the main tool for the mod.
@@ -92,7 +93,7 @@ public class InternItem extends WootItem {
                 ToolMode mode = getToolModeFromStack(itemStack);
                 mode = mode.getNext();
                 setToolModeInStack(itemStack, mode);
-                PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translate("info.woot.intern.mode." + getToolModeFromStack(itemStack).toString().toLowerCase()));
+                PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translate("info.woot.intern.mode." + getToolModeFromStack(itemStack).toString().toLowerCase(Locale.ROOT)));
             }
             return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
         }
@@ -193,7 +194,7 @@ public class InternItem extends WootItem {
         tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.0")));
 
         ToolMode toolMode = getToolModeFromStack(stack);
-        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.mode." + toolMode.toString().toLowerCase())));
+        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.mode." + toolMode.toString().toLowerCase(Locale.ROOT))));
         if (toolMode.isBuildMode()) {
             PatternRepository.Pattern pattern = PatternRepository.get().getPattern(toolMode.getTier());
             if (pattern != null) {

@@ -1,5 +1,7 @@
 package ipsis.woot.factory;
 
+import java.util.Locale;
+
 public enum FactoryComponent {
 
     FACTORY_A,
@@ -20,7 +22,7 @@ public enum FactoryComponent {
     CONTROLLER;
 
     public static FactoryComponent[] VALUES = values();
-    public String getName() { return name().toLowerCase(); }
+    public String getName() { return name().toLowerCase(Locale.ROOT); }
     public String getTranslationKey() { return "block.woot." + getName(); }
 
     public static boolean isSameComponentFuzzy(FactoryComponent componentA, FactoryComponent componentB) {

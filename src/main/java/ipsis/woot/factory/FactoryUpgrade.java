@@ -3,6 +3,7 @@ package ipsis.woot.factory;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 public enum FactoryUpgrade {
     CAPACITY_1,
@@ -25,7 +26,7 @@ public enum FactoryUpgrade {
     XP_3;
 
     public static FactoryUpgrade[] VALUES = values();
-    public String getName() { return name().toLowerCase(); }
+    public String getName() { return name().toLowerCase(Locale.ROOT); }
     public String getTranslationKey() { return "item.woot." + getName(); }
 
 

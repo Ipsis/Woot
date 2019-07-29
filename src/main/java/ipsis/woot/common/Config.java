@@ -129,7 +129,7 @@ public class Config {
             SIMULATION_TICKS = builder
                     .comment("Number of ticks between mob simulations")
                     .translation(TAG + TAG2)
-                    .defineInRange(TAG2, 200, 20, 20 * 60);
+                    .defineInRange(TAG2, 40, 20, 20 * 60);
 
             TAG2 = "simulationMobCount";
             SIMULATION_MOB_COUNT = builder
@@ -179,6 +179,11 @@ public class Config {
                         .comment("Max units for a tier 4 mob")
                         .translation(TAG + TIER_4_MAX_UNITS_TAG)
                         .defineInRange(TIER_4_MAX_UNITS_TAG, Integer.MAX_VALUE, 5, Integer.MAX_VALUE);
+
+                builder.push("power");
+                {
+
+                }
 
                 builder.push("upgrades");
                 {

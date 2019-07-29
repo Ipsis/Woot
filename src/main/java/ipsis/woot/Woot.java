@@ -3,10 +3,12 @@ package ipsis.woot;
 import ipsis.woot.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.common.Config;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
+import ipsis.woot.factory.blocks.heart.HeartScreen;
 import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModEvents;
 import ipsis.woot.mod.Registration;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -50,6 +52,7 @@ public class Woot {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(LayoutTileEntity.class, new LayoutTileEntitySpecialRenderer());
+        ScreenManager.registerFactory(ModBlocks.HEART_CONTAINER, HeartScreen::new);
     }
 
     public static ItemGroup itemGroup = new ItemGroup(MODID) {

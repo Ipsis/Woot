@@ -1,4 +1,4 @@
-package ipsis.woot.factory.blocks;
+package ipsis.woot.factory.blocks.heart;
 
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.generators.LootGeneration;
@@ -9,24 +9,31 @@ import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.WootDebug;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
  * The factory is formed manually by the user via the intern -> interrupt
  * When an attached block is removed or unloaded it should inform the heart -> interrupt
  */
-public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster, WootDebug {
+public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster, WootDebug, INamedContainerProvider {
 
     static final Logger LOGGER = LogManager.getLogger();
     static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
@@ -204,5 +211,19 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         debug.add("      setup: " + setup);
         debug.add("      recipe: " + recipe);
         return debug;
+    }
+
+    /**
+     * INamedContainerProvider
+     */
+    @Override
+    public ITextComponent getDisplayName() {
+        return new StringTextComponent(getType().getRegistryName().getPath());
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new HeartContainer(windowId, world, pos, playerInventory, playerEntity);
     }
 }

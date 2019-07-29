@@ -1,6 +1,6 @@
 package ipsis.woot.factory.multiblock;
 
-import ipsis.woot.factory.blocks.HeartBlock;
+import ipsis.woot.factory.blocks.heart.HeartBlock;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;

@@ -1,10 +1,9 @@
 package ipsis.woot.tools;
 
-import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.Tier;
-import ipsis.woot.factory.blocks.HeartBlock;
-import ipsis.woot.factory.blocks.HeartTileEntity;
+import ipsis.woot.factory.blocks.heart.HeartBlock;
+import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.factory.layout.FactoryHelper;
 import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.util.WootItem;

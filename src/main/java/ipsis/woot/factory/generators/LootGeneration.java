@@ -1,9 +1,7 @@
 package ipsis.woot.factory.generators;
 
-import ipsis.woot.common.Config;
-import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Setup;
-import ipsis.woot.factory.blocks.HeartTileEntity;
+import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.loot.MobDrop;
 import ipsis.woot.util.FakeMob;

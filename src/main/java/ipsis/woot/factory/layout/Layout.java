@@ -1,9 +1,6 @@
 package ipsis.woot.factory.layout;
 
-import ipsis.woot.factory.blocks.HeartTileEntity;
-import ipsis.woot.factory.layout.AbsolutePattern;
-import ipsis.woot.factory.layout.FactoryHelper;
-import ipsis.woot.factory.layout.FactoryScanner;
+import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;

@@ -5,18 +5,25 @@ import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.blocks.*;
+import ipsis.woot.factory.blocks.heart.HeartBlock;
+import ipsis.woot.factory.blocks.heart.HeartContainer;
+import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.tools.InternItem;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.ChunkGeneratorType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -111,6 +118,15 @@ public class Registration {
                 ModBlocks.FACTORY_CONNECT_BLOCK,
                 ModBlocks.FACTORY_CTR_BASE_BLOCK)
                 .build(null).setRegistryName(Woot.MODID, "multiblock"));
+    }
+
+    @SubscribeEvent
+    public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
+        Woot.LOGGER.info("registerContainers");
+        event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+            BlockPos pos = data.readBlockPos();
+            return new HeartContainer(windowId, Minecraft.getInstance().world, pos, inv, Minecraft.getInstance().player);
+        }).setRegistryName("heart"));
     }
 
     @SubscribeEvent

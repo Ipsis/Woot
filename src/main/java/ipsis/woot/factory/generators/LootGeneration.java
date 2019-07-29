@@ -1,8 +1,6 @@
 package ipsis.woot.factory.generators;
 
-import ipsis.woot.Woot;
-import ipsis.woot.common.WootConfig;
-import ipsis.woot.factory.FactoryUpgrade;
+import ipsis.woot.common.Config;
 import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Setup;
 import ipsis.woot.factory.blocks.HeartTileEntity;
@@ -46,7 +44,7 @@ public class LootGeneration {
             if (!heartTileEntity.getWorld().isBlockLoaded(setup.getExportPos().offset(facing)))
                 continue;
 
-            TileEntity te = heartTileEntity.getWorld().getTileEntity(heartTileEntity.getPos().offset(facing));
+            TileEntity te = heartTileEntity.getWorld().getTileEntity(setup.getExportPos().offset(facing));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -54,10 +52,10 @@ public class LootGeneration {
         }
 
         for (FakeMob mob : setup.getMobs()) {
-            int mobCount = WootConfig.get().getIntValue(mob, WootConfig.Key.MASS);
+            int mobCount = Config.getIntValueByString(mob, Config.COMMON.MASS_COUNT_TAG);
             if (setup.getUpgrades().containsKey(FactoryUpgradeType.MASS)) {
                 int level = setup.getUpgrades().get(FactoryUpgradeType.MASS);
-                mobCount = WootConfig.get().getIntValue(mob, FactoryUpgradeType.MASS, level);
+                mobCount = Config.getIntValueForUpgrade(mob, FactoryUpgradeType.MASS, level);
             }
 
             LOGGER.info(LOOTGEN, "generate: {} * {}", mob, mobCount);

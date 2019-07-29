@@ -1,6 +1,6 @@
 package ipsis.woot.simulation;
 
-import ipsis.woot.common.WootConfig;
+import ipsis.woot.common.Config;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;
@@ -73,8 +73,8 @@ public class SpawnController {
             return -1;
 
         // Configuration value has priority
-        if (WootConfig.get().hasMobValue(fakeMob, WootConfig.Key.SPAWN_UNITS))
-            return WootConfig.get().getIntValue(fakeMob, WootConfig.Key.SPAWN_UNITS);
+        if (Config.hasIntValueByString(fakeMob, Config.COMMON.MOB_HEALTH_TAG))
+            return Config.getIntValueByString(fakeMob, Config.COMMON.MOB_HEALTH_TAG);
 
         // Check the cache
         String key = fakeMob.toString();

@@ -1,7 +1,6 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
-import ipsis.woot.common.WootConfig;
 import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.server.command.WootCommand;
@@ -22,9 +21,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.MarkerManager;
 
 import java.util.List;
 

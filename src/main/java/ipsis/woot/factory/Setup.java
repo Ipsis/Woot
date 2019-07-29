@@ -44,7 +44,6 @@ public class Setup {
             } else if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
 
                 // Factory will only be formed if the controller is valid
-                // TODO controller to tier
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
                 if (te instanceof ControllerTileEntity) {
                     FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
@@ -70,7 +69,6 @@ public class Setup {
                             level = 2;
 
                         setup.upgrades.put(type, level);
-                        // TODO limited number of upgrades per tier
                     }
                 }
             }

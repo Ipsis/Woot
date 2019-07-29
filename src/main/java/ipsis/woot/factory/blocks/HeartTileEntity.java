@@ -8,6 +8,7 @@ import ipsis.woot.mod.ModBlocks;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,7 +71,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
                setup = Setup.creatFromLayout(world, layout);
-               recipe = new Recipe(1000, 10);
+               recipe = RecipeHelper.createRecipe(setup, world);
                layout.clearChanged();
            }
 
@@ -141,6 +142,42 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
         public void resetStructureTickCount() {
             currStructureTicks = 0;
+        }
+    }
+
+    /**
+     * Currently running recipe
+     */
+    public static class Recipe {
+
+        int numTicks;
+        int numUnits;
+
+        public int getNumTicks() {
+            return numTicks;
+        }
+
+        public int getNumUnits() {
+            return numUnits;
+        }
+
+        public Recipe() {
+            numTicks = 1;
+            numUnits = 1;
+        }
+
+        public Recipe(int numTicks, int numUnits) {
+            this.numTicks = MathHelper.clamp(numTicks, 1, Integer.MAX_VALUE);
+            this.numUnits = MathHelper.clamp(numUnits, 1, Integer.MAX_VALUE);
+        }
+
+        public int getUnitsPerTick() {
+            return MathHelper.clamp(numUnits / numTicks, 1, Integer.MAX_VALUE);
+        }
+
+        @Override
+        public String toString() {
+            return "u:" + numUnits + "/t:" + numTicks;
         }
     }
 }

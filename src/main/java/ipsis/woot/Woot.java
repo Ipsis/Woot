@@ -2,7 +2,6 @@ package ipsis.woot;
 
 import ipsis.woot.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.common.Config;
-import ipsis.woot.common.WootConfig;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.mod.ModBlocks;
@@ -46,7 +45,7 @@ public class Woot {
     private void setup(final FMLCommonSetupEvent event) {
 
         PatternRepository.get().load();
-        WootConfig.get().loadFromConfig();
+        Config.loadFromConfig();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

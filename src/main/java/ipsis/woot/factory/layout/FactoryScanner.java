@@ -1,7 +1,7 @@
 package ipsis.woot.factory.layout;
 
 import ipsis.woot.Woot;
-import ipsis.woot.common.WootConfig;
+import ipsis.woot.common.Config;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
@@ -14,7 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.checkerframework.checker.units.qual.A;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -148,7 +147,7 @@ public class FactoryScanner {
                 TileEntity te = world.getTileEntity(p.getBlockPos());
                 if (te instanceof ControllerTileEntity) {
                     FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
-                    Tier mobTier = WootConfig.get().getMobTier(fakeMob, world);
+                    Tier mobTier = Config.getMobTier(fakeMob, world);
                     if (!absolutePattern.getTier().isValidForTier(mobTier)) {
                         feedback.add(StringHelper.translateFormat(
                                 "chat.woot.intern.validate.wrongtier",

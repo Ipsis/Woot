@@ -1,16 +1,12 @@
 package ipsis.woot.factory.layout;
 
-import ipsis.woot.common.WootConfig;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
-import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.PlayerHelper;
-import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

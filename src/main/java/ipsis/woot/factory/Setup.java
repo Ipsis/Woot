@@ -1,5 +1,6 @@
 package ipsis.woot.factory;
 
+import ipsis.woot.common.Config;
 import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.factory.blocks.UpgradeTileEntity;
 import ipsis.woot.factory.layout.Layout;
@@ -24,11 +25,35 @@ public class Setup {
     List<FakeMob> mobs = new ArrayList<>();
     BlockPos importPos;
     BlockPos exportPos;
+    private int maxMobCount = -1;
 
     public List<FakeMob> getMobs() { return mobs; }
     public HashMap<FactoryUpgradeType, Integer> getUpgrades() { return upgrades; }
     public BlockPos getExportPos() { return exportPos; }
     public BlockPos getImportPos() { return importPos; }
+
+    public int getMaxMobCount() {
+        if (maxMobCount == -1) {
+            int mobCount = Config.COMMON.MASS_COUNT.get(); // no ugrades
+            int level = 0;
+            if (upgrades.containsKey(FactoryUpgradeType.MASS)) {
+                level = upgrades.get(FactoryUpgradeType.MASS);
+                mobCount = Config.getIntValueForUpgrade(FactoryUpgradeType.MASS, level);
+            }
+
+            for (FakeMob mob : mobs) {
+                int count = Config.getIntValueForUpgrade(mob, FactoryUpgradeType.MASS, 0);
+                if (upgrades.containsKey(FactoryUpgradeType.MASS))
+                    count = Config.getIntValueForUpgrade(mob, FactoryUpgradeType.MASS, level);
+
+                // Smallest mass allowed
+                if (count < mobCount)
+                    mobCount = count;
+            }
+            maxMobCount = mobCount;
+        }
+        return maxMobCount;
+    }
 
     Setup() {}
 

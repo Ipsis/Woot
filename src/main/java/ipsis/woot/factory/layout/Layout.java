@@ -82,4 +82,9 @@ public class Layout {
         if (absolutePattern != null)
             FactoryHelper.disconnectOld(world, absolutePattern);
     }
+
+    @Override
+    public String toString() {
+        return "facing:" + facing + " pattern:" + (absolutePattern != null ? "yes" : "no") + " changed:" + changed + " dirty:" + dirty;
+    }
 }

@@ -5,6 +5,8 @@ import ipsis.woot.factory.generators.LootGeneration;
 import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.util.WootDebug;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -15,11 +17,13 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import java.util.List;
+
 /**
  * The factory is formed manually by the user via the intern -> interrupt
  * When an attached block is removed or unloaded it should inform the heart -> interrupt
  */
-public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster {
+public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster, WootDebug {
 
     static final Logger LOGGER = LogManager.getLogger();
     static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
@@ -179,5 +183,17 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         public String toString() {
             return "u:" + numUnits + "/t:" + numTicks;
         }
+    }
+
+    /**
+     * WootDebug
+     */
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> HeartTileEntity");
+        debug.add("      layout: " + layout);
+        debug.add("      setup: " + setup);
+        debug.add("      recipe: " + recipe);
+        return debug;
     }
 }

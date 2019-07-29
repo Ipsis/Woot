@@ -31,9 +31,12 @@ public class RecipeHelper {
         }
 
         // Get the longest tick count
-        // Get the smallest mass count
         int masterTicks =  Config.COMMON.SPAWN_TICKS.get();
-        int masterMobCount = Config.COMMON.MASS_COUNT.get();
+        int masterMobCount = setup.getMaxMobCount();
+        if (setup.upgrades.containsKey(FactoryUpgradeType.MASS)) {
+            int level = setup.upgrades.get(FactoryUpgradeType.MASS);
+            masterMobCount = Config.getIntValueForUpgrade(FactoryUpgradeType.MASS, level);
+        }
         for (MobConfig m : mobs) {
             if (m.spawnTicks > masterTicks)
                 masterTicks = m.spawnTicks;
@@ -44,7 +47,7 @@ public class RecipeHelper {
 
         int mobCost = 0;
         for (MobConfig m : mobs)
-            mobCost += m.getCost();
+            mobCost += (m.getCost() * masterMobCount);
         LOGGER.info("createRecipe: mobCost:{}", mobCost);
 
         int actualTicks = masterTicks;

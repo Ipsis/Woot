@@ -51,13 +51,8 @@ public class LootGeneration {
             itemHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
         }
 
+        int mobCount = setup.getMaxMobCount();
         for (FakeMob mob : setup.getMobs()) {
-            int mobCount = Config.getIntValueByString(mob, Config.COMMON.MASS_COUNT_TAG);
-            if (setup.getUpgrades().containsKey(FactoryUpgradeType.MASS)) {
-                int level = setup.getUpgrades().get(FactoryUpgradeType.MASS);
-                mobCount = Config.getIntValueForUpgrade(mob, FactoryUpgradeType.MASS, level);
-            }
-
             LOGGER.info(LOOTGEN, "generate: {} * {}", mob, mobCount);
             List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(mob, 0));
             for (int i = 0; i < mobCount; i++) {

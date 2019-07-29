@@ -5,6 +5,7 @@ import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
+import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.WootDebug;
@@ -32,6 +33,8 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
             // You can add any level 1 upgrade when it is empty
             if (FactoryUpgrade.LEVEL_1_UPGRADES.contains(type)) {
                 upgrade = type;
+                glue.onGoodbye();
+                MultiBlockTracker.get().addEntry(pos);
                 Woot.LOGGER.info("tryAddUpgrade: added {}", upgrade);
                 return true;
             }
@@ -44,6 +47,8 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
             // Can only add the same type and cannot exceed the max level
             if (currType == addType && currLevel < 3 && addLevel == currLevel + 1) {
                 upgrade = type;
+                glue.onGoodbye();
+                MultiBlockTracker.get().addEntry(pos);
                 Woot.LOGGER.info("tryAddUpgrade: added {}", upgrade);
                 return true;
             }

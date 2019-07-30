@@ -1,10 +1,16 @@
 package ipsis.woot.factory.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
+import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.items.UpgradeItem;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -18,6 +24,17 @@ public class UpgradeBlock extends FactoryBlock {
 
     public UpgradeBlock(FactoryComponent component) {
         super(component);
+        this.setDefaultState(getStateContainer().getBaseState().with(UPGRADE, FactoryUpgrade.EMPTY).with(BlockStateProperties.ATTACHED, false));
+    }
+
+    public static final EnumProperty<FactoryUpgrade> UPGRRADE_TYPE;
+    static { UPGRRADE_TYPE = EnumProperty.create("upgrade", FactoryUpgrade.class); }
+
+    public static final EnumProperty<FactoryUpgrade> UPGRADE = UPGRRADE_TYPE;
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(UPGRADE, BlockStateProperties.ATTACHED);
     }
 
     @Override
@@ -29,11 +46,8 @@ public class UpgradeBlock extends FactoryBlock {
                 UpgradeItem upgradeItem = (UpgradeItem)itemStack.getItem();
 
                 TileEntity te = worldIn.getTileEntity(pos);
-                if (te instanceof UpgradeTileEntity) {
-                    if (((UpgradeTileEntity) te).tryAddUpgrade(upgradeItem.getFactoryUpgrade())) {
-
-                    }
-                }
+                if (te instanceof UpgradeTileEntity)
+                    ((UpgradeTileEntity) te).tryAddUpgrade(state, upgradeItem.getFactoryUpgrade());
             }
         }
 
@@ -46,7 +60,7 @@ public class UpgradeBlock extends FactoryBlock {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof UpgradeTileEntity) {
-                ((UpgradeTileEntity) te).dropItems(worldIn, pos);
+                ((UpgradeTileEntity) te).dropItems(state, worldIn, pos);
             }
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }

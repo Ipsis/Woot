@@ -1,11 +1,13 @@
 package ipsis.woot.factory;
 
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.EnumSet;
 import java.util.Locale;
 
-public enum FactoryUpgrade {
+public enum FactoryUpgrade implements IStringSerializable {
+    EMPTY,
     CAPACITY_1,
     CAPACITY_2,
     CAPACITY_3,

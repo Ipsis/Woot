@@ -78,7 +78,7 @@ public class Setup {
             } else if (pb.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
                 if (te instanceof UpgradeTileEntity) {
-                    FactoryUpgrade upgrade = ((UpgradeTileEntity) te).getUpgrade();
+                    FactoryUpgrade upgrade = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));
                     if (upgrade != null ) {
                         FactoryUpgradeType type = FactoryUpgrade.getType(upgrade);
                         int level = FactoryUpgrade.getLevel(upgrade);

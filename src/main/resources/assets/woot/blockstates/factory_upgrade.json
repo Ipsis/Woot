@@ -1,5 +1,48 @@
 {
   "variants": {
-    "": { "model": "woot:block/factory_upgrade" }
+    "upgrade=empty,attached=false": { "model":  "woot:block/factory_upgrade" },
+    "upgrade=empty,attached=true": { "model":  "woot:block/factory_upgrade" },
+
+    "upgrade=capacity_1,attached=false": { "model":  "woot:block/factory_upgrade_capacity_1" },
+    "upgrade=capacity_1,attached=true": { "model":  "woot:block/factory_upgrade_capacity_1" },
+    "upgrade=capacity_2,attached=false": { "model":  "woot:block/factory_upgrade_capacity_2" },
+    "upgrade=capacity_2,attached=true": { "model":  "woot:block/factory_upgrade_capacity_2" },
+    "upgrade=capacity_3,attached=false": { "model":  "woot:block/factory_upgrade_capacity_3" },
+    "upgrade=capacity_3,attached=true": { "model":  "woot:block/factory_upgrade_capacity_3" },
+
+    "upgrade=efficiency_1,attached=false": { "model":  "woot:block/factory_upgrade_efficiency_1" },
+    "upgrade=efficiency_1,attached=true": { "model":  "woot:block/factory_upgrade_efficiency_1" },
+    "upgrade=efficiency_2,attached=false": { "model":  "woot:block/factory_upgrade_efficiency_2" },
+    "upgrade=efficiency_2,attached=true": { "model":  "woot:block/factory_upgrade_efficiency_2" },
+    "upgrade=efficiency_3,attached=false": { "model":  "woot:block/factory_upgrade_efficiency_3" },
+    "upgrade=efficiency_3,attached=true": { "model":  "woot:block/factory_upgrade_efficiency_3" },
+
+    "upgrade=looting_1,attached=false": { "model":  "woot:block/factory_upgrade_looting_1" },
+    "upgrade=looting_1,attached=true": { "model":  "woot:block/factory_upgrade_looting_1" },
+    "upgrade=looting_2,attached=false": { "model":  "woot:block/factory_upgrade_looting_2" },
+    "upgrade=looting_2,attached=true": { "model":  "woot:block/factory_upgrade_looting_2" },
+    "upgrade=looting_3,attached=false": { "model":  "woot:block/factory_upgrade_looting_3" },
+    "upgrade=looting_3,attached=true": { "model":  "woot:block/factory_upgrade_looting_3" },
+
+    "upgrade=mass_1,attached=false": { "model":  "woot:block/factory_upgrade_mass_1" },
+    "upgrade=mass_1,attached=true": { "model":  "woot:block/factory_upgrade_mass_1" },
+    "upgrade=mass_2,attached=false": { "model":  "woot:block/factory_upgrade_mass_2" },
+    "upgrade=mass_2,attached=true": { "model":  "woot:block/factory_upgrade_mass_2" },
+    "upgrade=mass_3,attached=false": { "model":  "woot:block/factory_upgrade_mass_3" },
+    "upgrade=mass_3,attached=true": { "model":  "woot:block/factory_upgrade_mass_3" },
+
+    "upgrade=rate_1,attached=false": { "model":  "woot:block/factory_upgrade_rate_1" },
+    "upgrade=rate_1,attached=true": { "model":  "woot:block/factory_upgrade_rate_1" },
+    "upgrade=rate_2,attached=false": { "model":  "woot:block/factory_upgrade_rate_2" },
+    "upgrade=rate_2,attached=true": { "model":  "woot:block/factory_upgrade_rate_2" },
+    "upgrade=rate_3,attached=false": { "model":  "woot:block/factory_upgrade_rate_3" },
+    "upgrade=rate_3,attached=true": { "model":  "woot:block/factory_upgrade_rate_3" },
+
+    "upgrade=xp_1,attached=false": { "model":  "woot:block/factory_upgrade_xp_1" },
+    "upgrade=xp_1,attached=true": { "model":  "woot:block/factory_upgrade_xp_1" },
+    "upgrade=xp_2,attached=false": { "model":  "woot:block/factory_upgrade_xp_2" },
+    "upgrade=xp_2,attached=true": { "model":  "woot:block/factory_upgrade_xp_2" },
+    "upgrade=xp_3,attached=false": { "model":  "woot:block/factory_upgrade_xp_3" },
+    "upgrade=xp_3,attached=true": { "model":  "woot:block/factory_upgrade_xp_3" }
   }
 }

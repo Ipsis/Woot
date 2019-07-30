@@ -62,17 +62,25 @@ public class Config {
         public final IntValue TIER_2_MAX_UNITS;
         public final IntValue TIER_3_MAX_UNITS;
         public final IntValue TIER_4_MAX_UNITS;
+        public final IntValue TIER_1_UNITS_PER_TICK;
+        public final IntValue TIER_2_UNITS_PER_TICK;
+        public final IntValue TIER_3_UNITS_PER_TICK;
+        public final IntValue TIER_4_UNITS_PER_TICK;
         public final String MASS_COUNT_TAG = "massCount";
         public final String SPAWN_TICKS_TAG = "spawnTicks";
         public final String MOB_HEALTH_TAG = "mobHealth";
         public final String UNITS_PER_HEALTH_TAG = "unitsPerHealth";
+        public final String MOB_TIER_TAG = "mobTier";
 
         public final String TIER_1_MAX_UNITS_TAG = "tier1MaxUnits";
         public final String TIER_2_MAX_UNITS_TAG = "tier2MaxUnits";
         public final String TIER_3_MAX_UNITS_TAG = "tier3MaxUnits";
         public final String TIER_4_MAX_UNITS_TAG = "tier4MaxUnits";
+        public final String TIER_1_UNITS_PER_TICK_TAG = "tier1UnitsPerTick";
+        public final String TIER_2_UNITS_PER_TICK_TAG = "tier2UnitsPerTick";
+        public final String TIER_3_UNITS_PER_TICK_TAG = "tier3UnitsPerTick";
+        public final String TIER_4_UNITS_PER_TICK_TAG = "tier4UnitsPerTick";
 
-        public final String MOB_TIER_TAG = "mobTier";
 
         /**
          * Upgrades
@@ -180,10 +188,27 @@ public class Config {
                         .translation(TAG + TIER_4_MAX_UNITS_TAG)
                         .defineInRange(TIER_4_MAX_UNITS_TAG, Integer.MAX_VALUE, 5, Integer.MAX_VALUE);
 
-                builder.push("power");
+                builder.push("cost");
                 {
+                    TIER_1_UNITS_PER_TICK = builder
+                            .comment("Units per tick cost to run a Tier 1 factory")
+                            .translation(TAG + TIER_1_UNITS_PER_TICK_TAG)
+                            .defineInRange(TIER_1_UNITS_PER_TICK_TAG, 19, 1, Integer.MAX_VALUE);
+                    TIER_2_UNITS_PER_TICK = builder
+                            .comment("Units per tick cost to run a Tier 2 factory")
+                            .translation(TAG + TIER_2_UNITS_PER_TICK_TAG)
+                            .defineInRange(TIER_2_UNITS_PER_TICK_TAG, 10, 1, Integer.MAX_VALUE);
+                    TIER_3_UNITS_PER_TICK = builder
+                            .comment("Units per tick cost to run a Tier 3 factory")
+                            .translation(TAG + TIER_3_UNITS_PER_TICK_TAG)
+                            .defineInRange(TIER_3_UNITS_PER_TICK_TAG, 20, 1, Integer.MAX_VALUE);
+                    TIER_4_UNITS_PER_TICK = builder
+                            .comment("Units per tick cost to run a Tier 4 factory")
+                            .translation(TAG + TIER_4_UNITS_PER_TICK_TAG)
+                            .defineInRange(TIER_4_UNITS_PER_TICK_TAG, 30, 1, Integer.MAX_VALUE);
 
                 }
+                builder.pop(); // cost
 
                 builder.push("upgrades");
                 {

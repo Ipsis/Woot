@@ -10,6 +10,7 @@ import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -25,20 +26,18 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
         super(ModBlocks.FACTORY_UPGRADE_BLOCK_TILE);
     }
 
-    FactoryUpgrade upgrade = null;
+    public void tryAddUpgrade(BlockState state, FactoryUpgrade type) {
 
-    public boolean tryAddUpgrade(FactoryUpgrade type) {
-
-        if (upgrade == null) {
+        if (state.get(UpgradeBlock.UPGRADE) == FactoryUpgrade.EMPTY) {
             // You can add any level 1 upgrade when it is empty
-            if (FactoryUpgrade.LEVEL_1_UPGRADES.contains(type)) {
-                upgrade = type;
+                world.setBlockState(pos,
+                        state.with(UpgradeBlock.UPGRADE, type), 2);
                 glue.onGoodbye();
                 MultiBlockTracker.get().addEntry(pos);
-                Woot.LOGGER.info("tryAddUpgrade: added {}", upgrade);
-                return true;
-            }
+                Woot.LOGGER.info("tryAddUpgrade: added {}", type);
+                return;
         } else {
+            FactoryUpgrade upgrade = getBlockState().get(UpgradeBlock.UPGRADE);
             FactoryUpgradeType currType = FactoryUpgrade.getType(upgrade);
             FactoryUpgradeType addType = FactoryUpgrade.getType(type);
             int currLevel = FactoryUpgrade.getLevel(upgrade);
@@ -46,18 +45,19 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
 
             // Can only add the same type and cannot exceed the max level
             if (currType == addType && currLevel < 3 && addLevel == currLevel + 1) {
-                upgrade = type;
+                world.setBlockState(pos,
+                        state.with(UpgradeBlock.UPGRADE, type), 2);
                 glue.onGoodbye();
                 MultiBlockTracker.get().addEntry(pos);
-                Woot.LOGGER.info("tryAddUpgrade: added {}", upgrade);
-                return true;
+                Woot.LOGGER.info("tryAddUpgrade: added {}", type);
+                return;
             }
         }
-        return false;
     }
 
-    public void dropItems(World world, BlockPos pos) {
-        if (upgrade == null)
+    public void dropItems(BlockState state, World world, BlockPos pos) {
+        FactoryUpgrade upgrade = state.get(UpgradeBlock.UPGRADE);
+        if (upgrade == FactoryUpgrade.EMPTY)
             return;
 
         int currLevel = FactoryUpgrade.getLevel(upgrade);
@@ -73,7 +73,9 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
         }
     }
 
-    public @Nullable FactoryUpgrade getUpgrade() { return this.upgrade; }
+    public @Nullable FactoryUpgrade getUpgrade(BlockState state) {
+        return state.get(UpgradeBlock.UPGRADE);
+    }
 
     /**
      * WootDebug
@@ -82,7 +84,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> UpgradeTileEntity");
         debug.add("      hasMaster: " + glue.hasMaster());
-        debug.add("      type: " + upgrade);
+        debug.add("      upgrade: " + world.getBlockState(pos).get(UpgradeBlock.UPGRADE));
         return debug;
     }
 }

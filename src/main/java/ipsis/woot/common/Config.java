@@ -62,10 +62,12 @@ public class Config {
         public final IntValue TIER_2_MAX_UNITS;
         public final IntValue TIER_3_MAX_UNITS;
         public final IntValue TIER_4_MAX_UNITS;
+        public final IntValue TIER_5_MAX_UNITS;
         public final IntValue TIER_1_UNITS_PER_TICK;
         public final IntValue TIER_2_UNITS_PER_TICK;
         public final IntValue TIER_3_UNITS_PER_TICK;
         public final IntValue TIER_4_UNITS_PER_TICK;
+        public final IntValue TIER_5_UNITS_PER_TICK;
         public final String MASS_COUNT_TAG = "massCount";
         public final String SPAWN_TICKS_TAG = "spawnTicks";
         public final String MOB_HEALTH_TAG = "mobHealth";
@@ -76,10 +78,12 @@ public class Config {
         public final String TIER_2_MAX_UNITS_TAG = "tier2MaxUnits";
         public final String TIER_3_MAX_UNITS_TAG = "tier3MaxUnits";
         public final String TIER_4_MAX_UNITS_TAG = "tier4MaxUnits";
+        public final String TIER_5_MAX_UNITS_TAG = "tier5MaxUnits";
         public final String TIER_1_UNITS_PER_TICK_TAG = "tier1UnitsPerTick";
         public final String TIER_2_UNITS_PER_TICK_TAG = "tier2UnitsPerTick";
         public final String TIER_3_UNITS_PER_TICK_TAG = "tier3UnitsPerTick";
         public final String TIER_4_UNITS_PER_TICK_TAG = "tier4UnitsPerTick";
+        public final String TIER_5_UNITS_PER_TICK_TAG = "tier5UnitsPerTick";
 
 
         /**
@@ -187,13 +191,17 @@ public class Config {
                         .comment("Max units for a tier 4 mob")
                         .translation(TAG + TIER_4_MAX_UNITS_TAG)
                         .defineInRange(TIER_4_MAX_UNITS_TAG, Integer.MAX_VALUE, 5, Integer.MAX_VALUE);
+                TIER_5_MAX_UNITS = builder
+                        .comment("Max units for a tier 5 mob")
+                        .translation(TAG + TIER_5_MAX_UNITS_TAG)
+                        .defineInRange(TIER_5_MAX_UNITS_TAG, Integer.MAX_VALUE, 5, Integer.MAX_VALUE);
 
                 builder.push("cost");
                 {
                     TIER_1_UNITS_PER_TICK = builder
                             .comment("Units per tick cost to run a Tier 1 factory")
                             .translation(TAG + TIER_1_UNITS_PER_TICK_TAG)
-                            .defineInRange(TIER_1_UNITS_PER_TICK_TAG, 19, 1, Integer.MAX_VALUE);
+                            .defineInRange(TIER_1_UNITS_PER_TICK_TAG, 5, 1, Integer.MAX_VALUE);
                     TIER_2_UNITS_PER_TICK = builder
                             .comment("Units per tick cost to run a Tier 2 factory")
                             .translation(TAG + TIER_2_UNITS_PER_TICK_TAG)
@@ -206,7 +214,10 @@ public class Config {
                             .comment("Units per tick cost to run a Tier 4 factory")
                             .translation(TAG + TIER_4_UNITS_PER_TICK_TAG)
                             .defineInRange(TIER_4_UNITS_PER_TICK_TAG, 30, 1, Integer.MAX_VALUE);
-
+                    TIER_5_UNITS_PER_TICK = builder
+                            .comment("Units per tick cost to run a Tier 5 factory")
+                            .translation(TAG + TIER_5_UNITS_PER_TICK_TAG)
+                            .defineInRange(TIER_5_UNITS_PER_TICK_TAG, 40, 1, Integer.MAX_VALUE);
                 }
                 builder.pop(); // cost
 
@@ -414,7 +425,8 @@ public class Config {
             if (health <= Config.COMMON.TIER_1_MAX_UNITS.get()) tier = Tier.TIER_1;
             else if (health <= Config.COMMON.TIER_2_MAX_UNITS.get()) tier = Tier.TIER_2;
             else if (health <= Config.COMMON.TIER_3_MAX_UNITS.get()) tier = Tier.TIER_3;
-            else tier = Tier.TIER_4;
+            else if (health <= Config.COMMON.TIER_4_MAX_UNITS.get()) tier = Tier.TIER_4;
+            else tier = Tier.TIER_5;
         }
         return tier;
     }

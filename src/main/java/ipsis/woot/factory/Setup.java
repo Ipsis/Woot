@@ -84,13 +84,15 @@ public class Setup {
                         int level = FactoryUpgrade.getLevel(upgrade);
 
                         /**
-                         * Tier 1 - level 1 upgrades only
-                         * Tier 2 - level 1,2 upgrades only
-                         * Tier 3+ - all upgrades
+                         * Tier 1,2 - level 1 upgrades only
+                         * Tier 3 - level 1,2 upgrades only
+                         * Tier 4+ - all upgrades
                          */
                         if (setup.tier == Tier.TIER_1 && level > 1)
                             level = 1;
-                        else if (setup.tier == Tier.TIER_2 && level > 2)
+                        else if (setup.tier == Tier.TIER_2 && level > 1)
+                            level = 1;
+                        else if (setup.tier == Tier.TIER_3 && level > 2)
                             level = 2;
 
                         setup.upgrades.put(type, level);

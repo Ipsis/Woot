@@ -17,12 +17,12 @@ public class PatternRepository {
     static { INSTANCE = new PatternRepository(); }
 
     public void load() {
-        // TODO create a basic tier with one upgrade and one controller
         createRawPatterns();
         createPattern(Tier.TIER_1);
         createPattern(Tier.TIER_2);
         createPattern(Tier.TIER_3);
         createPattern(Tier.TIER_4);
+        createPattern(Tier.TIER_5);
     }
 
     void createPattern(Tier tier) {
@@ -176,24 +176,25 @@ public class PatternRepository {
     EnumMap<Tier, String[][]> rawPatterns = new EnumMap<>(Tier.class);
     void createRawPatterns() {
 
-        final String TIER_1_PATTERN = "[cde234]";
-        final String TIER_2_PATTERN = "[de34]";
-        final String TIER_3_PATTERN = "[e3]";
-        final String TIER_4_PATTERN = "";
-        addTier(Tier.TIER_1, TIER_1_PATTERN);
-        addTier(Tier.TIER_2, TIER_2_PATTERN);
-        addTier(Tier.TIER_3, TIER_3_PATTERN);
-        addTier(Tier.TIER_4, TIER_4_PATTERN);
+        final String TIER_2_PATTERN = "[cde234]";
+        final String TIER_3_PATTERN = "[de34]";
+        final String TIER_4_PATTERN = "[e3]";
+        final String TIER_5_PATTERN = "";
+        addTier(Tier.TIER_1, "", LAYOUT1);
+        addTier(Tier.TIER_2, TIER_2_PATTERN, LAYOUT);
+        addTier(Tier.TIER_3, TIER_3_PATTERN, LAYOUT);
+        addTier(Tier.TIER_4, TIER_4_PATTERN, LAYOUT);
+        addTier(Tier.TIER_5, TIER_5_PATTERN, LAYOUT);
     }
 
-    void addTier(Tier tier, String pattern) {
-       String[][] tmp = new String[LAYOUT.length][LAYOUT[0].length];
+    void addTier(Tier tier, String pattern, String[][] layout) {
+       String[][] tmp = new String[layout.length][layout[0].length];
        for (int i = 0; i < tmp.length; i++) {
            for (int j = 0; j < tmp[i].length; j++) {
                if (!pattern.isEmpty())
-                   tmp[i][j] = LAYOUT[i][j].replaceAll(pattern, WILDSTAR_CHAR.toString());
+                   tmp[i][j] = layout[i][j].replaceAll(pattern, WILDSTAR_CHAR.toString());
                else
-                   tmp[i][j] = LAYOUT[i][j];
+                   tmp[i][j] = layout[i][j];
            }
        }
 
@@ -226,6 +227,89 @@ public class PatternRepository {
         CHAR_MAPPINGS.put('C', FactoryComponent.CONTROLLER);
     }
 
+    private final String LAYOUT1[][] = {
+            {
+                    "-------",
+                    "-------",
+                    "---E---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "-------",
+                    "---I---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "-------",
+                    "---z---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "-------",
+                    "---z---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "---y---",
+                    "---a---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "---C---",
+                    "---a---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "-------",
+                    "---U---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "-------",
+                    "---H---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
+            {
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            }
+    };
 
     /**
      * First line is the front of the structure
@@ -233,26 +317,26 @@ public class PatternRepository {
     private final String LAYOUT[][] = {
             {
                     "-------",
-                    "---E---",
                     "-------",
+                    "---E---",
                     "-------",
                     "-------",
                     "-------",
                     "-------",
             },
             {
+                    "-------",
                     "-------",
                     "---I---",
                     "-------",
                     "-------",
                     "-------",
                     "-------",
-                    "-------",
             },
             {
                     "-------",
-                    "---z---",
                     "-------",
+                    "---z---",
                     "-------",
                     "-------",
                     "-------",
@@ -279,7 +363,7 @@ public class PatternRepository {
             {
                     "-4---4-",
                     "4dcCcd4",
-                    "-cbbbc-",
+                    "-cbabc-",
                     "-CbbbC-",
                     "-cbbbc-",
                     "4dcCcd4",
@@ -288,9 +372,9 @@ public class PatternRepository {
             {
                     "-------",
                     "-3c-c3-",
-                    "-caUac-",
+                    "-cbUbc-",
                     "--UaU--",
-                    "-caUac-",
+                    "-cbUbc-",
                     "-3c-c3-",
                     "-------",
             },

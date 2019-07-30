@@ -60,10 +60,12 @@
   "info.woot.intern.mode.build_2": "Build a Tier 2 factory",
   "info.woot.intern.mode.build_3": "Build a Tier 3 factory",
   "info.woot.intern.mode.build_4": "Build a Tier 4 factory",
+  "info.woot.intern.mode.build_5": "Build a Tier 5 factory",
   "info.woot.intern.mode.validate_1": "Validate a Tier 1 factory",
   "info.woot.intern.mode.validate_2": "Validate a Tier 2 factory",
   "info.woot.intern.mode.validate_3": "Validate a Tier 3 factory",
   "info.woot.intern.mode.validate_4": "Validate a Tier 4 factory",
+  "info.woot.intern.mode.validate_5": "Validate a Tier 5 factory",
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",

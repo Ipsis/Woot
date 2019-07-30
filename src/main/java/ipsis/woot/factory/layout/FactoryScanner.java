@@ -39,6 +39,7 @@ public class FactoryScanner {
 
             Woot.LOGGER.info("scanForTier: {}", tier);
             AbsolutePattern absolutePattern = scanTier(world, tier, origin, facing);
+            Woot.LOGGER.info("scanForTier: {}", absolutePattern == null ? "bad" : "good");
             if (absolutePattern != null)
                 return absolutePattern;
         }
@@ -166,6 +167,7 @@ public class FactoryScanner {
             valid = false;
         }
 
+        //feedback.forEach(s -> Woot.LOGGER.info("compareToWorld: {}", s));
         return valid;
     }
 }

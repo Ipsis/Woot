@@ -1,5 +1,6 @@
 package ipsis.woot.tools;
 
+import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.factory.blocks.heart.HeartBlock;
@@ -54,14 +55,16 @@ public class InternItem extends WootItem {
         BUILD_2(Tier.TIER_2),
         BUILD_3(Tier.TIER_3),
         BUILD_4(Tier.TIER_4),
+        BUILD_5(Tier.TIER_5),
         VALIDATE_1(Tier.TIER_1),
         VALIDATE_2(Tier.TIER_2),
         VALIDATE_3(Tier.TIER_3),
-        VALIDATE_4(Tier.TIER_4);
+        VALIDATE_4(Tier.TIER_4),
+        VALIDATE_5(Tier.TIER_5);
 
         public static ToolMode[] VALUES = values();
-        private static EnumSet<ToolMode> BUILD_MODES = EnumSet.range(BUILD_1, BUILD_4);
-        private static EnumSet<ToolMode> VALIDATE_TIERS = EnumSet.range(VALIDATE_1, VALIDATE_4);
+        private static EnumSet<ToolMode> BUILD_MODES = EnumSet.range(BUILD_1, BUILD_5);
+        private static EnumSet<ToolMode> VALIDATE_TIERS = EnumSet.range(VALIDATE_1, VALIDATE_5);
 
         public ToolMode getNext() {
             return VALUES[(this.ordinal() + 1) % VALUES.length];
@@ -129,8 +132,16 @@ public class InternItem extends WootItem {
     }
 
     @Override
+    public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        // This is where we should be handling the intern usageA
+        // Waiting on Forge #5976 (?)
+        return ActionResultType.PASS;
+    }
+
+    @Override
     public ActionResultType onItemUse(ItemUseContext context) {
 
+        Woot.LOGGER.info("onItemUse: client:{}", context.getWorld().isRemote);
         ActionResultType result = ActionResultType.PASS;
         /*if (!context.getWorld().isRemote) */
             ItemStack itemStack = context.getItem();

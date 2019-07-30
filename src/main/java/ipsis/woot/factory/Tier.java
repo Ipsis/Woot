@@ -8,12 +8,14 @@ public enum Tier {
     TIER_1,
     TIER_2,
     TIER_3,
-    TIER_4;
+    TIER_4,
+    TIER_5;
 
     static final EnumSet<Tier> VALID_FOR_TIER_1 = EnumSet.of(TIER_1);
     static final EnumSet<Tier> VALID_FOR_TIER_2 = EnumSet.range(TIER_1, TIER_2);
     static final EnumSet<Tier> VALID_FOR_TIER_3 = EnumSet.range(TIER_1, TIER_3);
     static final EnumSet<Tier> VALID_FOR_TIER_4 = EnumSet.range(TIER_1, TIER_4);
+    static final EnumSet<Tier> VALID_FOR_TIER_5 = EnumSet.range(TIER_1, TIER_5);
 
     public static Tier[] VALUES = values();
 
@@ -42,6 +44,7 @@ public enum Tier {
         if (this == TIER_2) return VALID_FOR_TIER_2.contains(check);
         if (this == TIER_3) return VALID_FOR_TIER_3.contains(check);
         if (this == TIER_4) return VALID_FOR_TIER_4.contains(check);
+        if (this == TIER_5) return VALID_FOR_TIER_5.contains(check);
         return false;
 
     }

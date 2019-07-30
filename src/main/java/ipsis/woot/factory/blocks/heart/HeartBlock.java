@@ -3,6 +3,7 @@ package ipsis.woot.factory.blocks.heart;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
+import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
@@ -13,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -61,6 +63,10 @@ public class HeartBlock extends WootBlock implements FactoryComponentProvider, W
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+
+        ItemStack itemStack = player.getHeldItem(handIn);
+        if (itemStack.getItem() == ModItems.INTERN_ITEM)
+            return true;
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof INamedContainerProvider)

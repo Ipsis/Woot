@@ -15,8 +15,10 @@ import java.util.List;
 
 public class DebugItem extends WootItem {
 
+    public static final String REGNAME = "debug";
+
     public DebugItem() {
-        super(new Item.Properties().maxStackSize(1), "debug");
+        super(new Item.Properties().maxStackSize(1), REGNAME);
     }
 
     @Override

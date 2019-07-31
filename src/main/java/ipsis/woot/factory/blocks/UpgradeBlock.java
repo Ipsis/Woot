@@ -1,6 +1,5 @@
 package ipsis.woot.factory.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.items.UpgradeItem;
@@ -22,8 +21,10 @@ import javax.annotation.Nullable;
 
 public class UpgradeBlock extends FactoryBlock {
 
+    public static final String REGNAME = "factory_upgrade";
+
     public UpgradeBlock(FactoryComponent component) {
-        super(component);
+        super(component, REGNAME);
         this.setDefaultState(getStateContainer().getBaseState().with(UPGRADE, FactoryUpgrade.EMPTY).with(BlockStateProperties.ATTACHED, false));
     }
 

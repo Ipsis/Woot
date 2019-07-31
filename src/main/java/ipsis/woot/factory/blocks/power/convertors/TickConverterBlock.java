@@ -11,8 +11,10 @@ import javax.annotation.Nullable;
 
 public class TickConverterBlock extends WootBlock {
 
+    public static final String REGNAME = "tick_conv";
+
     public TickConverterBlock() {
-        super(Block.Properties.create(Material.IRON), "tick_conv");
+        super(Block.Properties.create(Material.IRON), REGNAME);
     }
 
     @Override

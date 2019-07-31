@@ -32,8 +32,10 @@ import java.util.List;
 
 public class HeartBlock extends WootBlock implements FactoryComponentProvider, WootDebug {
 
+    public static final String REGNAME = "heart";
+
     public HeartBlock() {
-        super(Properties.create(Material.IRON) .sound(SoundType.METAL), "heart");
+        super(Properties.create(Material.IRON).sound(SoundType.METAL), REGNAME);
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
 

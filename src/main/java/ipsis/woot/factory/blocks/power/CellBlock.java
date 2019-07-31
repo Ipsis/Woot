@@ -17,6 +17,10 @@ import java.util.List;
 
 public class CellBlock extends WootBlock implements WootDebug, FactoryComponentProvider {
 
+    public static final String CELL_1_REGNAME = "cell_1";
+    public static final String CELL_2_REGNAME = "cell_2";
+    public static final String CELL_3_REGNAME = "cell_3";
+
     final Class<? extends CellTileEntityBase> tileEntityClazz;
     public CellBlock(String name, Class<? extends CellTileEntityBase> clazz) {
         super(Properties.create(Material.IRON).sound(SoundType.METAL), name);

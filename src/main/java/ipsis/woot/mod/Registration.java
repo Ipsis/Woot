@@ -41,24 +41,24 @@ public class Registration {
         event.getRegistry().register(new HeartBlock());
         event.getRegistry().register(new ControllerBlock());
         event.getRegistry().register(new LayoutBlock());
-        event.getRegistry().register(new CellBlock("cell_1", Cell1TileEntity.class));
-        event.getRegistry().register(new CellBlock("cell_2", Cell2TileEntity.class));
-        event.getRegistry().register(new CellBlock("cell_3", Cell3TileEntity.class));
+        event.getRegistry().register(new CellBlock(CellBlock.CELL_1_REGNAME, Cell1TileEntity.class));
+        event.getRegistry().register(new CellBlock(CellBlock.CELL_2_REGNAME, Cell2TileEntity.class));
+        event.getRegistry().register(new CellBlock(CellBlock.CELL_3_REGNAME, Cell3TileEntity.class));
         event.getRegistry().register(new TickConverterBlock());
 
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_A));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_B));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_C));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_D));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_E));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_A));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_B));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_C));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_D));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_CONNECT));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_CTR_BASE));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.IMPORT));
-        event.getRegistry().register(new FactoryBlock(FactoryComponent.EXPORT));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_A, FactoryBlock.FACTORY_A_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_B, FactoryBlock.FACTORY_B_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_C, FactoryBlock.FACTORY_C_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_D, FactoryBlock.FACTORY_D_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_E, FactoryBlock.FACTORY_E_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_A, FactoryBlock.CAP_A_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_B, FactoryBlock.CAP_B_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_C, FactoryBlock.CAP_C_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.CAP_D, FactoryBlock.CAP_D_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_CONNECT, FactoryBlock.FACTORY_CONNECT_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_CTR_BASE, FactoryBlock.FACTORY_CTR_BASE_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.IMPORT, FactoryBlock.IMPORT_REGNAME));
+        event.getRegistry().register(new FactoryBlock(FactoryComponent.EXPORT, FactoryBlock.EXPORT_REGNAME));
         event.getRegistry().register(new UpgradeBlock(FactoryComponent.FACTORY_UPGRADE));
     }
 
@@ -71,60 +71,60 @@ public class Registration {
         event.getRegistry().register(new DebugItem());
         event.getRegistry().register(new InternItem());
 
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_1));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_2));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_3));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_1));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_2));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_3));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_1));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_2));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_3));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_1));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_2));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_3));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_1));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_2));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_3));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_1));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_2));
-        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_3));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_1, UpgradeItem.CAPACITY_1_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_2, UpgradeItem.CAPACITY_2_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_3, UpgradeItem.CAPACITY_3_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_1, UpgradeItem.EFFICIENCY_1_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_2, UpgradeItem.EFFICIENCY_2_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.EFFICIENCY_3, UpgradeItem.EFFICIENCY_3_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_1, UpgradeItem.LOOTING_1_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_2, UpgradeItem.LOOTING_2_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.LOOTING_3, UpgradeItem.LOOTING_3_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_1, UpgradeItem.MASS_1_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_2, UpgradeItem.MASS_2_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.MASS_3, UpgradeItem.MASS_3_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_1, UpgradeItem.RATE_1_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_2, UpgradeItem.RATE_2_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.RATE_3, UpgradeItem.RATE_3_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_1, UpgradeItem.XP_1_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_2, UpgradeItem.XP_2_REGNAME));
+        event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_3, UpgradeItem.XP_3_REGNAME));
 
-        event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, "controller"));
-        event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, "heart"));
-        event.getRegistry().register(new BlockItem(ModBlocks.LAYOUT_BLOCK, properties).setRegistryName(Woot.MODID, "layout"));
-        event.getRegistry().register(new BlockItem(ModBlocks.TICK_CONVERTER_BLOCK, properties).setRegistryName(Woot.MODID, "tick_conv"));
-        event.getRegistry().register(new BlockItem(ModBlocks.CELL_1_BLOCK, properties).setRegistryName(Woot.MODID, "cell_1"));
-        event.getRegistry().register(new BlockItem(ModBlocks.CELL_2_BLOCK, properties).setRegistryName(Woot.MODID, "cell_2"));
-        event.getRegistry().register(new BlockItem(ModBlocks.CELL_3_BLOCK, properties).setRegistryName(Woot.MODID, "cell_3"));
+        event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.LAYOUT_BLOCK, properties).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.TICK_CONVERTER_BLOCK, properties).setRegistryName(Woot.MODID, TickConverterBlock.REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CELL_1_BLOCK, properties).setRegistryName(Woot.MODID, CellBlock.CELL_1_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CELL_2_BLOCK, properties).setRegistryName(Woot.MODID, CellBlock.CELL_2_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CELL_3_BLOCK, properties).setRegistryName(Woot.MODID, CellBlock.CELL_3_REGNAME));
 
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_A_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_A.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_B_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_B.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_C_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_C.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_D_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_D.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_E_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_E.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.CAP_A_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.CAP_A.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.CAP_B_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.CAP_B.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.CAP_C_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.CAP_C.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.CAP_D_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.CAP_D.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_CONNECT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_CONNECT.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_CTR_BASE_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_CTR_BASE.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.IMPORT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.IMPORT.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.EXPORT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.EXPORT.getName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_UPGRADE_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_UPGRADE.getName()));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_A_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_A_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_B_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_B_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_C_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_C_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_D_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_D_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_E_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_E_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CAP_A_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.CAP_A_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CAP_B_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.CAP_B_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CAP_C_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.CAP_C_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.CAP_D_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.CAP_D_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_CONNECT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_CONNECT_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_CTR_BASE_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.FACTORY_CTR_BASE_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.IMPORT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.IMPORT_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.EXPORT_BLOCK, properties).setRegistryName(Woot.MODID, FactoryBlock.EXPORT_REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_UPGRADE_BLOCK, properties).setRegistryName(Woot.MODID, UpgradeBlock.REGNAME));
     }
 
     @SubscribeEvent
     public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
         Woot.LOGGER.info("registerTileEntities");
-        event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, "heart"));
-        event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, "controller"));
-        event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, "layout"));
-        event.getRegistry().register(TileEntityType.Builder.create(UpgradeTileEntity::new, ModBlocks.FACTORY_UPGRADE_BLOCK).build(null).setRegistryName(Woot.MODID, "factory_upgrade"));
-        event.getRegistry().register(TileEntityType.Builder.create(TickConverterTileEntity::new, ModBlocks.TICK_CONVERTER_BLOCK).build(null).setRegistryName(Woot.MODID, "tick_conv"));
-        event.getRegistry().register(TileEntityType.Builder.create(Cell1TileEntity::new, ModBlocks.CELL_1_BLOCK).build(null).setRegistryName(Woot.MODID, "cell_1"));
-        event.getRegistry().register(TileEntityType.Builder.create(Cell2TileEntity::new, ModBlocks.CELL_2_BLOCK).build(null).setRegistryName(Woot.MODID, "cell_2"));
-        event.getRegistry().register(TileEntityType.Builder.create(Cell3TileEntity::new, ModBlocks.CELL_3_BLOCK).build(null).setRegistryName(Woot.MODID, "cell_3"));
+        event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(UpgradeTileEntity::new, ModBlocks.FACTORY_UPGRADE_BLOCK).build(null).setRegistryName(Woot.MODID, UpgradeBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(TickConverterTileEntity::new, ModBlocks.TICK_CONVERTER_BLOCK).build(null).setRegistryName(Woot.MODID, TickConverterBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(Cell1TileEntity::new, ModBlocks.CELL_1_BLOCK).build(null).setRegistryName(Woot.MODID, CellBlock.CELL_1_REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(Cell2TileEntity::new, ModBlocks.CELL_2_BLOCK).build(null).setRegistryName(Woot.MODID, CellBlock.CELL_2_REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(Cell3TileEntity::new, ModBlocks.CELL_3_BLOCK).build(null).setRegistryName(Woot.MODID, CellBlock.CELL_3_REGNAME));
 
 
         event.getRegistry().register(TileEntityType.Builder.create(
@@ -134,7 +134,7 @@ public class Registration {
                 ModBlocks.CAP_A_BLOCK, ModBlocks.CAP_B_BLOCK, ModBlocks.CAP_C_BLOCK, ModBlocks.CAP_D_BLOCK,
                 ModBlocks.FACTORY_CONNECT_BLOCK,
                 ModBlocks.FACTORY_CTR_BASE_BLOCK)
-                .build(null).setRegistryName(Woot.MODID, "multiblock"));
+                .build(null).setRegistryName(Woot.MODID, MultiBlockTileEntity.REGNAME));
     }
 
     @SubscribeEvent
@@ -143,7 +143,7 @@ public class Registration {
         event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
             BlockPos pos = data.readBlockPos();
             return new HeartContainer(windowId, Minecraft.getInstance().world, pos, inv, Minecraft.getInstance().player);
-        }).setRegistryName("heart"));
+        }).setRegistryName(HeartBlock.REGNAME));
     }
 
     @SubscribeEvent

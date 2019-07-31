@@ -45,8 +45,10 @@ import java.util.Locale;
  */
 public class InternItem extends WootItem {
 
+    public static final String REGNAME = "intern";
+
     public InternItem() {
-        super(new Item.Properties().maxStackSize(1), "intern");
+        super(new Item.Properties().maxStackSize(1), REGNAME);
     }
 
     public enum ToolMode {

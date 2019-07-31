@@ -32,8 +32,10 @@ import java.util.List;
 
 public class ControllerBlock extends WootBlock implements FactoryComponentProvider, WootDebug {
 
+    public static final String REGNAME = "controller";
+
     public ControllerBlock() {
-        super(Properties.create(Material.IRON) .sound(SoundType.METAL), "controller");
+        super(Properties.create(Material.IRON) .sound(SoundType.METAL), REGNAME);
     }
 
     @Override

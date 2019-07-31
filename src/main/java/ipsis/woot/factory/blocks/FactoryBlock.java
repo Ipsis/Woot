@@ -22,14 +22,28 @@ import java.util.List;
 public class FactoryBlock extends WootBlock implements FactoryComponentProvider, WootDebug {
 
     private final FactoryComponent component;
+
+    public static final String FACTORY_A_REGNAME = "factory_a";
+    public static final String FACTORY_B_REGNAME = "factory_b";
+    public static final String FACTORY_C_REGNAME = "factory_c";
+    public static final String FACTORY_D_REGNAME = "factory_d";
+    public static final String FACTORY_E_REGNAME = "factory_e";
+    public static final String CAP_A_REGNAME = "cap_a";
+    public static final String CAP_B_REGNAME = "cap_b";
+    public static final String CAP_C_REGNAME = "cap_c";
+    public static final String CAP_D_REGNAME = "cap_d";
+    public static final String FACTORY_CONNECT_REGNAME = "factory_connect";
+    public static final String FACTORY_CTR_BASE_REGNAME = "factory_ctr_base";
+    public static final String IMPORT_REGNAME = "import";
+    public static final String EXPORT_REGNAME = "export";
     /*
     private static final VoxelShape SHAPE =
             Block.makeCuboidShape(
                     15.0D, 15.0D, 15.0D,
                     15.0D, 15.0D, 15.0D); */
 
-    public FactoryBlock(FactoryComponent component) {
-        super(Block.Properties.create(Material.IRON), component.getName());
+    public FactoryBlock(FactoryComponent component, String name) {
+        super(Block.Properties.create(Material.IRON), name);
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
         this.component = component;
     }

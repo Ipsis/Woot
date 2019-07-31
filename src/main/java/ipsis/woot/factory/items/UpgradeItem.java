@@ -10,10 +10,29 @@ import net.minecraft.util.math.MathHelper;
 
 public class UpgradeItem extends WootItem {
 
+    public static final String CAPACITY_1_REGNAME = "capacity_1";
+    public static final String CAPACITY_2_REGNAME = "capacity_2";
+    public static final String CAPACITY_3_REGNAME = "capacity_3";
+    public static final String EFFICIENCY_1_REGNAME = "efficiency_1";
+    public static final String EFFICIENCY_2_REGNAME = "efficiency_2";
+    public static final String EFFICIENCY_3_REGNAME = "efficiency_3";
+    public static final String LOOTING_1_REGNAME = "looting_1";
+    public static final String LOOTING_2_REGNAME = "looting_2";
+    public static final String LOOTING_3_REGNAME = "looting_3";
+    public static final String MASS_1_REGNAME = "mass_1";
+    public static final String MASS_2_REGNAME = "mass_2";
+    public static final String MASS_3_REGNAME = "mass_3";
+    public static final String RATE_1_REGNAME = "rate_1";
+    public static final String RATE_2_REGNAME = "rate_2";
+    public static final String RATE_3_REGNAME = "rate_3";
+    public static final String XP_1_REGNAME = "xp_1";
+    public static final String XP_2_REGNAME = "xp_2";
+    public static final String XP_3_REGNAME = "xp_3";
+
     final FactoryUpgrade upgrade;
 
-    public UpgradeItem(FactoryUpgrade upgrade) {
-        super(new Item.Properties(), upgrade.getName());
+    public UpgradeItem(FactoryUpgrade upgrade, String name) {
+        super(new Item.Properties(), name);
         this.upgrade = upgrade;
     }
 

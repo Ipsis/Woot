@@ -11,6 +11,8 @@ import java.util.List;
 
 public class MultiBlockTileEntity extends TileEntity implements MultiBlockGlueProvider, WootDebug {
 
+    public static final String REGNAME = "multiblock";
+
     protected MultiBlockGlue glue;
 
     public MultiBlockTileEntity(TileEntityType type) {

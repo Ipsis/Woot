@@ -19,8 +19,10 @@ import javax.annotation.Nullable;
 
 public class LayoutBlock extends WootBlock {
 
+    public static final String REGNAME = "layout";
+
     public LayoutBlock() {
-        super(Block.Properties.create(Material.GLASS), "layout");
+        super(Block.Properties.create(Material.GLASS), REGNAME);
     }
 
     @Override

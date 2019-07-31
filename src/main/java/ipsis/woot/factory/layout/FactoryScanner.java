@@ -54,56 +54,6 @@ public class FactoryScanner {
         return valid ? absolutePattern : null;
     }
 
-    /*
-
-    public static AbsolutePattern compareToWorldQuick(AbsolutePattern absolutePattern, World world) {
-
-        int controllerCount = 0;
-        for (PatternBlock p : absolutePattern.getBlocks()) {
-
-            // Don't load an unloaded chunk
-            if (!world.isBlockLoaded(p.getBlockPos()))
-                return null;
-
-            BlockState currState = world.getBlockState(p.getBlockPos());
-            Block currBlock = currState.getBlock();
-
-            if (!(currBlock instanceof FactoryComponentProvider)) {
-                Woot.LOGGER.info("compareToWorldQuick: not a component {}", currBlock);
-                return null;
-            }
-
-            FactoryComponentProvider factoryComponent = (FactoryComponentProvider)currBlock;
-            if (!FactoryComponent.isSameComponentFuzzy(factoryComponent.getFactoryComponent(), p.getFactoryComponent())) {
-                Woot.LOGGER.info("compareToWorldQuick: not same component {} {}", factoryComponent.getFactoryComponent(), p.getFactoryComponent());
-                return null;
-            }
-
-            if (p.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                TileEntity te = world.getTileEntity(p.getBlockPos());
-                if (te instanceof ControllerTileEntity) {
-                    FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
-                    Tier mobTier = WootConfig.get().getMobTier(fakeMob, world);
-                    if (!absolutePattern.getTier().isValidForTier(mobTier)) {
-                        Woot.LOGGER.info("compareToWorldQuick: mob {} not valid for {}",
-                                fakeMob, absolutePattern.getTier());
-                        return null;
-                    } else {
-                        controllerCount++;
-                    }
-                    // TODO blacklisted ???
-                }
-            }
-        }
-
-        if (controllerCount == 0) {
-            Woot.LOGGER.info("compareToWorldQuick: no valid controllers");
-            return null;
-        }
-
-        return absolutePattern;
-    } */
-
     public static boolean compareToWorld(AbsolutePattern absolutePattern, World world, List<String> feedback) {
 
         boolean valid = true;

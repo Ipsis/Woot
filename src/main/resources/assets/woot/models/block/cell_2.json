@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "woot:block/cell_2",
+    "all": "woot:block/cell_2"
+  }
+}

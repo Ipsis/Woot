@@ -4,6 +4,10 @@ import ipsis.woot.factory.blocks.*;
 import ipsis.woot.factory.blocks.heart.HeartBlock;
 import ipsis.woot.factory.blocks.heart.HeartContainer;
 import ipsis.woot.factory.blocks.heart.HeartTileEntity;
+import ipsis.woot.factory.blocks.power.CellBlock;
+import ipsis.woot.factory.blocks.power.Cell1TileEntity;
+import ipsis.woot.factory.blocks.power.convertors.TickConverterBlock;
+import ipsis.woot.factory.blocks.power.convertors.TickConverterTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
@@ -32,6 +36,24 @@ public class ModBlocks {
     public static FactoryBlock IMPORT_BLOCK;
     @ObjectHolder("woot:export")
     public static FactoryBlock EXPORT_BLOCK;
+
+    @ObjectHolder("woot:cell_1")
+    public static CellBlock CELL_1_BLOCK;
+    @ObjectHolder("woot:cell_1")
+    public static TileEntityType<Cell1TileEntity> CELL_1_BLOCK_TILE;
+    @ObjectHolder("woot:cell_2")
+    public static CellBlock CELL_2_BLOCK;
+    @ObjectHolder("woot:cell_2")
+    public static TileEntityType<Cell1TileEntity> CELL_2_BLOCK_TILE;
+    @ObjectHolder("woot:cell_3")
+    public static CellBlock CELL_3_BLOCK;
+    @ObjectHolder("woot:cell_3")
+    public static TileEntityType<Cell1TileEntity> CELL_3_BLOCK_TILE;
+
+    @ObjectHolder("woot:tick_conv")
+    public static TickConverterBlock TICK_CONVERTER_BLOCK;
+    @ObjectHolder("woot:tick_conv")
+    public static TileEntityType<TickConverterTileEntity> TICK_CONVERTER_BLOCK_TILE;
 
     @ObjectHolder("woot:multiblock")
     public static TileEntityType<MultiBlockTileEntity> MULTIBLOCK_BLOCK_TILE;

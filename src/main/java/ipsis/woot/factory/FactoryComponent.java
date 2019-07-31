@@ -19,7 +19,8 @@ public enum FactoryComponent {
     CAP_D,
     IMPORT,
     EXPORT,
-    CONTROLLER;
+    CONTROLLER,
+    CELL;
 
     public static FactoryComponent[] VALUES = values();
     public String getName() { return name().toLowerCase(Locale.ROOT); }

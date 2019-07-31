@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This is my workaround for Forge #5883
+ */
 public class MultiBlockTracker {
 
     public static MultiBlockTracker get() { return INSTANCE; }

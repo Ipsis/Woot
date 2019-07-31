@@ -29,6 +29,10 @@
   "block.woot.import": "Factory Importer",
   "block.woot.export": "Factory Exporter",
   "block.woot.controller": "Factory Controller",
+  "block.woot.cell_1": "Basic Cell",
+  "block.woot.cell_2": "Advanced Cell",
+  "block.woot.cell_3": "Premium Cell",
+  "block.woot.tick_conv": "Tick Converter",
 
   # Item Names
   "item.woot.debug": "Debug",

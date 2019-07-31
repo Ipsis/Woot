@@ -225,9 +225,19 @@ public class PatternRepository {
         CHAR_MAPPINGS.put('4', FactoryComponent.CAP_D);
         CHAR_MAPPINGS.put(HEART_CHAR, FactoryComponent.HEART);
         CHAR_MAPPINGS.put('C', FactoryComponent.CONTROLLER);
+        CHAR_MAPPINGS.put('P', FactoryComponent.CELL);
     }
 
     private final String LAYOUT1[][] = {
+            {
+                    "-------",
+                    "-------",
+                    "---P---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
             {
                     "-------",
                     "-------",
@@ -315,6 +325,15 @@ public class PatternRepository {
      * First line is the front of the structure
      */
     private final String LAYOUT[][] = {
+            {
+                    "-------",
+                    "-------",
+                    "---P---",
+                    "-------",
+                    "-------",
+                    "-------",
+                    "-------",
+            },
             {
                     "-------",
                     "-------",

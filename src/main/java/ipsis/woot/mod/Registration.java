@@ -8,6 +8,9 @@ import ipsis.woot.factory.blocks.*;
 import ipsis.woot.factory.blocks.heart.HeartBlock;
 import ipsis.woot.factory.blocks.heart.HeartContainer;
 import ipsis.woot.factory.blocks.heart.HeartTileEntity;
+import ipsis.woot.factory.blocks.power.*;
+import ipsis.woot.factory.blocks.power.convertors.TickConverterBlock;
+import ipsis.woot.factory.blocks.power.convertors.TickConverterTileEntity;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.tools.InternItem;
@@ -38,6 +41,10 @@ public class Registration {
         event.getRegistry().register(new HeartBlock());
         event.getRegistry().register(new ControllerBlock());
         event.getRegistry().register(new LayoutBlock());
+        event.getRegistry().register(new CellBlock("cell_1", Cell1TileEntity.class));
+        event.getRegistry().register(new CellBlock("cell_2", Cell2TileEntity.class));
+        event.getRegistry().register(new CellBlock("cell_3", Cell3TileEntity.class));
+        event.getRegistry().register(new TickConverterBlock());
 
         event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_A));
         event.getRegistry().register(new FactoryBlock(FactoryComponent.FACTORY_B));
@@ -86,6 +93,10 @@ public class Registration {
         event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, "heart"));
         event.getRegistry().register(new BlockItem(ModBlocks.LAYOUT_BLOCK, properties).setRegistryName(Woot.MODID, "layout"));
+        event.getRegistry().register(new BlockItem(ModBlocks.TICK_CONVERTER_BLOCK, properties).setRegistryName(Woot.MODID, "tick_conv"));
+        event.getRegistry().register(new BlockItem(ModBlocks.CELL_1_BLOCK, properties).setRegistryName(Woot.MODID, "cell_1"));
+        event.getRegistry().register(new BlockItem(ModBlocks.CELL_2_BLOCK, properties).setRegistryName(Woot.MODID, "cell_2"));
+        event.getRegistry().register(new BlockItem(ModBlocks.CELL_3_BLOCK, properties).setRegistryName(Woot.MODID, "cell_3"));
 
         event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_A_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_A.getName()));
         event.getRegistry().register(new BlockItem(ModBlocks.FACTORY_B_BLOCK, properties).setRegistryName(Woot.MODID, FactoryComponent.FACTORY_B.getName()));
@@ -110,6 +121,12 @@ public class Registration {
         event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, "controller"));
         event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, "layout"));
         event.getRegistry().register(TileEntityType.Builder.create(UpgradeTileEntity::new, ModBlocks.FACTORY_UPGRADE_BLOCK).build(null).setRegistryName(Woot.MODID, "factory_upgrade"));
+        event.getRegistry().register(TileEntityType.Builder.create(TickConverterTileEntity::new, ModBlocks.TICK_CONVERTER_BLOCK).build(null).setRegistryName(Woot.MODID, "tick_conv"));
+        event.getRegistry().register(TileEntityType.Builder.create(Cell1TileEntity::new, ModBlocks.CELL_1_BLOCK).build(null).setRegistryName(Woot.MODID, "cell_1"));
+        event.getRegistry().register(TileEntityType.Builder.create(Cell2TileEntity::new, ModBlocks.CELL_2_BLOCK).build(null).setRegistryName(Woot.MODID, "cell_2"));
+        event.getRegistry().register(TileEntityType.Builder.create(Cell3TileEntity::new, ModBlocks.CELL_3_BLOCK).build(null).setRegistryName(Woot.MODID, "cell_3"));
+
+
         event.getRegistry().register(TileEntityType.Builder.create(
                 MultiBlockTileEntity::new,
                 ModBlocks.IMPORT_BLOCK, ModBlocks.EXPORT_BLOCK,

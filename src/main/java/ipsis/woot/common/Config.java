@@ -85,6 +85,21 @@ public class Config {
         public final String TIER_4_UNITS_PER_TICK_TAG = "tier4UnitsPerTick";
         public final String TIER_5_UNITS_PER_TICK_TAG = "tier5UnitsPerTick";
 
+        /**
+         * Cells
+         */
+        public final IntValue CELL_1_CAPACITY;
+        public final IntValue CELL_1_MAX_TRANSFER;
+        public final IntValue CELL_2_CAPACITY;
+        public final IntValue CELL_2_MAX_TRANSFER;
+        public final IntValue CELL_3_CAPACITY;
+        public final IntValue CELL_3_MAX_TRANSFER;
+        public final String CELL_1_CAPACITY_TAG = "cell1Capacity";
+        public final String CELL_2_CAPACITY_TAG = "cell2Capacity";
+        public final String CELL_3_CAPACITY_TAG = "cell3Capacity";
+        public final String CELL_1_MAX_TRANSFER_TAG = "cell1MaxTransfer";
+        public final String CELL_2_MAX_TRANSFER_TAG = "cell2MaxTransfer";
+        public final String CELL_3_MAX_TRANSFER_TAG = "cell3MaxTransfer";
 
         /**
          * Upgrades
@@ -158,6 +173,40 @@ public class Config {
                         .define(TAG2, DEFAULT_MOB_OVERRIDES);
             }
             builder.pop(); // mob
+
+            builder.push("cell");
+            {
+                CELL_1_CAPACITY = builder
+                        .comment("Storage capacity of a basic cell")
+                        .translation(TAG + CELL_1_CAPACITY_TAG)
+                        .worldRestart()
+                        .defineInRange(CELL_1_CAPACITY_TAG, 10000, 1, Integer.MAX_VALUE);
+                CELL_2_CAPACITY = builder
+                        .comment("Storage capacity of an advanced cell")
+                        .translation(TAG + CELL_2_CAPACITY_TAG)
+                        .worldRestart()
+                        .defineInRange(CELL_2_CAPACITY_TAG, 100000, 1, Integer.MAX_VALUE);
+                CELL_3_CAPACITY = builder
+                        .comment("Storage capacity of a premium cell")
+                        .translation(TAG + CELL_3_CAPACITY_TAG)
+                        .worldRestart()
+                        .defineInRange(CELL_3_CAPACITY_TAG, Integer.MAX_VALUE, 1, Integer.MAX_VALUE);
+                CELL_1_MAX_TRANSFER = builder
+                        .comment("Max transfer rate (per-side) of a basic cell")
+                        .translation(TAG + CELL_1_MAX_TRANSFER_TAG)
+                        .worldRestart()
+                        .defineInRange(CELL_1_MAX_TRANSFER_TAG, 1000, 1, Integer.MAX_VALUE);
+                CELL_2_MAX_TRANSFER = builder
+                        .comment("Max transfer rate (per-side) of an advanced cell")
+                        .translation(TAG + CELL_2_MAX_TRANSFER_TAG)
+                        .worldRestart()
+                        .defineInRange(CELL_2_MAX_TRANSFER_TAG, 1000, 1, Integer.MAX_VALUE);
+                CELL_3_MAX_TRANSFER = builder
+                        .comment("Max transfer rate (per-side) of a premium cell")
+                        .translation(TAG + CELL_3_MAX_TRANSFER_TAG)
+                        .worldRestart()
+                        .defineInRange(CELL_3_MAX_TRANSFER_TAG, Integer.MAX_VALUE, 1, Integer.MAX_VALUE);
+            }
 
             builder.push("factory");
             {

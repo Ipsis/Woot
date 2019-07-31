@@ -35,8 +35,10 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
     }
 
     TextureAtlasSprite getTextureAtlasSprite(FactoryComponent component) {
-        return Minecraft.getInstance().getTextureMap().getSprite(
-                new ResourceLocation(Woot.MODID, "block/" + component.getName()));
+        String path = "block/" + component.getName();
+        if (component == FactoryComponent.CELL)
+            path += "_1";
+        return Minecraft.getInstance().getTextureMap().getSprite( new ResourceLocation(Woot.MODID, path));
     }
 
     void textureRender(LayoutTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {

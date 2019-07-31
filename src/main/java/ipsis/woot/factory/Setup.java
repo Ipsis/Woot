@@ -25,12 +25,14 @@ public class Setup {
     List<FakeMob> mobs = new ArrayList<>();
     BlockPos importPos;
     BlockPos exportPos;
+    BlockPos cellPos;
     private int maxMobCount = -1;
 
     public List<FakeMob> getMobs() { return mobs; }
     public HashMap<FactoryUpgradeType, Integer> getUpgrades() { return upgrades; }
     public BlockPos getExportPos() { return exportPos; }
     public BlockPos getImportPos() { return importPos; }
+    public BlockPos getCellPos() { return cellPos; }
 
     public int getMaxMobCount() {
         if (maxMobCount == -1) {
@@ -66,6 +68,8 @@ public class Setup {
                 setup.importPos = new BlockPos(pb.getBlockPos());
             } else if (pb.getFactoryComponent() == FactoryComponent.EXPORT) {
                 setup.exportPos = new BlockPos(pb.getBlockPos());
+            } else if (pb.getFactoryComponent() == FactoryComponent.CELL) {
+                setup.cellPos = new BlockPos(pb.getBlockPos());
             } else if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
 
                 // Factory will only be formed if the controller is valid
@@ -79,7 +83,7 @@ public class Setup {
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
                 if (te instanceof UpgradeTileEntity) {
                     FactoryUpgrade upgrade = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));
-                    if (upgrade != null ) {
+                    if (upgrade != FactoryUpgrade.EMPTY ) {
                         FactoryUpgradeType type = FactoryUpgrade.getType(upgrade);
                         int level = FactoryUpgrade.getLevel(upgrade);
 

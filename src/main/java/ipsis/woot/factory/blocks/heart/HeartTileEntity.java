@@ -1,6 +1,7 @@
 package ipsis.woot.factory.blocks.heart;
 
 import ipsis.woot.factory.*;
+import ipsis.woot.factory.blocks.power.CellTileEntityBase;
 import ipsis.woot.factory.generators.LootGeneration;
 import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
@@ -123,7 +124,12 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     int consumedUnits = 0;
     void tickRecipe() {
-        consumedUnits += recipe.getUnitsPerTick();
+
+        TileEntity te = world.getTileEntity(setup.getCellPos());
+        if (te instanceof CellTileEntityBase) {
+            int drained = ((CellTileEntityBase) te).fakeFluidHandlerDrain(recipe.getUnitsPerTick());
+            consumedUnits += drained;
+        }
     }
 
     /**
@@ -210,6 +216,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         debug.add("      layout: " + layout);
         debug.add("      setup: " + setup);
         debug.add("      recipe: " + recipe);
+        debug.add("      consumed: " + consumedUnits);
         return debug;
     }
 

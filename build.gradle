@@ -13,6 +13,23 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+repositories {
+    maven { // TOP
+        name 'tterrag maven'
+        url "http://maven.tterrag.com/"
+    }
+    maven {
+        // JEI
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // JEI fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+}
+
 version = '0.1'
 group = 'ipsis.woot'
 archivesBaseName = 'woot'
@@ -96,6 +113,13 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    // TOP
+    // compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.14-1.4.31-alpha-8")
+
+    // JEI
+    compileOnly fg.deobf("mezz.jei:jei-1.14.3:6.0.0.8:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.3:6.0.0.8")
 
 }
 

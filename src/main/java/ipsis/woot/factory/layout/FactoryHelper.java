@@ -67,8 +67,10 @@ public class FactoryHelper {
             if (isCorrectBlock(currBlock, correctBlocks))
                 continue;
 
-            // TODO get blocks from player
             Block placeBlock = correctBlocks.get(0);
+            if (!playerEntity.isCreative()) {
+                // TODO get blocks from player
+            }
             if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
                 // TODO block snapshot for intern
                 world.setBlockState(pb.getBlockPos(), placeBlock.getDefaultState());

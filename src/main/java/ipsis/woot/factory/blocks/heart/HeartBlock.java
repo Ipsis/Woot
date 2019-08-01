@@ -1,5 +1,6 @@
 package ipsis.woot.factory.blocks.heart;
 
+import ipsis.woot.Woot;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
@@ -63,19 +64,23 @@ public class HeartBlock extends WootBlock implements FactoryComponentProvider, W
 
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+
         if (worldIn.isRemote)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 
         ItemStack itemStack = player.getHeldItem(handIn);
-        if (itemStack.getItem() == ModItems.INTERN_ITEM)
-            return true;
+        if (itemStack.getItem() == ModItems.INTERN_ITEM) {
+            // intern is used on the heart, so cannot open the gui
+            return false; // Block was not activated
+        }
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof INamedContainerProvider)
             NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());
         else
             throw new IllegalStateException("Named container provider is missing");
-        return true;
+
+        return true; // Block was activated
     }
 
     /**

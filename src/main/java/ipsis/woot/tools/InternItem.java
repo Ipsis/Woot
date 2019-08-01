@@ -7,6 +7,7 @@ import ipsis.woot.factory.blocks.heart.HeartBlock;
 import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.factory.layout.FactoryHelper;
 import ipsis.woot.factory.layout.PatternRepository;
+import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
@@ -135,6 +136,7 @@ public class InternItem extends WootItem {
 
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+        Woot.LOGGER.info("onItemUseFirst: client:{}", context.getWorld().isRemote);
         // This is where we should be handling the intern usageA
         // Waiting on Forge #5976 (?)
         return ActionResultType.PASS;
@@ -143,7 +145,6 @@ public class InternItem extends WootItem {
     @Override
     public ActionResultType onItemUse(ItemUseContext context) {
 
-        Woot.LOGGER.info("onItemUse: client:{}", context.getWorld().isRemote);
         ActionResultType result = ActionResultType.PASS;
         /*if (!context.getWorld().isRemote) */
             ItemStack itemStack = context.getItem();
@@ -157,13 +158,11 @@ public class InternItem extends WootItem {
                         TileEntity te = context.getWorld().getTileEntity(context.getPos());
                         if (te instanceof HeartTileEntity)
                             ((HeartTileEntity) te).interrupt();
-
                     } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
                         if (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier())) {
                             if (context.getWorld().isRemote)
                                 spawnParticle(context.getWorld(), context.getPos().up(), 10);
                         }
-
                         result = ActionResultType.SUCCESS;
                     } else if (toolMode.isValidateMode()) {
                         if (!context.getWorld().isRemote)

@@ -5,6 +5,7 @@ import ipsis.woot.common.Config;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.blocks.heart.HeartScreen;
 import ipsis.woot.factory.layout.PatternRepository;
+import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModEvents;
 import ipsis.woot.mod.Registration;
@@ -45,9 +46,9 @@ public class Woot {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-
         PatternRepository.get().load();
         Config.loadFromConfig();
+        DropRegistry.get().fromJson();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

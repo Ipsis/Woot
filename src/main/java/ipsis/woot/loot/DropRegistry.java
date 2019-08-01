@@ -1,8 +1,15 @@
 package ipsis.woot.loot;
 
+import com.google.gson.*;
+import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.helper.JsonHelper;
+import ipsis.woot.util.helper.MathHelper;
+import ipsis.woot.util.helper.SerializationHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JSONUtils;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -10,10 +17,9 @@ import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.io.File;
+import java.io.FileReader;
+import java.util.*;
 
 public class DropRegistry {
 
@@ -102,7 +108,7 @@ public class DropRegistry {
     class Mob {
 
         FakeMob fakeMob;
-        private static final int MAX_LOOTING = 4;
+        static final int MAX_LOOTING = 4;
 
         // number of learn events for this mob, dropping nothing is still an event
         int[] simulatedDropEventCount = new int[MAX_LOOTING];
@@ -135,10 +141,28 @@ public class DropRegistry {
             return drop;
         }
 
+        private @Nullable Drop getDrop(@Nonnull ItemStack itemStack, boolean createOnFail) {
+            if (itemStack.isEmpty())
+                return null;
+
+            Drop drop = null;
+            Iterator<Drop> iter = drops.iterator();
+            while (iter.hasNext() && drop == null) {
+                Drop curr = iter.next();
+                if (isEqualForLearning(itemStack, curr.droppedItem))
+                    drop = curr;
+            }
+
+            if (drop == null && createOnFail)
+                drop = new Drop(itemStack);
+
+            return drop;
+        }
+
         public void addSimulatedDrop(int looting, @Nonnull ItemStack itemStack) {
             LOGGER.info(DROPMGR, "addSimulatedDrop l:{} {}", looting, itemStack);
 
-            Drop drop = getOrCreateDrop(itemStack);
+            Drop drop = getDrop(itemStack, true);
             if (drop == null)
                 return;
 
@@ -153,7 +177,7 @@ public class DropRegistry {
 
         public void addCustomDrop(int looting, @Nonnull ItemStack itemStack, float dropChance) {
 
-            Drop drop = getOrCreateDrop(itemStack);
+            Drop drop = getDrop(itemStack, true);
             if (drop == null)
                 return;
 
@@ -165,7 +189,7 @@ public class DropRegistry {
 
         public void addCustomDropStackSize(int looting, @Nonnull ItemStack itemStack, float dropChance) {
 
-            Drop drop = getOrCreateDrop(itemStack);
+            Drop drop = getDrop(itemStack, true);
             if (drop == null)
                 return;
 
@@ -173,6 +197,29 @@ public class DropRegistry {
                 drops.add(drop);
 
             drop.customStackSizes.get(looting).put(itemStack.getCount(), dropChance);
+        }
+
+        public void loadDrop(ItemStack itemStack, int count0, int count1, int count2, int count3) {
+            Drop drop = getOrCreateDrop(itemStack);
+            if (drop == null)
+                return;
+
+            if (!drops.contains(drop))
+                drops.add(drop);
+            drop.simulatedDropCount[0] = count0;
+            drop.simulatedDropCount[1] = count1;
+            drop.simulatedDropCount[2] = count2;
+            drop.simulatedDropCount[3] = count3;
+        }
+
+        public void loadStackSize(ItemStack itemStack, int looting, int size, int count) {
+
+            looting = MathHelper.clampLooting(looting);
+            Drop drop = getDrop(itemStack, false);
+            if (drop == null)
+                return;
+
+            drop.simulatedStackSizes.get(looting).put(size, count);
         }
 
         class Drop {
@@ -213,4 +260,174 @@ public class DropRegistry {
         }
     }
 
+    /**
+     * Save/load
+     */
+    public File dropFile = new File("C:\\Projects\\minecraft\\tmp\\dropfile.json");
+
+    private static final String VERSION_TAG = "version";
+    private static final String MOBS_TAG = "mobs";
+    private static final String SIMULATED_MOB_TAG = "mob";
+    private static final String SIMULATED_COUNT_TAG = "simMobCount";
+    private static final String DROPS_TAG = "drops";
+    private static final String DROPPED_STACK_TAG = "drop";
+    private static final String SIMULATED_DROP_COUNT_TAG = "simDropCount";
+    private static final String[] LOOT_COUNT_TAGS = { "loot0", "loot1", "loot2", "loot3" };
+
+    public void fromJson() {
+
+        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        try {
+            JsonObject jsonObject = JSONUtils.fromJson(GSON, new FileReader(dropFile), JsonObject.class);
+            parseConfig(jsonObject);
+        } catch (Exception e) {
+            Woot.LOGGER.error("Could not load loot file " + dropFile.getAbsolutePath());
+            e.printStackTrace();
+        }
+    }
+
+    public void parseConfig(JsonObject jsonObject) {
+        if (jsonObject == null || jsonObject.isJsonNull())
+            throw new JsonSyntaxException("JsonObject cannot be null");
+
+        int version = JSONUtils.getInt(jsonObject, VERSION_TAG);
+        if (version != 1)
+            throw new JsonSyntaxException("Loot file version missing or invalid");
+
+        // Mobs
+        for (JsonElement e : JSONUtils.getJsonArray(jsonObject, MOBS_TAG)) {
+            if (e == null || !e.isJsonObject())
+                throw new JsonSyntaxException("Mob must be an object");
+
+            JsonObject o1 = (JsonObject) e;
+            String mob = JSONUtils.getString(o1, SIMULATED_MOB_TAG);
+            FakeMob fakeMob = new FakeMob(mob);
+            if (!fakeMob.isValid()) {
+                Woot.LOGGER.info("Invalid mob {}", mob);
+                continue;
+            }
+
+            JsonArray simulatedCountArray = JSONUtils.getJsonArray(o1, SIMULATED_COUNT_TAG);
+            if (simulatedCountArray.size() != Mob.MAX_LOOTING)
+                throw new JsonSyntaxException("Simulated count array must be of size " + Mob.MAX_LOOTING);
+
+            int sim0 = simulatedCountArray.get(0).getAsInt();
+            int sim1 = simulatedCountArray.get(1).getAsInt();
+            int sim2 = simulatedCountArray.get(2).getAsInt();
+            int sim3 = simulatedCountArray.get(3).getAsInt();
+
+            Woot.LOGGER.info("mob:{}", fakeMob);
+            Woot.LOGGER.info("sim0:{} sim1:{} sim2:{} sim3:{}", sim0, sim1, sim2, sim3);
+
+            Mob simulatedMob = new Mob(fakeMob);
+            simulatedMob.simulatedDropEventCount[0] = sim0;
+            simulatedMob.simulatedDropEventCount[1] = sim1;
+            simulatedMob.simulatedDropEventCount[2] = sim2;
+            simulatedMob.simulatedDropEventCount[3] = sim3;
+
+            //Drops
+            for (JsonElement e1 : JSONUtils.getJsonArray(o1, DROPS_TAG)) {
+                if (e == null || !e.isJsonObject())
+                    throw new JsonSyntaxException("Drop must be an object");
+
+                JsonObject o2 = (JsonObject) e1;
+                ItemStack itemStack;
+                try {
+                    itemStack = CraftingHelper.getItemStack(o2.getAsJsonObject(DROPPED_STACK_TAG), false);
+                } catch (JsonSyntaxException e2) {
+                    continue;
+                }
+                Woot.LOGGER.info("item:{}", itemStack.getItem());
+
+                JsonArray simulatedDropCountArray = JSONUtils.getJsonArray(o2, SIMULATED_DROP_COUNT_TAG);
+                if (simulatedDropCountArray.size() != Mob.MAX_LOOTING)
+                    throw new JsonSyntaxException("Simulated drop count array must be of size " + Mob.MAX_LOOTING);
+
+                int count0 = simulatedDropCountArray.get(0).getAsInt();
+                int count1 = simulatedDropCountArray.get(1).getAsInt();
+                int count2 = simulatedDropCountArray.get(2).getAsInt();
+                int count3 = simulatedDropCountArray.get(3).getAsInt();
+
+                Woot.LOGGER.info("count0:{} count1:{} count2{} count3{}", count0, count1, count2, count3);
+
+                simulatedMob.loadDrop(itemStack, count0, count1, count2, count3);
+
+                for (int i = 0; i < Mob.MAX_LOOTING; i++) {
+                    JsonArray lootSizeArray = JSONUtils.getJsonArray(o2, LOOT_COUNT_TAGS[i]);
+                    if (lootSizeArray.size() % 2 != 0)
+                        throw new JsonSyntaxException("Loot stack size array must be of event size");
+
+                    for (int j = 0; j < lootSizeArray.size() / 2; j += 2) {
+                        int size = lootSizeArray.get(j).getAsInt();
+                        int count = lootSizeArray.get(j + 1).getAsInt();
+                        Woot.LOGGER.info("looting:{} size:{} count:{}", i, size, count);
+                        simulatedMob.loadStackSize(itemStack, i, size, count);
+                    }
+                }
+            }
+            mobs.put(fakeMob, simulatedMob);
+        }
+    }
+
+    public JsonObject toJson() {
+
+        JsonObject json = new JsonObject();
+        json.addProperty(VERSION_TAG, 1);
+
+        JsonArray mobsArray = new JsonArray();
+        for (Map.Entry<FakeMob, Mob> entry : mobs.entrySet()) {
+            FakeMob fakeMob = entry.getKey();
+            Mob mob = entry.getValue();
+
+            if (!fakeMob.isValid())
+                continue;
+
+            JsonObject mobObject = new JsonObject();
+            {
+                mobObject.addProperty(SIMULATED_MOB_TAG, fakeMob.toString());
+                JsonArray simulatedCountArray = new JsonArray();
+                for (int i = 0; i < Mob.MAX_LOOTING; i++)
+                    simulatedCountArray.add(mob.simulatedDropEventCount[i]);
+                mobObject.add(SIMULATED_COUNT_TAG, simulatedCountArray);
+
+                JsonArray dropsArray = new JsonArray();
+                {
+                    for (Mob.Drop drop : mob.drops) {
+                        if (drop.droppedItem.isEmpty())
+                            continue;
+
+                        JsonObject dropObject = new JsonObject();
+                        JsonObject itemObject = JsonHelper.toJsonObject(drop.droppedItem);
+                        dropObject.add(DROPPED_STACK_TAG, itemObject);
+
+                        JsonArray simulatedDropCountArray = new JsonArray();
+                        for (int i = 0; i < Mob.MAX_LOOTING; i++)
+                            simulatedDropCountArray.add(drop.simulatedDropCount[i]);
+
+                        dropObject.add(SIMULATED_DROP_COUNT_TAG, simulatedDropCountArray);
+
+                        /**
+                         * Each entry is a pair - stacksize, dropcount
+                         */
+                        for (int i = 0; i < Mob.MAX_LOOTING; i++) {
+                            JsonArray lootSizeArray = new JsonArray();
+                            for (Map.Entry<Integer, Integer> entry1 : drop.simulatedStackSizes.get(i).entrySet()) {
+                                lootSizeArray.add(entry1.getKey());
+                                lootSizeArray.add(entry1.getValue());
+                            }
+                            dropObject.add(LOOT_COUNT_TAGS[i], lootSizeArray);
+                        }
+                        dropsArray.add(dropObject);
+                    }
+                }
+                mobObject.add(DROPS_TAG, dropsArray);
+            }
+            mobsArray.add(mobObject);
+        }
+        json.add(MOBS_TAG, mobsArray);
+
+        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        SerializationHelper.writeJsonFile(dropFile, GSON.toJson(json));
+        return json;
+    }
 }

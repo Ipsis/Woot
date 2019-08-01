@@ -1,5 +1,6 @@
 package ipsis.woot.mod;
 
+import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.loot.DropRegistry;
@@ -21,6 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 import java.util.List;
 
@@ -74,5 +76,12 @@ public class ModEvents {
 
         // Force load the simulation world
         Tartarus.get().setWorld(DimensionManager.getWorld(event.getServer(), ModDimensions.tartarusDimensionType, true, true));
+    }
+
+    @SubscribeEvent
+    public void onServerStop(final FMLServerStoppingEvent event) {
+
+        JsonObject jsonObject = DropRegistry.get().toJson();
+
     }
 }

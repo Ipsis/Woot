@@ -16,19 +16,19 @@ import static ipsis.woot.mod.ModBlocks.HEART_CONTAINER;
 public class HeartContainer extends Container {
 
     private TileEntity tileEntity;
-    private PlayerEntity playerEntity;
-    private IItemHandler playerInventory;
 
     public HeartContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(HEART_CONTAINER, windowId);
         tileEntity = world.getTileEntity(pos);
-        this.playerEntity = playerEntity;
-        this.playerInventory = new InvWrapper(playerInventory);
+
+        /**
+         * There is no player inventory as it is display only
+         */
     }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
-                playerEntity, ModBlocks.HEART_BLOCK);
+                playerIn, ModBlocks.HEART_BLOCK);
     }
 }

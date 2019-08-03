@@ -174,8 +174,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         if (font == null)
             font = this.font;
 
-        itemRenderer.renderItemIntoGUI(stack, x, y);
-//        itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
+        itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
         if (drawOverlay)
             itemRenderer.renderItemOverlayIntoGUI(font, stack, x, y - 8, overlayTxt);
 
@@ -215,12 +214,13 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
             if (isLocked) {
                 // TODO draw a cross or something
+                return;
             }
 
             ItemStack itemStack = itemStacks.get(idx);
             List<String> tooltip = tooltips.get(idx);
 
-            drawItemStack(itemStack, x, y, false, "");
+            itemRenderer.renderItemIntoGUI(itemStack, x, y);
             if (mouseX >= guiLeft + x && mouseX <= guiLeft + x + 20 && mouseY >= guiTop + y && mouseY <= guiTop + y + 20) {
                 FontRenderer fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
                 if (fontRenderer == null)

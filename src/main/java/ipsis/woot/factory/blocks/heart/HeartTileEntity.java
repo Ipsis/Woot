@@ -22,6 +22,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -232,5 +234,17 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new HeartContainer(windowId, world, pos, playerInventory, playerEntity);
+    }
+
+    public FactoryUIInfo createFactoryUIInfo() {
+        return FactoryUIInfo.create(setup, recipe);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public FactoryUIInfo factoryUIInfo;
+
+    @OnlyIn(Dist.CLIENT)
+    public void setFromUIInfo(FactoryUIInfo factoryUIInfo) {
+        this.factoryUIInfo = factoryUIInfo;
     }
 }

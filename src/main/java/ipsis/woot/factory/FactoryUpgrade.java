@@ -30,6 +30,11 @@ public enum FactoryUpgrade implements IStringSerializable {
     public static FactoryUpgrade[] VALUES = values();
     public String getName() { return name().toLowerCase(Locale.ROOT); }
 
+    public static FactoryUpgrade getUpgrade(int index) {
+        index = MathHelper.clamp(index, 0, VALUES.length);
+        return VALUES[index];
+    }
+
 
     public static final EnumSet<FactoryUpgrade> LEVEL_1_UPGRADES = EnumSet.of(CAPACITY_1, EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, XP_1);
     public static final EnumSet<FactoryUpgrade> LEVEL_2_UPGRADES = EnumSet.of(CAPACITY_2, EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, XP_2);

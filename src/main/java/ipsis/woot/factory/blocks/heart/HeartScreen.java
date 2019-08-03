@@ -2,7 +2,13 @@ package ipsis.woot.factory.blocks.heart;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
+import ipsis.woot.factory.FactoryUIInfo;
+import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.mod.ModItems;
+import ipsis.woot.network.HeartStaticDataRequest;
+import ipsis.woot.network.Network;
+import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,6 +19,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * There are two types of information displayed here.
+ * Static - the factory recipe and drops - custom packet
+ * Dynamic - progress - vanilla progress mechanism
+ */
+
 @OnlyIn(Dist.CLIENT)
 public class HeartScreen extends ContainerScreen<HeartContainer> {
 
@@ -20,8 +32,16 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
     public HeartScreen(HeartContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
-        xSize = 216;
+        xSize = 252;
         ySize = 152;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        // Request the static data
+        Network.channel.sendToServer(new HeartStaticDataRequest(container.getPos()));
     }
 
     @Override
@@ -37,42 +57,59 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
+        FactoryUIInfo factoryUIInfo = container.getFactoryUIInfo();
+        if (factoryUIInfo == null)
+            return;
+
+        int TEXT_COLOR = 4210752;
+
         // TODO Can only render 20 itemstacks!???
         // I'm going to assume that I am an idiot
-        font.drawString("Effort", 10, 10, 4210752);
-        font.drawString(": 12000mB", 70, 10, 4210752);
-        font.drawString("Time", 10, 20, 4210752);
-        font.drawString(": 3000 ticks", 70, 20, 4210752);
-        font.drawString("Rate", 10, 30, 4210752);
-        font.drawString(": 10 mb/tick ", 70, 30, 4210752);
-        font.drawString("Stored", 10, 40, 4210752);
-        font.drawString(": 3123234 mB ", 70, 40, 4210752);
-        font.drawString("Progress", 10, 50, 4210752);
-        font.drawString(": 15% ", 70, 50, 4210752);
+        font.drawString("Effort", 10, 10, TEXT_COLOR);
+        font.drawString(": " + factoryUIInfo.recipeEffort + " mB", 70, 10, TEXT_COLOR);
+        font.drawString("Time", 10, 20, TEXT_COLOR);
+        font.drawString(": " + factoryUIInfo.recipeTicks + " ticks", 70, 20, TEXT_COLOR);
+        font.drawString("Rate", 10, 30, TEXT_COLOR);
+        font.drawString(": " + factoryUIInfo.recipeCostPerTick + " mb/tick ", 70, 30, TEXT_COLOR);
+        font.drawString("Stored", 10, 40, TEXT_COLOR);
+        font.drawString(": " + factoryUIInfo.effortStored + " mB ", 70, 40, TEXT_COLOR);
+        font.drawString("Progress", 10, 50, TEXT_COLOR);
+        font.drawString(": 15% ", 70, 50, TEXT_COLOR);
 
-        font.drawString("Mobs", 10, 66.0F, 4210752);
+        int MOBS_X = 10;
+        int MOBS_Y = 76;
+        font.drawString("Mobs", MOBS_X, 66.0F, TEXT_COLOR);
+        for (int i = 0; i < factoryUIInfo.mobs.size(); i ++)
+            drawItemStack(factoryUIInfo.mobs.get(i), MOBS_X + (i * 18), MOBS_Y, false, "");
 
-        // TODO swap these to controllers or shards
-        ItemStack mobStack = new ItemStack(Items.DRAGON_EGG);
+        int UPGRADES_X = 91;
+        int UPGRADES_Y = 76;
+        font.drawString("Upgrades", UPGRADES_X, 66.0F, TEXT_COLOR);
+        for (int i = 0; i < factoryUIInfo.upgrades.size(); i++) {
+            drawItemStack(UpgradeItem.getItemStack(factoryUIInfo.upgrades.get(i)),
+                    UPGRADES_X + (i * 18), UPGRADES_Y, false, "");
+        }
+
+        int RECIPE_X = 172;
+        int RECIPE_Y = 76;
+        ItemStack mobStack = new ItemStack(Items.DIRT);
+        font.drawString("Recipe", RECIPE_X, 66.0F, TEXT_COLOR);
         for (int i = 0; i < 4; i ++)
-            drawItemStack(mobStack, 10 + (i * 18), 76, false, "");
+            drawItemStack(mobStack, RECIPE_X + (i * 18), RECIPE_Y, false, "");
 
-        font.drawString("Upgrades", 136, 66.0F, 4210752);
-        ItemStack[] upgrades = new ItemStack[]{
-                new ItemStack(ModItems.MASS_1_ITEM),
-                new ItemStack(ModItems.EFFICIENCY_3_ITEM),
-                new ItemStack(ModItems.LOOTING_3_ITEM),
-                new ItemStack(ModItems.CAPACITY_3_ITEM),
-        };
-        for (int i = 0; i < 4; i ++)
-            drawItemStack(upgrades[i], 136 + (i * 18), 76, false, "");
-
+        int DROPS_X = 10;
+        int DROPS_Y = 110;
+        int DROPS_COLS = 13;
+        int DROPS_ROWS = 2;
         font.drawString("Drops:", 10, 100, 4210752);
-        ItemStack itemStack = new ItemStack(Items.DIAMOND_SWORD);
-        for (int row = 0; row < 2; row++) {
-            for (int col = 0; col < 11; col++) {
-                drawItemStack(itemStack, 10 + (col * 18), 110 + (row * 18),false, "2.4%");
-            }
+        int row = 0;
+        int col = 0;
+        for (ItemStack itemStack : factoryUIInfo.drops) {
+            drawItemStack(itemStack,
+                    DROPS_X + (col * 18),
+                    DROPS_Y + (row * 18),
+                    true, Integer.toString(itemStack.getCount()));
+            col++;
         }
     }
 

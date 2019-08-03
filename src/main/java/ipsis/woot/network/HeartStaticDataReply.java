@@ -1,6 +1,7 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryUIInfo;
 import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.blocks.ControllerBlock;
@@ -57,8 +58,10 @@ public class HeartStaticDataReply {
             buf.writeInt(upgrade.ordinal());
 
         buf.writeInt(info.drops.size());
-        for (ItemStack itemStack : info.drops)
+        for (ItemStack itemStack : info.drops) {
+            Woot.LOGGER.info("HeartStaticDataReply: wrote {}", itemStack);
             NetworkTools.writeItemStack(buf, itemStack);
+        }
 
         buf.writeInt(info.mobs.size());
         for (ItemStack itemStack : info.mobs)

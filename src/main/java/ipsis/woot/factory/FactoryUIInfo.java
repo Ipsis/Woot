@@ -34,18 +34,21 @@ public class FactoryUIInfo {
             info.recipeEffort = recipe.getNumUnits();
             info.recipeTicks = recipe.getNumTicks();
             info.recipeCostPerTick = recipe.getUnitsPerTick();
-            for (Map.Entry<FactoryUpgradeType, Integer> entry : setup.getUpgrades().entrySet())
-                info.upgrades.add(FactoryUpgrade.getUpgrade(entry.getKey(), entry.getValue()));
 
+            int looting = 0;
+            for (Map.Entry<FactoryUpgradeType, Integer> entry : setup.getUpgrades().entrySet()) {
+                info.upgrades.add(FactoryUpgrade.getUpgrade(entry.getKey(), entry.getValue()));
+                if (entry.getKey() == FactoryUpgradeType.LOOTING)
+                    looting = entry.getValue();
+            }
 
             for (FakeMob fakeMob : setup.getMobs()) {
                 info.mobs.add(ControllerTileEntity.getItemStack(fakeMob));
-
-                // TODO handle looting upgrade
-                List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(fakeMob, 0));
+                List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(fakeMob, looting));
                 for (MobDrop mobDrop : mobDrops) {
                     ItemStack itemStack = mobDrop.getDroppedItem().copy();
-                    itemStack.setCount((int)mobDrop.getDropChance());
+                    float dropChance = mobDrop.getDropChance();
+                    itemStack.setCount((int)(dropChance * 100.0F));
                     info.drops.add(itemStack);
                 }
             }

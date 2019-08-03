@@ -102,7 +102,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             int idx = 0;
             for (ItemStack itemStack : factoryUIInfo.drops) {
                 List<String> tooltip = getTooltipFromItem(itemStack);
-                tooltip.add(String.format("Drop chance: %d %%", itemStack.getCount()));
+                tooltip.add(String.format("Drop chance: %.2f %%", itemStack.getCount() / 100.0F));
                 stackElements.get(idx).addDrop(itemStack, tooltip);
                 idx = (idx + 1) % stackElements.size();
             }

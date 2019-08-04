@@ -9,6 +9,7 @@ import ipsis.woot.network.HeartStaticDataRequest;
 import ipsis.woot.network.Network;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -17,6 +18,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +81,26 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         Network.channel.sendToServer(new HeartStaticDataRequest(container.getPos()));
     }
 
+    /**
+     * ContainerScreen render
+     *
+     * drawGuiContainerBackgroundLayer
+     *     draw slots and itemstacks
+     *     gradient fill active slot to highlight
+     * drawGuiContainerForegroundLayer
+     *     draw dragged itemstack
+     *
+     */
+
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
+
+        mobElements.forEach(e -> e.drawTooltip(mouseX, mouseY));
+        upgradeElements.forEach(e -> e.drawTooltip(mouseX, mouseY));
+        stackElements.forEach(e -> e.drawTooltip(mouseX, mouseY));
 
         if (renderTime == 0L)
             renderTime = Util.milliTime();
@@ -116,10 +133,18 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             }
 
             idx = 0;
-            for (ItemStack itemStack : factoryUIInfo.mobs) {
-                List<String> tooltip = getTooltipFromItem(itemStack);
-                mobElements.get(idx).addDrop(itemStack, tooltip);
-                idx = (idx + 1) % mobElements.size();
+            for (FactoryUIInfo.Mob mob : factoryUIInfo.mobInfo) {
+                List<String> tooltip = getTooltipFromItem(mob.controller);
+                if (!mob.itemIngredients.isEmpty()) {
+                    for (ItemStack itemStack : mob.itemIngredients)
+                        tooltip.add(itemStack.getCount() + "*" + itemStack.toString());
+                }
+                if (!mob.fluidIngredients.isEmpty()) {
+                    for (FluidStack fluidStack : mob.fluidIngredients)
+                        tooltip.add(fluidStack.amount + "mb " + fluidStack.toString());
+                }
+                mobElements.get(idx).addDrop(mob.controller, tooltip);
+                idx++;
             }
 
             idx = 0;
@@ -134,8 +159,6 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
         int TEXT_COLOR = 4210752;
 
-        // TODO Can only render 20 itemstacks!???
-        // I'm going to assume that I am an idiot
         font.drawString("Effort", 10, 10, TEXT_COLOR);
         font.drawString(": " + factoryUIInfo.recipeEffort + " mB", 70, 10, TEXT_COLOR);
         font.drawString("Time", 10, 20, TEXT_COLOR);
@@ -149,19 +172,11 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
         font.drawString("Mobs", MOBS_X, MOBS_Y - 10, TEXT_COLOR);
         font.drawString("Upgrades", UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
-
-        int RECIPE_X = 172;
-        int RECIPE_Y = 76;
-        ItemStack mobStack = new ItemStack(Items.DIRT);
-        font.drawString("Recipe", RECIPE_X, 66.0F, TEXT_COLOR);
-        for (int i = 0; i < 4; i ++)
-            drawItemStack(mobStack, RECIPE_X + (i * 18), RECIPE_Y, false, "");
-
         font.drawString("Drops:", DROPS_X, DROPS_Y - 10, TEXT_COLOR);
 
-        mobElements.forEach(e -> e.drawForeground(this, mouseX, mouseY));
-        upgradeElements.forEach(e -> e.drawForeground(this, mouseX, mouseY));
-        stackElements.forEach(e -> e.drawForeground(this, mouseX, mouseY));
+        mobElements.forEach(e -> e.drawForeground(mouseX, mouseY));
+        upgradeElements.forEach(e -> e.drawForeground(mouseX, mouseY));
+        stackElements.forEach(e -> e.drawForeground(mouseX, mouseY));
     }
 
     @Override
@@ -172,22 +187,9 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         int relY = (height - ySize) / 2;
         blit(relX, relY, 0, 0, xSize, ySize);
 
-    }
-
-    public void drawItemStack(ItemStack stack, int x, int y, boolean drawOverlay, String overlayTxt) {
-        GlStateManager.translatef(0.0F, 0.0F, 32.0F);
-        blitOffset = 200;
-        itemRenderer.zLevel = 200.0F;
-        FontRenderer font = stack.getItem().getFontRenderer(stack);
-        if (font == null)
-            font = this.font;
-
-        itemRenderer.renderItemAndEffectIntoGUI(stack, x, y);
-        if (drawOverlay)
-            itemRenderer.renderItemOverlayIntoGUI(font, stack, x, y - 8, overlayTxt);
-
-        blitOffset = 0;
-        itemRenderer.zLevel = 0.0F;
+        mobElements.forEach(e -> e.drawBackground(mouseX, mouseY));
+        upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
+        stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
     }
 
     class StackElement {
@@ -213,9 +215,42 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             tooltips.add(tooltip);
         }
 
-        public void cycle() { idx = (idx + 1) % itemStacks.size(); }
+        public void cycle() {
+            if (!itemStacks.isEmpty())
+                idx = (idx + 1) % itemStacks.size();
+        }
 
-        public void drawForeground(HeartScreen screen, int mouseX, int mouseY) {
+        public void drawBackground(int mouseX, int mouseY) {
+            if (itemStacks.isEmpty())
+                return;
+
+            if (isLocked) {
+                // TODO draw a cross or something
+                return;
+            }
+        }
+
+        public void drawTooltip(int mouseX, int mouseY)  {
+            if (itemStacks.isEmpty())
+                    return;
+
+            if (isLocked) {
+                // TODO draw a cross or something
+                return;
+            }
+
+            ItemStack itemStack = itemStacks.get(idx);
+            List<String> tooltip = tooltips.get(idx);
+            if (isPointInRegion(x, y, 16, 16, mouseX, mouseY)) {
+                FontRenderer fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
+                if (fontRenderer == null)
+                    fontRenderer = font;
+                renderTooltip(tooltip, mouseX, mouseY, fontRenderer);
+            }
+        }
+
+
+        public void drawForeground(int mouseX, int mouseY) {
 
             if (itemStacks.isEmpty())
                 return;
@@ -226,15 +261,14 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             }
 
             ItemStack itemStack = itemStacks.get(idx);
-            List<String> tooltip = tooltips.get(idx);
-
+            blitOffset = 100;
+            itemRenderer.zLevel = 100.0F;
+            RenderHelper.enableGUIStandardItemLighting();
+            GlStateManager.enableDepthTest();
             itemRenderer.renderItemIntoGUI(itemStack, x, y);
-            if (mouseX >= guiLeft + x && mouseX <= guiLeft + x + 20 && mouseY >= guiTop + y && mouseY <= guiTop + y + 20) {
-                FontRenderer fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
-                if (fontRenderer == null)
-                    fontRenderer = font;
-                renderTooltip(tooltip, mouseX - guiLeft, mouseY - guiTop, fontRenderer);
-            }
+            RenderHelper.disableStandardItemLighting();
+            itemRenderer.zLevel = 0.0F;
+            blitOffset = 0;
         }
     }
 }

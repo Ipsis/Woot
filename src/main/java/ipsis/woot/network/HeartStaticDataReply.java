@@ -9,6 +9,7 @@ import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.oss.NetworkTools;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 /**
  * Server -> Client
@@ -40,8 +41,18 @@ public class HeartStaticDataReply {
             factoryUIInfo.drops.add(NetworkTools.readItemStack(buf));
 
         int numMobs = buf.readInt();
-        for (int i = 0; i < numMobs; i++)
-            factoryUIInfo.mobs.add(NetworkTools.readItemStack(buf));
+        for (int i = 0; i < numMobs; i++) {
+            ItemStack controller = NetworkTools.readItemStack(buf);
+            factoryUIInfo.mobs.add(controller);
+            FactoryUIInfo.Mob mob = new FactoryUIInfo.Mob(controller);
+            int numItemIng = buf.readInt();
+            for (int j = 0; j < numItemIng; j++)
+                mob.itemIngredients.add(NetworkTools.readItemStack(buf));
+            int numFluidIng = buf.readInt();
+            for (int j = 0; j < numItemIng; j++) {
+            }
+            factoryUIInfo.mobInfo.add(mob);
+        }
 
         return new HeartStaticDataReply(factoryUIInfo);
     }
@@ -58,13 +69,23 @@ public class HeartStaticDataReply {
             buf.writeInt(upgrade.ordinal());
 
         buf.writeInt(info.drops.size());
-        for (ItemStack itemStack : info.drops) {
-            Woot.LOGGER.info("HeartStaticDataReply: wrote {}", itemStack);
+        for (ItemStack itemStack : info.drops)
             NetworkTools.writeItemStack(buf, itemStack);
-        }
 
+        boolean ingTest = true;
         buf.writeInt(info.mobs.size());
-        for (ItemStack itemStack : info.mobs)
+        for (ItemStack itemStack : info.mobs) {
             NetworkTools.writeItemStack(buf, itemStack);
+            if (ingTest) {
+                buf.writeInt(1); // number of item ingredients
+                NetworkTools.writeItemStack(buf, new ItemStack(Items.EMERALD, 4));
+                buf.writeInt(0); // number of fluid ingredients
+                ingTest = false;
+            } else {
+                buf.writeInt(0);
+                buf.writeInt(0);
+            }
+
+        }
     }
 }

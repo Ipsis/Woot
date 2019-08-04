@@ -7,6 +7,7 @@ import ipsis.woot.loot.MobDrop;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class FactoryUIInfo {
 
     public List<ItemStack> mobs = new ArrayList<>();
+    public List<Mob> mobInfo = new ArrayList<>();
     public List<FactoryUpgrade> upgrades = new ArrayList<>();
     public int recipeEffort;
     public int recipeTicks;
@@ -23,7 +25,14 @@ public class FactoryUIInfo {
     public int mobCount;
     public boolean valid = false;
 
-    // Stacksize is drop chance
+    public static class Mob {
+        public boolean missingIngredients = false;
+        public ItemStack controller;
+        public List<ItemStack> itemIngredients = new ArrayList<>();
+        public List<FluidStack> fluidIngredients = new ArrayList<>();
+        public Mob(ItemStack itemStack) { controller = itemStack; }
+    }
+
     // TODO handle float drop chance
     public List<ItemStack> drops = new ArrayList<>();
 
@@ -43,6 +52,9 @@ public class FactoryUIInfo {
             }
 
             for (FakeMob fakeMob : setup.getMobs()) {
+                Mob mob = new Mob(ControllerTileEntity.getItemStack(fakeMob));
+                info.mobInfo.add(mob);
+                // TODO add ingredients
                 info.mobs.add(ControllerTileEntity.getItemStack(fakeMob));
                 List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(fakeMob, looting));
                 for (MobDrop mobDrop : mobDrops) {

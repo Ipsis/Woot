@@ -16,6 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
@@ -50,7 +51,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
     private int DROPS_Y = 110;
     private int MOBS_X = 10;
     private int MOBS_Y = 76;
-    private int UPGRADES_X = 91;
+    private int UPGRADES_X = 99;
     private int UPGRADES_Y = 76;
     private float DROP_CYCLE_MS = 5000.0F;
 
@@ -136,8 +137,10 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             for (FactoryUIInfo.Mob mob : factoryUIInfo.mobInfo) {
                 List<String> tooltip = getTooltipFromItem(mob.controller);
                 if (!mob.itemIngredients.isEmpty()) {
-                    for (ItemStack itemStack : mob.itemIngredients)
-                        tooltip.add(itemStack.getCount() + "*" + itemStack.toString());
+                    for (ItemStack itemStack : mob.itemIngredients) {
+                        ITextComponent itextcomponent = (new StringTextComponent("")).appendSibling(itemStack.getDisplayName()).applyTextStyle(itemStack.getRarity().color);
+                        tooltip.add("Ingredient: " + itemStack.getCount() + " * " + itextcomponent.getFormattedText());
+                    }
                 }
                 if (!mob.fluidIngredients.isEmpty()) {
                     for (FluidStack fluidStack : mob.fluidIngredients)

@@ -54,6 +54,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
     private int UPGRADES_X = 99;
     private int UPGRADES_Y = 76;
     private float DROP_CYCLE_MS = 5000.0F;
+    private int TEXT_COLOR = 4210752;
 
     private long renderTime;
 
@@ -120,6 +121,11 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
+        /*
+        font.drawString(title.getFormattedText(),
+                (float)(xSize / 2 - font.getStringWidth(title.getFormattedText()) / 2),
+                6.0F, TEXT_COLOR); */
+
         FactoryUIInfo factoryUIInfo = container.getFactoryUIInfo();
         if (factoryUIInfo == null)
             return;
@@ -160,18 +166,11 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             sync = true;
         }
 
-        int TEXT_COLOR = 4210752;
+        addInfoLine(0, "Effort", factoryUIInfo.recipeEffort + " mB");
+        addInfoLine(1, "Time", factoryUIInfo.recipeTicks + " ticks");
+        addInfoLine(2, "Rate", factoryUIInfo.recipeCostPerTick + " mb/tick");
+        addInfoLine(3, "Progress", "15%");
 
-        font.drawString("Effort", 10, 10, TEXT_COLOR);
-        font.drawString(": " + factoryUIInfo.recipeEffort + " mB", 70, 10, TEXT_COLOR);
-        font.drawString("Time", 10, 20, TEXT_COLOR);
-        font.drawString(": " + factoryUIInfo.recipeTicks + " ticks", 70, 20, TEXT_COLOR);
-        font.drawString("Rate", 10, 30, TEXT_COLOR);
-        font.drawString(": " + factoryUIInfo.recipeCostPerTick + " mb/tick ", 70, 30, TEXT_COLOR);
-        font.drawString("Stored", 10, 40, TEXT_COLOR);
-        font.drawString(": " + factoryUIInfo.effortStored + " mB ", 70, 40, TEXT_COLOR);
-        font.drawString("Progress", 10, 50, TEXT_COLOR);
-        font.drawString(": 15% ", 70, 50, TEXT_COLOR);
 
         font.drawString("Mobs", MOBS_X, MOBS_Y - 10, TEXT_COLOR);
         font.drawString("Upgrades", UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
@@ -180,6 +179,14 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawForeground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawForeground(mouseX, mouseY));
+    }
+
+    private void addInfoLine(int offset, String tag, String value) {
+        int INFO_X = 10;
+        int INFO_Y = 10;
+        int TEXT_HEIGHT = 10;
+        font.drawString(tag, INFO_X, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
+        font.drawString(value, INFO_X + 60, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
     }
 
     @Override

@@ -9,15 +9,14 @@ import ipsis.woot.network.HeartStaticDataRequest;
 import ipsis.woot.network.Network;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.config.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +50,9 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
     private int MOBS_Y = 76;
     private int UPGRADES_X = 91;
     private int UPGRADES_Y = 76;
+    private float DROP_CYCLE_MS = 5000.0F;
+
+    private long renderTime;
 
     @Override
     protected void init() {
@@ -83,8 +85,14 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
 
-        // TODO use tick to cycle the dropelements
+        if (renderTime == 0L)
+            renderTime = Util.milliTime();
 
+        // Cycle the stacks every 5s
+        if (Util.milliTime() - renderTime > DROP_CYCLE_MS) {
+            stackElements.forEach(e -> e.cycle());
+            renderTime = Util.milliTime();
+        }
     }
 
     /**

@@ -31,6 +31,10 @@ public class DropRegistry {
 
     HashMap<FakeMob, Mob> mobs = new HashMap<>();
 
+    public Set<FakeMob> getKnownMobs() {
+        return mobs.keySet();
+    }
+
     public void learnSilent(@Nonnull FakeMobKey fakeMobKey, @Nonnull List<ItemStack> drops) {
         LOGGER.info(DROPMGR, "learnSilent {}", fakeMobKey);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
@@ -96,7 +100,7 @@ public class DropRegistry {
         return mobs.get(fakeMob);
     }
 
-    private boolean isEqualForLearning(ItemStack itemStackA, ItemStack itemStackB) {
+    public boolean isEqualForLearning(ItemStack itemStackA, ItemStack itemStackB) {
 
         boolean isEqual = ItemStack.areItemsEqualIgnoreDurability(itemStackA, itemStackB);
         return isEqual;

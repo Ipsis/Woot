@@ -1,6 +1,7 @@
 package ipsis.woot;
 
 import ipsis.woot.client.LayoutTileEntitySpecialRenderer;
+import ipsis.woot.client.ui.OracleScreen;
 import ipsis.woot.common.Config;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.blocks.heart.HeartScreen;
@@ -56,6 +57,7 @@ public class Woot {
     private void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(LayoutTileEntity.class, new LayoutTileEntitySpecialRenderer());
         ScreenManager.registerFactory(ModBlocks.HEART_CONTAINER, HeartScreen::new);
+        ScreenManager.registerFactory(ModBlocks.ORACLE_CONTAINER, OracleScreen::new);
     }
 
     public static ItemGroup itemGroup = new ItemGroup(MODID) {

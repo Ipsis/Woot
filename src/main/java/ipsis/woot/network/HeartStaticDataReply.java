@@ -1,13 +1,9 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryUIInfo;
 import ipsis.woot.factory.FactoryUpgrade;
-import ipsis.woot.factory.blocks.ControllerBlock;
-import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.oss.NetworkTools;
-import ipsis.woot.util.FakeMob;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
@@ -85,7 +81,6 @@ public class HeartStaticDataReply {
                 buf.writeInt(0);
                 buf.writeInt(0);
             }
-
         }
     }
 }

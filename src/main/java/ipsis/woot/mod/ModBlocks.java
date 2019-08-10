@@ -1,6 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.client.ui.OracleContainer;
 import ipsis.woot.factory.blocks.*;
 import ipsis.woot.factory.blocks.heart.HeartBlock;
 import ipsis.woot.factory.blocks.heart.HeartContainer;
@@ -10,6 +11,8 @@ import ipsis.woot.factory.blocks.power.Cell1TileEntity;
 import ipsis.woot.factory.blocks.power.convertors.TickConverterBlock;
 import ipsis.woot.factory.blocks.power.convertors.TickConverterTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
+import ipsis.woot.misc.OracleBlock;
+import ipsis.woot.misc.OracleTileEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -20,6 +23,13 @@ public class ModBlocks {
     public static LayoutBlock LAYOUT_BLOCK;
     @ObjectHolder(Woot.MODID + ":" + LayoutBlock.REGNAME)
     public static TileEntityType<LayoutTileEntity> LAYOUT_BLOCK_TILE;
+
+    @ObjectHolder(Woot.MODID + ":" + OracleBlock.REGNAME)
+    public static OracleBlock ORACLE_BLOCK;
+    @ObjectHolder(Woot.MODID + ":" + OracleBlock.REGNAME)
+    public static ContainerType<OracleContainer> ORACLE_CONTAINER;
+    @ObjectHolder(Woot.MODID + ":" + OracleBlock.REGNAME)
+    public static TileEntityType<OracleTileEntity> ORACLE_BLOCK_TILE;
 
     @ObjectHolder(Woot.MODID + ":" + ControllerBlock.REGNAME)
     public static ControllerBlock CONTROLLER_BLOCK;

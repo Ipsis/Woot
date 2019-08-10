@@ -3,7 +3,6 @@ package ipsis.woot.factory.blocks.heart;
 import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryUIInfo;
 import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.network.HeartStaticDataReply;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;

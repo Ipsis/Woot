@@ -32,6 +32,24 @@ public class Network {
                 .encoder(HeartStaticDataReply::toBytes)
                 .consumer(ClientHandler::onMessage)
                 .add();
+
+        channel.messageBuilder(ServerDataRequest.class, 3)
+                .decoder(ServerDataRequest::fromBytes)
+                .encoder(ServerDataRequest::toByte)
+                .consumer(ServerHandler::onMessage)
+                .add();
+
+        channel.messageBuilder(DropRegistryStatusReply.class, 4)
+                .decoder(DropRegistryStatusReply::fromBytes)
+                .encoder(DropRegistryStatusReply::toBytes)
+                .consumer(ClientHandler::onMessage)
+                .add();
+
+        channel.messageBuilder(SimulatedMobDropsReply.class, 5)
+                .decoder(SimulatedMobDropsReply::fromBytes)
+                .encoder(SimulatedMobDropsReply::toBytes)
+                .consumer(ClientHandler::onMessage)
+                .add();
     }
 
 

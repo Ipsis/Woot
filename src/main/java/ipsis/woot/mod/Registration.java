@@ -1,6 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
+import ipsis.woot.client.ui.OracleContainer;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryUpgrade;
@@ -13,6 +14,8 @@ import ipsis.woot.factory.blocks.power.convertors.TickConverterBlock;
 import ipsis.woot.factory.blocks.power.convertors.TickConverterTileEntity;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
+import ipsis.woot.misc.OracleBlock;
+import ipsis.woot.misc.OracleTileEntity;
 import ipsis.woot.tools.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -41,6 +44,7 @@ public class Registration {
         event.getRegistry().register(new HeartBlock());
         event.getRegistry().register(new ControllerBlock());
         event.getRegistry().register(new LayoutBlock());
+        event.getRegistry().register(new OracleBlock());
         event.getRegistry().register(new CellBlock(CellBlock.CELL_1_REGNAME, Cell1TileEntity.class));
         event.getRegistry().register(new CellBlock(CellBlock.CELL_2_REGNAME, Cell2TileEntity.class));
         event.getRegistry().register(new CellBlock(CellBlock.CELL_3_REGNAME, Cell3TileEntity.class));
@@ -90,6 +94,7 @@ public class Registration {
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_2, UpgradeItem.XP_2_REGNAME));
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.XP_3, UpgradeItem.XP_3_REGNAME));
 
+        event.getRegistry().register(new BlockItem(ModBlocks.ORACLE_BLOCK, properties).setRegistryName(Woot.MODID, OracleBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.LAYOUT_BLOCK, properties).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));
@@ -117,6 +122,7 @@ public class Registration {
     @SubscribeEvent
     public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
         Woot.LOGGER.info("registerTileEntities");
+        event.getRegistry().register(TileEntityType.Builder.create(OracleTileEntity::new, ModBlocks.ORACLE_BLOCK).build(null).setRegistryName(Woot.MODID, OracleBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));
@@ -142,8 +148,21 @@ public class Registration {
         Woot.LOGGER.info("registerContainers");
         event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
             BlockPos pos = data.readBlockPos();
-            return new HeartContainer(windowId, Minecraft.getInstance().world, pos, inv, Minecraft.getInstance().player);
+            return new HeartContainer(windowId,
+                    Minecraft.getInstance().world,
+                    pos,
+                    inv,
+                    Minecraft.getInstance().player);
         }).setRegistryName(HeartBlock.REGNAME));
+
+        event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+            BlockPos pos = data.readBlockPos();
+            return new OracleContainer(windowId,
+                    Minecraft.getInstance().world,
+                    pos,
+                    inv,
+                    Minecraft.getInstance().player);
+        }).setRegistryName(OracleBlock.REGNAME));
     }
 
     @SubscribeEvent

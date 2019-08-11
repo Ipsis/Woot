@@ -7,8 +7,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Background is sized width x height
@@ -79,15 +77,12 @@ public class GuiSimulatedMobsList extends ExtendedList {
                   top + 2,
                   0xFFFFFFFF);
 
-          /*
-          if (isMouseOver) {
-              List<String> tooltips = new ArrayList<>();
-              tooltips.add(String.format("No looting : %d/%d", simulatedMob.simulationKills[0], 1000));
-              tooltips.add(String.format("Looting 1 : %d/%d", simulatedMob.simulationKills[1], 1000));
-              tooltips.add(String.format("Looting 2 : %d/%d", simulatedMob.simulationKills[2], 1000));
-              tooltips.add(String.format("Looting 3 : %d/%d", simulatedMob.simulationKills[3], 1000));
-              oracleScreen.renderTooltip(tooltips, mouseX, mouseY);
-          } */
+          if (simulatedMob.simulationStatus[0] || simulatedMob.simulationStatus[1] || simulatedMob.simulationStatus[2] || simulatedMob.simulationStatus[3]) {
+              font.drawString(font.trimStringToWidth("L", listWidth),
+                      listWidth - 10,
+                      top + 2,
+                      0xFFFFFFFF);
+          }
       }
 
        @Override

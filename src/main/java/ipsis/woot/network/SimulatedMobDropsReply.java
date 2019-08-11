@@ -25,7 +25,6 @@ public class SimulatedMobDropsReply {
     public static SimulatedMobDropsReply fromBytes(ByteBuf buf) {
         List<SimDrop> simDrops = new ArrayList<>();
         int numDrops = buf.readInt();
-        Woot.LOGGER.info("fromBytes: contained {} drops", numDrops);
         for (int i = 0; i < numDrops; i++) {
             SimDrop simDrop = new SimDrop(NetworkTools.readItemStack(buf));
             for (int l = 0; l < 4; l++)
@@ -36,7 +35,6 @@ public class SimulatedMobDropsReply {
     }
 
     public void toBytes(ByteBuf buf) {
-        Woot.LOGGER.info("toBytes: {} drops", simulatedDrops.size());
         buf.writeInt(simulatedDrops.size());
         for (SimDrop simDrop : simulatedDrops) {
             NetworkTools.writeItemStack(buf, simDrop.itemStack);
@@ -46,7 +44,6 @@ public class SimulatedMobDropsReply {
     }
 
     public SimulatedMobDropsReply(String entityKey) {
-        Woot.LOGGER.info("Asked for drops on " + entityKey);
         FakeMob fakeMob = new FakeMob(entityKey);
         if (fakeMob.isValid()) {
             for (int l = 0; l < 4; l++) {
@@ -69,7 +66,6 @@ public class SimulatedMobDropsReply {
                 }
             }
         }
-        Woot.LOGGER.info("Created drops for " + entityKey);
     }
 
     public static class SimDrop {

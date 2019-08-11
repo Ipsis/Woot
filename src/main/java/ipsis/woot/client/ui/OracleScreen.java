@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -55,7 +56,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
         this.guiSimulatedMobsList = new GuiSimulatedMobsList(this, listWidth);
         this.guiSimulatedMobsList.setLeftPos(6);
 
-        this.simulatedDropsPanel = new DropPanel(this.minecraft, 200, this.height - 32, 16);
+        this.simulatedDropsPanel = new DropPanel(this.minecraft, 20 * 9, this.height - 32, 16);
 
         children.add(guiSimulatedMobsList);
         children.add(simulatedDropsPanel);
@@ -147,18 +148,57 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
             itemRenderer.zLevel = 100.0F;
             GlStateManager.enableBlend(); */
 
-            // If simulating looting count is 0 then indicate "no data available"
-            getFontRenderer().drawString("Header info", left + 4, relativeY, 0xFFFFFFFF);
-            relativeY += getFontRenderer().FONT_HEIGHT + 5;
 
-            // TODO Use the width to calculate how many we can get across
+            if (selected != null) {
+                String s;
+                float complete = 0.0F;
+                if (selected.getInfo().simulationKills[0] > 0)
+                    complete = (100.0F / (float)container.simCount) * (float)selected.getInfo().simulationKills[0];
+                complete = MathHelper.clamp(complete, 0.0F, 100.0F);
+                s = String.format("No looting: %d/%d %.0f%% %s", container.simCount, selected.getInfo().simulationKills[0], complete, selected.getInfo().simulationStatus[0] ? "L" : "");
+                getFontRenderer().drawString(s, left + 4, relativeY, 0xFFFFFFFF);
+                relativeY += getFontRenderer().FONT_HEIGHT + 5;
+
+                complete = 0.0F;
+                if (selected.getInfo().simulationKills[1] > 0)
+                    complete = (100.0F / (float)container.simCount) * (float)selected.getInfo().simulationKills[1];
+                complete = MathHelper.clamp(complete, 0.0F, 100.0F);
+                s = String.format("Looting I: %d/%d %.0f%% %s", container.simCount, selected.getInfo().simulationKills[1], complete, selected.getInfo().simulationStatus[1] ? "L" : "");
+                getFontRenderer().drawString(s, left + 4, relativeY, 0xFFFFFFFF);
+                relativeY += getFontRenderer().FONT_HEIGHT + 5;
+
+                complete = 0.0F;
+                if (selected.getInfo().simulationKills[2] > 0)
+                    complete = (100.0F / (float)container.simCount) * (float)selected.getInfo().simulationKills[2];
+                complete = MathHelper.clamp(complete, 0.0F, 100.0F);
+                s = String.format("Looting II: %d/%d %.0f%% %s", container.simCount, selected.getInfo().simulationKills[2], complete, selected.getInfo().simulationStatus[2] ? "L" : "");
+                getFontRenderer().drawString(s, left + 4, relativeY, 0xFFFFFFFF);
+                relativeY += getFontRenderer().FONT_HEIGHT + 5;
+
+                complete = 0.0F;
+                if (selected.getInfo().simulationKills[3] > 0)
+                    complete = (100.0F / (float)container.simCount) * (float)selected.getInfo().simulationKills[3];
+                complete = MathHelper.clamp(complete, 0.0F, 100.0F);
+                s = String.format("Looting III: %d/%d %.0f%% %s", container.simCount, selected.getInfo().simulationKills[3], complete, selected.getInfo().simulationStatus[3] ? "L" : "");
+                getFontRenderer().drawString(s, left + 4, relativeY, 0xFFFFFFFF);
+                relativeY += getFontRenderer().FONT_HEIGHT + 5;
+
+            }
+
+            int cols = width / 20;
+            int currCol = 0;
             for (SimulatedMobDropsReply.SimDrop simDrop : drops) {
 
                 /**
                  * Simulated Item
                  */
-                int stackX = left + 4;
+                int stackX = left + 4 + (currCol * 20);
                 int stackY = relativeY;
+
+                if (currCol + 1 == cols)
+                    relativeY += 20;
+                currCol = (currCol + 1) % cols;
+
                 blitOffset = 100;
                 itemRenderer.zLevel = 100.0F;
                 RenderHelper.enableGUIStandardItemLighting();
@@ -195,7 +235,6 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
                     renderTooltip(tooltip, mouseX, mouseY, fontRenderer);
                 }
-                relativeY += 20;
             }
 
 

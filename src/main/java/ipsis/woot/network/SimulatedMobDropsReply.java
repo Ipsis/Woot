@@ -64,6 +64,7 @@ public class SimulatedMobDropsReply {
                         simDrop = new SimDrop(itemStack);
                         simulatedDrops.add(simDrop);
                     }
+                    float dropChance = mobDrop.getDropChance();
                     simDrop.dropChance[l] = mobDrop.getDropChance();
                 }
             }

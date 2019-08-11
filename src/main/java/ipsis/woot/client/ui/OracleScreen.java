@@ -25,14 +25,6 @@ import java.util.function.Function;
  * When the GUI is first opened the list of fake mobs will be requested via ServerDataRequest.DROP_REGISTRY_STATUS
  * When the reply is received the list will be updated and displayed.
  * When a fake mob is selected, then the drops will be requested from the server via ServerDataRequest.MOB_DROPS
- *
- * The drop info is presented as :
- *
- * ItemStack : No looting 34.04% Looting 1 45.00% Looting 2 56.00% Looting 3 78.34%
- * Looting is presented as the upgrade itemstack, therefore the drop info is a fixed width
- *
- *
- * hover over to see tooltip
  */
 
 @OnlyIn(Dist.CLIENT)
@@ -127,7 +119,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
         @Override
         protected int getContentHeight() {
-            int height = 100;
+            int height = 50;
             height += (20 * font.FONT_HEIGHT);
             if (height < this.bottom - this.top - 8)
                 height = this.bottom - this.top - 8;
@@ -150,27 +142,69 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
         @Override
         protected void drawPanel(int entryRight, int relativeY, Tessellator tess, int mouseX, int mouseY) {
 
+            /*
             blitOffset = 100;
             itemRenderer.zLevel = 100.0F;
-            GlStateManager.enableBlend();
-            RenderHelper.enableGUIStandardItemLighting();
+            GlStateManager.enableBlend(); */
 
+            // If simulating looting count is 0 then indicate "no data available"
+            getFontRenderer().drawString("Header info", left + 4, relativeY, 0xFFFFFFFF);
+            relativeY += getFontRenderer().FONT_HEIGHT + 5;
+
+            // TODO Use the width to calculate how many we can get across
             for (SimulatedMobDropsReply.SimDrop simDrop : drops) {
-                itemRenderer.renderItemIntoGUI(simDrop.itemStack, left + 4, relativeY);
-                String detail = String.format("%.2f%% %.2f%% %.2f%% %.2f%%",
-                        simDrop.dropChance[0],
-                        simDrop.dropChance[1],
-                        simDrop.dropChance[2],
-                        simDrop.dropChance[3]);
-                OracleScreen.this.font.drawStringWithShadow(detail, left + 24, relativeY, 0xFFFFFF);
+
+                /**
+                 * Simulated Item
+                 */
+                int stackX = left + 4;
+                int stackY = relativeY;
+                blitOffset = 100;
+                itemRenderer.zLevel = 100.0F;
+                RenderHelper.enableGUIStandardItemLighting();
+                GlStateManager.enableDepthTest();
+                itemRenderer.renderItemIntoGUI(simDrop.itemStack, stackX, stackY);
+                RenderHelper.disableStandardItemLighting();
+                itemRenderer.zLevel = 0.0F;
+                blitOffset = 0;
+
+                if (mouseX >= stackX && mouseX <= stackX + 20 && mouseY >= stackY && mouseY <= stackY + 20) {
+                    FontRenderer fontRenderer = simDrop.itemStack.getItem().getFontRenderer(simDrop.itemStack);
+                    if (fontRenderer == null)
+                        fontRenderer = font;
+                    List<String> tooltip = getTooltipFromItem(simDrop.itemStack);
+                    if (simDrop.dropChance[0] == -1.0F)
+                        tooltip.add("No looting : no data");
+                    else
+                        tooltip.add(String.format("No looting : %.2f%%", simDrop.dropChance[0]));
+
+                    if (simDrop.dropChance[1] == -1.0F)
+                        tooltip.add("Looting 1 : no data");
+                    else
+                        tooltip.add(String.format("Looting 1 : %.2f%%", simDrop.dropChance[1]));
+
+                    if (simDrop.dropChance[2] == -1.0F)
+                        tooltip.add("Looting 2 : no data");
+                    else
+                        tooltip.add(String.format("Looting 2 : %.2f%%", simDrop.dropChance[2]));
+
+                    if (simDrop.dropChance[3] == -1.0F)
+                        tooltip.add("Looting 3 : no data");
+                    else
+                        tooltip.add(String.format("Looting 3: %.2f%%", simDrop.dropChance[3]));
+
+                    renderTooltip(tooltip, mouseX, mouseY, fontRenderer);
+                }
                 relativeY += 20;
             }
 
+
+            /*
             RenderHelper.disableStandardItemLighting();
             GlStateManager.disableAlphaTest();
             GlStateManager.disableBlend();
             itemRenderer.zLevel = 0.0F;
-            blitOffset = 0;
+            blitOffset = 0;*/
         }
     }
 }

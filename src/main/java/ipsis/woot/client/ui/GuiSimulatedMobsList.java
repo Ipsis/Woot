@@ -7,6 +7,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Background is sized width x height
  * List is sized x0,y0 -> x1,y1
@@ -32,9 +35,10 @@ public class GuiSimulatedMobsList extends ExtendedList {
        this.oracleScreen = oracleScreen;
        this.listWidth = listWidth;
        this.refreshList();
+       setRenderSelection(true);
    }
 
-   void refreshList() {
+    void refreshList() {
        this.clearEntries();
        oracleScreen.buildSimulatedMobsList(this::addEntry, mob -> new SimulatedMobEntry(mob, this.oracleScreen));
    }
@@ -64,7 +68,7 @@ public class GuiSimulatedMobsList extends ExtendedList {
       }
 
       @Override
-      public void render(int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean p_194999_5_, float partialTicks) {
+      public void render(int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isMouseOver, float partialTicks) {
           String name = "Unknown Mob";
           EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(simulatedMob.fakeMob.getResourceLocation());
           if (entityType != null)
@@ -75,10 +79,15 @@ public class GuiSimulatedMobsList extends ExtendedList {
                   top + 2,
                   0xFFFFFFFF);
 
-          if (p_194999_5_) {
-              // Mouse over entry ???
-              oracleScreen.renderTooltip("Tooltip: " + name, mouseX, mouseY);
-          }
+          /*
+          if (isMouseOver) {
+              List<String> tooltips = new ArrayList<>();
+              tooltips.add(String.format("No looting : %d/%d", simulatedMob.simulationKills[0], 1000));
+              tooltips.add(String.format("Looting 1 : %d/%d", simulatedMob.simulationKills[1], 1000));
+              tooltips.add(String.format("Looting 2 : %d/%d", simulatedMob.simulationKills[2], 1000));
+              tooltips.add(String.format("Looting 3 : %d/%d", simulatedMob.simulationKills[3], 1000));
+              oracleScreen.renderTooltip(tooltips, mouseX, mouseY);
+          } */
       }
 
        @Override
@@ -87,8 +96,6 @@ public class GuiSimulatedMobsList extends ExtendedList {
          GuiSimulatedMobsList.this.setSelected(this);
          return false;
        }
-
-
 
         public DropRegistryStatusReply.SimMob getInfo() {
           return simulatedMob;

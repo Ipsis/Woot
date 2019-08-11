@@ -247,6 +247,7 @@ public class DropRegistry {
             public Drop(ItemStack itemStack) {
                 this.droppedItem = itemStack.copy();
                 for (int i = 0; i < MAX_LOOTING; i++) {
+                    simulatedDropCount[i] = 0;
                     simulatedStackSizes.add(i, new HashMap<>());
                     customStackSizes.add(i, new HashMap<>());
                 }
@@ -254,7 +255,11 @@ public class DropRegistry {
 
             public @Nonnull MobDrop getMobDrop(int looting, int sampleSize) {
                 // TODO add the custom drops
-                float dropChance = (100.0F / (float)sampleSize) * simulatedDropCount[looting];
+                float dropChance = 0.0F;
+                if (sampleSize == 0)
+                    dropChance = -1.0F; // means that we haven't simulated anything yet
+                else
+                    dropChance = (100.0F / (float) sampleSize) * simulatedDropCount[looting];
                 MobDrop mobDrop = new MobDrop(droppedItem, dropChance);
                 for (Integer stackSize : simulatedStackSizes.get(looting).keySet())
                     mobDrop.addSizeChance(stackSize, (100.0F / (float)simulatedDropCount[looting]) * simulatedStackSizes.get(looting).get(stackSize));

@@ -15,7 +15,6 @@ public class ClientHandler {
         ctx.get().enqueueWork(() -> {
             ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
             if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof HeartContainer) {
-                Woot.LOGGER.info("onMessage: received heart reply");
                 ((HeartContainer) clientPlayerEntity.openContainer).handleUIInfo(message.info);
                 ctx.get().setPacketHandled(true);
             }
@@ -26,7 +25,6 @@ public class ClientHandler {
         ctx.get().enqueueWork(() -> {
             ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
             if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
-                Woot.LOGGER.info("onMessage: received drop registry reply");
                 ((OracleContainer) clientPlayerEntity.openContainer).handleDropRegistryStatus(message);
                 ctx.get().setPacketHandled(true);
             }
@@ -37,7 +35,6 @@ public class ClientHandler {
         ctx.get().enqueueWork(() -> {
             ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
             if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
-                Woot.LOGGER.info("onMessage: received drops");
                 ((OracleContainer) clientPlayerEntity.openContainer).handleSimulatedMobDrops(message);
                 ctx.get().setPacketHandled(true);
             }

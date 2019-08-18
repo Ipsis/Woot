@@ -3,6 +3,7 @@ package ipsis.woot.simulation;
 import ipsis.woot.common.Config;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.util.FakeMobKey;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,6 +36,9 @@ public class MobSimulator {
         if (pupils.keySet().contains(fakeMobKey))
             return false;
 
+        if (DropRegistry.get().isLearningFinished(fakeMobKey, Config.COMMON.SIMULATION_MOB_COUNT.get()))
+            return false;
+
         // defer allocating the cells
         waitingForCells.add(fakeMobKey);
         return true;
@@ -44,19 +48,21 @@ public class MobSimulator {
         return Collections.unmodifiableSet(pupils.keySet());
     }
 
+    private int currTicks = 0;
     public void tick(World world) {
 
         if (world == null)
             return;
 
-        Iterator iter = pupils.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry pair = (Map.Entry) iter.next();
-            Pupil pupil = (Pupil)pair.getValue();
-            pupil.tick();
+        currTicks = MathHelper.clamp(currTicks + 1, 0, Integer.MAX_VALUE);
+        if (currTicks >= Config.COMMON.SIMULATION_TICKS_PER_SIM_TICK.get()) {
+            // An actual simulation tick
 
-            if (pupil.currentTicks > Config.COMMON.SIMULATION_TICKS.get()) {
-                pupil.resetTicks();
+            int processed = 0;
+            Iterator iter = pupils.entrySet().iterator();
+            while (iter.hasNext() && processed <= Config.COMMON.SIMULATION_CELLS_PER_SIM_TICK.get()) {
+                Map.Entry pair = (Map.Entry) iter.next();
+                Pupil pupil = (Pupil) pair.getValue();
 
                 // Handle drops from previous kill
                 DropRegistry.get().learnSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
@@ -69,20 +75,24 @@ public class MobSimulator {
                     LOGGER.info(MOBSIM, "Simulate {}", pupil.fakeMobKey);
                     Tartarus.get().simulateInCell(pupil.cellId, pupil.fakeMobKey, world);
                 }
+                processed++;
             }
-        }
 
-        iter = waitingForCells.iterator();
-        while (iter.hasNext()) {
-            FakeMobKey fakeMobKey = (FakeMobKey)iter.next();
-            int cellId = Tartarus.get().allocateCell();
-            if (cellId != INVALID_CELL_ID) {
-                LOGGER.info(MOBSIM, "Allocated cell {} to {}", cellId, fakeMobKey);
-                Pupil pupil = new Pupil(fakeMobKey, cellId);
-                pupils.put(fakeMobKey, pupil);
-                LOGGER.info(MOBSIM, "Simulate {}", pupil.fakeMobKey);
-                Tartarus.get().simulateInCell(pupil.cellId, pupil.fakeMobKey, world);
-                iter.remove();
+            /**
+             * Always try to allocate free cells
+             */
+            iter = waitingForCells.iterator();
+            while (iter.hasNext()) {
+                FakeMobKey fakeMobKey = (FakeMobKey)iter.next();
+                int cellId = Tartarus.get().allocateCell();
+                if (cellId != INVALID_CELL_ID) {
+                    LOGGER.info(MOBSIM, "Allocated cell {} to {}", cellId, fakeMobKey);
+                    Pupil pupil = new Pupil(fakeMobKey, cellId);
+                    pupils.put(fakeMobKey, pupil);
+                    LOGGER.info(MOBSIM, "Simulate {}", pupil.fakeMobKey);
+                    Tartarus.get().simulateInCell(pupil.cellId, pupil.fakeMobKey, world);
+                    iter.remove();
+                }
             }
         }
     }
@@ -90,16 +100,11 @@ public class MobSimulator {
     public class Pupil {
         FakeMobKey fakeMobKey;
         int cellId = INVALID_CELL_ID;
-        int currentTicks;
 
         private Pupil(){}
         public Pupil(@Nonnull FakeMobKey fakeMobKey, int cellId) {
             this.fakeMobKey = fakeMobKey;
             this.cellId = cellId;
-            currentTicks = 0;
         }
-
-        public void tick() { currentTicks++; }
-        public void resetTicks() { currentTicks = 0; }
     }
 }

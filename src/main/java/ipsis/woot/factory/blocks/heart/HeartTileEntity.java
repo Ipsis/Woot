@@ -5,6 +5,7 @@ import ipsis.woot.factory.blocks.power.CellTileEntityBase;
 import ipsis.woot.factory.generators.LootGeneration;
 import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
+import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;
@@ -89,11 +90,13 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
            if (layout.hasChanged()) {
                setup = Setup.creatFromLayout(world, layout);
 
+               /**
+                * TODO learn only factory looting or all the looting ???
                int looting = 0;
                if (setup.getUpgrades().containsKey(FactoryUpgradeType.LOOTING))
                    looting = setup.getUpgrades().get(FactoryUpgradeType.LOOTING);
-               for (FakeMob mob : setup.getMobs())
-                   MobSimulator.get().learn(new FakeMobKey(mob, looting));
+                */
+               setup.getMobs().forEach(m -> DropRegistry.get().tryLearning(m));
                recipe = RecipeHelper.createRecipe(setup, world);
                layout.clearChanged();
            }

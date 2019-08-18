@@ -2,6 +2,8 @@ package ipsis.woot.loot;
 
 import com.google.gson.*;
 import ipsis.woot.Woot;
+import ipsis.woot.common.Config;
+import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.JsonHelper;
@@ -33,6 +35,19 @@ public class DropRegistry {
 
     public Set<FakeMob> getKnownMobs() {
         return mobs.keySet();
+    }
+
+    public void primeAllMobLearning() {
+        for (FakeMob fakeMob : mobs.keySet())
+            tryLearning(fakeMob);
+    }
+
+    public void tryLearning(@Nonnull FakeMob fakeMob) {
+        for (int looting = 0; looting < 4; looting++) {
+            FakeMobKey fakeMobKey = new FakeMobKey(fakeMob, looting);
+            if (!isLearningFinished(fakeMobKey, Config.COMMON.SIMULATION_MOB_COUNT.get()))
+                MobSimulator.get().learn(new FakeMobKey(fakeMob, looting));
+        }
     }
 
     public void learnSilent(@Nonnull FakeMobKey fakeMobKey, @Nonnull List<ItemStack> drops) {

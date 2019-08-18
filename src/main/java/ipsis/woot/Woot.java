@@ -52,6 +52,7 @@ public class Woot {
         PatternRepository.get().load();
         Config.loadFromConfig();
         DropRegistry.get().fromJson();
+        DropRegistry.get().primeAllMobLearning();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

@@ -53,6 +53,8 @@ public class Config {
 
         public final IntValue SIMULATION_TICKS;
         public final IntValue SIMULATION_MOB_COUNT;
+        public final IntValue SIMULATION_TICKS_PER_SIM_TICK;
+        public final IntValue SIMULATION_CELLS_PER_SIM_TICK;
         public final ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
 
         public final IntValue MASS_COUNT;
@@ -163,6 +165,16 @@ public class Config {
                     .comment("Number of simulated mobs to learn from")
                     .translation(TAG + TAG2)
                     .defineInRange(TAG2, 500,100, 5000);
+            TAG2 = "simulationTickPerSimTick";
+            SIMULATION_TICKS_PER_SIM_TICK = builder
+                    .comment("Number of ticks per tick of the simulator")
+                    .translation(TAG + TAG2)
+                    .defineInRange(TAG2, 10, 1, 20 * 60 );
+            TAG2 = "simulationCellsPerSimTick";
+            SIMULATION_CELLS_PER_SIM_TICK = builder
+                    .comment("Number of mobs to simulate per simulator tick")
+                    .translation(TAG + TAG2)
+                    .defineInRange(TAG2, 8, 1, 128);
 
             builder.push("mob");
             {

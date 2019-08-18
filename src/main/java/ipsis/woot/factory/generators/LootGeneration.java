@@ -51,7 +51,7 @@ public class LootGeneration {
 
         int mobCount = setup.getMaxMobCount();
         for (FakeMob mob : setup.getMobs()) {
-            LOGGER.info(LOOTGEN, "generate: {} * {}", mob, mobCount);
+//            LOGGER.info(LOOTGEN, "generate: {} * {}", mob, mobCount);
             List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(mob, 0));
             for (int i = 0; i < mobCount; i++) {
                 List<ItemStack> drops = MobDropHelper.getDrops(mobDrops);
@@ -59,7 +59,7 @@ public class LootGeneration {
                 while (iter.hasNext()) {
                     LazyOptional<IItemHandler> hdlr = iter.next();
                     hdlr.ifPresent(h -> {
-                        LOGGER.info(LOOTGEN, "generate: try drop into {} ", h);
+//                        LOGGER.info(LOOTGEN, "generate: try drop into {} ", h);
                         for (ItemStack itemStack : drops) {
                             if (itemStack.isEmpty())
                                 continue;

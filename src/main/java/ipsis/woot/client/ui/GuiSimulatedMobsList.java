@@ -77,7 +77,7 @@ public class GuiSimulatedMobsList extends ExtendedList {
                   top + 2,
                   0xFFFFFFFF);
 
-          if (simulatedMob.simulationStatus[0] || simulatedMob.simulationStatus[1] || simulatedMob.simulationStatus[2] || simulatedMob.simulationStatus[3]) {
+          if (!simulatedMob.simulationStatus[0] || !simulatedMob.simulationStatus[1] || !simulatedMob.simulationStatus[2] || !simulatedMob.simulationStatus[3]) {
               font.drawString(font.trimStringToWidth("L", listWidth),
                       listWidth - 10,
                       top + 2,

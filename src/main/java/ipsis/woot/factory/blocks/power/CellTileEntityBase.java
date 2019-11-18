@@ -13,7 +13,6 @@ public abstract class CellTileEntityBase extends TileFluidHandler implements Woo
     public CellTileEntityBase(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
         tank.setCapacity(getCapacity());
-        tank.setTileEntity(this);
     }
 
     private int amount = 0;

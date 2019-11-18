@@ -6,13 +6,12 @@ import ipsis.woot.factory.FactoryUIInfo;
 import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.network.HeartStaticDataRequest;
-import ipsis.woot.network.Network;
+import ipsis.woot.network.NetworkChannel;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
@@ -80,7 +79,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         }
 
         // Request the static data
-        Network.channel.sendToServer(new HeartStaticDataRequest(container.getPos()));
+        NetworkChannel.channel.sendToServer(new HeartStaticDataRequest(container.getPos()));
     }
 
     /**
@@ -150,7 +149,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                 }
                 if (!mob.fluidIngredients.isEmpty()) {
                     for (FluidStack fluidStack : mob.fluidIngredients)
-                        tooltip.add(fluidStack.amount + "mb " + fluidStack.toString());
+                        tooltip.add(fluidStack.getAmount() + "mb " + fluidStack.toString());
                 }
                 mobElements.get(idx).addDrop(mob.controller, tooltip);
                 idx++;

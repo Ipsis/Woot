@@ -16,6 +16,7 @@ import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.misc.OracleBlock;
 import ipsis.woot.misc.OracleTileEntity;
+import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.tools.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -74,6 +75,7 @@ public class Registration {
 
         event.getRegistry().register(new DebugItem());
         event.getRegistry().register(new InternItem());
+        event.getRegistry().register(new MobShardItem());
 
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_1, UpgradeItem.CAPACITY_1_REGNAME));
         event.getRegistry().register(new UpgradeItem(FactoryUpgrade.CAPACITY_2, UpgradeItem.CAPACITY_2_REGNAME));

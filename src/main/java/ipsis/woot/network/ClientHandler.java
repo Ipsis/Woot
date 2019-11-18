@@ -11,33 +11,48 @@ import java.util.function.Supplier;
 
 public class ClientHandler {
 
-    static void onMessage(HeartStaticDataReply message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
-            if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof HeartContainer) {
-                ((HeartContainer) clientPlayerEntity.openContainer).handleUIInfo(message.info);
-                ctx.get().setPacketHandled(true);
-            }
-        });
+    static boolean onMessage(HeartStaticDataReply message, Supplier<NetworkEvent.Context> ctx) {
+        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
+        if (clientPlayerEntity != null) {
+            ctx.get().enqueueWork(() -> {
+                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof HeartContainer) {
+                    ((HeartContainer) clientPlayerEntity.openContainer).handleUIInfo(message.info);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    static void onMessage(DropRegistryStatusReply message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
-            if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
-                ((OracleContainer) clientPlayerEntity.openContainer).handleDropRegistryStatus(message);
-                ctx.get().setPacketHandled(true);
-            }
-        });
+    static boolean onMessage(DropRegistryStatusReply message, Supplier<NetworkEvent.Context> ctx) {
+        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
+        if (clientPlayerEntity != null) {
+            ctx.get().enqueueWork(() -> {
+                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
+                    ((OracleContainer) clientPlayerEntity.openContainer).handleDropRegistryStatus(message);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    static void onMessage(SimulatedMobDropsReply message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
-            if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
-                ((OracleContainer) clientPlayerEntity.openContainer).handleSimulatedMobDrops(message);
-                ctx.get().setPacketHandled(true);
-            }
-        });
+    static boolean onMessage(SimulatedMobDropsReply message, Supplier<NetworkEvent.Context> ctx) {
+        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
+        if (clientPlayerEntity != null) {
+            ctx.get().enqueueWork(() -> {
+                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
+                    ((OracleContainer) clientPlayerEntity.openContainer).handleSimulatedMobDrops(message);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
 }

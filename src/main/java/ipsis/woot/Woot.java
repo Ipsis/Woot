@@ -10,7 +10,7 @@ import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModEvents;
 import ipsis.woot.mod.Registration;
-import ipsis.woot.network.Network;
+import ipsis.woot.network.NetworkChannel;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -48,7 +48,7 @@ public class Woot {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        Network.init();
+        NetworkChannel.init();
         PatternRepository.get().load();
         Config.loadFromConfig();
         DropRegistry.get().fromJson();

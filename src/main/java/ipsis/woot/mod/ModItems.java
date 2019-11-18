@@ -5,6 +5,7 @@ import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.items.UpgradeItem;
+import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.tools.InternItem;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -55,4 +56,10 @@ public class ModItems {
     public static UpgradeItem XP_2_ITEM;
     @ObjectHolder(Woot.MODID + ":" + UpgradeItem.XP_3_REGNAME)
     public static UpgradeItem XP_3_ITEM;
+
+    /**
+     * Shards
+     */
+    @ObjectHolder(Woot.MODID + ":" + MobShardItem.REGNAME)
+    public static MobShardItem MOB_SHARD_ITEM;
 }

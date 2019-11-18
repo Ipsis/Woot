@@ -1,5 +1,6 @@
 package ipsis.woot.util;
 
+import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -30,6 +31,10 @@ public class FakeMob {
 
     public FakeMob(FakeMob fakeMob) {
         this(fakeMob.getEntityKey(), fakeMob.getTag());
+    }
+
+    public FakeMob(MobEntity mobEntity) {
+        this(mobEntity.getEntityString());
     }
 
     private void setInfo(String entityKey, String tag) {

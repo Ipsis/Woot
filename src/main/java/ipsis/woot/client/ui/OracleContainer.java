@@ -2,14 +2,13 @@ package ipsis.woot.client.ui;
 
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.network.DropRegistryStatusReply;
-import ipsis.woot.network.Network;
+import ipsis.woot.network.NetworkChannel;
 import ipsis.woot.network.ServerDataRequest;
 import ipsis.woot.network.SimulatedMobDropsReply;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
@@ -46,14 +45,14 @@ public class OracleContainer extends Container {
     public List<DropRegistryStatusReply.SimMob> simulatedMobs = null;
     public List<SimulatedMobDropsReply.SimDrop> simulatedDrops = null;
     public void refreshMobs() {
-        Network.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.DROP_REGISTRY_STATUS,
+        NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.DROP_REGISTRY_STATUS,
                 getPos(), ""));
         simulatedMobs = null;
         simulatedDrops = null;
     }
 
     public void refreshDrops(FakeMob fakeMob) {
-        Network.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.SIMULATED_MOB_DROPS,
+        NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.SIMULATED_MOB_DROPS,
                 getPos(), fakeMob.getEntityKey()));
         simulatedDrops = null;
     }

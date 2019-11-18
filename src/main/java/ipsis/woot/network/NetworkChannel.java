@@ -7,7 +7,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 import java.util.Objects;
 
-public class Network {
+public class NetworkChannel {
 
     private static ResourceLocation resourceLocation = new ResourceLocation(Woot.MODID, "net");
 
@@ -21,6 +21,16 @@ public class Network {
                 .networkProtocolVersion(() -> "1")
                 .simpleChannel();
 
+        // Server side
+        channel.registerMessage(
+                1,
+                HeartStaticDataRequest.class,
+                HeartStaticDataRequest::toByte,
+                HeartStaticDataRequest::fromBytes,
+                HeartStaticDataRequest::handle);
+
+/*
+        // Client side
         channel.messageBuilder(HeartStaticDataRequest.class, 1)
                 .decoder(HeartStaticDataRequest::fromBytes)
                 .encoder(HeartStaticDataRequest::toByte)
@@ -49,7 +59,7 @@ public class Network {
                 .decoder(SimulatedMobDropsReply::fromBytes)
                 .encoder(SimulatedMobDropsReply::toBytes)
                 .consumer(ClientHandler::onMessage)
-                .add();
+                .add(); */
     }
 
 

@@ -37,6 +37,7 @@
   # Item Names
   "item.woot.debug": "Debug",
   "item.woot.intern": "Intern",
+  "item.woot.mobshard": "Ender Shard",
   "item.woot.capacity_1": "Capacity 1",
   "item.woot.capacity_2": "Capacity 2",
   "item.woot.capacity_3": "Capacity 3",
@@ -56,7 +57,8 @@
   "item.woot.xp_2": "XP 2",
   "item.woot.xp_3": "XP 3",
 
-  # Tooltips,
+
+  # Tooltips
   "info.woot.intern": "§aUse on the factory heart to form, build or validate a factory",
   "info.woot.intern.0": "§bSneak-right click to change modes",
   "info.woot.intern.mode.form": "Form the factory",
@@ -70,6 +72,14 @@
   "info.woot.intern.mode.validate_3": "Validate a Tier 3 factory",
   "info.woot.intern.mode.validate_4": "Validate a Tier 4 factory",
   "info.woot.intern.mode.validate_5": "Validate a Tier 5 factory",
+  "info.woot.mobshard.0": "Attack mob with shard to capture",
+  "info.woot.mobshard.1": "Kill mobs to fill the shard",
+  "info.woot.mobshard.2": "Shard must be in your hotbar to fill",
+  "info.woot.mobshard.3": "Can be cleared in a crafting table",
+  "info.woot.mobshard.a.0": "[Unprogrammed]",
+  "info.woot.mobshard.a.1": "[Fully Programmed]",
+  "info.woot.mobshard.b.0": "[Kills %d/%d]",
+  "info.woot.mobshard.b.1": "[Fully Programmed]",
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",
@@ -83,5 +93,7 @@
   "chat.woot.intern.validate.nocontroller": "No controller found",
   "chat.woot.intern.validate.missing": "Expected %s at (%d,%d,%d)",
   "chat.woot.intern.validate.incorrect": "Expected %s at (%d,%d,%d) but found %s",
-  "chat.woot.intern.validate.wrongtier": "Controller at (%d,%d,%d) not valid for %s"
+  "chat.woot.intern.validate.wrongtier": "Controller at (%d,%d,%d) not valid for %s",
+  "chat.woot.mobshard.failure": "Cannot capture mob",
+  "chat.woot.mobshard.success": "Captured mob"
 }

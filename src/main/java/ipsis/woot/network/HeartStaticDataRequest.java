@@ -1,7 +1,10 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.factory.blocks.heart.HeartTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -28,12 +31,17 @@ public class HeartStaticDataRequest {
         buf.writeInt(pos.getZ());
     }
 
-    public void handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context ctx = supplier.get();
-        ctx.enqueueWork(() -> {
-
-        });
-        ctx.setPacketHandled(true);
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
+        if (ctx.get().getSender() != null) {
+            ctx.get().enqueueWork(() -> {
+                TileEntity te = ctx.get().getSender().world.getTileEntity(pos);
+                if (te instanceof HeartTileEntity) {
+                    NetworkChannel.channel.sendTo(new HeartStaticDataReply(((HeartTileEntity) te).createFactoryUIInfo()),
+                            ctx.get().getSender().connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
+        }
     }
 
     @Override

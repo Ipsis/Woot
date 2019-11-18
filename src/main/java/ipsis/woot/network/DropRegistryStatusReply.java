@@ -1,15 +1,21 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.client.ui.OracleContainer;
 import ipsis.woot.common.Config;
+import ipsis.woot.factory.blocks.heart.HeartContainer;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.oss.NetworkTools;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class DropRegistryStatusReply {
 
@@ -57,6 +63,18 @@ public class DropRegistryStatusReply {
             buf.writeBoolean(DropRegistry.get().isLearningFinished(new FakeMobKey(fakeMob, 2), Config.COMMON.SIMULATION_MOB_COUNT.get()));
             buf.writeInt(simulationCounts.get(3)); // looting 3
             buf.writeBoolean(DropRegistry.get().isLearningFinished(new FakeMobKey(fakeMob, 3), Config.COMMON.SIMULATION_MOB_COUNT.get()));
+        }
+    }
+
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
+        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
+        if (clientPlayerEntity != null) {
+            ctx.get().enqueueWork(() -> {
+                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
+                    ((OracleContainer) clientPlayerEntity.openContainer).handleDropRegistryStatus(this);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
         }
     }
 

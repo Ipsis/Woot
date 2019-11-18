@@ -21,46 +21,32 @@ public class NetworkChannel {
                 .networkProtocolVersion(() -> "1")
                 .simpleChannel();
 
-        // Server side
         channel.registerMessage(
                 1,
-                HeartStaticDataRequest.class,
-                HeartStaticDataRequest::toByte,
-                HeartStaticDataRequest::fromBytes,
-                HeartStaticDataRequest::handle);
+                ServerDataRequest.class,
+                ServerDataRequest::toByte,
+                ServerDataRequest::fromBytes,
+                ServerDataRequest::handle);
 
-/*
-        // Client side
-        channel.messageBuilder(HeartStaticDataRequest.class, 1)
-                .decoder(HeartStaticDataRequest::fromBytes)
-                .encoder(HeartStaticDataRequest::toByte)
-                .consumer(ServerHandler::onMessage)
-                .add();
+        channel.registerMessage(
+                2,
+                HeartStaticDataReply.class,
+                HeartStaticDataReply::toBytes,
+                HeartStaticDataReply::fromBytes,
+                HeartStaticDataReply::handle);
 
-        channel.messageBuilder(HeartStaticDataReply.class, 2)
-                .decoder(HeartStaticDataReply::fromBytes)
-                .encoder(HeartStaticDataReply::toBytes)
-                .consumer(ClientHandler::onMessage)
-                .add();
+        channel.registerMessage(
+                3,
+                DropRegistryStatusReply.class,
+                DropRegistryStatusReply::toBytes,
+                DropRegistryStatusReply::fromBytes,
+                DropRegistryStatusReply::handle);
 
-        channel.messageBuilder(ServerDataRequest.class, 3)
-                .decoder(ServerDataRequest::fromBytes)
-                .encoder(ServerDataRequest::toByte)
-                .consumer(ServerHandler::onMessage)
-                .add();
-
-        channel.messageBuilder(DropRegistryStatusReply.class, 4)
-                .decoder(DropRegistryStatusReply::fromBytes)
-                .encoder(DropRegistryStatusReply::toBytes)
-                .consumer(ClientHandler::onMessage)
-                .add();
-
-        channel.messageBuilder(SimulatedMobDropsReply.class, 5)
-                .decoder(SimulatedMobDropsReply::fromBytes)
-                .encoder(SimulatedMobDropsReply::toBytes)
-                .consumer(ClientHandler::onMessage)
-                .add(); */
+        channel.registerMessage(
+                4,
+                SimulatedMobDropsReply.class,
+                SimulatedMobDropsReply::toBytes,
+                SimulatedMobDropsReply::fromBytes,
+                SimulatedMobDropsReply::handle);
     }
-
-
 }

@@ -1,11 +1,21 @@
 package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.client.ui.OracleContainer;
 import ipsis.woot.factory.FactoryUIInfo;
 import ipsis.woot.factory.FactoryUpgrade;
+import ipsis.woot.factory.blocks.heart.HeartContainer;
+import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.oss.NetworkTools;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 /**
  * Server -> Client
@@ -81,6 +91,18 @@ public class HeartStaticDataReply {
                 buf.writeInt(0);
                 buf.writeInt(0);
             }
+        }
+    }
+
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
+        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
+        if (clientPlayerEntity != null) {
+            ctx.get().enqueueWork(() -> {
+                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof HeartContainer) {
+                    ((HeartContainer) clientPlayerEntity.openContainer).handleUIInfo(info);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
         }
     }
 }

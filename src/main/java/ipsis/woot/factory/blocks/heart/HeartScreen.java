@@ -7,6 +7,7 @@ import ipsis.woot.factory.FactoryUpgrade;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.network.HeartStaticDataRequest;
 import ipsis.woot.network.NetworkChannel;
+import ipsis.woot.network.ServerDataRequest;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderHelper;
@@ -79,7 +80,10 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         }
 
         // Request the static data
-        NetworkChannel.channel.sendToServer(new HeartStaticDataRequest(container.getPos()));
+        NetworkChannel.channel.sendToServer(new ServerDataRequest(
+                ServerDataRequest.Type.HEART_STATIC_DATA,
+                container.getPos(),
+                ""));
     }
 
     /**

@@ -2,15 +2,20 @@ package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.Woot;
+import ipsis.woot.client.ui.OracleContainer;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.loot.MobDrop;
 import ipsis.woot.oss.NetworkTools;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SimulatedMobDropsReply {
 
@@ -65,6 +70,18 @@ public class SimulatedMobDropsReply {
                     simDrop.dropChance[l] = mobDrop.getDropChance();
                 }
             }
+        }
+    }
+
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
+        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
+        if (clientPlayerEntity != null) {
+            ctx.get().enqueueWork(() -> {
+                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
+                    ((OracleContainer) clientPlayerEntity.openContainer).handleSimulatedMobDrops(this);
+                    ctx.get().setPacketHandled(true);
+                }
+            });
         }
     }
 

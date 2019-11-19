@@ -71,7 +71,6 @@ public class MobShardItem extends WootItem {
      */
     private static final String NBT_MOB = "mob";
     private static final String NBT_KILLS = "kills";
-    private static final String NBT_FULL = "isfull";
 
     public static boolean isProgrammed(ItemStack itemStack) {
         return getProgrammedMob(itemStack).isValid();
@@ -92,7 +91,6 @@ public class MobShardItem extends WootItem {
         FakeMob.writeToNBT(fakeMob, mobNbt);
         compoundNBT.put(NBT_MOB, mobNbt);
         compoundNBT.putInt(NBT_KILLS, 0);
-        compoundNBT.putBoolean(NBT_FULL, false);
     }
 
     private void incrementKills(ItemStack itemStack, int v) {
@@ -102,15 +100,16 @@ public class MobShardItem extends WootItem {
             return;
 
         int killCount = itemStack.getTag().getInt(NBT_KILLS);
-        boolean isFull = itemStack.getTag().getBoolean(NBT_FULL);
-        if (!isFull) {
+        if (!isFull(itemStack)) {
             killCount += v;
             itemStack.getTag().putInt(NBT_KILLS, killCount);
-
-            // TODO config value for the programmed kills count
-            if (killCount >= 5)
-                itemStack.getTag().putBoolean(NBT_FULL, true);
         }
+    }
+
+    private boolean isFull(ItemStack itemStack) {
+
+        int killCount = itemStack.getTag().getInt(NBT_KILLS);
+        return killCount >= 5;
     }
 
 
@@ -139,8 +138,7 @@ public class MobShardItem extends WootItem {
             tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
 
         int killCount = stack.getTag().getInt(NBT_KILLS);
-        boolean isFull = stack.getTag().getBoolean(NBT_FULL);
-        if (isFull) {
+        if (isFull(stack)) {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.1"));
         } else {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.b.0",

@@ -93,7 +93,41 @@ public class MobShardItem extends WootItem {
         compoundNBT.putInt(NBT_KILLS, 0);
     }
 
-    private void incrementKills(ItemStack itemStack, int v) {
+    private static boolean isMatchingMob(ItemStack itemStack, FakeMob fakeMob) {
+
+        if (itemStack.getItem() != ModItems.MOB_SHARD_ITEM)
+            return false;
+
+        if (!isProgrammed(itemStack))
+            return false;
+
+        FakeMob programmedMob = getProgrammedMob(itemStack);
+        if (!programmedMob.isValid())
+            return false;
+
+        return programmedMob.getEntityKey().equals(fakeMob.getEntityKey());
+    }
+
+    public static void handleKill(PlayerEntity playerEntity, FakeMob fakeMob) {
+        ItemStack foundStack = ItemStack.EMPTY;
+
+        // Hotbar only
+        for (int i = 0; i <= 9; i++) {
+            ItemStack itemStack = playerEntity.inventory.getStackInSlot(i);
+            if (!itemStack.isEmpty() && isMatchingMob(itemStack, fakeMob)) {
+                foundStack = itemStack;
+                break;
+            }
+        }
+
+        if (!foundStack.isEmpty())
+            incrementKills(foundStack, 1);
+    }
+
+    private static void incrementKills(ItemStack itemStack, int v) {
+
+        if (itemStack.getItem() != ModItems.MOB_SHARD_ITEM)
+            return;
 
         FakeMob fakeMob = getProgrammedMob(itemStack);
         if (!fakeMob.isValid())
@@ -106,7 +140,7 @@ public class MobShardItem extends WootItem {
         }
     }
 
-    private boolean isFull(ItemStack itemStack) {
+    private static boolean isFull(ItemStack itemStack) {
 
         int killCount = itemStack.getTag().getInt(NBT_KILLS);
         return killCount >= 5;

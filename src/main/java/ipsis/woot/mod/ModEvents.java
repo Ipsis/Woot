@@ -5,6 +5,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.server.command.WootCommand;
+import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.simulation.FakePlayerPool;
 import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.simulation.Tartarus;
@@ -12,11 +13,15 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,6 +55,39 @@ public class ModEvents {
         FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob(livingEntity.getEntityString()), event.getLootingLevel());
         if (fakeMobKey.getMob().isValid())
             DropRegistry.get().learn(fakeMobKey, drops);
+    }
+
+    @SubscribeEvent(priority = EventPriority.NORMAL)
+    public void onLivingDeathEvent(LivingDeathEvent event) {
+
+        // Only player kills
+        if (!(event.getSource().getTrueSource() instanceof PlayerEntity))
+            return;
+
+        if (event.getEntityLiving() == null)
+            return;
+
+        PlayerEntity killer = (PlayerEntity)event.getSource().getTrueSource();
+        LivingEntity victim = event.getEntityLiving();
+
+        // Ignore fakeplayer
+        if (killer instanceof FakePlayer)
+            return;
+
+        // Ignore player killing player
+        if (victim instanceof PlayerEntity)
+            return;
+
+        if (!(victim instanceof MobEntity))
+            return;
+
+        // TODO check for extra death events eg enderdragon
+
+        FakeMob fakeMob = new FakeMob((MobEntity)victim);
+        if (!fakeMob.isValid())
+            return;
+
+        MobShardItem.handleKill(killer, fakeMob);
     }
 
     @SubscribeEvent

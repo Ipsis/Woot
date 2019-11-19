@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=south": { "model": "woot:block/anvil" },
+    "facing=west": { "model": "woot:block/anvil", "y": 90 },
+    "facing=north": { "model": "woot:block/anvil", "y": 180 },
+    "facing=east": { "model": "woot:block/anvil", "y": 270 }
+  }
+}

@@ -11,6 +11,7 @@ import ipsis.woot.factory.blocks.power.Cell1TileEntity;
 import ipsis.woot.factory.blocks.power.convertors.TickConverterBlock;
 import ipsis.woot.factory.blocks.power.convertors.TickConverterTileEntity;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
+import ipsis.woot.misc.AnvilBlock;
 import ipsis.woot.misc.OracleBlock;
 import ipsis.woot.misc.OracleTileEntity;
 import net.minecraft.inventory.container.ContainerType;
@@ -30,6 +31,9 @@ public class ModBlocks {
     public static ContainerType<OracleContainer> ORACLE_CONTAINER;
     @ObjectHolder(Woot.MODID + ":" + OracleBlock.REGNAME)
     public static TileEntityType<OracleTileEntity> ORACLE_BLOCK_TILE;
+
+    @ObjectHolder(Woot.MODID + ":" + AnvilBlock.REGNAME)
+    public static AnvilBlock ANVIL_BLOCK;
 
     @ObjectHolder(Woot.MODID + ":" + ControllerBlock.REGNAME)
     public static ControllerBlock CONTROLLER_BLOCK;

@@ -33,6 +33,8 @@
   "block.woot.cell_2": "Advanced Cell",
   "block.woot.cell_3": "Premium Cell",
   "block.woot.tick_conv": "Tick Converter",
+  "block.woot.oracle": "Oracle Of Drops",
+  "block.woot.anvil": "Anvil",
 
   # Item Names
   "item.woot.debug": "Debug",

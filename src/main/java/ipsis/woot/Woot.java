@@ -1,5 +1,6 @@
 package ipsis.woot;
 
+import ipsis.woot.client.AnvilTileEntitySpecialRenderer;
 import ipsis.woot.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.client.ui.OracleScreen;
 import ipsis.woot.common.Config;
@@ -7,6 +8,8 @@ import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.blocks.heart.HeartScreen;
 import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.loot.DropRegistry;
+import ipsis.woot.misc.anvil.AnvilCraftingManagerLoader;
+import ipsis.woot.misc.anvil.AnvilTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModEvents;
 import ipsis.woot.mod.Registration;
@@ -53,10 +56,12 @@ public class Woot {
         Config.loadFromConfig();
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
+        AnvilCraftingManagerLoader.load();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(LayoutTileEntity.class, new LayoutTileEntitySpecialRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(AnvilTileEntity.class, new AnvilTileEntitySpecialRenderer());
         ScreenManager.registerFactory(ModBlocks.HEART_CONTAINER, HeartScreen::new);
         ScreenManager.registerFactory(ModBlocks.ORACLE_CONTAINER, OracleScreen::new);
     }

@@ -14,7 +14,8 @@ import ipsis.woot.factory.blocks.power.convertors.TickConverterBlock;
 import ipsis.woot.factory.blocks.power.convertors.TickConverterTileEntity;
 import ipsis.woot.factory.items.UpgradeItem;
 import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
-import ipsis.woot.misc.AnvilBlock;
+import ipsis.woot.misc.anvil.AnvilBlock;
+import ipsis.woot.misc.anvil.AnvilTileEntity;
 import ipsis.woot.misc.OracleBlock;
 import ipsis.woot.misc.OracleTileEntity;
 import ipsis.woot.shards.MobShardItem;
@@ -128,6 +129,7 @@ public class Registration {
     public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
         Woot.LOGGER.info("registerTileEntities");
         event.getRegistry().register(TileEntityType.Builder.create(OracleTileEntity::new, ModBlocks.ORACLE_BLOCK).build(null).setRegistryName(Woot.MODID, OracleBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(AnvilTileEntity::new, ModBlocks.ANVIL_BLOCK).build(null).setRegistryName(Woot.MODID, AnvilBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));

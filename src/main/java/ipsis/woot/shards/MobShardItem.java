@@ -146,6 +146,14 @@ public class MobShardItem extends WootItem {
         return killCount >= 5;
     }
 
+    public static boolean isFullyProgrammed(ItemStack itemStack) {
+        return isProgrammed(itemStack) && isFull(itemStack);
+    }
+
+    @Override
+    public boolean hasEffect(ItemStack itemStack) {
+        return isFullyProgrammed(itemStack);
+    }
 
     /**
      * Tooltip

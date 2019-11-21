@@ -106,6 +106,16 @@ public class AnvilBlock extends WootBlock implements WootDebug {
         return true;
     }
 
+    @Override
+    public void onReplaced(BlockState blockState, World world, BlockPos pos, BlockState newBlockState, boolean isMoving) {
+        if (blockState.getBlock() != newBlockState.getBlock()) {
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof AnvilTileEntity)
+                ((AnvilTileEntity) te).dropContents(world, pos);
+            super.onReplaced(blockState, world, pos, newBlockState, isMoving);
+        }
+    }
+
     /**
      * WootDebug
      */

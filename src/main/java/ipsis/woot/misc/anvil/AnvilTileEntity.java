@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,7 +20,9 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -63,6 +66,24 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
         }
 
         return false;
+    }
+
+    public void dropContents(World world, BlockPos pos) {
+        if (!baseItem.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), baseItem);
+            baseItem = ItemStack.EMPTY;
+        }
+
+        for (int i = 0; i < ingredients.length; i++) {
+            if (!ingredients[i].isEmpty()) {
+                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), ingredients[i]);
+                ingredients[i] = ItemStack.EMPTY;
+            }
+        }
+
+        markDirty();
+        if (world != null)
+            WorldHelper.updateClient(world, pos);
     }
 
     public void dropItem(PlayerEntity playerEntity) {

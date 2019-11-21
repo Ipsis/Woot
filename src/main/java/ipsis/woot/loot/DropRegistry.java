@@ -3,6 +3,7 @@ package ipsis.woot.loot;
 import com.google.gson.*;
 import ipsis.woot.Woot;
 import ipsis.woot.common.Config;
+import ipsis.woot.mod.ModFiles;
 import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
@@ -287,8 +288,6 @@ public class DropRegistry {
     /**
      * Save/load
      */
-    public File dropFile = new File("C:\\Projects\\minecraft\\tmp\\dropfile.json");
-
     private static final String VERSION_TAG = "version";
     private static final String MOBS_TAG = "mobs";
     private static final String SIMULATED_MOB_TAG = "mob";
@@ -300,6 +299,7 @@ public class DropRegistry {
 
     public void fromJson() {
 
+        File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         try {
             JsonObject jsonObject = JSONUtils.fromJson(GSON, new FileReader(dropFile), JsonObject.class);
@@ -450,6 +450,7 @@ public class DropRegistry {
         }
         json.add(MOBS_TAG, mobsArray);
 
+        File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         SerializationHelper.writeJsonFile(dropFile, GSON.toJson(json));
         return json;

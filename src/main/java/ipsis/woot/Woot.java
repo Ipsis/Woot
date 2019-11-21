@@ -12,6 +12,7 @@ import ipsis.woot.misc.anvil.AnvilCraftingManagerLoader;
 import ipsis.woot.misc.anvil.AnvilTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModEvents;
+import ipsis.woot.mod.ModFiles;
 import ipsis.woot.mod.Registration;
 import ipsis.woot.network.NetworkChannel;
 import net.minecraft.client.gui.ScreenManager;
@@ -51,12 +52,14 @@ public class Woot {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+        ModFiles.INSTANCE.init();
         NetworkChannel.init();
         PatternRepository.get().load();
         Config.loadFromConfig();
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
         AnvilCraftingManagerLoader.load();
+
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

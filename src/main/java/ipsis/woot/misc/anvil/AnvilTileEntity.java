@@ -109,11 +109,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
                 WorldHelper.updateClient(world, pos);
 
             if (!playerEntity.inventory.addItemStackToInventory(itemStack)) {
-                ItemEntity itemEntity = new ItemEntity(world,
-                        pos.getX(), pos.getY() + 1, pos.getZ(),
-                        itemStack);
-                itemEntity.setDefaultPickupDelay();
-                world.addEntity(itemEntity);
+                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
             } else {
                 playerEntity.openContainer.detectAndSendChanges();
             }

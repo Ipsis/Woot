@@ -6,7 +6,10 @@ import ipsis.woot.mod.ModItems;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,6 +19,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -96,6 +100,17 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
     }
 
     public void tryCraft(PlayerEntity playerEntity) {
+
+        /**
+         * Check anvil is hot
+         */
+        BlockState blockState = world.getBlockState(pos.down());
+        if (blockState.getBlock() != Blocks.MAGMA_BLOCK) {
+            PlayerHelper.sendActionBarMessage(
+                    playerEntity,
+                    new TranslationTextComponent("chat.woot.anvil.cold").getFormattedText());
+            return;
+        }
 
         AnvilCraftingManager.AnvilRecipe recipe = AnvilCraftingManager.get().getRecipe(baseItem);
         if (recipe == null)

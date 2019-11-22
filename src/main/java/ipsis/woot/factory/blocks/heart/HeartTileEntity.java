@@ -109,11 +109,22 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                return;
 
            tickRecipe();
-           if (consumedUnits >= recipe.getNumUnits()) {
+           if (consumedUnits >= recipe.getNumTicks()) {
                // get and process the ingredients
                consumedUnits = 0;
 
-               LootGeneration.get().generate(this, setup);
+               TileEntity te = world.getTileEntity(setup.getCellPos());
+               if (te instanceof CellTileEntityBase) {
+                   LazyOptional<IFluidHandler> hdlr = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+                   if (hdlr.isPresent()){
+                       IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
+                       FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
+                       if (fluidStack.getAmount() == recipe.getNumUnits()) {
+                           iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
+                           LootGeneration.get().generate(this, setup);
+                       }
+                   }
+               }
            }
        }
     }
@@ -134,14 +145,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     int consumedUnits = 0;
     void tickRecipe() {
 
-        TileEntity te = world.getTileEntity(setup.getCellPos());
-        if (te instanceof CellTileEntityBase) {
-            LazyOptional<IFluidHandler> hdlr = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
-            if (hdlr.isPresent()){
-                IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
-                consumedUnits += iFluidHandler.drain(recipe.getUnitsPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount();
-            }
-        }
+        // Purely the passage of time
+        consumedUnits++;
+
     }
 
     /**

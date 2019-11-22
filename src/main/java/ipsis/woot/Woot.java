@@ -10,15 +10,13 @@ import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.misc.anvil.AnvilCraftingManagerLoader;
 import ipsis.woot.misc.anvil.AnvilTileEntity;
-import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.mod.ModEvents;
-import ipsis.woot.mod.ModFiles;
-import ipsis.woot.mod.Registration;
+import ipsis.woot.mod.*;
 import ipsis.woot.network.NetworkChannel;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -49,6 +47,8 @@ public class Woot {
 
         // Register ourselves
         MinecraftForge.EVENT_BUS.register(this);
+
+        ModFluids.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     private void setup(final FMLCommonSetupEvent event) {

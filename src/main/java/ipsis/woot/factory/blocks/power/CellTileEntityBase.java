@@ -1,10 +1,15 @@
 package ipsis.woot.factory.blocks.power;
 
+import ipsis.woot.mod.ModFluids;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.TileFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
@@ -13,24 +18,15 @@ public abstract class CellTileEntityBase extends TileFluidHandler implements Woo
     public CellTileEntityBase(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
         tank.setCapacity(getCapacity());
+        tank.setValidator(e -> e.getFluid() == ModFluids.CONATUS_FLUID.get().getFluid());
     }
 
-    private int amount = 0;
-    public void fakeFluidHandlerFill(int amount) {
-        this.amount += amount;
-        this.amount = MathHelper.clamp(this.amount, 0, tank.getCapacity());
-    }
-
-    public int fakeFluidHandlerDrain(int amount) {
-        int drained = 0;
-        if (this.amount > amount) {
-            drained = amount;
-            this.amount -= amount;
-        } else {
-            drained = this.amount;
-            this.amount = 0;
-        }
-        return drained;
+    /**
+     * For testing and the tick converter
+     */
+    public void fillToCapacity() {
+        tank.fill(new FluidStack(ModFluids.CONATUS_FLUID.get(),
+                getCapacity()), IFluidHandler.FluidAction.EXECUTE);
     }
 
     abstract int getCapacity();
@@ -44,8 +40,8 @@ public abstract class CellTileEntityBase extends TileFluidHandler implements Woo
         debug.add("====> CellTileEntity");
         debug.add("      capacity: " + tank.getCapacity());
         debug.add("      transfer: " + getMaxTransfer());
-        debug.add("      contains: " + tank.getFluid());
-        debug.add("      fake: " + amount);
+        debug.add("      contains: " + tank.getFluid().getTranslationKey());
+        debug.add("      contains: " + tank.getFluid().getAmount());
         return debug;
     }
 }

@@ -25,6 +25,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -132,8 +136,11 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
         TileEntity te = world.getTileEntity(setup.getCellPos());
         if (te instanceof CellTileEntityBase) {
-            int drained = ((CellTileEntityBase) te).fakeFluidHandlerDrain(recipe.getUnitsPerTick());
-            consumedUnits += drained;
+            LazyOptional<IFluidHandler> hdlr = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+            if (hdlr.isPresent()){
+                IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
+                consumedUnits += iFluidHandler.drain(recipe.getUnitsPerTick(), IFluidHandler.FluidAction.EXECUTE).getAmount();
+            }
         }
     }
 

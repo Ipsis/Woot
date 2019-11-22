@@ -2,10 +2,12 @@ package ipsis.woot.factory.blocks.power.convertors;
 
 import ipsis.woot.factory.blocks.power.CellTileEntityBase;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.mod.ModFluids;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -27,13 +29,7 @@ public class TickConverterTileEntity extends TileEntity implements ITickableTile
             if (!(te instanceof CellTileEntityBase))
                 continue;
 
-            // We only fill cells
-            LazyOptional<IFluidHandler> hdlr = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite());
-            if (hdlr.isPresent()) {
-                ((CellTileEntityBase) te).fakeFluidHandlerFill(Integer.MAX_VALUE);
-                // fill to capacity
-//                ((CellTileEntityBase) te).fakeFluidHandlerFill(((IFluidHandler)hdlr).getTankProperties()[0].getCapacity());
-            }
+            ((CellTileEntityBase) te).fillToCapacity();
         }
     }
 }

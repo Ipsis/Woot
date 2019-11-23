@@ -1,7 +1,6 @@
 package ipsis.woot.loot;
 
 import com.google.gson.*;
-import ipsis.woot.Woot;
 import ipsis.woot.common.Config;
 import ipsis.woot.mod.ModFiles;
 import ipsis.woot.simulation.MobSimulator;
@@ -15,8 +14,6 @@ import net.minecraft.util.JSONUtils;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,8 +23,7 @@ import java.util.*;
 
 public class DropRegistry {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final Marker DROPMGR = MarkerManager.getMarker("WOOT_DROPS");
+    public static final Logger LOGGER = LogManager.getLogger();
 
     static DropRegistry INSTANCE = new DropRegistry();
     public static DropRegistry get() { return INSTANCE; }
@@ -39,8 +35,10 @@ public class DropRegistry {
     }
 
     public void primeAllMobLearning() {
-        for (FakeMob fakeMob : mobs.keySet())
+        for (FakeMob fakeMob : mobs.keySet()) {
+            LOGGER.debug("Try learning on " + fakeMob);
             tryLearning(fakeMob);
+        }
     }
 
     public void tryLearning(@Nonnull FakeMob fakeMob) {
@@ -52,26 +50,26 @@ public class DropRegistry {
     }
 
     public void learnSilent(@Nonnull FakeMobKey fakeMobKey, @Nonnull List<ItemStack> drops) {
-        LOGGER.info(DROPMGR, "learnSilent {}", fakeMobKey);
+        LOGGER.debug("learnSilent {}", fakeMobKey);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         drops.forEach((drop)-> mob.addSimulatedDrop(fakeMobKey.getLooting(), drop));
     }
 
     public void learn(@Nonnull FakeMobKey fakeMobKey, @Nonnull List<ItemStack> drops) {
-        LOGGER.info(DROPMGR, "learn {}", fakeMobKey);
+        LOGGER.debug("learn {}", fakeMobKey);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         mob.incrementSimulatedCount(fakeMobKey.getLooting());
         learnSilent(fakeMobKey, drops);
     }
 
     public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, float dropChance) {
-        LOGGER.info(DROPMGR, "learnCustomDrop {} {}", fakeMobKey, droppedItem.getItem());
+        LOGGER.debug("learnCustomDrop {} {}", fakeMobKey, droppedItem.getItem());
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         mob.addCustomDrop(fakeMobKey.getLooting(), droppedItem, dropChance);
     }
 
     public void learnCustomDropStackSize(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, int stackSize, float dropChance) {
-        LOGGER.info(DROPMGR, "learnCustomDropStackSize {} {} {} {}", fakeMobKey, droppedItem, stackSize, dropChance);
+        LOGGER.debug("learnCustomDropStackSize {} {} {} {}", fakeMobKey, droppedItem, stackSize, dropChance);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());
         ItemStack itemStack = droppedItem.copy();
         itemStack.setCount(stackSize);
@@ -180,7 +178,7 @@ public class DropRegistry {
         }
 
         public void addSimulatedDrop(int looting, @Nonnull ItemStack itemStack) {
-            LOGGER.info(DROPMGR, "addSimulatedDrop l:{} {}", looting, itemStack);
+            LOGGER.debug("addSimulatedDrop l:{} {}", looting, itemStack);
 
             Drop drop = getDrop(itemStack, true);
             if (drop == null)
@@ -191,7 +189,7 @@ public class DropRegistry {
 
             drop.incrementSimulatedDropCount(looting);
             Integer count = drop.simulatedStackSizes.get(looting).getOrDefault(itemStack.getCount(), 0);
-            LOGGER.info(DROPMGR, "addSimulatedDrop stacksize:{} count:{}", itemStack.getCount(), count + 1);
+            LOGGER.debug("addSimulatedDrop stacksize:{} count:{}", itemStack.getCount(), count + 1);
             drop.simulatedStackSizes.get(looting).put(itemStack.getCount(), count + 1);
         }
 
@@ -299,13 +297,14 @@ public class DropRegistry {
 
     public void fromJson() {
 
+        LOGGER.debug("Loading drop registry from " + ModFiles.INSTANCE.getLootFile());
         File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         try {
             JsonObject jsonObject = JSONUtils.fromJson(GSON, new FileReader(dropFile), JsonObject.class);
             parseConfig(jsonObject);
         } catch (Exception e) {
-            Woot.LOGGER.error("Could not load loot file " + dropFile.getAbsolutePath());
+            LOGGER.error("Could not load loot file " + dropFile.getAbsolutePath());
             e.printStackTrace();
         }
     }
@@ -327,7 +326,7 @@ public class DropRegistry {
             String mob = JSONUtils.getString(o1, SIMULATED_MOB_TAG);
             FakeMob fakeMob = new FakeMob(mob);
             if (!fakeMob.isValid()) {
-                Woot.LOGGER.info("Invalid mob {}", mob);
+                LOGGER.info("Invalid mob {}", mob);
                 continue;
             }
 
@@ -340,8 +339,8 @@ public class DropRegistry {
             int sim2 = simulatedCountArray.get(2).getAsInt();
             int sim3 = simulatedCountArray.get(3).getAsInt();
 
-            Woot.LOGGER.info("mob:{}", fakeMob);
-            Woot.LOGGER.info("sim0:{} sim1:{} sim2:{} sim3:{}", sim0, sim1, sim2, sim3);
+            LOGGER.info("mob:{}", fakeMob);
+            LOGGER.info("sim0:{} sim1:{} sim2:{} sim3:{}", sim0, sim1, sim2, sim3);
 
             Mob simulatedMob = new Mob(fakeMob);
             simulatedMob.simulatedDropEventCount[0] = sim0;
@@ -361,7 +360,7 @@ public class DropRegistry {
                 } catch (JsonSyntaxException e2) {
                     continue;
                 }
-                Woot.LOGGER.info("item:{}", itemStack.getItem());
+                LOGGER.info("item:{}", itemStack.getItem());
 
                 JsonArray simulatedDropCountArray = JSONUtils.getJsonArray(o2, SIMULATED_DROP_COUNT_TAG);
                 if (simulatedDropCountArray.size() != Mob.MAX_LOOTING)
@@ -372,7 +371,7 @@ public class DropRegistry {
                 int count2 = simulatedDropCountArray.get(2).getAsInt();
                 int count3 = simulatedDropCountArray.get(3).getAsInt();
 
-                Woot.LOGGER.info("count0:{} count1:{} count2{} count3{}", count0, count1, count2, count3);
+                LOGGER.info("count0:{} count1:{} count2{} count3{}", count0, count1, count2, count3);
 
                 simulatedMob.loadDrop(itemStack, count0, count1, count2, count3);
 
@@ -384,7 +383,7 @@ public class DropRegistry {
                     for (int j = 0; j < lootSizeArray.size() / 2; j += 2) {
                         int size = lootSizeArray.get(j).getAsInt();
                         int count = lootSizeArray.get(j + 1).getAsInt();
-                        Woot.LOGGER.info("looting:{} size:{} count:{}", i, size, count);
+                        LOGGER.info("looting:{} size:{} count:{}", i, size, count);
                         simulatedMob.loadStackSize(itemStack, i, size, count);
                     }
                 }
@@ -451,6 +450,7 @@ public class DropRegistry {
         json.add(MOBS_TAG, mobsArray);
 
         File dropFile = ModFiles.INSTANCE.getLootFile();
+        LOGGER.debug("Saving drop registry to " + dropFile);
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         SerializationHelper.writeJsonFile(dropFile, GSON.toJson(json));
         return json;

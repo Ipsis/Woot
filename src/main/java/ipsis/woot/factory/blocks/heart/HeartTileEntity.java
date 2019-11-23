@@ -7,9 +7,6 @@ import ipsis.woot.factory.layout.Layout;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.simulation.MobSimulator;
-import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,8 +28,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -44,7 +39,6 @@ import java.util.List;
 public class HeartTileEntity extends TileEntity implements ITickableTileEntity, MultiBlockMaster, WootDebug, INamedContainerProvider {
 
     static final Logger LOGGER = LogManager.getLogger();
-    static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
 
     /**
      * Layout will not exist until after the first update call
@@ -122,6 +116,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                        IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
                        FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
                        if (fluidStack.getAmount() == recipe.getNumUnits()) {
+                           LOGGER.debug("Generate loot");
                            iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
                            LootGeneration.get().generate(this, setup);
                        }
@@ -136,7 +131,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     @Override
     public void interrupt() {
-        LOGGER.info(LAYOUT, "interrupt layout:" + layout);
+        LOGGER.debug("interrupt layout:" + layout);
         if (layout != null)
             layout.setDirty();
     }

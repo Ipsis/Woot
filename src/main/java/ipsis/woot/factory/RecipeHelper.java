@@ -7,8 +7,6 @@ import ipsis.woot.util.FakeMob;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
 public class RecipeHelper {
 
     static final Logger LOGGER = LogManager.getLogger();
-    static final Marker COST = MarkerManager.getMarker("WOOT_COST");
     /**
      * Calculate the cost of running the factory for the provided configuration
      */
@@ -27,7 +24,7 @@ public class RecipeHelper {
         for (FakeMob fakeMob : setup.getMobs()) {
             MobConfig mobConfig = new MobConfig(new FakeMob(fakeMob), setup, world);
             mobs.add(mobConfig);
-            LOGGER.info("createRecipe: {} {}", fakeMob, mobConfig);
+            LOGGER.debug("createRecipe: {} {}", fakeMob, mobConfig);
         }
 
         // Get the longest tick count
@@ -43,15 +40,16 @@ public class RecipeHelper {
             if (m.mass < masterMobCount)
                 masterMobCount = m.mass;
         }
-        LOGGER.info("createRecipe: masterTicks:{} masterMobCount:{}", masterTicks, masterMobCount);
+        LOGGER.debug("createRecipe: masterTicks:{} masterMobCount:{}", masterTicks, masterMobCount);
 
         int mobCost = 0;
         for (MobConfig m : mobs)
             mobCost += (m.getCost() * masterMobCount);
-        LOGGER.info("createRecipe: mobCost:{}", mobCost);
+        LOGGER.debug("createRecipe: mobCost:{}", mobCost);
 
         int actualTicks = masterTicks;
         int totalCost = mobCost;
+        LOGGER.debug("createRecipe created actualTicks:{} totalCost:{}", actualTicks, totalCost);
         return new HeartTileEntity.Recipe(actualTicks, totalCost);
     }
     

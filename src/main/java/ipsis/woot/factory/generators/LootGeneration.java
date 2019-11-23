@@ -16,8 +16,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,7 +24,6 @@ import java.util.List;
 public class LootGeneration {
 
     static final Logger LOGGER = LogManager.getLogger();
-    private static final Marker LOOTGEN = MarkerManager.getMarker("WOOT_LOOTGEN");
 
     public static LootGeneration get() { return INSTANCE; }
     static LootGeneration INSTANCE;
@@ -51,7 +48,7 @@ public class LootGeneration {
 
         int mobCount = setup.getMaxMobCount();
         for (FakeMob mob : setup.getMobs()) {
-//            LOGGER.info(LOOTGEN, "generate: {} * {}", mob, mobCount);
+            LOGGER.debug("generate: {} * {}", mob, mobCount);
             List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(mob, 0));
             for (int i = 0; i < mobCount; i++) {
                 List<ItemStack> drops = MobDropHelper.getDrops(mobDrops);
@@ -59,7 +56,7 @@ public class LootGeneration {
                 while (iter.hasNext()) {
                     LazyOptional<IItemHandler> hdlr = iter.next();
                     hdlr.ifPresent(h -> {
-//                        LOGGER.info(LOOTGEN, "generate: try drop into {} ", h);
+                        LOGGER.debug("generate: try drop into {} ", h);
                         for (ItemStack itemStack : drops) {
                             if (itemStack.isEmpty())
                                 continue;

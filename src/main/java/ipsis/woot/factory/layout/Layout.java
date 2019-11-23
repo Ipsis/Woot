@@ -7,8 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nullable;
 
@@ -18,7 +16,6 @@ import javax.annotation.Nullable;
 public class Layout {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Marker LAYOUT = MarkerManager.getMarker("WOOT_LAYOUT");
 
     World world;
     BlockPos pos;
@@ -43,19 +40,19 @@ public class Layout {
 
         AbsolutePattern rescannedPattern = FactoryScanner.scanForTier(world, pos, facing);
         if (absolutePattern == null && rescannedPattern == null) {
-            LOGGER.info(LAYOUT, "was:nothing now:nothing");
+            LOGGER.debug("was:nothing now:nothing");
         } else if (absolutePattern == null && rescannedPattern != null) {
-            LOGGER.info(LAYOUT, "was:nothing now:{}", rescannedPattern.getTier());
+            LOGGER.debug("was:nothing now:{}", rescannedPattern.getTier());
             FactoryHelper.connectNew(world, rescannedPattern, master);
             absolutePattern = rescannedPattern;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern == null) {
-            LOGGER.info(LAYOUT, "was:{} now:nothing", absolutePattern.getTier());
+            LOGGER.debug("was:{} now:nothing", absolutePattern.getTier());
             FactoryHelper.disconnectOld(world, absolutePattern);
             absolutePattern = null;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern != null) {
-            LOGGER.info(LAYOUT, "was:{} now:{}", absolutePattern.getTier(), rescannedPattern.getTier());
+            LOGGER.debug("was:{} now:{}", absolutePattern.getTier(), rescannedPattern.getTier());
             FactoryHelper.disconnectOld(world, absolutePattern);
             FactoryHelper.connectNew(world, rescannedPattern, master);
             absolutePattern = rescannedPattern;

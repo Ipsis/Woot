@@ -17,6 +17,7 @@ public class PatternRepository {
     static { INSTANCE = new PatternRepository(); }
 
     public void load() {
+        LOGGER.debug("Creating factory patterns");
         createRawPatterns();
         createPattern(Tier.TIER_1);
         createPattern(Tier.TIER_2);

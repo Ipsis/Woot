@@ -14,12 +14,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FactoryScanner {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Scan for the specified tier.
@@ -37,9 +41,8 @@ public class FactoryScanner {
             if (tier == Tier.UNKNOWN)
                 break;
 
-            Woot.LOGGER.info("scanForTier: {}", tier);
             AbsolutePattern absolutePattern = scanTier(world, tier, origin, facing);
-            Woot.LOGGER.info("scanForTier: {}", absolutePattern == null ? "bad" : "good");
+            LOGGER.debug("scanForTier: {} {}", tier, absolutePattern == null ? "bad" : "good");
             if (absolutePattern != null)
                 return absolutePattern;
         }
@@ -117,7 +120,7 @@ public class FactoryScanner {
             valid = false;
         }
 
-        //feedback.forEach(s -> Woot.LOGGER.info("compareToWorld: {}", s));
+        //feedback.forEach(s -> LOGGER.debug("compareToWorld: {}", s));
         return valid;
     }
 }

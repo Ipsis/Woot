@@ -52,6 +52,7 @@ public class Woot {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
+        LOGGER.debug("FMLCommonSetupEvent");
         ModFiles.INSTANCE.init();
         NetworkChannel.init();
         PatternRepository.get().load();
@@ -59,10 +60,10 @@ public class Woot {
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
         AnvilCraftingManagerLoader.load();
-
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        LOGGER.debug("FMLClientSetupEvent");
         ClientRegistry.bindTileEntitySpecialRenderer(LayoutTileEntity.class, new LayoutTileEntitySpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(AnvilTileEntity.class, new AnvilTileEntitySpecialRenderer());
         ScreenManager.registerFactory(ModBlocks.HEART_CONTAINER, HeartScreen::new);

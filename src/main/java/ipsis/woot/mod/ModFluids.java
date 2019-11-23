@@ -59,6 +59,7 @@ public class ModFluids {
                     .block(CONATUS_FLUID_BLOCK);
 
     public static void register(IEventBus modEventBus) {
+        Woot.LOGGER.debug("Registering fluids");
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         FLUIDS.register(modEventBus);

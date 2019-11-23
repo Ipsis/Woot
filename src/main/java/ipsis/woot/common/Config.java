@@ -11,15 +11,12 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import java.util.*;
 
 public class Config {
 
     static final Logger LOGGER = LogManager.getLogger();
-    static final Marker CONFIG = MarkerManager.getMarker("WOOT_CONFIG");
 
     static final List<String> DEFAULT_MOB_OVERRIDES = Arrays.asList(
             "minecraft:wither_skeleton,mobHealth,40",
@@ -501,11 +498,12 @@ public class Config {
             intMappings.put(fakeMob, new HashMap<>());
         HashMap<String, Integer> map = intMappings.get(fakeMob);
         map.put(key, value);
-        LOGGER.info(CONFIG, "Added mapping {}:{} -> {}", fakeMob, key, value);
+        LOGGER.debug("Added mapping {}:{} -> {}", fakeMob, key, value);
     }
 
     public static void loadFromConfig() {
 
+        LOGGER.debug("Loading configuration");
         for (String s : Config.COMMON.MOB_OVERRIDES.get()) {
             String[] parts = s.split(",");
             if (parts.length != 3) {

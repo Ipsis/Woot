@@ -7,8 +7,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -16,7 +14,6 @@ import java.util.*;
 public class MobSimulator {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Marker MOBSIM = MarkerManager.getMarker("WOOT_MOBSIM");
 
     private static final int INVALID_CELL_ID = -1;
 
@@ -68,11 +65,11 @@ public class MobSimulator {
                 DropRegistry.get().learnSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
 
                 if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, Config.COMMON.SIMULATION_MOB_COUNT.get())) {
-                    LOGGER.info(MOBSIM, "Finished simulating {}", pupil.fakeMobKey);
+                    LOGGER.debug("Finished simulating {}", pupil.fakeMobKey);
                     Tartarus.get().vacateCell(pupil.cellId);
                     iter.remove();
                 } else {
-                    LOGGER.info(MOBSIM, "Simulate {}", pupil.fakeMobKey);
+                    LOGGER.debug("Simulate {}", pupil.fakeMobKey);
                     Tartarus.get().simulateInCell(pupil.cellId, pupil.fakeMobKey, world);
                 }
                 processed++;
@@ -86,10 +83,10 @@ public class MobSimulator {
                 FakeMobKey fakeMobKey = (FakeMobKey)iter.next();
                 int cellId = Tartarus.get().allocateCell();
                 if (cellId != INVALID_CELL_ID) {
-                    LOGGER.info(MOBSIM, "Allocated cell {} to {}", cellId, fakeMobKey);
+                    LOGGER.debug("Allocated cell {} to {}", cellId, fakeMobKey);
                     Pupil pupil = new Pupil(fakeMobKey, cellId);
                     pupils.put(fakeMobKey, pupil);
-                    LOGGER.info(MOBSIM, "Simulate {}", pupil.fakeMobKey);
+                    LOGGER.debug("Simulate {}", pupil.fakeMobKey);
                     Tartarus.get().simulateInCell(pupil.cellId, pupil.fakeMobKey, world);
                     iter.remove();
                 }

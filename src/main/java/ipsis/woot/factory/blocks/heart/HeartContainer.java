@@ -3,6 +3,7 @@ package ipsis.woot.factory.blocks.heart;
 import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryUIInfo;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.network.NetworkChannel;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -38,7 +39,16 @@ public class HeartContainer extends Container {
     }
 
     public FactoryUIInfo getFactoryUIInfo() {
-        return ((HeartTileEntity)tileEntity).factoryUIInfo;
+        if (tileEntity instanceof HeartTileEntity)
+            return ((HeartTileEntity)tileEntity).factoryUIInfo;
+        return null;
+    }
+
+    public int getProgress() {
+        int progress = 0;
+        if (tileEntity instanceof HeartTileEntity)
+            progress = (int)((100.0F / ((HeartTileEntity) tileEntity).factoryUIInfo.recipeTicks * ((HeartTileEntity) tileEntity).getClientProgress()));
+        return progress;
     }
 
     @Override
@@ -52,13 +62,24 @@ public class HeartContainer extends Container {
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void updateProgressBar(int p_75137_1_, int p_75137_2_) {
+    public void updateProgressBar(int id, int data) {
+        if (!(tileEntity instanceof HeartTileEntity))
+            return;
+        HeartTileEntity heartTileEntity = (HeartTileEntity)tileEntity;
+
+        if (id == 0)
+            heartTileEntity.setClientProgress(data);
+
     }
 
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
 
+        if (!(tileEntity instanceof HeartTileEntity))
+            return;
+
+        HeartTileEntity heartTileEntity = (HeartTileEntity)tileEntity;
 
         try {
             List<IContainerListener> iContainerListeners =
@@ -66,14 +87,20 @@ public class HeartContainer extends Container {
 
             for (IContainerListener l : iContainerListeners) {
                 ServerPlayerEntity playerEntity = (ServerPlayerEntity) l;
-                //Network.channel.sendTo(msg, l.get,NetworkDirection.PLAY_TO_CLIENT);
+                if (heartTileEntity.consumedUnits != heartTileEntity.getClientProgress()) {
+                    playerEntity.sendWindowProperty(this, 0, heartTileEntity.consumedUnits);
+                }
+                //NetworkChannel.channel.send(playerEntity, new FixedWindowPropertyPacket(windowId, 1, 65535));
             }
+
+            heartTileEntity.setClientProgress(heartTileEntity.consumedUnits);
         } catch (Throwable e) {
             Woot.LOGGER.error("Reflection of container listener failed");
         }
     }
 
     public void handleUIInfo(FactoryUIInfo factoryUIInfo) {
+        // Static data values
         ((HeartTileEntity)tileEntity).setFromUIInfo(factoryUIInfo);
     }
 }

@@ -74,6 +74,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
             layout.fullDisconnect();
     }
 
+    public boolean isFormed() { return layout != null && layout.isFormed(); }
+
     @Override
     public void tick() {
        if (world.isRemote)
@@ -252,6 +254,12 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         return new HeartContainer(windowId, world, pos, playerInventory, playerEntity);
     }
 
+    /**
+     * Client sync data
+     */
+    private int clientProgress = -1;
+    public int getClientProgress() { return clientProgress; }
+    public void setClientProgress(int clientProgress) { this.clientProgress = clientProgress; }
     public FactoryUIInfo createFactoryUIInfo() {
         return FactoryUIInfo.create(setup, recipe);
     }

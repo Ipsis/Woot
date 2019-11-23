@@ -171,8 +171,8 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
         addInfoLine(0, "Effort", factoryUIInfo.recipeEffort + " mB");
         addInfoLine(1, "Time", factoryUIInfo.recipeTicks + " ticks");
-        addInfoLine(2, "Rate", factoryUIInfo.recipeCostPerTick + " mb/tick");
-        addInfoLine(3, "Progress", "15%");
+        //addInfoLine(2, "Rate", factoryUIInfo.recipeCostPerTick + " mb/tick");
+        addInfoLine(3, "Progress", container.getProgress() + "%");
 
 
         font.drawString("Mobs", MOBS_X, MOBS_Y - 10, TEXT_COLOR);

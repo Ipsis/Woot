@@ -5,11 +5,15 @@ import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public class MultiBlockTileEntity extends TileEntity implements MultiBlockGlueProvider, WootDebug {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static final String REGNAME = "multiblock";
 
@@ -27,20 +31,28 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     @Override
     public void validate() {
         super.validate();
-        if (!world.isRemote)
+        if (!world.isRemote) {
+            LOGGER.debug("validate");
             MultiBlockTracker.get().addEntry(pos);
+        }
     }
 
     @Override
     public void remove() {
         super.remove();
-        glue.onGoodbye();
+        if (!world.isRemote) {
+            LOGGER.debug("remove");
+            glue.onGoodbye();
+        }
     }
 
     @Override
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
-        glue.onGoodbye();
+        if (!world.isRemote) {
+            LOGGER.debug("onChunkUnloaded");
+            glue.onGoodbye();
+        }
     }
 
     @Nonnull

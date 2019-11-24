@@ -1,5 +1,6 @@
 package ipsis.woot.debug;
 
+import ipsis.woot.Woot;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
@@ -22,22 +23,7 @@ public class DebugItem extends WootItem {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        if (!context.getWorld().isRemote) {
-            Block b =  context.getWorld().getBlockState(context.getPos()).getBlock();
-            if (b instanceof WootDebug) {
-                List<String> debug = new ArrayList<>();
-                ((WootDebug)b).getDebugText(debug, context);
-                for (String s : debug)
-                    PlayerHelper.sendChatMessage(context.getPlayer(), s);
-            }
-        }
-        return ActionResultType.PASS;
-    }
-
-    @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        // TODO the Forge patch for onItemUseFirst isn't applied yet
         if (!context.getWorld().isRemote) {
             Block b =  context.getWorld().getBlockState(context.getPos()).getBlock();
             if (b instanceof WootDebug) {
@@ -47,7 +33,7 @@ public class DebugItem extends WootItem {
                     PlayerHelper.sendChatMessage(context.getPlayer(), s);
             }
         }
-        return ActionResultType.PASS;
+        return ActionResultType.SUCCESS;
     }
 
     public static List<String> getTileEntityDebug(List<String> debug, ItemUseContext context) {

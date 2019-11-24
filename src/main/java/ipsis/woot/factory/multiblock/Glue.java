@@ -1,6 +1,7 @@
 package ipsis.woot.factory.multiblock;
 
 import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.block.Block;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -34,8 +35,10 @@ public class Glue implements MultiBlockGlue {
             this.master = null;
             te.getWorld().setBlockState(te.getPos(),
                     te.getBlockState().with(BlockStateProperties.ATTACHED, false), 3);
+
             WorldHelper.updateClient(te.getWorld(), te.getPos());
-            // TODO update neighbours
+            // Update neighbours to trigger possible connection changes eg. power cables
+            WorldHelper.updateNeighbours(te.getWorld(), te.getPos());
         }
     }
 
@@ -50,7 +53,8 @@ public class Glue implements MultiBlockGlue {
             te.getWorld().setBlockState(te.getPos(),
                     te.getBlockState().with(BlockStateProperties.ATTACHED, true), 3);
             WorldHelper.updateClient(te.getWorld(), te.getPos());
-            // TODO update neighbours
+            // Update neighbours to trigger possible connection changes eg. power cables
+            WorldHelper.updateNeighbours(te.getWorld(), te.getPos());
         }
     }
 

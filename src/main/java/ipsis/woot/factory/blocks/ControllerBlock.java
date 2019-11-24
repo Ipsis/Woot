@@ -7,6 +7,7 @@ import ipsis.woot.simulation.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.WootDebug;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,6 +21,8 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -42,7 +45,14 @@ public class ControllerBlock extends WootBlock implements FactoryComponentProvid
     public static final String REGNAME = "controller";
 
     public ControllerBlock() {
+
         super(Properties.create(Material.IRON) .sound(SoundType.METAL), REGNAME);
+        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        builder.add(BlockStateProperties.ATTACHED);
     }
 
     @Override

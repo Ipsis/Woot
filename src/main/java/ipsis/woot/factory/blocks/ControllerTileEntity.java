@@ -1,5 +1,6 @@
 package ipsis.woot.factory.blocks;
 
+import ipsis.woot.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
@@ -10,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import java.util.List;
 
-public class ControllerTileEntity extends TileEntity implements WootDebug {
+public class ControllerTileEntity extends MultiBlockTileEntity implements WootDebug {
 
     public ControllerTileEntity() {
         super(ModBlocks.CONTROLLER_BLOCK_TILE);
@@ -62,6 +63,7 @@ public class ControllerTileEntity extends TileEntity implements WootDebug {
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> ControllerTileEntity");
+        debug.add("      hasMaster: " + glue.hasMaster());
         debug.add("      mob: " + fakeMob);
         return debug;
     }

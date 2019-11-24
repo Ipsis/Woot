@@ -25,6 +25,10 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapeCube;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -79,6 +83,18 @@ public class ControllerBlock extends WootBlock implements FactoryComponentProvid
                     tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
             }
         }
+    }
+
+    /**
+     * Block display since we are less than a full block
+     */
+    private final VoxelShape shape = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        if (state.get(BlockStateProperties.ATTACHED))
+            return VoxelShapes.fullCube();
+        else
+            return shape;
     }
 
     /**

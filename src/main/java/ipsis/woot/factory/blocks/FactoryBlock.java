@@ -14,6 +14,10 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
@@ -36,11 +40,6 @@ public class FactoryBlock extends WootBlock implements FactoryComponentProvider,
     public static final String FACTORY_CTR_BASE_REGNAME = "factory_ctr_base";
     public static final String IMPORT_REGNAME = "import";
     public static final String EXPORT_REGNAME = "export";
-    /*
-    private static final VoxelShape SHAPE =
-            Block.makeCuboidShape(
-                    15.0D, 15.0D, 15.0D,
-                    15.0D, 15.0D, 15.0D); */
 
     public FactoryBlock(FactoryComponent component, String name) {
         super(Block.Properties.create(Material.IRON), name);
@@ -53,14 +52,17 @@ public class FactoryBlock extends WootBlock implements FactoryComponentProvider,
         builder.add(BlockStateProperties.ATTACHED);
     }
 
-    /*
+    /**
+     * Block display since we are less than a full block
+     */
+    private final VoxelShape shape = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         if (state.get(BlockStateProperties.ATTACHED))
             return VoxelShapes.fullCube();
-
-        return SHAPE;
-    } */
+        else
+            return shape;
+    }
 
     @Override
     public boolean hasTileEntity(BlockState state) {

@@ -62,6 +62,10 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
                 getCapacity()), IFluidHandler.FluidAction.EXECUTE);
     }
 
+    public void fillToValue(int v) {
+        tank.fill(new FluidStack(ModFluids.CONATUS_FLUID.get(), v), IFluidHandler.FluidAction.EXECUTE);
+    }
+
     abstract int getCapacity();
     abstract int getMaxTransfer();
 

@@ -12,6 +12,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.extensions.IForgeTileEntity;
 
 import javax.annotation.Nullable;
 
@@ -75,6 +76,7 @@ public class LayoutTileEntity extends TileEntity {
         return new AxisAlignedBB(
                 pos.add(-PatternRepository.get().getMaxXZOffset(), -1, -PatternRepository.get().getMaxXZOffset()),
                 pos.add(PatternRepository.get().getMaxXZOffset(), PatternRepository.get().getMaxYOffset() - 1, PatternRepository.get().getMaxXZOffset()));
+        // return IForgeTileEntity.INFINITE_EXTENT_AABB;
     }
 
     /**

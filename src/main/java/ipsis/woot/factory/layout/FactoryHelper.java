@@ -4,21 +4,28 @@ import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
+import ipsis.woot.factory.blocks.power.CellTileEntityBase;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.helper.PlayerHelper;
+import ipsis.woot.util.helper.StringHelper;
+import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.BlockSnapshot;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FactoryHelper {
 
@@ -54,7 +61,11 @@ public class FactoryHelper {
         return false;
     }
 
+
     public static boolean tryBuild(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
+
+        if (!playerEntity.isAllowEdit())
+            return false;
 
         AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
         for (PatternBlock pb : absolutePattern.getBlocks()) {
@@ -62,19 +73,39 @@ public class FactoryHelper {
             Block currBlock = currState.getBlock();
 
             List<Block> correctBlocks = getComponentBlocks(pb.getFactoryComponent());
+            List<ItemStack> correctItemStacks = getComponentStacks(pb.getFactoryComponent());
 
             // Is it the correct block already
             if (isCorrectBlock(currBlock, correctBlocks))
                 continue;
 
             Block placeBlock = correctBlocks.get(0);
-            if (!playerEntity.isCreative()) {
-                // TODO get blocks from player
+            if (!PlayerHelper.playerHasFactoryComponent(playerEntity, correctItemStacks)) {
+                PlayerHelper.sendChatMessage(playerEntity, StringHelper.translate("Do not have " + pb.getFactoryComponent()));
+                return false;
             }
             if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
-                // TODO block snapshot for intern
-                world.setBlockState(pb.getBlockPos(), placeBlock.getDefaultState());
-                // TODO take from player
+
+                ItemStack takenStack = PlayerHelper.takeFactoryComponent(playerEntity, correctItemStacks);
+                if (!takenStack.isEmpty()) {
+
+                    BlockSnapshot blockSnapshot = BlockSnapshot.getBlockSnapshot(world, pos);
+                    world.setBlockState(pb.getBlockPos(), placeBlock.getDefaultState(), 11);
+                    if (ForgeEventFactory.onBlockPlace(playerEntity, blockSnapshot, Direction.UP)) {
+                        blockSnapshot.restore(true, false);
+                        return false;
+                    }
+
+                    if (pb.getFactoryComponent() == FactoryComponent.CELL) {
+                        TileEntity te = world.getTileEntity(pb.getBlockPos());
+                        if (te instanceof CellTileEntityBase) {
+                            if (playerEntity.isCreative()) {
+                                ((CellTileEntityBase) te).fillToCapacity();
+                            } else {
+                            }
+                        }
+                    }
+                }
                 return true;
             } else {
                 // cannot replace block
@@ -160,7 +191,7 @@ public class FactoryHelper {
         return blocks;
     }
 
-    static List<ItemStack> getComponentStacks(FactoryComponent component) {
+    public static List<ItemStack> getComponentStacks(FactoryComponent component) {
         List<ItemStack> stacks = new ArrayList<>();
         switch (component) {
             case FACTORY_A:

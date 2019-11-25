@@ -31,6 +31,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -136,48 +137,34 @@ public class InternItem extends WootItem {
 
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        Woot.LOGGER.info("onItemUseFirst: client:{}", context.getWorld().isRemote);
-        // This is where we should be handling the intern usageA
-        // Waiting on Forge #5976 (?)
-        return ActionResultType.PASS;
-    }
-
-    @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-
         ActionResultType result = ActionResultType.PASS;
-        /*if (!context.getWorld().isRemote) */
-            ItemStack itemStack = context.getItem();
-            if (!context.getPlayer().isSneaking()) {
-                Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
-                if (b instanceof HeartBlock) {
-                    BlockState blockState = context.getWorld().getBlockState(context.getPos());
-                    Direction facing = blockState.get(BlockStateProperties.HORIZONTAL_FACING);
-                    ToolMode toolMode = getToolModeFromStack(itemStack);
-                    if (toolMode == ToolMode.FORM) {
-                        TileEntity te = context.getWorld().getTileEntity(context.getPos());
-                        if (te instanceof HeartTileEntity)
-                            ((HeartTileEntity) te).interrupt();
-                    } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
-                        if (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier())) {
-                            if (context.getWorld().isRemote)
-                                spawnParticle(context.getWorld(), context.getPos().up(), 10);
-                        }
-                        result = ActionResultType.SUCCESS;
-                    } else if (toolMode.isValidateMode()) {
-                        if (!context.getWorld().isRemote)
-                            FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
-                        result = ActionResultType.SUCCESS;
+        ItemStack itemStack = context.getItem();
+        if (!context.getPlayer().isSneaking()) {
+            Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
+            if (b instanceof HeartBlock) {
+                BlockState blockState = context.getWorld().getBlockState(context.getPos());
+                Direction facing = blockState.get(BlockStateProperties.HORIZONTAL_FACING);
+                ToolMode toolMode = getToolModeFromStack(itemStack);
+                if (toolMode == ToolMode.FORM) {
+                    TileEntity te = context.getWorld().getTileEntity(context.getPos());
+                    if (te instanceof HeartTileEntity)
+                        ((HeartTileEntity) te).interrupt();
+                } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
+                    if (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier())) {
+                        if (context.getWorld().isRemote)
+                            spawnParticle(context.getWorld(), context.getPos().up(), 10);
                     }
+                    result = ActionResultType.SUCCESS;
+                } else if (toolMode.isValidateMode()) {
+                    if (!context.getWorld().isRemote)
+                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                    result = ActionResultType.SUCCESS;
                 }
             }
-            /*
-        } else {
-            // So we swing
-            result = ActionResultType.SUCCESS;
-        }*/
+        }
 
-        return result;
+        // Returning SUCCESS will filter out the MAIN_HAND hand from onBlockActivated
+        return ActionResultType.PASS;
     }
 
     @OnlyIn(Dist.CLIENT)

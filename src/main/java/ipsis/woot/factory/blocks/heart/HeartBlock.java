@@ -68,10 +68,9 @@ public class HeartBlock extends WootBlock implements FactoryComponentProvider, W
         if (worldIn.isRemote)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 
-        ItemStack itemStack = player.getHeldItem(handIn);
-        if (itemStack.getItem() == ModItems.INTERN_ITEM) {
-            // intern is used on the heart, so cannot open the gui
-            return false; // Block was not activated
+        if (player.getHeldItemMainhand().getItem() == ModItems.INTERN_ITEM || player.getHeldItemMainhand().getItem() == ModItems.DEBUG_ITEM) {
+                // intern is used on the heart, so cannot open the gui
+                return false; // Block was not activated
         }
 
         TileEntity te = worldIn.getTileEntity(pos);

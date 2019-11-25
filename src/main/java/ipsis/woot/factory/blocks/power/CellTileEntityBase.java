@@ -35,13 +35,16 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        tank.readFromNBT(compound);
+        if (compound.contains("Tank"))
+            tank.readFromNBT(compound.getCompound("Tank"));
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound = super.write(compound);
-        tank.writeToNBT(compound);
+        super.write(compound);
+        CompoundNBT tankNBT = new CompoundNBT();
+        tank.writeToNBT(tankNBT);
+        compound.put("Tank", tankNBT);
         return compound;
     }
 

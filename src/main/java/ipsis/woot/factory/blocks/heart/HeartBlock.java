@@ -74,6 +74,9 @@ public class HeartBlock extends WootBlock implements FactoryComponentProvider, W
         }
 
         TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof HeartTileEntity && !((HeartTileEntity) te).isFormed())
+                return false;
+
         if (te instanceof INamedContainerProvider)
             NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());
         else

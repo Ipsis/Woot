@@ -46,7 +46,6 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         boolean showAll = tileEntityIn.getLevel() == -1;
         int validY = showAll ? 0 : tileEntityIn.getYForLevel();
 
-        // TODO DONT USE pushLightingAttrib or pushMatrix Forge 1637
         GlStateManager.pushLightingAttributes();
         {
             GlStateManager.pushMatrix();

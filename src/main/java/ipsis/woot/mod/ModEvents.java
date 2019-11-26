@@ -81,8 +81,6 @@ public class ModEvents {
         if (!(victim instanceof MobEntity))
             return;
 
-        // TODO check for extra death events eg enderdragon
-
         FakeMob fakeMob = new FakeMob((MobEntity)victim);
         if (!fakeMob.isValid())
             return;
@@ -97,7 +95,6 @@ public class ModEvents {
 
         Dimension dimension = event.world.getDimension();
         if (dimension.getType() != ModDimensions.tartarusDimensionType) {
-            // TODO make this every 20 ticks
             MultiBlockTracker.get().run(event.world);
         } else {
             MobSimulator.get().tick(event.world);

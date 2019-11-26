@@ -24,7 +24,6 @@ public class SpawnController {
     static SpawnController INSTANCE;
     static { INSTANCE = new SpawnController(); }
 
-    // TODO check passive animal spawning rather than spawner mechanis
     public void spawnKill(@Nonnull FakeMobKey fakeMobKey, @Nonnull World world, @Nonnull BlockPos spawnPos) {
 
         if (!fakeMobKey.getMob().isValid())
@@ -44,7 +43,6 @@ public class SpawnController {
         if (livingEntity instanceof MobEntity)
             ((MobEntity)entity).onInitialSpawn(world,world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData)null, (CompoundNBT)null);
 
-        // TODO recentlyHit, AttackingPlayer, onDeath
         livingEntity.recentlyHit = 100;
         livingEntity.attackingPlayer = fakePlayer;
         livingEntity.onDeath(DamageSource.causePlayerDamage(fakePlayer));

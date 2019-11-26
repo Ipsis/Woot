@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 public class SimulationCommand {
 
-    // TODO use entitysummonargument style instead of string
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("simulation")
                 .then(LearnCommand.register())

@@ -268,7 +268,6 @@ public class DropRegistry {
             }
 
             public @Nonnull MobDrop getMobDrop(int looting, int sampleSize) {
-                // TODO add the custom drops
                 float dropChance = 0.0F;
                 if (sampleSize == 0)
                     dropChance = -1.0F; // means that we haven't simulated anything yet

@@ -7,7 +7,6 @@ public class JsonHelper {
 
     /**
      * This is the reverse of the Forge CraftingHelper.getItemStack
-     * TODO NBT????
      */
     public static JsonObject toJsonObject(ItemStack itemStack) {
 

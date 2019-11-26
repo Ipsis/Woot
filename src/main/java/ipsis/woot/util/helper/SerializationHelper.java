@@ -27,7 +27,7 @@ public class SerializationHelper {
                     throw (FileNotFoundException) exception;
                 }
                 else {
-                    exception.printStackTrace(); // TODO Better logging of the exception
+                    exception.printStackTrace();
                 }
             }
         }
@@ -50,7 +50,7 @@ public class SerializationHelper {
                 bufferedWriter.write(fileContents);
                 bufferedWriter.close();
             } catch (IOException exception) {
-                exception.printStackTrace(); // TODO Better logging of the exception
+                exception.printStackTrace();
             }
 
             if (file.exists()) {

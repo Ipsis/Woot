@@ -27,7 +27,6 @@ public class MultiBlockTracker {
     static { INSTANCE = new MultiBlockTracker(); }
 
     List<BlockPos> blocks = new ArrayList<>();
-    // TODO make it dimension specific ??
     public void addEntry(BlockPos pos) {
         LOGGER.debug("Adding entry at {} to block tracker", pos);
         blocks.add(new BlockPos(pos));

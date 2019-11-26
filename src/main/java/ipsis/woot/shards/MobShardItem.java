@@ -49,11 +49,6 @@ public class MobShardItem extends WootItem {
         if (isProgrammed(stack))
             return false;
 
-        // TODO check policy canCapture
-        /*
-        PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
-                new TranslationTextComponent("chat.woot.mobshard.failure").getFormattedText());
-         */
         // status messages for success
         FakeMob fakeMob = new FakeMob((MobEntity)target);
         if (!fakeMob.isValid())
@@ -168,7 +163,6 @@ public class MobShardItem extends WootItem {
         tooltip.add(new TranslationTextComponent("info.woot.mobshard.2"));
         tooltip.add(new TranslationTextComponent("info.woot.mobshard.3"));
 
-        // TODO show the mob, kill count, full etc
         FakeMob fakeMob = getProgrammedMob(stack);
         if (!fakeMob.isValid()) {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.0"));

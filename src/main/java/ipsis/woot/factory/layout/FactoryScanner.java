@@ -126,7 +126,6 @@ public class FactoryScanner {
                         Woot.LOGGER.debug("compareToWorld: Found primary controller");
                         foundPrimaryController = true;
                     }
-                    // TODO blacklisted ???
                 }
             }
         }

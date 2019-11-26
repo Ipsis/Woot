@@ -33,7 +33,6 @@ public class FactoryUIInfo {
         public Mob(ItemStack itemStack) { controller = itemStack; }
     }
 
-    // TODO handle float drop chance
     public List<ItemStack> drops = new ArrayList<>();
 
     public static FactoryUIInfo create(Setup setup, HeartTileEntity.Recipe recipe) {
@@ -54,7 +53,6 @@ public class FactoryUIInfo {
             for (FakeMob fakeMob : setup.getMobs()) {
                 Mob mob = new Mob(ControllerTileEntity.getItemStack(fakeMob));
                 info.mobInfo.add(mob);
-                // TODO add ingredients
                 info.mobs.add(ControllerTileEntity.getItemStack(fakeMob));
                 List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(fakeMob, looting));
                 for (MobDrop mobDrop : mobDrops) {

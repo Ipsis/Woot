@@ -52,7 +52,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     @Override
     protected void init() {
         super.init(); // this sets guiLeft/guiTop
-        this.listWidth = 100; // TODO width should be based off the name
+        this.listWidth = 100;
         this.guiSimulatedMobsList = new GuiSimulatedMobsList(this, listWidth);
         this.guiSimulatedMobsList.setLeftPos(6);
 

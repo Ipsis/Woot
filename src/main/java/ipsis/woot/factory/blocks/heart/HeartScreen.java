@@ -238,7 +238,6 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                 return;
 
             if (isLocked) {
-                // TODO draw a cross or something
                 return;
             }
         }
@@ -248,7 +247,6 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                     return;
 
             if (isLocked) {
-                // TODO draw a cross or something
                 return;
             }
 
@@ -269,7 +267,6 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                 return;
 
             if (isLocked) {
-                // TODO draw a cross or something
                 return;
             }
 

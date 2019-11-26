@@ -92,12 +92,6 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
            if (layout.hasChanged()) {
                setup = Setup.createFromLayout(world, layout);
 
-               /**
-                * TODO learn only factory looting or all the looting ???
-               int looting = 0;
-               if (setup.getUpgrades().containsKey(FactoryUpgradeType.LOOTING))
-                   looting = setup.getUpgrades().get(FactoryUpgradeType.LOOTING);
-                */
                setup.getMobs().forEach(m -> DropRegistry.get().tryLearning(m));
                recipe = RecipeHelper.createRecipe(setup, world);
 
@@ -190,8 +184,6 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         int currStructureTicks = 0;
 
         public boolean tick(World world) {
-
-            // @todo config for tick acceleration
 
             boolean realTick = false;
             long currGameTime = world.getGameTime();

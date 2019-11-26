@@ -14,7 +14,6 @@ public class ItemEntityHelper {
         List<ItemStack> itemStackList = new ArrayList<>(itemEntityList.size());
 
         for (ItemEntity itemEntity : itemEntityList) {
-            // TODO flatten the list
             ItemStack itemStack = itemEntity.getItem();
             itemStackList.add(itemStack);
         }

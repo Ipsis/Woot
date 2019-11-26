@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -48,6 +49,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     Setup setup;
     Recipe recipe;
     TickTracker tickTracker = new TickTracker();
+    boolean loadedFromNBT = false;
 
     public HeartTileEntity() {
         super(ModBlocks.HEART_BLOCK_TILE);
@@ -98,7 +100,15 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                 */
                setup.getMobs().forEach(m -> DropRegistry.get().tryLearning(m));
                recipe = RecipeHelper.createRecipe(setup, world);
-               consumedUnits = 0;
+
+               // Restore the progress on load
+               if (loadedFromNBT) {
+                   loadedFromNBT = false;
+               } else {
+                   consumedUnits = 0;
+                   markDirty();
+               }
+
                layout.clearChanged();
            }
 
@@ -109,6 +119,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
            if (consumedUnits >= recipe.getNumTicks()) {
                // get and process the ingredients
                consumedUnits = 0;
+               markDirty();
 
                TileEntity te = world.getTileEntity(setup.getCellPos());
                if (te instanceof CellTileEntityBase) {
@@ -128,6 +139,29 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     /**
+     * NBT
+     */
+    @Override
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+        if (compound.contains("progress")) {
+            loadedFromNBT = true;
+            consumedUnits = compound.getInt("progress");
+            LOGGER.debug("read: loading progress " + consumedUnits);
+        }
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
+        if (isFormed() && recipe != null) {
+            compound.putInt("progress", consumedUnits);
+            LOGGER.debug("write: saving progress " + consumedUnits);
+        }
+        return compound;
+    }
+
+    /**
      * MultiBlockMaster
      */
     @Override
@@ -142,10 +176,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     int consumedUnits = 0;
     void tickRecipe() {
-
         // Purely the passage of time
         consumedUnits++;
-
+        markDirty();
     }
 
     /**

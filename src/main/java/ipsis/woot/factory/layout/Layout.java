@@ -52,11 +52,13 @@ public class Layout {
             absolutePattern = null;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern != null) {
-            LOGGER.debug("was:{} now:{}", absolutePattern.getTier(), rescannedPattern.getTier());
-            FactoryHelper.disconnectOld(world, absolutePattern);
-            FactoryHelper.connectNew(world, rescannedPattern, master);
-            absolutePattern = rescannedPattern;
-            changed = true;
+            if (!FactoryScanner.isPatternEqual(world, absolutePattern, rescannedPattern)) {
+                LOGGER.debug("was:{} now:{}", absolutePattern.getTier(), rescannedPattern.getTier());
+                FactoryHelper.disconnectOld(world, absolutePattern);
+                FactoryHelper.connectNew(world, rescannedPattern, master);
+                absolutePattern = rescannedPattern;
+                changed = true;
+            }
         }
     }
 

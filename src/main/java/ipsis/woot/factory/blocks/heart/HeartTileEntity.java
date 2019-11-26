@@ -98,6 +98,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                 */
                setup.getMobs().forEach(m -> DropRegistry.get().tryLearning(m));
                recipe = RecipeHelper.createRecipe(setup, world);
+               consumedUnits = 0;
                layout.clearChanged();
            }
 

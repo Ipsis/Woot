@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,5 +123,47 @@ public class FactoryScanner {
 
         //feedback.forEach(s -> LOGGER.debug("compareToWorld: {}", s));
         return valid;
+    }
+
+    /**
+     * This identifies any change in the two patterns, including things like
+     * the upgrade mods or controllers changing.
+     * This will be used to trigger a new factory recipe calculation.
+     */
+    public static boolean isPatternEqual(@Nonnull World world, AbsolutePattern pattern1, AbsolutePattern pattern2) {
+
+        if (pattern1 == null || pattern2 == null)
+            return false;
+
+        if (pattern1.tier != pattern2.tier)
+            return false;
+
+        List<FakeMob> pattern1Mobs = new ArrayList<>();
+        List<FakeMob> pattern2Mobs = new ArrayList<>();
+
+        for (PatternBlock pb : pattern1.getBlocks()) {
+            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
+                TileEntity te = world.getTileEntity(pb.getBlockPos());
+                if (te instanceof ControllerTileEntity)
+                    pattern1Mobs.add(((ControllerTileEntity) te).getFakeMob());
+            }
+        }
+
+        for (PatternBlock pb : pattern2.getBlocks()) {
+            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
+                TileEntity te = world.getTileEntity(pb.getBlockPos());
+                if (te instanceof ControllerTileEntity)
+                    pattern2Mobs.add(((ControllerTileEntity) te).getFakeMob());
+            }
+        }
+
+        if (pattern1Mobs.size() != pattern2Mobs.size())
+            return false;
+
+        if (!pattern1Mobs.equals(pattern2Mobs))
+            return false;
+
+        Woot.LOGGER.debug("isPatternEqual: old and new patterns are equal");
+        return true;
     }
 }

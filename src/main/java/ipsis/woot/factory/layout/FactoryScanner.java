@@ -61,7 +61,20 @@ public class FactoryScanner {
     public static boolean compareToWorld(AbsolutePattern absolutePattern, World world, List<String> feedback) {
 
         boolean valid = true;
-        int controllerCount = 0;
+        boolean foundPrimaryController = false;
+
+        BlockPos heartPos = null;
+        for (PatternBlock p : absolutePattern.getBlocks()) {
+            if (p.getFactoryComponent() == FactoryComponent.HEART)
+                heartPos = new BlockPos(p.getBlockPos());
+        }
+
+        if (heartPos == null)
+            return false;
+
+        BlockPos primaryControllerPos;
+        primaryControllerPos = new BlockPos(heartPos.offset(absolutePattern.facing, 1).add(0,-2,0));
+
         for (PatternBlock p : absolutePattern.getBlocks()) {
 
             // Don't load an unloaded chunk
@@ -106,18 +119,22 @@ public class FactoryScanner {
                     if (!absolutePattern.getTier().isValidForTier(mobTier)) {
                         feedback.add(StringHelper.translateFormat(
                                 "chat.woot.intern.validate.wrongtier",
-                                 p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(),
+                                p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(),
                                 absolutePattern.getTier()));
-                    } else {
-                        controllerCount++;
+                    }
+                    if (primaryControllerPos.equals(p.getBlockPos())) {
+                        Woot.LOGGER.debug("compareToWorld: Found primary controller");
+                        foundPrimaryController = true;
                     }
                     // TODO blacklisted ???
                 }
             }
         }
 
-        if (controllerCount == 0) {
-            feedback.add(StringHelper.translate("chat.woot.intern.validate.nocontroller"));
+        if (foundPrimaryController == false) {
+            feedback.add(StringHelper.translateFormat("chat.woot.intern.validate.noprimary",
+                    primaryControllerPos.getX(), primaryControllerPos.getY(), primaryControllerPos.getZ()
+                    ));
             valid = false;
         }
 

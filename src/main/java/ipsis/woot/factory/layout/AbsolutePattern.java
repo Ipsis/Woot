@@ -18,6 +18,7 @@ import java.util.List;
 public class AbsolutePattern {
 
     Tier tier;
+    Direction facing;
     List<PatternBlock> blocks = new ArrayList<>();
     public List<PatternBlock> getBlocks() { return Collections.unmodifiableList(blocks); }
 
@@ -42,6 +43,7 @@ public class AbsolutePattern {
             absolutePattern.addAbsoluteBlock(patternBlock.getFactoryComponent(), origin.add(pos));
         }
 
+        absolutePattern.facing = facing;
         return absolutePattern;
     }
 }

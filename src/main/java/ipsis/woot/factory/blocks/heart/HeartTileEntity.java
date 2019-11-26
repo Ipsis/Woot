@@ -88,7 +88,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        layout.tick(tickTracker, this);
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
-               setup = Setup.creatFromLayout(world, layout);
+               setup = Setup.createFromLayout(world, layout);
 
                /**
                 * TODO learn only factory looting or all the looting ???

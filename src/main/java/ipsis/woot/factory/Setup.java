@@ -59,7 +59,7 @@ public class Setup {
 
     Setup() {}
 
-    public static Setup creatFromLayout(World world, Layout layout) {
+    public static Setup createFromLayout(World world, Layout layout) {
         Setup setup = new Setup();
         setup.tier = layout.getAbsolutePattern().getTier();
 

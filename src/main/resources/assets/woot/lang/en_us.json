@@ -66,6 +66,7 @@
   # Tooltips
   "info.woot.intern": "§aUse on the factory heart to form, build or validate a factory",
   "info.woot.intern.0": "§bSneak-right click to change modes",
+  "info.woot.intern.1": "§bPlace controllers and cells manually",
   "info.woot.intern.mode.form": "Form the factory",
   "info.woot.intern.mode.build_1": "Build a Tier 1 factory",
   "info.woot.intern.mode.build_2": "Build a Tier 2 factory",
@@ -85,6 +86,7 @@
   "info.woot.mobshard.a.1": "[Fully Programmed]",
   "info.woot.mobshard.b.0": "[Kills %d/%d]",
   "info.woot.mobshard.b.1": "[Fully Programmed]",
+  "info.woot.cell.0": "Conatus Fluid %d/%dmB",
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",

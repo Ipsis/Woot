@@ -1,19 +1,32 @@
 package ipsis.woot.factory.blocks.power;
 
+import ipsis.woot.common.Config;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
+import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -49,6 +62,27 @@ public class CellBlock extends WootBlock implements WootDebug, FactoryComponentP
         } catch (InstantiationException | IllegalAccessException e) {
             throw new RuntimeException();
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        int capacity = 0;
+        if (stack.getItem() == Item.getItemFromBlock(ModBlocks.CELL_1_BLOCK))
+            capacity = Config.COMMON.CELL_1_CAPACITY.get();
+        else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.CELL_2_BLOCK))
+            capacity = Config.COMMON.CELL_2_CAPACITY.get();
+        else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.CELL_3_BLOCK))
+            capacity = Config.COMMON.CELL_3_CAPACITY.get();
+
+        int contents = 0;
+        CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");
+        if (compoundNBT != null && compoundNBT.contains("Tank")) {
+            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(compoundNBT.getCompound("Tank"));
+            contents = fluidStack.getAmount();
+        }
+        tooltip.add(new TranslationTextComponent("info.woot.cell.0", contents , capacity));
     }
 
     /**

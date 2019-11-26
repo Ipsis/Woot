@@ -191,6 +191,7 @@ public class InternItem extends WootItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern")));
         tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.0")));
+        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.1")));
 
         ToolMode toolMode = getToolModeFromStack(stack);
         tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.mode." + toolMode.toString().toLowerCase(Locale.ROOT))));

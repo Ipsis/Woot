@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
+import ipsis.woot.factory.blocks.power.CellBlock;
 import ipsis.woot.factory.blocks.power.CellTileEntityBase;
 import ipsis.woot.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.factory.multiblock.MultiBlockMaster;
@@ -79,13 +80,15 @@ public class FactoryHelper {
             if (isCorrectBlock(currBlock, correctBlocks))
                 continue;
 
+            if (pb.getFactoryComponent() == FactoryComponent.CELL || pb.getFactoryComponent() == FactoryComponent.CONTROLLER)
+                continue;
+
             Block placeBlock = correctBlocks.get(0);
             if (!PlayerHelper.playerHasFactoryComponent(playerEntity, correctItemStacks)) {
                 PlayerHelper.sendChatMessage(playerEntity, StringHelper.translate("Do not have " + pb.getFactoryComponent()));
                 return false;
             }
             if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
-
                 ItemStack takenStack = PlayerHelper.takeFactoryComponent(playerEntity, correctItemStacks);
                 if (!takenStack.isEmpty()) {
 
@@ -94,16 +97,6 @@ public class FactoryHelper {
                     if (ForgeEventFactory.onBlockPlace(playerEntity, blockSnapshot, Direction.UP)) {
                         blockSnapshot.restore(true, false);
                         return false;
-                    }
-
-                    if (pb.getFactoryComponent() == FactoryComponent.CELL) {
-                        TileEntity te = world.getTileEntity(pb.getBlockPos());
-                        if (te instanceof CellTileEntityBase) {
-                            if (playerEntity.isCreative()) {
-                                ((CellTileEntityBase) te).fillToCapacity();
-                            } else {
-                            }
-                        }
                     }
                 }
                 return true;

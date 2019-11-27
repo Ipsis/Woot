@@ -1,5 +1,7 @@
 package ipsis.woot.shards;
 
+import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.Policy;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootItem;
@@ -12,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -25,8 +28,6 @@ import java.util.List;
 /**
  * Mob shard is used to hold the mob kills until the shard is turned into a mob controller.
  * A shard is full when its kill count hits a predefined level.
- * The first time the level is hit, then the shard is full.
- * Changing the predefined levels does NOT make previously full shards empty again.
  */
 
 public class MobShardItem extends WootItem {
@@ -54,13 +55,28 @@ public class MobShardItem extends WootItem {
         if (!fakeMob.isValid())
             return false;
 
-
+        if (!Policy.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation())) {
+            PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
+                    new TranslationTextComponent("chat.woot.mobshard.failure").getFormattedText());
+            return false;
+        }
 
         setProgrammedMob(stack, fakeMob);
         PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
                 new TranslationTextComponent("chat.woot.mobshard.success").getFormattedText());
         return true;
 
+    }
+
+    private static boolean canShardCaptureMob(ResourceLocation resourceLocation) {
+        for (String s : Config.COMMON.SHARD_BLACKLIST_FULL_MOD.get())
+            if (s.equalsIgnoreCase(resourceLocation.getNamespace()))
+                return false;
+
+        for (String s : Config.COMMON.SHARD_BLACKLIST_ENTITY.get())
+            if (s.equalsIgnoreCase(resourceLocation.toString()))
+                return false;
+        return true;
     }
 
     /**
@@ -128,6 +144,9 @@ public class MobShardItem extends WootItem {
 
         FakeMob fakeMob = getProgrammedMob(itemStack);
         if (!fakeMob.isValid())
+            return;
+
+        if (!Policy.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation()))
             return;
 
         int killCount = itemStack.getTag().getInt(NBT_KILLS);

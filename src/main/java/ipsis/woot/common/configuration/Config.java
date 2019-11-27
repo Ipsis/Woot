@@ -18,34 +18,6 @@ public class Config {
 
     static final Logger LOGGER = LogManager.getLogger();
 
-    static final List<String> DEFAULT_MOB_OVERRIDES = Arrays.asList(
-            "minecraft:wither_skeleton,mobHealth,40",
-            "minecraft:wither_skeleton,mobTier,3",
-            "minecraft:villager,mobTier,3",
-            "minecraft:magma_cube,mobTier,2",
-            "minecraft:enderman,mobTier,3",
-            "minecraft:villager_golem,mobTier,3",
-            "minecraft:guardian,mobTier,3",
-            "minecraft:blaze,mobTier,2",
-            "minecraft:witch,mobTier,2",
-            "minecraft:ghast,mobTier,2",
-            "minecraft:zombie_pigman,mobTier,2",
-
-            "minecraft:ender_dragon,mobHealth,500",
-            "minecraft:ender_dragon,spawnTicks,12000",
-            "minecraft:ender_dragon,mobTier,4",
-            "minecraft:ender_dragon,mass1MobCount,2",
-            "minecraft:ender_dragon,mass2MobCount,3",
-            "minecraft:ender_dragon,mass3MobCount,4",
-
-            "minecraft:minecraft_wither,mobHealth,500",
-            "minecraft:minecraft_wither,spawnTicks,1200",
-            "minecraft:minecraft_wither,mobTier,4",
-            "minecraft:minecraft_wither,mass1MobCount,2",
-            "minecraft:minecraft_wither,mass2MobCount,3",
-            "minecraft:minecraft_wither,mass3MobCount,4"
-            );
-
     public static class Common {
 
         public final IntValue SIMULATION_TICKS;
@@ -53,6 +25,14 @@ public class Config {
         public final IntValue SIMULATION_TICKS_PER_SIM_TICK;
         public final IntValue SIMULATION_CELLS_PER_SIM_TICK;
         public final ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
+        public final ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_FULL_MOD;
+        public final ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_ENTITY;
+        public final ForgeConfigSpec.ConfigValue<List<String>> LEARN_BLACKLIST_FULL_MOD;
+        public final ForgeConfigSpec.ConfigValue<List<String>> LEARN_BLACKLIST_ITEM;
+        public final ForgeConfigSpec.ConfigValue<List<String>> GENERATE_BLACKLIST_FULL_MOD;
+        public final ForgeConfigSpec.ConfigValue<List<String>> GENERATE_BLACKLIST_ITEM;
+        public final ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_FULL_MOD;
+        public final ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_ENTITY;
 
         public final IntValue MASS_COUNT;
         public final IntValue SPAWN_TICKS;
@@ -173,13 +153,61 @@ public class Config {
                     .translation(TAG + TAG2)
                     .defineInRange(TAG2, 8, 1, 128);
 
+            builder.push("blacklist");
+            {
+                TAG2 = "captureFullMod";
+                CAPTURE_BLACKLIST_FULL_MOD = builder
+                        .comment("Do not capture any entity from the following mods")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_CAPTURE_BLACKLIST_FULL_MOD);
+
+                TAG2 = "captureEntity";
+                CAPTURE_BLACKLIST_ENTITY = builder
+                        .comment("Do not capture the following entities")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_CAPTURE_BLACKLIST_ENTITY);
+
+                TAG2 = "learnFullMod";
+                LEARN_BLACKLIST_FULL_MOD = builder
+                        .comment("Do not learn items from the following mods")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_LEARN_BLACKLIST_FULL_MOD);
+                TAG2 = "learnItem";
+                LEARN_BLACKLIST_ITEM = builder
+                        .comment("Do not learn the following item")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_LEARN_BLACKLIST_ITEM);
+
+                TAG2 = "generateFullMod";
+                GENERATE_BLACKLIST_FULL_MOD = builder
+                        .comment("Do not generate items from the following mods")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_GENERATE_BLACKLIST_FULL_MOD);
+                TAG2 = "generateItem";
+                GENERATE_BLACKLIST_ITEM = builder
+                        .comment("Do not generate the following item")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_GENERATE_BLACKLIST_ITEM);
+                TAG2 = "shardFullMod";
+                SHARD_BLACKLIST_FULL_MOD = builder
+                        .comment("Do not allow shard creation with entities from the following mods")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_SHARD_BLACKLIST_FULL_MOD);
+                TAG2 = "shardEntity";
+                SHARD_BLACKLIST_ENTITY = builder
+                        .comment("Do not allow shard creation with the following entities")
+                        .translation(TAG + TAG2)
+                        .define(TAG2, Defaults.DEFAULT_SHARD_BLACKLIST_ENTITY);
+            }
+            builder.pop(); // mob
+
             builder.push("mob");
             {
                 TAG2 = "mobOverrides";
                 MOB_OVERRIDES = builder
                         .comment("A list of mob specific factory configuration values")
                         .translation(TAG + TAG2)
-                        .define(TAG2, DEFAULT_MOB_OVERRIDES);
+                        .define(TAG2, Defaults.DEFAULT_MOB_OVERRIDES);
             }
             builder.pop(); // mob
 
@@ -527,7 +555,7 @@ public class Config {
                 }
             }
         }
-
+        Policy.get().loadFromConfig();
     }
 
 }

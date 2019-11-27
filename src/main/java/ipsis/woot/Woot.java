@@ -4,6 +4,7 @@ import ipsis.woot.client.AnvilTileEntitySpecialRenderer;
 import ipsis.woot.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.client.ui.OracleScreen;
 import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.Policy;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.blocks.heart.HeartScreen;
 import ipsis.woot.factory.layout.PatternRepository;
@@ -52,6 +53,7 @@ public class Woot {
 
     private void setup(final FMLCommonSetupEvent event) {
         LOGGER.debug("FMLCommonSetupEvent");
+        Policy.get().loadFromConfig();
         ModFiles.INSTANCE.init();
         NetworkChannel.init();
         PatternRepository.get().load();

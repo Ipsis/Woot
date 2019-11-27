@@ -1,5 +1,6 @@
 package ipsis.woot.factory.blocks.heart;
 
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.factory.*;
 import ipsis.woot.factory.blocks.power.CellTileEntityBase;
 import ipsis.woot.factory.generators.LootGeneration;
@@ -187,7 +188,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
             boolean realTick = false;
             long currGameTime = world.getGameTime();
-            if (lastGameTime != currGameTime) {
+            if (Config.COMMON.TICK_ACCEL.get() == true || lastGameTime != currGameTime) {
                 // actual time has passed - no acceleration
                 lastGameTime = currGameTime;
                 realTick = true;

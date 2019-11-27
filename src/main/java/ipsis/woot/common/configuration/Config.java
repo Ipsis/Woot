@@ -25,6 +25,7 @@ public class Config {
         public final IntValue SIMULATION_MOB_COUNT;
         public final IntValue SIMULATION_TICKS_PER_SIM_TICK;
         public final IntValue SIMULATION_CELLS_PER_SIM_TICK;
+        public final ForgeConfigSpec.BooleanValue TICK_ACCEL;
         public final ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
         public final ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_FULL_MOD;
         public final ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_ENTITY;
@@ -153,6 +154,12 @@ public class Config {
                     .comment("Number of mobs to simulate per simulator tick")
                     .translation(TAG + TAG2)
                     .defineInRange(TAG2, 8, 1, 128);
+
+            TAG2 = "tickAcceleration";
+            TICK_ACCEL = builder
+                    .comment("Allow tick acceleration to be used on the factory")
+                    .translation(TAG + TAG2)
+                    .define(TAG2, true);
 
             builder.push("blacklist");
             {

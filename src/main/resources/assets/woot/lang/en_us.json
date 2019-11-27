@@ -100,6 +100,7 @@
   "chat.woot.intern.validate.missing": "Expected %s at (%d,%d,%d)",
   "chat.woot.intern.validate.incorrect": "Expected %s at (%d,%d,%d) but found %s",
   "chat.woot.intern.validate.wrongtier": "Controller at (%d,%d,%d) not valid for %s",
+  "chat.woot.intern.validate.blacklisted": "Controller at (%d,%d,%d) is blacklisted",
   "chat.woot.intern.validate.noprimary": "No valid primary controller at (%d,%d,%d)",
   "chat.woot.mobshard.failure": "Cannot capture mob",
   "chat.woot.mobshard.success": "Captured mob"

@@ -2,6 +2,7 @@ package ipsis.woot.factory.layout;
 
 import ipsis.woot.Woot;
 import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.Policy;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;
@@ -115,16 +116,29 @@ public class FactoryScanner {
                 TileEntity te = world.getTileEntity(p.getBlockPos());
                 if (te instanceof ControllerTileEntity) {
                     FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
-                    Tier mobTier = Config.getMobTier(fakeMob, world);
-                    if (!absolutePattern.getTier().isValidForTier(mobTier)) {
-                        feedback.add(StringHelper.translateFormat(
-                                "chat.woot.intern.validate.wrongtier",
-                                p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(),
-                                absolutePattern.getTier()));
-                    }
-                    if (primaryControllerPos.equals(p.getBlockPos())) {
-                        Woot.LOGGER.debug("compareToWorld: Found primary controller");
-                        foundPrimaryController = true;
+                    if (fakeMob.isValid()) {
+                        Tier mobTier = Config.getMobTier(fakeMob, world);
+
+                        /**
+                         * Ignore if blacklisted
+                         * Ignore if wrong tier
+                         */
+                        if (!Policy.get().canCaptureEntity(fakeMob.getResourceLocation())) {
+                            feedback.add(StringHelper.translateFormat(
+                                    "chat.woot.intern.validate.blacklisted",
+                                    p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()));
+                        } else if (!absolutePattern.getTier().isValidForTier(mobTier)) {
+                            feedback.add(StringHelper.translateFormat(
+                                    "chat.woot.intern.validate.wrongtier",
+                                    p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(),
+                                    absolutePattern.getTier()));
+                        } else {
+                            // This is a valid controller
+                            if (primaryControllerPos.equals(p.getBlockPos())) {
+                                Woot.LOGGER.debug("compareToWorld: Found primary controller");
+                                foundPrimaryController = true;
+                            }
+                        }
                     }
                 }
             }

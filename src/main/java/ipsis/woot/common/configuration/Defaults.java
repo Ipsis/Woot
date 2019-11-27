@@ -1,29 +1,30 @@
 package ipsis.woot.common.configuration;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
 
 public class Defaults {
 
-    public static final List<String> DEFAULT_CAPTURE_BLACKLIST_FULL_MOD = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_CAPTURE_BLACKLIST_FULL_MOD = Lists.newArrayList(
             "botania"
     );
 
-    public static final List<String> DEFAULT_CAPTURE_BLACKLIST_ENTITY = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_CAPTURE_BLACKLIST_ENTITY = Lists.newArrayList(
     );
 
-    public static final List<String> DEFAULT_LEARN_BLACKLIST_FULL_MOD = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_LEARN_BLACKLIST_FULL_MOD = Lists.newArrayList(
     );
-    public static final List<String> DEFAULT_LEARN_BLACKLIST_ITEM = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_LEARN_BLACKLIST_ITEM = Lists.newArrayList(
     );
 
     /**
      * These are for mod pack makers that want to stop the factory from generating
      * specific items.
      */
-    public static final List<String> DEFAULT_GENERATE_BLACKLIST_FULL_MOD = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_GENERATE_BLACKLIST_FULL_MOD = Lists.newArrayList(
     );
-    public static final List<String> DEFAULT_GENERATE_BLACKLIST_ITEM = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_GENERATE_BLACKLIST_ITEM = Lists.newArrayList(
     );
 
     /**
@@ -31,10 +32,10 @@ public class Defaults {
      * See #415
      */
 
-    public static final List<String> DEFAULT_SHARD_BLACKLIST_FULL_MOD = Arrays.asList();
-    public static final List<String> DEFAULT_SHARD_BLACKLIST_ENTITY = Arrays.asList();
+    public static final ArrayList<String> DEFAULT_SHARD_BLACKLIST_FULL_MOD = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_SHARD_BLACKLIST_ENTITY = Lists.newArrayList();
 
-    public static final List<String> DEFAULT_MOB_OVERRIDES = Arrays.asList(
+    public static final ArrayList<String> DEFAULT_MOB_OVERRIDES = Lists.newArrayList(
             "minecraft:wither_skeleton,mobHealth,40",
             "minecraft:wither_skeleton,mobTier,3",
             "minecraft:villager,mobTier,3",

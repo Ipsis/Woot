@@ -1,5 +1,6 @@
 package ipsis.woot.common.configuration;
 
+import com.google.common.collect.Lists;
 import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.simulation.SpawnController;
@@ -174,7 +175,7 @@ public class Config {
                         .define(TAG2, Defaults.DEFAULT_LEARN_BLACKLIST_FULL_MOD);
                 TAG2 = "learnItem";
                 LEARN_BLACKLIST_ITEM = builder
-                        .comment("Do not learn the following item")
+                        .comment("Do not learn the following items")
                         .translation(TAG + TAG2)
                         .define(TAG2, Defaults.DEFAULT_LEARN_BLACKLIST_ITEM);
 
@@ -185,7 +186,7 @@ public class Config {
                         .define(TAG2, Defaults.DEFAULT_GENERATE_BLACKLIST_FULL_MOD);
                 TAG2 = "generateItem";
                 GENERATE_BLACKLIST_ITEM = builder
-                        .comment("Do not generate the following item")
+                        .comment("Do not generate the following items")
                         .translation(TAG + TAG2)
                         .define(TAG2, Defaults.DEFAULT_GENERATE_BLACKLIST_ITEM);
                 TAG2 = "shardFullMod";

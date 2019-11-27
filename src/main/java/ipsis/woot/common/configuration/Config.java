@@ -1,4 +1,4 @@
-package ipsis.woot.common;
+package ipsis.woot.common.configuration;
 
 import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Tier;

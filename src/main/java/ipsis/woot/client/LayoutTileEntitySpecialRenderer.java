@@ -2,7 +2,7 @@ package ipsis.woot.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
-import ipsis.woot.common.Config;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
 import ipsis.woot.factory.layout.PatternBlock;

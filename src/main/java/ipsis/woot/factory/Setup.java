@@ -1,6 +1,6 @@
 package ipsis.woot.factory;
 
-import ipsis.woot.common.Config;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.factory.blocks.UpgradeTileEntity;
 import ipsis.woot.factory.layout.Layout;

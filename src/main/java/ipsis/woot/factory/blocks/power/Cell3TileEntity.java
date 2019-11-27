@@ -1,6 +1,6 @@
 package ipsis.woot.factory.blocks.power;
 
-import ipsis.woot.common.Config;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.mod.ModBlocks;
 
 public class Cell3TileEntity extends CellTileEntityBase {

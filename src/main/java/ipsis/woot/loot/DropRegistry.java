@@ -1,7 +1,7 @@
 package ipsis.woot.loot;
 
 import com.google.gson.*;
-import ipsis.woot.common.Config;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.mod.ModFiles;
 import ipsis.woot.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;

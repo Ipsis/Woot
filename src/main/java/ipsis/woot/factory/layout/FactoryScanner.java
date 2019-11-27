@@ -1,7 +1,7 @@
 package ipsis.woot.factory.layout;
 
 import ipsis.woot.Woot;
-import ipsis.woot.common.Config;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
 import ipsis.woot.factory.Tier;

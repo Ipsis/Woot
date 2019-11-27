@@ -54,6 +54,8 @@ public class MobShardItem extends WootItem {
         if (!fakeMob.isValid())
             return false;
 
+
+
         setProgrammedMob(stack, fakeMob);
         PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
                 new TranslationTextComponent("chat.woot.mobshard.success").getFormattedText());

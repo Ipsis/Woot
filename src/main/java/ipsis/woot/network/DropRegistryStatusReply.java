@@ -2,8 +2,7 @@ package ipsis.woot.network;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.client.ui.OracleContainer;
-import ipsis.woot.common.Config;
-import ipsis.woot.factory.blocks.heart.HeartContainer;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.oss.NetworkTools;
 import ipsis.woot.util.FakeMob;

@@ -1,6 +1,5 @@
 package ipsis.woot.common.configuration;
 
-import com.google.common.collect.Lists;
 import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Tier;
 import ipsis.woot.simulation.SpawnController;
@@ -39,6 +38,7 @@ public class Config {
         public final IntValue MASS_COUNT;
         public final IntValue SPAWN_TICKS;
         public final IntValue UNITS_PER_HEALTH;
+        public final IntValue MOB_SHARD_KILLS;
         public final IntValue TIER_1_MAX_UNITS;
         public final IntValue TIER_2_MAX_UNITS;
         public final IntValue TIER_3_MAX_UNITS;
@@ -54,6 +54,7 @@ public class Config {
         public final String MOB_HEALTH_TAG = "mobHealth";
         public final String UNITS_PER_HEALTH_TAG = "unitsPerHealth";
         public final String MOB_TIER_TAG = "mobTier";
+        public final String MOB_SHARD_KILLS_TAG = "mobShardKill";
 
         public final String TIER_1_MAX_UNITS_TAG = "tier1MaxUnits";
         public final String TIER_2_MAX_UNITS_TAG = "tier2MaxUnits";
@@ -125,6 +126,7 @@ public class Config {
             add(MOB_HEALTH_TAG.toLowerCase(Locale.ROOT));
             add(UNITS_PER_HEALTH_TAG.toLowerCase(Locale.ROOT));
             add(MOB_TIER_TAG.toLowerCase(Locale.ROOT));
+            add(MOB_SHARD_KILLS_TAG.toLowerCase(Locale.ROOT));
 
         }};
 
@@ -268,6 +270,10 @@ public class Config {
                         .comment("Number of units for each health")
                         .translation(TAG + UNITS_PER_HEALTH_TAG)
                         .defineInRange(UNITS_PER_HEALTH_TAG, 1, 1, 65535);
+                MOB_SHARD_KILLS = builder
+                        .comment("Number of kills to program the shard")
+                        .translation(TAG + MOB_SHARD_KILLS_TAG)
+                        .defineInRange(MOB_SHARD_KILLS_TAG, 5, 1, 65535);
 
                 TIER_1_MAX_UNITS = builder
                         .comment("Max units for a tier 1 mob")
@@ -460,7 +466,7 @@ public class Config {
             return getIntValueForUpgrade(upgradeType, level);
         } else {
             String key = getTag(upgradeType, level);
-            if (key != "" && intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(key))
+            if (key != "" && hasIntValueByString(fakeMob, key))
                 return intMappings.get(fakeMob).get(key);
             else
                 return getIntValueForUpgrade(upgradeType, level);
@@ -468,13 +474,15 @@ public class Config {
     }
 
     public static boolean hasIntValueByString(FakeMob fakeMob, String key) {
-        return intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(key);
+        String lookupKey = key.toLowerCase();
+        return intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(lookupKey);
     }
 
     public static int getIntValueByString(FakeMob fakeMob, String key) {
-        if (!hasIntValueByString(fakeMob, key))
+        String lookupKey = key.toLowerCase();
+        if (!hasIntValueByString(fakeMob, lookupKey))
             return -1;
-        return intMappings.get(fakeMob).get(key);
+        return intMappings.get(fakeMob).get(lookupKey);
     }
 
     static String getTag(FactoryUpgradeType type, int level) {
@@ -510,8 +518,8 @@ public class Config {
     public static Tier getMobTier(FakeMob fakeMob, World world) {
 
         Tier tier;
-        if (intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(COMMON.MOB_TIER_TAG)) {
-            int v = intMappings.get(fakeMob).get(COMMON.MOB_TIER_TAG);
+        if (hasIntValueByString(fakeMob, COMMON.MOB_TIER_TAG)) {
+            int v = getIntValueByString(fakeMob, COMMON.MOB_TIER_TAG);
             v = MathHelper.clamp(v, 1, Tier.getMaxTier());
             tier = Tier.byIndex(v);
         } else {
@@ -523,6 +531,14 @@ public class Config {
             else tier = Tier.TIER_5;
         }
         return tier;
+    }
+
+    public static int getMobShardKills(FakeMob fakeMob) {
+
+        if (hasIntValueByString(fakeMob, COMMON.MOB_SHARD_KILLS_TAG))
+            return getIntValueByString(fakeMob, COMMON.MOB_SHARD_KILLS_TAG);
+
+        return Config.COMMON.MOB_SHARD_KILLS.get();
     }
 
     /**

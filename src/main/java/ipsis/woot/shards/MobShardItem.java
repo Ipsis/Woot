@@ -159,7 +159,11 @@ public class MobShardItem extends WootItem {
     private static boolean isFull(ItemStack itemStack) {
 
         int killCount = itemStack.getTag().getInt(NBT_KILLS);
-        return killCount >= 5;
+        FakeMob fakeMob = getProgrammedMob(itemStack);
+        if (!fakeMob.isValid())
+            return false;
+
+        return killCount >= Config.getMobShardKills(fakeMob);
     }
 
     public static boolean isFullyProgrammed(ItemStack itemStack) {
@@ -199,7 +203,7 @@ public class MobShardItem extends WootItem {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.1"));
         } else {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.b.0",
-                    killCount, 5));
+                    killCount, Config.getMobShardKills(fakeMob)));
         }
     }
 }

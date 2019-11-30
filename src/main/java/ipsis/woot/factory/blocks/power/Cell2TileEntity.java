@@ -1,6 +1,7 @@
 package ipsis.woot.factory.blocks.power;
 
 import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.mod.ModBlocks;
 
 public class Cell2TileEntity extends CellTileEntityBase {
@@ -11,11 +12,11 @@ public class Cell2TileEntity extends CellTileEntityBase {
 
     @Override
     int getCapacity() {
-        return Config.COMMON.CELL_2_CAPACITY.get();
+        return WootConfig.get().getIntConfig(WootConfig.ConfigKey.CELL_2_CAPACITY);
     }
 
     @Override
     int getMaxTransfer() {
-        return Config.COMMON.CELL_2_MAX_TRANSFER.get();
+        return WootConfig.get().getIntConfig(WootConfig.ConfigKey.CELL_2_MAX_TRANSFER);
     }
 }

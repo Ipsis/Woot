@@ -16,6 +16,7 @@ public class WootCommand {
                 .then(LootCommand.register())
                 .then(SimulationCommand.register())
                 .then(GiveCommand.register())
+                .then(ConfigCommand.register())
         );
     }
 }

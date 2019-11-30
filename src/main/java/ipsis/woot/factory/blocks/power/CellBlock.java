@@ -1,6 +1,7 @@
 package ipsis.woot.factory.blocks.power;
 
 import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryComponentProvider;
@@ -68,11 +69,11 @@ public class CellBlock extends WootBlock implements WootDebug, FactoryComponentP
         super.addInformation(stack, worldIn, tooltip, flagIn);
         int capacity = 0;
         if (stack.getItem() == Item.getItemFromBlock(ModBlocks.CELL_1_BLOCK))
-            capacity = Config.COMMON.CELL_1_CAPACITY.get();
+            capacity = WootConfig.get().getIntConfig(WootConfig.ConfigKey.CELL_1_CAPACITY);
         else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.CELL_2_BLOCK))
-            capacity = Config.COMMON.CELL_2_CAPACITY.get();
+            capacity = WootConfig.get().getIntConfig(WootConfig.ConfigKey.CELL_2_CAPACITY);
         else if (stack.getItem() == Item.getItemFromBlock(ModBlocks.CELL_3_BLOCK))
-            capacity = Config.COMMON.CELL_3_CAPACITY.get();
+            capacity = WootConfig.get().getIntConfig(WootConfig.ConfigKey.CELL_3_CAPACITY);
 
         int contents = 0;
         CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");

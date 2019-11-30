@@ -1,6 +1,8 @@
 package ipsis.woot.factory;
 
 import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.ConfigHelper;
+import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.factory.blocks.ControllerTileEntity;
 import ipsis.woot.factory.blocks.UpgradeTileEntity;
 import ipsis.woot.factory.layout.Layout;
@@ -36,17 +38,17 @@ public class Setup {
 
     public int getMaxMobCount() {
         if (maxMobCount == -1) {
-            int mobCount = Config.COMMON.MASS_COUNT.get(); // no ugrades
+            int mobCount = WootConfig.get().getIntConfig(WootConfig.ConfigKey.MASS_COUNT); // upgrades
             int level = 0;
             if (upgrades.containsKey(FactoryUpgradeType.MASS)) {
                 level = upgrades.get(FactoryUpgradeType.MASS);
-                mobCount = Config.getIntValueForUpgrade(FactoryUpgradeType.MASS, level);
+                mobCount = ConfigHelper.getIntValueForFactoryUpgrade(FactoryUpgradeType.MASS, level);
             }
 
             for (FakeMob mob : mobs) {
-                int count = Config.getIntValueForUpgrade(mob, FactoryUpgradeType.MASS, 0);
+                int count = WootConfig.get().getIntConfig(mob, WootConfig.ConfigKey.MASS_COUNT);
                 if (upgrades.containsKey(FactoryUpgradeType.MASS))
-                    count = Config.getIntValueForUpgrade(mob, FactoryUpgradeType.MASS, level);
+                    count = ConfigHelper.getIntValueForFactoryUpgrade(mob, FactoryUpgradeType.MASS, level);
 
                 // Smallest mass allowed
                 if (count < mobCount)

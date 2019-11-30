@@ -2,6 +2,7 @@ package ipsis.woot.shards;
 
 import ipsis.woot.common.configuration.Config;
 import ipsis.woot.common.configuration.Policy;
+import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootItem;
@@ -163,7 +164,7 @@ public class MobShardItem extends WootItem {
         if (!fakeMob.isValid())
             return false;
 
-        return killCount >= Config.getMobShardKills(fakeMob);
+        return killCount >= WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.MOB_SHARD_KILLS);
     }
 
     public static boolean isFullyProgrammed(ItemStack itemStack) {
@@ -203,7 +204,7 @@ public class MobShardItem extends WootItem {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.1"));
         } else {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.b.0",
-                    killCount, Config.getMobShardKills(fakeMob)));
+                    killCount, WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.MOB_SHARD_KILLS)));
         }
     }
 }

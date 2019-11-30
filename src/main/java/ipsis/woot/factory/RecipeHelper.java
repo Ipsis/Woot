@@ -1,6 +1,8 @@
 package ipsis.woot.factory;
 
 import ipsis.woot.common.configuration.Config;
+import ipsis.woot.common.configuration.ConfigHelper;
+import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.factory.blocks.heart.HeartTileEntity;
 import ipsis.woot.simulation.SpawnController;
 import ipsis.woot.util.FakeMob;
@@ -28,11 +30,11 @@ public class RecipeHelper {
         }
 
         // Get the longest tick count
-        int masterTicks =  Config.COMMON.SPAWN_TICKS.get();
+        int masterTicks =  WootConfig.get().getIntConfig(WootConfig.ConfigKey.SPAWN_TICKS);
         int masterMobCount = setup.getMaxMobCount();
         if (setup.upgrades.containsKey(FactoryUpgradeType.MASS)) {
             int level = setup.upgrades.get(FactoryUpgradeType.MASS);
-            masterMobCount = Config.getIntValueForUpgrade(FactoryUpgradeType.MASS, level);
+            masterMobCount = ConfigHelper.getIntValueForFactoryUpgrade(FactoryUpgradeType.MASS, level);
         }
         for (MobConfig m : mobs) {
             if (m.spawnTicks > masterTicks)
@@ -63,18 +65,13 @@ public class RecipeHelper {
         private MobConfig() {}
         public MobConfig(FakeMob fakeMob, Setup setup, World world) {
             this.fakeMob = fakeMob;
-            if (Config.hasIntValueByString(fakeMob, Config.COMMON.SPAWN_TICKS_TAG))
-                spawnTicks = Config.getIntValueByString(fakeMob, Config.COMMON.SPAWN_TICKS_TAG);
-            else
-                spawnTicks = Config.COMMON.SPAWN_TICKS.get();
+            spawnTicks = WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.SPAWN_TICKS);
             health = SpawnController.get().getMobHealth(fakeMob, world);
-            mass = Config.getIntValueForUpgrade(fakeMob,
+            mass = ConfigHelper.getIntValueForFactoryUpgrade(
+                    fakeMob,
                     FactoryUpgradeType.MASS,
                     setup.getUpgrades().getOrDefault(FactoryUpgradeType.MASS, 0));
-            if (Config.hasIntValueByString(fakeMob, Config.COMMON.UNITS_PER_HEALTH_TAG))
-                units_per_health = Config.getIntValueByString(fakeMob, Config.COMMON.UNITS_PER_HEALTH_TAG);
-            else
-                units_per_health = Config.COMMON.UNITS_PER_HEALTH.get();
+            units_per_health = WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.UNITS_PER_HEALTH);
         }
 
         public int getCost() {

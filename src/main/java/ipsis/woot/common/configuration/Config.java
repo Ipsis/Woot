@@ -1,11 +1,6 @@
 package ipsis.woot.common.configuration;
 
-import ipsis.woot.factory.FactoryUpgradeType;
-import ipsis.woot.factory.Tier;
-import ipsis.woot.simulation.SpawnController;
 import ipsis.woot.util.FakeMob;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,6 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+
+/**
+ * Woot has config values that can have an override for specific mobs.
+ * Therefore configuration should not be pulled from here but from
+ *
+ * WootConfig and
+ * ConfigHelper
+ */
 
 public class Config {
 
@@ -25,7 +28,8 @@ public class Config {
         public final IntValue SIMULATION_TICKS_PER_SIM_TICK;
         public final IntValue SIMULATION_CELLS_PER_SIM_TICK;
         public final ForgeConfigSpec.BooleanValue TICK_ACCEL;
-        public final ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
+
+        private final ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
         public final ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_FULL_MOD;
         public final ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_ENTITY;
         public final ForgeConfigSpec.ConfigValue<List<String>> LEARN_BLACKLIST_FULL_MOD;
@@ -35,20 +39,21 @@ public class Config {
         public final ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_FULL_MOD;
         public final ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_ENTITY;
 
-        public final IntValue MASS_COUNT;
-        public final IntValue SPAWN_TICKS;
-        public final IntValue UNITS_PER_HEALTH;
-        public final IntValue MOB_SHARD_KILLS;
-        public final IntValue TIER_1_MAX_UNITS;
-        public final IntValue TIER_2_MAX_UNITS;
-        public final IntValue TIER_3_MAX_UNITS;
-        public final IntValue TIER_4_MAX_UNITS;
-        public final IntValue TIER_5_MAX_UNITS;
-        public final IntValue TIER_1_UNITS_PER_TICK;
-        public final IntValue TIER_2_UNITS_PER_TICK;
-        public final IntValue TIER_3_UNITS_PER_TICK;
-        public final IntValue TIER_4_UNITS_PER_TICK;
-        public final IntValue TIER_5_UNITS_PER_TICK;
+        private final IntValue MASS_COUNT;
+        private final IntValue SPAWN_TICKS;
+        private final IntValue UNITS_PER_HEALTH;
+        private final IntValue MOB_SHARD_KILLS;
+        private final IntValue TIER_1_MAX_UNITS;
+        private final IntValue TIER_2_MAX_UNITS;
+        private final IntValue TIER_3_MAX_UNITS;
+        private final IntValue TIER_4_MAX_UNITS;
+        private final IntValue TIER_5_MAX_UNITS;
+        private final IntValue TIER_1_UNITS_PER_TICK;
+        private final IntValue TIER_2_UNITS_PER_TICK;
+        private final IntValue TIER_3_UNITS_PER_TICK;
+        private final IntValue TIER_4_UNITS_PER_TICK;
+        private final IntValue TIER_5_UNITS_PER_TICK;
+
         public final String MASS_COUNT_TAG = "massCount";
         public final String SPAWN_TICKS_TAG = "spawnTicks";
         public final String MOB_HEALTH_TAG = "mobHealth";
@@ -61,6 +66,7 @@ public class Config {
         public final String TIER_3_MAX_UNITS_TAG = "tier3MaxUnits";
         public final String TIER_4_MAX_UNITS_TAG = "tier4MaxUnits";
         public final String TIER_5_MAX_UNITS_TAG = "tier5MaxUnits";
+
         public final String TIER_1_UNITS_PER_TICK_TAG = "tier1UnitsPerTick";
         public final String TIER_2_UNITS_PER_TICK_TAG = "tier2UnitsPerTick";
         public final String TIER_3_UNITS_PER_TICK_TAG = "tier3UnitsPerTick";
@@ -70,12 +76,13 @@ public class Config {
         /**
          * Cells
          */
-        public final IntValue CELL_1_CAPACITY;
-        public final IntValue CELL_1_MAX_TRANSFER;
-        public final IntValue CELL_2_CAPACITY;
-        public final IntValue CELL_2_MAX_TRANSFER;
-        public final IntValue CELL_3_CAPACITY;
-        public final IntValue CELL_3_MAX_TRANSFER;
+        private final IntValue CELL_1_CAPACITY;
+        private final IntValue CELL_1_MAX_TRANSFER;
+        private final IntValue CELL_2_CAPACITY;
+        private final IntValue CELL_2_MAX_TRANSFER;
+        private final IntValue CELL_3_CAPACITY;
+        private final IntValue CELL_3_MAX_TRANSFER;
+
         public final String CELL_1_CAPACITY_TAG = "cell1Capacity";
         public final String CELL_2_CAPACITY_TAG = "cell2Capacity";
         public final String CELL_3_CAPACITY_TAG = "cell3Capacity";
@@ -86,18 +93,19 @@ public class Config {
         /**
          * Upgrades
          */
-        public final IntValue CAPACITY_1;
-        public final IntValue CAPACITY_2;
-        public final IntValue CAPACITY_3;
-        public final IntValue EFFICIENCY_1;
-        public final IntValue EFFICIENCY_2;
-        public final IntValue EFFICIENCY_3;
-        public final IntValue MASS_COUNT_1;
-        public final IntValue MASS_COUNT_2;
-        public final IntValue MASS_COUNT_3;
-        public final IntValue RATE_1;
-        public final IntValue RATE_2;
-        public final IntValue RATE_3;
+        private final IntValue CAPACITY_1;
+        private final IntValue CAPACITY_2;
+        private final IntValue CAPACITY_3;
+        private final IntValue EFFICIENCY_1;
+        private final IntValue EFFICIENCY_2;
+        private final IntValue EFFICIENCY_3;
+        private final IntValue MASS_COUNT_1;
+        private final IntValue MASS_COUNT_2;
+        private final IntValue MASS_COUNT_3;
+        private final IntValue RATE_1;
+        private final IntValue RATE_2;
+        private final IntValue RATE_3;
+
         public final String CAPACITY_1_TAG = "capacity1ControllerCount";
         public final String CAPACITY_2_TAG = "capacity2ControllerCount";
         public final String CAPACITY_3_TAG = "capacity3ControllerCount";
@@ -112,22 +120,21 @@ public class Config {
         public final String RATE_3_TAG = "rate3Increase";
 
         final List<String> VALID_OVERRIDE_TAGS = new ArrayList<String>(){{
-            add(RATE_1_TAG.toLowerCase(Locale.ROOT));
-            add(RATE_2_TAG.toLowerCase(Locale.ROOT));
-            add(RATE_3_TAG.toLowerCase(Locale.ROOT));
-            add(MASS_COUNT_1_TAG.toLowerCase(Locale.ROOT));
-            add(MASS_COUNT_2_TAG.toLowerCase(Locale.ROOT));
-            add(MASS_COUNT_3_TAG.toLowerCase(Locale.ROOT));
-            add(EFFICIENCY_1_TAG.toLowerCase(Locale.ROOT));
-            add(EFFICIENCY_2_TAG.toLowerCase(Locale.ROOT));
-            add(EFFICIENCY_3_TAG.toLowerCase(Locale.ROOT));
-            add(MASS_COUNT_TAG.toLowerCase(Locale.ROOT));
-            add(SPAWN_TICKS_TAG.toLowerCase(Locale.ROOT));
-            add(MOB_HEALTH_TAG.toLowerCase(Locale.ROOT));
-            add(UNITS_PER_HEALTH_TAG.toLowerCase(Locale.ROOT));
-            add(MOB_TIER_TAG.toLowerCase(Locale.ROOT));
-            add(MOB_SHARD_KILLS_TAG.toLowerCase(Locale.ROOT));
-
+            add(RATE_1_TAG);
+            add(RATE_2_TAG);
+            add(RATE_3_TAG);
+            add(MASS_COUNT_1_TAG);
+            add(MASS_COUNT_2_TAG);
+            add(MASS_COUNT_3_TAG);
+            add(EFFICIENCY_1_TAG);
+            add(EFFICIENCY_2_TAG);
+            add(EFFICIENCY_3_TAG);
+            add(MASS_COUNT_TAG);
+            add(SPAWN_TICKS_TAG);
+            add(MOB_HEALTH_TAG);
+            add(UNITS_PER_HEALTH_TAG);
+            add(MOB_TIER_TAG);
+            add(MOB_SHARD_KILLS_TAG);
         }};
 
         Common(ForgeConfigSpec.Builder builder) {
@@ -421,138 +428,6 @@ public class Config {
         COMMON = specPair.getLeft();
     }
 
-    /**
-     * Access config values that might have mob specific versions
-     * Access config values for upgrades
-     * Access the other values directly
-     */
-    public static int getIntValueForUpgrade(FactoryUpgradeType upgradeType, int level) {
-        level = MathHelper.clamp(level, 0, 3);
-        if (upgradeType == FactoryUpgradeType.CAPACITY) {
-            if (level == 0) return 1;
-            else if (level == 1) return COMMON.CAPACITY_1.get();
-            else if (level == 2) return COMMON.CAPACITY_2.get();
-            else if (level == 3) return COMMON.CAPACITY_3.get();
-        } else if (upgradeType == FactoryUpgradeType.EFFICIENCY) {
-            if (level == 0) return 0;
-            else if (level == 1) return COMMON.EFFICIENCY_1.get();
-            else if (level == 2) return COMMON.EFFICIENCY_2.get();
-            else if (level == 3) return COMMON.EFFICIENCY_3.get();
-        } else if (upgradeType == FactoryUpgradeType.LOOTING) {
-            return level;
-        } else if (upgradeType == FactoryUpgradeType.MASS) {
-            if (level == 0) return COMMON.MASS_COUNT.get();
-            else if (level == 1) return COMMON.MASS_COUNT_1.get();
-            else if (level == 2) return COMMON.MASS_COUNT_2.get();
-            else if (level == 3) return COMMON.MASS_COUNT_3.get();
-        } else if (upgradeType == FactoryUpgradeType.RATE) {
-            if (level == 0) return 0;
-            else if (level == 1) return COMMON.RATE_1.get();
-            else if (level == 2) return COMMON.RATE_2.get();
-            else if (level == 3) return COMMON.RATE_3.get();
-        } else if (upgradeType == FactoryUpgradeType.XP) {
-
-        }
-        return 1;
-    }
-
-    public static int getIntValueForUpgrade(FakeMob fakeMob, FactoryUpgradeType upgradeType, int level) {
-        level = MathHelper.clamp(level, 0, 3);
-        if (!fakeMob.isValid())
-            return getIntValueForUpgrade(upgradeType, level);
-
-        if (upgradeType == FactoryUpgradeType.CAPACITY || upgradeType == FactoryUpgradeType.LOOTING) {
-            // Cannot override capacity
-            return getIntValueForUpgrade(upgradeType, level);
-        } else {
-            String key = getTag(upgradeType, level);
-            if (key != "" && hasIntValueByString(fakeMob, key))
-                return intMappings.get(fakeMob).get(key);
-            else
-                return getIntValueForUpgrade(upgradeType, level);
-        }
-    }
-
-    public static boolean hasIntValueByString(FakeMob fakeMob, String key) {
-        String lookupKey = key.toLowerCase();
-        return intMappings.containsKey(fakeMob) && intMappings.get(fakeMob).containsKey(lookupKey);
-    }
-
-    public static int getIntValueByString(FakeMob fakeMob, String key) {
-        String lookupKey = key.toLowerCase();
-        if (!hasIntValueByString(fakeMob, lookupKey))
-            return -1;
-        return intMappings.get(fakeMob).get(lookupKey);
-    }
-
-    static String getTag(FactoryUpgradeType type, int level) {
-        level = MathHelper.clamp(level, 0, 3);
-        if (type == FactoryUpgradeType.CAPACITY) {
-            if (level == 0) return "";
-            else if (level == 1) return COMMON.CAPACITY_1_TAG;
-            else if (level == 2) return COMMON.CAPACITY_2_TAG;
-            else if (level == 3) return COMMON.CAPACITY_3_TAG;
-        } else if (type == FactoryUpgradeType.EFFICIENCY) {
-            if (level == 0) return "";
-            else if (level == 1) return COMMON.EFFICIENCY_1_TAG;
-            else if (level == 2) return COMMON.EFFICIENCY_2_TAG;
-            else if (level == 3) return COMMON.EFFICIENCY_3_TAG;
-        } else if (type == FactoryUpgradeType.LOOTING) {
-            return "";
-        } else if (type == FactoryUpgradeType.MASS) {
-            if (level == 0) return "";
-            else if (level == 1) return COMMON.MASS_COUNT_1_TAG;
-            else if (level == 2) return COMMON.MASS_COUNT_2_TAG;
-            else if (level == 3) return COMMON.MASS_COUNT_3_TAG;
-        } else if (type == FactoryUpgradeType.RATE) {
-            if (level == 0) return "";
-            else if (level == 1) return COMMON.RATE_1_TAG;
-            else if (level == 2) return COMMON.RATE_2_TAG;
-            else if (level == 3) return COMMON.RATE_3_TAG;
-        } else if (type == FactoryUpgradeType.XP) {
-            return "";
-        }
-        return "";
-    }
-
-    public static Tier getMobTier(FakeMob fakeMob, World world) {
-
-        Tier tier;
-        if (hasIntValueByString(fakeMob, COMMON.MOB_TIER_TAG)) {
-            int v = getIntValueByString(fakeMob, COMMON.MOB_TIER_TAG);
-            v = MathHelper.clamp(v, 1, Tier.getMaxTier());
-            tier = Tier.byIndex(v);
-        } else {
-            int health = SpawnController.get().getMobHealth(fakeMob, world);
-            if (health <= Config.COMMON.TIER_1_MAX_UNITS.get()) tier = Tier.TIER_1;
-            else if (health <= Config.COMMON.TIER_2_MAX_UNITS.get()) tier = Tier.TIER_2;
-            else if (health <= Config.COMMON.TIER_3_MAX_UNITS.get()) tier = Tier.TIER_3;
-            else if (health <= Config.COMMON.TIER_4_MAX_UNITS.get()) tier = Tier.TIER_4;
-            else tier = Tier.TIER_5;
-        }
-        return tier;
-    }
-
-    public static int getMobShardKills(FakeMob fakeMob) {
-
-        if (hasIntValueByString(fakeMob, COMMON.MOB_SHARD_KILLS_TAG))
-            return getIntValueByString(fakeMob, COMMON.MOB_SHARD_KILLS_TAG);
-
-        return Config.COMMON.MOB_SHARD_KILLS.get();
-    }
-
-    /**
-     * Mob specific config
-     */
-    static HashMap<FakeMob, HashMap<String, Integer>> intMappings = new HashMap<>();
-    static void addIntMapping(FakeMob fakeMob, String key, int value) {
-        if (!intMappings.containsKey(fakeMob))
-            intMappings.put(fakeMob, new HashMap<>());
-        HashMap<String, Integer> map = intMappings.get(fakeMob);
-        map.put(key, value);
-        LOGGER.debug("Added mapping {}:{} -> {}", fakeMob, key, value);
-    }
-
     public static void loadFromConfig() {
 
         LOGGER.debug("Loading configuration");
@@ -562,13 +437,15 @@ public class Config {
                 LOGGER.error(s + " == INVALID");
             } else {
                 String mob = parts[0];
-                String param = parts[1].toLowerCase(Locale.ROOT);
+                String param = parts[1];
                 if (COMMON.VALID_OVERRIDE_TAGS.contains(param)) {
                     try {
                         int v = Integer.valueOf(parts[2]);
                         FakeMob fakeMob = new FakeMob(mob);
-                        if (fakeMob.isValid())
-                            addIntMapping(fakeMob, param, v);
+                        if (fakeMob.isValid()) {
+                            MobOverride.get().addIntOverride(fakeMob, WootConfig.ConfigKey.getByString(param), v);
+                            //addIntMapping(fakeMob, param, v);
+                        }
                         else
                             LOGGER.error(s + " == INVALID (invalid mob)");
                     } catch (NumberFormatException e) {
@@ -580,6 +457,45 @@ public class Config {
             }
         }
         Policy.get().loadFromConfig();
+
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_COUNT, Config.COMMON.MASS_COUNT.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.SPAWN_TICKS, Config.COMMON.SPAWN_TICKS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MOB_SHARD_KILLS, Config.COMMON.MOB_SHARD_KILLS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.UNITS_PER_HEALTH, Config.COMMON.UNITS_PER_HEALTH.get());
+        // MOB_TIER is an override or calculated, never a default value
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_1_MAX_UNITS, Config.COMMON.TIER_1_MAX_UNITS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_2_MAX_UNITS, Config.COMMON.TIER_2_MAX_UNITS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_3_MAX_UNITS, Config.COMMON.TIER_3_MAX_UNITS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_4_MAX_UNITS, Config.COMMON.TIER_4_MAX_UNITS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_5_MAX_UNITS, Config.COMMON.TIER_5_MAX_UNITS.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_1_UNITS_PER_TICK, Config.COMMON.TIER_1_UNITS_PER_TICK.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_2_UNITS_PER_TICK, Config.COMMON.TIER_2_UNITS_PER_TICK.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_3_UNITS_PER_TICK, Config.COMMON.TIER_3_UNITS_PER_TICK.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_4_UNITS_PER_TICK, Config.COMMON.TIER_4_UNITS_PER_TICK.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.TIER_5_UNITS_PER_TICK, Config.COMMON.TIER_5_UNITS_PER_TICK.get());
+
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CELL_1_CAPACITY, Config.COMMON.CELL_1_CAPACITY.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CELL_2_CAPACITY, Config.COMMON.CELL_2_CAPACITY.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CELL_3_CAPACITY, Config.COMMON.CELL_3_CAPACITY.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CELL_1_MAX_TRANSFER, Config.COMMON.CELL_1_MAX_TRANSFER.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CELL_2_MAX_TRANSFER, Config.COMMON.CELL_2_MAX_TRANSFER.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CELL_3_MAX_TRANSFER, Config.COMMON.CELL_3_MAX_TRANSFER.get());
+
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CAPACITY_1, Config.COMMON.CAPACITY_1.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CAPACITY_2, Config.COMMON.CAPACITY_2.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.CAPACITY_3, Config.COMMON.CAPACITY_3.get());
+
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.EFFICIENCY_1, Config.COMMON.EFFICIENCY_1.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.EFFICIENCY_2, Config.COMMON.EFFICIENCY_2.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.EFFICIENCY_3, Config.COMMON.EFFICIENCY_3.get());
+
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_1, Config.COMMON.MASS_COUNT_1.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_2, Config.COMMON.MASS_COUNT_2.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_3, Config.COMMON.MASS_COUNT_3.get());
+
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.RATE_1, Config.COMMON.RATE_1.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.RATE_2, Config.COMMON.RATE_2.get());
+        WootConfig.get().putIntConfig(WootConfig.ConfigKey.RATE_3, Config.COMMON.RATE_3.get());
     }
 
 }

@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import ipsis.woot.Woot;
+import ipsis.woot.common.configuration.Config;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.loot.MobDrop;
 import ipsis.woot.util.FakeMob;
@@ -77,7 +78,7 @@ public class LootCommand {
         FakeMob fakeMob = new FakeMob(entityKey);
         List<Integer> status = DropRegistry.get().getLearningStatus(fakeMob);
         cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.learned.summary",
-                1000, status.get(0), status.get(1), status.get(2), status.get(3)), true);
+                Config.COMMON.SIMULATION_MOB_COUNT, status.get(0), status.get(1), status.get(2), status.get(3)), true);
         return 0;
     }
 }

@@ -2,7 +2,6 @@ package ipsis.woot.simulation.spawning;
 
 import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.helper.FakeMobHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.MagmaCubeEntity;
 import net.minecraft.world.World;
@@ -24,7 +23,8 @@ public class MagmaCubeSpawner extends AbstractMobSpawner {
                     "setSlimeSize",
                     int.class,
                     boolean.class);
-            if (FakeMobHelper.isSmallMagmaCube(fakeMob))
+
+            if (fakeMob.isSmallMagmaCube())
                 method.invoke(livingEntity, 1, false);
             else
                 method.invoke(livingEntity, 2, false);

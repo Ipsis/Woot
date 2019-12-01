@@ -1,7 +1,6 @@
 package ipsis.woot.simulation.spawning;
 
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.helper.FakeMobHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -15,7 +14,7 @@ public class ChargedCreeperSpawner extends AbstractMobSpawner {
         if (!(livingEntity instanceof CreeperEntity))
             return;
 
-        if (FakeMobHelper.isChargedCreeper(fakeMob))
+        if (fakeMob.isChargedCreeper())
             livingEntity.onStruckByLightning(new LightningBoltEntity(world,
                         livingEntity.getPosition().getX(),
                         livingEntity.getPosition().getY(),

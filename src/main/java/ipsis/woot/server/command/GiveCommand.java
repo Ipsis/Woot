@@ -1,5 +1,6 @@
 package ipsis.woot.server.command;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import ipsis.woot.factory.blocks.ControllerTileEntity;
@@ -29,18 +30,33 @@ public class GiveCommand {
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("give")
                 .requires(cs -> cs.hasPermissionLevel(0))
-                .then(Commands.argument("target", EntityArgument.player())
-                        .then(Commands.argument("entity", ResourceLocationArgument.resourceLocation())
-                                .suggests(ENTITY_SUGGESTIONS)
-                                .executes(ctx -> giveItem(
+                .then(
+                        Commands.argument("target", EntityArgument.player())
+                        .then(
+                                Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
+                                    .executes(ctx -> giveItem(
                                         ctx.getSource(),
                                         EntityArgument.getPlayer(ctx, "target"),
-                                        ResourceLocationArgument.getResourceLocation(ctx, "entity")))));
+                                        ResourceLocationArgument.getResourceLocation(ctx, "entity"), ""))
+                                .then(
+                                        Commands.argument("tag", StringArgumentType.string())
+                                                .executes(ctx -> giveItem(
+                                                        ctx.getSource(),
+                                                        EntityArgument.getPlayer(ctx, "target"),
+                                                        ResourceLocationArgument.getResourceLocation(ctx, "entity"),
+                                                        StringArgumentType.getString(ctx, "tag")))
+                                )
+                        )
+                );
     }
 
-    private static int giveItem(CommandSource source, ServerPlayerEntity target, ResourceLocation resourceLocation) {
+    private static int giveItem(CommandSource source, ServerPlayerEntity target, ResourceLocation resourceLocation, String tag) {
 
-        FakeMob fakeMob = new FakeMob(resourceLocation.toString());
+        FakeMob fakeMob = new FakeMob();
+        if (tag.equalsIgnoreCase(""))
+            fakeMob = new FakeMob(resourceLocation.toString());
+        else
+            fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
         if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             ItemStack itemStack = ControllerTileEntity.getItemStack(fakeMob);
 

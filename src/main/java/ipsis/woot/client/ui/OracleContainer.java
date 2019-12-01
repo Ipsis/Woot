@@ -53,7 +53,7 @@ public class OracleContainer extends Container {
 
     public void refreshDrops(FakeMob fakeMob) {
         NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.SIMULATED_MOB_DROPS,
-                getPos(), fakeMob.getEntityKey()));
+                getPos(), fakeMob.getName()));
         simulatedDrops = null;
     }
 

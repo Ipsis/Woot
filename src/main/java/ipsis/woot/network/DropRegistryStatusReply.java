@@ -53,7 +53,7 @@ public class DropRegistryStatusReply {
         buf.writeInt(knownMobs.size());
         for (FakeMob fakeMob : knownMobs) {
             List<Integer> simulationCounts = DropRegistry.get().getLearningStatus(fakeMob);
-            NetworkTools.writeString(buf, fakeMob.getEntityKey());
+            NetworkTools.writeString(buf, fakeMob.getName());
             buf.writeInt(simulationCounts.get(0)); // no looting
             buf.writeBoolean(DropRegistry.get().isLearningFinished(new FakeMobKey(fakeMob, 0), Config.COMMON.SIMULATION_MOB_COUNT.get()));
             buf.writeInt(simulationCounts.get(1)); // looting 1

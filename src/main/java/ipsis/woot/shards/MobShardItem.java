@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -119,7 +120,7 @@ public class MobShardItem extends WootItem {
         if (!programmedMob.isValid())
             return false;
 
-        return programmedMob.getEntityKey().equals(fakeMob.getEntityKey());
+        return programmedMob.equals(fakeMob);
     }
 
     public static void handleKill(PlayerEntity playerEntity, FakeMob fakeMob) {
@@ -198,6 +199,8 @@ public class MobShardItem extends WootItem {
         EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
         if (entityType != null)
             tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
+        if (fakeMob.hasTag())
+            tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
 
         int killCount = stack.getTag().getInt(NBT_KILLS);
         if (isFull(stack)) {

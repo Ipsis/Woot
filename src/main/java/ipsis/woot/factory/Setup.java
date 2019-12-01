@@ -79,7 +79,7 @@ public class Setup {
                 if (te instanceof ControllerTileEntity) {
                     FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
                     if (fakeMob.isValid())
-                        setup.mobs.add(new FakeMob(fakeMob.getEntityKey(), fakeMob.getTag()));
+                        setup.mobs.add(new FakeMob(fakeMob));
                 }
             } else if (pb.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
                 TileEntity te = world.getTileEntity(pb.getBlockPos());

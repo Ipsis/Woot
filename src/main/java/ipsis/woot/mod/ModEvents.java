@@ -88,6 +88,8 @@ public class ModEvents {
         MobShardItem.handleKill(killer, fakeMob);
     }
 
+    private static final long MULTI_BLOCK_TRACKER_DELAY = 20;
+    private static long lastWorldTick = 0;
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.phase == TickEvent.Phase.START)
@@ -95,7 +97,10 @@ public class ModEvents {
 
         Dimension dimension = event.world.getDimension();
         if (dimension.getType() != ModDimensions.tartarusDimensionType) {
-            MultiBlockTracker.get().run(event.world);
+            if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
+                lastWorldTick += MULTI_BLOCK_TRACKER_DELAY;
+                MultiBlockTracker.get().run(event.world);
+            }
         } else {
             MobSimulator.get().tick(event.world);
         }

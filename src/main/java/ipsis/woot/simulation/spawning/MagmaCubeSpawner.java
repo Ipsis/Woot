@@ -5,9 +5,6 @@ import ipsis.woot.util.FakeMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.MagmaCubeEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
-import java.lang.reflect.Method;
 
 public class MagmaCubeSpawner extends AbstractMobSpawner {
 
@@ -17,19 +14,13 @@ public class MagmaCubeSpawner extends AbstractMobSpawner {
         if (!(livingEntity instanceof MagmaCubeEntity))
             return;
 
-        try {
-            Method method = ObfuscationReflectionHelper.findMethod(
-                    MagmaCubeEntity.class,
-                    "setSlimeSize",
-                    int.class,
-                    boolean.class);
-
-            if (fakeMob.isSmallMagmaCube())
-                method.invoke(livingEntity, 1, false);
-            else
-                method.invoke(livingEntity, 2, false);
-        } catch (Throwable e) {
-            Woot.LOGGER.error("Reflection MagmaCubeEntity.setSlimeSize failed");
+        MagmaCubeEntity magmaCubeEntity = (MagmaCubeEntity)livingEntity;
+        if (fakeMob.isSmallMagmaCube()) {
+            magmaCubeEntity.setSlimeSize(1, false);
+            Woot.LOGGER.debug("SlimeSpawner: set size to small {}", magmaCubeEntity.getSlimeSize());
+        } else {
+            magmaCubeEntity.setSlimeSize(2, false);
+            Woot.LOGGER.debug("SlimeSpawner: set size to small {}", magmaCubeEntity.getSlimeSize());
         }
     }
 }

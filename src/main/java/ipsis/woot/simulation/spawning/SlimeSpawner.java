@@ -5,9 +5,6 @@ import ipsis.woot.util.FakeMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
-import java.lang.reflect.Method;
 
 public class SlimeSpawner extends AbstractMobSpawner {
 
@@ -17,18 +14,13 @@ public class SlimeSpawner extends AbstractMobSpawner {
         if (!(livingEntity instanceof SlimeEntity))
             return;
 
-        try {
-            Method method = ObfuscationReflectionHelper.findMethod(
-                    SlimeEntity.class,
-                    "setSlimeSize",
-                    int.class, boolean.class);
-
-            if (fakeMob.isSmallSlime())
-                method.invoke(livingEntity, 1, false);
-            else
-                method.invoke(livingEntity, 2, false);
-        } catch (Throwable e) {
-            Woot.LOGGER.error("Reflection SlimeEntity.setSlimeSize failed");
+        SlimeEntity slimeEntity = (SlimeEntity)livingEntity;
+        if (fakeMob.isSmallSlime()) {
+            slimeEntity.setSlimeSize(1, false);
+            Woot.LOGGER.debug("SlimeSpawner: set size to small {}", slimeEntity.getSlimeSize());
+        } else {
+            slimeEntity.setSlimeSize(2, false);
+            Woot.LOGGER.debug("SlimeSpawner: set size to small {}", slimeEntity.getSlimeSize());
         }
     }
 }

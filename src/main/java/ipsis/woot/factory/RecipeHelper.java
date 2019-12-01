@@ -1,10 +1,9 @@
 package ipsis.woot.factory;
 
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.common.configuration.ConfigHelper;
 import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.factory.blocks.heart.HeartTileEntity;
-import ipsis.woot.simulation.SpawnController;
+import ipsis.woot.simulation.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;

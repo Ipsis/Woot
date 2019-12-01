@@ -3,7 +3,7 @@ package ipsis.woot.server.command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import ipsis.woot.factory.blocks.ControllerTileEntity;
-import ipsis.woot.simulation.SpawnController;
+import ipsis.woot.simulation.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;

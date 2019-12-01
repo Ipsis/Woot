@@ -2,7 +2,7 @@ package ipsis.woot.common.configuration;
 
 import ipsis.woot.factory.FactoryUpgradeType;
 import ipsis.woot.factory.Tier;
-import ipsis.woot.simulation.SpawnController;
+import ipsis.woot.simulation.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;

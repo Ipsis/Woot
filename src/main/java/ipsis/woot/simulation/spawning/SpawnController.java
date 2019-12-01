@@ -1,7 +1,7 @@
-package ipsis.woot.simulation;
+package ipsis.woot.simulation.spawning;
 
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.common.configuration.WootConfig;
+import ipsis.woot.simulation.FakePlayerPool;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;
@@ -40,6 +40,7 @@ public class SpawnController {
             return;
 
         LivingEntity livingEntity = (LivingEntity)entity;
+        CustomSpawnController.get().apply(livingEntity, fakeMobKey.getMob(), world);
 
         if (livingEntity instanceof MobEntity)
             ((MobEntity)entity).onInitialSpawn(world,world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData)null, (CompoundNBT)null);

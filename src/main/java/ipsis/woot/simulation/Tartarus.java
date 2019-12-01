@@ -1,6 +1,7 @@
 package ipsis.woot.simulation;
 
 import ipsis.woot.Woot;
+import ipsis.woot.simulation.spawning.SpawnController;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;

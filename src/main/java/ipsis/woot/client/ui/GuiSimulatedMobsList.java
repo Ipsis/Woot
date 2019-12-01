@@ -69,8 +69,12 @@ public class GuiSimulatedMobsList extends ExtendedList {
       public void render(int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isMouseOver, float partialTicks) {
           String name = "Unknown Mob";
           EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(simulatedMob.fakeMob.getResourceLocation());
-          if (entityType != null)
+          if (entityType != null) {
               name = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+              if (simulatedMob.fakeMob.hasTag())
+                  name = name + " [" + simulatedMob.fakeMob.getTag() + "]";
+          }
+
           FontRenderer font = this.oracleScreen.getFontRenderer();
           font.drawString(font.trimStringToWidth(name, listWidth),
                   left + 3,

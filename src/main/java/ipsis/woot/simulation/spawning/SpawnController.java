@@ -1,5 +1,6 @@
 package ipsis.woot.simulation.spawning;
 
+import ipsis.woot.Woot;
 import ipsis.woot.common.configuration.WootConfig;
 import ipsis.woot.simulation.FakePlayerPool;
 import ipsis.woot.util.FakeMob;
@@ -34,21 +35,22 @@ public class SpawnController {
         if (fakePlayer == null)
             return;
 
-
         Entity entity = createEntity(fakeMobKey.getMob(), world, spawnPos);
-        if (entity == null || !(entity instanceof LivingEntity))
+        if (entity == null || !(entity instanceof MobEntity))
             return;
 
-        LivingEntity livingEntity = (LivingEntity)entity;
-        CustomSpawnController.get().apply(livingEntity, fakeMobKey.getMob(), world);
+        MobEntity mobEntity = (MobEntity)entity;
 
-        if (livingEntity instanceof MobEntity)
-            ((MobEntity)entity).onInitialSpawn(world,world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData)null, (CompoundNBT)null);
+        mobEntity.onInitialSpawn(world,
+                world.getDifficultyForLocation(new BlockPos(entity)),
+                SpawnReason.SPAWNER,
+                null, null);
 
-        livingEntity.recentlyHit = 100;
-        livingEntity.attackingPlayer = fakePlayer;
-        livingEntity.onDeath(DamageSource.causePlayerDamage(fakePlayer));
+        mobEntity.recentlyHit = 100;
+        mobEntity.attackingPlayer = fakePlayer;
 
+        CustomSpawnController.get().apply(mobEntity, fakeMobKey.getMob(), world);
+        mobEntity.onDeath(DamageSource.causePlayerDamage(fakePlayer));
     }
 
     private @Nullable Entity createEntity(@Nonnull FakeMob fakeMob, @Nonnull World world, @Nonnull BlockPos pos) {

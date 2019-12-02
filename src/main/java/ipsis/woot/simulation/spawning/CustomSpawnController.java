@@ -1,7 +1,7 @@
 package ipsis.woot.simulation.spawning;
 
 import ipsis.woot.util.FakeMob;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -20,11 +20,11 @@ public class CustomSpawnController {
         spawnerList.add(new ChargedCreeperSpawner());
     }
 
-    public void apply(LivingEntity livingEntity, FakeMob fakeMob, World world) {
+    public void apply(MobEntity mobEntity, FakeMob fakeMob, World world) {
         if (!fakeMob.isValid() || world == null)
             return;
 
         for (AbstractMobSpawner abstractMobSpawner : spawnerList)
-            abstractMobSpawner.apply(livingEntity, fakeMob, world);
+            abstractMobSpawner.apply(mobEntity, fakeMob, world);
     }
 }

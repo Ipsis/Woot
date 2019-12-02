@@ -65,11 +65,11 @@ public class MobSimulator {
                 DropRegistry.get().learnSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
 
                 if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, Config.COMMON.SIMULATION_MOB_COUNT.get())) {
-                    LOGGER.debug("Finished simulating {}", pupil.fakeMobKey);
+                    LOGGER.debug("MobSimulator:tick finished simulating {}", pupil.fakeMobKey);
                     Tartarus.get().vacateCell(pupil.cellId);
                     iter.remove();
                 } else {
-                    LOGGER.debug("Simulate {}", pupil.fakeMobKey);
+                    LOGGER.debug("MobSimulator:tick continue simulating {}", pupil.fakeMobKey);
                     Tartarus.get().simulateInCell(pupil.cellId, pupil.fakeMobKey, world);
                 }
                 processed++;

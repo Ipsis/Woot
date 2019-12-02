@@ -14,6 +14,7 @@ import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -36,10 +37,14 @@ public class ModEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onLivingDropsEvent(LivingDropsEvent event) {
 
-        if (!(event.getEntity() instanceof LivingEntity))
+        /**
+         * Entity->LivingEntity->MobEntity
+         */
+
+        if (!(event.getEntity() instanceof MobEntity))
             return;
 
-        LivingEntity livingEntity = (LivingEntity)event.getEntity();
+        MobEntity mobEntity = (MobEntity)event.getEntityLiving();
         DamageSource damageSource = event.getSource();
         if (damageSource == null)
             return;
@@ -50,9 +55,8 @@ public class ModEvents {
         // Cancel our fake spawns
         event.setCanceled(true);
 
-        Woot.LOGGER.info("onLivingDropsEvent fake kill {}", event.getDrops());
         List<ItemStack> drops = ItemEntityHelper.convertToItemStacks(event.getDrops());
-        FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob(livingEntity.getEntityString()), event.getLootingLevel());
+        FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob(mobEntity), event.getLootingLevel());
         if (fakeMobKey.getMob().isValid())
             DropRegistry.get().learn(fakeMobKey, drops);
     }

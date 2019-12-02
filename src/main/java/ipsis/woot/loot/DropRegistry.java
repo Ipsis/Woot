@@ -42,6 +42,7 @@ public class DropRegistry {
     }
 
     public void tryLearning(@Nonnull FakeMob fakeMob) {
+        LOGGER.debug("Trying to learn {}", fakeMob);
         for (int looting = 0; looting < 4; looting++) {
             FakeMobKey fakeMobKey = new FakeMobKey(fakeMob, looting);
             if (!isLearningFinished(fakeMobKey, Config.COMMON.SIMULATION_MOB_COUNT.get()))
@@ -91,7 +92,10 @@ public class DropRegistry {
 
     public boolean isLearningFinished(@Nonnull FakeMobKey fakeMobKey, int learningCap) {
         Mob mob = mobs.get(fakeMobKey.getMob());
-        if (mob == null || mob.getSimulatedDropCount(fakeMobKey.getLooting()) < learningCap)
+        if (mob == null)
+            return false;
+
+        if (mob.getSimulatedDropCount(fakeMobKey.getLooting()) < learningCap)
             return false;
 
         return true;
@@ -135,9 +139,13 @@ public class DropRegistry {
         private Mob() {}
         public Mob(FakeMob fakeMob) {
             this.fakeMob = fakeMob;
+            for (int i = 0; i < MAX_LOOTING; i++)
+                simulatedDropEventCount[i] = 0;
         }
 
-        public void incrementSimulatedCount(int looting) { simulatedDropEventCount[looting]++; }
+        public void incrementSimulatedCount(int looting) {
+            simulatedDropEventCount[looting]++;
+        }
 
         public int getSimulatedDropCount(int looting) { return simulatedDropEventCount[looting]; }
 

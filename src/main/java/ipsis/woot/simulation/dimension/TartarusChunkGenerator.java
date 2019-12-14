@@ -5,21 +5,18 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
 
 import java.util.*;
 
-public class TartarusChunkGenerator extends ChunkGenerator<GenerationSettings> {
+public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerator.Config> {
 
-    public TartarusChunkGenerator(IWorld world, BiomeProvider biomeProvider, GenerationSettings generationSettings) {
-        super(world, biomeProvider, generationSettings);
+    public TartarusChunkGenerator(IWorld world, BiomeProvider biomeProvider) {
+        super(world, biomeProvider, Config.createDefault());
     }
 
     private static final int WORK_CHUNK_X = 0;
@@ -111,7 +108,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<GenerationSettings> {
 
     @Override
     public int getGroundHeight() {
-        return 0;
+        return world.getSeaLevel() + 1;
     }
 
     @Override
@@ -120,12 +117,13 @@ public class TartarusChunkGenerator extends ChunkGenerator<GenerationSettings> {
 
     @Override
     public int func_222529_a(int i, int i1, Heightmap.Type type) {
-
         return 0;
     }
 
-    @Override
-    public boolean hasStructure(Biome p_202094_1_, Structure<? extends IFeatureConfig> p_202094_2_) {
-        return false;
+    public static class Config extends GenerationSettings {
+        public static Config createDefault() {
+            Config config = new Config();
+            return config;
+        }
     }
 }

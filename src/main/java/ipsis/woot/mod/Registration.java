@@ -19,6 +19,7 @@ import ipsis.woot.misc.anvil.AnvilTileEntity;
 import ipsis.woot.misc.OracleBlock;
 import ipsis.woot.misc.OracleTileEntity;
 import ipsis.woot.shards.MobShardItem;
+import ipsis.woot.simulation.dimension.TartarusModDimension;
 import ipsis.woot.tools.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -37,6 +38,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static ipsis.woot.mod.ModDimensions.TARTARUS_DIMENSION_ID;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class Registration {
@@ -178,22 +181,8 @@ public class Registration {
     }
 
     @SubscribeEvent
-    public static void registerModDimensions(final RegistryEvent.Register<ModDimension> event) {
-        Woot.LOGGER.info("registerModDimensions");
-        event.getRegistry().register(ModDimensions.tartarusModDimension.setRegistryName(Woot.MODID, "tartarus_dim"));
-        ModDimensions.tartarusDimensionType = DimensionManager.registerDimension(
-                new ResourceLocation(Woot.MODID, "tartarus_simulator"), ModDimensions.tartarusModDimension, null, true);
-        DimensionManager.keepLoaded(ModDimensions.tartarusDimensionType, true);
-    }
-
-    @SubscribeEvent
-    public static void registerDimensions(RegisterDimensionsEvent registerDimensionsEvent) {
+    public static void registerDimensions(final RegistryEvent.Register<ModDimension> event) {
         Woot.LOGGER.info("registerDimensions");
-    }
-
-    @SubscribeEvent
-    public static void registerChunkGeneratorTypes(final RegistryEvent.Register<ChunkGeneratorType<?, ?>> event) {
-        Woot.LOGGER.info("registerChunkGeneratorTypes");
-        event.getRegistry().register(ModDimensions.tartarusChunkGeneratorType.setRegistryName(Woot.MODID, "tartarus_gen"));
+        event.getRegistry().register(new TartarusModDimension().setRegistryName(TARTARUS_DIMENSION_ID));
     }
 }

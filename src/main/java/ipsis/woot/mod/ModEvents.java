@@ -24,6 +24,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig;
@@ -31,6 +32,9 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 import java.util.List;
+
+import static ipsis.woot.mod.ModDimensions.TARTARUS_DIMENSION_ID;
+import static ipsis.woot.mod.ModDimensions.TARTARUS_DIMENSION_TYPE;
 
 public class ModEvents {
 
@@ -100,7 +104,7 @@ public class ModEvents {
             return;
 
         Dimension dimension = event.world.getDimension();
-        if (dimension.getType() != ModDimensions.tartarusDimensionType) {
+        if (dimension.getType() != ModDimensions.TARTARUS_DIMENSION_TYPE) {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
                 lastWorldTick += MULTI_BLOCK_TRACKER_DELAY;
                 MultiBlockTracker.get().run(event.world);
@@ -112,20 +116,32 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onFileChange(final ModConfig.ConfigReloading configEvent) {
+        Woot.LOGGER.info("onFileChange");
     }
 
     @SubscribeEvent
     public void onServerStarting(final FMLServerStartingEvent event) {
+        Woot.LOGGER.info("onServerStarting");
         new WootCommand(event.getCommandDispatcher());
 
         // Force load the simulation world
-        Tartarus.get().setWorld(DimensionManager.getWorld(event.getServer(), ModDimensions.tartarusDimensionType, true, true));
+        Tartarus.get().setWorld(DimensionManager.getWorld(event.getServer(), ModDimensions.TARTARUS_DIMENSION_TYPE, true, true));
     }
 
     @SubscribeEvent
     public void onServerStop(final FMLServerStoppingEvent event) {
-
+        Woot.LOGGER.info("onServerStop");
         JsonObject jsonObject = DropRegistry.get().toJson();
+    }
 
+    @SubscribeEvent
+    public void onDimensionRegistry(final RegisterDimensionsEvent event) {
+        Woot.LOGGER.info("onDimensionRegistry");
+        ModDimensions.TARTARUS_DIMENSION_TYPE = DimensionManager.registerOrGetDimension(
+                TARTARUS_DIMENSION_ID,
+                ModDimensions.TARTARUS,
+                null,
+                true);
+        DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);
     }
 }

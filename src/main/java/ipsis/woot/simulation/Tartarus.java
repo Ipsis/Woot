@@ -58,15 +58,6 @@ public class Tartarus {
         return allocatedCell;
     }
 
-    private ServerWorld serverWorld;
-    public void setWorld(@Nonnull ServerWorld world) {
-        Woot.LOGGER.info("setWorld " + world);
-        this.serverWorld = world;
-
-        // How do we default create this dimension?????
-        //world.setBlockState(new BlockPos(0, 0, 0), SnowyDirtBlock.getStateById(0));
-    }
-
     public void vacateCell(int cellid) {
         if (cellid >= 0 && cellid < NUM_CELLS)
             cells[cellid].vacate();

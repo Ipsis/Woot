@@ -123,9 +123,6 @@ public class ModEvents {
     public void onServerStarting(final FMLServerStartingEvent event) {
         Woot.LOGGER.info("onServerStarting");
         new WootCommand(event.getCommandDispatcher());
-
-        // Force load the simulation world
-        Tartarus.get().setWorld(DimensionManager.getWorld(event.getServer(), ModDimensions.TARTARUS_DIMENSION_TYPE, true, true));
     }
 
     @SubscribeEvent

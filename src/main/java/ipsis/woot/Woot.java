@@ -3,7 +3,8 @@ package ipsis.woot;
 import ipsis.woot.client.AnvilTileEntitySpecialRenderer;
 import ipsis.woot.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.client.ui.OracleScreen;
-import ipsis.woot.client.ui.SqueezerScreen;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
+import ipsis.woot.modules.squeezer.client.SqueezerScreen;
 import ipsis.woot.common.configuration.Config;
 import ipsis.woot.common.configuration.Policy;
 import ipsis.woot.factory.blocks.LayoutTileEntity;
@@ -12,10 +13,10 @@ import ipsis.woot.factory.layout.PatternRepository;
 import ipsis.woot.loot.DropRegistry;
 import ipsis.woot.misc.anvil.AnvilCraftingManagerLoader;
 import ipsis.woot.misc.anvil.AnvilTileEntity;
-import ipsis.woot.misc.squeezer.SqueezerRegistry;
 import ipsis.woot.mod.*;
 import ipsis.woot.network.NetworkChannel;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,7 +26,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,6 +44,8 @@ public class Woot {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.clientSpec);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.commonSpec);
+
+        SqueezerSetup.register();
 
         MinecraftForge.EVENT_BUS.register(new Registration());
         MinecraftForge.EVENT_BUS.register(new ModEvents());
@@ -72,7 +74,7 @@ public class Woot {
         ClientRegistry.bindTileEntitySpecialRenderer(AnvilTileEntity.class, new AnvilTileEntitySpecialRenderer());
         ScreenManager.registerFactory(ModBlocks.HEART_CONTAINER, HeartScreen::new);
         ScreenManager.registerFactory(ModBlocks.ORACLE_CONTAINER, OracleScreen::new);
-        ScreenManager.registerFactory(ModBlocks.SQUEEZER_CONTAINER, SqueezerScreen::new);
+        ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), SqueezerScreen::new);
     }
 
     public static ItemGroup itemGroup = new ItemGroup(MODID) {
@@ -81,5 +83,9 @@ public class Woot {
             return new ItemStack(ModBlocks.CONTROLLER_BLOCK);
         }
     };
+
+    public static Item.Properties createStandardProperties() {
+        return new Item.Properties().group(Woot.itemGroup);
+    }
 
 }

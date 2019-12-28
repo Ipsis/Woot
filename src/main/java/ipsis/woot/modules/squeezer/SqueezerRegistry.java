@@ -1,7 +1,5 @@
-package ipsis.woot.misc.squeezer;
+package ipsis.woot.modules.squeezer;
 
-import ipsis.woot.simulation.spawning.AbstractMobSpawner;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -128,50 +126,4 @@ public class SqueezerRegistry {
         return null;
     }
 
-    /**
-     * Red/Yellow/Blue/White breakdown for each of the standard 16 Minecraft colors
-     * Dye tags are provided by Forge
-     */
-    private static final int LCM = 72;
-    enum DyeMakeup {
-
-        BLACK("black", LCM / 3, LCM / 3, LCM / 3, 0),
-        RED("red", LCM, 0, 0, 0),
-        GREEN("green", 0, LCM / 2, LCM / 2, 0),
-        BROWN("brown", 3 * (LCM / 4), LCM / 8, LCM / 8, 0),
-        BLUE("blue", 0, 0, LCM, 0),
-        PURPLE("purple", LCM / 2, 0, LCM / 2, 0),
-        CYAN("cyan", 0, 0, LCM / 4, 3 * (LCM / 4)),
-        LIGHTGRAY("light_gray", LCM / 9, LCM / 9, LCM / 9, 2 * (LCM / 3)),
-        GRAY("gray", LCM / 6, LCM / 6, LCM / 6, LCM / 2),
-        PINK("pink", LCM / 2, 0, 0, LCM / 2),
-        LIME("lime", 0, LCM / 4, LCM / 4, LCM / 2),
-        YELLOW("yellow", 0, LCM, 0, 0),
-        LIGHTBLUE("light_blue", 0, 0, LCM / 2, LCM / 2),
-        MAGENTA("magenta", LCM / 2, 0, LCM / 4, LCM / 4),
-        ORANGE("orange", LCM / 2, LCM / 2, 0, 0),
-        WHITE("white", 0, 0, 0, LCM);
-
-        private int red;
-        private int yellow;
-        private int blue;
-        private int white;
-        private String tag;
-
-        DyeMakeup(String tag, int red, int yellow, int blue, int white) {
-            this.tag = tag;
-            this.red = red;
-            this.yellow = yellow;
-            this.blue = blue;
-            this.white = white;
-        }
-
-        public int getRed() { return this.red; }
-        public int getYellow() { return this.yellow; }
-        public int getBlue() { return this.blue; }
-        public int getWhite() { return this.white; }
-        public ResourceLocation getForgeTag() { return new ResourceLocation("forge", "dyes/" + this.tag); }
-
-        public static final DyeMakeup[] VALUES = DyeMakeup.values();
-    }
 }

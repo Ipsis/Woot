@@ -1,4 +1,4 @@
-package ipsis.woot.client.datagen;
+package ipsis.woot.datagen;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

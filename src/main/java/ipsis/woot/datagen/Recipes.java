@@ -1,4 +1,4 @@
-package ipsis.woot.client.datagen;
+package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
 import ipsis.woot.mod.ModBlocks;

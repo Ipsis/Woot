@@ -1,8 +1,8 @@
-package ipsis.woot.client.ui;
+package ipsis.woot.modules.squeezer.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
-import ipsis.woot.misc.squeezer.SqueezerContainer;
+import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;

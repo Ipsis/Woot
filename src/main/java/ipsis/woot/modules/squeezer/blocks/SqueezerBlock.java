@@ -1,6 +1,8 @@
-package ipsis.woot.misc.squeezer;
+package ipsis.woot.modules.squeezer.blocks;
 
+import ipsis.woot.modules.squeezer.blocks.SqueezerTileEntity;
 import ipsis.woot.util.WootBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -17,12 +19,10 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class SqueezerBlock extends WootBlock {
-
-    public static final String REGNAME = "squeezer";
+public class SqueezerBlock extends Block {
 
     public SqueezerBlock() {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL), REGNAME);
+        super(Properties.create(Material.IRON).sound(SoundType.METAL));
     }
 
     @Override

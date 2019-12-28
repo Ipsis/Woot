@@ -1,6 +1,9 @@
-package ipsis.woot.misc.squeezer;
+package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.modules.squeezer.SqueezerRegistry;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
+import ipsis.woot.modules.squeezer.blocks.SqueezerTileEntity;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,15 +17,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-import static ipsis.woot.mod.ModBlocks.SQUEEZER_CONTAINER;
-
-
 public class SqueezerContainer extends WootContainer {
 
     public SqueezerTileEntity tileEntity;
 
     public SqueezerContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        super(SQUEEZER_CONTAINER, windowId);
+        super(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), windowId);
         tileEntity = (SqueezerTileEntity)world.getTileEntity(pos);
         addOwnSlots();
         addPlayerSlots(playerInventory);
@@ -56,7 +56,7 @@ public class SqueezerContainer extends WootContainer {
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
-                playerIn, ModBlocks.SQUEEZER_BLOCK);
+                playerIn, SqueezerSetup.SQUEEZER_BLOCK.get());
     }
 
     @Override

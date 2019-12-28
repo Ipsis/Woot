@@ -20,6 +20,7 @@ import java.util.*;
 public class Config {
 
     static final Logger LOGGER = LogManager.getLogger();
+    public static final String TAG = "woot.configgui.";
 
     public static class Common {
 
@@ -138,7 +139,6 @@ public class Config {
         }};
 
         Common(ForgeConfigSpec.Builder builder) {
-            String TAG = "woot.configgui.";
             builder.comment("Common configuration settings")
                     .push("common");
 

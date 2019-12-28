@@ -1,8 +1,9 @@
-package ipsis.woot.misc.squeezer;
+package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.Woot;
-import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModFluids;
+import ipsis.woot.modules.squeezer.SqueezerRegistry;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,7 +21,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class SqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
 
-    public SqueezerTileEntity() { super(ModBlocks.SQUEEZER_BLOCK_TILE); }
+    public SqueezerTileEntity() { super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get()); }
 
     private int red = 0;
     private int yellow = 0;

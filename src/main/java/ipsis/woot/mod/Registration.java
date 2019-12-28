@@ -2,6 +2,7 @@ package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
 import ipsis.woot.client.ui.OracleContainer;
+import ipsis.woot.misc.squeezer.SqueezerContainer;
 import ipsis.woot.debug.DebugItem;
 import ipsis.woot.factory.FactoryComponent;
 import ipsis.woot.factory.FactoryUpgrade;
@@ -18,6 +19,8 @@ import ipsis.woot.misc.anvil.AnvilBlock;
 import ipsis.woot.misc.anvil.AnvilTileEntity;
 import ipsis.woot.misc.OracleBlock;
 import ipsis.woot.misc.OracleTileEntity;
+import ipsis.woot.misc.squeezer.SqueezerBlock;
+import ipsis.woot.misc.squeezer.SqueezerTileEntity;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.simulation.dimension.TartarusModDimension;
 import ipsis.woot.tools.InternItem;
@@ -28,14 +31,10 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.ChunkGeneratorType;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -52,6 +51,7 @@ public class Registration {
         event.getRegistry().register(new LayoutBlock());
         event.getRegistry().register(new OracleBlock());
         event.getRegistry().register(new AnvilBlock());
+        event.getRegistry().register(new SqueezerBlock());
         event.getRegistry().register(new CellBlock(CellBlock.CELL_1_REGNAME, Cell1TileEntity.class));
         event.getRegistry().register(new CellBlock(CellBlock.CELL_2_REGNAME, Cell2TileEntity.class));
         event.getRegistry().register(new CellBlock(CellBlock.CELL_3_REGNAME, Cell3TileEntity.class));
@@ -104,6 +104,7 @@ public class Registration {
 
         event.getRegistry().register(new BlockItem(ModBlocks.ORACLE_BLOCK, properties).setRegistryName(Woot.MODID, OracleBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.ANVIL_BLOCK, properties).setRegistryName(Woot.MODID, AnvilBlock.REGNAME));
+        event.getRegistry().register(new BlockItem(ModBlocks.SQUEEZER_BLOCK, properties).setRegistryName(Woot.MODID, SqueezerBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.CONTROLLER_BLOCK, properties).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.HEART_BLOCK, properties).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
         event.getRegistry().register(new BlockItem(ModBlocks.LAYOUT_BLOCK, properties).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));
@@ -133,6 +134,7 @@ public class Registration {
         Woot.LOGGER.info("registerTileEntities");
         event.getRegistry().register(TileEntityType.Builder.create(OracleTileEntity::new, ModBlocks.ORACLE_BLOCK).build(null).setRegistryName(Woot.MODID, OracleBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(AnvilTileEntity::new, ModBlocks.ANVIL_BLOCK).build(null).setRegistryName(Woot.MODID, AnvilBlock.REGNAME));
+        event.getRegistry().register(TileEntityType.Builder.create(SqueezerTileEntity::new, ModBlocks.SQUEEZER_BLOCK).build(null).setRegistryName(Woot.MODID, SqueezerBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(HeartTileEntity::new, ModBlocks.HEART_BLOCK).build(null).setRegistryName(Woot.MODID, HeartBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(ControllerTileEntity::new, ModBlocks.CONTROLLER_BLOCK).build(null).setRegistryName(Woot.MODID, ControllerBlock.REGNAME));
         event.getRegistry().register(TileEntityType.Builder.create(LayoutTileEntity::new, ModBlocks.LAYOUT_BLOCK).build(null).setRegistryName(Woot.MODID, LayoutBlock.REGNAME));
@@ -173,6 +175,15 @@ public class Registration {
                     inv,
                     Minecraft.getInstance().player);
         }).setRegistryName(OracleBlock.REGNAME));
+
+        event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+            BlockPos pos = data.readBlockPos();
+            return new SqueezerContainer(windowId,
+                    Minecraft.getInstance().world,
+                    pos,
+                    inv,
+                    Minecraft.getInstance().player);
+        }).setRegistryName(SqueezerBlock.REGNAME));
     }
 
     @SubscribeEvent

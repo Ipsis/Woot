@@ -2,6 +2,7 @@ package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
 import ipsis.woot.client.ui.OracleContainer;
+import ipsis.woot.misc.squeezer.SqueezerContainer;
 import ipsis.woot.factory.blocks.*;
 import ipsis.woot.factory.blocks.heart.HeartBlock;
 import ipsis.woot.factory.blocks.heart.HeartContainer;
@@ -15,6 +16,8 @@ import ipsis.woot.misc.anvil.AnvilBlock;
 import ipsis.woot.misc.anvil.AnvilTileEntity;
 import ipsis.woot.misc.OracleBlock;
 import ipsis.woot.misc.OracleTileEntity;
+import ipsis.woot.misc.squeezer.SqueezerBlock;
+import ipsis.woot.misc.squeezer.SqueezerTileEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -37,6 +40,13 @@ public class ModBlocks {
     public static AnvilBlock ANVIL_BLOCK;
     @ObjectHolder(Woot.MODID + ":" + AnvilBlock.REGNAME)
     public static TileEntityType<AnvilTileEntity> ANVIL_BLOCK_TILE;
+
+    @ObjectHolder(Woot.MODID + ":" + SqueezerBlock.REGNAME)
+    public static SqueezerBlock SQUEEZER_BLOCK;
+    @ObjectHolder(Woot.MODID + ":" + SqueezerBlock.REGNAME)
+    public static ContainerType<SqueezerContainer> SQUEEZER_CONTAINER;
+    @ObjectHolder(Woot.MODID + ":" + SqueezerBlock.REGNAME)
+    public static TileEntityType<SqueezerTileEntity> SQUEEZER_BLOCK_TILE;
 
     @ObjectHolder(Woot.MODID + ":" + ControllerBlock.REGNAME)
     public static ControllerBlock CONTROLLER_BLOCK;

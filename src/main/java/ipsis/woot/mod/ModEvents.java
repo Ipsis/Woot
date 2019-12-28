@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.loot.DropRegistry;
+import ipsis.woot.misc.squeezer.SqueezerRegistry;
 import ipsis.woot.server.command.WootCommand;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.simulation.FakePlayerPool;
@@ -123,6 +124,7 @@ public class ModEvents {
     public void onServerStarting(final FMLServerStartingEvent event) {
         Woot.LOGGER.info("onServerStarting");
         new WootCommand(event.getCommandDispatcher());
+        SqueezerRegistry.get().loadRecipes(event.getServer().getRecipeManager());
     }
 
     @SubscribeEvent

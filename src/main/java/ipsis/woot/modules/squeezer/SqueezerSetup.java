@@ -43,12 +43,10 @@ public class SqueezerSetup {
 
     public static final RegistryObject<ContainerType<SqueezerContainer>> SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
             SQUEEZER_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> {
-                        return new SqueezerContainer(
-                                windowId,
-                                Minecraft.getInstance().world,
-                                data.readBlockPos(),
-                                inv,
-                                Minecraft.getInstance().player);
-                    }));
+                    IForgeContainerType.create((windowId, inv, data) -> new SqueezerContainer(
+                            windowId,
+                            Minecraft.getInstance().world,
+                            data.readBlockPos(),
+                            inv,
+                            Minecraft.getInstance().player)));
 }

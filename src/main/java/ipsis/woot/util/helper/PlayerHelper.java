@@ -1,10 +1,6 @@
 package ipsis.woot.util.helper;
 
-import ipsis.woot.factory.FactoryComponent;
-import ipsis.woot.factory.layout.FactoryHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
 

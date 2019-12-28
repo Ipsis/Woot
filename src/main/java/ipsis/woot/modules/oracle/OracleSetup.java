@@ -1,0 +1,53 @@
+package ipsis.woot.modules.oracle;
+
+import ipsis.woot.Woot;
+import ipsis.woot.modules.oracle.blocks.OracleBlock;
+import ipsis.woot.modules.oracle.blocks.OracleContainer;
+import ipsis.woot.modules.oracle.blocks.OracleTileEntity;
+import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+
+public class OracleSetup {
+
+    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Woot.MODID);
+    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Woot.MODID);
+    public static final DeferredRegister<TileEntityType<?>> TILES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Woot.MODID);
+    public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Woot.MODID);
+
+    public static void register() {
+        Woot.LOGGER.info("OracleSetup: register");
+        BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        TILES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+
+    public static final String ORACLE_TAG = "oracle";
+    public static final RegistryObject<OracleBlock> ORACLE_BLOCK = BLOCKS.register(
+            ORACLE_TAG, () -> new OracleBlock());
+    public static final RegistryObject<Item> ORACLE_BLOCK_ITEM = ITEMS.register(
+            ORACLE_TAG, () ->
+                    new BlockItem(ORACLE_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> ORACLE_BLOCK_TILE = TILES.register(
+            ORACLE_TAG, () ->
+                    TileEntityType.Builder.create(OracleTileEntity::new, ORACLE_BLOCK.get()).build(null));
+
+    public static final RegistryObject<ContainerType<OracleContainer>> ORACLE_BLOCK_CONTAINER = CONTAINERS.register(
+            ORACLE_TAG, () ->
+                    IForgeContainerType.create((windowId, inv, data) -> new OracleContainer(
+                            windowId,
+                            Minecraft.getInstance().world,
+                            data.readBlockPos(),
+                            inv,
+                            Minecraft.getInstance().player)));
+}

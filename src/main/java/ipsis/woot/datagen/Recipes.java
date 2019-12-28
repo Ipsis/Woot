@@ -2,6 +2,8 @@ package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.layout.LayoutSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
@@ -20,7 +22,7 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shapedRecipe(ModBlocks.LAYOUT_BLOCK)
+        ShapedRecipeBuilder.shapedRecipe(LayoutSetup.LAYOUT_BLOCK.get())
                 .patternLine("grg")
                 .patternLine("ygb")
                 .patternLine("gwg")

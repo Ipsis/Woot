@@ -1,13 +1,11 @@
 package ipsis.woot.tools;
 
-import ipsis.woot.Woot;
-import ipsis.woot.factory.FactoryComponent;
-import ipsis.woot.factory.Tier;
-import ipsis.woot.factory.blocks.heart.HeartBlock;
-import ipsis.woot.factory.blocks.heart.HeartTileEntity;
-import ipsis.woot.factory.layout.FactoryHelper;
-import ipsis.woot.factory.layout.PatternRepository;
-import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.modules.factory.FactoryComponent;
+import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.modules.factory.blocks.HeartBlock;
+import ipsis.woot.modules.factory.blocks.HeartTileEntity;
+import ipsis.woot.modules.factory.layout.FactoryHelper;
+import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
@@ -31,7 +29,6 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

@@ -1,9 +1,9 @@
 package ipsis.woot.shards;
 
-import ipsis.woot.common.configuration.Config;
-import ipsis.woot.common.configuration.Policy;
-import ipsis.woot.common.configuration.WootConfig;
+import ipsis.woot.policy.PolicyRegistry;
+import ipsis.woot.config.WootConfig;
 import ipsis.woot.mod.ModItems;
+import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
@@ -57,7 +57,7 @@ public class MobShardItem extends WootItem {
         if (!fakeMob.isValid())
             return false;
 
-        if (!Policy.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation())) {
+        if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation())) {
             PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
                     new TranslationTextComponent("chat.woot.mobshard.failure").getFormattedText());
             return false;
@@ -71,11 +71,11 @@ public class MobShardItem extends WootItem {
     }
 
     private static boolean canShardCaptureMob(ResourceLocation resourceLocation) {
-        for (String s : Config.COMMON.SHARD_BLACKLIST_FULL_MOD.get())
+        for (String s : PolicyConfiguration.SHARD_BLACKLIST_FULL_MOD.get())
             if (s.equalsIgnoreCase(resourceLocation.getNamespace()))
                 return false;
 
-        for (String s : Config.COMMON.SHARD_BLACKLIST_ENTITY.get())
+        for (String s : PolicyConfiguration.SHARD_BLACKLIST_ENTITY.get())
             if (s.equalsIgnoreCase(resourceLocation.toString()))
                 return false;
         return true;
@@ -148,7 +148,7 @@ public class MobShardItem extends WootItem {
         if (!fakeMob.isValid())
             return;
 
-        if (!Policy.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation()))
+        if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation()))
             return;
 
         int killCount = itemStack.getTag().getInt(NBT_KILLS);

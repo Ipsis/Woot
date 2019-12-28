@@ -1,7 +1,7 @@
 package ipsis.woot.util.helper;
 
 import ipsis.woot.Woot;
-import ipsis.woot.loot.MobDrop;
+import ipsis.woot.modules.simulation.MobDrop;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;

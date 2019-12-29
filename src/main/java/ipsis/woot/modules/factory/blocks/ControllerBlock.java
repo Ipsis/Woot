@@ -1,10 +1,9 @@
 package ipsis.woot.modules.factory.blocks;
 
-import ipsis.woot.debug.DebugItem;
+import ipsis.woot.modules.tools.items.DebugItem;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.FactoryComponentProvider;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

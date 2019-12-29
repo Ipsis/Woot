@@ -1,8 +1,7 @@
-package ipsis.woot.debug;
+package ipsis.woot.modules.tools.items;
 
 import ipsis.woot.Woot;
 import ipsis.woot.util.WootDebug;
-import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -14,12 +13,10 @@ import net.minecraft.util.ActionResultType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebugItem extends WootItem {
-
-    public static final String REGNAME = "debug";
+public class DebugItem extends Item {
 
     public DebugItem() {
-        super(new Item.Properties().maxStackSize(1), REGNAME);
+        super(new Item.Properties().maxStackSize(1).group(Woot.itemGroup));
     }
 
     @Override

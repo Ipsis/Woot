@@ -4,7 +4,6 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.oracle.blocks.OracleBlock;
 import ipsis.woot.modules.oracle.blocks.OracleContainer;
 import ipsis.woot.modules.oracle.blocks.OracleTileEntity;
-import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.container.ContainerType;

@@ -1,13 +1,13 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
-import ipsis.woot.debug.DebugItem;
+import ipsis.woot.modules.tools.items.DebugItem;
 import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.modules.simulation.dimension.TartarusModDimension;
-import ipsis.woot.tools.InternItem;
+import ipsis.woot.modules.tools.items.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
@@ -35,8 +35,6 @@ public class Registration {
 
         Item.Properties properties = new Item.Properties().group(Woot.itemGroup);
 
-        event.getRegistry().register(new DebugItem());
-        event.getRegistry().register(new InternItem());
         event.getRegistry().register(new MobShardItem());
 
         event.getRegistry().register(new BlockItem(ModBlocks.TICK_CONVERTER_BLOCK, properties).setRegistryName(Woot.MODID, TickConverterBlock.REGNAME));

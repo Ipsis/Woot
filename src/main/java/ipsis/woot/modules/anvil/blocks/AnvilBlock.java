@@ -1,9 +1,9 @@
 package ipsis.woot.modules.anvil.blocks;
 
-import ipsis.woot.debug.DebugItem;
+import ipsis.woot.modules.tools.ToolsSetup;
+import ipsis.woot.modules.tools.items.DebugItem;
 import ipsis.woot.modules.anvil.AnvilCraftingManager;
 import ipsis.woot.mod.ModItems;
-import ipsis.woot.util.WootBlock;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -87,7 +87,7 @@ public class AnvilBlock extends Block implements WootDebug {
             if (playerEntity.isSneaking() && heldItem.isEmpty()) {
                 // Sneak with empty hand to empty
                 anvil.dropItem(playerEntity);
-            } else if (heldItem.getItem() == ModItems.INTERN_ITEM) {
+            } else if (heldItem.getItem() == ToolsSetup.INTERN_ITEM.get()) {
                 // Crafting
                 anvil.tryCraft(playerEntity);
             } else {

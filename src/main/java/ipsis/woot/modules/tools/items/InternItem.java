@@ -1,5 +1,6 @@
-package ipsis.woot.tools;
+package ipsis.woot.modules.tools.items;
 
+import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.HeartBlock;
@@ -42,12 +43,10 @@ import java.util.Locale;
  * This is the main tool for the mod.
  * It is used to construct, validate and form the factory.
  */
-public class InternItem extends WootItem {
-
-    public static final String REGNAME = "intern";
+public class InternItem extends Item {
 
     public InternItem() {
-        super(new Item.Properties().maxStackSize(1), REGNAME);
+        super(new Item.Properties().maxStackSize(1).group(Woot.itemGroup));
     }
 
     public enum ToolMode {

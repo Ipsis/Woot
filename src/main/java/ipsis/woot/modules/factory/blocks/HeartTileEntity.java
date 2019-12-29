@@ -1,6 +1,5 @@
 package ipsis.woot.modules.factory.blocks;
 
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.factory.layout.Layout;

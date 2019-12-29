@@ -2,7 +2,6 @@ package ipsis.woot.modules.oracle.network;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.oracle.blocks.OracleContainer;
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.modules.simulation.SimulationConfiguration;
 import ipsis.woot.util.oss.NetworkTools;

@@ -1,6 +1,5 @@
 package ipsis.woot.config;
 
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.util.FakeMob;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

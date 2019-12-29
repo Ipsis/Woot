@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import ipsis.woot.Woot;
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.modules.simulation.MobDrop;
 import ipsis.woot.modules.simulation.SimulationConfiguration;

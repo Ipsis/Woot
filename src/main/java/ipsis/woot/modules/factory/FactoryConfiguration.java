@@ -1,6 +1,5 @@
 package ipsis.woot.modules.factory;
 
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.config.MobOverride;
 import ipsis.woot.config.WootConfig;
 import net.minecraftforge.common.ForgeConfigSpec;

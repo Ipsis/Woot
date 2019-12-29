@@ -1,6 +1,5 @@
 package ipsis.woot.modules.simulation;
 
-import ipsis.woot.common.configuration.Config;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;

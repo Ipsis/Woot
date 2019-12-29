@@ -25,7 +25,7 @@ public enum DyeMakeup {
     ORANGE("orange", DyeMakeup.LCM / 2, DyeMakeup.LCM / 2, 0, 0),
     WHITE("white", 0, 0, 0, DyeMakeup.LCM);
 
-    private static final int LCM = 72;
+    public static final int LCM = 72;
 
     private int red;
     private int yellow;

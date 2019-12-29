@@ -2,6 +2,8 @@ package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.modules.squeezer.DyeMakeup;
+import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerRegistry;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
@@ -57,21 +59,19 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
             if (!itemStack.isEmpty()) {
                 SqueezerRegistry.Recipe recipe = SqueezerRegistry.get().getRecipe(itemStack);
                 if (recipe != null) {
-                    Woot.LOGGER.info("Tick {} {}", itemStack.getTranslationKey(), recipe.getDyeMakeup());
-
                     red += recipe.getDyeMakeup().getRed();
                     yellow += recipe.getDyeMakeup().getYellow();
                     blue += recipe.getDyeMakeup().getBlue();
                     white += recipe.getDyeMakeup().getWhite();
 
                     while (canCreateOutput() && canStoreOutput()) {
-                        FluidTank tank = fluidTank.orElseThrow(NullPointerException::new);
-                        tank.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
-                        red -= 20;
-                        yellow -= 20;
-                        blue -= 20;
-                        white -= 20;
-                        Woot.LOGGER.info("Tick created output");
+                        fluidTank.ifPresent(t -> {
+                            t.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
+                            red -= DyeMakeup.LCM;
+                            yellow -= DyeMakeup.LCM;
+                            blue -= DyeMakeup.LCM;
+                            white -= DyeMakeup.LCM;
+                        });
                     }
                 }
                 h.extractItem(0, 1, false);
@@ -81,14 +81,14 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     }
 
     private boolean canCreateOutput() {
-        return red >= 20 && yellow >= 20 && blue >= 20 && white >= 20;
+        return red >= DyeMakeup.LCM && yellow >= DyeMakeup.LCM && blue >= DyeMakeup.LCM && white >= DyeMakeup.LCM;
     }
 
     private boolean canStoreOutput() {
 
         AtomicBoolean v = new AtomicBoolean(false);
         fluidTank.ifPresent(h -> {
-            if (h.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000), IFluidHandler.FluidAction.SIMULATE) == 1000)
+            if (h.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.SIMULATE) == DyeMakeup.LCM * 4)
                 v.set(true);
         });
         return v.get();
@@ -133,6 +133,9 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> SqueezerTileEntity");
         debug.add("      r:" + red + " y:" + yellow + " b:" + blue + " w:" + white);
+        fluidTank.ifPresent(h -> {
+            debug.add("     p:" + h.getFluidAmount());
+        });
         return debug;
     }
 
@@ -141,7 +144,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(10000, h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1)));
+        return new FluidTank(SqueezerConfiguration.OUTPUT_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1)));
     }
 
     /**

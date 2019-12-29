@@ -15,7 +15,7 @@ public class SqueezerConfiguration {
         {
             OUTPUT_CAPACITY = COMMON_BUILDER
                     .comment("Maximum output tank capacity (in mB)")
-                    .defineInRange("outputMaxCapacity", 32000, 0, Integer.MAX_VALUE);
+                    .defineInRange("outputMaxCapacity", DyeMakeup.LCM * 100, 0, Integer.MAX_VALUE);
         }
         COMMON_BUILDER.pop();
         CLIENT_BUILDER.pop();

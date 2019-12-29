@@ -1,7 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
-import ipsis.woot.mod.ModFluids;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +27,7 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     public CellTileEntityBase(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
         tank.setCapacity(getCapacity());
-        tank.setValidator(e -> e.getFluid() == ModFluids.CONATUS_FLUID.get().getFluid());
+        tank.setValidator(e -> e.getFluid() == FluidSetup.CONATUS_FLUID.get().getFluid());
     }
 
     @Override
@@ -59,7 +59,7 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
      * For testing and the tick converter
      */
     public void fillToCapacity() {
-        tank.fill(new FluidStack(ModFluids.CONATUS_FLUID.get(),
+        tank.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(),
                 getCapacity()), IFluidHandler.FluidAction.EXECUTE);
     }
 

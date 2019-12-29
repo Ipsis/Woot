@@ -1,7 +1,7 @@
 package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.Woot;
-import ipsis.woot.mod.ModFluids;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerRegistry;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
@@ -66,7 +66,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
                     while (canCreateOutput() && canStoreOutput()) {
                         FluidTank tank = fluidTank.orElseThrow(NullPointerException::new);
-                        tank.fill(new FluidStack(ModFluids.CONATUS_FLUID.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
+                        tank.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000), IFluidHandler.FluidAction.EXECUTE);
                         red -= 20;
                         yellow -= 20;
                         blue -= 20;
@@ -88,7 +88,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
         AtomicBoolean v = new AtomicBoolean(false);
         fluidTank.ifPresent(h -> {
-            if (h.fill(new FluidStack(ModFluids.CONATUS_FLUID.get(), 1000), IFluidHandler.FluidAction.SIMULATE) == 1000)
+            if (h.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000), IFluidHandler.FluidAction.SIMULATE) == 1000)
                 v.set(true);
         });
         return v.get();
@@ -122,7 +122,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
     public void setPure(int v) {
         fluidTank.ifPresent(h -> {
-            h.setFluid(new FluidStack(ModFluids.CONATUS_FLUID.get(), v));
+            h.setFluid(new FluidStack(FluidSetup.CONATUS_FLUID.get(), v));
         });
     }
 
@@ -141,7 +141,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(10000, h -> h.isFluidEqual(new FluidStack(ModFluids.CONATUS_FLUID.get(), 1)));
+        return new FluidTank(10000, h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1)));
     }
 
     /**

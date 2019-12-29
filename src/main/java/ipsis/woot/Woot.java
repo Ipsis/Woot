@@ -1,6 +1,7 @@
 package ipsis.woot;
 
 import ipsis.woot.config.Config;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.layout.Layout;
@@ -8,6 +9,7 @@ import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.oracle.OracleSetup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.mod.*;
+import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.setup.ModSetup;
 import ipsis.woot.setup.Registration;
 import net.minecraft.item.Item;
@@ -41,6 +43,8 @@ public class Woot {
         FactorySetup.register();
         LayoutSetup.register();
         AnvilSetup.register();
+        FluidSetup.register();
+        ToolsSetup.register();
 
         MinecraftForge.EVENT_BUS.register(new Registration());
 
@@ -52,8 +56,6 @@ public class Woot {
 
         // Register ourselves
         MinecraftForge.EVENT_BUS.register(this);
-
-        ModFluids.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static ItemGroup itemGroup = new ItemGroup(MODID) {

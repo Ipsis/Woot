@@ -1,9 +1,7 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.mod.ModBlocks;
-import ipsis.woot.modules.squeezer.SqueezerRegistry;
+import ipsis.woot.crafting.SqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
-import ipsis.woot.modules.squeezer.blocks.SqueezerTileEntity;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -78,7 +76,7 @@ public class SqueezerContainer extends WootContainer {
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
-                if (SqueezerRegistry.get().getRecipe(stack) != null) {
+                if (SqueezerRecipe.findRecipe(stack) != null) {
                     // Player -> Machine
                     if (!this.mergeItemStack(stack, 0, 1, false))
                         return ItemStack.EMPTY;

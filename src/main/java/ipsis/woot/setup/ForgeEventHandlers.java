@@ -6,7 +6,7 @@ import ipsis.woot.commands.ModCommands;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.mod.ModDimensions;
-import ipsis.woot.modules.squeezer.SqueezerRegistry;
+import ipsis.woot.modules.squeezer.SqueezerRecipes;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.modules.simulation.FakePlayerPool;
 import ipsis.woot.modules.simulation.MobSimulator;
@@ -123,7 +123,7 @@ public class ForgeEventHandlers {
     public void onServerStarting(final FMLServerStartingEvent event) {
         Woot.LOGGER.info("onServerStarting");
         ModCommands.register(event.getCommandDispatcher());
-        SqueezerRegistry.get().loadRecipes(event.getServer().getRecipeManager());
+        SqueezerRecipes.load(event.getServer().getRecipeManager());
     }
 
     @SubscribeEvent

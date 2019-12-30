@@ -1,30 +1,44 @@
 package ipsis.woot.crafting;
 
+import ipsis.woot.Woot;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import net.minecraft.item.ItemStack;
 
-public class SqueezerRecipe {
-    private ItemStack input = ItemStack.EMPTY;
-    private DyeMakeup dyeMakeup;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 
-    public SqueezerRecipe(ItemStack itemStack, DyeMakeup dyeMakeup) {
-        this.input = itemStack;
-        this.dyeMakeup = dyeMakeup;
+public class SqueezerRecipe {
+
+    public final DyeMakeup output;
+    public final ItemStack input;
+
+    public SqueezerRecipe(DyeMakeup output, ItemStack input) {
+        this.output = output;
+        this.input = input;
     }
 
-    public ItemStack getInput() { return this.input; }
-    public DyeMakeup getDyeMakeup() { return this.dyeMakeup; }
-    public boolean isInput(ItemStack itemStack) {
-        if (itemStack == null || itemStack.isEmpty())
-            return false;
+    public static ArrayList<SqueezerRecipe> recipeList = new ArrayList<>();
+    public static void addRecipe(DyeMakeup output, ItemStack input) {
+        SqueezerRecipe recipe = new SqueezerRecipe(output, input);
+        if (recipe.input != null && !recipe.input.isEmpty()) {
+            Woot.LOGGER.info("SqueezerRecipe: addRecipe {}", input.getTranslationKey());
+            recipeList.add(recipe);
+        }
+    }
 
-        // This should never be true
-        if (input.isEmpty())
-            return false;
+    public static void clearRecipes() {
+        recipeList = new ArrayList<>();
+    }
 
-        if (input.isItemEqual(itemStack))
-            return true;
+    public static @Nullable
+    SqueezerRecipe findRecipe(ItemStack input) {
+        if (!input.isEmpty()) {
+            for (SqueezerRecipe recipe : recipeList) {
+                if (recipe.input.isItemEqual(input))
+                    return recipe;
+            }
+        }
 
-        return false;
+        return null;
     }
 }

@@ -4,7 +4,6 @@ import ipsis.woot.crafting.SqueezerRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
-import ipsis.woot.modules.squeezer.SqueezerRegistry;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
@@ -24,7 +23,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -60,12 +58,12 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         itemHandler.ifPresent(h -> {
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
-                SqueezerRecipe recipe = SqueezerRegistry.get().getRecipe(itemStack);
+                SqueezerRecipe recipe = SqueezerRecipe.findRecipe(itemStack);
                 if (recipe != null) {
-                    red += recipe.getDyeMakeup().getRed();
-                    yellow += recipe.getDyeMakeup().getYellow();
-                    blue += recipe.getDyeMakeup().getBlue();
-                    white += recipe.getDyeMakeup().getWhite();
+                    red += recipe.output.getRed();
+                    yellow += recipe.output.getYellow();
+                    blue += recipe.output.getBlue();
+                    white += recipe.output.getWhite();
 
                     while (canCreateOutput() && canStoreOutput()) {
                         fluidTank.ifPresent(t -> {
@@ -170,7 +168,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return SqueezerRegistry.get().getRecipe(stack) != null;
+                return SqueezerRecipe.findRecipe(stack) != null;
             }
         };
     }

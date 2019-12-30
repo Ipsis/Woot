@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "woot:block/enchant_fluid" }
+  }
+}

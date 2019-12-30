@@ -26,13 +26,11 @@ public class SqueezerRecipe {
     public static ArrayList<SqueezerRecipe> recipeList = new ArrayList<>();
     public static void addRecipe(DyeMakeup output, ItemStack input) {
         SqueezerRecipe recipe = new SqueezerRecipe(output, input);
-        Woot.LOGGER.info("SqueezerRecipe: addRecipe {}", input.getTranslationKey());
         recipeList.add(recipe);
     }
 
     public static void addRecipe(DyeMakeup output, ResourceLocation tag) {
         SqueezerRecipe recipe = new SqueezerRecipe(output, tag);
-        Woot.LOGGER.info("SqueezerRecipe: addRecipe {}", tag);
         recipeList.add(recipe);
     }
 
@@ -43,7 +41,7 @@ public class SqueezerRecipe {
 
     public static @Nullable
     SqueezerRecipe findRecipe(ItemStack input) {
-        if (!input.isEmpty()) {
+        if (input != null && !input.isEmpty()) {
             for (SqueezerRecipe recipe : recipeList) {
                 if (recipe.input.isSameIngredient(input))
                     return recipe;

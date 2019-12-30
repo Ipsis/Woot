@@ -4,12 +4,10 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
-import ipsis.woot.modules.infuser.InfuserRegistry;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.WaterFluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -25,7 +23,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -60,15 +57,11 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
                 fluidTank.ifPresent(f -> {
-                    InfuserRecipe recipe = InfuserRegistry.get().getRecipe(itemStack, f.getFluid());
-                    if (recipe != null) {
-                        ItemStack itemStack1 = h.insertItem(OUTPUT_SLOT, recipe.getOutput().copy(), true);
-                        Woot.LOGGER.info("itemStack1:{} ", itemStack1);
-                    }
-                    if (recipe != null && h.insertItem(OUTPUT_SLOT, recipe.getOutput().copy(), true).isEmpty()) {
+                    InfuserRecipe recipe = InfuserRecipe.findRecipe(itemStack, f.getFluid());
+                    if (recipe != null && h.insertItem(OUTPUT_SLOT, recipe.output.copy(), true).isEmpty()) {
                         h.extractItem(INPUT_SLOT, 1, false);
-                        f.drain(recipe.getInputFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
-                        h.insertItem(OUTPUT_SLOT, recipe.getOutput().copy(), false);
+                        f.drain(recipe.fluid.copy(), IFluidHandler.FluidAction.EXECUTE);
+                        h.insertItem(OUTPUT_SLOT, recipe.output.copy(), false);
                         markDirty();
                     }
                 });
@@ -128,7 +121,8 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return slot == INPUT_SLOT ? InfuserRegistry.get().isInput(stack) : true;
+                // TODO limit to valid input items
+                return true;
             }
         };
     }

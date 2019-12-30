@@ -1,37 +1,50 @@
 package ipsis.woot.crafting;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+
 public class InfuserRecipe {
-    private ItemStack input = ItemStack.EMPTY;
-    private FluidStack inputFluid;
-    private ItemStack output = ItemStack.EMPTY;
 
-    public InfuserRecipe(ItemStack itemStack, FluidStack fluidStack, ItemStack output) {
-        this.input = itemStack.copy();
-        this.inputFluid = fluidStack.copy();
-        this.output = output.copy();
+    public final WootIngredient input;
+    public final FluidStack fluid;
+    public final ItemStack output;
+
+    public InfuserRecipe(ItemStack output, ItemStack input, FluidStack fluid) {
+        this(output, new WootIngredient(input), fluid);
     }
 
-    public boolean isInput(ItemStack itemStack) {
-        if (itemStack == null || itemStack.isEmpty())
-            return false;
-
-        if (input.isItemEqual(itemStack))
-            return true;
-
-        return false;
+    public InfuserRecipe(ItemStack output, ResourceLocation tag, FluidStack fluid) {
+        this(output, new WootIngredient(tag), fluid);
     }
 
-    public boolean isInputFluid(FluidStack fluidStack) {
-        if (fluidStack == null || fluidStack.isEmpty())
-            return false;
-
-        return inputFluid.isFluidEqual(fluidStack);
+    private InfuserRecipe(ItemStack output, WootIngredient input, FluidStack fluid) {
+        this.output = output;
+        this.input = input;
+        this.fluid = fluid;
     }
 
-    public ItemStack getOutput() { return this.output; }
-    public FluidStack getInputFluid() { return this.inputFluid; }
+    public static ArrayList<InfuserRecipe> recipeList = new ArrayList<>();
+    public static void addRecipe(ItemStack output, ItemStack input, FluidStack fluid) {
+        InfuserRecipe recipe = new InfuserRecipe(output, input, fluid);
+        recipeList.add(recipe);
+    }
+
+    public static @Nullable
+    InfuserRecipe findRecipe(ItemStack input, FluidStack fluidStack) {
+        if (input == null || fluidStack == null || input.isEmpty() || fluidStack.isEmpty())
+            return null;
+
+        for (InfuserRecipe recipe : recipeList) {
+            if (recipe.input.isSameIngredient(input) && fluidStack.containsFluid(recipe.fluid))
+                return recipe;
+        }
+
+        return null;
+    }
+
 
 }

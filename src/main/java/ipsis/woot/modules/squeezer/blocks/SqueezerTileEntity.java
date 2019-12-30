@@ -7,6 +7,7 @@ import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerRegistry;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.WootEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -22,6 +23,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -100,6 +103,8 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
             return itemHandler.cast();
         else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return fluidTank.cast();
+        else if (cap == CapabilityEnergy.ENERGY)
+            return energyStorage.cast();
         return super.getCapability(cap, side);
     }
 
@@ -123,6 +128,12 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         fluidTank.ifPresent(h -> {
             h.setFluid(new FluidStack(FluidSetup.CONATUS_FLUID.get(), v));
         });
+    }
+    public int getEnergy() {
+        return energyStorage.map(h -> h.getEnergyStored()).orElse(0);
+    }
+    public void setEnergy(int v) {
+        energyStorage.ifPresent(h -> h.setEnergy(v));
     }
 
     /**
@@ -165,6 +176,14 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     }
 
     /**
+     * Energy
+     */
+    private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
+    private WootEnergyStorage createEnergy() {
+        return new WootEnergyStorage(SqueezerConfiguration.MAX_ENERGY.get(), SqueezerConfiguration.MAX_ENERGY_RX.get());
+    }
+
+    /**
      * NBT
      */
     @Override
@@ -174,6 +193,9 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
         fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
+
+        CompoundNBT energyTag = compoundNBT.getCompound("energy");
+        energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
         if (compoundNBT.contains("dye")) {
             CompoundNBT dyeTag = compoundNBT.getCompound("dye");
@@ -195,6 +217,11 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         fluidTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
             compoundNBT.put("tank", tankTag);
+        });
+
+        energyStorage.ifPresent(h -> {
+            CompoundNBT energyTag = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
+            compoundNBT.put("energy", energyTag);
         });
 
         CompoundNBT dyeTag = new CompoundNBT();

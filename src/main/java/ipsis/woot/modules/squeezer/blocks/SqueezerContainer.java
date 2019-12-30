@@ -143,6 +143,13 @@ public class SqueezerContainer extends WootContainer {
             @Override
             public void set(int i) { tileEntity.setPure(i); }
         });
+        addIntegerListener(new IntReferenceHolder() {
+            @Override
+            public int get() { return tileEntity.getEnergy(); }
+
+            @Override
+            public void set(int i) { tileEntity.setEnergy(i); }
+        });
     }
 
     public SqueezerTileEntity getTileEntity() { return tileEntity; }

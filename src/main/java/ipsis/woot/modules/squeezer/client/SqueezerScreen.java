@@ -38,7 +38,9 @@ public class SqueezerScreen extends ContainerScreen<SqueezerContainer> {
         if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 60 && mouseY < guiTop + 67)
             renderTooltip("White: " + container.getTileEntity().getWhite(), mouseX, mouseY);
         if (mouseX > guiLeft + 154 && mouseX < guiLeft + 169 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
-            renderTooltip("Pure: " + container.getTileEntity().getPure(), mouseX, mouseY);
+            renderTooltip("Pure: " + container.getTileEntity().getPure() + "/" + SqueezerConfiguration.TANK_CAPACITY.get(), mouseX, mouseY);
+        if (mouseX > guiLeft + 10 && mouseX < guiLeft + 25 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
+            renderTooltip("Energy: " + container.getTileEntity().getEnergy() + "/" + SqueezerConfiguration.MAX_ENERGY.get(), mouseX, mouseY);
     }
 
     @Override

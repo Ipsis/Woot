@@ -67,7 +67,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
                     while (canCreateOutput() && canStoreOutput()) {
                         fluidTank.ifPresent(t -> {
-                            t.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
+                            t.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
                             red -= DyeMakeup.LCM;
                             yellow -= DyeMakeup.LCM;
                             blue -= DyeMakeup.LCM;
@@ -88,7 +88,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     private boolean canStoreOutput() {
         AtomicBoolean v = new AtomicBoolean(false);
         fluidTank.ifPresent(h -> {
-            if (h.getFluid().containsFluid(new FluidStack(FluidSetup.CONATUS_FLUID.get(), DyeMakeup.LCM * 4)))
+            if (h.getFluid().containsFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4)))
                 v.set(true);
         });
         return v.get();
@@ -124,7 +124,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
     public void setPure(int v) {
         fluidTank.ifPresent(h -> {
-            h.setFluid(new FluidStack(FluidSetup.CONATUS_FLUID.get(), v));
+            h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v));
         });
     }
     public int getEnergy() {
@@ -152,7 +152,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(SqueezerConfiguration.TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1)));
+        return new FluidTank(SqueezerConfiguration.TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1)));
     }
 
     /**

@@ -2,6 +2,7 @@ package ipsis.woot.setup;
 
 import ipsis.woot.config.MobOverride;
 import ipsis.woot.modules.factory.FactoryConfiguration;
+import ipsis.woot.modules.infuser.InfuserRegistry;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.modules.simulation.DropRegistry;
@@ -27,6 +28,7 @@ public class ModSetup {
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
         AnvilCraftingManagerLoader.load();
+        InfuserRegistry.get().loadRecipes();
     }
 
     public void initClient(FMLClientSetupEvent e) {

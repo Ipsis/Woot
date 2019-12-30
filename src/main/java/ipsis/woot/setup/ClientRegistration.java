@@ -2,6 +2,8 @@ package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.client.AnvilTileEntitySpecialRenderer;
+import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.layout.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.oracle.client.OracleScreen;
@@ -29,5 +31,6 @@ public class ClientRegistration {
         ScreenManager.registerFactory(FactorySetup.HEART_BLOCK_CONTAINER.get(), HeartScreen::new);
         ScreenManager.registerFactory(OracleSetup.ORACLE_BLOCK_CONTAINER.get(), OracleScreen::new);
         ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), SqueezerScreen::new);
+        ScreenManager.registerFactory(InfuserSetup.INFUSER_BLOCK_CONTAINER.get(), InfuserScreen::new);
     }
 }

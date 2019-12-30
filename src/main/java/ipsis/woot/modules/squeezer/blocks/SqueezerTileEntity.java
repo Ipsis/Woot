@@ -1,6 +1,6 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.Woot;
+import ipsis.woot.crafting.SqueezerRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
@@ -57,7 +57,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         itemHandler.ifPresent(h -> {
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
-                SqueezerRegistry.Recipe recipe = SqueezerRegistry.get().getRecipe(itemStack);
+                SqueezerRecipe recipe = SqueezerRegistry.get().getRecipe(itemStack);
                 if (recipe != null) {
                     red += recipe.getDyeMakeup().getRed();
                     yellow += recipe.getDyeMakeup().getYellow();
@@ -85,10 +85,9 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     }
 
     private boolean canStoreOutput() {
-
         AtomicBoolean v = new AtomicBoolean(false);
         fluidTank.ifPresent(h -> {
-            if (h.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.SIMULATE) == DyeMakeup.LCM * 4)
+            if (h.getFluid().containsFluid(new FluidStack(FluidSetup.CONATUS_FLUID.get(), DyeMakeup.LCM * 4)))
                 v.set(true);
         });
         return v.get();
@@ -144,7 +143,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(SqueezerConfiguration.OUTPUT_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1)));
+        return new FluidTank(SqueezerConfiguration.TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1)));
     }
 
     /**
@@ -174,7 +173,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         itemHandler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
-        fluidTank.ifPresent(h -> ((FluidTank)h).readFromNBT(tankTag));
+        fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
 
         if (compoundNBT.contains("dye")) {
             CompoundNBT dyeTag = compoundNBT.getCompound("dye");
@@ -194,7 +193,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         });
 
         fluidTank.ifPresent(h -> {
-            CompoundNBT tankTag = ((FluidTank)h).writeToNBT(new CompoundNBT());
+            CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
             compoundNBT.put("tank", tankTag);
         });
 

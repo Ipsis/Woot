@@ -35,6 +35,8 @@
   "block.woot.tick_conv": "Tick Converter",
   "block.woot.oracle": "Oracle Of Drops",
   "block.woot.anvil": "Anvil",
+  "block.woot.squeezer": "Squeezer",
+  "block.woot.infuser": "Infuser",
 
   # Item Names
   "item.woot.debug": "Debug",
@@ -61,6 +63,8 @@
   "item.woot.conatus_fluid_bucket": "Conatus Bucket",
   "item.woot.enchant_fluid_bucket": "Liquid Enchant Bucket",
   "item.woot.puredye_fluid_bucket": "Pure Dye Bucket",
+  "item.woot.white_dyecasing": "White Dye Casing",
+  "item.woot.white_dyeshard": "White Dye Shard",
 
   # Fluids
   "fluid.woot.conatus_fluid": "Conatus Fluid",

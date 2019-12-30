@@ -5,6 +5,7 @@ import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.layout.Layout;
+import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.oracle.OracleSetup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
@@ -38,6 +39,7 @@ public class Woot {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
 
+        InfuserSetup.register();
         SqueezerSetup.register();
         OracleSetup.register();
         FactorySetup.register();

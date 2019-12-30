@@ -2,6 +2,8 @@ package ipsis.woot.modules.squeezer.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
+import ipsis.woot.modules.squeezer.SqueezerConfiguration;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -49,16 +51,20 @@ public class SqueezerScreen extends ContainerScreen<SqueezerContainer> {
 
         drawHorizontalBar(
                 82, 30, 132, 37,
-                72 * 100, container.getTileEntity().getRed(), 0xffff1641);
+                SqueezerConfiguration.TANK_CAPACITY.get(),
+                container.getTileEntity().getRed(), 0xffff1641);
         drawHorizontalBar(
                 82, 40, 132, 47,
-                72 * 100, container.getTileEntity().getYellow(), 0xffffd800);
+                SqueezerConfiguration.TANK_CAPACITY.get(),
+                container.getTileEntity().getYellow(), 0xffffd800);
         drawHorizontalBar(
                 82, 50, 132, 57,
-                72 * 100, container.getTileEntity().getBlue(), 0xff0094ff);
+                SqueezerConfiguration.TANK_CAPACITY.get(),
+                container.getTileEntity().getBlue(), 0xff0094ff);
         drawHorizontalBar(
                 82, 60, 132, 67,
-                72 * 100, container.getTileEntity().getWhite(), 0xffffffff);
+                SqueezerConfiguration.TANK_CAPACITY.get(),
+                container.getTileEntity().getWhite(), 0xffffffff);
     }
 
     private void drawHorizontalBar(int tlx, int tly, int brx, int bry, int max, int v, int color) {

@@ -1,5 +1,6 @@
 package ipsis.woot.modules.squeezer;
 
+import ipsis.woot.crafting.SqueezerRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,7 +26,7 @@ public class SqueezerRegistry {
     static SqueezerRegistry INSTANCE = new SqueezerRegistry();
     public static SqueezerRegistry get() { return INSTANCE; }
 
-    private List<Recipe> recipes = new ArrayList<>();
+    private List<SqueezerRecipe> recipes = new ArrayList<>();
     public void loadRecipes(@Nonnull RecipeManager recipeManager) {
 
         recipes.clear();
@@ -86,38 +87,13 @@ public class SqueezerRegistry {
 
     private void addRecipe(ItemStack itemStack, DyeMakeup dyeMakeup) {
         LOGGER.info("addRecipe: {} -> {}", itemStack.getTranslationKey(), dyeMakeup);
-        recipes.add(new Recipe(itemStack.copy(), dyeMakeup));
+        recipes.add(new SqueezerRecipe(itemStack.copy(), dyeMakeup));
     }
 
-    public class Recipe {
-        private ItemStack input;
-        private DyeMakeup dyeMakeup;
-
-        public Recipe(ItemStack itemStack, DyeMakeup dyeMakeup) {
-            this.input = itemStack;
-            this.dyeMakeup = dyeMakeup;
-        }
-
-        public ItemStack getInput() { return this.input; }
-        public DyeMakeup getDyeMakeup() { return this.dyeMakeup; }
-        public boolean isInput(ItemStack itemStack) {
-            if (itemStack == null || itemStack.isEmpty())
-                return false;
-
-            // This should never be true
-            if (input.isEmpty())
-                return false;
-
-            if (input.isItemEqual(itemStack))
-                return true;
-
-            return false;
-        }
-    }
-
-    public @Nullable Recipe getRecipe(ItemStack itemStack) {
+    public @Nullable
+    SqueezerRecipe getRecipe(ItemStack itemStack) {
         if (itemStack != null && !itemStack.isEmpty()) {
-            for (Recipe r : recipes) {
+            for (SqueezerRecipe r : recipes) {
                 if (r.isInput(itemStack))
                     return r;
             }

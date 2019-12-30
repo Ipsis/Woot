@@ -3,6 +3,7 @@ package ipsis.woot.config;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import ipsis.woot.modules.factory.FactoryConfiguration;
+import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.layout.LayoutConfiguration;
 import ipsis.woot.modules.simulation.SimulationConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
@@ -24,6 +25,7 @@ public class Config {
     static {
         setupGeneralConfig();
         FactoryConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
+        InfuserConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         LayoutConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         SimulationConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         SqueezerConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);

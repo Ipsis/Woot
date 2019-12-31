@@ -87,6 +87,6 @@ public class SqueezerScreen extends WootContainerScreen<SqueezerContainer> {
 
         renderFluidTank(154, 18, 169, 77,
                 container.getTileEntity().getPure(), SqueezerConfiguration.TANK_CAPACITY.get(),
-                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1));
+                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()));
     }
 }

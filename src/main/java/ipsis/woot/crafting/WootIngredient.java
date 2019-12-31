@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 public class WootIngredient {
 
     public ItemStack itemStack = ItemStack.EMPTY;
-    public ResourceLocation tag;
+    public ResourceLocation tag = null;
 
     public WootIngredient(ItemStack itemStack) {
         this.itemStack = itemStack;
@@ -19,6 +19,14 @@ public class WootIngredient {
 
     public WootIngredient(ResourceLocation tag) {
         this.tag = tag;
+    }
+
+    public boolean isItemStackIngredient() {
+        return !itemStack.isEmpty();
+    }
+
+    public boolean isTagIngredient() {
+        return this.tag != null;
     }
 
     public boolean isSameIngredient(ItemStack itemStack) {

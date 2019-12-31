@@ -8,6 +8,7 @@ import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
 import ipsis.woot.util.WootContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,8 +22,8 @@ public class SqueezerScreen extends WootContainerScreen<SqueezerContainer> {
 
     public SqueezerScreen(SqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
-        xSize = 256;
-        ySize = 256;
+        xSize = 180;
+        ySize = 177;
     }
 
     @Override
@@ -70,16 +71,16 @@ public class SqueezerScreen extends WootContainerScreen<SqueezerContainer> {
 
         renderHorizontalGauge(82, 30, 132, 37,
                 container.getTileEntity().getRed(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
-                0xffff1641);
+                0xff000000 | DyeColor.RED.getColorValue());
         renderHorizontalGauge(82, 40, 132, 47,
                 container.getTileEntity().getYellow(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
-                0xffffd800);
+                0xff000000 | DyeColor.YELLOW.getColorValue());
         renderHorizontalGauge(82, 50, 132, 57,
                 container.getTileEntity().getBlue(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
-                0xff0094ff);
+                0xff000000 | DyeColor.BLUE.getColorValue());
         renderHorizontalGauge(82, 60, 132, 67,
                 container.getTileEntity().getWhite(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
-                0xffffffff);
+                0xff000000 | DyeColor.WHITE.getColorValue());
 
         renderEnergyBar(10, 18, 25, 77,
                 container.getTileEntity().getEnergy(), SqueezerConfiguration.MAX_ENERGY.get());

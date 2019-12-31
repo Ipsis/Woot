@@ -2,18 +2,20 @@ package ipsis.woot.modules.squeezer.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import ipsis.woot.util.WootContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 
 @OnlyIn(Dist.CLIENT)
-public class SqueezerScreen extends ContainerScreen<SqueezerContainer> {
+public class SqueezerScreen extends WootContainerScreen<SqueezerContainer> {
 
     private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/squeezer.png");
 
@@ -30,17 +32,32 @@ public class SqueezerScreen extends ContainerScreen<SqueezerContainer> {
         this.renderHoveredToolTip(mouseX, mouseY);
 
         if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 30 && mouseY < guiTop + 37)
-            renderTooltip("Red: " + container.getTileEntity().getRed(), mouseX, mouseY);
+            renderTooltip(String.format("Red: %d/%d mb",
+                        container.getTileEntity().getRed(),
+                        SqueezerConfiguration.INTERNAL_FLUID_MAX.get()),
+                    mouseX, mouseY);
         if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 40 && mouseY < guiTop + 47)
-            renderTooltip("Yellow: " + container.getTileEntity().getYellow(), mouseX, mouseY);
+            renderTooltip(String.format("Yellow: %d/%d mb",
+                        container.getTileEntity().getYellow(),
+                        SqueezerConfiguration.INTERNAL_FLUID_MAX.get()),
+                    mouseX, mouseY);
         if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 50 && mouseY < guiTop + 57)
-            renderTooltip("Blue: " + container.getTileEntity().getBlue(), mouseX, mouseY);
+            renderTooltip(String.format("Blue: %d/%d mb",
+                        container.getTileEntity().getBlue(),
+                        SqueezerConfiguration.INTERNAL_FLUID_MAX.get()),
+                    mouseX, mouseY);
         if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 60 && mouseY < guiTop + 67)
-            renderTooltip("White: " + container.getTileEntity().getWhite(), mouseX, mouseY);
+            renderTooltip(String.format("White: %d/%d mb",
+                        container.getTileEntity().getWhite(),
+                        SqueezerConfiguration.INTERNAL_FLUID_MAX.get()),
+                    mouseX, mouseY);
         if (mouseX > guiLeft + 154 && mouseX < guiLeft + 169 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
-            renderTooltip("Pure: " + container.getTileEntity().getPure() + "/" + SqueezerConfiguration.TANK_CAPACITY.get(), mouseX, mouseY);
+            renderFluidTankTooltip(mouseX, mouseY,
+                    new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()),
+                    SqueezerConfiguration.TANK_CAPACITY.get());
         if (mouseX > guiLeft + 10 && mouseX < guiLeft + 25 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
-            renderTooltip("Energy: " + container.getTileEntity().getEnergy() + "/" + SqueezerConfiguration.MAX_ENERGY.get(), mouseX, mouseY);
+            renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
+                    SqueezerConfiguration.MAX_ENERGY.get());
     }
 
     @Override
@@ -51,31 +68,24 @@ public class SqueezerScreen extends ContainerScreen<SqueezerContainer> {
         int relY = (this.height - this.ySize) / 2;
         blit(relX, relY, 0, 0, xSize, ySize);
 
-        drawHorizontalBar(
-                82, 30, 132, 37,
-                SqueezerConfiguration.TANK_CAPACITY.get(),
-                container.getTileEntity().getRed(), 0xffff1641);
-        drawHorizontalBar(
-                82, 40, 132, 47,
-                SqueezerConfiguration.TANK_CAPACITY.get(),
-                container.getTileEntity().getYellow(), 0xffffd800);
-        drawHorizontalBar(
-                82, 50, 132, 57,
-                SqueezerConfiguration.TANK_CAPACITY.get(),
-                container.getTileEntity().getBlue(), 0xff0094ff);
-        drawHorizontalBar(
-                82, 60, 132, 67,
-                SqueezerConfiguration.TANK_CAPACITY.get(),
-                container.getTileEntity().getWhite(), 0xffffffff);
-    }
+        renderHorizontalGauge(82, 30, 132, 37,
+                container.getTileEntity().getRed(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
+                0xffff1641);
+        renderHorizontalGauge(82, 40, 132, 47,
+                container.getTileEntity().getYellow(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
+                0xffffd800);
+        renderHorizontalGauge(82, 50, 132, 57,
+                container.getTileEntity().getBlue(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
+                0xff0094ff);
+        renderHorizontalGauge(82, 60, 132, 67,
+                container.getTileEntity().getWhite(), SqueezerConfiguration.INTERNAL_FLUID_MAX.get(),
+                0xffffffff);
 
-    private void drawHorizontalBar(int tlx, int tly, int brx, int bry, int max, int v, int color) {
-        fill(guiLeft + tlx, guiTop + tly, guiLeft + brx, guiTop + bry, color);
-        int p = v * (brx - tlx) / max;
-        for (int i = 0; i < p; i++)
-            vLine(guiLeft + tlx + 1 + i,
-                    guiTop + tly,
-                    guiTop + tly + 6,
-                    i % 2 == 0 ? color : 0xff000000);
+        renderEnergyBar(10, 18, 25, 77,
+                container.getTileEntity().getEnergy(), SqueezerConfiguration.MAX_ENERGY.get());
+
+        renderFluidTank(154, 18, 169, 77,
+                container.getTileEntity().getPure(), SqueezerConfiguration.TANK_CAPACITY.get(),
+                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1));
     }
 }

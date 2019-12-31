@@ -7,6 +7,7 @@ public class SqueezerConfiguration {
     public static final String CATEGORY_BUILDER = "squeezer";
 
     public static ForgeConfigSpec.IntValue TANK_CAPACITY;
+    public static ForgeConfigSpec.IntValue INTERNAL_FLUID_MAX;
     public static ForgeConfigSpec.IntValue MAX_ENERGY;
     public static ForgeConfigSpec.IntValue MAX_ENERGY_RX;
 
@@ -19,6 +20,9 @@ public class SqueezerConfiguration {
             TANK_CAPACITY = COMMON_BUILDER
                     .comment("Maximum tank capacity (in mB)")
                     .defineInRange("tankMaxCapacity", DyeMakeup.LCM * 100, 0, Integer.MAX_VALUE);
+            INTERNAL_FLUID_MAX = COMMON_BUILDER
+                    .comment("Maximum internal fluid capacity(in mB)")
+                    .defineInRange("internalFluidMaxCapacity", DyeMakeup.LCM * 10, 0, Integer.MAX_VALUE);
             MAX_ENERGY = COMMON_BUILDER
                     .comment("Maximum energy capacity (in RF)")
                     .defineInRange("energyMaxCapacity", 1000, 0, Integer.MAX_VALUE);

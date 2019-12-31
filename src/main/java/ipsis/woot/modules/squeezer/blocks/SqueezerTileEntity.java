@@ -59,7 +59,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
                 SqueezerRecipe recipe = SqueezerRecipe.findRecipe(itemStack);
-                if (recipe != null) {
+                if (recipe != null && canStoreInternal(recipe)) {
                     red += recipe.output.getRed();
                     yellow += recipe.output.getYellow();
                     blue += recipe.output.getBlue();
@@ -74,11 +74,24 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
                             white -= DyeMakeup.LCM;
                         });
                     }
+                    h.extractItem(0, 1, false);
+                    markDirty();
                 }
-                h.extractItem(0, 1, false);
-                markDirty();
             }
         });
+    }
+
+    private boolean canStoreInternal(SqueezerRecipe recipe) {
+        if (recipe.output.getRed() + red > SqueezerConfiguration.INTERNAL_FLUID_MAX.get())
+            return false;
+        if (recipe.output.getYellow() + yellow > SqueezerConfiguration.INTERNAL_FLUID_MAX.get())
+            return false;
+        if (recipe.output.getBlue() + blue > SqueezerConfiguration.INTERNAL_FLUID_MAX.get())
+            return false;
+        if (recipe.output.getWhite() + white > SqueezerConfiguration.INTERNAL_FLUID_MAX.get())
+            return false;
+
+        return true;
     }
 
     private boolean canCreateOutput() {
@@ -88,7 +101,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     private boolean canStoreOutput() {
         AtomicBoolean v = new AtomicBoolean(false);
         fluidTank.ifPresent(h -> {
-            if (h.getFluid().containsFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4)))
+            if (h.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.SIMULATE ) == DyeMakeup.LCM * 4)
                 v.set(true);
         });
         return v.get();

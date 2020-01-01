@@ -1,6 +1,7 @@
 package ipsis.woot.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import ipsis.woot.Woot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -26,11 +27,10 @@ public abstract class WootContainerScreen<T extends Container> extends Container
     }
 
     public void renderEnergyBar(int x1, int y1, int x2, int y2, int curr, int max) {
-        int filled = curr * max / 100;
+        int filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * (y2 - y1) / 100;
-        fill(guiLeft + x1, guiTop + y2 - h,
-                guiLeft + x2, guiTop + y2, 0xffff0000);
+        fill(guiLeft + x1, guiTop + y2 - h, guiLeft + x2, guiTop + y2, 0xffff0000);
     }
 
     public void renderFluidTank(int x1, int y1, int x2, int y2, int curr, int max, FluidStack fluidStack)  {
@@ -75,9 +75,8 @@ public abstract class WootContainerScreen<T extends Container> extends Container
 
     public void drawFluid(int x, int y, FluidStack fluid, int width, int height) {
 
-        if (fluid == null) {
+        if (fluid == null)
             return;
-        }
 
         Minecraft.getInstance().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         int color = fluid.getFluid().getAttributes().getColor(fluid);

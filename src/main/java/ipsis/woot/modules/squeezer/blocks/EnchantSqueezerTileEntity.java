@@ -1,22 +1,27 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.crafting.DyeSqueezerRecipe;
+import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
-import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
+import ipsis.woot.util.helper.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,81 +35,65 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
+public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
 
-    public DyeSqueezerTileEntity() { super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get()); }
-
-    private int red = 0;
-    private int yellow = 0;
-    private int blue = 0;
-    private int white = 0;
+    public EnchantSqueezerTileEntity() {
+        super(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_TILE.get());
+    }
 
     @Override
     public void tick() {
+       if (world.isRemote)
+           return;
 
-        if (world.isRemote)
-            return;
+       if (world.getGameTime() % 20 != 0)
+           return;
 
-        if (world.getGameTime() % 20 != 0)
-            return;
+       itemHandler.ifPresent(h -> {
+           ItemStack itemStack = h.getStackInSlot(0);
+           if (!itemStack.isEmpty() && EnchantmentHelper.isEnchanted(itemStack)) {
+               int amount = 0;
 
-        itemHandler.ifPresent(h -> {
-            ItemStack itemStack = h.getStackInSlot(0);
-            if (!itemStack.isEmpty()) {
-                DyeSqueezerRecipe recipe = DyeSqueezerRecipe.findRecipe(itemStack);
-                if (recipe != null && canStoreInternal(recipe)) {
-                    red += recipe.output.getRed();
-                    yellow += recipe.output.getYellow();
-                    blue += recipe.output.getBlue();
-                    white += recipe.output.getWhite();
+               ListNBT listNBT;
+               if (itemStack.getItem() == Items.ENCHANTED_BOOK)
+                   listNBT = EnchantedBookItem.getEnchantments(itemStack);
+               else
+                   listNBT = itemStack.getEnchantmentTagList();
 
-                    while (canCreateOutput() && canStoreOutput()) {
-                        fluidTank.ifPresent(t -> {
-                            t.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
-                            red -= DyeMakeup.LCM;
-                            yellow -= DyeMakeup.LCM;
-                            blue -= DyeMakeup.LCM;
-                            white -= DyeMakeup.LCM;
-                        });
-                    }
-                    h.extractItem(0, 1, false);
-                    markDirty();
-                }
-            }
-        });
-    }
-
-    private boolean canStoreInternal(DyeSqueezerRecipe recipe) {
-        if (recipe.output.getRed() + red > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-        if (recipe.output.getYellow() + yellow > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-        if (recipe.output.getBlue() + blue > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-        if (recipe.output.getWhite() + white > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-
-        return true;
-    }
-
-    private boolean canCreateOutput() {
-        return red >= DyeMakeup.LCM && yellow >= DyeMakeup.LCM && blue >= DyeMakeup.LCM && white >= DyeMakeup.LCM;
-    }
-
-    private boolean canStoreOutput() {
-        AtomicBoolean v = new AtomicBoolean(false);
-        fluidTank.ifPresent(h -> {
-            if (h.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.SIMULATE ) == DyeMakeup.LCM * 4)
-                v.set(true);
-        });
-        return v.get();
+               for (int i = 0; i < listNBT.size(); i++) {
+                   CompoundNBT compoundNBT = listNBT.getCompound(i);
+                   Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
+                   if (enchantment != null) {
+                       int level = compoundNBT.getInt("lvl");
+                       Woot.LOGGER.info("{} : {}", enchantment, level);
+                       if (level == 1) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_1_ENCHANT_MB.get();
+                       else if (level == 2) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_2_ENCHANT_MB.get();
+                       else if (level == 3) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_3_ENCHANT_MB.get();
+                       else if (level == 4) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_4_ENCHANT_MB.get();
+                       else if (level == 5) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get();
+                       else if (level > 5) {
+                           int extra = level - 5;
+                           amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get();
+                           amount += (extra * SqueezerConfiguration.ENCH_SQUEEZER_EXTRA_ENCHANT_MB.get());
+                       }
+                   }
+               }
+               FluidStack fluidStack = new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount);
+               fluidTank.ifPresent(t -> {
+                   t.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                   h.extractItem(0, 1, false);
+                   markDirty();
+               });
+           }
+       });
     }
 
     @Nonnull
@@ -119,15 +108,7 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
         return super.getCapability(cap, side);
     }
 
-    public int getRed() { return this.red; }
-    public int getYellow() { return this.yellow; }
-    public int getBlue() { return this.blue; }
-    public int getWhite() { return this.white; }
-    public void setRed(int v) { this.red = v; }
-    public void setYellow(int v) { this.yellow = v; }
-    public void setBlue(int v) { this.blue = v; }
-    public void setWhite(int v) { this.white = v; }
-    public int getPure() {
+    public int getEnchant() {
         AtomicInteger v = new AtomicInteger(0);
         fluidTank.ifPresent(h -> {
             v.set(h.getFluidAmount());
@@ -135,37 +116,22 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
         return v.get();
     }
 
-    public void setPure(int v) {
+    public void setEnchant(int v) {
         fluidTank.ifPresent(h -> {
-            h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v));
+            h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v));
         });
     }
     public int getEnergy() {
         return energyStorage.map(h -> h.getEnergyStored()).orElse(0);
     }
-    public void setEnergy(int v) {
-        energyStorage.ifPresent(h -> h.setEnergy(v));
-    }
-
-    /**
-     * IWootDebug
-     */
-    @Override
-    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add("====> SqueezerTileEntity");
-        debug.add("      r:" + red + " y:" + yellow + " b:" + blue + " w:" + white);
-        fluidTank.ifPresent(h -> {
-            debug.add("     p:" + h.getFluidAmount());
-        });
-        return debug;
-    }
+    public void setEnergy(int v) { energyStorage.ifPresent(h -> h.setEnergy(v)); }
 
     /**
      * Tank
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1)));
+        return new FluidTank(SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1)));
     }
 
     /**
@@ -181,7 +147,7 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return DyeSqueezerRecipe.findRecipe(stack) != null;
+                return EnchantmentHelper.isEnchanted(stack);
             }
         };
     }
@@ -197,7 +163,7 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
     /**
      * NBT
      */
-    @Override
+
     public void read(CompoundNBT compoundNBT) {
         CompoundNBT invTag = compoundNBT.getCompound("inv");
         itemHandler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
@@ -208,13 +174,6 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
         CompoundNBT energyTag = compoundNBT.getCompound("energy");
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
-        if (compoundNBT.contains("dye")) {
-            CompoundNBT dyeTag = compoundNBT.getCompound("dye");
-            red = dyeTag.getInt("red");
-            yellow = dyeTag.getInt("yellow");
-            blue = dyeTag.getInt("blue");
-            white = dyeTag.getInt("white");
-        }
         super.read(compoundNBT);
     }
 
@@ -235,12 +194,6 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
             compoundNBT.put("energy", energyTag);
         });
 
-        CompoundNBT dyeTag = new CompoundNBT();
-        dyeTag.putInt("red", red);
-        dyeTag.putInt("yellow", yellow);
-        dyeTag.putInt("blue", blue);
-        dyeTag.putInt("white", white);
-        compoundNBT.put("dye", dyeTag);
         return super.write(compoundNBT);
     }
 
@@ -255,6 +208,18 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new DyeSqueezerContainer(i, world, pos, playerInventory, playerEntity);
+        return new EnchantSqueezerContainer(i, world, pos, playerInventory, playerEntity);
+    }
+
+    /**
+     * IWootDebug
+     */
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> EnchantSqueezerTileEntity");
+        fluidTank.ifPresent(h -> {
+            debug.add("     p:" + h.getFluidAmount());
+        });
+        return debug;
     }
 }

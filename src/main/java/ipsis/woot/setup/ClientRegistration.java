@@ -14,7 +14,8 @@ import ipsis.woot.modules.factory.client.HeartScreen;
 import ipsis.woot.modules.anvil.blocks.AnvilTileEntity;
 import ipsis.woot.modules.oracle.OracleSetup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
-import ipsis.woot.modules.squeezer.client.SqueezerScreen;
+import ipsis.woot.modules.squeezer.client.DyeSqueezerScreen;
+import ipsis.woot.modules.squeezer.client.EnchantSqueezerScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -34,7 +35,8 @@ public class ClientRegistration {
         ClientRegistry.bindTileEntitySpecialRenderer(AnvilTileEntity.class, new AnvilTileEntitySpecialRenderer());
         ScreenManager.registerFactory(FactorySetup.HEART_BLOCK_CONTAINER.get(), HeartScreen::new);
         ScreenManager.registerFactory(OracleSetup.ORACLE_BLOCK_CONTAINER.get(), OracleScreen::new);
-        ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), SqueezerScreen::new);
+        ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), DyeSqueezerScreen::new);
+        ScreenManager.registerFactory(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_CONTAINER.get(), EnchantSqueezerScreen::new);
         ScreenManager.registerFactory(InfuserSetup.INFUSER_BLOCK_CONTAINER.get(), InfuserScreen::new);
 
         ItemColors items = Minecraft.getInstance().getItemColors();

@@ -1,9 +1,7 @@
 package ipsis.woot.modules.squeezer;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.squeezer.blocks.DyeSqueezerContainer;
-import ipsis.woot.modules.squeezer.blocks.DyeSqueezerBlock;
-import ipsis.woot.modules.squeezer.blocks.DyeSqueezerTileEntity;
+import ipsis.woot.modules.squeezer.blocks.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.container.ContainerType;
@@ -44,6 +42,25 @@ public class SqueezerSetup {
     public static final RegistryObject<ContainerType<DyeSqueezerContainer>> SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
             SQUEEZER_TAG, () ->
                     IForgeContainerType.create((windowId, inv, data) -> new DyeSqueezerContainer(
+                            windowId,
+                            Minecraft.getInstance().world,
+                            data.readBlockPos(),
+                            inv,
+                            Minecraft.getInstance().player)));
+
+    public static final String ENCHANT_SQUEEZER_TAG = "enchsqueezer";
+    public static final RegistryObject<EnchantSqueezerBlock> ENCHANT_SQUEEZER_BLOCK = BLOCKS.register(
+            ENCHANT_SQUEEZER_TAG, () -> new EnchantSqueezerBlock());
+    public static final RegistryObject<Item> ENCHANT_SQUEEZER_BLOCK_ITEM = ITEMS.register(
+            ENCHANT_SQUEEZER_TAG, () ->
+                    new BlockItem(ENCHANT_SQUEEZER_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> ENCHANT_SQUEEZER_BLOCK_TILE = TILES.register(
+            ENCHANT_SQUEEZER_TAG, () ->
+                    TileEntityType.Builder.create(EnchantSqueezerTileEntity::new, ENCHANT_SQUEEZER_BLOCK.get()).build(null));
+
+    public static final RegistryObject<ContainerType<EnchantSqueezerContainer>> ENCHANT_SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
+            ENCHANT_SQUEEZER_TAG, () ->
+                    IForgeContainerType.create((windowId, inv, data) -> new EnchantSqueezerContainer(
                             windowId,
                             Minecraft.getInstance().world,
                             data.readBlockPos(),

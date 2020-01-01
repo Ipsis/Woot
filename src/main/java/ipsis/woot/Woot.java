@@ -3,6 +3,7 @@ package ipsis.woot;
 import ipsis.woot.config.Config;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
+import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.infuser.InfuserSetup;
@@ -47,6 +48,7 @@ public class Woot {
         AnvilSetup.register();
         FluidSetup.register();
         ToolsSetup.register();
+        DebugSetup.register();
 
         MinecraftForge.EVENT_BUS.register(new Registration());
 

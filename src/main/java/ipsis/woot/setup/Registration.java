@@ -1,13 +1,11 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.tools.items.DebugItem;
 import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.modules.simulation.dimension.TartarusModDimension;
-import ipsis.woot.modules.tools.items.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;

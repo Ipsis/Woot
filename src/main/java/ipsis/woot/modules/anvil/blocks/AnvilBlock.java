@@ -1,9 +1,8 @@
 package ipsis.woot.modules.anvil.blocks;
 
 import ipsis.woot.modules.tools.ToolsSetup;
-import ipsis.woot.modules.tools.items.DebugItem;
+import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.modules.anvil.AnvilCraftingManager;
-import ipsis.woot.mod.ModItems;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -1,6 +1,6 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.crafting.SqueezerRecipe;
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,13 +15,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class SqueezerContainer extends WootContainer {
+public class DyeSqueezerContainer extends WootContainer {
 
-    public SqueezerTileEntity tileEntity;
+    public DyeSqueezerTileEntity tileEntity;
 
-    public SqueezerContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public DyeSqueezerContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = (SqueezerTileEntity)world.getTileEntity(pos);
+        tileEntity = (DyeSqueezerTileEntity)world.getTileEntity(pos);
         addOwnSlots();
         addPlayerSlots(playerInventory);
         addListeners();
@@ -76,7 +76,7 @@ public class SqueezerContainer extends WootContainer {
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
-                if (SqueezerRecipe.findRecipe(stack) != null) {
+                if (DyeSqueezerRecipe.findRecipe(stack) != null) {
                     // Player -> Machine
                     if (!this.mergeItemStack(stack, 0, 1, false))
                         return ItemStack.EMPTY;
@@ -150,5 +150,5 @@ public class SqueezerContainer extends WootContainer {
         });
     }
 
-    public SqueezerTileEntity getTileEntity() { return tileEntity; }
+    public DyeSqueezerTileEntity getTileEntity() { return tileEntity; }
 }

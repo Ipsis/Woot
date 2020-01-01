@@ -1,7 +1,5 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.modules.squeezer.blocks.SqueezerTileEntity;
-import ipsis.woot.util.WootBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -23,9 +21,9 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class SqueezerBlock extends Block {
+public class DyeSqueezerBlock extends Block {
 
-    public SqueezerBlock() {
+    public DyeSqueezerBlock() {
         super(Properties.create(Material.IRON).sound(SoundType.METAL));
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
@@ -49,7 +47,7 @@ public class SqueezerBlock extends Block {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new SqueezerTileEntity();
+        return new DyeSqueezerTileEntity();
     }
 
     @Override

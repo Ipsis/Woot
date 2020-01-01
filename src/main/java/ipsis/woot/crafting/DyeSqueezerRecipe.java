@@ -1,7 +1,6 @@
 package ipsis.woot.crafting;
 
 import ipsis.woot.fluilds.FluidSetup;
-import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -16,33 +15,33 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SqueezerRecipe {
+public class DyeSqueezerRecipe {
 
     public final DyeMakeup output;
     public final WootIngredient input;
 
-    public SqueezerRecipe(DyeMakeup output, ItemStack input) {
+    public DyeSqueezerRecipe(DyeMakeup output, ItemStack input) {
         this(output, new WootIngredient(input));
     }
 
-    public SqueezerRecipe(DyeMakeup output, ResourceLocation tag) {
+    public DyeSqueezerRecipe(DyeMakeup output, ResourceLocation tag) {
         this(output, new WootIngredient(tag));
     }
 
-    private SqueezerRecipe(DyeMakeup output, WootIngredient ingredient) {
+    private DyeSqueezerRecipe(DyeMakeup output, WootIngredient ingredient) {
         this.output = output;
         this.input = ingredient;
         initJei();
     }
 
-    public static ArrayList<SqueezerRecipe> recipeList = new ArrayList<>();
+    public static ArrayList<DyeSqueezerRecipe> recipeList = new ArrayList<>();
     public static void addRecipe(DyeMakeup output, ItemStack input) {
-        SqueezerRecipe recipe = new SqueezerRecipe(output, input);
+        DyeSqueezerRecipe recipe = new DyeSqueezerRecipe(output, input);
         recipeList.add(recipe);
     }
 
     public static void addRecipe(DyeMakeup output, ResourceLocation tag) {
-        SqueezerRecipe recipe = new SqueezerRecipe(output, tag);
+        DyeSqueezerRecipe recipe = new DyeSqueezerRecipe(output, tag);
         recipeList.add(recipe);
     }
 
@@ -55,9 +54,9 @@ public class SqueezerRecipe {
     }
 
     public static @Nullable
-    SqueezerRecipe findRecipe(ItemStack input) {
+    DyeSqueezerRecipe findRecipe(ItemStack input) {
         if (input != null && !input.isEmpty()) {
-            for (SqueezerRecipe recipe : recipeList) {
+            for (DyeSqueezerRecipe recipe : recipeList) {
                 if (recipe.input.isSameIngredient(input))
                     return recipe;
             }

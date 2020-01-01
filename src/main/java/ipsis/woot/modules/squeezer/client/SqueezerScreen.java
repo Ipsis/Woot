@@ -4,8 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
-import ipsis.woot.modules.squeezer.SqueezerSetup;
-import ipsis.woot.modules.squeezer.blocks.SqueezerContainer;
+import ipsis.woot.modules.squeezer.blocks.DyeSqueezerContainer;
 import ipsis.woot.util.WootContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.DyeColor;
@@ -16,11 +15,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 
 @OnlyIn(Dist.CLIENT)
-public class SqueezerScreen extends WootContainerScreen<SqueezerContainer> {
+public class SqueezerScreen extends WootContainerScreen<DyeSqueezerContainer> {
 
     private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/squeezer.png");
 
-    public SqueezerScreen(SqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
+    public SqueezerScreen(DyeSqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
         xSize = 180;
         ySize = 177;

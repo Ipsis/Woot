@@ -1,7 +1,7 @@
 package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
-import ipsis.woot.crafting.SqueezerRecipe;
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import mezz.jei.api.constants.VanillaTypes;
@@ -19,31 +19,31 @@ import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 
-public class SqueezerRecipeCategory implements IRecipeCategory<SqueezerRecipe>  {
+public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRecipe>  {
 
-    public static final ResourceLocation UID = new ResourceLocation(Woot.MODID, "squeezer");
+    public static final ResourceLocation UID = new ResourceLocation(Woot.MODID, "dyesqueezer");
     private static IDrawableStatic background;
     private final IDrawable icon;
 
-    public SqueezerRecipeCategory(IGuiHelper guiHelper) {
+    public DyeSqueezerRecipeCategory(IGuiHelper guiHelper) {
         ResourceLocation resourceLocation = new ResourceLocation(Woot.MODID, "textures/gui/jei/squeezer.png");
         background = guiHelper.createDrawable(resourceLocation, 0, 0, 180, 86);
         icon = guiHelper.createDrawableIngredient(new ItemStack(FactorySetup.HEART_BLOCK.get()));
     }
 
     @Override
-    public Class<? extends SqueezerRecipe> getRecipeClass() {
-        return SqueezerRecipe.class;
+    public Class<? extends DyeSqueezerRecipe> getRecipeClass() {
+        return DyeSqueezerRecipe.class;
     }
 
     @Override
-    public void setIngredients(SqueezerRecipe recipe, IIngredients iIngredients) {
+    public void setIngredients(DyeSqueezerRecipe recipe, IIngredients iIngredients) {
         iIngredients.setInputLists(VanillaTypes.ITEM, recipe.getJeiInputs());
         iIngredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout iRecipeLayout, SqueezerRecipe recipe, IIngredients iIngredients) {
+    public void setRecipe(IRecipeLayout iRecipeLayout, DyeSqueezerRecipe recipe, IIngredients iIngredients) {
         IGuiItemStackGroup itemStacks = iRecipeLayout.getItemStacks();
         itemStacks.init(0, true, 38, 39);
         itemStacks.set(iIngredients);
@@ -54,7 +54,7 @@ public class SqueezerRecipeCategory implements IRecipeCategory<SqueezerRecipe>  
     }
 
     @Override
-    public void draw(SqueezerRecipe recipe, double mouseX, double mouseY) {
+    public void draw(DyeSqueezerRecipe recipe, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
         minecraft.fontRenderer.drawString("Red: " + recipe.output.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
         minecraft.fontRenderer.drawString("Yellow: " + recipe.output.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());

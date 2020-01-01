@@ -1,6 +1,6 @@
 package ipsis.woot.modules.squeezer;
 
-import ipsis.woot.crafting.SqueezerRecipe;
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
@@ -18,11 +18,11 @@ public class SqueezerRecipes {
     public static void load(@Nonnull RecipeManager manager) {
 
         // Loaded on server start so need to clear the old ones
-        SqueezerRecipe.clearRecipes();
+        DyeSqueezerRecipe.clearRecipes();
 
         // Map Forge dye tag to relevant dye
         for (DyeMakeup d : DyeMakeup.VALUES)
-            SqueezerRecipe.addRecipe(d, d.getForgeTag());
+            DyeSqueezerRecipe.addRecipe(d, d.getForgeTag());
 
         ResourceLocation rs = new ResourceLocation("forge", "dyes");
         Tag<Item> tag = ItemTags.getCollection().get(rs);
@@ -47,11 +47,11 @@ public class SqueezerRecipes {
                         if (dyeMakeup != null) {
                             if (recipe instanceof ShapelessRecipe) {
                                 for (ItemStack itemStack : ((ShapelessRecipe)recipe).getIngredients().get(0).getMatchingStacks()) {
-                                    SqueezerRecipe.addRecipe(dyeMakeup, itemStack.copy());
+                                    DyeSqueezerRecipe.addRecipe(dyeMakeup, itemStack.copy());
                                 }
                             } else if (recipe instanceof AbstractCookingRecipe) {
                                 for (ItemStack itemStack : ((AbstractCookingRecipe)recipe).getIngredients().get(0).getMatchingStacks()) {
-                                    SqueezerRecipe.addRecipe(dyeMakeup, itemStack.copy());
+                                    DyeSqueezerRecipe.addRecipe(dyeMakeup, itemStack.copy());
                                 }
                             }
                         }

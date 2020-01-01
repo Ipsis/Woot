@@ -1,6 +1,6 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.crafting.SqueezerRecipe;
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
@@ -37,9 +37,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
+public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
 
-    public SqueezerTileEntity() { super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get()); }
+    public DyeSqueezerTileEntity() { super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get()); }
 
     private int red = 0;
     private int yellow = 0;
@@ -58,7 +58,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         itemHandler.ifPresent(h -> {
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
-                SqueezerRecipe recipe = SqueezerRecipe.findRecipe(itemStack);
+                DyeSqueezerRecipe recipe = DyeSqueezerRecipe.findRecipe(itemStack);
                 if (recipe != null && canStoreInternal(recipe)) {
                     red += recipe.output.getRed();
                     yellow += recipe.output.getYellow();
@@ -81,7 +81,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
         });
     }
 
-    private boolean canStoreInternal(SqueezerRecipe recipe) {
+    private boolean canStoreInternal(DyeSqueezerRecipe recipe) {
         if (recipe.output.getRed() + red > SqueezerConfiguration.INTERNAL_FLUID_MAX.get())
             return false;
         if (recipe.output.getYellow() + yellow > SqueezerConfiguration.INTERNAL_FLUID_MAX.get())
@@ -181,7 +181,7 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return SqueezerRecipe.findRecipe(stack) != null;
+                return DyeSqueezerRecipe.findRecipe(stack) != null;
             }
         };
     }
@@ -255,6 +255,6 @@ public class SqueezerTileEntity extends TileEntity implements ITickableTileEntit
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new SqueezerContainer(i, world, pos, playerInventory, playerEntity);
+        return new DyeSqueezerContainer(i, world, pos, playerInventory, playerEntity);
     }
 }

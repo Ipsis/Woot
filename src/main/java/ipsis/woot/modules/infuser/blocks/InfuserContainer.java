@@ -31,7 +31,8 @@ public class InfuserContainer extends WootContainer {
         tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent((
                 iItemHandler -> {
                     addSlot(new SlotItemHandler(iItemHandler, 0, 46, 40));
-                    addSlot(new SlotItemHandler(iItemHandler, 1, 118, 40));
+                    addSlot(new SlotItemHandler(iItemHandler, 1, 64, 40));
+                    addSlot(new SlotItemHandler(iItemHandler, 2, 118, 40));
                 }
         ));
     }
@@ -65,18 +66,24 @@ public class InfuserContainer extends WootContainer {
     public void addListeners() {
         addIntegerListener(new IntReferenceHolder() {
             @Override
+            public int get() { return tileEntity.getEnergy(); }
+
+            @Override
+            public void set(int i) { tileEntity.setEnergy(i); }
+        });
+        addIntegerListener(new IntReferenceHolder() {
+            @Override
             public int get() { return tileEntity.getTankAmount(); }
 
             @Override
             public void set(int v) { tileEntity.setTankAmount(v); }
         });
-        /*
         addIntegerListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getTankFluid(); }
 
             @Override
             public void set(int v) { tileEntity.setTankFluid(v); }
-        }); */
+        });
     }
 }

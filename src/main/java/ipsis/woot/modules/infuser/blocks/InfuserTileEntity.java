@@ -1,12 +1,10 @@
 package ipsis.woot.modules.infuser.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
-import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
-import ipsis.woot.modules.infuser.InfuserRecipes;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.WootEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -23,6 +21,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -61,6 +60,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                     InfuserRecipe recipe = InfuserRecipe.findRecipe(itemStack, f.getFluid(), ItemStack.EMPTY);
                     if (recipe != null && h.insertItem(OUTPUT_SLOT, recipe.output.copy(), true).isEmpty()) {
                         h.extractItem(INPUT_SLOT, 1, false);
+                        h.extractItem(AUGMENT_SLOT, 1, false);
                         f.drain(recipe.fluid.copy(), IFluidHandler.FluidAction.EXECUTE);
                         h.insertItem(OUTPUT_SLOT, recipe.output.copy(), false);
                         markDirty();
@@ -81,9 +81,22 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     public void setTankAmount(int v) {
         fluidTank.ifPresent(h -> {
             if (h.getFluidAmount() == 0)
-                h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v));
+                h.setFluid(FluidStack.EMPTY);
             else
                 h.setFluid(new FluidStack(h.getFluid(), v));
+        });
+    }
+
+    public int getTankFluid() {
+        AtomicInteger v = new AtomicInteger(-1);
+        fluidTank.ifPresent(h -> {
+            // reg id?
+        });
+        return v.get();
+    }
+
+    public void setTankFluid(int v) {
+        fluidTank.ifPresent(h -> {
         });
     }
 
@@ -94,25 +107,42 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             return itemHandler.cast();
         else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return fluidTank.cast();
+        else if (cap == CapabilityEnergy.ENERGY)
+            return energyStorage.cast();
         return super.getCapability(cap, side);
     }
+
+    public int getEnergy() {
+        return energyStorage.map(h -> h.getEnergyStored()).orElse(0);
+    }
+    public void setEnergy(int v) { energyStorage.ifPresent(h -> h.setEnergy(v)); }
 
     /**
      * Tank
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(InfuserConfiguration.TANK_CAPACITY.get(), h -> InfuserRecipe.getValidFluids().contains(h.getFluid()));
+        return new FluidTank(InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), h -> InfuserRecipe.getValidFluids().contains(h.getFluid()));
     }
+
+    /**
+     * Energy
+     */
+    private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
+    private WootEnergyStorage createEnergy() {
+        return new WootEnergyStorage(InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_MAX_ENERGY_RX.get());
+    }
+
 
     /**
      * Inventory
      */
     public static final int INPUT_SLOT = 0;
-    public static final int OUTPUT_SLOT = 1;
+    public static final int AUGMENT_SLOT = 1;
+    public static final int OUTPUT_SLOT = 2;
     private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
     private IItemHandler createItemHandler() {
-        return new ItemStackHandler(2) {
+        return new ItemStackHandler(3) {
             @Override
             protected void onContentsChanged(int slot) {
                 markDirty();
@@ -120,9 +150,9 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (slot == 0)
+                if (slot == INPUT_SLOT)
                     return InfuserRecipe.isValidInput(stack);
-                else if (slot == 1)
+                else if (slot == AUGMENT_SLOT)
                     return InfuserRecipe.isValidAugment(stack);
 
                 return true;
@@ -153,6 +183,10 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
         fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
+
+        CompoundNBT energyTag = compoundNBT.getCompound("energy");
+        energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
+
         super.read(compoundNBT);
     }
 
@@ -167,6 +201,12 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
             compoundNBT.put("tank", tankTag);
         });
+
+        energyStorage.ifPresent(h -> {
+            CompoundNBT energyTag = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
+            compoundNBT.put("energy", energyTag);
+        });
+
         return super.write(compoundNBT);
     }
 

@@ -60,7 +60,7 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
         itemStacks.set(iIngredients);
 
         IGuiFluidStackGroup fluidStacks = iRecipeLayout.getFluidStacks();
-        fluidStacks.init(0, true, 154, 18, 16, 60, InfuserConfiguration.TANK_CAPACITY.get(), true, null);
+        fluidStacks.init(0, true, 154, 18, 16, 60, InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), true, null);
         fluidStacks.set(iIngredients);
     }
 

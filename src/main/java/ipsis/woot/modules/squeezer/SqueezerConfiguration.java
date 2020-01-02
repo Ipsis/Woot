@@ -56,22 +56,22 @@ public class SqueezerConfiguration {
                         .defineInRange("energyMaxRx", 100, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_LVL_1_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of fluid for a level I enchantment (in mb")
-                        .defineInRange("level1Fluid", 10, 0, Integer.MAX_VALUE);
+                        .defineInRange("level1Fluid", 500, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_LVL_2_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of fluid for a level 2 enchantment (in mb")
-                        .defineInRange("level2Fluid", 20, 0, Integer.MAX_VALUE);
+                        .defineInRange("level2Fluid", 1000, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_LVL_3_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of fluid for a level 3 enchantment (in mb")
-                        .defineInRange("level3Fluid", 30, 0, Integer.MAX_VALUE);
+                        .defineInRange("level3Fluid", 1500, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_LVL_4_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of fluid for a level 4 enchantment (in mb")
-                        .defineInRange("level4Fluid", 40, 0, Integer.MAX_VALUE);
+                        .defineInRange("level4Fluid", 2000, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_LVL_5_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of fluid for a level 5 enchantment (in mb")
-                        .defineInRange("level5Fluid", 50, 0, Integer.MAX_VALUE);
+                        .defineInRange("level5Fluid", 2500, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_EXTRA_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of extra fluid for each level above 5 (in mb")
-                        .defineInRange("plus5Fluid", 10, 0, Integer.MAX_VALUE);
+                        .defineInRange("plus5Fluid", 500, 0, Integer.MAX_VALUE);
             }
             COMMON_BUILDER.pop();
         }

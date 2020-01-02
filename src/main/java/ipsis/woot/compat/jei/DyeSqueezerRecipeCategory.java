@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -28,7 +29,7 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
     public DyeSqueezerRecipeCategory(IGuiHelper guiHelper) {
         ResourceLocation resourceLocation = new ResourceLocation(Woot.MODID, "textures/gui/jei/squeezer.png");
         background = guiHelper.createDrawable(resourceLocation, 0, 0, 180, 86);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(FactorySetup.HEART_BLOCK.get()));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(SqueezerSetup.SQUEEZER_BLOCK.get()));
     }
 
     @Override

@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
+import ipsis.woot.modules.infuser.InfuserRecipes;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,7 +58,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
                 fluidTank.ifPresent(f -> {
-                    InfuserRecipe recipe = InfuserRecipe.findRecipe(itemStack, f.getFluid());
+                    InfuserRecipe recipe = InfuserRecipe.findRecipe(itemStack, f.getFluid(), ItemStack.EMPTY);
                     if (recipe != null && h.insertItem(OUTPUT_SLOT, recipe.output.copy(), true).isEmpty()) {
                         h.extractItem(INPUT_SLOT, 1, false);
                         f.drain(recipe.fluid.copy(), IFluidHandler.FluidAction.EXECUTE);
@@ -101,9 +102,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(InfuserConfiguration.TANK_CAPACITY.get(), h ->
-            h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1)) ||
-                    h.isFluidEqual(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1)));
+        return new FluidTank(InfuserConfiguration.TANK_CAPACITY.get(), h -> InfuserRecipe.getValidFluids().contains(h.getFluid()));
     }
 
     /**
@@ -121,7 +120,11 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                // TODO limit to valid input items
+                if (slot == 0)
+                    return InfuserRecipe.isValidInput(stack);
+                else if (slot == 1)
+                    return InfuserRecipe.isValidAugment(stack);
+
                 return true;
             }
         };

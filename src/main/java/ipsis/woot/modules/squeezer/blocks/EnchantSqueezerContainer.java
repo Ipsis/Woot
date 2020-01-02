@@ -3,6 +3,7 @@ package ipsis.woot.modules.squeezer.blocks;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootContainer;
+import ipsis.woot.util.helper.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -57,7 +58,6 @@ public class EnchantSqueezerContainer extends WootContainer {
                 playerIn, SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get());
     }
 
-    /*
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerEntity, int index) {
 
@@ -77,7 +77,7 @@ public class EnchantSqueezerContainer extends WootContainer {
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
-                if (DyeSqueezerRecipe.findRecipe(stack) != null) {
+                if (EnchantmentHelper.isEnchanted(itemStack)) {
                     // Player -> Machine
                     if (!this.mergeItemStack(stack, 0, 1, false))
                         return ItemStack.EMPTY;
@@ -103,7 +103,7 @@ public class EnchantSqueezerContainer extends WootContainer {
         }
 
         return itemStack;
-    } */
+    }
 
 
     public void addListeners() {

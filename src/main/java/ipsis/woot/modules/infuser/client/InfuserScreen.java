@@ -15,8 +15,8 @@ public class InfuserScreen extends ContainerScreen<InfuserContainer> {
 
     public InfuserScreen(InfuserContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
-        xSize = 256;
-        ySize = 256;
+        xSize = 180;
+        ySize = 177;
     }
 
     @Override

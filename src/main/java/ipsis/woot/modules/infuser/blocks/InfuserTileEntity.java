@@ -1,8 +1,12 @@
 package ipsis.woot.modules.infuser.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
+import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.util.FluidStackPacketHandler;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -50,6 +54,9 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         if (world.isRemote)
             return;
 
+        machineTick();
+
+        /*
         if (world.getGameTime() % 20 != 0)
             return;
 
@@ -67,37 +74,15 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                     }
                 });
             }
-        });
+        }); */
     }
 
-    public int getTankAmount() {
-        AtomicInteger v = new AtomicInteger(0);
-        fluidTank.ifPresent(h -> {
-            v.set(h.getFluidAmount());
-        });
-        return v.get();
+    public void setTankFluid(FluidStack fluidStack) {
+        fluidTank.ifPresent(h -> h.setFluid(fluidStack));
     }
 
-    public void setTankAmount(int v) {
-        fluidTank.ifPresent(h -> {
-            if (h.getFluidAmount() == 0)
-                h.setFluid(FluidStack.EMPTY);
-            else
-                h.setFluid(new FluidStack(h.getFluid(), v));
-        });
-    }
-
-    public int getTankFluid() {
-        AtomicInteger v = new AtomicInteger(-1);
-        fluidTank.ifPresent(h -> {
-            // reg id?
-        });
-        return v.get();
-    }
-
-    public void setTankFluid(int v) {
-        fluidTank.ifPresent(h -> {
-        });
+    public FluidStack getTankFluid() {
+        return fluidTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
     }
 
     @Nonnull
@@ -231,5 +216,129 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new InfuserContainer(i, world, pos, playerInventory, playerEntity);
+    }
+
+    public FluidStackPacket getFluidStackPacket() {
+        return new FluidStackPacket(fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+    }
+
+    /**
+     * Process
+     */
+    private boolean isActive = false;
+    private int processMax = 0; // total energy needed
+    private int processRem = 0; // energy still to use
+    private InfuserRecipe currRecipe = null;
+    public void machineTick() {
+
+        if (isActive) {
+            processTick(); // use energy and update processRem
+            if (canFinish()) {
+                // all energy used and all inputs are still valid
+                processFinish(); // use inputs and generate outputs
+                if (isDisabled() || !canStart()) {
+                    //  disabled via redstone or dont have a valid set of input items and enough energy
+                    processOff();
+                    isActive = false;
+                } else {
+                    processStart(); // set processMax and processRem
+                }
+            } else if (energyStorage.map(e -> e.getEnergyStored() <= 0).orElse(false)) {
+                processOff();
+            }
+        } else if (!isDisabled()) {
+            if (world.getGameTime() % 10 == 0 && canStart()) {
+                // have a valid set of input items and enough energy
+                processStart(); // set processMax and processRem
+                processTick(); // use energy and update processRem
+                isActive = true;
+            }
+        }
+    }
+
+    private boolean isDisabled() {
+        return false;
+    }
+
+    private boolean canStart() {
+        if (!itemHandler.map(h -> {
+            if (h.getStackInSlot(INPUT_SLOT).isEmpty()) return false;
+            return true;
+        }).orElse(false)) {
+            return false;
+        }
+
+        if (!fluidTank.map(f -> {
+            if (f.getFluidAmount() == 0) return false;
+            return true;
+        }).orElse(false)) {
+            return false;
+        }
+
+        getRecipe();
+        if (currRecipe == null)
+            return false;
+
+        return true;
+    }
+
+    private void getRecipe() {
+        currRecipe = InfuserRecipe.findRecipe(
+                itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY),
+                fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY),
+                itemHandler.map(i -> i.getStackInSlot(AUGMENT_SLOT)).orElse(ItemStack.EMPTY));
+        Woot.LOGGER.info("getRecipe: {}", currRecipe);
+    }
+
+    private boolean hasValidInput() {
+        if (currRecipe == null)
+            getRecipe();
+        if (currRecipe == null)
+            return false;
+
+        return true;
+    }
+
+    private int processTick() {
+        if (processRem <= 0) return 0;
+        AtomicInteger energy = new AtomicInteger(0);
+        energyStorage.ifPresent(e -> {
+            energy.set(e.extractEnergy(200, false));
+        });
+        processRem -= energy.get();
+        return energy.get();
+    }
+
+    private boolean canFinish() {
+        return processRem <= 0 && hasValidInput();
+    }
+
+    private void processOff() {
+        processRem = 0;
+        currRecipe = null;
+    }
+
+    private void processStart() {
+        processMax = currRecipe.energy;
+        processRem = currRecipe.energy;
+    }
+
+    private void processFinish() {
+        if (currRecipe == null)
+            getRecipe();
+        if (currRecipe == null) {
+            processOff();
+            return;
+        }
+
+        itemHandler.ifPresent(i -> {
+            i.extractItem(INPUT_SLOT, currRecipe.input.size, false);
+            if (currRecipe.hasAugment())
+                i.extractItem(AUGMENT_SLOT, currRecipe.augment.size, false);
+            i.insertItem(OUTPUT_SLOT, currRecipe.getOutput(), false);
+        });
+
+        fluidTank.ifPresent(f -> f.drain(currRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
+        markDirty();;
     }
 }

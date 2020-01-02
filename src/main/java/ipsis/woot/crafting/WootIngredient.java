@@ -12,14 +12,24 @@ public class WootIngredient {
 
     public ItemStack itemStack = ItemStack.EMPTY;
     public ResourceLocation tag = null;
+    public int size = 0;
 
     public WootIngredient(ItemStack itemStack) {
         this.itemStack = itemStack;
+        this.size = itemStack.getCount();
     }
 
     public WootIngredient(ResourceLocation tag) {
         this.tag = tag;
+        this.size = 1;
     }
+
+    public WootIngredient(ResourceLocation tag, int size) {
+        this.tag = tag;
+        this.size = size;
+    }
+
+    public int getSize() { return this.size; }
 
     public boolean isItemStackIngredient() {
         return !itemStack.isEmpty();

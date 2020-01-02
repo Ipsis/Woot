@@ -1,20 +1,32 @@
 package ipsis.woot.modules.infuser.blocks;
 
+import ipsis.woot.Woot;
+import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserSetup;
-import ipsis.woot.modules.squeezer.SqueezerSetup;
+import ipsis.woot.setup.NetworkChannel;
+import ipsis.woot.util.FluidStackPacketHandler;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class InfuserContainer extends WootContainer {
+import java.lang.reflect.Field;
+import java.util.List;
+
+public class InfuserContainer extends WootContainer implements FluidStackPacketHandler {
 
     public InfuserTileEntity tileEntity;
 
@@ -53,6 +65,23 @@ public class InfuserContainer extends WootContainer {
         }
     }
 
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        try {
+            List<IContainerListener> iContainerListeners =
+                    (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
+
+            // TODO check for actual changes
+            for (IContainerListener l : iContainerListeners) {
+                NetworkChannel.channel.sendTo(tileEntity.getFluidStackPacket(), ((ServerPlayerEntity)l).connection.netManager,
+                        NetworkDirection.PLAY_TO_CLIENT);
+            }
+        } catch (Throwable e) {
+            Woot.LOGGER.error("Reflection of container listener failed");
+        }
+}
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
@@ -71,19 +100,12 @@ public class InfuserContainer extends WootContainer {
             @Override
             public void set(int i) { tileEntity.setEnergy(i); }
         });
-        addIntegerListener(new IntReferenceHolder() {
-            @Override
-            public int get() { return tileEntity.getTankAmount(); }
+    }
 
-            @Override
-            public void set(int v) { tileEntity.setTankAmount(v); }
-        });
-        addIntegerListener(new IntReferenceHolder() {
-            @Override
-            public int get() { return tileEntity.getTankFluid(); }
-
-            @Override
-            public void set(int v) { tileEntity.setTankFluid(v); }
-        });
+    @Override
+    public void handlePacket(FluidStackPacket packet) {
+        if (packet.fluidStackList.isEmpty())
+            return;
+        tileEntity.setTankFluid(packet.fluidStackList.get(0));
     }
 }

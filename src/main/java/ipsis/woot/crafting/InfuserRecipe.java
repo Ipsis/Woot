@@ -21,9 +21,11 @@ public class InfuserRecipe {
     public final WootIngredient augment;
     public final FluidStack fluid;
     public final ItemStack output;
+    public final int energy;
 
-    public InfuserRecipe(ItemStack output, Object input, FluidStack fluidStack, Object augment) {
+    public InfuserRecipe(ItemStack output, Object input, FluidStack fluidStack, Object augment, int energy) {
         this.output = output;
+        this.energy = energy;
         if (input instanceof ItemStack)
             this.input = new WootIngredient((ItemStack)input);
         else if (input instanceof ResourceLocation)
@@ -48,16 +50,13 @@ public class InfuserRecipe {
     public ItemStack getOutput() {
         return output.copy();
     }
-
-    public FluidStack getFluidInput() {
-        return this.fluid.copy();
-    }
-
+    public FluidStack getFluidInput() { return this.fluid.copy(); }
     public boolean hasAugment() { return this.augment != null; }
+    public int getEnergy() { return this.energy; }
 
     public static ArrayList<InfuserRecipe> recipeList = new ArrayList<>();
-    public static void addRecipe(ItemStack output, Object input, FluidStack fluidStack, Object augment) {
-        InfuserRecipe recipe = new InfuserRecipe(output, input, fluidStack, augment);
+    public static void addRecipe(ItemStack output, Object input, FluidStack fluidStack, Object augment, int energy) {
+        InfuserRecipe recipe = new InfuserRecipe(output, input, fluidStack, augment, energy);
         recipeList.add(recipe);
     }
 
@@ -102,18 +101,18 @@ public class InfuserRecipe {
             Tag<Item> itemTag = ItemTags.getCollection().get(input.tag);
             if (itemTag != null) {
                 for (Item item : itemTag.getAllElements())
-                    in.add(new ItemStack(item));
+                    in.add(new ItemStack(item, input.size));
             }
             Tag<Block> blockTag = BlockTags.getCollection().get(input.tag);
             if (blockTag != null) {
                 for (Block block : blockTag.getAllElements())
-                    in.add(new ItemStack(block.asItem()));
+                    in.add(new ItemStack(block.asItem(), input.getSize()));
             }
         }
         jeiInputs.add(in);
 
         List<ItemStack> augments = new ArrayList<>();
-        if (augment != null) {
+        if (hasAugment()) {
             if (augment.isItemStackIngredient())
                 augments.add(augment.itemStack.copy());
             // TODO tags

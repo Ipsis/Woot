@@ -1,9 +1,11 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
+import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
 import ipsis.woot.modules.oracle.network.DropRegistryStatusReply;
 import ipsis.woot.modules.oracle.network.SimulatedMobDropsReply;
+import ipsis.woot.util.FluidStackPacketHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -44,5 +46,10 @@ public class NetworkChannel {
                 4,
                 SimulatedMobDropsReply.class,
                 SimulatedMobDropsReply::toBytes, SimulatedMobDropsReply::fromBytes, SimulatedMobDropsReply::handle);
+
+        channel.registerMessage(
+                5,
+                FluidStackPacket.class,
+                FluidStackPacket::toBytes, FluidStackPacket::fromBytes, FluidStackPacket::handle);
     }
 }

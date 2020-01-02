@@ -3,11 +3,9 @@ package ipsis.woot.modules.infuser;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 import static net.minecraft.enchantment.Enchantments.SHARPNESS;
@@ -38,36 +36,36 @@ public class InfuserRecipes {
         InfuserRecipe.addRecipe(book,
                 new ItemStack(Items.BOOK),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), InfuserConfiguration.LVL_1_ENCHANT_COST.get()),
-                new ItemStack(Items.LAPIS_LAZULI, 1));
+                new ItemStack(Items.LAPIS_LAZULI, 1), 1000);
         book = new ItemStack(Items.ENCHANTED_BOOK);
         book.addEnchantment(SHARPNESS, 2);
         InfuserRecipe.addRecipe(book,
                 new ItemStack(Items.BOOK),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), InfuserConfiguration.LVL_2_ENCHANT_COST.get()),
-                new ItemStack(Items.LAPIS_LAZULI, 2));
+                new ItemStack(Items.LAPIS_LAZULI, 2), 2000);
         book = new ItemStack(Items.ENCHANTED_BOOK);
         book.addEnchantment(SHARPNESS, 3);
         InfuserRecipe.addRecipe(book,
                 new ItemStack(Items.BOOK),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), InfuserConfiguration.LVL_3_ENCHANT_COST.get()),
-                new ItemStack(Items.LAPIS_LAZULI, 3));
+                new ItemStack(Items.LAPIS_LAZULI, 3), 3000);
         book = new ItemStack(Items.ENCHANTED_BOOK);
         book.addEnchantment(SHARPNESS, 4);
         InfuserRecipe.addRecipe(book,
                 new ItemStack(Items.BOOK),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), InfuserConfiguration.LVL_4_ENCHANT_COST.get()),
-                new ItemStack(Items.LAPIS_LAZULI, 4));
+                new ItemStack(Items.LAPIS_LAZULI, 4), 4000);
         book = new ItemStack(Items.ENCHANTED_BOOK);
         book.addEnchantment(SHARPNESS, 5);
         InfuserRecipe.addRecipe(book,
                 new ItemStack(Items.BOOK),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), InfuserConfiguration.LVL_5_ENCHANT_COST.get()),
-                new ItemStack(Items.LAPIS_LAZULI, 5));
+                new ItemStack(Items.LAPIS_LAZULI, 5), 5000);
     }
 
     private static void addInfuserPlateRecipe(Item plate, Item casing) {
         InfuserRecipe.addRecipe(new ItemStack(plate),
                 new ItemStack(casing),
-                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM), null);
+                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM), null, 1000);
     }
 }

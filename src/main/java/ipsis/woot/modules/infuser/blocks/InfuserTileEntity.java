@@ -309,23 +309,18 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
      * Check that we have inputs and they represent a valid recipe
      */
     private boolean canStart() {
-        if (!itemHandler.map(h -> {
-            if (h.getStackInSlot(INPUT_SLOT).isEmpty()) return false;
-            return true;
-        }).orElse(false)) {
+        if (itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT).isEmpty()).orElse(true)) {
             return false;
         }
 
-        if (!fluidTank.map(f -> {
-            if (f.getFluidAmount() == 0) return false;
-            return true;
-        }).orElse(false)) {
+        if (fluidTank.map(f -> f.isEmpty()).orElse(true)) {
             return false;
         }
 
         getRecipe();
-        if (currRecipe == null)
+        if (currRecipe == null) {
             return false;
+        }
 
         return true;
     }
@@ -367,6 +362,9 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         return true;
     }
 
+    private int clientFluidAmount = 0;
+    public int getClientFluidAmount() { return clientFluidAmount; }
+    public void setClientFluidAmount(int v) { clientFluidAmount = v; }
 
 
 

@@ -74,10 +74,13 @@ public class InfuserContainer extends WootContainer implements FluidStackPacketH
             List<IContainerListener> iContainerListeners =
                     (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
 
-            // TODO check for actual changes
-            for (IContainerListener l : iContainerListeners) {
-                NetworkChannel.channel.sendTo(tileEntity.getFluidStackPacket(), ((ServerPlayerEntity)l).connection.netManager,
-                        NetworkDirection.PLAY_TO_CLIENT);
+            if (tileEntity.getTankFluid().getAmount() != tileEntity.getClientFluidAmount()) {
+                tileEntity.setClientFluidAmount(tileEntity.getTankFluid().getAmount());
+
+                for (IContainerListener l : iContainerListeners) {
+                    NetworkChannel.channel.sendTo(tileEntity.getFluidStackPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
             }
         } catch (Throwable e) {
             Woot.LOGGER.error("Reflection of container listener failed");

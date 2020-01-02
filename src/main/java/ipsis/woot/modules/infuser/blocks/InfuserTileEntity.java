@@ -224,6 +224,8 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
 
     /**
      * Process
+     *
+     * This is HEAVILY based off the CoFH's TileMachineBase
      */
     private boolean isActive = false;
     private int processMax = 0; // total energy needed
@@ -232,6 +234,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     public void machineTick() {
 
         if (isActive) {
+            Woot.LOGGER.info("machineTick: running");
             processTick(); // use energy and update processRem
             if (canFinish()) {
                 // all energy used and all inputs are still valid
@@ -240,10 +243,12 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                     //  disabled via redstone or dont have a valid set of input items and enough energy
                     processOff();
                     isActive = false;
+                    Woot.LOGGER.info("machineTick: turn off");
                 } else {
                     processStart(); // set processMax and processRem
                 }
             } else if (energyStorage.map(e -> e.getEnergyStored() <= 0).orElse(false)) {
+                // No energy left so stop processing
                 processOff();
             }
         } else if (!isDisabled()) {
@@ -252,14 +257,57 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                 processStart(); // set processMax and processRem
                 processTick(); // use energy and update processRem
                 isActive = true;
+                Woot.LOGGER.info("machineTick: turn on");
             }
         }
     }
 
-    private boolean isDisabled() {
-        return false;
+    /**
+     *
+     * If energy still needs to be consumed then do so
+     * Returns the amount of energy used
+     */
+    private int processTick() {
+        if (processRem <= 0)
+            return 0;
+
+        int energy = energyStorage.map(e -> e.extractEnergy(200, false)).orElse(0);
+        processRem -= energy;
+        return energy;
     }
 
+    /**
+     * Can finish if all the energy has been consumed and the inputs still give a valid recipe
+     */
+    private boolean canFinish() {
+        return processRem <= 0 && hasValidInput();
+    }
+
+    /**
+     * Consume all the inputs and generate the output
+     */
+    private void processFinish() {
+        if (currRecipe == null)
+            getRecipe();
+        if (currRecipe == null) {
+            processOff();
+            return;
+        }
+
+        itemHandler.ifPresent(i -> {
+            i.extractItem(INPUT_SLOT, currRecipe.input.size, false);
+            if (currRecipe.hasAugment())
+                i.extractItem(AUGMENT_SLOT, currRecipe.augment.size, false);
+            i.insertItem(OUTPUT_SLOT, currRecipe.getOutput(), false);
+        });
+
+        fluidTank.ifPresent(f -> f.drain(currRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
+        markDirty();
+    }
+
+    /**
+     * Check that we have inputs and they represent a valid recipe
+     */
     private boolean canStart() {
         if (!itemHandler.map(h -> {
             if (h.getStackInSlot(INPUT_SLOT).isEmpty()) return false;
@@ -282,6 +330,26 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         return true;
     }
 
+    private void processOff() {
+        processRem = 0;
+        currRecipe = null;
+    }
+
+    /**
+     * Setup the required energy for the recipe
+     */
+    private void processStart() {
+        processMax = currRecipe.energy;
+        processRem = currRecipe.energy;
+    }
+
+    /**
+     * Redstone disabling of the machine
+     */
+    private boolean isDisabled() {
+        return false;
+    }
+
     private void getRecipe() {
         currRecipe = InfuserRecipe.findRecipe(
                 itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY),
@@ -299,46 +367,8 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         return true;
     }
 
-    private int processTick() {
-        if (processRem <= 0) return 0;
-        AtomicInteger energy = new AtomicInteger(0);
-        energyStorage.ifPresent(e -> {
-            energy.set(e.extractEnergy(200, false));
-        });
-        processRem -= energy.get();
-        return energy.get();
-    }
 
-    private boolean canFinish() {
-        return processRem <= 0 && hasValidInput();
-    }
 
-    private void processOff() {
-        processRem = 0;
-        currRecipe = null;
-    }
 
-    private void processStart() {
-        processMax = currRecipe.energy;
-        processRem = currRecipe.energy;
-    }
 
-    private void processFinish() {
-        if (currRecipe == null)
-            getRecipe();
-        if (currRecipe == null) {
-            processOff();
-            return;
-        }
-
-        itemHandler.ifPresent(i -> {
-            i.extractItem(INPUT_SLOT, currRecipe.input.size, false);
-            if (currRecipe.hasAugment())
-                i.extractItem(AUGMENT_SLOT, currRecipe.augment.size, false);
-            i.insertItem(OUTPUT_SLOT, currRecipe.getOutput(), false);
-        });
-
-        fluidTank.ifPresent(f -> f.drain(currRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
-        markDirty();;
-    }
 }

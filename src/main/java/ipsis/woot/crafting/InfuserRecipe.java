@@ -60,23 +60,36 @@ public class InfuserRecipe {
         recipeList.add(recipe);
     }
 
+    public boolean isInput(ItemStack itemStack) {
+        return input.isSameIngredient(itemStack);
+    }
+
+    public boolean isAugment(ItemStack itemStack) {
+        return augment != null && augment.isSameIngredient(itemStack);
+    }
+
     public static boolean isValidInput(ItemStack itemStack) {
+        for (InfuserRecipe recipe : recipeList) {
+            if (recipe.isInput(itemStack))
+                return true;
+        }
         return true;
     }
 
     public static boolean isValidAugment(ItemStack itemStack) {
+        for (InfuserRecipe recipe : recipeList) {
+            if (recipe.isAugment(itemStack))
+                return true;
+        }
         return true;
     }
 
     public static boolean isValidFluid(FluidStack fluidStack) {
-        return true;
-    }
-
-    public static List<Fluid> getValidFluids() {
-        List<Fluid> fluids = new ArrayList<>();
-        fluids.add(FluidSetup.ENCHANT_FLUID.get().getFluid());
-        fluids.add(FluidSetup.PUREDYE_FLUID.get().getFluid());
-        return fluids;
+        for (InfuserRecipe recipe : recipeList) {
+            if (recipe.fluid.isFluidEqual(fluidStack))
+                return true;
+        }
+        return false;
     }
 
     public static @Nullable

@@ -107,7 +107,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), h -> InfuserRecipe.getValidFluids().contains(h.getFluid()));
+        return new FluidTank(InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), h -> InfuserRecipe.isValidFluid(h));
     }
 
     /**
@@ -334,8 +334,8 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
      * Setup the required energy for the recipe
      */
     private void processStart() {
-        processMax = currRecipe.energy;
-        processRem = currRecipe.energy;
+        processMax = currRecipe.getEnergy();
+        processRem = currRecipe.getEnergy();
     }
 
     /**
@@ -350,7 +350,6 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                 itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY),
                 fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY),
                 itemHandler.map(i -> i.getStackInSlot(AUGMENT_SLOT)).orElse(ItemStack.EMPTY));
-        Woot.LOGGER.info("getRecipe: {}", currRecipe);
     }
 
     private boolean hasValidInput() {

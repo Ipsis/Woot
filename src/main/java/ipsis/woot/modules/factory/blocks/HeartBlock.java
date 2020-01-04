@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.modules.debug.DebugSetup;
+import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.modules.factory.FactoryComponent;
@@ -64,7 +65,7 @@ public class HeartBlock extends Block implements FactoryComponentProvider, WootD
         if (worldIn.isRemote)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 
-        if (player.getHeldItemMainhand().getItem() == ToolsSetup.INTERN_ITEM.get() || player.getHeldItemMainhand().getItem() == DebugSetup.DEBUG_ITEM.get()) {
+        if (player.getHeldItemMainhand().getItem() == LayoutSetup.INTERN_ITEM.get() || player.getHeldItemMainhand().getItem() == DebugSetup.DEBUG_ITEM.get()) {
                 // intern is used on the heart, so cannot open the gui
                 return false; // Block was not activated
         }

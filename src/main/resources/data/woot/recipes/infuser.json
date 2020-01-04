@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    "idi",
+    "gbg",
+    "ioi"
+  ],
+  "key": {
+    "i": {
+      "item": "woot:si_plate"
+    },
+    "d": {
+      "item": "minecraft:dropper"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "g": {
+      "tag": "forge:glass"
+    }
+  },
+  "result": {
+    "item": "woot:infuser"
+  }
+}

@@ -36,7 +36,9 @@
   "block.woot.oracle": "Oracle Of Drops",
   "block.woot.anvil": "Anvil",
   "block.woot.squeezer": "Squeezer",
+  "block.woot.enchsqueezer": "Enchantment Squeezer",
   "block.woot.infuser": "Infuser",
+  "block.woot.creative_power": "Creative Power (Dev)",
 
   # Item Names
   "item.woot.debug": "Debug",
@@ -63,6 +65,13 @@
   "item.woot.conatus_fluid_bucket": "Conatus Bucket",
   "item.woot.enchant_fluid_bucket": "Liquid Enchant Bucket",
   "item.woot.puredye_fluid_bucket": "Pure Dye Bucket",
+  "item.woot.plate_die": "Plate Die",
+  "item.woot.shard_die": "Shard Die",
+  "item.woot.si_dust": "Stygian Iron Dust",
+  "item.woot.si_ingot": "Stygian Iron Ingot",
+  "item.woot.si_plate": "Stygian Iron Plate",
+  "item.woot.hammer": "YA Hammer",
+
 
   "item.woot.white_dyecasing": "White Dye Casing",
   "item.woot.orange_dyecasing": "Orange Dye Casing",

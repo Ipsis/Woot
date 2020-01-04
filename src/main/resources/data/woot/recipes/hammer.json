@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  i",
+    "sws",
+    "w  "
+  ],
+  "key": {
+    "i": {
+      "item": "woot:si_ingot"
+    },
+    "s": {
+      "tag": "forge:string"
+    },
+    "w": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "woot:hammer"
+  }
+}

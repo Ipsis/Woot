@@ -1,11 +1,10 @@
 package ipsis.woot.modules.anvil.blocks;
 
-import ipsis.woot.modules.anvil.AnvilCraftingManager;
+import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
-import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.mod.ModItems;
-import ipsis.woot.shards.MobShardItem;
+import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
@@ -131,7 +130,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
             return;
         }
 
-        AnvilCraftingManager.AnvilRecipe recipe = AnvilCraftingManager.get().getRecipe(baseItem);
+        AnvilRecipe recipe = AnvilRecipe.findRecipe(baseItem);
         if (recipe == null)
             return;
 

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    "ipi",
+    "dbd",
+    "ioi"
+  ],
+  "key": {
+    "i": {
+      "item": "woot:si_plate"
+    },
+    "p": {
+      "item": "minecraft:piston"
+    },
+    "d": {
+      "tag": "forge:dyes"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    }
+  },
+  "result": {
+    "item": "woot:squeezer"
+  }
+}

@@ -3,6 +3,7 @@ package ipsis.woot.modules.layout;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.layout.blocks.LayoutBlock;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
+import ipsis.woot.modules.layout.items.InternItem;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -37,4 +38,7 @@ public class LayoutSetup {
     public static final RegistryObject<TileEntityType<?>> LAYOUT_BLOCK_TILE = TILES.register(
             LAYOUT_TAG, () ->
                     TileEntityType.Builder.create(LayoutTileEntity::new, LAYOUT_BLOCK.get()).build(null));
+
+    public static final RegistryObject<InternItem> INTERN_ITEM = ITEMS.register(
+            "intern", () -> new InternItem());
 }

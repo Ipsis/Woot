@@ -1,8 +1,11 @@
 package ipsis.woot.modules.anvil.blocks;
 
+import ipsis.woot.crafting.AnvilRecipe;
+import ipsis.woot.modules.anvil.AnvilSetup;
+import ipsis.woot.modules.generic.GenericSetup;
+import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.modules.debug.items.DebugItem;
-import ipsis.woot.modules.anvil.AnvilCraftingManager;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -86,13 +89,13 @@ public class AnvilBlock extends Block implements WootDebug {
             if (playerEntity.isSneaking() && heldItem.isEmpty()) {
                 // Sneak with empty hand to empty
                 anvil.dropItem(playerEntity);
-            } else if (heldItem.getItem() == ToolsSetup.INTERN_ITEM.get()) {
+            } else if (heldItem.getItem() == AnvilSetup.HAMMER_ITEM.get()) {
                 // Crafting
                 anvil.tryCraft(playerEntity);
             } else {
                 if (!anvil.hasBaseItem()) {
                     // Empty anvil so try to add a base item
-                    AnvilCraftingManager.AnvilRecipe recipe = AnvilCraftingManager.get().getRecipe(heldItem);
+                    AnvilRecipe recipe = AnvilRecipe.findRecipe(heldItem);
                     if (recipe != null) {
                         ItemStack baseItem = heldItem.copy();
                         baseItem.setCount(1);

@@ -1,4 +1,4 @@
-package ipsis.woot.shards;
+package ipsis.woot.modules.factory.items;
 
 /**
  * XP shards are created by the factory when killing mobs and the appropriate upgrade is present.

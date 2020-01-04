@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "woot:si_dust"
+  },
+  "result": "woot:si_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

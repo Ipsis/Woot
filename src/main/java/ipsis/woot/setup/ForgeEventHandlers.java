@@ -7,7 +7,7 @@ import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.modules.simulation.SimulationSetup;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
-import ipsis.woot.shards.MobShardItem;
+import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.simulation.FakePlayerPool;
 import ipsis.woot.modules.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;

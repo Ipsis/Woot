@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    " a ",
+    "ooo"
+  ],
+  "key": {
+    "i": {
+      "item": "woot:si_ingot"
+    },
+    "a": {
+      "item": "minecraft:anvil"
+    },
+    "o": {
+      "tag": "forge:obsidian"
+    }
+  },
+  "result": {
+    "item": "woot:anvil"
+  }
+}

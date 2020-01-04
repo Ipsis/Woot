@@ -6,7 +6,7 @@ import ipsis.woot.modules.infuser.InfuserRecipes;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.modules.simulation.DropRegistry;
-import ipsis.woot.modules.anvil.AnvilCraftingManagerLoader;
+import ipsis.woot.modules.anvil.AnvilRecipes;
 import ipsis.woot.mod.ModFiles;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -27,7 +27,7 @@ public class ModSetup {
         FactoryConfiguration.pushToWootConfig();
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
-        AnvilCraftingManagerLoader.load();
+        AnvilRecipes.load();
         InfuserRecipes.load();
     }
 

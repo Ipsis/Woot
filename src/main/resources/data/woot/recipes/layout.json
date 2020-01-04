@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    "grg",
+    "ygb",
+    "gwg"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:glass"
+    },
+    "r": {
+      "tag": "forge:dyes/red"
+    },
+    "y": {
+      "tag": "forge:dyes/yellow"
+    },
+    "b": {
+      "tag": "forge:dyes/black"
+    },
+    "w": {
+      "tag": "forge:dyes/white"
+    }
+  },
+  "result": {
+    "item": "woot:layout"
+  }
+}

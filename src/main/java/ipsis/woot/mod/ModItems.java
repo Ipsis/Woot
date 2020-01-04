@@ -1,7 +1,7 @@
 package ipsis.woot.mod;
 
 import ipsis.woot.Woot;
-import ipsis.woot.shards.MobShardItem;
+import ipsis.woot.modules.factory.items.MobShardItem;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class ModItems {

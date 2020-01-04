@@ -1,4 +1,4 @@
-package ipsis.woot.modules.tools.items;
+package ipsis.woot.modules.layout.items;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;

@@ -3,6 +3,8 @@ package ipsis.woot.modules.anvil;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.blocks.AnvilBlock;
 import ipsis.woot.modules.anvil.blocks.AnvilTileEntity;
+import ipsis.woot.modules.anvil.items.DieItem;
+import ipsis.woot.modules.anvil.items.HammerItem;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -37,4 +39,11 @@ public class AnvilSetup {
     public static final RegistryObject<TileEntityType<?>> ANVIL_BLOCK_TILE = TILES.register(
             ANVIL_TAG, () ->
                     TileEntityType.Builder.create(AnvilTileEntity::new, ANVIL_BLOCK.get()).build(null));
+
+    public static final RegistryObject<HammerItem> HAMMER_ITEM = ITEMS.register(
+            "hammer", () -> new HammerItem());
+    public static final RegistryObject<DieItem> PLATE_DIE_ITEM = ITEMS.register(
+            "plate_die", () -> new DieItem(DieType.PLATE));
+    public static final RegistryObject<DieItem> SHARD_DIE_ITEM = ITEMS.register(
+            "shard_die", () -> new DieItem(DieType.SHARD));
 }

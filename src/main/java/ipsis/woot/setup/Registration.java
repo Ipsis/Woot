@@ -5,7 +5,7 @@ import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.modules.simulation.SimulationSetup;
-import ipsis.woot.shards.MobShardItem;
+import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.simulation.dimension.TartarusModDimension;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;

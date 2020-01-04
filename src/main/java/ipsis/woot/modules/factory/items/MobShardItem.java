@@ -1,4 +1,4 @@
-package ipsis.woot.shards;
+package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.config.WootConfig;

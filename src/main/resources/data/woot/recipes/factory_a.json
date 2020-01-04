@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " s ",
+    "sps",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:stone"
+    },
+    "p": {
+      "item": "woot:gray_dyeplate"
+    }
+  },
+  "result": {
+    "item": "woot:factory_a",
+    "count": 4
+  }
+}

@@ -26,4 +26,6 @@ public class GenericSetup {
             "si_dust", () -> new GenericItem(GenericItemType.SI_DUST));
     public static final RegistryObject<GenericItem> SI_PLATE_ITEM = ITEMS.register(
             "si_plate", () -> new GenericItem(GenericItemType.SI_PLATE));
+    public static final RegistryObject<GenericItem> PRISM_ITEM = ITEMS.register(
+            "prism", () -> new GenericItem(GenericItemType.PRISM));
 }

@@ -1,6 +1,8 @@
 package ipsis.woot.datagen;
 
 import ipsis.woot.datagen.modules.*;
+import ipsis.woot.modules.anvil.AnvilRecipes;
+import ipsis.woot.modules.infuser.InfuserRecipes;
 import net.minecraft.data.*;
 
 import java.util.function.Consumer;

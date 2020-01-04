@@ -27,6 +27,8 @@ public class ModSetup {
         FactoryConfiguration.pushToWootConfig();
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
+
+        // TODO recipe loading needs to be in a better place, with tag access
         AnvilRecipes.load();
         InfuserRecipes.load();
     }

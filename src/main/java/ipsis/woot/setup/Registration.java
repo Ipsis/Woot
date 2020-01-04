@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.modules.simulation.SimulationSetup;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.modules.simulation.dimension.TartarusModDimension;
 import net.minecraft.block.Block;
@@ -15,8 +16,6 @@ import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import static ipsis.woot.mod.ModDimensions.TARTARUS_DIMENSION_ID;
 
 @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
 public class Registration {
@@ -52,6 +51,6 @@ public class Registration {
     @SubscribeEvent
     public static void registerDimensions(final RegistryEvent.Register<ModDimension> event) {
         Woot.LOGGER.info("registerDimensions");
-        event.getRegistry().register(new TartarusModDimension().setRegistryName(TARTARUS_DIMENSION_ID));
+        event.getRegistry().register(new TartarusModDimension().setRegistryName(SimulationSetup.TARTARUS_DIMENSION_ID));
     }
 }

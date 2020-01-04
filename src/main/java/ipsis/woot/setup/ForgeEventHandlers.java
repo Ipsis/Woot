@@ -5,7 +5,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.commands.ModCommands;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.modules.simulation.DropRegistry;
-import ipsis.woot.mod.ModDimensions;
+import ipsis.woot.modules.simulation.SimulationSetup;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
 import ipsis.woot.shards.MobShardItem;
 import ipsis.woot.modules.simulation.FakePlayerPool;
@@ -33,8 +33,8 @@ import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 import java.util.List;
 
-import static ipsis.woot.mod.ModDimensions.TARTARUS_DIMENSION_ID;
-import static ipsis.woot.mod.ModDimensions.TARTARUS_DIMENSION_TYPE;
+import static ipsis.woot.modules.simulation.SimulationSetup.TARTARUS_DIMENSION_ID;
+import static ipsis.woot.modules.simulation.SimulationSetup.TARTARUS_DIMENSION_TYPE;
 
 public class ForgeEventHandlers {
 
@@ -104,7 +104,7 @@ public class ForgeEventHandlers {
             return;
 
         Dimension dimension = event.world.getDimension();
-        if (dimension.getType() != ModDimensions.TARTARUS_DIMENSION_TYPE) {
+        if (dimension.getType() != TARTARUS_DIMENSION_TYPE) {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
                 lastWorldTick += MULTI_BLOCK_TRACKER_DELAY;
                 MultiBlockTracker.get().run(event.world);
@@ -135,9 +135,9 @@ public class ForgeEventHandlers {
     @SubscribeEvent
     public void onDimensionRegistry(final RegisterDimensionsEvent event) {
         Woot.LOGGER.info("onDimensionRegistry");
-        ModDimensions.TARTARUS_DIMENSION_TYPE = DimensionManager.registerOrGetDimension(
+        TARTARUS_DIMENSION_TYPE = DimensionManager.registerOrGetDimension(
                 TARTARUS_DIMENSION_ID,
-                ModDimensions.TARTARUS,
+                SimulationSetup.TARTARUS,
                 null,
                 true);
         DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);

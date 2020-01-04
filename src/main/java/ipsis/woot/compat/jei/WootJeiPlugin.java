@@ -1,6 +1,7 @@
 package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
+import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.InfuserRecipe;
 import mezz.jei.api.IModPlugin;
@@ -20,8 +21,9 @@ public class WootJeiPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(
-                new DyeSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-                new InfuserRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+ new DyeSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new InfuserRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new AnvilRecipeCategory(registration.getJeiHelpers().getGuiHelper())
         );
     }
 
@@ -30,5 +32,6 @@ public class WootJeiPlugin implements IModPlugin {
 
         registration.addRecipes(DyeSqueezerRecipe.recipeList, DyeSqueezerRecipeCategory.UID);
         registration.addRecipes(InfuserRecipe.recipeList, InfuserRecipeCategory.UID);
+        registration.addRecipes(AnvilRecipe.recipeList, AnvilRecipeCategory.UID);
     }
 }

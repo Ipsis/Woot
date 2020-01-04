@@ -2,10 +2,16 @@ package ipsis.woot.crafting;
 
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.modules.factory.items.MobShardItem;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,7 +54,10 @@ public class AnvilRecipe {
             if (this.ingredients.size() <= 4)
                 this.ingredients.add(ingredient.copy());
         }
+        initJei();
     }
+
+    public ItemStack getOutput(){ return outputItem.copy(); }
 
     public List<ItemStack> getIngredients() { return Collections.unmodifiableList(ingredients); }
 
@@ -72,11 +81,19 @@ public class AnvilRecipe {
                     break;
                 }
             }
-
             if (found == false)
                 return false;
         }
-
         return true;
     }
+
+    public List<List<ItemStack>> jeiInputs;
+    private void initJei() {
+        jeiInputs = new ArrayList<>();
+        jeiInputs.add(Arrays.asList(baseItem.copy()));
+
+        for (ItemStack itemStack : ingredients)
+            jeiInputs.add(Arrays.asList(itemStack.copy()));
+    }
+    public List<List<ItemStack>> getJeiInputs() { return jeiInputs; }
 }

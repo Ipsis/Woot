@@ -1,5 +1,6 @@
 package ipsis.woot.crafting;
 
+import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import net.minecraft.block.Block;

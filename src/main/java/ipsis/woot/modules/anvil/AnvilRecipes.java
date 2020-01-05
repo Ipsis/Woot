@@ -14,6 +14,8 @@ public class AnvilRecipes {
     public static void load() {
         Woot.LOGGER.debug("Loading anvil crafting recipes");
 
+        AnvilRecipe.recipeList.clear();
+
         // Die creation
         AnvilRecipe.addRecipe(
                 new ItemStack(Items.STONE_SLAB),

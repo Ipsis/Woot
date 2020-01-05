@@ -17,6 +17,8 @@ public class InfuserRecipes {
 
     public static void load() {
 
+        InfuserRecipe.recipeList.clear();
+
         addInfuserPlateRecipe(InfuserSetup.WHITE_DYE_PLATE_ITEM.get(), InfuserSetup.WHITE_DYE_CASING_ITEM.get());
         addInfuserPlateRecipe(InfuserSetup.ORANGE_DYE_PLATE_ITEM.get(), InfuserSetup.ORANGE_DYE_CASING_ITEM.get());
         addInfuserPlateRecipe(InfuserSetup.MAGENTA_DYE_PLATE_ITEM.get(), InfuserSetup.MAGENTA_DYE_CASING_ITEM.get());

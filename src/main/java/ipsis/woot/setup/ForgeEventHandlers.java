@@ -3,7 +3,9 @@ package ipsis.woot.setup;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.commands.ModCommands;
+import ipsis.woot.modules.anvil.AnvilRecipes;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
+import ipsis.woot.modules.infuser.InfuserRecipes;
 import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.modules.simulation.SimulationSetup;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
@@ -124,6 +126,10 @@ public class ForgeEventHandlers {
         Woot.LOGGER.info("onServerStarting");
         ModCommands.register(event.getCommandDispatcher());
         SqueezerRecipes.load(event.getServer().getRecipeManager());
+
+        // TODO recipe loading needs to be in a better place, with tag access
+        AnvilRecipes.load();
+        InfuserRecipes.load();
     }
 
     @SubscribeEvent

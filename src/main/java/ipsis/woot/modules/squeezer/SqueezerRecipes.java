@@ -1,15 +1,6 @@
 package ipsis.woot.modules.squeezer;
 
-import ipsis.woot.crafting.DyeSqueezerRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.item.crafting.ShapelessRecipe;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
-import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +8,7 @@ public class SqueezerRecipes {
 
     public static void load(@Nonnull RecipeManager manager) {
 
+        /*
         // Loaded on server start so need to clear the old ones
         DyeSqueezerRecipe.clearRecipes();
 
@@ -58,6 +50,6 @@ public class SqueezerRecipes {
                     }
                 }
             }
-        }
+        } */
     }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "item": "minecraft:cocoa_beans"
+  },
+  "energy": 1000,
+  "red": 54,
+  "yellow": 9,
+  "blue": 9,
+  "white": 0
+}

@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "tag": "forge:dyes/gray"
+  },
+  "energy": 1000,
+  "red": 12,
+  "yellow": 12,
+  "blue": 12,
+  "white": 36
+}

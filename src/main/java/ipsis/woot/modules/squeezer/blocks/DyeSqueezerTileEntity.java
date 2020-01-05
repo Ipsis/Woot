@@ -60,10 +60,10 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
             if (!itemStack.isEmpty()) {
                 DyeSqueezerRecipe recipe = DyeSqueezerRecipe.findRecipe(itemStack);
                 if (recipe != null && canStoreInternal(recipe)) {
-                    red += recipe.output.getRed();
-                    yellow += recipe.output.getYellow();
-                    blue += recipe.output.getBlue();
-                    white += recipe.output.getWhite();
+                    red += recipe.getRed();
+                    yellow += recipe.getYellow();
+                    blue += recipe.getBlue();
+                    white += recipe.getWhite();
 
                     while (canCreateOutput() && canStoreOutput()) {
                         fluidTank.ifPresent(t -> {
@@ -82,13 +82,13 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
     }
 
     private boolean canStoreInternal(DyeSqueezerRecipe recipe) {
-        if (recipe.output.getRed() + red > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
+        if (recipe.getRed() + red > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
             return false;
-        if (recipe.output.getYellow() + yellow > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
+        if (recipe.getYellow() + yellow > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
             return false;
-        if (recipe.output.getBlue() + blue > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
+        if (recipe.getBlue() + blue > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
             return false;
-        if (recipe.output.getWhite() + white > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
+        if (recipe.getWhite() + white > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
             return false;
 
         return true;

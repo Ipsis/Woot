@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "item": "minecraft:poppy"
+  },
+  "energy": 1000,
+  "red": 72,
+  "yellow": 0,
+  "blue": 0,
+  "white": 0
+}

@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "item": "minecraft:lily_of_the_valley"
+  },
+  "energy": 1000,
+  "red": 0,
+  "yellow": 0,
+  "blue": 0,
+  "white": 72
+}

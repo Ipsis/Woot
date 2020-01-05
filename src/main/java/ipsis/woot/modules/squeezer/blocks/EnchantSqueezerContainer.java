@@ -1,6 +1,5 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootContainer;
 import ipsis.woot.util.helper.EnchantmentHelper;

@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "item": "minecraft:white_tulip"
+  },
+  "energy": 1000,
+  "red": 8,
+  "yellow": 8,
+  "blue": 8,
+  "white": 48
+}

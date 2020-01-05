@@ -1,7 +1,6 @@
 package ipsis.woot.modules.infuser.blocks;
 
 import ipsis.woot.Woot;
-import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserSetup;

@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "item": "minecraft:cornflower"
+  },
+  "energy": 1000,
+  "red": 0,
+  "yellow": 0,
+  "blue": 72,
+  "white": 0
+}

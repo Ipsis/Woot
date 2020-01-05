@@ -2,7 +2,6 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
-import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import mezz.jei.api.constants.VanillaTypes;
@@ -39,7 +38,7 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
 
     @Override
     public void setIngredients(DyeSqueezerRecipe recipe, IIngredients iIngredients) {
-        iIngredients.setInputLists(VanillaTypes.ITEM, recipe.getJeiInputs());
+        iIngredients.setInputLists(VanillaTypes.ITEM, recipe.getInputs());
         iIngredients.setOutput(VanillaTypes.FLUID, recipe.getOutput());
     }
 
@@ -57,10 +56,10 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
     @Override
     public void draw(DyeSqueezerRecipe recipe, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString("Red: " + recipe.output.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
-        minecraft.fontRenderer.drawString("Yellow: " + recipe.output.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
-        minecraft.fontRenderer.drawString("Blue: " + recipe.output.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
-        minecraft.fontRenderer.drawString("White: " + recipe.output.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
+        minecraft.fontRenderer.drawString("Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
+        minecraft.fontRenderer.drawString("Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
+        minecraft.fontRenderer.drawString("Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
+        minecraft.fontRenderer.drawString("White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
     }
 
     @Override

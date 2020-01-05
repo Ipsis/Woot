@@ -1,0 +1,11 @@
+{
+  "type": "woot:dyesqueezer",
+  "ingredient": {
+    "item": "minecraft:wither_rose"
+  },
+  "energy": 1000,
+  "red": 24,
+  "yellow": 24,
+  "blue": 24,
+  "white": 0
+}

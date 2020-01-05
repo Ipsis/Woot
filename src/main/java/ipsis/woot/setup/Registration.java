@@ -1,7 +1,7 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.anvil.AnvilRecipes;
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
@@ -13,9 +13,12 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -56,5 +59,13 @@ public class Registration {
     public static void registerDimensions(final RegistryEvent.Register<ModDimension> event) {
         Woot.LOGGER.info("registerDimensions");
         event.getRegistry().register(new TartarusModDimension().setRegistryName(SimulationSetup.TARTARUS_DIMENSION_ID));
+    }
+
+    @SubscribeEvent
+    public static void registerRecipeSerializer(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        Woot.LOGGER.info("registerRecipeSerializer");
+
+        event.getRegistry().register(new DyeSqueezerRecipe.Serializer<IRecipe<?>>().setRegistryName(new ResourceLocation("woot", "dyesqueezer")));
+
     }
 }

@@ -29,7 +29,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,12 +41,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
 
-    public DyeSqueezerTileEntity() { super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get()); }
+    public DyeSqueezerTileEntity() {
+        super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get());
+        itemHandler.ifPresent(h -> this.recipeWrapper = new RecipeWrapper((IItemHandlerModifiable)h));
+    }
+
 
     private int red = 0;
     private int yellow = 0;
     private int blue = 0;
     private int white = 0;
+
+    private RecipeWrapper recipeWrapper;
 
     @Override
     public void tick() {
@@ -58,7 +66,7 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
         itemHandler.ifPresent(h -> {
             ItemStack itemStack = h.getStackInSlot(0);
             if (!itemStack.isEmpty()) {
-                DyeSqueezerRecipe recipe = DyeSqueezerRecipe.findRecipe(itemStack);
+                DyeSqueezerRecipe recipe = world.getRecipeManager().getRecipe(DyeSqueezerRecipe.DYE_SQUEEZER_TYPE, recipeWrapper, world).orElse(null);
                 if (recipe != null && canStoreInternal(recipe)) {
                     red += recipe.getRed();
                     yellow += recipe.getYellow();
@@ -181,7 +189,7 @@ public class DyeSqueezerTileEntity extends TileEntity implements ITickableTileEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return DyeSqueezerRecipe.findRecipe(stack) != null;
+                return DyeSqueezerRecipe.isValidInput(stack);
             }
         };
     }

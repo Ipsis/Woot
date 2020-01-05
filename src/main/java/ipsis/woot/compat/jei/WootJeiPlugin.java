@@ -6,9 +6,17 @@ import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.InfuserRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JeiPlugin
 public class WootJeiPlugin implements IModPlugin {
@@ -21,7 +29,7 @@ public class WootJeiPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(
- new DyeSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new DyeSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new InfuserRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new AnvilRecipeCategory(registration.getJeiHelpers().getGuiHelper())
         );
@@ -30,7 +38,18 @@ public class WootJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
 
-        registration.addRecipes(DyeSqueezerRecipe.recipeList, DyeSqueezerRecipeCategory.UID);
+        ClientWorld world = Minecraft.getInstance().world;
+        RecipeManager recipeManager = world.getRecipeManager();
+
+        List<IRecipe> dyeRecipes = new ArrayList<>();
+        for (IRecipe recipe : recipeManager.getRecipes()) {
+            if (recipe instanceof DyeSqueezerRecipe) {
+                dyeRecipes.add(recipe);
+            }
+        }
+        registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);
+
+
         registration.addRecipes(InfuserRecipe.recipeList, InfuserRecipeCategory.UID);
         registration.addRecipes(AnvilRecipe.recipeList, AnvilRecipeCategory.UID);
     }

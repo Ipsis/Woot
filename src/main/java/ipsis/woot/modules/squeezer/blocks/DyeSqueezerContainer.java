@@ -76,9 +76,9 @@ public class DyeSqueezerContainer extends WootContainer {
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
-                if (DyeSqueezerRecipe.findRecipe(stack) != null) {
-                    // Player -> Machine
-                    if (!this.mergeItemStack(stack, 0, 1, false))
+                if (DyeSqueezerRecipe.isValidInput(itemStack))
+                    // Player -> Machine input slot
+                    if (!this.mergeItemStack(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                 } else if (index < 28) {
                         // Player -> Hotbar

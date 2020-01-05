@@ -52,10 +52,9 @@ public class Squeezer {
          * Vanilla dyes
          */
         for (DyeMakeup d : DyeMakeup.values()) {
+            ResourceLocation rl = new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name().toLowerCase(Locale.ROOT));
             Woot.LOGGER.info("Generating Dye Squeezer recipe for {}", d);
-                DyeSqueezerRecipe.dyeSqueezerRecipe(
-                        Ingredient.fromTag(d.getItemTag()), 1000, d)
-                        .build(consumer, new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name().toLowerCase(Locale.ROOT)));
+                DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromTag(d.getItemTag()), 1000, d) .build(consumer, rl);
         }
 
         /**
@@ -96,9 +95,8 @@ public class Squeezer {
         };
         for (VanillaDyes d : dyes) {
             Woot.LOGGER.info("Generating Dye Squeezer recipe for {}", d.name);
-            DyeSqueezerRecipe.dyeSqueezerRecipe(
-                    Ingredient.fromItems(d.item), 1000, d.dyeMakeup)
-                    .build(consumer, new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name));
+            ResourceLocation rl = new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name);
+            DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromItems(d.item), 1000, d.dyeMakeup) .build(consumer, rl);
         }
     }
 }

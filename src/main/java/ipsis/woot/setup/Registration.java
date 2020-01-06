@@ -1,8 +1,7 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
-import ipsis.woot.crafting.DyeSqueezerRecipe;
-import ipsis.woot.crafting.DyeSqueezerRecipeSerializer;
+import ipsis.woot.crafting.*;
 import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
@@ -13,10 +12,8 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -64,7 +61,8 @@ public class Registration {
     public static void registerRecipeSerializer(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
         Woot.LOGGER.info("registerRecipeSerializer");
 
-        event.getRegistry().register( new DyeSqueezerRecipeSerializer<>(DyeSqueezerRecipe::new).setRegistryName(Woot.MODID, "dyesqueezer"));
+        event.getRegistry().register(new DyeSqueezerRecipeSerializer<>(DyeSqueezerRecipe::new).setRegistryName(Woot.MODID, "dyesqueezer"));
+        event.getRegistry().register(new AnvilRecipeSerializer<>(AnvilRecipe::new).setRegistryName(Woot.MODID, "anvil"));
 
     }
 }

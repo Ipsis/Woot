@@ -6,7 +6,6 @@ import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.InfuserRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
@@ -42,15 +41,20 @@ public class WootJeiPlugin implements IModPlugin {
         RecipeManager recipeManager = world.getRecipeManager();
 
         List<IRecipe> dyeRecipes = new ArrayList<>();
+        List<IRecipe> anvilRecipes = new ArrayList<>();
+        List<IRecipe> infuserRecipes = new ArrayList<>();
         for (IRecipe recipe : recipeManager.getRecipes()) {
             if (recipe instanceof DyeSqueezerRecipe) {
                 dyeRecipes.add(recipe);
+            } else if (recipe instanceof AnvilRecipe) {
+                anvilRecipes.add(recipe);
+            } else if (recipe instanceof InfuserRecipe) {
+                infuserRecipes.add(recipe);
             }
         }
         registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);
-
+        registration.addRecipes(anvilRecipes, AnvilRecipeCategory.UID);
 
         registration.addRecipes(InfuserRecipe.recipeList, InfuserRecipeCategory.UID);
-        registration.addRecipes(AnvilRecipe.recipeList, AnvilRecipeCategory.UID);
     }
 }

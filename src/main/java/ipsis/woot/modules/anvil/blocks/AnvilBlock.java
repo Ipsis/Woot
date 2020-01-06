@@ -2,9 +2,6 @@ package ipsis.woot.modules.anvil.blocks;
 
 import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.modules.anvil.AnvilSetup;
-import ipsis.woot.modules.generic.GenericSetup;
-import ipsis.woot.modules.layout.LayoutSetup;
-import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
@@ -12,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -94,9 +92,8 @@ public class AnvilBlock extends Block implements WootDebug {
                 anvil.tryCraft(playerEntity);
             } else {
                 if (!anvil.hasBaseItem()) {
-                    // Empty anvil so try to add a base item
-                    AnvilRecipe recipe = AnvilRecipe.findRecipe(heldItem);
-                    if (recipe != null) {
+                    // Check if valid base item
+                    if (AnvilRecipe.isValidInput(heldItem)) {
                         ItemStack baseItem = heldItem.copy();
                         baseItem.setCount(1);
                         anvil.setBaseItem(baseItem);

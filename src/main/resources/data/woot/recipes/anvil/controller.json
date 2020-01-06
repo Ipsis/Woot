@@ -1,0 +1,17 @@
+{
+  "type": "woot:anvil",
+  "base": {
+    "item": "woot:mobshard"
+  },
+  "ingredients": [
+    {
+      "item": "woot:prism"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "result": {
+    "item": "woot:controller"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "woot:anvil",
+  "base": {
+    "item": "minecraft:quartz"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "result": {
+    "item": "woot:shard_die"
+  }
+}

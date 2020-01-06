@@ -126,9 +126,9 @@ public class ForgeEventHandlers {
         Woot.LOGGER.info("onServerStarting");
         ModCommands.register(event.getCommandDispatcher());
         SqueezerRecipes.load(event.getServer().getRecipeManager());
+        AnvilRecipes.load(event.getServer().getRecipeManager());
 
         // TODO recipe loading needs to be in a better place, with tag access
-        AnvilRecipes.load();
         InfuserRecipes.load();
     }
 

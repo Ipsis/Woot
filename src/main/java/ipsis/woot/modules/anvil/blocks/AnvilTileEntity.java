@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -27,6 +28,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static ipsis.woot.crafting.AnvilRecipe.ANVIL_TYPE;
 
 public class AnvilTileEntity extends TileEntity implements WootDebug {
 
@@ -130,14 +133,12 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
             return;
         }
 
-        AnvilRecipe recipe = AnvilRecipe.findRecipe(baseItem);
+        AnvilRecipe recipe = world.getRecipeManager().getRecipe(ANVIL_TYPE,
+                new Inventory(baseItem, ingredients[0], ingredients[1], ingredients[2], ingredients[3]), world).orElse(null);
         if (recipe == null)
             return;
 
-        if (!recipe.checkIngredients(ingredients))
-            return;
-
-        ItemStack output = recipe.outputItem.copy();
+        ItemStack output = recipe.getOutput();
         /**
          * Handle the shard programming
          */

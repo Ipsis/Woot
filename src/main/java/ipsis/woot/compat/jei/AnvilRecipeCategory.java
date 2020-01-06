@@ -4,7 +4,6 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.anvil.items.DieItem;
-import ipsis.woot.modules.infuser.InfuserSetup;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -38,7 +37,7 @@ public class AnvilRecipeCategory implements IRecipeCategory<AnvilRecipe>, IToolt
 
     @Override
     public void setIngredients(AnvilRecipe anvilRecipe, IIngredients iIngredients) {
-        iIngredients.setInputLists(VanillaTypes.ITEM, anvilRecipe.getJeiInputs());
+        iIngredients.setInputLists(VanillaTypes.ITEM, anvilRecipe.getInputs());
         iIngredients.setOutput(VanillaTypes.ITEM, anvilRecipe.getOutput());
 
     }

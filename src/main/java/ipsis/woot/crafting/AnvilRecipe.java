@@ -1,99 +1,210 @@
 package ipsis.woot.crafting;
 
-import ipsis.woot.mod.ModItems;
-import ipsis.woot.modules.factory.items.MobShardItem;
-import net.minecraft.block.Block;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class AnvilRecipe {
+public class AnvilRecipe implements IRecipe<IInventory> {
 
-    public static ArrayList<AnvilRecipe> recipeList = new ArrayList<>();
-    public static void addRecipe(ItemStack baseItem, boolean preserveBase, ItemStack outputItem, ItemStack... ingredients) {
-        recipeList.add(new AnvilRecipe( baseItem, preserveBase, outputItem, ingredients));
+    private final NonNullList<Ingredient> ingredients;
+    private final Ingredient baseIngredient;
+    private final Item result;
+    private final int count;
+    private final ResourceLocation id;
+    private final IRecipeType<?> type;
+
+    public AnvilRecipe(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, int count, NonNullList<Ingredient> ingredients) {
+        this.id = id;
+        this.baseIngredient = baseIngredient;
+        this.result = result.asItem();
+        this.count = count;
+        this.ingredients = ingredients;
+        this.type = ANVIL_TYPE;
+
+        inputs.add(Arrays.asList(baseIngredient.getMatchingStacks()));
+        for (Ingredient i : ingredients)
+            inputs.add(Arrays.asList(i.getMatchingStacks()));
     }
 
-    public static @Nullable AnvilRecipe findRecipe(ItemStack baseItem) {
-        if (baseItem == null || baseItem.isEmpty())
-            return null;
+    public Ingredient getBaseIngredient() { return this.baseIngredient; }
+    public NonNullList<Ingredient> getIngredients() { return this.ingredients; }
+    public ItemStack getOutput() { return new ItemStack(result, count); }
 
-        if (baseItem.getItem() == ModItems.MOB_SHARD_ITEM) {
-            if (!MobShardItem.isFullyProgrammed(baseItem))
-                return null;
-        }
+    public static final IRecipeType<AnvilRecipe> ANVIL_TYPE = IRecipeType.register("anvil");
 
-        for (AnvilRecipe r : recipeList) {
-            if (r.baseItem.getItem() == baseItem.getItem())
-                return r;
-        }
+    @ObjectHolder("woot:anvil")
+    public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
 
-        return null;
+    public static AnvilRecipe anvilRecipe2(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, NonNullList<Ingredient> ingredients) {
+        return new AnvilRecipe(id, baseIngredient, result, 1, ingredients);
+    }
+    public static AnvilRecipe anvilRecipe2(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, int count, NonNullList<Ingredient> ingredients) {
+        return new AnvilRecipe(id, baseIngredient, result, count, ingredients);
     }
 
-    private AnvilRecipe() {}
-    public ItemStack baseItem;
-    public boolean preserveBase;
-    public ItemStack outputItem;
-    private List<ItemStack> ingredients = new ArrayList<>();
-
-    public AnvilRecipe(ItemStack baseItem, boolean preserveBase, ItemStack outputItem, ItemStack... ingredients) {
-        this.baseItem = baseItem.copy();
-        this.preserveBase = preserveBase;
-        this.outputItem = outputItem.copy();
-
-        for (ItemStack ingredient : ingredients) {
-            if (this.ingredients.size() <= 4)
-                this.ingredients.add(ingredient.copy());
+    /**
+     * Valid inputs
+     */
+    private static List<ItemStack> validInputs = new ArrayList<>();
+    public static void clearValidInputs() { validInputs.clear(); }
+    public static void addValidInput(ItemStack itemStack) { validInputs.add(itemStack); }
+    public static boolean isValidInput(ItemStack itemStack) {
+        for (ItemStack i : validInputs) {
+            if (i.isItemEqual(itemStack))
+                return true;
         }
-        initJei();
+        return false;
     }
 
-    public ItemStack getOutput(){ return outputItem.copy(); }
+    /**
+     * Jei
+     */
+    private List<List<ItemStack>> inputs = new ArrayList<>();
+    public List<List<ItemStack>> getInputs() { return inputs; }
 
-    public List<ItemStack> getIngredients() { return Collections.unmodifiableList(ingredients); }
+    /**
+     * IRecipe
+     */
+    @Override
+    public boolean matches(IInventory inv, World worldIn) {
+        if (!baseIngredient.test(inv.getStackInSlot(0)))
+            return false;
 
-    public boolean checkIngredients(ItemStack[] itemStacks) {
+        int count = 0;
+        for (int i = 1; i < 4; i++) {
+            if (!inv.getStackInSlot(i).isEmpty())
+                count++;
+        }
 
-        boolean[] checkedIn = { false, false, false, false };
+        if (ingredients.size() != count)
+            return false;
 
-        for (int i = 0; i < ingredients.size(); i++) {
-            ItemStack itemStack = ingredients.get(i);
-            if (itemStack.isEmpty())
-                continue;
-
-            boolean found = false;
-            for (int j = 0; j < itemStacks.length; j++) {
-                if (checkedIn[j])
-                    continue;
-
-                if (ItemStack.areItemStacksEqual(itemStack, itemStacks[j])) {
-                    checkedIn[j] = true;
-                    found = true;
+        List<Integer> matchedSlots = new ArrayList<>();
+        for (Ingredient ingredient : ingredients) {
+            for (int i = 1; i < 4; i++) {
+                if (!matchedSlots.contains(i) && ingredient.test(inv.getStackInSlot(i))) {
+                    // found ingredient in one of the slots
+                    matchedSlots.add(i);
                     break;
                 }
             }
-            if (found == false)
-                return false;
         }
+
+        if (matchedSlots.size() == ingredients.size())
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public ItemStack getCraftingResult(IInventory inv) {
+        return null;
+    }
+
+    @Override
+    public boolean canFit(int width, int height) {
         return true;
     }
 
-    public List<List<ItemStack>> jeiInputs;
-    private void initJei() {
-        jeiInputs = new ArrayList<>();
-        jeiInputs.add(Arrays.asList(baseItem.copy()));
-
-        for (ItemStack itemStack : ingredients)
-            jeiInputs.add(Arrays.asList(itemStack.copy()));
+    @Override
+    public ItemStack getRecipeOutput() {
+        return ItemStack.EMPTY;
     }
-    public List<List<ItemStack>> getJeiInputs() { return jeiInputs; }
+
+    @Override
+    public ResourceLocation getId() {
+        return id;
+    }
+
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
+
+    @Override
+    public IRecipeType<?> getType() {
+        return type;
+    }
+
+    /**
+     * IFinishedRecipe
+     */
+    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+        if (this.baseIngredient == null)
+            throw new IllegalStateException("No valid base ingredient for recipe " + id);
+        consumer.accept(new Finished(id, this.baseIngredient, this.result, this.count, this.ingredients));
+    }
+    public static class Finished implements IFinishedRecipe {
+
+        private final NonNullList<Ingredient> ingredients;
+        private final Ingredient baseIngredient;
+        private final Item result;
+        private final int count;
+        private final ResourceLocation id;
+
+        public Finished(ResourceLocation id, Ingredient baseIngredient, Item result, int count, NonNullList<Ingredient> ingredients) {
+            this.id = id;
+            this.baseIngredient = baseIngredient;
+            this.result = result;
+            this.count = count;
+            this.ingredients = ingredients;
+        }
+
+        @Override
+        public void serialize(JsonObject json) {
+            json.add("base", this.baseIngredient.serialize());
+            JsonArray array = new JsonArray();
+            for (Ingredient i : this.ingredients)
+                array.add(i.serialize());
+            json.add("ingredients", array);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
+            if (this.count > 1)
+                jsonObject.addProperty("count", this.count);
+            json.add("result", jsonObject);
+        }
+
+        @Override
+        public ResourceLocation getID() {
+            return id;
+        }
+
+        @Override
+        public IRecipeSerializer<?> getSerializer() {
+            return SERIALIZER;
+        }
+
+        @Nullable
+        @Override
+        public JsonObject getAdvancementJson() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public ResourceLocation getAdvancementID() {
+            return null;
+        }
+    }
+
+
 }

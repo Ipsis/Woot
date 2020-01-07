@@ -29,11 +29,27 @@ public class AnvilRecipeSerializer<T extends AnvilRecipe> extends ForgeRegistryE
     @Nullable
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
-        return null;
+        String s = buffer.readString(32767);
+        Ingredient baseIngredient = Ingredient.read(buffer);
+
+        NonNullList<Ingredient> ingredients = NonNullList.create();
+        int ingCount = buffer.readShort();
+        if (ingCount != 0) {
+            for (int i = 0; i < ingCount; i++)
+                ingredients.add(Ingredient.read(buffer));
+        }
+
+        ItemStack result = buffer.readItemStack();
+        return this.factory.create(recipeId, baseIngredient, result.getItem(), result.getCount(), ingredients);
     }
 
     @Override
     public void write(PacketBuffer buffer, T recipe) {
+        recipe.getBaseIngredient().write(buffer);
+        buffer.writeShort(recipe.getIngredients().size());
+        for (Ingredient ingredient : recipe.getIngredients())
+            ingredient.write(buffer);
+        buffer.writeItemStack(recipe.getOutput());
     }
 
     @Override

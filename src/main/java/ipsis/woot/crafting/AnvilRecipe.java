@@ -54,10 +54,10 @@ public class AnvilRecipe implements IRecipe<IInventory> {
     @ObjectHolder("woot:anvil")
     public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
 
-    public static AnvilRecipe anvilRecipe2(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, NonNullList<Ingredient> ingredients) {
+    public static AnvilRecipe anvilRecipe(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, NonNullList<Ingredient> ingredients) {
         return new AnvilRecipe(id, baseIngredient, result, 1, ingredients);
     }
-    public static AnvilRecipe anvilRecipe2(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, int count, NonNullList<Ingredient> ingredients) {
+    public static AnvilRecipe anvilRecipe(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, int count, NonNullList<Ingredient> ingredients) {
         return new AnvilRecipe(id, baseIngredient, result, count, ingredients);
     }
 
@@ -83,6 +83,7 @@ public class AnvilRecipe implements IRecipe<IInventory> {
 
     /**
      * IRecipe
+     * Matches base item and all ingredients
      */
     @Override
     public boolean matches(IInventory inv, World worldIn) {

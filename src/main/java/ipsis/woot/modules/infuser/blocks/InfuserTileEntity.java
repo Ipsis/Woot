@@ -2,15 +2,14 @@ package ipsis.woot.modules.infuser.blocks;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
-import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
-import ipsis.woot.util.FluidStackPacketHandler;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -40,7 +39,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import static ipsis.woot.crafting.InfuserRecipe.INFUSER_TYPE;
 
 public class InfuserTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
 
@@ -55,26 +55,6 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             return;
 
         machineTick();
-
-        /*
-        if (world.getGameTime() % 20 != 0)
-            return;
-
-        itemHandler.ifPresent(h -> {
-            ItemStack itemStack = h.getStackInSlot(0);
-            if (!itemStack.isEmpty()) {
-                fluidTank.ifPresent(f -> {
-                    InfuserRecipe recipe = InfuserRecipe.findRecipe(itemStack, f.getFluid(), ItemStack.EMPTY);
-                    if (recipe != null && h.insertItem(OUTPUT_SLOT, recipe.output.copy(), true).isEmpty()) {
-                        h.extractItem(INPUT_SLOT, 1, false);
-                        h.extractItem(AUGMENT_SLOT, 1, false);
-                        f.drain(recipe.fluid.copy(), IFluidHandler.FluidAction.EXECUTE);
-                        h.insertItem(OUTPUT_SLOT, recipe.output.copy(), false);
-                        markDirty();
-                    }
-                });
-            }
-        }); */
     }
 
     public void setTankFluid(FluidStack fluidStack) {
@@ -294,10 +274,13 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             return;
         }
 
+        final int inputSize = currRecipe.getIngredient().getMatchingStacks()[0].getCount();
+        final int augmentSize = currRecipe.hasAugment() ? currRecipe.getAugment().getMatchingStacks()[0].getCount() : 1;
+
         itemHandler.ifPresent(i -> {
-            i.extractItem(INPUT_SLOT, currRecipe.input.size, false);
+            i.extractItem(INPUT_SLOT, inputSize, false);
             if (currRecipe.hasAugment())
-                i.extractItem(AUGMENT_SLOT, currRecipe.augment.size, false);
+                i.extractItem(AUGMENT_SLOT, augmentSize, false);
             i.insertItem(OUTPUT_SLOT, currRecipe.getOutput(), false);
         });
 
@@ -346,10 +329,31 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     private void getRecipe() {
-        currRecipe = InfuserRecipe.findRecipe(
-                itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY),
-                fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY),
-                itemHandler.map(i -> i.getStackInSlot(AUGMENT_SLOT)).orElse(ItemStack.EMPTY));
+
+        if (fluidTank.map(h -> h.isEmpty()).orElse(false)) {
+            currRecipe = null;
+            return;
+        }
+
+        List<InfuserRecipe> recipes = world.getRecipeManager().getRecipes(
+                INFUSER_TYPE,
+                new Inventory(
+                        itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY),
+                        itemHandler.map(i -> i.getStackInSlot(AUGMENT_SLOT)).orElse(ItemStack.EMPTY)),
+                world);
+
+        if (!recipes.isEmpty()) {
+            // Already checked for empty so this should always be !empty
+            FluidStack fluidStack = fluidTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
+            for (InfuserRecipe r : recipes) {
+                if (r.getFluidInput().isFluidEqual(fluidStack)) {
+                    currRecipe = r;
+                    return;
+                }
+            }
+        }
+
+        currRecipe = null;
     }
 
     private boolean hasValidInput() {

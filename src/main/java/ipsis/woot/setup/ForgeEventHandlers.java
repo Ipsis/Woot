@@ -127,9 +127,7 @@ public class ForgeEventHandlers {
         ModCommands.register(event.getCommandDispatcher());
         SqueezerRecipes.load(event.getServer().getRecipeManager());
         AnvilRecipes.load(event.getServer().getRecipeManager());
-
-        // TODO recipe loading needs to be in a better place, with tag access
-        InfuserRecipes.load();
+        InfuserRecipes.load(event.getServer().getRecipeManager());
     }
 
     @SubscribeEvent

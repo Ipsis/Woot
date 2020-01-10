@@ -1,0 +1,14 @@
+{
+  "type": "woot:infuser",
+  "ingredient": {
+    "item": "woot:red_dyecasing"
+  },
+  "infuse": {
+    "fluid": "woot:puredye_fluid",
+    "amount": 72
+  },
+  "result": {
+    "item": "woot:red_dyeplate"
+  },
+  "energy": 1000
+}

@@ -1,0 +1,14 @@
+{
+  "type": "woot:infuser",
+  "ingredient": {
+    "tag": "forge:glass"
+  },
+  "infuse": {
+    "fluid": "woot:puredye_fluid",
+    "amount": 1000
+  },
+  "result": {
+    "item": "woot:prism"
+  },
+  "energy": 1000
+}

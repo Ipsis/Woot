@@ -54,7 +54,6 @@ public class WootJeiPlugin implements IModPlugin {
         }
         registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);
         registration.addRecipes(anvilRecipes, AnvilRecipeCategory.UID);
-
-        registration.addRecipes(InfuserRecipe.recipeList, InfuserRecipeCategory.UID);
+        registration.addRecipes(infuserRecipes, InfuserRecipeCategory.UID);
     }
 }

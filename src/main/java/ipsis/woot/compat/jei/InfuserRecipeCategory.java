@@ -39,14 +39,14 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
 
     @Override
     public void setIngredients(InfuserRecipe recipe, IIngredients iIngredients) {
-        iIngredients.setInputLists(VanillaTypes.ITEM, recipe.getJeiInputs());
+        iIngredients.setInputLists(VanillaTypes.ITEM, recipe.getInputs());
         iIngredients.setInput(VanillaTypes.FLUID, recipe.getFluidInput());
         iIngredients.setOutput(VanillaTypes.ITEM, recipe.getOutput());
     }
 
     @Override
-    public void onTooltip(int i, boolean b, ItemStack itemStack, List<String> list) {
-        if (i == 2 && itemStack.getItem() == Items.ENCHANTED_BOOK || itemStack.isEnchanted())
+    public void onTooltip(int slot, boolean isInput, ItemStack itemStack, List<String> list) {
+        if (slot == 2 && itemStack.getItem() == Items.ENCHANTED_BOOK || itemStack.isEnchanted())
             list.add("Random enchantment");
     }
 

@@ -42,21 +42,21 @@ public class Anvil {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        AnvilRecipe.anvilRecipe2(new ResourceLocation(Woot.MODID, "anvil/plate_die"),
+        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/plate_die"),
                 Ingredient.fromItems(Items.STONE_SLAB),
                 AnvilSetup.PLATE_DIE_ITEM.get(),
                 NonNullList.from(Ingredient.EMPTY,
                         Ingredient.fromItems(Blocks.OBSIDIAN)))
                 .build(consumer, new ResourceLocation(Woot.MODID, "anvil/plate_die"));
 
-        AnvilRecipe.anvilRecipe2(new ResourceLocation(Woot.MODID, "anvil/shard_die"),
+        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/shard_die"),
                 Ingredient.fromItems(Items.QUARTZ),
                 AnvilSetup.SHARD_DIE_ITEM.get(),
                 NonNullList.from(Ingredient.EMPTY,
                         Ingredient.fromItems(Blocks.OBSIDIAN)))
                 .build(consumer, new ResourceLocation(Woot.MODID, "anvil/shard_die"));
 
-        AnvilRecipe.anvilRecipe2(new ResourceLocation(Woot.MODID, "anvil/controller"),
+        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/controller"),
                 Ingredient.fromItems(ModItems.MOB_SHARD_ITEM.getItem()),
                 FactorySetup.CONTROLLER_BLOCK.get(),
                 NonNullList.from(Ingredient.EMPTY,

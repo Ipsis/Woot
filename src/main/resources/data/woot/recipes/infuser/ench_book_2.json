@@ -1,0 +1,18 @@
+{
+  "type": "woot:infuser",
+  "ingredient": {
+    "item": "minecraft:book"
+  },
+  "augment": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "augment_count": 2,
+  "infuse": {
+    "fluid": "woot:enchant_fluid",
+    "amount": 2000
+  },
+  "result": {
+    "item": "minecraft:enchanted_book"
+  },
+  "energy": 1000
+}

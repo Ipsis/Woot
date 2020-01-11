@@ -117,13 +117,13 @@ public class Infuser {
 
         InfuserRecipe.infuserRecipe(ENCH_PLATE_1_RL,
                 Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()),
-                Ingredient.fromTag(Tags.Items.ORES_IRON), 1,
+                Ingredient.fromTag(Tags.Items.INGOTS_IRON), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_PLATE_1_FLUID_COST),
                 GenericSetup.ENCH_PLATE_1.get(), ENCH_PLATE_1_ENERGY_COST)
                 .build(consumer, ENCH_PLATE_1_RL);
         InfuserRecipe.infuserRecipe(ENCH_PLATE_2_RL,
                 Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()),
-                Ingredient.fromTag(Tags.Items.ORES_GOLD), 1,
+                Ingredient.fromTag(Tags.Items.INGOTS_GOLD), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_PLATE_2_FLUID_COST),
                 GenericSetup.ENCH_PLATE_2.get(), ENCH_PLATE_2_ENERGY_COST)
                 .build(consumer, ENCH_PLATE_2_RL);

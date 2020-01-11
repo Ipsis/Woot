@@ -12,7 +12,8 @@
     "amount": 4000
   },
   "result": {
-    "item": "minecraft:enchanted_book"
+    "item": "minecraft:enchanted_book",
+    "count": 4
   },
-  "energy": 1000
+  "energy": 8000
 }

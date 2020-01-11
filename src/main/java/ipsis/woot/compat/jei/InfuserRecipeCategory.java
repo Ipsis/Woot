@@ -46,8 +46,22 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
 
     @Override
     public void onTooltip(int slot, boolean isInput, ItemStack itemStack, List<String> list) {
-        if (slot == 2 && itemStack.getItem() == Items.ENCHANTED_BOOK || itemStack.isEnchanted())
-            list.add("Random enchantment");
+
+        if (slot != 2)
+            return;
+
+        if (itemStack.getItem() == Items.ENCHANTED_BOOK || itemStack.isEnchanted()) {
+            if (itemStack.getCount() == 1)
+                list.add("Random enchantment I");
+            else if (itemStack.getCount() == 2)
+                list.add("Random enchantment II");
+            else if (itemStack.getCount() == 3)
+                list.add("Random enchantment III");
+            else if (itemStack.getCount() == 4)
+                list.add("Random enchantment IV");
+            else if (itemStack.getCount() == 5)
+                list.add("Random enchantment V");
+        }
     }
 
     @Override

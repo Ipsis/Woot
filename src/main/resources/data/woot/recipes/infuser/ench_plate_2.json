@@ -1,19 +1,17 @@
 {
   "type": "woot:infuser",
   "ingredient": {
-    "item": "minecraft:book"
+    "item": "woot:si_plate"
   },
   "augment": {
-    "item": "minecraft:lapis_lazuli"
+    "tag": "forge:ores/gold"
   },
-  "augment_count": 2,
   "infuse": {
     "fluid": "woot:enchant_fluid",
     "amount": 2000
   },
   "result": {
-    "item": "minecraft:enchanted_book",
-    "count": 2
+    "item": "woot:ench_plate_2"
   },
-  "energy": 2000
+  "energy": 20000
 }

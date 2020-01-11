@@ -6,9 +6,6 @@
   "ingredients": [
     {
       "item": "minecraft:obsidian"
-    },
-    {
-      "item": "minecraft:cobblestone"
     }
   ],
   "result": {

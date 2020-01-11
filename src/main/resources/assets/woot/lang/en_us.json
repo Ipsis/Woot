@@ -107,6 +107,10 @@
   "item.woot.red_dyeplate": "Red Dye Plate",
   "item.woot.black_dyeplate": "Black Dye Plate",
 
+  "item.woot.ench_plate_1": "Practicus Plate",
+  "item.woot.ench_plate_2": "Theoricus Plate",
+  "item.woot.ench_plate_3": "Zelator Plate",
+
   # Fluids
   "fluid.woot.conatus_fluid": "Conatus Fluid",
   "fluid.woot.puredye_fluid": "Pure Dye Fluid",

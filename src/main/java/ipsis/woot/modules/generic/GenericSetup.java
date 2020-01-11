@@ -28,4 +28,10 @@ public class GenericSetup {
             "si_plate", () -> new GenericItem(GenericItemType.SI_PLATE));
     public static final RegistryObject<GenericItem> PRISM_ITEM = ITEMS.register(
             "prism", () -> new GenericItem(GenericItemType.PRISM));
+    public static final RegistryObject<GenericItem> ENCH_PLATE_1 = ITEMS.register(
+            "ench_plate_1", () -> new GenericItem(GenericItemType.ENCH_PLATE_1));
+    public static final RegistryObject<GenericItem> ENCH_PLATE_2 = ITEMS.register(
+            "ench_plate_2", () -> new GenericItem(GenericItemType.ENCH_PLATE_2));
+    public static final RegistryObject<GenericItem> ENCH_PLATE_3 = ITEMS.register(
+            "ench_plate_3", () -> new GenericItem(GenericItemType.ENCH_PLATE_3));
 }

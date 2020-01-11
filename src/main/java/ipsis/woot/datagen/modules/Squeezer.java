@@ -19,7 +19,11 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 public class Squeezer {
+
+    private static final int DYE_ENERGY_COST = 1000;
+
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+
 
         ShapedRecipeBuilder.shapedRecipe(SqueezerSetup.SQUEEZER_BLOCK.get())
                 .patternLine("ipi")
@@ -54,7 +58,7 @@ public class Squeezer {
         for (DyeMakeup d : DyeMakeup.values()) {
             ResourceLocation rl = new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name().toLowerCase(Locale.ROOT));
             Woot.LOGGER.info("Generating Dye Squeezer recipe for {}", d);
-                DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromTag(d.getItemTag()), 1000, d) .build(consumer, rl);
+                DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromTag(d.getItemTag()), DYE_ENERGY_COST, d) .build(consumer, rl);
         }
 
         /**
@@ -96,7 +100,7 @@ public class Squeezer {
         for (VanillaDyes d : dyes) {
             Woot.LOGGER.info("Generating Dye Squeezer recipe for {}", d.name);
             ResourceLocation rl = new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name);
-            DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromItems(d.item), 1000, d.dyeMakeup) .build(consumer, rl);
+            DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromItems(d.item), DYE_ENERGY_COST, d.dyeMakeup) .build(consumer, rl);
         }
     }
 }

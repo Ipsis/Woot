@@ -131,7 +131,7 @@ public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTi
      */
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
-        return new FluidTank(SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1)));
+        return new FluidTank(SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1)));
     }
 
     /**
@@ -157,7 +157,7 @@ public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTi
      */
     private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
     private WootEnergyStorage createEnergy() {
-        return new WootEnergyStorage(SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get(), SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY_RX.get());
+        return new WootEnergyStorage(SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY_RX.get());
     }
 
     /**

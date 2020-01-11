@@ -156,5 +156,8 @@
   "chat.woot.intern.validate.blacklisted": "Controller at (%d,%d,%d) is blacklisted",
   "chat.woot.intern.validate.noprimary": "No valid primary controller at (%d,%d,%d)",
   "chat.woot.mobshard.failure": "Cannot capture mob",
-  "chat.woot.mobshard.success": "Captured mob"
+  "chat.woot.mobshard.success": "Captured mob",
+
+  # Gui
+  "gui.woot.infuser.name": "Infuser"
 }

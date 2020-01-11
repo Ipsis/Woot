@@ -49,6 +49,12 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
                 InfuserConfiguration.INFUSER_TANK_CAPACITY.get(),
                 container.getTileEntity().getTankFluid());
     }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        String text = title.getFormattedText();
+        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
+    }
 }
 
 

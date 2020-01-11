@@ -9,11 +9,7 @@ public class InfuserConfiguration {
     public static ForgeConfigSpec.IntValue INFUSER_TANK_CAPACITY;
     public static ForgeConfigSpec.IntValue INFUSER_MAX_ENERGY;
     public static ForgeConfigSpec.IntValue INFUSER_MAX_ENERGY_RX;
-    public static ForgeConfigSpec.IntValue LVL_1_ENCHANT_COST;
-    public static ForgeConfigSpec.IntValue LVL_2_ENCHANT_COST;
-    public static ForgeConfigSpec.IntValue LVL_3_ENCHANT_COST;
-    public static ForgeConfigSpec.IntValue LVL_4_ENCHANT_COST;
-    public static ForgeConfigSpec.IntValue LVL_5_ENCHANT_COST;
+    public static ForgeConfigSpec.IntValue INFUSER_ENERGY_PER_TICK;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -29,21 +25,9 @@ public class InfuserConfiguration {
             INFUSER_MAX_ENERGY_RX = COMMON_BUILDER
                     .comment("Maximum energy that can be received (in RF/t)")
                     .defineInRange("energyMaxRx", 100, 0, Integer.MAX_VALUE);
-            LVL_1_ENCHANT_COST = COMMON_BUILDER
-                    .comment("Cost (in mb) to enchant an item to level 1")
-                    .defineInRange("lvl1EnchantCost", 1000, 0, Integer.MAX_VALUE);
-            LVL_2_ENCHANT_COST = COMMON_BUILDER
-                    .comment("Cost (in mb) to enchant an item to level 2")
-                    .defineInRange("lvl2EnchantCost", 2000, 0, Integer.MAX_VALUE);
-            LVL_3_ENCHANT_COST = COMMON_BUILDER
-                    .comment("Cost (in mb) to enchant an item to level 3")
-                    .defineInRange("lvl3EnchantCost", 3000, 0, Integer.MAX_VALUE);
-            LVL_4_ENCHANT_COST = COMMON_BUILDER
-                    .comment("Cost (in mb) to enchant an item to level 4")
-                    .defineInRange("lvl4EnchantCost", 4000, 0, Integer.MAX_VALUE);
-            LVL_5_ENCHANT_COST = COMMON_BUILDER
-                    .comment("Cost (in mb) to enchant an item to level 5")
-                    .defineInRange("lvl5EnchantCost", 5000, 0, Integer.MAX_VALUE);
+            INFUSER_ENERGY_PER_TICK = COMMON_BUILDER
+                    .comment("How much energy per tick to use (in RF/t)")
+                    .defineInRange("energyPerTick", 70, 0, Integer.MAX_VALUE);
         }
         COMMON_BUILDER.pop();
         CLIENT_BUILDER.pop();

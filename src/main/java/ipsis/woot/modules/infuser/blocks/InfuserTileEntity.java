@@ -251,7 +251,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         if (processRem <= 0)
             return 0;
 
-        int energy = energyStorage.map(e -> e.extractEnergy(200, false)).orElse(0);
+        int energy = energyStorage.map(e -> e.extractEnergy(InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get(), false)).orElse(0);
         processRem -= energy;
         return energy;
     }

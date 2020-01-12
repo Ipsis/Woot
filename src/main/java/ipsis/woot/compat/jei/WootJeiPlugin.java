@@ -28,6 +28,8 @@ import java.util.List;
 @JeiPlugin
 public class WootJeiPlugin implements IModPlugin {
 
+    public static int maxInfuserRecipeMb = 1000;
+
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(Woot.MODID, "main");
@@ -58,7 +60,10 @@ public class WootJeiPlugin implements IModPlugin {
             } else if (recipe instanceof AnvilRecipe) {
                 anvilRecipes.add(recipe);
             } else if (recipe instanceof InfuserRecipe) {
-                infuserRecipes.add(recipe);
+                InfuserRecipe r = (InfuserRecipe)recipe;
+                infuserRecipes.add(r);
+                if (r.getFluidInput().getAmount() > maxInfuserRecipeMb)
+                    maxInfuserRecipeMb = r.getFluidInput().getAmount();
             }
         }
         registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);

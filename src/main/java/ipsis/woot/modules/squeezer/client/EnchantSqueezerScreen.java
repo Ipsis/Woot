@@ -37,7 +37,7 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
                     SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get());
         if (mouseX > guiLeft + 10 && mouseX < guiLeft + 25 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
             renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
-                    SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get());
+                    SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), 10);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ipsis.woot.util;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import net.minecraft.client.Minecraft;
@@ -18,6 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class WootContainerScreen<T extends Container> extends ContainerScreen<T> {
@@ -69,8 +71,11 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         renderTooltip(tooltip, mouseX, mouseY);
     }
 
-    public void renderEnergyTooltip(int mouseX, int mouseY, int curr, int capacity) {
-        renderTooltip(String.format("%d/%d RF", curr, capacity), mouseX, mouseY);
+    public void renderEnergyTooltip(int mouseX, int mouseY, int curr, int capacity, int rate) {
+        List<String> tooltip = Arrays.asList(
+                String.format("%d/%d RF", curr, capacity),
+                String.format("%d RF/tick", rate));
+        renderTooltip(tooltip, mouseX, mouseY);
     }
 
     public void drawFluid(int x, int y, FluidStack fluid, int width, int height) {

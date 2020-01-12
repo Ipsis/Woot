@@ -30,7 +30,7 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
                     InfuserConfiguration.INFUSER_TANK_CAPACITY.get());
         if (mouseX > guiLeft + 10 && mouseX < guiLeft + 25 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
             renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
-                    InfuserConfiguration.INFUSER_MAX_ENERGY.get());
+                    InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
     }
 
     @Override

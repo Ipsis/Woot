@@ -142,6 +142,8 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> InfuserTileEntity");
+        debug.add("      Tank " + getTankFluid().getTranslationKey() + " " + getTankFluid().getAmount());
+        debug.add("      Energy " + getEnergy());
         return debug;
     }
     //endregion

@@ -1,5 +1,7 @@
 package ipsis.woot.modules.infuser.blocks;
 
+import ipsis.woot.modules.debug.items.DebugItem;
+import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -18,13 +21,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class InfuserBlock extends Block {
+public class InfuserBlock extends Block implements WootDebug {
 
     public InfuserBlock() {
         super(Properties.create(Material.IRON).sound(SoundType.METAL));
@@ -75,5 +78,15 @@ public class InfuserBlock extends Block {
             return true;
 
         }
+    }
+
+    /**
+     * WootDebug
+     */
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> InfuserBlock");
+        DebugItem.getTileEntityDebug(debug, itemUseContext);
+        return debug;
     }
 }

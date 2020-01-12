@@ -1,6 +1,5 @@
 package ipsis.woot.modules.infuser.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
@@ -8,9 +7,7 @@ import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.util.EnchantingHelper;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
+import ipsis.woot.util.WootMachineTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -20,13 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -44,29 +37,22 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static ipsis.woot.crafting.InfuserRecipe.INFUSER_TYPE;
 
-public class InfuserTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
-
-    private final Random rand = new Random();
+public class InfuserTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
 
     public InfuserTileEntity() {
         super(InfuserSetup.INFUSER_BLOCK_TILE.get());
     }
 
-    @Override
-    public void tick() {
-
-        if (world.isRemote)
-            return;
-
-        machineTick();
+    //-------------------------------------------------------------------------
+    //region Tanks
+    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
+    private FluidTank createTank() {
+        return new FluidTank(InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), h -> InfuserRecipe.isValidFluid(h));
     }
 
     public void setTankFluid(FluidStack fluidStack) {
@@ -77,43 +63,34 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         return fluidTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return itemHandler.cast();
-        else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-            return fluidTank.cast();
-        else if (cap == CapabilityEnergy.ENERGY)
-            return energyStorage.cast();
-        return super.getCapability(cap, side);
+    public boolean handleFluidContainerUse(ItemStack heldItem, PlayerEntity playerEntity, Hand hand) {
+        AtomicBoolean ret = new AtomicBoolean(false);
+        fluidTank.ifPresent(h -> {
+            FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(heldItem, h, null, Integer.MAX_VALUE, playerEntity, true);
+            if (fillResult.isSuccess()) {
+                playerEntity.setHeldItem(hand, fillResult.getResult());
+                ret.set(true);
+            }
+        });
+        return ret.get();
+    }
+    //endregion
+
+    //-------------------------------------------------------------------------
+    //region Energy
+    private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
+    private WootEnergyStorage createEnergy() {
+        return new WootEnergyStorage(InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_MAX_ENERGY_RX.get());
     }
 
     public int getEnergy() {
         return energyStorage.map(h -> h.getEnergyStored()).orElse(0);
     }
     public void setEnergy(int v) { energyStorage.ifPresent(h -> h.setEnergy(v)); }
+    //endregion
 
-    /**
-     * Tank
-     */
-    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
-    private FluidTank createTank() {
-        return new FluidTank(InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), h -> InfuserRecipe.isValidFluid(h));
-    }
-
-    /**
-     * Energy
-     */
-    private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
-    private WootEnergyStorage createEnergy() {
-        return new WootEnergyStorage(InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_MAX_ENERGY_RX.get());
-    }
-
-
-    /**
-     * Inventory
-     */
+    //-------------------------------------------------------------------------
+    //region Inventory
     public static final int INPUT_SLOT = 0;
     public static final int AUGMENT_SLOT = 1;
     public static final int OUTPUT_SLOT = 2;
@@ -136,22 +113,10 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             }
         };
     }
+    //endregion
 
-    public boolean handleFluidContainerUse(ItemStack heldItem, PlayerEntity playerEntity, Hand hand) {
-        AtomicBoolean ret = new AtomicBoolean(false);
-        fluidTank.ifPresent(h -> {
-            FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(heldItem, h, null, Integer.MAX_VALUE, playerEntity, true);
-            if (fillResult.isSuccess()) {
-                playerEntity.setHeldItem(hand, fillResult.getResult());
-                ret.set(true);
-            }
-        });
-        return ret.get();
-    }
-
-    /**
-     * NBT
-     */
+    //-------------------------------------------------------------------------
+    //region NBT
     @Override
     public void read(CompoundNBT compoundNBT) {
 
@@ -186,19 +151,19 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
 
         return super.write(compoundNBT);
     }
+    //endregion
 
-    /**
-     * IWootDebug
-     */
+    //-------------------------------------------------------------------------
+    //region IWootDebug
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> InfuserTileEntity");
         return debug;
     }
+    //endregion
 
-    /**
-     * INamedContainerProvider
-     */
+    //-------------------------------------------------------------------------
+    //region Container
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("gui.woot.infuser.name");
@@ -209,76 +174,42 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new InfuserContainer(i, world, pos, playerInventory, playerEntity);
     }
+    //endregion
 
-    public FluidStackPacket getFluidStackPacket() {
-        return new FluidStackPacket(fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
-    }
 
-    /**
-     * Process
-     *
-     * This is HEAVILY based off the CoFH's TileMachineBase
-     */
-    private boolean isActive = false;
-    private int processMax = 0; // total energy needed
-    private int processRem = 0; // energy still to use
+    //-------------------------------------------------------------------------
+    //region Client sync
+    private int clientFluidAmount = 0;
+    public int getClientFluidAmount() { return clientFluidAmount; }
+    public void setClientFluidAmount(int v) { clientFluidAmount = v; }
+    //endregion
+
+    //-------------------------------------------------------------------------
+    //region Machine Process
     private InfuserRecipe currRecipe = null;
-    public void machineTick() {
 
-        if (isActive) {
-            Woot.LOGGER.info("machineTick: running");
-            processTick(); // use energy and update processRem
-            if (canFinish()) {
-                // all energy used and all inputs are still valid
-                processFinish(); // use inputs and generate outputs
-                if (isDisabled() || !canStart()) {
-                    //  disabled via redstone or dont have a valid set of input items and enough energy
-                    processOff();
-                    isActive = false;
-                    Woot.LOGGER.info("machineTick: turn off");
-                } else {
-                    processStart(); // set processMax and processRem
-                }
-            } else if (energyStorage.map(e -> e.getEnergyStored() <= 0).orElse(false)) {
-                // No energy left so stop processing
-                processOff();
-            }
-        } else if (!isDisabled()) {
-            if (world.getGameTime() % 10 == 0 && canStart()) {
-                // have a valid set of input items and enough energy
-                processStart(); // set processMax and processRem
-                processTick(); // use energy and update processRem
-                isActive = true;
-                Woot.LOGGER.info("machineTick: turn on");
-            }
-        }
+    @Override
+    protected boolean hasEnergy() {
+        return energyStorage.map(e -> e.getEnergyStored() > 0).orElse(false);
     }
 
-    /**
-     *
-     * If energy still needs to be consumed then do so
-     * Returns the amount of energy used
-     */
-    private int processTick() {
-        if (processRem <= 0)
-            return 0;
-
-        int energy = energyStorage.map(e -> e.extractEnergy(InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get(), false)).orElse(0);
-        processRem -= energy;
-        return energy;
+    @Override
+    protected int useEnergy() {
+        return energyStorage.map(e -> e.extractEnergy(InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get(), false)).orElse(0);
     }
 
-    /**
-     * Can finish if all the energy has been consumed and the inputs still give a valid recipe
-     */
-    private boolean canFinish() {
-        return processRem <= 0 && hasValidInput();
+    @Override
+    protected void clearRecipe() {
+        currRecipe = null;
     }
 
-    /**
-     * Consume all the inputs and generate the output
-     */
-    private void processFinish() {
+    @Override
+    protected int getRecipeEnergy() {
+        return currRecipe != null ? currRecipe.getEnergy() : 0;
+    }
+
+    @Override
+    protected void processFinish() {
         if (currRecipe == null)
             getRecipe();
         if (currRecipe == null) {
@@ -309,22 +240,17 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         markDirty();
     }
 
-    /**
-     * Check that we have inputs and they represent a valid recipe
-     */
-    private boolean canStart() {
-        if (itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT).isEmpty()).orElse(true)) {
+    @Override
+    protected boolean canStart() {
+        if (itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT).isEmpty()).orElse(true))
             return false;
-        }
 
-        if (fluidTank.map(f -> f.isEmpty()).orElse(true)) {
+        if (fluidTank.map(f -> f.isEmpty()).orElse(true))
             return false;
-        }
 
         getRecipe();
-        if (currRecipe == null) {
+        if (currRecipe == null)
             return false;
-        }
 
         // Can only start for enchanted books if the output slot is empty
         if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !itemHandler.map(h -> h.getStackInSlot(OUTPUT_SLOT).isEmpty()).orElse(true))
@@ -333,30 +259,23 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         return true;
     }
 
-    private void processOff() {
-        processRem = 0;
-        currRecipe = null;
+    @Override
+    protected boolean hasValidInput() {
+        if (currRecipe == null)
+            getRecipe();
+
+        return currRecipe == null ? false : true;
     }
 
-    /**
-     * Setup the required energy for the recipe
-     */
-    private void processStart() {
-        processMax = currRecipe.getEnergy();
-        processRem = currRecipe.getEnergy();
-    }
-
-    /**
-     * Redstone disabling of the machine
-     */
-    private boolean isDisabled() {
+    @Override
+    protected boolean isDisabled() {
         return false;
     }
+    //endregion
 
     private void getRecipe() {
-
         if (fluidTank.map(h -> h.isEmpty()).orElse(false)) {
-            currRecipe = null;
+            clearRecipe();
             return;
         }
 
@@ -368,8 +287,6 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                 world);
 
         if (!recipes.isEmpty()) {
-
-            List<InfuserRecipe> possibleRecipes = new ArrayList<>();
             // Already checked for empty so this should always be !empty
             FluidStack fluidStack = fluidTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
             for (InfuserRecipe r : recipes) {
@@ -380,23 +297,23 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             }
         }
 
-        currRecipe = null;
+        clearRecipe();
     }
 
-    private boolean hasValidInput() {
-        if (currRecipe == null)
-            getRecipe();
-        if (currRecipe == null)
-            return false;
-
-        return true;
+    public FluidStackPacket getFluidStackPacket() {
+        return new FluidStackPacket(fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
-    private int clientFluidAmount = 0;
-    public int getClientFluidAmount() { return clientFluidAmount; }
-    public void setClientFluidAmount(int v) { clientFluidAmount = v; }
-
-
-
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return itemHandler.cast();
+        else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return fluidTank.cast();
+        else if (cap == CapabilityEnergy.ENERGY)
+            return energyStorage.cast();
+        return super.getCapability(cap, side);
+    }
 
 }

@@ -5,9 +5,11 @@ import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
 import ipsis.woot.crafting.InfuserRecipe;
+import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
@@ -75,6 +77,10 @@ public class WootJeiPlugin implements IModPlugin {
             }
         }
         registration.addRecipes(books, EnchantSqueezerRecipeCategory.UID);
+    }
 
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(InfuserScreen.class, 84, 39, 30, 18, InfuserRecipeCategory.UID);
     }
 }

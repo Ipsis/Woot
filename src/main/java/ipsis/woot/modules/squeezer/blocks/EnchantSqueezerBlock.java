@@ -1,5 +1,6 @@
 package ipsis.woot.modules.squeezer.blocks;
 
+import ipsis.woot.modules.infuser.blocks.InfuserTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -17,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -53,11 +56,20 @@ public class EnchantSqueezerBlock extends Block {
     @Override
     public boolean onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
         if (world.isRemote)
-            return super.onBlockActivated(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
+            return true;
 
-        TileEntity te = world.getTileEntity((pos));
-        if (te instanceof INamedContainerProvider)
-            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, (INamedContainerProvider)te, te.getPos());
+        if (!(world.getTileEntity(pos) instanceof EnchantSqueezerTileEntity))
+            throw new IllegalStateException("Tile entity is missing");
+
+        EnchantSqueezerTileEntity squeezer = (EnchantSqueezerTileEntity) world.getTileEntity(pos);
+        ItemStack heldItem = playerEntity.getHeldItem(hand);
+
+        if (FluidUtil.getFluidHandler(heldItem).isPresent())
+            return FluidUtil.interactWithFluidHandler(playerEntity, hand, world, pos, null);
+
+        // open the gui
+        if (squeezer instanceof INamedContainerProvider)
+            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, squeezer, squeezer.getPos());
         else
             throw new IllegalStateException("Named container provider is missing");
 

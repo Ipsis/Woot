@@ -1,11 +1,11 @@
 package ipsis.woot.modules.squeezer.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
+import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,12 +18,9 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -41,91 +38,35 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
+public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
 
     public EnchantSqueezerTileEntity() {
         super(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_TILE.get());
     }
 
-    @Override
-    public void tick() {
-       if (world.isRemote)
-           return;
-
-       if (world.getGameTime() % 20 != 0)
-           return;
-
-       itemHandler.ifPresent(h -> {
-           ItemStack itemStack = h.getStackInSlot(0);
-           if (!itemStack.isEmpty() && EnchantmentHelper.isEnchanted(itemStack)) {
-               int amount = 0;
-
-               ListNBT listNBT;
-               if (itemStack.getItem() == Items.ENCHANTED_BOOK)
-                   listNBT = EnchantedBookItem.getEnchantments(itemStack);
-               else
-                   listNBT = itemStack.getEnchantmentTagList();
-
-               for (int i = 0; i < listNBT.size(); i++) {
-                   CompoundNBT compoundNBT = listNBT.getCompound(i);
-                   Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
-                   if (enchantment != null && compoundNBT.contains("lvl"))
-                       amount += SqueezerConfiguration.getEnchantFluidAmount(compoundNBT.getInt("lvl"));
-               }
-               FluidStack fluidStack = new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount);
-               fluidTank.ifPresent(t -> {
-                   t.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
-                   h.extractItem(0, 1, false);
-                   markDirty();
-               });
-           }
-       });
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return itemHandler.cast();
-        else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-            return fluidTank.cast();
-        else if (cap == CapabilityEnergy.ENERGY)
-            return energyStorage.cast();
-        return super.getCapability(cap, side);
-    }
-
-    public int getEnchant() {
-        AtomicInteger v = new AtomicInteger(0);
-        fluidTank.ifPresent(h -> {
-            v.set(h.getFluidAmount());
-        });
-        return v.get();
-    }
-
-    public void setEnchant(int v) {
-        fluidTank.ifPresent(h -> {
-            h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v));
-        });
-    }
-    public int getEnergy() {
-        return energyStorage.map(h -> h.getEnergyStored()).orElse(0);
-    }
-    public void setEnergy(int v) { energyStorage.ifPresent(h -> h.setEnergy(v)); }
-
-    /**
-     * Tank
-     */
+    //-------------------------------------------------------------------------
+    //region Tanks
     private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
         return new FluidTank(SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1)));
     }
+    //endregion
 
-    /**
-     * Inventory
-     */
+    //-------------------------------------------------------------------------
+    //region Energy
+    private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
+    private WootEnergyStorage createEnergy() {
+        return new WootEnergyStorage(SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY_RX.get());
+    }
+
+    public int getEnergy() { return energyStorage.map(h -> h.getEnergyStored()).orElse(0); }
+    public void setEnergy(int v) { energyStorage.ifPresent(h -> h.setEnergy(v)); }
+    //endregion
+
+    //-------------------------------------------------------------------------
+    //region Inventory
+    public static int INPUT_SLOT = 0;
     private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
     private IItemHandler createItemHandler() {
         return new ItemStackHandler(1) {
@@ -140,19 +81,11 @@ public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTi
             }
         };
     }
+    //endregion
 
-    /**
-     * Energy
-     */
-    private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
-    private WootEnergyStorage createEnergy() {
-        return new WootEnergyStorage(SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY_RX.get());
-    }
-
-    /**
-     * NBT
-     */
-
+    //-------------------------------------------------------------------------
+    //region NBT
+    @Override
     public void read(CompoundNBT compoundNBT) {
         CompoundNBT invTag = compoundNBT.getCompound("inv");
         itemHandler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
@@ -185,10 +118,22 @@ public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTi
 
         return super.write(compoundNBT);
     }
+    //endregion
 
-    /**
-     * INamedContainerProvider
-     */
+    //-------------------------------------------------------------------------
+    //region WootDebug
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> EnchantSqueezerTileEntity");
+        fluidTank.ifPresent(h -> {
+            debug.add("     p:" + h.getFluidAmount());
+        });
+        return debug;
+    }
+    //endregion
+
+    //-------------------------------------------------------------------------
+    //region Container
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("gui.woot.enchsqueezer.name");
@@ -199,16 +144,119 @@ public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTi
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         return new EnchantSqueezerContainer(i, world, pos, playerInventory, playerEntity);
     }
+    //endregion
 
-    /**
-     * IWootDebug
-     */
-    @Override
-    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add("====> EnchantSqueezerTileEntity");
-        fluidTank.ifPresent(h -> {
-            debug.add("     p:" + h.getFluidAmount());
-        });
-        return debug;
+    //-------------------------------------------------------------------------
+    //region Client sync
+    public int getEnchant() {
+        return fluidTank.map(h -> h.getFluidAmount()).orElse(0);
     }
+
+    public void setEnchant(int v) {
+        fluidTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v)));
+    }
+    //endregion
+
+    //-------------------------------------------------------------------------
+    //region Machine Process
+
+    @Override
+    protected boolean hasEnergy() {
+        return energyStorage.map(e -> e.getEnergyStored() > 0).orElse(false);
+    }
+
+    @Override
+    protected int useEnergy() {
+        return energyStorage.map(e -> e.extractEnergy(SqueezerConfiguration.ENCH_SQUEEZER_ENERGY_PER_TICK.get(), false)).orElse(0);
+    }
+
+    @Override
+    protected int getRecipeEnergy() {
+        return SqueezerConfiguration.ENCH_SQUEEZER_RECIPE_ENERGY.get();
+    }
+
+    @Override
+    protected void clearRecipe() { }
+
+    @Override
+    protected void processFinish() {
+        ItemStack itemStack = itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY);
+        if (itemStack.isEmpty())
+            return;
+
+        itemHandler.ifPresent(i -> i.extractItem(INPUT_SLOT, 1, false));
+
+        int amount = getEnchantAmount(itemStack);
+        fluidTank.ifPresent(h -> {
+            h.fill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
+        });
+
+        markDirty();
+    }
+
+    @Override
+    protected boolean canStart() {
+        ItemStack itemStack = itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY);
+        if (itemStack.isEmpty())
+            return false;
+
+        if (fluidTank.map(h -> {
+            int amount = getEnchantAmount(itemStack);
+            int filled = h.fill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.SIMULATE);
+            return amount != filled;
+        }).orElse(false)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    protected boolean hasValidInput() {
+        return itemHandler.map(h -> {
+            ItemStack itemStack = h.getStackInSlot(INPUT_SLOT);
+            if (itemStack.isEmpty() || !EnchantmentHelper.isEnchanted(itemStack))
+                return false;
+
+            return true;
+        }).orElse(false);
+    }
+
+    @Override
+    protected boolean isDisabled() {
+        return false;
+    }
+    //endregion
+
+    @Nonnull
+    @Override
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return itemHandler.cast();
+        else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return fluidTank.cast();
+        else if (cap == CapabilityEnergy.ENERGY)
+            return energyStorage.cast();
+        return super.getCapability(cap, side);
+    }
+
+    private int getEnchantAmount(ItemStack itemStack) {
+        int amount = 0;
+        if (!itemStack.isEmpty() && EnchantmentHelper.isEnchanted(itemStack)) {
+            ListNBT listNBT;
+            if (itemStack.getItem() == Items.ENCHANTED_BOOK)
+                listNBT = EnchantedBookItem.getEnchantments(itemStack);
+            else
+                listNBT = itemStack.getEnchantmentTagList();
+
+            for (int i = 0; i < listNBT.size(); i++) {
+                CompoundNBT compoundNBT = listNBT.getCompound(i);
+                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
+                if (enchantment != null && compoundNBT.contains("lvl"))
+                    amount += SqueezerConfiguration.getEnchantFluidAmount(compoundNBT.getInt("lvl"));
+            }
+        }
+        return amount;
+    }
+
 }

@@ -18,16 +18,13 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -60,18 +57,6 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     public FluidStack getTankFluid() {
         return fluidTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
-    }
-
-    public boolean handleFluidContainerUse(ItemStack heldItem, PlayerEntity playerEntity, Hand hand) {
-       return fluidTank.map(h -> {
-               FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(heldItem, h, null, Integer.MAX_VALUE, playerEntity, true);
-               if (fillResult.isSuccess()) {
-                   playerEntity.setHeldItem(hand, fillResult.getResult());
-                   return true;
-               } else {
-                   return false;
-               }
-               }).orElse(false);
     }
     //endregion
 

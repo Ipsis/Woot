@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -59,7 +60,7 @@ public class InfuserBlock extends Block {
         TileEntity te = worldIn.getTileEntity(pos);
         ItemStack heldItem = player.getHeldItem(handIn);
         if (!heldItem.isEmpty() && te instanceof InfuserTileEntity) {
-            return ((InfuserTileEntity) te).handleFluidContainerUse(heldItem, player, handIn);
+            return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null);
         } else {
             if (te instanceof INamedContainerProvider)
                 NetworkHooks.openGui(

@@ -5,8 +5,12 @@ import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.util.EnchantingHelper;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -14,11 +18,13 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -38,12 +44,17 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static ipsis.woot.crafting.InfuserRecipe.INFUSER_TYPE;
 
 public class InfuserTileEntity extends TileEntity implements ITickableTileEntity, WootDebug, INamedContainerProvider {
+
+    private final Random rand = new Random();
 
     public InfuserTileEntity() {
         super(InfuserSetup.INFUSER_BLOCK_TILE.get());
@@ -282,7 +293,16 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             i.extractItem(INPUT_SLOT, inputSize, false);
             if (currRecipe.hasAugment())
                 i.extractItem(AUGMENT_SLOT, augmentSize, false);
-            i.insertItem(OUTPUT_SLOT, currRecipe.getOutput(), false);
+
+            ItemStack itemStack = currRecipe.getOutput();
+            if (itemStack.getItem() == Items.ENCHANTED_BOOK) {
+                // stack size determines the enchant level, so save it off and reset to single item generated
+                int level = itemStack.getCount();
+                itemStack = new ItemStack(Items.BOOK, 1);
+                itemStack = EnchantingHelper.addRandomBookEnchant(itemStack, level);
+            }
+
+            i.insertItem(OUTPUT_SLOT, itemStack, false);
         });
 
         fluidTank.ifPresent(f -> f.drain(currRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
@@ -305,6 +325,10 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
         if (currRecipe == null) {
             return false;
         }
+
+        // Can only start for enchanted books if the output slot is empty
+        if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !itemHandler.map(h -> h.getStackInSlot(OUTPUT_SLOT).isEmpty()).orElse(true))
+            return false;
 
         return true;
     }
@@ -344,6 +368,8 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                 world);
 
         if (!recipes.isEmpty()) {
+
+            List<InfuserRecipe> possibleRecipes = new ArrayList<>();
             // Already checked for empty so this should always be !empty
             FluidStack fluidStack = fluidTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
             for (InfuserRecipe r : recipes) {

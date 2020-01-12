@@ -134,6 +134,13 @@ public class InfuserRecipe implements IRecipe<IInventory> {
         if (!ingredient.test(inv.getStackInSlot(0)))
             return false;
 
+        if (augment != Ingredient.EMPTY) {
+            ItemStack invStack = inv.getStackInSlot(1);
+            // augment count must be exact
+            if (!augment.test(invStack) || augmentCount != invStack.getCount())
+                return false;
+        }
+
         if (augment != Ingredient.EMPTY && !augment.test(inv.getStackInSlot(1)))
             return false;
 

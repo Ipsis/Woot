@@ -38,7 +38,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static ipsis.woot.crafting.InfuserRecipe.INFUSER_TYPE;
 
@@ -64,15 +63,15 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     public boolean handleFluidContainerUse(ItemStack heldItem, PlayerEntity playerEntity, Hand hand) {
-        AtomicBoolean ret = new AtomicBoolean(false);
-        fluidTank.ifPresent(h -> {
-            FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(heldItem, h, null, Integer.MAX_VALUE, playerEntity, true);
-            if (fillResult.isSuccess()) {
-                playerEntity.setHeldItem(hand, fillResult.getResult());
-                ret.set(true);
-            }
-        });
-        return ret.get();
+       return fluidTank.map(h -> {
+               FluidActionResult fillResult = FluidUtil.tryEmptyContainerAndStow(heldItem, h, null, Integer.MAX_VALUE, playerEntity, true);
+               if (fillResult.isSuccess()) {
+                   playerEntity.setHeldItem(hand, fillResult.getResult());
+                   return true;
+               } else {
+                   return false;
+               }
+               }).orElse(false);
     }
     //endregion
 

@@ -159,5 +159,6 @@
   "chat.woot.mobshard.success": "Captured mob",
 
   # Gui
-  "gui.woot.infuser.name": "Infuser"
+  "gui.woot.infuser.name": "Infuser",
+  "gui.woot.enchsqueezer.name": "Enchantment Squeezer"
 }

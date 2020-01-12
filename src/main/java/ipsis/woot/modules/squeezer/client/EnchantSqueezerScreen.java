@@ -55,4 +55,10 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
                 container.getTileEntity().getEnchant(), SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), container.getTileEntity().getEnchant()));
     }
+    
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        String text = title.getFormattedText();
+        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
+    }
 }

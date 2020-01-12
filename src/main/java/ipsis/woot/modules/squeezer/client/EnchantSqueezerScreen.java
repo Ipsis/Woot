@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.squeezer.blocks.EnchantSqueezerContainer;
 import ipsis.woot.util.WootContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,7 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 @OnlyIn(Dist.CLIENT)
 public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerContainer> {
 
-    private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/enchant_squeezer.png");
+    private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/" + SqueezerSetup.ENCHANT_SQUEEZER_TAG + ".png");
 
     public EnchantSqueezerScreen(EnchantSqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);

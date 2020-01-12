@@ -18,13 +18,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqueezerRecipe> {
 
-    public static final ResourceLocation UID = new ResourceLocation(Woot.MODID, "enchant_squeezer");
+    public static final ResourceLocation UID = new ResourceLocation(Woot.MODID, SqueezerSetup.ENCHANT_SQUEEZER_TAG);
 
     private static IDrawableStatic background;
     private static IDrawable icon;
 
     public EnchantSqueezerRecipeCategory(IGuiHelper guiHelper) {
-        ResourceLocation resourceLocation = new ResourceLocation(Woot.MODID, "textures/gui/jei/enchant_squeezer.png");
+        ResourceLocation resourceLocation = new ResourceLocation(Woot.MODID, "textures/gui/jei/" + SqueezerSetup.ENCHANT_SQUEEZER_TAG + ".png");
         background = guiHelper.createDrawable(resourceLocation, 0, 0, 180, 87);
         icon = guiHelper.createDrawableIngredient(new ItemStack(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get()));
     }

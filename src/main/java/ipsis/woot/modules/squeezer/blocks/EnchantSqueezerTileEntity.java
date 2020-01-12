@@ -71,20 +71,8 @@ public class EnchantSqueezerTileEntity extends TileEntity implements ITickableTi
                for (int i = 0; i < listNBT.size(); i++) {
                    CompoundNBT compoundNBT = listNBT.getCompound(i);
                    Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
-                   if (enchantment != null) {
-                       int level = compoundNBT.getInt("lvl");
-                       Woot.LOGGER.info("{} : {}", enchantment, level);
-                       if (level == 1) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_1_ENCHANT_MB.get();
-                       else if (level == 2) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_2_ENCHANT_MB.get();
-                       else if (level == 3) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_3_ENCHANT_MB.get();
-                       else if (level == 4) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_4_ENCHANT_MB.get();
-                       else if (level == 5) amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get();
-                       else if (level > 5) {
-                           int extra = level - 5;
-                           amount += SqueezerConfiguration.ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get();
-                           amount += (extra * SqueezerConfiguration.ENCH_SQUEEZER_EXTRA_ENCHANT_MB.get());
-                       }
-                   }
+                   if (enchantment != null && compoundNBT.contains("lvl"))
+                       amount += SqueezerConfiguration.getEnchantFluidAmount(compoundNBT.getInt("lvl"));
                }
                FluidStack fluidStack = new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount);
                fluidTank.ifPresent(t -> {

@@ -78,4 +78,16 @@ public class SqueezerConfiguration {
         COMMON_BUILDER.pop();
         CLIENT_BUILDER.pop();
     }
+
+    public static int getEnchantFluidAmount(int level) {
+        if (level <= 1) return ENCH_SQUEEZER_LVL_1_ENCHANT_MB.get();
+        if (level == 2) return ENCH_SQUEEZER_LVL_2_ENCHANT_MB.get();
+        if (level == 3) return ENCH_SQUEEZER_LVL_3_ENCHANT_MB.get();
+        if (level == 4) return ENCH_SQUEEZER_LVL_4_ENCHANT_MB.get();
+        if (level == 5) return ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get();
+
+        level -= 5;
+        return ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get() + (level * ENCH_SQUEEZER_EXTRA_ENCHANT_MB.get());
+
+    }
 }

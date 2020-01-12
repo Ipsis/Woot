@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -55,21 +56,24 @@ public class InfuserBlock extends Block {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+            return true;
 
-        TileEntity te = worldIn.getTileEntity(pos);
+        if (!(worldIn.getTileEntity(pos) instanceof InfuserTileEntity))
+            throw new IllegalStateException("Tile entity is missing");
+
+        InfuserTileEntity infuser = (InfuserTileEntity)worldIn.getTileEntity(pos);
         ItemStack heldItem = player.getHeldItem(handIn);
-        if (!heldItem.isEmpty() && te instanceof InfuserTileEntity) {
+
+        if (FluidUtil.getFluidHandler(heldItem).isPresent()) {
             return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null);
-        } else {
-            if (te instanceof INamedContainerProvider)
-                NetworkHooks.openGui(
-                        (ServerPlayerEntity) player,
-                        (INamedContainerProvider) te,
-                        te.getPos());
+        } else  {
+            // open the gui
+            if (infuser instanceof INamedContainerProvider)
+                NetworkHooks.openGui((ServerPlayerEntity) player, infuser, infuser.getPos());
             else
                 throw new IllegalStateException("Named container provider is missing");
+            return true;
+
         }
-        return true;
     }
 }

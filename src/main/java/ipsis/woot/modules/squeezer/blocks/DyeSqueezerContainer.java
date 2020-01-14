@@ -64,15 +64,21 @@ public class DyeSqueezerContainer extends WootContainer {
         // 1 -> 27 player
         // 28 -> 36 hotbar
 
+        final int LAST_MACHINE_SLOT = 0;
+        final int FIRST_PLAYER_SLOT = 1;
+        final int LAST_PLAYER_SLOT = FIRST_PLAYER_SLOT + 27 - 1;
+        final int FIRST_HOTBAR_SLOT = LAST_PLAYER_SLOT + 1;
+        final int LAST_HOTBAR_SLOT = FIRST_HOTBAR_SLOT + 9 - 1;
+
         // Straight from McJty's YouTubeModdingTutorial
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
             ItemStack stack = slot.getStack();
             itemStack = stack.copy();
-            if (index == 0) {
+            if (index <= LAST_MACHINE_SLOT) {
                 // Machine -> Player/Hotbar
-                if (!this.mergeItemStack(stack, 1, 37, true))
+                if (!this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_HOTBAR_SLOT + 1, true))
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
@@ -82,9 +88,9 @@ public class DyeSqueezerContainer extends WootContainer {
                         return ItemStack.EMPTY;
                 } else if (index < 28) {
                         // Player -> Hotbar
-                        if (!this.mergeItemStack(stack, 28, 37, false))
+                        if (!this.mergeItemStack(stack, FIRST_HOTBAR_SLOT, LAST_HOTBAR_SLOT + 1, false))
                             return ItemStack.EMPTY;
-                } else if (index < 37 && !this.mergeItemStack(stack, 1, 28, false)) {
+                } else if (index < 37 && !this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_PLAYER_SLOT + 1, false)) {
                     // Hotbar -> Player
                     return ItemStack.EMPTY;
                 }

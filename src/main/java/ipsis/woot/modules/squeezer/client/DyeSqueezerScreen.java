@@ -88,4 +88,10 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
                 container.getTileEntity().getPure(), SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(),
                 new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()));
     }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        String text = title.getFormattedText();
+        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
+    }
 }

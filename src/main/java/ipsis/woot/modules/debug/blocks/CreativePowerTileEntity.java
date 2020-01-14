@@ -1,8 +1,6 @@
 package ipsis.woot.modules.debug.blocks;
 
 import ipsis.woot.modules.debug.DebugSetup;
-import ipsis.woot.modules.squeezer.SqueezerConfiguration;
-import ipsis.woot.util.WootEnergyStorage;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -27,14 +25,11 @@ public class CreativePowerTileEntity extends TileEntity implements ITickableTile
             return;
 
         // Fill adjacent every second
-        if (world.getGameTime() % 20 != 0)
-            return;
-
         for (Direction facing : Direction.values()) {
             TileEntity te = world.getTileEntity(pos.offset(facing));
             if (te != null) {
                 te.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite())
-                        .ifPresent(h -> { if (h.canReceive()) h.receiveEnergy(50, false); });
+                        .ifPresent(h -> { if (h.canReceive()) h.receiveEnergy(1000, false); });
 
             }
         }

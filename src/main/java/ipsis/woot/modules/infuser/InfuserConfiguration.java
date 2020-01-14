@@ -21,7 +21,7 @@ public class InfuserConfiguration {
                     .defineInRange("tankMaxCapacity", 10000, 0, Integer.MAX_VALUE);
             INFUSER_MAX_ENERGY = COMMON_BUILDER
                     .comment("Maximum energy capacity (in RF)")
-                    .defineInRange("energyMaxCapacity", 1000, 0, Integer.MAX_VALUE);
+                    .defineInRange("energyMaxCapacity", 10000, 0, Integer.MAX_VALUE);
             INFUSER_MAX_ENERGY_RX = COMMON_BUILDER
                     .comment("Maximum energy that can be received (in RF/t)")
                     .defineInRange("energyMaxRx", 100, 0, Integer.MAX_VALUE);

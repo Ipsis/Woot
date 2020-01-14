@@ -49,7 +49,7 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
         itemStacks.set(iIngredients);
 
         IGuiFluidStackGroup fluidStacks = iRecipeLayout.getFluidStacks();
-        fluidStacks.init(0, false, 154, 40, 16, 16, SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), true, null);
+        fluidStacks.init(0, false, 154, 40, 16, 16, 1000, true, null);
         fluidStacks.set(iIngredients);
     }
 

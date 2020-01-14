@@ -7,12 +7,15 @@ import ipsis.woot.crafting.EnchantSqueezerRecipe;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
+import ipsis.woot.modules.squeezer.client.DyeSqueezerScreen;
+import ipsis.woot.modules.squeezer.client.EnchantSqueezerScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
@@ -87,5 +90,8 @@ public class WootJeiPlugin implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(InfuserScreen.class, 84, 39, 30, 18, InfuserRecipeCategory.UID);
+        registration.addRecipeClickArea(DyeSqueezerScreen.class, 60, 39, 18, 18, DyeSqueezerRecipeCategory.UID);
+        registration.addRecipeClickArea(EnchantSqueezerScreen.class, 101, 32, 50, 36, EnchantSqueezerRecipeCategory.UID);
+
     }
 }

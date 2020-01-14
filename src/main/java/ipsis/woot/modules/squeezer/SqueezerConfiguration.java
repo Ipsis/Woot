@@ -10,6 +10,7 @@ public class SqueezerConfiguration {
     public static ForgeConfigSpec.IntValue DYE_SQUEEZER_INTERNAL_FLUID_MAX;
     public static ForgeConfigSpec.IntValue DYE_SQUEEZER_MAX_ENERGY;
     public static ForgeConfigSpec.IntValue DYE_SQUEEZER_MAX_ENERGY_RX;
+    public static ForgeConfigSpec.IntValue DYE_SQUEEZER_ENERGY_PER_TICK;
 
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_TANK_CAPACITY;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_MAX_ENERGY;
@@ -43,6 +44,9 @@ public class SqueezerConfiguration {
                 DYE_SQUEEZER_MAX_ENERGY_RX = COMMON_BUILDER
                         .comment("Maximum energy that can be received (in RF/t)")
                         .defineInRange("energyMaxRx", 100, 0, Integer.MAX_VALUE);
+                DYE_SQUEEZER_ENERGY_PER_TICK = COMMON_BUILDER
+                        .comment("How much energy per tick to use (in RF/t)")
+                        .defineInRange("energyPerTick", 70, 0, Integer.MAX_VALUE);
             }
             COMMON_BUILDER.pop();
             COMMON_BUILDER.push("enchantment");

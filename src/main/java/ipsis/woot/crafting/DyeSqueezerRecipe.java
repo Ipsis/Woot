@@ -1,11 +1,10 @@
 package ipsis.woot.crafting;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -14,7 +13,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nullable;
@@ -23,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DyeSqueezerRecipe implements IRecipe<RecipeWrapper>  {
+public class DyeSqueezerRecipe implements IRecipe<IInventory>  {
 
     private final Ingredient ingredient;
     private final int energy;
@@ -95,18 +93,18 @@ public class DyeSqueezerRecipe implements IRecipe<RecipeWrapper>  {
      * IRecipe
      */
     @Override
-    public boolean matches(RecipeWrapper inv, World worldIn) {
+    public boolean matches(IInventory inv, World worldIn) {
         return this.ingredient.test(inv.getStackInSlot(0));
     }
 
     @Override
-    public ItemStack getCraftingResult(RecipeWrapper inv) {
+    public ItemStack getCraftingResult(IInventory inv) {
         return ItemStack.EMPTY;
     }
 
     @Override
     public boolean canFit(int width, int height) {
-        return true;
+        return false;
     }
 
     @Override

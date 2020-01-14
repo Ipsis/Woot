@@ -160,5 +160,6 @@
 
   # Gui
   "gui.woot.infuser.name": "Infuser",
-  "gui.woot.enchsqueezer.name": "Enchantment Squeezer"
+  "gui.woot.enchsqueezer.name": "Enchantment Squeezer",
+  "gui.woot.squeezer.name": "Dye Squeezer"
 }

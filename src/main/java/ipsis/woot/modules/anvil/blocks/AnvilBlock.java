@@ -131,7 +131,6 @@ public class AnvilBlock extends Block implements WootDebug {
     }
 
     public boolean isAnvilHot(World world, BlockPos pos) {
-        BlockState blockState = world.getBlockState(pos.down());
         return world.getBlockState(pos.down()).getBlock() == Blocks.MAGMA_BLOCK;
     }
 

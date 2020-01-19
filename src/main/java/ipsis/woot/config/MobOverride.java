@@ -56,7 +56,7 @@ public class MobOverride {
     public static String MOB_TIER_TAG = "mobTier";
     public static String MOB_SHARD_KILLS_TAG = "mobShardKill";
 
-    final List<String> VALID_OVERRIDE_TAGS = new ArrayList<String>(){{
+    private static final List<String> VALID_OVERRIDE_TAGS = new ArrayList<String>(){{
         add(RATE_1_TAG);
         add(RATE_2_TAG);
         add(RATE_3_TAG);
@@ -75,6 +75,9 @@ public class MobOverride {
     }};
 
     public void loadFromConfig() {
+
+        LOGGER.info("Valid tags {}", VALID_OVERRIDE_TAGS.toString());
+
         LOGGER.debug("Loading configuration");
         for (String s : PolicyConfiguration.MOB_OVERRIDES.get()) {
             String[] parts = s.split(",");

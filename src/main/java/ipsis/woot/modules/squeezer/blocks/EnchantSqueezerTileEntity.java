@@ -7,9 +7,11 @@ import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.EnchantmentHelper;
+import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.EnchantedBookItem;
@@ -20,8 +22,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -43,6 +47,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     public EnchantSqueezerTileEntity() {
         super(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_TILE.get());
+        inputSlots = new ItemStackHandler();
     }
 
     //-------------------------------------------------------------------------
@@ -67,7 +72,8 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     //-------------------------------------------------------------------------
     //region Inventory
     public static int INPUT_SLOT = 0;
-    private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
+    private ItemStackHandler inputSlots;
+    private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
     private IItemHandler createItemHandler() {
         return new ItemStackHandler(1) {
             @Override
@@ -88,7 +94,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     @Override
     public void read(CompoundNBT compoundNBT) {
         CompoundNBT invTag = compoundNBT.getCompound("inv");
-        itemHandler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
+        inputSlots.deserializeNBT(invTag);
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
         fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
@@ -101,10 +107,8 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
-        itemHandler.ifPresent(h -> {
-            CompoundNBT invTag = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-            compoundNBT.put("inv", invTag);
-        });
+        CompoundNBT invTag = inputSlots.serializeNBT();
+        compoundNBT.put("inv", invTag);
 
         fluidTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
@@ -180,11 +184,11 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     @Override
     protected void processFinish() {
-        ItemStack itemStack = itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY);
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
         if (itemStack.isEmpty())
             return;
 
-        itemHandler.ifPresent(i -> i.extractItem(INPUT_SLOT, 1, false));
+        inputSlots.extractItem(INPUT_SLOT, 1, false);
 
         int amount = getEnchantAmount(itemStack);
         fluidTank.ifPresent(h -> {
@@ -196,7 +200,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     @Override
     protected boolean canStart() {
-        ItemStack itemStack = itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY);
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
         if (itemStack.isEmpty())
             return false;
 
@@ -213,13 +217,11 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     @Override
     protected boolean hasValidInput() {
-        return itemHandler.map(h -> {
-            ItemStack itemStack = h.getStackInSlot(INPUT_SLOT);
-            if (itemStack.isEmpty() || !EnchantmentHelper.isEnchanted(itemStack))
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (itemStack.isEmpty() || !EnchantmentHelper.isEnchanted(itemStack))
                 return false;
 
-            return true;
-        }).orElse(false);
+        return true;
     }
 
     @Override
@@ -233,7 +235,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (side == null || side == Direction.UP || side == Direction.EAST)
-                return itemHandler.cast();
+                return inputSlotHandler.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return fluidTank.cast();
         } else if (cap == CapabilityEnergy.ENERGY) {
@@ -259,6 +261,18 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             }
         }
         return amount;
+    }
+
+    public void dropContents(World world, BlockPos pos) {
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (!itemStack.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
+        }
+
+        markDirty();
+        if (world != null)
+            WorldHelper.updateClient(world, pos);
     }
 
 }

@@ -1,11 +1,13 @@
 package ipsis.woot.modules.infuser.blocks;
 
+import ipsis.woot.modules.anvil.blocks.AnvilTileEntity;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -19,7 +21,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -77,6 +81,16 @@ public class InfuserBlock extends Block implements WootDebug {
                 throw new IllegalStateException("Named container provider is missing");
             return true;
 
+        }
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof InfuserTileEntity)
+                ((InfuserTileEntity) te).dropContents(worldIn, pos);
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
     }
 

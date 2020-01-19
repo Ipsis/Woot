@@ -75,4 +75,15 @@ public class EnchantSqueezerBlock extends Block {
 
         return true; // Block was activated
     }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if (te instanceof EnchantSqueezerTileEntity)
+                ((EnchantSqueezerTileEntity) te).dropContents(worldIn, pos);
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
+    }
+
 }

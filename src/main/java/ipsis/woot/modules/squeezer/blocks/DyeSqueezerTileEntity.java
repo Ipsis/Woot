@@ -8,17 +8,21 @@ import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootMachineTileEntity;
+import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -44,7 +48,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     private int blue = 0;
     private int white = 0;
 
-    public DyeSqueezerTileEntity() { super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get()); }
+    public DyeSqueezerTileEntity() {
+        super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get());
+        inputSlots = new ItemStackHandler();
+    }
 
     //-------------------------------------------------------------------------
     //region Tanks
@@ -68,7 +75,8 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //-------------------------------------------------------------------------
     //region Inventory
     public static int INPUT_SLOT = 0;
-    private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
+    private ItemStackHandler inputSlots;
+    private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
     private IItemHandler createItemHandler() {
         return new ItemStackHandler(1) {
             @Override
@@ -90,7 +98,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     @Override
     public void read(CompoundNBT compoundNBT) {
         CompoundNBT invTag = compoundNBT.getCompound("inv");
-        itemHandler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
+        inputSlots.deserializeNBT(invTag);
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
         fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
@@ -110,10 +118,8 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
-        itemHandler.ifPresent(h -> {
-            CompoundNBT invTag = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-            compoundNBT.put("inv", invTag);
-        });
+        CompoundNBT invTag = inputSlots.serializeNBT();
+        compoundNBT.put("inv", invTag);
 
         fluidTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
@@ -211,7 +217,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         yellow += currRecipe.getYellow();
         blue += currRecipe.getBlue();
         white += currRecipe.getWhite();
-        itemHandler.ifPresent(h -> h.extractItem(INPUT_SLOT, 1, false));
+        inputSlots.extractItem(INPUT_SLOT, 1, false);
         fluidTank.ifPresent(f -> {
             while (canCreateOutput() && canStoreOutput()) {
                 f.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
@@ -226,7 +232,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     @Override
     protected boolean canStart() {
-        if (itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT).isEmpty()).orElse(true))
+        if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
         getRecipe();
@@ -255,7 +261,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     private void getRecipe() {
         currRecipe = world.getRecipeManager().getRecipe(DYE_SQUEEZER_TYPE,
-                new Inventory(itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY)),
+                new Inventory(inputSlots.getStackInSlot(INPUT_SLOT)),
                 world).orElse(null);
     }
 
@@ -280,7 +286,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (side == null || side == Direction.UP || side == Direction.WEST)
-                return itemHandler.cast();
+                return inputSlotHandler.cast();
             else
                 super.getCapability(cap, side);
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -291,5 +297,16 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         return super.getCapability(cap, side);
     }
 
+    public void dropContents(World world, BlockPos pos) {
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (!itemStack.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
+        }
+
+        markDirty();
+        if (world != null)
+            WorldHelper.updateClient(world, pos);
+    }
 
 }

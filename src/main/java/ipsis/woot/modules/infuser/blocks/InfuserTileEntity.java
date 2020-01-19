@@ -9,10 +9,12 @@ import ipsis.woot.util.EnchantingHelper;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootMachineTileEntity;
+import ipsis.woot.util.helper.WorldHelper;
 import ipsis.woot.util.oss.OutputOnlyItemStackHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -20,8 +22,10 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -316,6 +320,26 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             return energyStorage.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    public void dropContents(World world, BlockPos pos) {
+        for (int i = 0; i < 2; i++) {
+            ItemStack itemStack = inputSlots.getStackInSlot(i);
+            if (!itemStack.isEmpty()) {
+                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+                inputSlots.setStackInSlot(i, ItemStack.EMPTY);
+            }
+        }
+
+        ItemStack itemStack = outputSlot.getStackInSlot(OUTPUT_SLOT);
+        if (!itemStack.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            outputSlot.setStackInSlot(OUTPUT_SLOT, ItemStack.EMPTY);
+        }
+
+         markDirty();
+        if (world != null)
+            WorldHelper.updateClient(world, pos);
     }
 
 }

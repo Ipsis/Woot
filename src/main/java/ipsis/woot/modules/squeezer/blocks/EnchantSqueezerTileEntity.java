@@ -231,12 +231,14 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return itemHandler.cast();
-        else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (side == null || side == Direction.UP || side == Direction.EAST)
+                return itemHandler.cast();
+        } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return fluidTank.cast();
-        else if (cap == CapabilityEnergy.ENERGY)
+        } else if (cap == CapabilityEnergy.ENERGY) {
             return energyStorage.cast();
+        }
         return super.getCapability(cap, side);
     }
 

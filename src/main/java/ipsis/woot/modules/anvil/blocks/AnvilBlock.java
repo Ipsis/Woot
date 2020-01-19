@@ -1,11 +1,13 @@
 package ipsis.woot.modules.anvil.blocks;
 
 import ipsis.woot.crafting.AnvilRecipe;
+import ipsis.woot.modules.anvil.AnvilConfiguration;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +15,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -25,9 +28,12 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class AnvilBlock extends Block implements WootDebug {
 
@@ -122,6 +128,18 @@ public class AnvilBlock extends Block implements WootDebug {
         }
 
         return true;
+    }
+
+    public boolean isAnvilHot(World world, BlockPos pos) {
+        BlockState blockState = world.getBlockState(pos.down());
+        return world.getBlockState(pos.down()).getBlock() == Blocks.MAGMA_BLOCK;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        super.animateTick(stateIn, worldIn, pos, rand);
+        if (AnvilConfiguration.ANVIL_PARTICILES.get() && rand.nextInt(10) == 0 && isAnvilHot(worldIn, pos))
+            worldIn.addParticle(ParticleTypes.LAVA, (double) ((float) pos.getX() + rand.nextFloat()), (double) ((float) pos.getY() + 1.1F), (double) ((float) pos.getZ() + rand.nextFloat()), 0.0D, 0.0D, 0.0D);
     }
 
     @Override

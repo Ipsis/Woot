@@ -125,8 +125,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
         /**
          * Check anvil is hot
          */
-        BlockState blockState = world.getBlockState(pos.down());
-        if (blockState.getBlock() != Blocks.MAGMA_BLOCK) {
+        if (!AnvilSetup.ANVIL_BLOCK.get().isAnvilHot(world, pos)) {
             PlayerHelper.sendActionBarMessage(
                     playerEntity,
                     new TranslationTextComponent("chat.woot.anvil.cold").getFormattedText());

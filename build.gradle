@@ -28,6 +28,11 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
     }
+
+    maven {
+        // Patchouli
+        url 'https://maven.blamejared.com'
+    }
 }
 
 version = '0.1'
@@ -141,6 +146,9 @@ dependencies {
     // JEI
     compileOnly fg.deobf("mezz.jei:jei-" + jei_version + ":api")
     runtimeOnly fg.deobf("mezz.jei:jei-" + jei_version)
+
+    // Patchouli
+    compile fg.deobf("vazkii.patchouli:Patchouli:" + patchouli_version) { transitive = false }
 
 }
 

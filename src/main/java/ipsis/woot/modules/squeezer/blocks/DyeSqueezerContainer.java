@@ -86,11 +86,11 @@ public class DyeSqueezerContainer extends WootContainer {
                     // Player -> Machine input slot
                     if (!this.mergeItemStack(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
-                } else if (index < 28) {
+                } else if (index <= LAST_PLAYER_SLOT) {
                         // Player -> Hotbar
                         if (!this.mergeItemStack(stack, FIRST_HOTBAR_SLOT, LAST_HOTBAR_SLOT + 1, false))
                             return ItemStack.EMPTY;
-                } else if (index < 37 && !this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_PLAYER_SLOT + 1, false)) {
+                } else if (index <= LAST_HOTBAR_SLOT && !this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_PLAYER_SLOT + 1, false)) {
                     // Hotbar -> Player
                     return ItemStack.EMPTY;
                 }

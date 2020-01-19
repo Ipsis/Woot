@@ -252,7 +252,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             return false;
 
         // Can only start for enchanted books if the output slot is empty
-        if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !inputSlots.getStackInSlot(OUTPUT_SLOT).isEmpty())
+        if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !outputSlot.getStackInSlot(OUTPUT_SLOT).isEmpty())
             return false;
 
         return true;

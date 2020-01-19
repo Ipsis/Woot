@@ -1,5 +1,6 @@
 package ipsis.woot.modules.infuser.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
@@ -8,6 +9,7 @@ import ipsis.woot.util.EnchantingHelper;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootMachineTileEntity;
+import ipsis.woot.util.oss.OutputOnlyItemStackHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -31,6 +33,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,6 +45,23 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     public InfuserTileEntity() {
         super(InfuserSetup.INFUSER_BLOCK_TILE.get());
+        inputSlots = new ItemStackHandler(2) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                markDirty();
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                if (slot == INPUT_SLOT)
+                    return InfuserRecipe.isValidInput(stack);
+                else if (slot == AUGMENT_SLOT)
+                    return InfuserRecipe.isValidAugment(stack);
+                return false;
+            }
+        };
+        outputSlot = new ItemStackHandler();
+        outputWrappedSlot= new OutputOnlyItemStackHandler(outputSlot);
     }
 
     //-------------------------------------------------------------------------
@@ -77,26 +97,13 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     //region Inventory
     public static final int INPUT_SLOT = 0;
     public static final int AUGMENT_SLOT = 1;
-    public static final int OUTPUT_SLOT = 2;
-    private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
-    private IItemHandler createItemHandler() {
-        return new ItemStackHandler(3) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                markDirty();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (slot == INPUT_SLOT)
-                    return InfuserRecipe.isValidInput(stack);
-                else if (slot == AUGMENT_SLOT)
-                    return InfuserRecipe.isValidAugment(stack);
-
-                return true;
-            }
-        };
-    }
+    public static final int OUTPUT_SLOT = 0; // two different inventories, one for input, one for output
+    private ItemStackHandler inputSlots;
+    private ItemStackHandler outputSlot;
+    private ItemStackHandler outputWrappedSlot;
+    private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
+    private final LazyOptional<IItemHandler> outputWrappedSlotHandler = LazyOptional.of(() -> outputWrappedSlot);
+    private final LazyOptional<IItemHandler> allSlotHandler = LazyOptional.of(() -> new CombinedInvWrapper(inputSlots, outputSlot));
     //endregion
 
     //-------------------------------------------------------------------------
@@ -104,8 +111,11 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     @Override
     public void read(CompoundNBT compoundNBT) {
 
-        CompoundNBT invTag = compoundNBT.getCompound("inv");
-        itemHandler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
+        CompoundNBT invInputTag = compoundNBT.getCompound("invInput");
+        inputSlots.deserializeNBT(invInputTag);
+
+        CompoundNBT invOutputTag = compoundNBT.getCompound("invOutput");
+        outputSlot.deserializeNBT(invOutputTag);
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
         fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
@@ -118,10 +128,12 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
-        itemHandler.ifPresent(h -> {
-            CompoundNBT invTag = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
-            compoundNBT.put("inv", invTag);
-        });
+
+        CompoundNBT invInputTag = inputSlots.serializeNBT();
+        compoundNBT.put("invInput", invInputTag);
+
+        CompoundNBT invOutputTag = outputSlot.serializeNBT();
+        compoundNBT.put("invOutput", invOutputTag);
 
         fluidTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
@@ -206,29 +218,26 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         final int inputSize = currRecipe.getIngredient().getMatchingStacks()[0].getCount();
         final int augmentSize = currRecipe.hasAugment() ? currRecipe.getAugment().getMatchingStacks()[0].getCount() : 1;
 
-        itemHandler.ifPresent(i -> {
-            i.extractItem(INPUT_SLOT, inputSize, false);
-            if (currRecipe.hasAugment())
-                i.extractItem(AUGMENT_SLOT, augmentSize, false);
+        inputSlots.extractItem(INPUT_SLOT, inputSize, false);
+        if (currRecipe.hasAugment())
+            inputSlots.extractItem(INPUT_SLOT, augmentSize, false);
 
-            ItemStack itemStack = currRecipe.getOutput();
-            if (itemStack.getItem() == Items.ENCHANTED_BOOK) {
-                // stack size determines the enchant level, so save it off and reset to single item generated
-                int level = itemStack.getCount();
-                itemStack = new ItemStack(Items.BOOK, 1);
-                itemStack = EnchantingHelper.addRandomBookEnchant(itemStack, level);
-            }
+        ItemStack itemStack = currRecipe.getOutput();
+        if (itemStack.getItem() == Items.ENCHANTED_BOOK) {
+            // stack size determines the enchant level, so save it off and reset to single item generated
+            int level = itemStack.getCount();
+            itemStack = new ItemStack(Items.BOOK, 1);
+            itemStack = EnchantingHelper.addRandomBookEnchant(itemStack, level);
+        }
 
-            i.insertItem(OUTPUT_SLOT, itemStack, false);
-        });
-
+        outputSlot.insertItem(OUTPUT_SLOT, itemStack, false);
         fluidTank.ifPresent(f -> f.drain(currRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
         markDirty();
     }
 
     @Override
     protected boolean canStart() {
-        if (itemHandler.map(h -> h.getStackInSlot(INPUT_SLOT).isEmpty()).orElse(true))
+        if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
         if (fluidTank.map(f -> f.isEmpty()).orElse(true))
@@ -239,7 +248,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             return false;
 
         // Can only start for enchanted books if the output slot is empty
-        if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !itemHandler.map(h -> h.getStackInSlot(OUTPUT_SLOT).isEmpty()).orElse(true))
+        if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !inputSlots.getStackInSlot(OUTPUT_SLOT).isEmpty())
             return false;
 
         return true;
@@ -268,8 +277,8 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         List<InfuserRecipe> recipes = world.getRecipeManager().getRecipes(
                 INFUSER_TYPE,
                 new Inventory(
-                        itemHandler.map(i -> i.getStackInSlot(INPUT_SLOT)).orElse(ItemStack.EMPTY),
-                        itemHandler.map(i -> i.getStackInSlot(AUGMENT_SLOT)).orElse(ItemStack.EMPTY)),
+                        inputSlots.getStackInSlot(INPUT_SLOT),
+                        inputSlots.getStackInSlot(AUGMENT_SLOT)),
                 world);
 
         if (!recipes.isEmpty()) {
@@ -293,12 +302,19 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return itemHandler.cast();
-        else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (side == null)
+                // eg. player is in the gui
+                return allSlotHandler.cast();
+            else if (side == Direction.UP || side == Direction.EAST)
+                return inputSlotHandler.cast();
+            else if (side == Direction.DOWN || side == Direction.WEST)
+                return outputWrappedSlotHandler.cast();
+        } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return fluidTank.cast();
-        else if (cap == CapabilityEnergy.ENERGY)
+        } else if (cap == CapabilityEnergy.ENERGY) {
             return energyStorage.cast();
+        }
         return super.getCapability(cap, side);
     }
 

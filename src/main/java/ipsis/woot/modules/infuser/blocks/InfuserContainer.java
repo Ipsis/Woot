@@ -24,6 +24,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class InfuserContainer extends WootContainer implements FluidStackPacketHandler {
@@ -44,7 +45,13 @@ public class InfuserContainer extends WootContainer implements FluidStackPacketH
                 iItemHandler -> {
                     addSlot(new SlotItemHandler(iItemHandler, 0, 46, 40));
                     addSlot(new SlotItemHandler(iItemHandler, 1, 64, 40));
-                    addSlot(new SlotItemHandler(iItemHandler, 2, 118, 40));
+                    addSlot(new SlotItemHandler(iItemHandler, 2, 118, 40){
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            // Cannot put anything in here as it is an output
+                           return false;
+                        }
+                    });
                 }
         ));
     }

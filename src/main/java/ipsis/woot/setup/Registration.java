@@ -24,15 +24,15 @@ public class Registration {
 
     @SubscribeEvent
     public static void registerBlocks(final RegistryEvent.Register<Block> event) {
-        Woot.LOGGER.info("registerBlocks");
+        Woot.setup.getLogger().info("registerBlocks");
         event.getRegistry().register(new TickConverterBlock());
     }
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
-        Woot.LOGGER.info("registerItems");
+        Woot.setup.getLogger().info("registerItems");
 
-        Item.Properties properties = new Item.Properties().group(Woot.itemGroup);
+        Item.Properties properties = new Item.Properties().group(Woot.setup.getCreativeTab());
 
         event.getRegistry().register(new MobShardItem());
         event.getRegistry().register(new BlockItem(ModBlocks.TICK_CONVERTER_BLOCK, properties).setRegistryName(Woot.MODID, TickConverterBlock.REGNAME));
@@ -42,24 +42,24 @@ public class Registration {
 
     @SubscribeEvent
     public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
-        Woot.LOGGER.info("registerTileEntities");
+        Woot.setup.getLogger().info("registerTileEntities");
         event.getRegistry().register(TileEntityType.Builder.create(TickConverterTileEntity::new, ModBlocks.TICK_CONVERTER_BLOCK).build(null).setRegistryName(Woot.MODID, TickConverterBlock.REGNAME));
     }
 
     @SubscribeEvent
     public static void registerEnchantments(final RegistryEvent.Register<Enchantment> event) {
-        Woot.LOGGER.info("registerEnchantments");
+        Woot.setup.getLogger().info("registerEnchantments");
     }
 
     @SubscribeEvent
     public static void registerDimensions(final RegistryEvent.Register<ModDimension> event) {
-        Woot.LOGGER.info("registerDimensions");
+        Woot.setup.getLogger().info("registerDimensions");
         event.getRegistry().register(new TartarusModDimension().setRegistryName(SimulationSetup.TARTARUS_DIMENSION_ID));
     }
 
     @SubscribeEvent
     public static void registerRecipeSerializer(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        Woot.LOGGER.info("registerRecipeSerializer");
+        Woot.setup.getLogger().info("registerRecipeSerializer");
 
         event.getRegistry().register(new DyeSqueezerRecipeSerializer<>(DyeSqueezerRecipe::new).setRegistryName(Woot.MODID, "dyesqueezer"));
         event.getRegistry().register(new AnvilRecipeSerializer<>(AnvilRecipe::new).setRegistryName(Woot.MODID, "anvil"));

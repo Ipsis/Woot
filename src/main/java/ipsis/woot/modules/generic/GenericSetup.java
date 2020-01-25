@@ -15,7 +15,7 @@ public class GenericSetup {
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Woot.MODID);
 
     public static void register() {
-        Woot.LOGGER.info("GenericSetup: register");
+        Woot.setup.getLogger().info("GenericSetup: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }

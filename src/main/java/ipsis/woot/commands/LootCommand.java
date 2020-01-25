@@ -43,7 +43,7 @@ public class LootCommand {
             cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.drops.none"), true);
         } else {
             for (MobDrop drop : drops) {
-                Woot.LOGGER.info("sendDrops: {}", drop);
+                Woot.setup.getLogger().info("sendDrops: {}", drop);
                 cs.sendFeedback(new TranslationTextComponent("commands.woot.loot.drops.info", drop.getDroppedItem().getTranslationKey(), drop.getDropChance()), true);
             }
         }

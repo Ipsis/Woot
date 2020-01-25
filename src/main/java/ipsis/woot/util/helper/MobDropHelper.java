@@ -18,7 +18,7 @@ public class MobDropHelper {
             float roll = RANDOM.nextFloat();
             float dropChance = drop.getDropChance() / 100.0F; // stored as 0.0->100.0
 
-            Woot.LOGGER.info("getDrops: {} {} {}", drop.getDroppedItem(), dropChance, roll);
+            Woot.setup.getLogger().info("getDrops: {} {} {}", drop.getDroppedItem(), dropChance, roll);
             if (dropChance == 1.0F || dropChance < roll)
                 drops.add(new ItemStack(drop.getDroppedItem().getItem(), 1));
         }

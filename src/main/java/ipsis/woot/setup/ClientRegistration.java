@@ -30,7 +30,7 @@ public class ClientRegistration {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        Woot.LOGGER.debug("FMLClientSetupEvent");
+        Woot.setup.getLogger().debug("FMLClientSetupEvent");
         ClientRegistry.bindTileEntitySpecialRenderer(LayoutTileEntity.class, new LayoutTileEntitySpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(AnvilTileEntity.class, new AnvilTileEntitySpecialRenderer());
         ScreenManager.registerFactory(FactorySetup.HEART_BLOCK_CONTAINER.get(), HeartScreen::new);

@@ -64,7 +64,7 @@ public class Tartarus {
 
     public void simulateInCell(int cellid, @Nonnull FakeMobKey fakeMobKey, @Nonnull World world) {
         if (cellid >= 0 && cellid < NUM_CELLS && fakeMobKey.getMob().isValid()) {
-            Woot.LOGGER.info("Spawning and killing {} {}", fakeMobKey, world.getDimension());
+            Woot.setup.getLogger().info("Spawning and killing {} {}", fakeMobKey, world.getDimension());
             SpawnController.get().spawnKill(fakeMobKey, world, cells[cellid].spawnPos);
         }
     }

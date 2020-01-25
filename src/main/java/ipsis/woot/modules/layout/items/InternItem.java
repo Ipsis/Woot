@@ -7,7 +7,7 @@ import ipsis.woot.modules.factory.blocks.HeartBlock;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.layout.FactoryHelper;
 import ipsis.woot.modules.factory.layout.PatternRepository;
-import ipsis.woot.util.WootItem;
+import ipsis.woot.setup.ModSetup;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
@@ -46,7 +46,7 @@ import java.util.Locale;
 public class InternItem extends Item {
 
     public InternItem() {
-        super(new Item.Properties().maxStackSize(1).group(Woot.itemGroup));
+        super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab()));
     }
 
     public enum ToolMode {

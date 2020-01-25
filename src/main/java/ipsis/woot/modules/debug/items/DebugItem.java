@@ -1,6 +1,7 @@
 package ipsis.woot.modules.debug.items;
 
 import ipsis.woot.Woot;
+import ipsis.woot.setup.ModSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
@@ -16,7 +17,7 @@ import java.util.List;
 public class DebugItem extends Item {
 
     public DebugItem() {
-        super(new Item.Properties().maxStackSize(1).group(Woot.itemGroup));
+        super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab()));
     }
 
     @Override

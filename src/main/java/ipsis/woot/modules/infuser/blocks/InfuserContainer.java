@@ -89,7 +89,7 @@ public class InfuserContainer extends WootContainer implements FluidStackPacketH
                 }
             }
         } catch (Throwable e) {
-            Woot.LOGGER.error("Reflection of container listener failed");
+            Woot.setup.getLogger().error("Reflection of container listener failed");
         }
 }
 

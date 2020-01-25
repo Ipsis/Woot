@@ -58,7 +58,7 @@ public class SerializationHelper {
             }
 
             if (file.exists()) {
-                Woot.LOGGER.warn("Failed to delete " + file);
+                Woot.setup.getLogger().warn("Failed to delete " + file);
             } else {
                 tempFile.renameTo(file);
             }

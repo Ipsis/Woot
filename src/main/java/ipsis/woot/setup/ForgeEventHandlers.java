@@ -118,12 +118,12 @@ public class ForgeEventHandlers {
 
     @SubscribeEvent
     public static void onFileChange(final ModConfig.ConfigReloading configEvent) {
-        Woot.LOGGER.info("onFileChange");
+        Woot.setup.getLogger().info("onFileChange");
     }
 
     @SubscribeEvent
     public void onServerStarting(final FMLServerStartingEvent event) {
-        Woot.LOGGER.info("onServerStarting");
+        Woot.setup.getLogger().info("onServerStarting");
         ModCommands.register(event.getCommandDispatcher());
         SqueezerRecipes.load(event.getServer().getRecipeManager());
         AnvilRecipes.load(event.getServer().getRecipeManager());
@@ -132,13 +132,13 @@ public class ForgeEventHandlers {
 
     @SubscribeEvent
     public void onServerStop(final FMLServerStoppingEvent event) {
-        Woot.LOGGER.info("onServerStop");
+        Woot.setup.getLogger().info("onServerStop");
         JsonObject jsonObject = DropRegistry.get().toJson();
     }
 
     @SubscribeEvent
     public void onDimensionRegistry(final RegisterDimensionsEvent event) {
-        Woot.LOGGER.info("onDimensionRegistry");
+        Woot.setup.getLogger().info("onDimensionRegistry");
         TARTARUS_DIMENSION_TYPE = DimensionManager.registerOrGetDimension(
                 TARTARUS_DIMENSION_ID,
                 SimulationSetup.TARTARUS,

@@ -23,7 +23,7 @@ public class AnvilSetup {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Woot.MODID);
 
     public static void register() {
-        Woot.LOGGER.info("AnvilSetup: register");
+        Woot.setup.getLogger().info("AnvilSetup: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         TILES.register(FMLJavaModLoadingContext.get().getModEventBus());

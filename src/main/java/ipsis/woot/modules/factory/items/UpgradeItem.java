@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.FactoryUpgrade;
 import ipsis.woot.modules.factory.FactoryUpgradeType;
+import ipsis.woot.setup.ModSetup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -31,7 +32,7 @@ public class UpgradeItem extends Item {
     final FactoryUpgrade upgrade;
 
     public UpgradeItem(FactoryUpgrade upgrade) {
-        super(new Item.Properties().group(Woot.itemGroup));
+        super(new Item.Properties().group(Woot.setup.getCreativeTab()));
         this.upgrade = upgrade;
     }
 

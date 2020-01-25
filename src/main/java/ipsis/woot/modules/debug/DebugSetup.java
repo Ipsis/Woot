@@ -20,7 +20,7 @@ public class DebugSetup {
     public static final DeferredRegister<TileEntityType<?>> TILES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Woot.MODID);
 
     public static void register() {
-        Woot.LOGGER.info("DebugSetup: register");
+        Woot.setup.getLogger().info("DebugSetup: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         TILES.register(FMLJavaModLoadingContext.get().getModEventBus());

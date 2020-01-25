@@ -11,7 +11,7 @@ public class ToolsSetup {
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Woot.MODID);
 
     public static void register() {
-        Woot.LOGGER.info("ToolsSetup: register");
+        Woot.setup.getLogger().info("ToolsSetup: register");
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 }

@@ -1,6 +1,7 @@
 package ipsis.woot.fluilds;
 
 import ipsis.woot.Woot;
+import ipsis.woot.setup.ModSetup;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
@@ -42,7 +43,7 @@ public class FluidSetup {
                     new Item.Properties()
                             .containerItem(Items.BUCKET)
                             .maxStackSize(1)
-                            .group(Woot.itemGroup)));
+                            .group(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties CONATUS_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             CONATUS_FLUID,
             CONATUS_FLUID_FLOWING,
@@ -69,7 +70,7 @@ public class FluidSetup {
                     new Item.Properties()
                             .containerItem(Items.BUCKET)
                             .maxStackSize(1)
-                            .group(Woot.itemGroup)));
+                            .group(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties PUREDYE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             PUREDYE_FLUID,
             PUREDYE_FLUID_FLOWING,
@@ -96,7 +97,7 @@ public class FluidSetup {
                     new Item.Properties()
                             .containerItem(Items.BUCKET)
                             .maxStackSize(1)
-                            .group(Woot.itemGroup)));
+                            .group(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties ENCHANT_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             ENCHANT_FLUID,
             ENCHANT_FLUID_FLOWING,
@@ -105,7 +106,7 @@ public class FluidSetup {
             .block(ENCHANT_FLUID_BLOCK);
 
     public static void register() {
-        Woot.LOGGER.info("FluidSetup: register");
+        Woot.setup.getLogger().info("FluidSetup: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());

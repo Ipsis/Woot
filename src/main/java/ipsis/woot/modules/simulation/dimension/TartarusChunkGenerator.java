@@ -80,7 +80,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
         /**
          * This is all based off chunk coordinates - therefore 0->16
          */
-        Woot.LOGGER.info("generateSurface: {}", iChunk);
+        Woot.setup.getLogger().info("generateSurface: {}", iChunk);
 
         BlockState blockState = Blocks.AIR.getDefaultState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -93,7 +93,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
         }
 
         if (iChunk.getPos().x == WORK_CHUNK_X && iChunk.getPos().z == WORK_CHUNK_Z) {
-            Woot.LOGGER.info("generateSurface: work chunk creating cells");
+            Woot.setup.getLogger().info("generateSurface: work chunk creating cells");
             BlockState wallState = Blocks.GLASS.getDefaultState();
             calcCellStructures();
 

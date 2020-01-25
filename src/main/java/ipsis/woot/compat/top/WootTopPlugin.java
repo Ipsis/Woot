@@ -34,7 +34,7 @@ public class WootTopPlugin {
         @Override
         public Void apply(@Nullable ITheOneProbe input) {
             probe = input;
-            Woot.LOGGER.info("Enabling support The One Probe");
+            Woot.setup.getLogger().info("Enabling support The One Probe");
             probe.registerProvider(new IProbeInfoProvider() {
                 @Override
                 public String getID() {

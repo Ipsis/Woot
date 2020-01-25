@@ -169,7 +169,7 @@ public class Infuser {
         };
 
         for (Plate p : plates) {
-            Woot.LOGGER.info("Generating Infuser recipe for {} plate", p.name);
+            Woot.setup.getLogger().info("Generating Infuser recipe for {} plate", p.name);
             InfuserRecipe.infuserRecipe(p.rl,
                     Ingredient.fromItems(p.casing.get()),
                     Ingredient.EMPTY, 0,

@@ -135,7 +135,7 @@ public class FactoryScanner {
                         } else {
                             // This is a valid controller
                             if (primaryControllerPos.equals(p.getBlockPos())) {
-                                Woot.LOGGER.debug("compareToWorld: Found primary controller");
+                                Woot.setup.getLogger().debug("compareToWorld: Found primary controller");
                                 foundPrimaryController = true;
                             }
                         }
@@ -193,7 +193,7 @@ public class FactoryScanner {
         if (!pattern1Mobs.equals(pattern2Mobs))
             return false;
 
-        Woot.LOGGER.debug("isPatternEqual: old and new patterns are equal");
+        Woot.setup.getLogger().debug("isPatternEqual: old and new patterns are equal");
         return true;
     }
 }

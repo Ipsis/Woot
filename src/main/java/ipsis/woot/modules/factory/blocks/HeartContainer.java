@@ -92,7 +92,7 @@ public class HeartContainer extends Container {
 
             heartTileEntity.setClientProgress(heartTileEntity.consumedUnits);
         } catch (Throwable e) {
-            Woot.LOGGER.error("Reflection of container listener failed");
+            Woot.setup.getLogger().error("Reflection of container listener failed");
         }
     }
 

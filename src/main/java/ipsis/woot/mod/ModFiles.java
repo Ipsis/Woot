@@ -16,7 +16,7 @@ public class ModFiles {
     public void init() {
         this.lootFile = FMLPaths.GAMEDIR.get().resolve(
                 Paths.get(Woot.MODID, "loot.json"));
-        Woot.LOGGER.info(lootFile);
+        Woot.setup.getLogger().info(lootFile);
     }
 
     public File getLootFile() {

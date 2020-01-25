@@ -46,7 +46,7 @@ public class FakePlayerPool {
         fakePlayerMap = new HashMap<>();
         Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation("minecraft", "looting"));
         if (enchantment == null)
-            Woot.LOGGER.warn("FakePlayerPool failed to find looting enchantment");
+            Woot.setup.getLogger().warn("FakePlayerPool failed to find looting enchantment");
 
         addFakePlayer(FakePlayerFactory.get(world, GP_LOOT_0), 0, enchantment);
         addFakePlayer(FakePlayerFactory.get(world, GP_LOOT_1), 1, enchantment);

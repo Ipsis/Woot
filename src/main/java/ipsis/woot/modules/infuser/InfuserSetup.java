@@ -27,7 +27,7 @@ public class InfuserSetup {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Woot.MODID);
 
     public static void register() {
-        Woot.LOGGER.info("InfuserSetup: register");
+        Woot.setup.getLogger().info("InfuserSetup: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         TILES.register(FMLJavaModLoadingContext.get().getModEventBus());

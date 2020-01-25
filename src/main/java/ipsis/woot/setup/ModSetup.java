@@ -1,5 +1,6 @@
 package ipsis.woot.setup;
 
+import ipsis.woot.compat.top.WootTopPlugin;
 import ipsis.woot.config.MobOverride;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.infuser.InfuserRecipes;
@@ -27,6 +28,8 @@ public class ModSetup {
         FactoryConfiguration.pushToWootConfig();
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
+
+        WootTopPlugin.init();
 
     }
 

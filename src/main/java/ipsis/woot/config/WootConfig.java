@@ -21,10 +21,8 @@ public class WootConfig {
         MOB_SHARD_KILLS(MobOverride.MOB_SHARD_KILLS_TAG),
         MOB_HEALTH(MobOverride.MOB_HEALTH_TAG),
         MOB_TIER(MobOverride.MOB_TIER_TAG),
+        FIXED_COST(MobOverride.FIXED_COST_TAG),
 
-        //CAPACITY_1(MobOverride.CAPACITY_1_TAG),
-        //CAPACITY_2(MobOverride.CAPACITY_2_TAG),
-        //CAPACITY_3(MobOverride.CAPACITY_3_TAG),
         EFFICIENCY_1(MobOverride.EFFICIENCY_1_TAG),
         EFFICIENCY_2(MobOverride.EFFICIENCY_2_TAG),
         EFFICIENCY_3(MobOverride.EFFICIENCY_3_TAG),

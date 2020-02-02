@@ -55,6 +55,7 @@ public class MobOverride {
     public static String UNITS_PER_HEALTH_TAG = "unitsPerHealth";
     public static String MOB_TIER_TAG = "mobTier";
     public static String MOB_SHARD_KILLS_TAG = "mobShardKill";
+    public static String FIXED_COST_TAG = "fixedCost";
 
     private static final List<String> VALID_OVERRIDE_TAGS = new ArrayList<String>(){{
         add(RATE_1_TAG);
@@ -72,6 +73,7 @@ public class MobOverride {
         add(UNITS_PER_HEALTH_TAG);
         add(MOB_TIER_TAG);
         add(MOB_SHARD_KILLS_TAG);
+        add(FIXED_COST_TAG);
     }};
 
     public void loadFromConfig() {

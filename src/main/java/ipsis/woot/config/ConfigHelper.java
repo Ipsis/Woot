@@ -82,4 +82,8 @@ public class ConfigHelper {
         }
         return WootConfig.ConfigKey.INVALID_KEY;
     }
+
+    public static boolean hasFixedCost(FakeMob fakeMob) {
+        return MobOverride.get().hasIntMobOverride(fakeMob, WootConfig.ConfigKey.FIXED_COST);
+    }
 }

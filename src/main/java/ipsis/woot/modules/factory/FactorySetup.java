@@ -9,7 +9,7 @@ import ipsis.woot.modules.factory.blocks.Cell1TileEntity;
 import ipsis.woot.modules.factory.blocks.Cell2TileEntity;
 import ipsis.woot.modules.factory.blocks.Cell3TileEntity;
 import ipsis.woot.modules.factory.blocks.CellBlock;
-import ipsis.woot.modules.factory.items.UpgradeItem;
+import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -203,45 +203,38 @@ public class FactorySetup {
             CELL_3_TAG, () ->
                     TileEntityType.Builder.create(Cell3TileEntity::new, CELL_3_BLOCK.get()).build(null));
 
-    public static final RegistryObject<UpgradeItem> CAPACITY_1_ITEM = ITEMS.register(
-            UpgradeItem.CAPACITY_1_REGNAME, () -> new UpgradeItem(FactoryUpgrade.CAPACITY_1));
-    public static final RegistryObject<UpgradeItem> CAPACITY_2_ITEM = ITEMS.register(
-            UpgradeItem.CAPACITY_2_REGNAME, () -> new UpgradeItem(FactoryUpgrade.CAPACITY_2));
-    public static final RegistryObject<UpgradeItem> CAPACITY_3_ITEM = ITEMS.register(
-            UpgradeItem.CAPACITY_3_REGNAME, () -> new UpgradeItem(FactoryUpgrade.CAPACITY_3));
+    public static final RegistryObject<PerkItem> EFFICIENCY_1_ITEM = ITEMS.register(
+            PerkItem.EFFICIENCY_1_REGNAME, () -> new PerkItem(Perk.EFFICIENCY_1));
+    public static final RegistryObject<PerkItem> EFFICIENCY_2_ITEM = ITEMS.register(
+            PerkItem.EFFICIENCY_2_REGNAME, () -> new PerkItem(Perk.EFFICIENCY_2));
+    public static final RegistryObject<PerkItem> EFFICIENCY_3_ITEM = ITEMS.register(
+            PerkItem.EFFICIENCY_3_REGNAME, () -> new PerkItem(Perk.EFFICIENCY_3));
 
-    public static final RegistryObject<UpgradeItem> EFFICIENCY_1_ITEM = ITEMS.register(
-            UpgradeItem.EFFICIENCY_1_REGNAME, () -> new UpgradeItem(FactoryUpgrade.EFFICIENCY_1));
-    public static final RegistryObject<UpgradeItem> EFFICIENCY_2_ITEM = ITEMS.register(
-            UpgradeItem.EFFICIENCY_2_REGNAME, () -> new UpgradeItem(FactoryUpgrade.EFFICIENCY_2));
-    public static final RegistryObject<UpgradeItem> EFFICIENCY_3_ITEM = ITEMS.register(
-            UpgradeItem.EFFICIENCY_3_REGNAME, () -> new UpgradeItem(FactoryUpgrade.EFFICIENCY_3));
+    public static final RegistryObject<PerkItem> LOOTING_1_ITEM = ITEMS.register(
+            PerkItem.LOOTING_1_REGNAME, () -> new PerkItem(Perk.LOOTING_1));
+    public static final RegistryObject<PerkItem> LOOTING_2_ITEM = ITEMS.register(
+            PerkItem.LOOTING_2_REGNAME, () -> new PerkItem(Perk.LOOTING_2));
+    public static final RegistryObject<PerkItem> LOOTING_3_ITEM = ITEMS.register(
+            PerkItem.LOOTING_3_REGNAME, () -> new PerkItem(Perk.LOOTING_3));
 
-    public static final RegistryObject<UpgradeItem> LOOTING_1_ITEM = ITEMS.register(
-            UpgradeItem.LOOTING_1_REGNAME, () -> new UpgradeItem(FactoryUpgrade.LOOTING_1));
-    public static final RegistryObject<UpgradeItem> LOOTING_2_ITEM = ITEMS.register(
-            UpgradeItem.LOOTING_2_REGNAME, () -> new UpgradeItem(FactoryUpgrade.LOOTING_2));
-    public static final RegistryObject<UpgradeItem> LOOTING_3_ITEM = ITEMS.register(
-            UpgradeItem.LOOTING_3_REGNAME, () -> new UpgradeItem(FactoryUpgrade.LOOTING_3));
+    public static final RegistryObject<PerkItem> MASS_1_ITEM = ITEMS.register(
+            PerkItem.MASS_1_REGNAME, () -> new PerkItem(Perk.MASS_1));
+    public static final RegistryObject<PerkItem> MASS_2_ITEM = ITEMS.register(
+            PerkItem.MASS_2_REGNAME, () -> new PerkItem(Perk.MASS_2));
+    public static final RegistryObject<PerkItem> MASS_3_ITEM = ITEMS.register(
+            PerkItem.MASS_3_REGNAME, () -> new PerkItem(Perk.MASS_3));
 
-    public static final RegistryObject<UpgradeItem> MASS_1_ITEM = ITEMS.register(
-            UpgradeItem.MASS_1_REGNAME, () -> new UpgradeItem(FactoryUpgrade.MASS_1));
-    public static final RegistryObject<UpgradeItem> MASS_2_ITEM = ITEMS.register(
-            UpgradeItem.MASS_2_REGNAME, () -> new UpgradeItem(FactoryUpgrade.MASS_2));
-    public static final RegistryObject<UpgradeItem> MASS_3_ITEM = ITEMS.register(
-            UpgradeItem.MASS_3_REGNAME, () -> new UpgradeItem(FactoryUpgrade.MASS_3));
+    public static final RegistryObject<PerkItem> RATE_1_ITEM = ITEMS.register(
+            PerkItem.RATE_1_REGNAME, () -> new PerkItem(Perk.RATE_1));
+    public static final RegistryObject<PerkItem> RATE_2_ITEM = ITEMS.register(
+            PerkItem.RATE_2_REGNAME, () -> new PerkItem(Perk.RATE_2));
+    public static final RegistryObject<PerkItem> RATE_3_ITEM = ITEMS.register(
+            PerkItem.RATE_3_REGNAME, () -> new PerkItem(Perk.RATE_3));
 
-    public static final RegistryObject<UpgradeItem> RATE_1_ITEM = ITEMS.register(
-            UpgradeItem.RATE_1_REGNAME, () -> new UpgradeItem(FactoryUpgrade.RATE_1));
-    public static final RegistryObject<UpgradeItem> RATE_2_ITEM = ITEMS.register(
-            UpgradeItem.RATE_2_REGNAME, () -> new UpgradeItem(FactoryUpgrade.RATE_2));
-    public static final RegistryObject<UpgradeItem> RATE_3_ITEM = ITEMS.register(
-            UpgradeItem.RATE_3_REGNAME, () -> new UpgradeItem(FactoryUpgrade.RATE_3));
-
-    public static final RegistryObject<UpgradeItem> XP_1_ITEM = ITEMS.register(
-            UpgradeItem.XP_1_REGNAME, () -> new UpgradeItem(FactoryUpgrade.XP_1));
-    public static final RegistryObject<UpgradeItem> XP_2_ITEM = ITEMS.register(
-            UpgradeItem.XP_2_REGNAME, () -> new UpgradeItem(FactoryUpgrade.XP_2));
-    public static final RegistryObject<UpgradeItem> XP_3_ITEM = ITEMS.register(
-            UpgradeItem.XP_3_REGNAME, () -> new UpgradeItem(FactoryUpgrade.XP_3));
+    public static final RegistryObject<PerkItem> XP_1_ITEM = ITEMS.register(
+            PerkItem.XP_1_REGNAME, () -> new PerkItem(Perk.XP_1));
+    public static final RegistryObject<PerkItem> XP_2_ITEM = ITEMS.register(
+            PerkItem.XP_2_REGNAME, () -> new PerkItem(Perk.XP_2));
+    public static final RegistryObject<PerkItem> XP_3_ITEM = ITEMS.register(
+            PerkItem.XP_3_REGNAME, () -> new PerkItem(Perk.XP_3));
 }

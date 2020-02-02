@@ -1,7 +1,7 @@
 package ipsis.woot.config;
 
 import ipsis.woot.modules.factory.FactoryConfiguration;
-import ipsis.woot.modules.factory.FactoryUpgradeType;
+import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.simulation.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
@@ -35,47 +35,47 @@ public class ConfigHelper {
         return tier;
     }
 
-    public static int getIntValueForFactoryUpgrade(FactoryUpgradeType upgradeType, int level) {
+    public static int getIntValueForPerk(PerkType upgradeType, int level) {
         level = MathHelper.clamp(level, 0, 3);
-        WootConfig.ConfigKey configKey = getByFactoryUpgrade(upgradeType, level);
+        WootConfig.ConfigKey configKey = getConfigKeyByPerk(upgradeType, level);
         if (configKey != WootConfig.ConfigKey.INVALID_KEY)
             return WootConfig.get().getIntConfig(configKey);
         return 1;
 }
 
-    public static int getIntValueForFactoryUpgrade(FakeMob fakeMob, FactoryUpgradeType factoryUpgradeType, int level) {
+    public static int getIntValueForPerk(FakeMob fakeMob, PerkType perkType, int level) {
         int v = 1;
         level = MathHelper.clamp(level, 0, 3);
         if (fakeMob.isValid()) {
             // No override
-            if (factoryUpgradeType == FactoryUpgradeType.CAPACITY || factoryUpgradeType == FactoryUpgradeType.LOOTING) {
-                v = getIntValueForFactoryUpgrade(factoryUpgradeType, level);
+            if (perkType == PerkType.LOOTING) {
+                v = getIntValueForPerk(perkType, level);
             } else {
-                WootConfig.ConfigKey configKey = getByFactoryUpgrade(factoryUpgradeType, level);
+                WootConfig.ConfigKey configKey = getConfigKeyByPerk(perkType, level);
                 if (configKey != WootConfig.ConfigKey.INVALID_KEY) {
                     // Handle mob override and default
                     if (MobOverride.get().hasIntMobOverride(fakeMob, configKey))
                         return MobOverride.get().getIntMobOverride(fakeMob, configKey);
                     else
-                        return getIntValueForFactoryUpgrade(factoryUpgradeType, level);
+                        return getIntValueForPerk(perkType, level);
                 }
             }
         } else {
-            v = getIntValueForFactoryUpgrade(factoryUpgradeType, level);
+            v = getIntValueForPerk(perkType, level);
         }
         return v;
     }
 
-    public static WootConfig.ConfigKey getByFactoryUpgrade(FactoryUpgradeType factoryUpgradeType, int level) {
-        if (factoryUpgradeType == FactoryUpgradeType.EFFICIENCY) {
+    public static WootConfig.ConfigKey getConfigKeyByPerk(PerkType perkType, int level) {
+        if (perkType == PerkType.EFFICIENCY) {
             if (level == 1) return WootConfig.ConfigKey.EFFICIENCY_1;
             if (level == 2) return WootConfig.ConfigKey.EFFICIENCY_2;
             if (level == 3) return WootConfig.ConfigKey.EFFICIENCY_3;
-        } else if (factoryUpgradeType == FactoryUpgradeType.MASS) {
+        } else if (perkType == PerkType.MASS) {
             if (level == 1) return WootConfig.ConfigKey.MASS_1;
             if (level == 2) return WootConfig.ConfigKey.MASS_2;
             if (level == 3) return WootConfig.ConfigKey.MASS_3;
-        } else if (factoryUpgradeType == FactoryUpgradeType.RATE) {
+        } else if (perkType == PerkType.RATE) {
             if (level == 1) return WootConfig.ConfigKey.RATE_1;
             if (level == 2) return WootConfig.ConfigKey.RATE_2;
             if (level == 3) return WootConfig.ConfigKey.RATE_3;

@@ -2,7 +2,7 @@ package ipsis.woot.modules.factory.calculators;
 
 import ipsis.woot.config.ConfigHelper;
 import ipsis.woot.config.WootConfig;
-import ipsis.woot.modules.factory.FactoryUpgradeType;
+import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.util.FakeMob;
@@ -43,9 +43,9 @@ public class CalculatorVersion1 {
          * Each perk increases the overall cost
          */
         int tempCost = actualCost;
-        for (FactoryUpgradeType upgrade : setup.getUpgrades().keySet()) {
-            int level = setup.getUpgrades().get(upgrade);
-            WootConfig.ConfigKey key = ConfigHelper.getByFactoryUpgrade(upgrade, level);
+        for (PerkType perkType : setup.getPerks().keySet()) {
+            int level = setup.getPerks().get(perkType);
+            WootConfig.ConfigKey key = ConfigHelper.getConfigKeyByPerk(perkType, level);
             int cost = 10; // TODO
             actualCost += (int)(tempCost / 100.0F * cost);
         }
@@ -53,8 +53,8 @@ public class CalculatorVersion1 {
         /**
          * Rate perk - reduces spawn time
          */
-        if (setup.getUpgrades().containsKey(FactoryUpgradeType.RATE)) {
-            int reduction = (int)(masterTicks / 100.0F * setup.getUpgrades().get(FactoryUpgradeType.RATE));
+        if (setup.getPerks().containsKey(PerkType.RATE)) {
+            int reduction = (int)(masterTicks / 100.0F * setup.getPerks().get(PerkType.RATE));
             actualTicks = masterTicks - reduction;
             actualTicks = MathHelper.clamp(actualTicks, 1, Integer.MAX_VALUE);
             LOGGER.debug("calculate: rate reducing {} by {} to {}", masterTicks, reduction, actualTicks);
@@ -63,8 +63,8 @@ public class CalculatorVersion1 {
         /**
          * Efficiency perk - reduced cost
          */
-        if (setup.getUpgrades().containsKey(FactoryUpgradeType.EFFICIENCY)) {
-            int reduction = (int)(masterCost / 100.0F * setup.getUpgrades().get(FactoryUpgradeType.EFFICIENCY));
+        if (setup.getPerks().containsKey(PerkType.EFFICIENCY)) {
+            int reduction = (int)(masterCost / 100.0F * setup.getPerks().get(PerkType.EFFICIENCY));
             actualCost = masterCost - reduction;
             actualCost = MathHelper.clamp(actualCost, 0, Integer.MAX_VALUE);
             LOGGER.debug("calculate: cost reducing {} by {} to {}", masterCost, reduction, actualCost);

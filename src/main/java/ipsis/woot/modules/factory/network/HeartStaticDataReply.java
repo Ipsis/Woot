@@ -2,7 +2,7 @@ package ipsis.woot.modules.factory.network;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.factory.FactoryUIInfo;
-import ipsis.woot.modules.factory.FactoryUpgrade;
+import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
@@ -36,7 +36,7 @@ public class HeartStaticDataReply {
 
         int numUpgrades = buf.readInt();
         for (int i = 0; i < numUpgrades; i++)
-            factoryUIInfo.upgrades.add(FactoryUpgrade.getUpgrade(buf.readInt()));
+            factoryUIInfo.upgrades.add(Perk.getPerks(buf.readInt()));
 
         int numDrops = buf.readInt();
         for (int i = 0; i < numDrops; i++)
@@ -67,7 +67,7 @@ public class HeartStaticDataReply {
         buf.writeInt(info.mobCount);
 
         buf.writeInt(info.upgrades.size());
-        for (FactoryUpgrade upgrade : info.upgrades)
+        for (Perk upgrade : info.upgrades)
             buf.writeInt(upgrade.ordinal());
 
         buf.writeInt(info.drops.size());

@@ -3,9 +3,9 @@ package ipsis.woot.modules.factory.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryUIInfo;
-import ipsis.woot.modules.factory.FactoryUpgrade;
+import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
-import ipsis.woot.modules.factory.items.UpgradeItem;
+import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
 import net.minecraft.client.gui.FontRenderer;
@@ -160,8 +160,8 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             }
 
             idx = 0;
-            for (FactoryUpgrade upgrade : factoryUIInfo.upgrades) {
-                ItemStack itemStack = UpgradeItem.getItemStack(upgrade);
+            for (Perk upgrade : factoryUIInfo.upgrades) {
+                ItemStack itemStack = PerkItem.getItemStack(upgrade);
                 List<String> tooltip = getTooltipFromItem(itemStack);
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);
                 idx = (idx + 1) % upgradeElements.size();

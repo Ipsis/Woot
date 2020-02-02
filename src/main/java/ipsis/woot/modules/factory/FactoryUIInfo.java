@@ -17,7 +17,7 @@ public class FactoryUIInfo {
 
     public List<ItemStack> mobs = new ArrayList<>();
     public List<Mob> mobInfo = new ArrayList<>();
-    public List<FactoryUpgrade> upgrades = new ArrayList<>();
+    public List<Perk> upgrades = new ArrayList<>();
     public int recipeEffort;
     public int recipeTicks;
     public int recipeCostPerTick;
@@ -44,9 +44,9 @@ public class FactoryUIInfo {
             info.recipeCostPerTick = recipe.getUnitsPerTick();
 
             int looting = 0;
-            for (Map.Entry<FactoryUpgradeType, Integer> entry : setup.getUpgrades().entrySet()) {
-                info.upgrades.add(FactoryUpgrade.getUpgrade(entry.getKey(), entry.getValue()));
-                if (entry.getKey() == FactoryUpgradeType.LOOTING)
+            for (Map.Entry<PerkType, Integer> entry : setup.getPerks().entrySet()) {
+                info.upgrades.add(Perk.getPerks(entry.getKey(), entry.getValue()));
+                if (entry.getKey() == PerkType.LOOTING)
                     looting = entry.getValue();
             }
 

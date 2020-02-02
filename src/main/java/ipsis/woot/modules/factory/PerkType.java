@@ -1,7 +1,6 @@
 package ipsis.woot.modules.factory;
 
-public enum FactoryUpgradeType {
-    CAPACITY,
+public enum PerkType {
     EFFICIENCY,
     LOOTING,
     MASS,

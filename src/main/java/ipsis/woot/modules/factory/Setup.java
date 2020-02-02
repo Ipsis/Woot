@@ -22,7 +22,7 @@ import java.util.List;
 public class Setup {
 
     Tier tier;
-    HashMap<FactoryUpgradeType, Integer> upgrades = new HashMap<>();
+    HashMap<PerkType, Integer> perks = new HashMap<>();
     List<FakeMob> mobs = new ArrayList<>();
     BlockPos importPos;
     BlockPos exportPos;
@@ -30,7 +30,7 @@ public class Setup {
     private int maxMobCount = -1;
 
     public List<FakeMob> getMobs() { return mobs; }
-    public HashMap<FactoryUpgradeType, Integer> getUpgrades() { return upgrades; }
+    public HashMap<PerkType, Integer> getPerks() { return perks; }
     public BlockPos getExportPos() { return exportPos; }
     public BlockPos getImportPos() { return importPos; }
     public BlockPos getCellPos() { return cellPos; }
@@ -39,15 +39,15 @@ public class Setup {
         if (maxMobCount == -1) {
             int mobCount = WootConfig.get().getIntConfig(WootConfig.ConfigKey.MASS_COUNT); // upgrades
             int level = 0;
-            if (upgrades.containsKey(FactoryUpgradeType.MASS)) {
-                level = upgrades.get(FactoryUpgradeType.MASS);
-                mobCount = ConfigHelper.getIntValueForFactoryUpgrade(FactoryUpgradeType.MASS, level);
+            if (perks.containsKey(PerkType.MASS)) {
+                level = perks.get(PerkType.MASS);
+                mobCount = ConfigHelper.getIntValueForPerk(PerkType.MASS, level);
             }
 
             for (FakeMob mob : mobs) {
                 int count = WootConfig.get().getIntConfig(mob, WootConfig.ConfigKey.MASS_COUNT);
-                if (upgrades.containsKey(FactoryUpgradeType.MASS))
-                    count = ConfigHelper.getIntValueForFactoryUpgrade(mob, FactoryUpgradeType.MASS, level);
+                if (perks.containsKey(PerkType.MASS))
+                    count = ConfigHelper.getIntValueForPerk(mob, PerkType.MASS, level);
 
                 // Smallest mass allowed
                 if (count < mobCount)
@@ -83,10 +83,10 @@ public class Setup {
             } else if (pb.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
                 if (te instanceof UpgradeTileEntity) {
-                    FactoryUpgrade upgrade = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));
-                    if (upgrade != FactoryUpgrade.EMPTY ) {
-                        FactoryUpgradeType type = FactoryUpgrade.getType(upgrade);
-                        int level = FactoryUpgrade.getLevel(upgrade);
+                    Perk upgrade = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));
+                    if (upgrade != Perk.EMPTY ) {
+                        PerkType type = Perk.getType(upgrade);
+                        int level = Perk.getLevel(upgrade);
 
                         /**
                          * Tier 1,2 - level 1 upgrades only
@@ -100,7 +100,7 @@ public class Setup {
                         else if (setup.tier == Tier.TIER_3 && level > 2)
                             level = 2;
 
-                        setup.upgrades.put(type, level);
+                        setup.perks.put(type, level);
                     }
                 }
             }
@@ -114,8 +114,8 @@ public class Setup {
         for (FakeMob fakeMob : mobs)
             s += " mob:" + fakeMob;
 
-        for (FactoryUpgradeType upgrade : upgrades.keySet())
-            s += " upgrade: " + upgrade + "/" + upgrades.get(upgrade);
+        for (PerkType upgrade : perks.keySet())
+            s += " upgrade: " + upgrade + "/" + perks.get(upgrade);
 
         return s;
     }

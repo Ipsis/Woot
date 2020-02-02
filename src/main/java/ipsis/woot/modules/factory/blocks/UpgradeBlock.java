@@ -1,8 +1,8 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.modules.factory.FactoryComponent;
-import ipsis.woot.modules.factory.FactoryUpgrade;
-import ipsis.woot.modules.factory.items.UpgradeItem;
+import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.items.PerkItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,13 +23,13 @@ public class UpgradeBlock extends FactoryBlock {
 
     public UpgradeBlock(FactoryComponent component) {
         super(component);
-        this.setDefaultState(getStateContainer().getBaseState().with(UPGRADE, FactoryUpgrade.EMPTY).with(BlockStateProperties.ATTACHED, false));
+        this.setDefaultState(getStateContainer().getBaseState().with(UPGRADE, Perk.EMPTY).with(BlockStateProperties.ATTACHED, false));
     }
 
-    public static final EnumProperty<FactoryUpgrade> UPGRRADE_TYPE;
-    static { UPGRRADE_TYPE = EnumProperty.create("upgrade", FactoryUpgrade.class); }
+    public static final EnumProperty<Perk> UPGRRADE_TYPE;
+    static { UPGRRADE_TYPE = EnumProperty.create("upgrade", Perk.class); }
 
-    public static final EnumProperty<FactoryUpgrade> UPGRADE = UPGRRADE_TYPE;
+    public static final EnumProperty<Perk> UPGRADE = UPGRRADE_TYPE;
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
@@ -41,12 +41,12 @@ public class UpgradeBlock extends FactoryBlock {
 
         if (!worldIn.isRemote) {
             ItemStack itemStack = player.getHeldItem(handIn);
-            if (!itemStack.isEmpty() && itemStack.getItem() instanceof UpgradeItem) {
-                UpgradeItem upgradeItem = (UpgradeItem)itemStack.getItem();
+            if (!itemStack.isEmpty() && itemStack.getItem() instanceof PerkItem) {
+                PerkItem perkItem = (PerkItem)itemStack.getItem();
 
                 TileEntity te = worldIn.getTileEntity(pos);
                 if (te instanceof UpgradeTileEntity)
-                    ((UpgradeTileEntity) te).tryAddUpgrade(state, upgradeItem.getFactoryUpgrade());
+                    ((UpgradeTileEntity) te).tryAddUpgrade(state, perkItem.getFactoryUpgrade());
             }
         }
 

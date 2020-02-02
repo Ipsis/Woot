@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.modules.factory.*;
+import ipsis.woot.modules.factory.calculators.CalculatorVersion1;
 import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.multiblock.MultiBlockMaster;
@@ -91,7 +92,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                setup = Setup.createFromLayout(world, layout);
 
                setup.getMobs().forEach(m -> DropRegistry.get().tryLearning(m));
-               recipe = RecipeHelper.createRecipe(setup, world);
+               recipe = CalculatorVersion1.calculate(setup, world);
 
                // Restore the progress on load
                if (loadedFromNBT) {

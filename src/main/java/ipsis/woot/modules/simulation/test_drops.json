@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "drops": [
+    {
+      "drop": {
+        "item": "minecraft:dragon_egg"
+      },
+      "mobs": [
+        {
+          "mob": "minecraft:ender_dragon",
+          "chance": [ 10.0, 30.0, 50.0, 100.0 ],
+          "sizes": [
+            {
+              "looting": 1,
+              "sizes": [ 1, 2, 3, 4 ],
+              "chances": [ 30.0, 30.0, 30.0, 10.0 ]
+            }
+          ]
+        }
+
+      ]
+    }
+  ]
+}

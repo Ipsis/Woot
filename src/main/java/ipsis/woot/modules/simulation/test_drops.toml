@@ -1,0 +1,29 @@
+[[customdrops]]
+    name = "Dragon Egg"
+    drop = "minecraft:dragon_egg"
+    [[customdrops.mobs]]
+        mob = "minecraft:ender_dragon"
+        chances = [ 10.0, 30.0, 50.0 , 100.0 ]
+        [[customdrops.mobs.sizes]]
+            looting = 1
+            sizes = [ 1, 2, 3, 4]
+            chance = [ 30.0, 30.0, 30.0 , 10.0 ]
+        [[customdrops.mobs.sizes]]
+            looting = 2
+            sizes = [ 3, 4, 6, 12]
+            chance = [ 10.0, 10.0, 10.0 , 70.0 ]
+
+[[customdrops]]
+    name = "Dragon Breath"
+    drop = "minecraft:dragon_breath"
+    [[customdrops.mobs]]
+        mob = "minecraft:ender_dragon"
+        chances = [ 10.0, 30.0, 50.0 , 100.0 ]
+
+[[customdrops]]
+    name = "Quark Dragon Scale"
+    drop = "quark:enderdragon_scale"
+    [[customdrops.mobs]]
+        mob = "minecraft:ender_dragon"
+
+

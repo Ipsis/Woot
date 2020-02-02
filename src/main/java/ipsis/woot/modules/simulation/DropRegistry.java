@@ -67,6 +67,29 @@ public class DropRegistry {
         mob.addCustomDrop(fakeMobKey.getLooting(), droppedItem, dropChance);
     }
 
+    public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, int count, float dropChance) {
+        LOGGER.debug("learnCustomDrop {} {} {}", fakeMobKey, droppedItem.getItem(), count);
+        droppedItem.setCount(count);
+        learnCustomDrop(fakeMobKey, droppedItem, dropChance);
+    }
+
+    public void learnCustomDropStackSize(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, int[] stackSize, float[] dropChance) {
+        LOGGER.debug("learnCustomDropStackSize {} {} {} {}", fakeMobKey, droppedItem, stackSize, dropChance);
+        Mob mob = getOrCreateMob(fakeMobKey.getMob());
+
+        float full = 0.0F;
+        for (float f : dropChance)
+            full += f;
+        if (full != 100.0F)
+            return;
+
+        for (int i = 0; i < stackSize.length; i++) {
+            ItemStack itemStack = droppedItem.copy();
+            itemStack.setCount(stackSize[i]);
+            mob.addCustomDropStackSize(fakeMobKey.getLooting(), itemStack, dropChance[i]);
+        }
+    }
+
     public void learnCustomDropStackSize(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack droppedItem, int stackSize, float dropChance) {
         LOGGER.debug("learnCustomDropStackSize {} {} {} {}", fakeMobKey, droppedItem, stackSize, dropChance);
         Mob mob = getOrCreateMob(fakeMobKey.getMob());

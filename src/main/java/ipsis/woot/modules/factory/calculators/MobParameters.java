@@ -1,7 +1,7 @@
 package ipsis.woot.modules.factory.calculators;
 
-import ipsis.woot.config.ConfigHelper;
-import ipsis.woot.config.WootConfig;
+import ipsis.woot.config.*;
+import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.simulation.spawning.SpawnController;
@@ -21,16 +21,22 @@ public class MobParameters {
      */
     public MobParameters(FakeMob fakeMob, Setup setup, World world) {
         this.fakeMob = fakeMob;
-        spawnTicks = WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.SPAWN_TICKS);
+        spawnTicks = Config.OVERRIDE.getIntegerOrDefault(fakeMob, ConfigOverride.OverrideKey.SPAWN_TICKS);
         healthPoints = SpawnController.get().getMobHealth(fakeMob, world);
-        massCount = ConfigHelper.getIntValueForPerk(
-                fakeMob,
-                PerkType.MASS,
-                setup.getPerks().getOrDefault(PerkType.MASS, 0));
-        unitsPerHealthPoint = WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.UNITS_PER_HEALTH);
 
-        // TODO check for master override of this mob to a specific conatus fluid amount
+        massCount = Config.OVERRIDE.getIntegerOrDefault(fakeMob, ConfigOverride.OverrideKey.MASS_COUNT);
+        if (setup.getPerks().containsKey(PerkType.MASS)) {
+            int level = setup.getPerks().getOrDefault(PerkType.MASS, 0);
+            if (level > 0)
+                massCount = Config.OVERRIDE.getIntegerOrDefault(fakeMob, Config.OVERRIDE.getKeyByPerk(PerkType.MASS, level));
+        }
+
+        unitsPerHealthPoint = Config.OVERRIDE.getIntegerOrDefault(fakeMob, ConfigOverride.OverrideKey.UNITS_PER_HEALTH);
     }
 
-    public int getCost() { return healthPoints * unitsPerHealthPoint; }
+    public int getCost() {
+        if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.FIXED_COST))
+            return Config.OVERRIDE.getInteger(fakeMob, ConfigOverride.OverrideKey.FIXED_COST);
+        return healthPoints * unitsPerHealthPoint;
+    }
 }

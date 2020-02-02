@@ -35,31 +35,32 @@ public class Defaults {
     public static final ArrayList<String> DEFAULT_SHARD_BLACKLIST_FULL_MOD = Lists.newArrayList();
     public static final ArrayList<String> DEFAULT_SHARD_BLACKLIST_ENTITY = Lists.newArrayList();
 
+
     public static final ArrayList<String> DEFAULT_MOB_OVERRIDES = Lists.newArrayList(
-            "minecraft:wither_skeleton,mobHealth,40",
-            "minecraft:wither_skeleton,mobTier,3",
-            "minecraft:villager,mobTier,3",
-            "minecraft:magma_cube,mobTier,2",
-            "minecraft:enderman,mobTier,3",
-            "minecraft:villager_golem,mobTier,3",
-            "minecraft:guardian,mobTier,3",
-            "minecraft:blaze,mobTier,2",
-            "minecraft:witch,mobTier,2",
-            "minecraft:ghast,mobTier,2",
-            "minecraft:zombie_pigman,mobTier,2",
+            "minecraft:wither_skeleton,HEALTH,40",
+            "minecraft:wither_skeleton,TIER,3",
+            "minecraft:villager,TIER,3",
+            "minecraft:magma_cube,TIER,2",
+            "minecraft:enderman,TIER,3",
+            "minecraft:villager_golem,TIER,3",
+            "minecraft:guardian,TIER,3",
+            "minecraft:blaze,TIER,2",
+            "minecraft:witch,TIER,2",
+            "minecraft:ghast,TIER,2",
+            "minecraft:zombie_pigman,TIER,2",
 
-            "minecraft:ender_dragon,mobHealth,500",
-            "minecraft:ender_dragon,spawnTicks,12000",
-            "minecraft:ender_dragon,mobTier,4",
-            "minecraft:ender_dragon,mass1MobCount,2",
-            "minecraft:ender_dragon,mass2MobCount,3",
-            "minecraft:ender_dragon,mass3MobCount,4",
+            "minecraft:ender_dragon,HEALTH,500",
+            "minecraft:ender_dragon,SPAWN_TICKS,12000",
+            "minecraft:ender_dragon,TIER,4",
+            "minecraft:ender_dragon,PERK_MASS_1_COUNT,2",
+            "minecraft:ender_dragon,PERK_MASS_2_COUNT,3",
+            "minecraft:ender_dragon,PERK_MASS_3_COUNT,4",
 
-            "minecraft:minecraft_wither,mobHealth,500",
-            "minecraft:minecraft_wither,spawnTicks,1200",
-            "minecraft:minecraft_wither,mobTier,4",
-            "minecraft:minecraft_wither,mass1MobCount,2",
-            "minecraft:minecraft_wither,mass2MobCount,3",
-            "minecraft:minecraft_wither,mass3MobCount,4"
+            "minecraft:minecraft_wither,HEALTH,500",
+            "minecraft:minecraft_wither,SPAWN_TICKS,1200",
+            "minecraft:minecraft_wither,TIER,4",
+            "minecraft:minecraft_wither,PERK_MASS_1_COUNT,2",
+            "minecraft:minecraft_wither,PERK_MASS_2_COUNT,3",
+            "minecraft:minecraft_wither,PERK_MASS_3_COUNT,4"
     );
 }

@@ -1,7 +1,6 @@
 package ipsis.woot.modules.factory;
 
-import ipsis.woot.config.MobOverride;
-import ipsis.woot.config.WootConfig;
+import ipsis.woot.config.ConfigOverride;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class FactoryConfiguration {
@@ -56,17 +55,17 @@ public class FactoryConfiguration {
 
             MASS_COUNT = COMMON_BUILDER
                     .comment("Number of mobs to spawn")
-                    .defineInRange(MobOverride.MASS_COUNT_TAG, 1, 1, 100);
+                    .defineInRange(ConfigOverride.OverrideKey.MASS_COUNT.name(), 1, 1, 100);
 
             SPAWN_TICKS = COMMON_BUILDER
                     .comment("Number of ticks to spawn a mob")
-                    .defineInRange(MobOverride.SPAWN_TICKS_TAG, 16 * 20, 1, 65535);
+                    .defineInRange(ConfigOverride.OverrideKey.SPAWN_TICKS.name(), 16 * 20, 1, 65535);
             UNITS_PER_HEALTH = COMMON_BUILDER
                     .comment("Number of units for each health")
-                    .defineInRange(MobOverride.UNITS_PER_HEALTH_TAG, 1, 1, 65535);
+                    .defineInRange(ConfigOverride.OverrideKey.UNITS_PER_HEALTH.name(), 1, 1, 65535);
             MOB_SHARD_KILLS = COMMON_BUILDER
                     .comment("Number of kills to program the shard")
-                    .defineInRange(MobOverride.MOB_SHARD_KILLS_TAG, 5, 1, 65535);
+                    .defineInRange(ConfigOverride.OverrideKey.SHARD_KILLS.name(), 5, 1, 65535);
 
             TIER_1_MAX_UNITS = COMMON_BUILDER
                     .comment("Max units for a tier 1 mob")
@@ -107,46 +106,35 @@ public class FactoryConfiguration {
 
             COMMON_BUILDER.push("upgrades");
             {
-                /*
-                CAPACITY_1 = COMMON_BUILDER
-                        .comment("Number of supported controllers for capacity 1 upgrade")
-                        .defineInRange(MobOverride.CAPACITY_1_TAG, 2, 1, 4);
-                CAPACITY_2 = COMMON_BUILDER
-                        .comment("Number of supported controllers for capacity 2 upgrade")
-                        .defineInRange(MobOverride.CAPACITY_2_TAG, 3, 1, 4);
-                CAPACITY_3 = COMMON_BUILDER
-                        .comment("Number of supported controllers for capacity 3 upgrade")
-                        .defineInRange(MobOverride.CAPACITY_3_TAG, 4, 1, 4); */
-
                 EFFICIENCY_1 = COMMON_BUILDER
                         .comment("Percentage reduction for efficiency 1 upgrade")
-                        .defineInRange(MobOverride.EFFICIENCY_1_TAG, 15, 1, 100);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_1_REDUCTION.name(), 15, 1, 100);
                 EFFICIENCY_2 = COMMON_BUILDER
                         .comment("Percentage reduction for efficiency 2 upgrade")
-                        .defineInRange(MobOverride.EFFICIENCY_2_TAG, 25, 1, 100);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_2_REDUCTION.name(), 25, 1, 100);
                 EFFICIENCY_3 = COMMON_BUILDER
                         .comment("Percentage reduction for efficiency 3 upgrade")
-                        .defineInRange(MobOverride.EFFICIENCY_3_TAG, 30, 1, 100);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_3_REDUCTION.name(), 30, 1, 100);
 
                 MASS_COUNT_1 = COMMON_BUILDER
                         .comment("Number of mobs to spawn for mass 1 upgrade")
-                        .defineInRange(MobOverride.MASS_COUNT_1_TAG, 2, 1, 100);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_1_COUNT.name(), 2, 1, 100);
                 MASS_COUNT_2 = COMMON_BUILDER
                         .comment("Number of mobs to spawn for mass 2 upgrade")
-                        .defineInRange(MobOverride.MASS_COUNT_2_TAG, 4, 1, 100);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_2_COUNT.name(), 4, 1, 100);
                 MASS_COUNT_3 = COMMON_BUILDER
                         .comment("Number of mobs to spawn for mass 3 upgrade")
-                        .defineInRange(MobOverride.MASS_COUNT_3_TAG, 6, 1, 100);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_3_COUNT.name(), 6, 1, 100);
 
                 RATE_1 = COMMON_BUILDER
                         .comment("Percentage reduction in spawn time for rate 1 upgrade")
-                        .defineInRange(MobOverride.RATE_1_TAG, 20, 1, 99);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_1_REDUCTION.name(), 20, 1, 99);
                 RATE_2 = COMMON_BUILDER
                         .comment("Percentage reduction in spawn time for rate 2 upgrade")
-                        .defineInRange(MobOverride.RATE_2_TAG, 50, 1, 99);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_2_REDUCTION.name(), 50, 1, 99);
                 RATE_3 = COMMON_BUILDER
                         .comment("Percentage reduction in spawn time for rate 3 upgrade")
-                        .defineInRange(MobOverride.RATE_3_TAG, 75, 1, 99);
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_3_REDUCTION.name(), 75, 1, 99);
             }
             COMMON_BUILDER.pop();
 
@@ -181,30 +169,5 @@ public class FactoryConfiguration {
         }
         CLIENT_BUILDER.pop();
         COMMON_BUILDER.pop();
-    }
-
-    public static void pushToWootConfig() {
-
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_COUNT, MASS_COUNT.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.SPAWN_TICKS, SPAWN_TICKS.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MOB_SHARD_KILLS, MOB_SHARD_KILLS.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.UNITS_PER_HEALTH, UNITS_PER_HEALTH.get());
-        // MOB_TIER is an override or calculated, never a default value
-
-        //WootConfig.get().putIntConfig(WootConfig.ConfigKey.CAPACITY_1, Config.COMMON.CAPACITY_1.get());
-        //WootConfig.get().putIntConfig(WootConfig.ConfigKey.CAPACITY_2, Config.COMMON.CAPACITY_2.get());
-        //WootConfig.get().putIntConfig(WootConfig.ConfigKey.CAPACITY_3, Config.COMMON.CAPACITY_3.get());
-
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.EFFICIENCY_1, EFFICIENCY_1.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.EFFICIENCY_2, EFFICIENCY_2.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.EFFICIENCY_3, EFFICIENCY_3.get());
-
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_1, MASS_COUNT_1.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_2, MASS_COUNT_2.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.MASS_3, MASS_COUNT_3.get());
-
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.RATE_1, RATE_1.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.RATE_2, RATE_2.get());
-        WootConfig.get().putIntConfig(WootConfig.ConfigKey.RATE_3, RATE_3.get());
     }
 }

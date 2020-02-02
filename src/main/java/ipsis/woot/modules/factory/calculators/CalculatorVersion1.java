@@ -1,7 +1,7 @@
 package ipsis.woot.modules.factory.calculators;
 
-import ipsis.woot.config.ConfigHelper;
-import ipsis.woot.config.WootConfig;
+import ipsis.woot.config.Config;
+import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
@@ -24,7 +24,7 @@ public class CalculatorVersion1 {
         for (FakeMob fakeMob : setup.getMobs())
             mobs.add(new MobParameters(fakeMob, setup, world));
 
-        int masterTicks = WootConfig.get().getIntConfig(WootConfig.ConfigKey.SPAWN_TICKS);
+        int masterTicks = Config.OVERRIDE.getDefaultInteger(ConfigOverride.OverrideKey.SPAWN_TICKS);
 
         // Spawn time is the maximum from all mobs
         for (MobParameters p : mobs) {
@@ -45,9 +45,11 @@ public class CalculatorVersion1 {
         int tempCost = actualCost;
         for (PerkType perkType : setup.getPerks().keySet()) {
             int level = setup.getPerks().get(perkType);
-            WootConfig.ConfigKey key = ConfigHelper.getConfigKeyByPerk(perkType, level);
-            int cost = 10; // TODO
-            actualCost += (int)(tempCost / 100.0F * cost);
+            if (level > 0) {
+                ConfigOverride.OverrideKey key = Config.OVERRIDE.getKeyByPerk(perkType, level);
+                int cost = 10; // TODO
+                actualCost += (int) (tempCost / 100.0F * cost);
+            }
         }
 
         /**

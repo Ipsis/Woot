@@ -3,7 +3,7 @@ package ipsis.woot.commands;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import ipsis.woot.config.WootConfig;
+import ipsis.woot.config.Config;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -21,7 +21,7 @@ public class ConfigCommand {
 
     private static int showConfig(CommandSource source, String entityKey, String key) throws CommandSyntaxException {
         FakeMob fakeMob = new FakeMob(entityKey);
-        source.sendFeedback(new StringTextComponent(WootConfig.get().getConfigAsString(fakeMob, key)), true);
+        source.sendFeedback(new StringTextComponent(Config.OVERRIDE.getConfigAsString(fakeMob, key)), true);
         return 0;
     }
 }

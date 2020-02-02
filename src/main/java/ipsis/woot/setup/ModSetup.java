@@ -2,11 +2,10 @@ package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
 import ipsis.woot.compat.top.WootTopPlugin;
-import ipsis.woot.config.MobOverride;
+import ipsis.woot.config.OverrideLoader;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
-import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
@@ -62,9 +61,8 @@ public class ModSetup {
         ModFiles.INSTANCE.init();
         NetworkChannel.init();
         PatternRepository.get().load();
-        MobOverride.get().loadFromConfig();
+        OverrideLoader.loadFromConfig();
         PolicyRegistry.get().loadFromConfig();
-        FactoryConfiguration.pushToWootConfig();
         DropRegistry.get().fromJson();
         DropRegistry.get().primeAllMobLearning();
         setupPlugins();

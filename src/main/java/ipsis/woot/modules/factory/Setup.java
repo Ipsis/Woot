@@ -1,7 +1,5 @@
 package ipsis.woot.modules.factory;
 
-import ipsis.woot.config.ConfigHelper;
-import ipsis.woot.config.WootConfig;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.UpgradeTileEntity;
 import ipsis.woot.modules.factory.layout.Layout;
@@ -27,36 +25,12 @@ public class Setup {
     BlockPos importPos;
     BlockPos exportPos;
     BlockPos cellPos;
-    private int maxMobCount = -1;
 
     public List<FakeMob> getMobs() { return mobs; }
     public HashMap<PerkType, Integer> getPerks() { return perks; }
     public BlockPos getExportPos() { return exportPos; }
     public BlockPos getImportPos() { return importPos; }
     public BlockPos getCellPos() { return cellPos; }
-
-    public int getMaxMobCount() {
-        if (maxMobCount == -1) {
-            int mobCount = WootConfig.get().getIntConfig(WootConfig.ConfigKey.MASS_COUNT); // upgrades
-            int level = 0;
-            if (perks.containsKey(PerkType.MASS)) {
-                level = perks.get(PerkType.MASS);
-                mobCount = ConfigHelper.getIntValueForPerk(PerkType.MASS, level);
-            }
-
-            for (FakeMob mob : mobs) {
-                int count = WootConfig.get().getIntConfig(mob, WootConfig.ConfigKey.MASS_COUNT);
-                if (perks.containsKey(PerkType.MASS))
-                    count = ConfigHelper.getIntValueForPerk(mob, PerkType.MASS, level);
-
-                // Smallest mass allowed
-                if (count < mobCount)
-                    mobCount = count;
-            }
-            maxMobCount = mobCount;
-        }
-        return maxMobCount;
-    }
 
     Setup() {}
 

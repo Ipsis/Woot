@@ -1,7 +1,8 @@
 package ipsis.woot.modules.factory.items;
 
+import ipsis.woot.config.Config;
+import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.policy.PolicyRegistry;
-import ipsis.woot.config.WootConfig;
 import ipsis.woot.mod.ModItems;
 import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.util.FakeMob;
@@ -165,7 +166,7 @@ public class MobShardItem extends WootItem {
         if (!fakeMob.isValid())
             return false;
 
-        return killCount >= WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.MOB_SHARD_KILLS);
+        return killCount >= Config.OVERRIDE.getIntegerOrDefault(fakeMob, ConfigOverride.OverrideKey.SHARD_KILLS);
     }
 
     public static boolean isFullyProgrammed(ItemStack itemStack) {
@@ -207,7 +208,8 @@ public class MobShardItem extends WootItem {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.1"));
         } else {
             tooltip.add(new TranslationTextComponent("info.woot.mobshard.b.0",
-                    killCount, WootConfig.get().getIntConfig(fakeMob, WootConfig.ConfigKey.MOB_SHARD_KILLS)));
+                    killCount,
+                    Config.OVERRIDE.getIntegerOrDefault(fakeMob, ConfigOverride.OverrideKey.SHARD_KILLS)));
         }
     }
 }

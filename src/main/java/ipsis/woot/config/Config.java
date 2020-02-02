@@ -17,6 +17,8 @@ import java.nio.file.Path;
 @Mod.EventBusSubscriber
 public class Config {
 
+    public static ConfigOverride OVERRIDE = new ConfigOverride();
+
     private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
     private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
 

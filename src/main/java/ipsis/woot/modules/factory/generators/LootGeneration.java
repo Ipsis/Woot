@@ -1,5 +1,7 @@
 package ipsis.woot.modules.factory.generators;
 
+import ipsis.woot.config.Config;
+import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.simulation.DropRegistry;
@@ -46,8 +48,8 @@ public class LootGeneration {
             itemHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
         }
 
-        int mobCount = setup.getMaxMobCount();
         for (FakeMob mob : setup.getMobs()) {
+            int mobCount = Config.OVERRIDE.getInteger(mob, ConfigOverride.OverrideKey.MASS_COUNT);
             LOGGER.debug("generate: {} * {}", mob, mobCount);
             List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(mob, 0));
             for (int i = 0; i < mobCount; i++) {

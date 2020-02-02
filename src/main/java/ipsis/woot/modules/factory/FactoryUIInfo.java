@@ -38,7 +38,7 @@ public class FactoryUIInfo {
     public static FactoryUIInfo create(Setup setup, HeartTileEntity.Recipe recipe) {
         FactoryUIInfo info = new FactoryUIInfo();
         if (setup != null) {
-            info.mobCount = setup.getMaxMobCount();
+            info.mobCount = 65535;
             info.recipeEffort = recipe.getNumUnits();
             info.recipeTicks = recipe.getNumTicks();
             info.recipeCostPerTick = recipe.getUnitsPerTick();

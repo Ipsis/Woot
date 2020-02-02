@@ -1,7 +1,7 @@
 package ipsis.woot.modules.factory.layout;
 
 import ipsis.woot.Woot;
-import ipsis.woot.config.ConfigHelper;
+import ipsis.woot.config.Config;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.FactoryComponentProvider;
@@ -117,7 +117,7 @@ public class FactoryScanner {
                 if (te instanceof ControllerTileEntity) {
                     FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
                     if (fakeMob.isValid()) {
-                        Tier mobTier = ConfigHelper.getMobTier(fakeMob, world);
+                        Tier mobTier = Config.OVERRIDE.getMobTier(fakeMob, world);
 
                         /**
                          * Ignore if blacklisted

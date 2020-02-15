@@ -17,6 +17,7 @@ public class PolicyConfiguration {
     public static ForgeConfigSpec.ConfigValue<List<String>> GENERATE_BLACKLIST_ITEM;
     public static ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_FULL_MOD;
     public static ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_ENTITY;
+    public static ForgeConfigSpec.ConfigValue<List<String>> CUSTOM_DROPS_ONLY;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -57,6 +58,9 @@ public class PolicyConfiguration {
                 MOB_OVERRIDES = COMMON_BUILDER
                         .comment("A list of mob specific factory configuration values")
                         .define("mobOverrides", Defaults.DEFAULT_MOB_OVERRIDES);
+                CUSTOM_DROPS_ONLY = COMMON_BUILDER
+                        .comment("A list of mobs that should not be simulated and use custom config only")
+                        .define("customDropsOnly", Defaults.DEFAULT_CUSTOM_DROPS_ONLY);
             }
             COMMON_BUILDER.pop();
 

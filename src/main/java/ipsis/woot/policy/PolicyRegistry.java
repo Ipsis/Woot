@@ -187,4 +187,16 @@ public class PolicyRegistry {
 
         return true;
     }
+
+    public boolean canSimulate(ResourceLocation rl) {
+        if (rl == null)
+            return false;
+
+        for (String s : PolicyConfiguration.CUSTOM_DROPS_ONLY.get()) {
+            if (s.equalsIgnoreCase(rl.toString()))
+                return false;
+        }
+
+        return true;
+    }
 }

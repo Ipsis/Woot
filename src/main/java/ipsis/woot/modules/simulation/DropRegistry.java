@@ -2,6 +2,7 @@ package ipsis.woot.modules.simulation;
 
 import com.google.gson.*;
 import ipsis.woot.mod.ModFiles;
+import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.JsonHelper;
@@ -431,6 +432,9 @@ public class DropRegistry {
             Mob mob = entry.getValue();
 
             if (!fakeMob.isValid())
+                continue;
+
+            if (!PolicyRegistry.get().canSimulate(fakeMob.getResourceLocation()))
                 continue;
 
             JsonObject mobObject = new JsonObject();

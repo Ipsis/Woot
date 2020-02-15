@@ -1,5 +1,7 @@
 package ipsis.woot.modules.simulation;
 
+import ipsis.woot.policy.PolicyConfiguration;
+import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -35,8 +37,13 @@ public class MobSimulator {
             return false;
 
         // defer allocating the cells
-        waitingForCells.add(fakeMobKey);
+        addToCellWaiting(fakeMobKey);
         return true;
+    }
+
+    private void addToCellWaiting(@Nonnull FakeMobKey fakeMobKey) {
+        if (PolicyRegistry.get().canSimulate(fakeMobKey.getMob().getResourceLocation()))
+            waitingForCells.add(fakeMobKey);
     }
 
     public Set<FakeMobKey> getPupils() {

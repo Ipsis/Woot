@@ -35,6 +35,9 @@ public class Defaults {
     public static final ArrayList<String> DEFAULT_SHARD_BLACKLIST_FULL_MOD = Lists.newArrayList();
     public static final ArrayList<String> DEFAULT_SHARD_BLACKLIST_ENTITY = Lists.newArrayList();
 
+    public static final ArrayList<String> DEFAULT_CUSTOM_DROPS_ONLY = Lists.newArrayList(
+            "minecraft:ender_dragon"
+    );
 
     public static final ArrayList<String> DEFAULT_MOB_OVERRIDES = Lists.newArrayList(
             "minecraft:wither_skeleton,HEALTH,40",

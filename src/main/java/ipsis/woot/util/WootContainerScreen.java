@@ -86,7 +86,8 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         Minecraft.getInstance().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         int color = fluid.getFluid().getAttributes().getColor(fluid);
         setGLColorFromInt(color);
-        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getTextureMap().getSprite(fluid.getFluid().getAttributes().getStill(fluid));
+        ResourceLocation resourceLocation = fluid.getFluid().getAttributes().getStillTexture();
+        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(resourceLocation);
         drawTiledTexture(x, y, textureAtlasSprite, width, height);
     }
 
@@ -119,10 +120,10 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         if (icon == null) {
             return;
         }
-        double minU = icon.getMinU();
-        double maxU = icon.getMaxU();
-        double minV = icon.getMinV();
-        double maxV = icon.getMaxV();
+        float minU = icon.getMinU();
+        float maxU = icon.getMaxU();
+        float minV = icon.getMinV();
+        float maxV = icon.getMaxV();
 
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);

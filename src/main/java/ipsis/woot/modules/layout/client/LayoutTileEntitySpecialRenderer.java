@@ -1,5 +1,6 @@
 package ipsis.woot.modules.layout.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
@@ -8,8 +9,11 @@ import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
 import ipsis.woot.modules.factory.layout.PatternBlock;
 import ipsis.woot.util.helper.RenderHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,6 +23,10 @@ import org.lwjgl.opengl.GL11;
 @OnlyIn(Dist.CLIENT)
 public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTileEntity> {
 
+    public LayoutTileEntitySpecialRenderer(TileEntityRendererDispatcher dispatcher) {
+        super(dispatcher);
+    }
+
     @Override
     public boolean isGlobalRenderer(LayoutTileEntity te) {
         // Force the render even when the chunk is out of view
@@ -26,32 +34,33 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
     }
 
     @Override
-    public void render(LayoutTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(LayoutTileEntity layoutTileEntity, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
 
-        if (tileEntityIn.getAbsolutePattern() == null)
-            tileEntityIn.refresh();
+        if (layoutTileEntity.getAbsolutePattern() == null)
+            layoutTileEntity.refresh();
 
-        textureRender(tileEntityIn, x, y, z, partialTicks, destroyStage);
+        textureRender(layoutTileEntity, matrixStack);
     }
 
     TextureAtlasSprite getTextureAtlasSprite(FactoryComponent component) {
         String path = "block/" + component.getName();
         if (component == FactoryComponent.CELL)
             path += "_1";
-        return Minecraft.getInstance().getTextureMap().getSprite( new ResourceLocation(Woot.MODID, path));
+        return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(new ResourceLocation(Woot.MODID, path));
     }
 
-    void textureRender(LayoutTileEntity tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
+    void textureRender(LayoutTileEntity tileEntityIn, MatrixStack matrixStack) {
 
         boolean showAll = tileEntityIn.getLevel() == -1;
         int validY = showAll ? 0 : tileEntityIn.getYForLevel();
 
+        matrixStack.push();
         GlStateManager.pushLightingAttributes();
         {
             GlStateManager.pushMatrix();
-            setLightmapDisabled(true);
+            //setLightmapDisabled(true);
             {
-                GlStateManager.translated(x + 0.5F, y + 0.5F, z + 0.5F);
+                GlStateManager.translated(0.5F, 0.5F, 0.5F);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
                 GlStateManager.color4f(1F, 1F, 1F, LayoutConfiguration.RENDER_OPACITY.get().floatValue());
@@ -78,9 +87,10 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
                 GlStateManager.disableBlend();
             }
-            setLightmapDisabled(false);
+            //setLightmapDisabled(false);
             GlStateManager.popMatrix();
         }
         GlStateManager.popAttributes();
+        matrixStack.pop();
     }
 }

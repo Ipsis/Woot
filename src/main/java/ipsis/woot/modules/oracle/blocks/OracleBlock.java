@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -35,16 +36,16 @@ public class OracleBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
-        if (world.isRemote)
-            return super.onBlockActivated(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+        if (worldIn.isRemote)
+            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
-        TileEntity te = world.getTileEntity((pos));
+        TileEntity te = worldIn.getTileEntity((pos));
         if (te instanceof INamedContainerProvider)
-            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, (INamedContainerProvider)te, te.getPos());
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());
         else
             throw new IllegalStateException("Named container provider is missing");
 
-        return true; // Block was activated
+        return ActionResultType.SUCCESS; // Block was activated
     }
 }

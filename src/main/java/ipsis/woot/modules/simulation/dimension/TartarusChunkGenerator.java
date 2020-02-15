@@ -10,6 +10,7 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.WorldGenRegion;
 
 import java.util.*;
 
@@ -75,7 +76,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
     }
 
     @Override
-    public void generateSurface(IChunk iChunk) {
+    public void func_225551_a_(WorldGenRegion worldGenRegion, IChunk iChunk) {
 
         /**
          * This is all based off chunk coordinates - therefore 0->16
@@ -83,7 +84,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
         Woot.setup.getLogger().info("generateSurface: {}", iChunk);
 
         BlockState blockState = Blocks.AIR.getDefaultState();
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        BlockPos.Mutable pos = new BlockPos.Mutable();
         for (int x1 = 0; x1 < 16; x1++) {
             for (int z1 = 0; z1 < 16; z1++) {
                 for (int y1 = 0; y1 < 256; y1++) {
@@ -105,6 +106,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
             }
         }
     }
+
 
     @Override
     public int getGroundHeight() {

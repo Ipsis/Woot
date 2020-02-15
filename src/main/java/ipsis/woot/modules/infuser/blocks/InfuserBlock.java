@@ -17,6 +17,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -61,9 +62,9 @@ public class InfuserBlock extends Block implements WootDebug {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
         if (worldIn.isRemote)
-            return true;
+            return ActionResultType.SUCCESS;
 
         if (!(worldIn.getTileEntity(pos) instanceof InfuserTileEntity))
             throw new IllegalStateException("Tile entity is missing");
@@ -72,14 +73,14 @@ public class InfuserBlock extends Block implements WootDebug {
         ItemStack heldItem = player.getHeldItem(handIn);
 
         if (FluidUtil.getFluidHandler(heldItem).isPresent()) {
-            return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null);
+            return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
         } else  {
             // open the gui
             if (infuser instanceof INamedContainerProvider)
                 NetworkHooks.openGui((ServerPlayerEntity) player, infuser, infuser.getPos());
             else
                 throw new IllegalStateException("Named container provider is missing");
-            return true;
+            return ActionResultType.SUCCESS;
 
         }
     }

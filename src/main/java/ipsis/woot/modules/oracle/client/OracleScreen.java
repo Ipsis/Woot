@@ -199,14 +199,14 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                     relativeY += 20;
                 currCol = (currCol + 1) % cols;
 
-                blitOffset = 100;
+                setBlitOffset(100);
                 itemRenderer.zLevel = 100.0F;
-                RenderHelper.enableGUIStandardItemLighting();
+                RenderHelper.enableStandardItemLighting();
                 GlStateManager.enableDepthTest();
                 itemRenderer.renderItemIntoGUI(simDrop.itemStack, stackX, stackY);
                 RenderHelper.disableStandardItemLighting();
                 itemRenderer.zLevel = 0.0F;
-                blitOffset = 0;
+                setBlitOffset(0);
 
                 if (mouseX >= stackX && mouseX <= stackX + 20 && mouseY >= stackY && mouseY <= stackY + 20) {
                     FontRenderer fontRenderer = simDrop.itemStack.getItem().getFontRenderer(simDrop.itemStack);

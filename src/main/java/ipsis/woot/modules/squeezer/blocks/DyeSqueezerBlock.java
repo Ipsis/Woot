@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -53,9 +54,9 @@ public class DyeSqueezerBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
         if (world.isRemote)
-            return true;
+            return ActionResultType.SUCCESS;
 
         if (!(world.getTileEntity(pos) instanceof DyeSqueezerTileEntity))
             throw new IllegalStateException("Tile entity is missing");
@@ -64,7 +65,7 @@ public class DyeSqueezerBlock extends Block {
         ItemStack heldItem = playerEntity.getHeldItem(hand);
 
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
-            return FluidUtil.interactWithFluidHandler(playerEntity, hand, world, pos, null);
+            return FluidUtil.interactWithFluidHandler(playerEntity, hand, world, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 
         // open the gui
         if (squeezer instanceof INamedContainerProvider)
@@ -72,7 +73,7 @@ public class DyeSqueezerBlock extends Block {
         else
             throw new IllegalStateException("Named container provider is missing");
 
-        return true; // Block was activated
+        return ActionResultType.SUCCESS; // Block was activated
     }
 
     @Override

@@ -17,13 +17,13 @@ import javax.annotation.Nullable;
 
 public class TartarusDimension extends Dimension {
     public TartarusDimension(World world, DimensionType dimensionType) {
-        super(world, dimensionType);
+        super(world, dimensionType, 0.0f);
     }
 
     @Override
     public ChunkGenerator<?> createChunkGenerator() {
         return new TartarusChunkGenerator(world, new SingleBiomeProvider(
-                new SingleBiomeProviderSettings().setBiome(Biomes.THE_VOID)));
+                new SingleBiomeProviderSettings(this.world.getWorldInfo()).setBiome(Biomes.THE_VOID)));
     }
 
     @Nullable

@@ -1,11 +1,14 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
+import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.anvil.client.AnvilTileEntitySpecialRenderer;
+import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.infuser.items.DyeCasingItem;
 import ipsis.woot.modules.infuser.items.DyePlateItem;
+import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.layout.client.LayoutTileEntitySpecialRenderer;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.oracle.client.OracleScreen;
@@ -19,6 +22,7 @@ import ipsis.woot.modules.squeezer.client.EnchantSqueezerScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -31,8 +35,8 @@ public class ClientRegistration {
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
         Woot.setup.getLogger().debug("FMLClientSetupEvent");
-        ClientRegistry.bindTileEntitySpecialRenderer(LayoutTileEntity.class, new LayoutTileEntitySpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(AnvilTileEntity.class, new AnvilTileEntitySpecialRenderer());
+        ClientRegistry.bindTileEntityRenderer(LayoutSetup.LAYOUT_BLOCK_TILE.get(), LayoutTileEntitySpecialRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AnvilSetup.ANVIL_BLOCK_TILE.get(), AnvilTileEntitySpecialRenderer::new);
         ScreenManager.registerFactory(FactorySetup.HEART_BLOCK_CONTAINER.get(), HeartScreen::new);
         ScreenManager.registerFactory(OracleSetup.ORACLE_BLOCK_CONTAINER.get(), OracleScreen::new);
         ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), DyeSqueezerScreen::new);

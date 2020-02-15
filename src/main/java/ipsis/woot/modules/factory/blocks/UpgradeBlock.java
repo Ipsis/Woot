@@ -11,6 +11,7 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -37,7 +38,7 @@ public class UpgradeBlock extends FactoryBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
         if (!worldIn.isRemote) {
             ItemStack itemStack = player.getHeldItem(handIn);
@@ -50,7 +51,7 @@ public class UpgradeBlock extends FactoryBlock {
             }
         }
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
     }
 
     @Override

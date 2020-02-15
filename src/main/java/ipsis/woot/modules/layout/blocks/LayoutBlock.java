@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -41,15 +42,15 @@ public class LayoutBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
         if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
         if (handIn == Hand.MAIN_HAND) {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof LayoutTileEntity) {
                 LayoutTileEntity layout = (LayoutTileEntity)te;
-                if (player.isSneaking()) {
+                if (player.func_226563_dT_()) {
                     layout.setNextLevel();
                 } else {
                     layout.setNextTier();
@@ -58,6 +59,6 @@ public class LayoutBlock extends Block {
             }
         }
 
-        return true;
+        return ActionResultType.SUCCESS;
     }
 }

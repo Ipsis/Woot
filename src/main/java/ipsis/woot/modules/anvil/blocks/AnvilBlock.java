@@ -19,6 +19,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -80,7 +81,7 @@ public class AnvilBlock extends Block implements WootDebug {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
 
         if (world.isRemote)
             super.onBlockActivated(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
@@ -90,7 +91,7 @@ public class AnvilBlock extends Block implements WootDebug {
             AnvilTileEntity anvil = (AnvilTileEntity)te;
             ItemStack heldItem = playerEntity.getHeldItem(hand);
 
-            if (playerEntity.isSneaking() && heldItem.isEmpty()) {
+            if (playerEntity.func_226563_dT_() && heldItem.isEmpty()) {
                 // Sneak with empty hand to empty
                 anvil.dropItem(playerEntity);
             } else if (heldItem.getItem() == AnvilSetup.HAMMER_ITEM.get()) {
@@ -127,7 +128,7 @@ public class AnvilBlock extends Block implements WootDebug {
 
         }
 
-        return true;
+        return ActionResultType.SUCCESS;
     }
 
     public boolean isAnvilHot(World world, BlockPos pos) {

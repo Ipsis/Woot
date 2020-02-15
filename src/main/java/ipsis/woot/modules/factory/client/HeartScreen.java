@@ -271,14 +271,14 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             }
 
             ItemStack itemStack = itemStacks.get(idx);
-            blitOffset = 100;
+            setBlitOffset(100);
             itemRenderer.zLevel = 100.0F;
-            RenderHelper.enableGUIStandardItemLighting();
+            RenderHelper.enableStandardItemLighting();
             GlStateManager.enableDepthTest();
             itemRenderer.renderItemIntoGUI(itemStack, x, y);
             RenderHelper.disableStandardItemLighting();
             itemRenderer.zLevel = 0.0F;
-            blitOffset = 0;
+            setBlitOffset(0);
         }
     }
 }

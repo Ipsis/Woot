@@ -117,7 +117,7 @@ public class ForgeEventHandlers {
     }
 
     @SubscribeEvent
-    public static void onFileChange(final ModConfig.ConfigReloading configEvent) {
+    public static void onFileChange(final ModConfig.Reloading configEvent) {
         Woot.setup.getLogger().info("onFileChange");
     }
 

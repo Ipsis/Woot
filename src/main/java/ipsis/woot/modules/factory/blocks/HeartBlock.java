@@ -19,6 +19,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -60,26 +61,26 @@ public class HeartBlock extends Block implements FactoryComponentProvider, WootD
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
         if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
         if (player.getHeldItemMainhand().getItem() == LayoutSetup.INTERN_ITEM.get() || player.getHeldItemMainhand().getItem() == DebugSetup.DEBUG_ITEM.get()) {
                 // intern is used on the heart, so cannot open the gui
-                return false; // Block was not activated
+                return ActionResultType.FAIL; // Block was not activated
         }
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof HeartTileEntity && !((HeartTileEntity) te).isFormed())
-                return false;
+                return ActionResultType.FAIL;
 
         if (te instanceof INamedContainerProvider)
             NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());
         else
             throw new IllegalStateException("Named container provider is missing");
 
-        return true; // Block was activated
+        return ActionResultType.SUCCESS; // Block was activated
     }
 
     /**

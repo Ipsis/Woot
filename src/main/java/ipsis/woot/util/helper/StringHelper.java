@@ -1,6 +1,7 @@
 package ipsis.woot.util.helper;
 
-import net.minecraft.util.text.translation.LanguageMap;
+
+import net.minecraft.util.text.LanguageMap;
 
 public class StringHelper {
 

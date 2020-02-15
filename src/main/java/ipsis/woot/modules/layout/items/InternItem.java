@@ -87,7 +87,7 @@ public class InternItem extends Item {
         ItemStack itemStack = playerEntity.getHeldItem(hand);
 
         // Sneak click not on block to cycle
-        if (playerEntity.isSneaking()) {
+        if (playerEntity.func_226563_dT_()) {
             RayTraceResult rayTraceResult = rayTrace(world, playerEntity, RayTraceContext.FluidMode.NONE);
             if (rayTraceResult != null && rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
                 return new ActionResult<>(ActionResultType.PASS, itemStack);
@@ -135,7 +135,7 @@ public class InternItem extends Item {
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
         ActionResultType result = ActionResultType.PASS;
         ItemStack itemStack = context.getItem();
-        if (!context.getPlayer().isSneaking()) {
+        if (!context.getPlayer().func_226563_dT_()) {
             Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
             if (b instanceof HeartBlock) {
                 BlockState blockState = context.getWorld().getBlockState(context.getPos());

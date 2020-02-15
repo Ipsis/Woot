@@ -57,7 +57,7 @@ public class FakeMob {
             else
                 setInfo(mobEntity.getEntityString(), LARGE_TAG);
         } else if (isChargedCreeper(mobEntity)) {
-            if (((CreeperEntity)mobEntity).getPowered())
+            if (((CreeperEntity)mobEntity).func_225509_J__())
                 setInfo(mobEntity.getEntityString(), CHARGED_TAG);
         } else {
             setInfo(mobEntity.getEntityString(), EMPTY_TAG);
@@ -143,7 +143,7 @@ public class FakeMob {
     private static final String MAGMA_CUBE = "minecraft:magma_cube";
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
-        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).getPowered();
+        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).func_225509_J__();
     }
 
     private boolean isSlime(MobEntity mobEntity) { return mobEntity instanceof SlimeEntity; }

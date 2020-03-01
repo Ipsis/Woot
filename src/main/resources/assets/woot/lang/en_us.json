@@ -10,6 +10,7 @@
   "commands.woot.pupils": "Simulating %s",
   "commands.woot.give.ok": "Gave %s controller for %s",
   "commands.woot.give.fail": "Invalid mob %s",
+  "commands.woot.simulation.dump.drop": "Drops {0}",
 
   # Block Names
   "block.woot.factory_a": "Factory A",

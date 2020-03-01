@@ -1,13 +1,17 @@
 package ipsis.woot.setup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.commands.ModCommands;
+import ipsis.woot.mod.ModFiles;
 import ipsis.woot.modules.anvil.AnvilRecipes;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.modules.infuser.InfuserRecipes;
 import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.modules.simulation.SimulationSetup;
+import ipsis.woot.modules.simulation.library.DropLibrary;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
 import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.simulation.FakePlayerPool;
@@ -15,6 +19,7 @@ import ipsis.woot.modules.simulation.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
+import ipsis.woot.util.helper.SerializationHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,6 +38,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
+import java.io.File;
 import java.util.List;
 
 import static ipsis.woot.modules.simulation.SimulationSetup.TARTARUS_DIMENSION_ID;
@@ -63,8 +69,10 @@ public class ForgeEventHandlers {
 
         List<ItemStack> drops = ItemEntityHelper.convertToItemStacks(event.getDrops());
         FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob(mobEntity), event.getLootingLevel());
-        if (fakeMobKey.getMob().isValid())
+        if (fakeMobKey.getMob().isValid()) {
             DropRegistry.get().learn(fakeMobKey, drops);
+            DropLibrary.getInstance().learnSimulatedDrops(fakeMobKey, drops);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
@@ -133,7 +141,12 @@ public class ForgeEventHandlers {
     @SubscribeEvent
     public void onServerStop(final FMLServerStoppingEvent event) {
         Woot.setup.getLogger().info("onServerStop");
-        JsonObject jsonObject = DropRegistry.get().toJson();
+//        JsonObject jsonObject = DropRegistry.get().toJson();
+
+        JsonObject jsonObject = DropLibrary.getInstance().toJson();
+        File dropFile = ModFiles.INSTANCE.getLootFile();
+        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        SerializationHelper.writeJsonFile(dropFile, GSON.toJson(jsonObject));
     }
 
     @SubscribeEvent

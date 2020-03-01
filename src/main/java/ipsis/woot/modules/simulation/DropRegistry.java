@@ -2,6 +2,7 @@ package ipsis.woot.modules.simulation;
 
 import com.google.gson.*;
 import ipsis.woot.mod.ModFiles;
+import ipsis.woot.modules.simulation.library.DropLibrary;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
@@ -277,12 +278,14 @@ public class DropRegistry {
             int[] simulatedDropCount = new int[MAX_LOOTING];
 
             // number of times a specific stack size has dropped
+            // eg. 4,50 means that 50 times we have seen a stack size of 4
             List<HashMap<Integer,Integer>> simulatedStackSizes = new ArrayList<>(MAX_LOOTING);
 
             // chance to drop the item for each looting level
             float[] customChanceToDrop = new float[MAX_LOOTING];
 
             // chance to drop a specific stack size
+            // 4,50 means that when the items is dropped there is a 50% chance it will have a stack size of 4
             List<HashMap<Integer,Float>> customStackSizes = new ArrayList<>(MAX_LOOTING);
 
             public void incrementSimulatedDropCount(int looting) { simulatedDropCount[looting]++; }
@@ -422,6 +425,9 @@ public class DropRegistry {
     }
 
     public JsonObject toJson() {
+
+        JsonObject t = DropLibrary.getInstance().toJson();
+        LOGGER.info(t);
 
         JsonObject json = new JsonObject();
         json.addProperty(VERSION_TAG, 1);

@@ -1,5 +1,6 @@
 package ipsis.woot.modules.simulation;
 
+import ipsis.woot.modules.simulation.library.DropLibrary;
 import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.util.FakeMobKey;
@@ -68,6 +69,7 @@ public class MobSimulator {
 
                 // Handle drops from previous kill
                 DropRegistry.get().learnSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
+                DropLibrary.getInstance().learnSimulatedDropsSilent(pupil.fakeMobKey, Tartarus.get().sweepCell(pupil.cellId, world));
 
                 if (DropRegistry.get().isLearningFinished(pupil.fakeMobKey, SimulationConfiguration.SIMULATION_MOB_COUNT.get())) {
                     LOGGER.debug("MobSimulator:tick finished simulating {}", pupil.fakeMobKey);

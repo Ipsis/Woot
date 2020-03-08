@@ -1,26 +1,30 @@
 package ipsis.woot.commands;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import ipsis.woot.modules.simulation.MobSimulator;
-import ipsis.woot.modules.simulation.library.DropSummary;
-import ipsis.woot.modules.simulation.library.DropLibrary;
+import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.ResourceLocationArgument;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class SimulationCommand {
+
+    private static final String TAG = "commands.woot.simulation.";
 
     static final SuggestionProvider<CommandSource> ENTITY_SUGGESTIONS = (ctx, builder) ->
             ISuggestionProvider.func_212476_a(
@@ -31,7 +35,8 @@ public class SimulationCommand {
         return Commands.literal("simulation")
                 .then(LearnCommand.register())
                 .then(DumpCommand.register())
-                .then(StatusCommand.register());
+                .then(StatusCommand.register())
+                .then(RollDropsCommand.register());
     }
 
     private static class LearnCommand {
@@ -40,21 +45,44 @@ public class SimulationCommand {
                     .requires(cs -> cs.hasPermissionLevel(0))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
+                                .executes(ctx -> learnEntity(
+                                                ctx.getSource(),
+                                                ResourceLocationArgument.getResourceLocation(ctx, "entity"), ""))
                             .then(
-                                    Commands.argument("looting", IntegerArgumentType.integer(0, 3))
+                                    Commands.argument("tag", StringArgumentType.string())
                                         .executes(ctx -> learnEntity(
                                                 ctx.getSource(),
                                                 ResourceLocationArgument.getResourceLocation(ctx, "entity"),
-                                                IntegerArgumentType.getInteger(ctx, "looting"), ""))
-                                        .then(
-                                            Commands.argument("tag", StringArgumentType.string())
-                                                .executes(ctx -> learnEntity(
-                                                    ctx.getSource(),
-                                                    ResourceLocationArgument.getResourceLocation(ctx, "entity"),
-                                                    IntegerArgumentType.getInteger(ctx, "looting"),
-                                                    StringArgumentType.getString(ctx, "tag")))
-                                        )
+                                                StringArgumentType.getString(ctx, "tag")))
                             )
+
+                    );
+        }
+    }
+
+    private static class RollDropsCommand {
+        static ArgumentBuilder<CommandSource, ?> register() {
+            return Commands.literal("roll")
+                    .requires(cs -> cs.hasPermissionLevel(0))
+                    .then(
+                            Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
+                                    .then (
+                                            Commands.argument("looting", IntegerArgumentType.integer(0, 3))
+                                                .executes(ctx -> rollDrops(
+                                                        ctx.getSource(),
+                                                        ResourceLocationArgument.getResourceLocation(ctx, "entity"), "",
+                                                        IntegerArgumentType.getInteger(ctx, "looting"))))
+                                    )
+                                    .then(
+                                            Commands.argument("tag", StringArgumentType.string())
+                                                    .then (
+                                                            Commands.argument("looting", IntegerArgumentType.integer(0, 3))
+                                                                    .executes(ctx -> rollDrops(
+                                                                            ctx.getSource(),
+                                                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"), "",
+                                                                            IntegerArgumentType.getInteger(ctx, "looting"))
+                                                                    )
+                                    )
 
                     );
         }
@@ -66,27 +94,22 @@ public class SimulationCommand {
                     .requires(cs -> cs.hasPermissionLevel(0))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
-                                    .then(
-                                            Commands.argument("looting", IntegerArgumentType.integer(0, 3))
-                                                    .executes(ctx -> dumpEntity(
-                                                            ctx.getSource(),
-                                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"),
-                                                            IntegerArgumentType.getInteger(ctx, "looting"), ""))
-                                                    .then(
-                                                            Commands.argument("tag", StringArgumentType.string())
-                                                                    .executes(ctx -> dumpEntity(
-                                                                            ctx.getSource(),
-                                                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"),
-                                                                            IntegerArgumentType.getInteger(ctx, "looting"),
-                                                                            StringArgumentType.getString(ctx, "tag")))
-                                                    )
-                                    )
+                                    .executes(ctx -> dumpEntity(
+                                            ctx.getSource(),
+                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"), ""))
+                            .then(
+                                    Commands.argument("tag", StringArgumentType.string())
+                                            .executes(ctx -> dumpEntity(
+                                                    ctx.getSource(),
+                                                    ResourceLocationArgument.getResourceLocation(ctx, "entity"),
+                                                    StringArgumentType.getString(ctx, "tag")))
+                            )
 
                     );
         }
     }
 
-    private static int learnEntity(CommandSource source, ResourceLocation resourceLocation, int looting, String tag) throws CommandSyntaxException {
+    private static int rollDrops(CommandSource source, ResourceLocation resourceLocation, String tag, int looting) throws CommandSyntaxException {
 
         FakeMob fakeMob;
         if (tag.equalsIgnoreCase(""))
@@ -95,17 +118,16 @@ public class SimulationCommand {
             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
         if (fakeMob.isValid()) {
-            boolean result = MobSimulator.get().learn(new FakeMobKey(fakeMob, looting));
-            if (result)
-                source.sendFeedback(new TranslationTextComponent("commands.woot.learn.ok", resourceLocation.toString(), looting), true);
-            else
-                source.sendFeedback(new TranslationTextComponent("commands.woot.learn.fail", resourceLocation.toString(), looting), true);
+            List<ItemStack> drops = MobSimulator.getInstance().getRolledDrops(new FakeMobKey(fakeMob, looting));
+            source.sendFeedback(new TranslationTextComponent(TAG + "roll",
+                    fakeMob, looting,
+                    drops.stream().map(ItemStack::toString).collect(Collectors.joining(","))), true);
         }
 
         return 0;
     }
 
-    private static int dumpEntity(CommandSource source, ResourceLocation resourceLocation, int looting, String tag) throws CommandSyntaxException {
+    private static int learnEntity(CommandSource source, ResourceLocation resourceLocation, String tag) throws CommandSyntaxException {
 
         FakeMob fakeMob;
         if (tag.equalsIgnoreCase(""))
@@ -114,8 +136,27 @@ public class SimulationCommand {
             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
         if (fakeMob.isValid()) {
-            for (DropSummary dropSummary : DropLibrary.getInstance().getDropSummary(new FakeMobKey(fakeMob, looting)))
-                source.sendFeedback(new TranslationTextComponent("commands.woot.simulation.dump.drop", dropSummary), true);
+            boolean result = ipsis.woot.simulator.MobSimulator.getInstance().learn(fakeMob);
+            if (result)
+                source.sendFeedback(new TranslationTextComponent(TAG + "learn.ok", resourceLocation.toString()), true);
+            else
+                source.sendFeedback(new TranslationTextComponent(TAG + "learn.fail", resourceLocation.toString()), true);
+        }
+
+        return 0;
+    }
+
+    private static int dumpEntity(CommandSource source, ResourceLocation resourceLocation, String tag) throws CommandSyntaxException {
+
+        FakeMob fakeMob;
+        if (tag.equalsIgnoreCase(""))
+            fakeMob = new FakeMob(resourceLocation.toString());
+        else
+            fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
+
+        if (fakeMob.isValid()) {
+            for (SimulatedMobDropSummary summary : ipsis.woot.simulator.MobSimulator.getInstance().getDropSummary(fakeMob))
+                source.sendFeedback(new TranslationTextComponent(TAG + "dump.drop", summary), true);
         }
 
         return 0;
@@ -130,8 +171,12 @@ public class SimulationCommand {
     }
 
      private static int status (CommandSource source) throws CommandSyntaxException {
-        source.sendFeedback(new TranslationTextComponent("commands.woot.pupils",
-                MobSimulator.get().getPupils().stream().map(FakeMobKey::toString).collect(Collectors.joining(","))), true);
+        source.sendFeedback(new TranslationTextComponent(TAG + "status.simulating",
+                ipsis.woot.simulator.MobSimulator.getInstance().getSimulations().stream().map(
+                        FakeMobKey::toString).collect(Collectors.joining(","))), true);
+         source.sendFeedback(new TranslationTextComponent(TAG + "status.waiting",
+                 ipsis.woot.simulator.MobSimulator.getInstance().getWaiting().stream().map(
+                         FakeMobKey::toString).collect(Collectors.joining(","))), true);
 
          return 0;
      }

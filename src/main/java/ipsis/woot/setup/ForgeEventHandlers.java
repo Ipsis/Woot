@@ -9,13 +9,11 @@ import ipsis.woot.mod.ModFiles;
 import ipsis.woot.modules.anvil.AnvilRecipes;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.modules.infuser.InfuserRecipes;
-import ipsis.woot.modules.simulation.DropRegistry;
-import ipsis.woot.modules.simulation.SimulationSetup;
-import ipsis.woot.modules.simulation.library.DropLibrary;
+import ipsis.woot.simulator.MobSimulatorSetup;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
 import ipsis.woot.modules.factory.items.MobShardItem;
-import ipsis.woot.modules.simulation.FakePlayerPool;
-import ipsis.woot.modules.simulation.MobSimulator;
+import ipsis.woot.simulator.spawning.FakePlayerPool;
+import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
@@ -41,8 +39,8 @@ import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import java.io.File;
 import java.util.List;
 
-import static ipsis.woot.modules.simulation.SimulationSetup.TARTARUS_DIMENSION_ID;
-import static ipsis.woot.modules.simulation.SimulationSetup.TARTARUS_DIMENSION_TYPE;
+import static ipsis.woot.simulator.MobSimulatorSetup.TARTARUS_DIMENSION_ID;
+import static ipsis.woot.simulator.MobSimulatorSetup.TARTARUS_DIMENSION_TYPE;
 
 public class ForgeEventHandlers {
 
@@ -70,8 +68,9 @@ public class ForgeEventHandlers {
         List<ItemStack> drops = ItemEntityHelper.convertToItemStacks(event.getDrops());
         FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob(mobEntity), event.getLootingLevel());
         if (fakeMobKey.getMob().isValid()) {
-            DropRegistry.get().learn(fakeMobKey, drops);
-            DropLibrary.getInstance().learnSimulatedDrops(fakeMobKey, drops);
+//            DropRegistry.get().learn(fakeMobKey, drops);
+//            DropLibrary.getInstance().learnSimulatedDrops(fakeMobKey, drops);
+            ipsis.woot.simulator.MobSimulator.getInstance().learnSimulatedDrops(fakeMobKey, drops);
         }
     }
 
@@ -120,7 +119,8 @@ public class ForgeEventHandlers {
                 MultiBlockTracker.get().run(event.world);
             }
         } else {
-            MobSimulator.get().tick(event.world);
+//            MobSimulator.get().tick(event.world);
+            ipsis.woot.simulator.MobSimulator.getInstance().tick(event.world);
         }
     }
 
@@ -142,8 +142,8 @@ public class ForgeEventHandlers {
     public void onServerStop(final FMLServerStoppingEvent event) {
         Woot.setup.getLogger().info("onServerStop");
 //        JsonObject jsonObject = DropRegistry.get().toJson();
-
-        JsonObject jsonObject = DropLibrary.getInstance().toJson();
+//        JsonObject jsonObject = DropLibrary.getInstance().toJson();
+        JsonObject jsonObject = MobSimulator.getInstance().toJson();
         File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         SerializationHelper.writeJsonFile(dropFile, GSON.toJson(jsonObject));
@@ -154,7 +154,7 @@ public class ForgeEventHandlers {
         Woot.setup.getLogger().info("onDimensionRegistry");
         TARTARUS_DIMENSION_TYPE = DimensionManager.registerOrGetDimension(
                 TARTARUS_DIMENSION_ID,
-                SimulationSetup.TARTARUS,
+                MobSimulatorSetup.TARTARUS,
                 null,
                 true);
         DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);

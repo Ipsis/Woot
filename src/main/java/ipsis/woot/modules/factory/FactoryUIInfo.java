@@ -2,10 +2,10 @@ package ipsis.woot.modules.factory;
 
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
-import ipsis.woot.modules.simulation.DropRegistry;
-import ipsis.woot.modules.simulation.MobDrop;
+import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.helper.MathHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -50,15 +50,16 @@ public class FactoryUIInfo {
                     looting = entry.getValue();
             }
 
+            looting = MathHelper.clampLooting(looting);
+
             for (FakeMob fakeMob : setup.getMobs()) {
                 Mob mob = new Mob(ControllerTileEntity.getItemStack(fakeMob));
                 info.mobInfo.add(mob);
                 info.mobs.add(ControllerTileEntity.getItemStack(fakeMob));
-                List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(fakeMob, looting));
-                for (MobDrop mobDrop : mobDrops) {
-                    ItemStack itemStack = mobDrop.getDroppedItem().copy();
-                    float dropChance = mobDrop.getDropChance();
-                    itemStack.setCount((int)(dropChance * 100.0F));
+                List<SimulatedMobDropSummary> simulatedMobDropSummaries = MobSimulator.getInstance().getDropSummary(fakeMob);
+                for (SimulatedMobDropSummary summary : simulatedMobDropSummaries) {
+                    ItemStack itemStack = summary.itemStack.copy();
+                    itemStack.setCount((int)(summary.chanceToDrop[looting] * 100.0F));
                     info.drops.add(itemStack);
                 }
             }

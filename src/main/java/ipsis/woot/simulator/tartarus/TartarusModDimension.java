@@ -1,5 +1,6 @@
-package ipsis.woot.modules.simulation.dimension;
+package ipsis.woot.simulator.tartarus;
 
+import ipsis.woot.simulator.tartarus.TartarusDimension;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;

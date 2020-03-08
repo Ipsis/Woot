@@ -1,8 +1,8 @@
-package ipsis.woot.modules.simulation;
+package ipsis.woot.simulator;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class SimulationConfiguration {
+public class MobSimulatorConfiguration {
 
     public static final String CATEGORY_SIMULATION = "simulation";
 

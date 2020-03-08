@@ -3,7 +3,7 @@ package ipsis.woot.config;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Tier;
-import ipsis.woot.modules.simulation.spawning.SpawnController;
+import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;

@@ -2,15 +2,16 @@
   "itemGroup.woot": "Woot",
 
   # Commands
-  "commands.woot.loot.drops.list": "Entity: {0} Looting: {1}",
-  "commands.woot.loot.drops.none": "No drops found.",
-  "commands.woot.loot.drops.info": "Drop: {0} chance {1}",
-  "commands.woot.loot.learned.summary": "Drop Counts cap:{0} l0:{1} l1:{2} l2:{3} l3:{4}",
-  "commands.woot.learn.ok": "Starting learning Entity: {0} Looting: {1}",
   "commands.woot.pupils": "Simulating %s",
   "commands.woot.give.ok": "Gave %s controller for %s",
   "commands.woot.give.fail": "Invalid mob %s",
+
+  "commands.woot.simulation.learn.ok": "Starting learning Entity: {0}",
+  "commands.woot.simulation.learn.fail": "Failed to start learning Entity: {0}",
+  "commands.woot.simulation.status.simulating": "Simulating {0}",
+  "commands.woot.simulation.status.waiting": "Waiting for cell {0}",
   "commands.woot.simulation.dump.drop": "Drops {0}",
+  "commands.woot.simulation.roll": "{0} Looting {1} dropped {2}",
 
   # Block Names
   "block.woot.factory_a": "Factory A",

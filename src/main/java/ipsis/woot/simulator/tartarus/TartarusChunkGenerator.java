@@ -1,4 +1,4 @@
-package ipsis.woot.modules.simulation.dimension;
+package ipsis.woot.simulator.tartarus;
 
 import ipsis.woot.Woot;
 import net.minecraft.block.BlockState;

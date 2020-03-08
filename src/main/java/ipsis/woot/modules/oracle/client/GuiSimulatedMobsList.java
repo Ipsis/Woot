@@ -1,6 +1,6 @@
 package ipsis.woot.modules.oracle.client;
 
-import ipsis.woot.modules.oracle.network.DropRegistryStatusReply;
+import ipsis.woot.util.FakeMob;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.list.ExtendedList;
 import net.minecraft.entity.EntityType;
@@ -58,9 +58,9 @@ public class GuiSimulatedMobsList extends ExtendedList {
 
     class SimulatedMobEntry extends ExtendedList.AbstractListEntry<SimulatedMobEntry> {
       private final OracleScreen oracleScreen;
-      private DropRegistryStatusReply.SimMob simulatedMob;
+      private FakeMob simulatedMob;
 
-      SimulatedMobEntry(DropRegistryStatusReply.SimMob simulatedMob, OracleScreen oracleScreen) {
+      SimulatedMobEntry(FakeMob simulatedMob, OracleScreen oracleScreen) {
           this.simulatedMob = simulatedMob;
           this.oracleScreen = oracleScreen;
       }
@@ -68,11 +68,11 @@ public class GuiSimulatedMobsList extends ExtendedList {
       @Override
       public void render(int entryIdx, int top, int left, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isMouseOver, float partialTicks) {
           String name = "Unknown Mob";
-          EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(simulatedMob.fakeMob.getResourceLocation());
+          EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(simulatedMob.getResourceLocation());
           if (entityType != null) {
               name = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
-              if (simulatedMob.fakeMob.hasTag())
-                  name = name + " [" + simulatedMob.fakeMob.getTag() + "]";
+              if (simulatedMob.hasTag())
+                  name = name + " [" + simulatedMob.getTag() + "]";
           }
 
           FontRenderer font = this.oracleScreen.getFontRenderer();
@@ -80,13 +80,13 @@ public class GuiSimulatedMobsList extends ExtendedList {
                   left + 3,
                   top + 2,
                   0xFFFFFFFF);
-
+          /*
           if (!simulatedMob.simulationStatus[0] || !simulatedMob.simulationStatus[1] || !simulatedMob.simulationStatus[2] || !simulatedMob.simulationStatus[3]) {
               font.drawString(font.trimStringToWidth("L", listWidth),
                       listWidth - 10,
                       top + 2,
                       0xFFFFFFFF);
-          }
+          } */
       }
 
        @Override
@@ -96,7 +96,7 @@ public class GuiSimulatedMobsList extends ExtendedList {
          return false;
        }
 
-        public DropRegistryStatusReply.SimMob getInfo() {
+        public FakeMob getInfo() {
           return simulatedMob;
        }
    }

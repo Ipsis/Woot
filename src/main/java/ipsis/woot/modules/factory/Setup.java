@@ -5,6 +5,7 @@ import ipsis.woot.modules.factory.blocks.UpgradeTileEntity;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.layout.PatternBlock;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.helper.MathHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,6 +32,10 @@ public class Setup {
     public BlockPos getExportPos() { return exportPos; }
     public BlockPos getImportPos() { return importPos; }
     public BlockPos getCellPos() { return cellPos; }
+    public int getLooting() {
+        int looting = perks.getOrDefault(PerkType.LOOTING, 0);
+        return MathHelper.clampLooting(looting);
+    }
 
     Setup() {}
 

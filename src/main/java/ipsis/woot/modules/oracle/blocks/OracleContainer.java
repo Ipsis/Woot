@@ -1,10 +1,11 @@
 package ipsis.woot.modules.oracle.blocks;
 
 import ipsis.woot.modules.oracle.OracleSetup;
-import ipsis.woot.modules.oracle.network.DropRegistryStatusReply;
+import ipsis.woot.modules.oracle.network.SimulatedMobDropsSummaryReply;
+import ipsis.woot.modules.oracle.network.SimulatedMobsReply;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
-import ipsis.woot.modules.oracle.network.SimulatedMobDropsReply;
+import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -40,8 +41,8 @@ public class OracleContainer extends Container {
     /**
      * Server data sync
      */
-    public List<DropRegistryStatusReply.SimMob> simulatedMobs = null;
-    public List<SimulatedMobDropsReply.SimDrop> simulatedDrops = null;
+    public List<FakeMob> simulatedMobs = null;
+    public List<SimulatedMobDropSummary> simulatedDrops = null;
     public void refreshMobs() {
         NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.DROP_REGISTRY_STATUS,
                 getPos(), ""));
@@ -55,13 +56,11 @@ public class OracleContainer extends Container {
         simulatedDrops = null;
     }
 
-    public int simCount = 0;
-    public void handleDropRegistryStatus(DropRegistryStatusReply msg) {
-        this.simCount = msg.simCount;
+    public void handleSimulatedMobsReply(SimulatedMobsReply msg) {
         this.simulatedMobs = msg.simulatedMobs;
     }
 
-    public void handleSimulatedMobDrops(SimulatedMobDropsReply msg) {
-        this.simulatedDrops = msg.simulatedDrops;
+    public void handleSimulatedMobDropsSummaryReply(SimulatedMobDropsSummaryReply msg) {
+        this.simulatedDrops = msg.drops;
     }
 }

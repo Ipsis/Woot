@@ -1,4 +1,4 @@
-package ipsis.woot.modules.simulation;
+package ipsis.woot.simulator.spawning;
 
 import com.mojang.authlib.GameProfile;
 import ipsis.woot.Woot;

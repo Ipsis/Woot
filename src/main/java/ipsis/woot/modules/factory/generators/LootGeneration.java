@@ -4,11 +4,9 @@ import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
-import ipsis.woot.modules.simulation.DropRegistry;
-import ipsis.woot.modules.simulation.MobDrop;
+import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
-import ipsis.woot.util.helper.MobDropHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -48,18 +46,18 @@ public class LootGeneration {
             itemHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
         }
 
+        int looting = setup.getLooting();
         for (FakeMob mob : setup.getMobs()) {
             int mobCount = Config.OVERRIDE.getInteger(mob, ConfigOverride.OverrideKey.MASS_COUNT);
             LOGGER.debug("generate: {} * {}", mob, mobCount);
-            List<MobDrop> mobDrops = DropRegistry.get().getMobDrops(new FakeMobKey(mob, 0));
             for (int i = 0; i < mobCount; i++) {
-                List<ItemStack> drops = MobDropHelper.getDrops(mobDrops);
+                List<ItemStack> rolledDrops = MobSimulator.getInstance().getRolledDrops(new FakeMobKey(mob, looting));
                 Iterator<LazyOptional<IItemHandler>> iter = itemHandlers.iterator();
                 while (iter.hasNext()) {
                     LazyOptional<IItemHandler> hdlr = iter.next();
                     hdlr.ifPresent(h -> {
                         LOGGER.debug("generate: try drop into {} ", h);
-                        for (ItemStack itemStack : drops) {
+                        for (ItemStack itemStack : rolledDrops) {
                             if (itemStack.isEmpty())
                                 continue;
 

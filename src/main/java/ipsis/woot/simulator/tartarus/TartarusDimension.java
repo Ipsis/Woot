@@ -1,5 +1,6 @@
-package ipsis.woot.modules.simulation.dimension;
+package ipsis.woot.simulator.tartarus;
 
+import ipsis.woot.simulator.tartarus.TartarusChunkGenerator;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;

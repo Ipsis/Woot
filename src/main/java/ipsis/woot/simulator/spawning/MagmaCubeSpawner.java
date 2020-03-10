@@ -1,4 +1,4 @@
-package ipsis.woot.modules.simulation.spawning;
+package ipsis.woot.simulator.spawning;
 
 import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;

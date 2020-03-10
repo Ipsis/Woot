@@ -4,7 +4,7 @@ import ipsis.woot.config.*;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Setup;
-import ipsis.woot.modules.simulation.spawning.SpawnController;
+import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.world.World;
 

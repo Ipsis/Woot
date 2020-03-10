@@ -1,8 +1,7 @@
-package ipsis.woot.modules.simulation.spawning;
+package ipsis.woot.simulator.spawning;
 
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
-import ipsis.woot.modules.simulation.FakePlayerPool;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;

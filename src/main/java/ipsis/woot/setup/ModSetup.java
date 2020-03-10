@@ -11,13 +11,13 @@ import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.oracle.OracleSetup;
-import ipsis.woot.modules.simulation.CustomDropsLoader;
+import ipsis.woot.simulator.CustomDropsLoader;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.layout.PatternRepository;
-import ipsis.woot.modules.simulation.DropRegistry;
 import ipsis.woot.mod.ModFiles;
+import ipsis.woot.simulator.MobSimulator;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -63,8 +63,7 @@ public class ModSetup {
         PatternRepository.get().load();
         OverrideLoader.loadFromConfig();
         PolicyRegistry.get().loadFromConfig();
-        DropRegistry.get().fromJson();
-        DropRegistry.get().primeAllMobLearning();
+        MobSimulator.getInstance().fromJson();
         setupPlugins();
         CustomDropsLoader.load();
     }

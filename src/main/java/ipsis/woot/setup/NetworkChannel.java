@@ -3,9 +3,8 @@ package ipsis.woot.setup;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
-import ipsis.woot.modules.oracle.network.DropRegistryStatusReply;
-import ipsis.woot.modules.oracle.network.SimulatedMobDropsReply;
-import ipsis.woot.util.FluidStackPacketHandler;
+import ipsis.woot.modules.oracle.network.SimulatedMobDropsSummaryReply;
+import ipsis.woot.modules.oracle.network.SimulatedMobsReply;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -39,13 +38,13 @@ public class NetworkChannel {
 
         channel.registerMessage(
                 3,
-                DropRegistryStatusReply.class,
-                DropRegistryStatusReply::toBytes, DropRegistryStatusReply::fromBytes, DropRegistryStatusReply::handle);
+                SimulatedMobsReply.class,
+                SimulatedMobsReply::toBytes, SimulatedMobsReply::fromBytes, SimulatedMobsReply::handle);
 
         channel.registerMessage(
                 4,
-                SimulatedMobDropsReply.class,
-                SimulatedMobDropsReply::toBytes, SimulatedMobDropsReply::fromBytes, SimulatedMobDropsReply::handle);
+                SimulatedMobDropsSummaryReply.class,
+                SimulatedMobDropsSummaryReply::toBytes, SimulatedMobDropsSummaryReply::fromBytes, SimulatedMobDropsSummaryReply::handle);
 
         channel.registerMessage(
                 5,

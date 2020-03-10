@@ -53,8 +53,33 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
         boolean showAll = tileEntityIn.getLevel() == -1;
         int validY = showAll ? 0 : tileEntityIn.getYForLevel();
+        BlockPos origin = tileEntityIn.getPos();
 
         matrixStack.push();
+        {
+            matrixStack.translate(0.5F, 0.5F, 0.5F);
+            for (PatternBlock block : tileEntityIn.getAbsolutePattern().getBlocks()) {
+                if (!showAll && block.getBlockPos().getY() != validY)
+                    continue;
+
+                matrixStack.push();
+                {
+                    matrixStack.translate(
+                            (origin.getX() - block.getBlockPos().getX()) * -1.0F,
+                            (origin.getY() - block.getBlockPos().getY()) * -1.0F,
+                            (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
+
+                    TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryComponent());
+                    if (textureAtlasSprite != null) {
+                        RenderHelper.drawTexturedCube(textureAtlasSprite, LayoutConfiguration.RENDER_SIZE.get().floatValue());
+                        RenderHelper.drawShadedCube(LayoutConfiguration.RENDER_SIZE.get().floatValue());
+                    }
+                }
+                matrixStack.pop();;
+            }
+        }
+        matrixStack.pop();
+        /*
         GlStateManager.pushLightingAttributes();
         {
             GlStateManager.pushMatrix();
@@ -91,6 +116,6 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
             GlStateManager.popMatrix();
         }
         GlStateManager.popAttributes();
-        matrixStack.pop();
+        matrixStack.pop(); */
     }
 }

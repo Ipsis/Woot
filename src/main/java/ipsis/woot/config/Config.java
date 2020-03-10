@@ -6,7 +6,7 @@ import ipsis.woot.modules.anvil.AnvilConfiguration;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.layout.LayoutConfiguration;
-import ipsis.woot.modules.simulation.SimulationConfiguration;
+import ipsis.woot.simulator.MobSimulatorConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.policy.PolicyConfiguration;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -31,7 +31,7 @@ public class Config {
         FactoryConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         InfuserConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         LayoutConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
-        SimulationConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
+        MobSimulatorConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         SqueezerConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         PolicyConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
 

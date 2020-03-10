@@ -5,7 +5,7 @@ import ipsis.woot.modules.factory.calculators.CalculatorVersion1;
 import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.multiblock.MultiBlockMaster;
-import ipsis.woot.modules.simulation.DropRegistry;
+import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -91,7 +91,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
            if (layout.hasChanged()) {
                setup = Setup.createFromLayout(world, layout);
 
-               setup.getMobs().forEach(m -> DropRegistry.get().tryLearning(m));
+               setup.getMobs().forEach(m -> MobSimulator.getInstance().learn(m));
                recipe = CalculatorVersion1.calculate(setup, world);
 
                // Restore the progress on load

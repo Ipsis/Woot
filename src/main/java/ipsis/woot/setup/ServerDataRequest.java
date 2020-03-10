@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
 import ipsis.woot.modules.oracle.blocks.OracleTileEntity;
-import ipsis.woot.modules.oracle.network.DropRegistryStatusReply;
-import ipsis.woot.modules.oracle.network.SimulatedMobDropsReply;
+import ipsis.woot.modules.oracle.network.SimulatedMobDropsSummaryReply;
+import ipsis.woot.modules.oracle.network.SimulatedMobsReply;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -50,14 +50,14 @@ public class ServerDataRequest {
                 TileEntity te = serverPlayerEntity.world.getTileEntity(pos);
                 if (requestType == Type.DROP_REGISTRY_STATUS) {
                     if (te instanceof OracleTileEntity) {
-                        NetworkChannel.channel.sendTo(new DropRegistryStatusReply(),
+                        NetworkChannel.channel.sendTo(new SimulatedMobsReply(),
                                 serverPlayerEntity.connection.netManager,
                                 NetworkDirection.PLAY_TO_CLIENT);
                         ctx.get().setPacketHandled(true);
                     }
                 } else if (requestType == Type.SIMULATED_MOB_DROPS) {
                     if (te instanceof OracleTileEntity) {
-                        NetworkChannel.channel.sendTo(new SimulatedMobDropsReply(s),
+                        NetworkChannel.channel.sendTo(SimulatedMobDropsSummaryReply.fromMob(s),
                                 serverPlayerEntity.connection.netManager,
                                 NetworkDirection.PLAY_TO_CLIENT);
                         ctx.get().setPacketHandled(true);

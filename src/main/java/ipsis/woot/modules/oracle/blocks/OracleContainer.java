@@ -15,6 +15,7 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OracleContainer extends Container {
@@ -41,26 +42,32 @@ public class OracleContainer extends Container {
     /**
      * Server data sync
      */
-    public List<FakeMob> simulatedMobs = null;
-    public List<SimulatedMobDropSummary> simulatedDrops = null;
+    public List<FakeMob> simulatedMobs = new ArrayList<>();
+    public List<SimulatedMobDropSummary> simulatedDrops = new ArrayList<>();
     public void refreshMobs() {
-        NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.DROP_REGISTRY_STATUS,
-                getPos(), ""));
-        simulatedMobs = null;
-        simulatedDrops = null;
+        NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.DROP_REGISTRY_STATUS, getPos(), ""));
+        simulatedMobs.clear();
+        simulatedDrops.clear();
     }
 
-    public void refreshDrops(FakeMob fakeMob) {
-        NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.SIMULATED_MOB_DROPS,
-                getPos(), fakeMob.getName()));
-        simulatedDrops = null;
+    public void refreshDrops(int index) {
+        if (simulatedMobs.size() > index) {
+            NetworkChannel.channel.sendToServer(new ServerDataRequest(ServerDataRequest.Type.SIMULATED_MOB_DROPS,
+                    getPos(), simulatedMobs.get(index).getName()));
+        }
+        simulatedDrops.clear();
     }
+
 
     public void handleSimulatedMobsReply(SimulatedMobsReply msg) {
-        this.simulatedMobs = msg.simulatedMobs;
+        simulatedMobs.clear();
+        simulatedMobs.addAll(msg.simulatedMobs);
+        if (!simulatedMobs.isEmpty())
+            refreshDrops(0);
     }
 
     public void handleSimulatedMobDropsSummaryReply(SimulatedMobDropsSummaryReply msg) {
-        this.simulatedDrops = msg.drops;
+        simulatedDrops.clear();
+        simulatedDrops.addAll(msg.drops);
     }
 }

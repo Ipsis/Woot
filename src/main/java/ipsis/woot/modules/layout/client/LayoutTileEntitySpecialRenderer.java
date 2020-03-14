@@ -54,13 +54,6 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         textureRender(layoutTileEntity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
     }
 
-    TextureAtlasSprite getTextureAtlasSprite(FactoryComponent component) {
-        String path = "block/" + component.getName();
-        if (component == FactoryComponent.CELL)
-            path += "_1";
-        return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(new ResourceLocation(Woot.MODID, path));
-    }
-
     void textureRender(LayoutTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         boolean showAll = tileEntityIn.getLevel() == -1;

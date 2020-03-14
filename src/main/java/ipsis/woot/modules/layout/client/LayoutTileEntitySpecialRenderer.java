@@ -10,6 +10,7 @@ import ipsis.woot.modules.factory.blocks.HeartBlock;
 import ipsis.woot.modules.layout.LayoutConfiguration;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
 import ipsis.woot.modules.factory.layout.PatternBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -21,7 +22,9 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.EndGatewayTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,7 +51,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         if (layoutTileEntity.getAbsolutePattern() == null)
             layoutTileEntity.refresh();
 
-        textureRender(layoutTileEntity, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+        textureRender(layoutTileEntity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
     }
 
     TextureAtlasSprite getTextureAtlasSprite(FactoryComponent component) {
@@ -58,7 +61,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(new ResourceLocation(Woot.MODID, path));
     }
 
-    void textureRender(LayoutTileEntity tileEntityIn, MatrixStack matrixStack, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    void textureRender(LayoutTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         boolean showAll = tileEntityIn.getLevel() == -1;
         int validY = showAll ? 0 : tileEntityIn.getYForLevel();
@@ -78,8 +81,12 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
                             (origin.getY() - block.getBlockPos().getY()) * -1.0F,
                             (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
 
-                    Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(
-                            block.getFactoryComponent().getDefaultBlockState(),
+
+                    BlockState blockState = block.getFactoryComponent().getDefaultBlockState();
+                    if (block.getFactoryComponent() == FactoryComponent.HEART)
+                        blockState = FactorySetup.HEART_BLOCK.get().getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, tileEntityIn.getFacing());
+
+                    Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(blockState,
                             matrixStack, bufferIn, 0x00f000f0, combinedOverlayIn, EmptyModelData.INSTANCE);
                 }
                 matrixStack.pop();;

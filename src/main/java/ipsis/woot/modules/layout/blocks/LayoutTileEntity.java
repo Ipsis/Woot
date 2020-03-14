@@ -29,6 +29,8 @@ public class LayoutTileEntity extends TileEntity {
         refresh();
     }
 
+    public Direction getFacing() { return facing; }
+
     public int getLevel() { return level; }
     public int setNextLevel() {
         level++;

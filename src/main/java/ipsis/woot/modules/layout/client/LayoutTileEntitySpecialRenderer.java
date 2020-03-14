@@ -2,22 +2,31 @@ package ipsis.woot.modules.layout.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
+import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.factory.blocks.HeartBlock;
 import ipsis.woot.modules.layout.LayoutConfiguration;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
 import ipsis.woot.modules.factory.layout.PatternBlock;
-import ipsis.woot.util.helper.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.EndGatewayTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.data.EmptyModelData;
 import org.lwjgl.opengl.GL11;
 
 @OnlyIn(Dist.CLIENT)
@@ -34,12 +43,12 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
     }
 
     @Override
-    public void render(LayoutTileEntity layoutTileEntity, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
+    public void render(LayoutTileEntity layoutTileEntity, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         if (layoutTileEntity.getAbsolutePattern() == null)
             layoutTileEntity.refresh();
 
-        textureRender(layoutTileEntity, matrixStack);
+        textureRender(layoutTileEntity, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
     }
 
     TextureAtlasSprite getTextureAtlasSprite(FactoryComponent component) {
@@ -49,7 +58,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         return Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(new ResourceLocation(Woot.MODID, path));
     }
 
-    void textureRender(LayoutTileEntity tileEntityIn, MatrixStack matrixStack) {
+    void textureRender(LayoutTileEntity tileEntityIn, MatrixStack matrixStack, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         boolean showAll = tileEntityIn.getLevel() == -1;
         int validY = showAll ? 0 : tileEntityIn.getYForLevel();
@@ -57,7 +66,8 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
         matrixStack.push();
         {
-            matrixStack.translate(0.5F, 0.5F, 0.5F);
+            matrixStack.translate(0.0F, 0.0F, 0.0F);
+            RenderHelper.enableStandardItemLighting();
             for (PatternBlock block : tileEntityIn.getAbsolutePattern().getBlocks()) {
                 if (!showAll && block.getBlockPos().getY() != validY)
                     continue;
@@ -69,53 +79,13 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
                             (origin.getY() - block.getBlockPos().getY()) * -1.0F,
                             (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
 
-                    TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryComponent());
-                    if (textureAtlasSprite != null) {
-                        RenderHelper.drawTexturedCube(textureAtlasSprite, LayoutConfiguration.RENDER_SIZE.get().floatValue());
-                        RenderHelper.drawShadedCube(LayoutConfiguration.RENDER_SIZE.get().floatValue());
-                    }
+                    Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(
+                            block.getFactoryComponent().getDefaultBlockState(),
+                            matrixStack, bufferIn, combinedLightIn, combinedOverlayIn, EmptyModelData.INSTANCE);
                 }
                 matrixStack.pop();;
             }
         }
         matrixStack.pop();
-        /*
-        GlStateManager.pushLightingAttributes();
-        {
-            GlStateManager.pushMatrix();
-            //setLightmapDisabled(true);
-            {
-                GlStateManager.translated(0.5F, 0.5F, 0.5F);
-                GlStateManager.enableBlend();
-                GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                GlStateManager.color4f(1F, 1F, 1F, LayoutConfiguration.RENDER_OPACITY.get().floatValue());
-
-                BlockPos origin = tileEntityIn.getPos();
-                for (PatternBlock block : tileEntityIn.getAbsolutePattern().getBlocks()) {
-
-                    if (!showAll && block.getBlockPos().getY() != validY)
-                        continue;
-
-                    GlStateManager.pushMatrix();
-                    {
-                        GlStateManager.translated(
-                                (origin.getX() - block.getBlockPos().getX()) * -1.0F,
-                                (origin.getY() - block.getBlockPos().getY()) * -1.0F,
-                                (origin.getZ() - block.getBlockPos().getZ()) * -1.0F);
-
-                        TextureAtlasSprite textureAtlasSprite = getTextureAtlasSprite(block.getFactoryComponent());
-                        if (textureAtlasSprite != null)
-                            RenderHelper.drawTexturedCube(textureAtlasSprite, LayoutConfiguration.RENDER_SIZE.get().floatValue());
-                    }
-                    GlStateManager.popMatrix();
-                }
-
-                GlStateManager.disableBlend();
-            }
-            //setLightmapDisabled(false);
-            GlStateManager.popMatrix();
-        }
-        GlStateManager.popAttributes();
-        matrixStack.pop(); */
     }
 }

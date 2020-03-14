@@ -97,7 +97,8 @@ public class MobSimulator {
         return library.toJson();
     }
 
-    public void fromJson() {
+    public void fromJson(JsonObject jsonObject) {
+        library.fromJson(jsonObject);
     }
 
     /**

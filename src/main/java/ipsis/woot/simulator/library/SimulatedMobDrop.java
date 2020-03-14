@@ -2,14 +2,18 @@ package ipsis.woot.simulator.library;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import ipsis.woot.Woot;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.helper.JsonHelper;
 import ipsis.woot.util.helper.MathHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JSONUtils;
+import net.minecraftforge.common.crafting.CraftingHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,6 +169,37 @@ public class SimulatedMobDrop {
             }
         }
         return jsonObject;
+    }
+
+    public static @Nullable SimulatedMobDrop fromJson(SimulatedMob simulatedMob, JsonObject jsonObject) {
+        ItemStack itemStack;
+        try {
+            itemStack = CraftingHelper.getItemStack(jsonObject.getAsJsonObject(TAG_DROPPED_ITEM), false);
+        } catch (JsonSyntaxException e) {
+            Woot.setup.getLogger().error("Failed to parse itemstack");
+            return null;
+        }
+
+        JsonArray dropsArray = JSONUtils.getJsonArray(jsonObject, TAG_SIM_KILLS);
+        if (dropsArray.size() != 4)
+            throw new JsonSyntaxException("Simulated count array must be of size 4");
+
+        SimulatedMobDrop simulatedMobDrop = new SimulatedMobDrop(itemStack, simulatedMob);
+        for (int i = 0; i < 4; i++)
+            simulatedMobDrop.simulatedDropCount[i] = dropsArray.get(i).getAsInt();
+
+        for (int i = 0; i < 4; i++) {
+            JsonArray sizesArray = JSONUtils.getJsonArray(jsonObject, TAG_STACK_SIZES[i]);
+            if (sizesArray.size() > 0 && sizesArray.size() % 2 == 0) {
+                for (int j = 0; j < sizesArray.size() / 2; j += 2) {
+                    int size = sizesArray.get(j).getAsInt();
+                    int count = sizesArray.get(j + 1).getAsInt();
+                    simulatedMobDrop.simulatedStackSize.get(i).put(size, count);
+                }
+            }
+        }
+
+        return simulatedMobDrop;
     }
 
 }

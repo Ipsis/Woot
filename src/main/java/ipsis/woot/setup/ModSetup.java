@@ -1,5 +1,8 @@
 package ipsis.woot.setup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.compat.top.WootTopPlugin;
 import ipsis.woot.config.OverrideLoader;
@@ -20,11 +23,15 @@ import ipsis.woot.mod.ModFiles;
 import ipsis.woot.simulator.MobSimulator;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JSONUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.io.FileReader;
 
 public class ModSetup {
 
@@ -63,7 +70,16 @@ public class ModSetup {
         PatternRepository.get().load();
         OverrideLoader.loadFromConfig();
         PolicyRegistry.get().loadFromConfig();
-        MobSimulator.getInstance().fromJson();
+
+        File dropFile = ModFiles.INSTANCE.getLootFile();
+        Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        try {
+            JsonObject jsonObject = JSONUtils.fromJson(GSON, new FileReader(dropFile), JsonObject.class);
+            MobSimulator.getInstance().fromJson(jsonObject);
+        } catch (Exception exception) {
+            Woot.setup.getLogger().error("Failed to load loot file {}", dropFile.getAbsolutePath());
+            exception.printStackTrace();
+        }
         setupPlugins();
         CustomDropsLoader.load();
     }

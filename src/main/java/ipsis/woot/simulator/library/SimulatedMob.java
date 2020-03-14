@@ -1,7 +1,11 @@
 package ipsis.woot.simulator.library;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.mojang.realmsclient.util.JsonUtils;
+import ipsis.woot.Woot;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
@@ -9,8 +13,10 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.MathHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.JSONUtils;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +33,8 @@ public class SimulatedMob {
         simulatedKills = new int[]{0, 0, 0, 0};
         simulatedMobDrops = new ArrayList<>();
     }
+
+    public FakeMob getFakeMob() { return fakeMob; }
 
     private @Nonnull SimulatedMobDrop getOrCreateSimulatedMobDrop(@Nonnull ItemStack itemStack) {
         SimulatedMobDrop simulatedMobDrop = null;
@@ -116,6 +124,41 @@ public class SimulatedMob {
             jsonObject.add(TAG_DROPS, dropsArray);
         }
         return jsonObject;
+    }
+
+    public static @Nullable SimulatedMob fromJson(JsonObject jsonObject) {
+        String mob = JSONUtils.getString(jsonObject, TAG_MOB);
+        FakeMob fakeMob = new FakeMob(mob);
+        if (!fakeMob.isValid()) {
+            Woot.setup.getLogger().info("SimulatedMob:fromJson invalid mob {}", mob);
+            return null;
+        }
+
+        if (!FakeMob.isInEntityList(fakeMob)) {
+            Woot.setup.getLogger().info("SimulatedMob:fromJson mob not in entity list {}", mob);
+            return null;
+        }
+
+        JsonArray killsArray = JSONUtils.getJsonArray(jsonObject, TAG_SIM_KILLS);
+        if (killsArray.size() != 4)
+            throw new JsonSyntaxException("Simulated kills array must be of size 4");
+
+        SimulatedMob simulatedMob = new SimulatedMob(fakeMob);
+        for (int i = 0; i < 4; i++)
+            simulatedMob.simulatedKills[i] = killsArray.get(i).getAsInt();
+
+        for (JsonElement jsonElement : JSONUtils.getJsonArray(jsonObject, TAG_DROPS)) {
+            if (jsonElement == null || !jsonElement.isJsonObject())
+                throw new JsonSyntaxException("Simulated drop must be an object");
+
+            SimulatedMobDrop simulatedMobDrop = SimulatedMobDrop.fromJson(simulatedMob, (JsonObject)jsonElement);
+            if (simulatedMobDrop != null)
+                simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+
+        }
+
+
+        return simulatedMob;
     }
 
 }

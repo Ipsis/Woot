@@ -68,8 +68,6 @@ public class ForgeEventHandlers {
         List<ItemStack> drops = ItemEntityHelper.convertToItemStacks(event.getDrops());
         FakeMobKey fakeMobKey = new FakeMobKey(new FakeMob(mobEntity), event.getLootingLevel());
         if (fakeMobKey.getMob().isValid()) {
-//            DropRegistry.get().learn(fakeMobKey, drops);
-//            DropLibrary.getInstance().learnSimulatedDrops(fakeMobKey, drops);
             ipsis.woot.simulator.MobSimulator.getInstance().learnSimulatedDrops(fakeMobKey, drops);
         }
     }
@@ -119,7 +117,6 @@ public class ForgeEventHandlers {
                 MultiBlockTracker.get().run(event.world);
             }
         } else {
-//            MobSimulator.get().tick(event.world);
             ipsis.woot.simulator.MobSimulator.getInstance().tick(event.world);
         }
     }
@@ -141,8 +138,6 @@ public class ForgeEventHandlers {
     @SubscribeEvent
     public void onServerStop(final FMLServerStoppingEvent event) {
         Woot.setup.getLogger().info("onServerStop");
-//        JsonObject jsonObject = DropRegistry.get().toJson();
-//        JsonObject jsonObject = DropLibrary.getInstance().toJson();
         JsonObject jsonObject = MobSimulator.getInstance().toJson();
         File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

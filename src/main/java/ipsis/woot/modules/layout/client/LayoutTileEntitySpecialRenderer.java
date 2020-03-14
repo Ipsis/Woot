@@ -67,7 +67,6 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         matrixStack.push();
         {
             matrixStack.translate(0.0F, 0.0F, 0.0F);
-            RenderHelper.enableStandardItemLighting();
             for (PatternBlock block : tileEntityIn.getAbsolutePattern().getBlocks()) {
                 if (!showAll && block.getBlockPos().getY() != validY)
                     continue;
@@ -81,7 +80,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
                     Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(
                             block.getFactoryComponent().getDefaultBlockState(),
-                            matrixStack, bufferIn, combinedLightIn, combinedOverlayIn, EmptyModelData.INSTANCE);
+                            matrixStack, bufferIn, 0x00f000f0, combinedOverlayIn, EmptyModelData.INSTANCE);
                 }
                 matrixStack.pop();;
             }

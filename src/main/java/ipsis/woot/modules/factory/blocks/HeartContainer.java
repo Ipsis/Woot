@@ -109,13 +109,11 @@ public class HeartContainer extends WootContainer {
         addIntegerListener(new IntReferenceHolder() {
             @Override
             public int get() {
-                Woot.setup.getLogger().info("getClientProgress: {}", tileEntity.getClientProgress());
                 return tileEntity.getClientProgress();
             }
 
             @Override
             public void set(int i) {
-                Woot.setup.getLogger().info("setClientProgress: {}", i);
                 tileEntity.setClientProgress(i);
             }
         });

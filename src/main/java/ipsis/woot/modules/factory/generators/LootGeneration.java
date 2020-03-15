@@ -48,7 +48,7 @@ public class LootGeneration {
 
         int looting = setup.getLooting();
         for (FakeMob mob : setup.getMobs()) {
-            int mobCount = Config.OVERRIDE.getInteger(mob, ConfigOverride.OverrideKey.MASS_COUNT);
+            int mobCount = Config.OVERRIDE.getIntegerOrDefault(mob, ConfigOverride.OverrideKey.MASS_COUNT);
             LOGGER.debug("generate: {} * {}", mob, mobCount);
             for (int i = 0; i < mobCount; i++) {
                 List<ItemStack> rolledDrops = MobSimulator.getInstance().getRolledDrops(new FakeMobKey(mob, looting));

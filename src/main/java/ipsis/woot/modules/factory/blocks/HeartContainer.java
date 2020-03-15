@@ -52,49 +52,6 @@ public class HeartContainer extends WootContainer {
                 playerIn, FactorySetup.HEART_BLOCK.get());
     }
 
-    /**
-     * Sync data - short only
-     */
-    /*
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void updateProgressBar(int id, int data) {
-        if (!(tileEntity instanceof HeartTileEntity))
-            return;
-        HeartTileEntity heartTileEntity = (HeartTileEntity)tileEntity;
-
-        if (id == 0)
-            heartTileEntity.setClientProgress(data);
-
-    }
-
-    @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-
-        if (!(tileEntity instanceof HeartTileEntity))
-            return;
-
-        HeartTileEntity heartTileEntity = (HeartTileEntity)tileEntity;
-
-        try {
-            List<IContainerListener> iContainerListeners =
-                    (List<IContainerListener>)ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
-
-            for (IContainerListener l : iContainerListeners) {
-                ServerPlayerEntity playerEntity = (ServerPlayerEntity) l;
-                if (heartTileEntity.consumedUnits != heartTileEntity.getClientProgress()) {
-                    playerEntity.sendWindowProperty(this, 0, heartTileEntity.consumedUnits);
-                }
-                //NetworkChannel.channel.send(playerEntity, new FixedWindowPropertyPacket(windowId, 1, 65535));
-            }
-
-            heartTileEntity.setClientProgress(heartTileEntity.consumedUnits);
-        } catch (Throwable e) {
-            Woot.setup.getLogger().error("Reflection of container listener failed");
-        }
-    } */
-
     public void handleUIInfo(FactoryUIInfo factoryUIInfo) {
         // Static data values
         tileEntity.setFromUIInfo(factoryUIInfo);

@@ -9,6 +9,7 @@ import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
+import ipsis.woot.util.WootContainerScreen;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 
 @OnlyIn(Dist.CLIENT)
-public class HeartScreen extends ContainerScreen<HeartContainer> {
+public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
     private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/heart.png");
 
@@ -217,6 +218,12 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
+
+        /*
+        renderFluidTank(226,8,242, 92,
+                container.getTileEntity().getConatus(),
+                FactoryConfiguration.CELL_1_CAPACITY.get(),
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getConatus())); */
     }
 
     class StackElement {

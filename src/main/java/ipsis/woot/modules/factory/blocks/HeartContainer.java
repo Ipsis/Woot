@@ -3,6 +3,7 @@ package ipsis.woot.modules.factory.blocks;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.FactoryUIInfo;
+import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -10,6 +11,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,13 +20,14 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.List;
 
-public class HeartContainer extends Container {
+public class HeartContainer extends WootContainer {
 
-    private TileEntity tileEntity;
+    private HeartTileEntity tileEntity;
 
     public HeartContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(FactorySetup.HEART_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = world.getTileEntity(pos);
+        tileEntity = (HeartTileEntity)world.getTileEntity(pos);
+        addListeners();
 
         /**
          * There is no player inventory as it is display only
@@ -36,16 +39,11 @@ public class HeartContainer extends Container {
     }
 
     public FactoryUIInfo getFactoryUIInfo() {
-        if (tileEntity instanceof HeartTileEntity)
-            return ((HeartTileEntity)tileEntity).factoryUIInfo;
-        return null;
+        return tileEntity.factoryUIInfo;
     }
 
     public int getProgress() {
-        int progress = 0;
-        if (tileEntity instanceof HeartTileEntity)
-            progress = (int)((100.0F / ((HeartTileEntity) tileEntity).factoryUIInfo.recipeTicks * ((HeartTileEntity) tileEntity).getClientProgress()));
-        return progress;
+        return (int)((100.0F / tileEntity.factoryUIInfo.recipeTicks * tileEntity.getClientProgress()));
     }
 
     @Override
@@ -57,6 +55,7 @@ public class HeartContainer extends Container {
     /**
      * Sync data - short only
      */
+    /*
     @OnlyIn(Dist.CLIENT)
     @Override
     public void updateProgressBar(int id, int data) {
@@ -94,10 +93,31 @@ public class HeartContainer extends Container {
         } catch (Throwable e) {
             Woot.setup.getLogger().error("Reflection of container listener failed");
         }
-    }
+    } */
 
     public void handleUIInfo(FactoryUIInfo factoryUIInfo) {
         // Static data values
-        ((HeartTileEntity)tileEntity).setFromUIInfo(factoryUIInfo);
+        tileEntity.setFromUIInfo(factoryUIInfo);
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+    }
+
+    private void addListeners() {
+        addIntegerListener(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                Woot.setup.getLogger().info("getClientProgress: {}", tileEntity.getClientProgress());
+                return tileEntity.getClientProgress();
+            }
+
+            @Override
+            public void set(int i) {
+                Woot.setup.getLogger().info("setClientProgress: {}", i);
+                tileEntity.setClientProgress(i);
+            }
+        });
     }
 }

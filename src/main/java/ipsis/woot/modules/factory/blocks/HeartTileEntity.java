@@ -277,9 +277,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     /**
      * Client sync data
      */
-    private int clientProgress = -1;
-    public int getClientProgress() { return clientProgress; }
-    public void setClientProgress(int clientProgress) { this.clientProgress = clientProgress; }
+    public int getClientProgress() { return consumedUnits; }
+    public void setClientProgress(int clientProgress) { this.consumedUnits = clientProgress; }
     public FactoryUIInfo createFactoryUIInfo() {
         return FactoryUIInfo.create(setup, recipe);
     }

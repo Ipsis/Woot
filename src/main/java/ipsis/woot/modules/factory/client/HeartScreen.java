@@ -4,10 +4,12 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryUIInfo;
 import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderHelper;
@@ -142,6 +144,16 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                 idx = (idx + 1) % stackElements.size();
             }
 
+            if (factoryUIInfo.factoryTier != Tier.TIER_1) {
+                for (int i = 0; i < 4; i++) {
+                    mobElements.get(i).unlock();
+                    upgradeElements.get(i).unlock();
+                }
+            } else {
+                mobElements.get(0).unlock();
+                upgradeElements.get(0).unlock();
+            }
+
             idx = 0;
             for (FactoryUIInfo.Mob mob : factoryUIInfo.mobInfo) {
                 List<String> tooltip = getTooltipFromItem(mob.controller);
@@ -156,6 +168,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                         tooltip.add(fluidStack.getAmount() + "mb " + fluidStack.toString());
                 }
                 mobElements.get(idx).addDrop(mob.controller, tooltip);
+                mobElements.get(idx).unlock();
                 idx++;
             }
 
@@ -164,6 +177,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
                 ItemStack itemStack = PerkItem.getItemStack(upgrade);
                 List<String> tooltip = getTooltipFromItem(itemStack);
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);
+                upgradeElements.get(idx).unlock();
                 idx = (idx + 1) % upgradeElements.size();
             }
             sync = true;
@@ -177,7 +191,7 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
         font.drawString("Mobs", MOBS_X, MOBS_Y - 10, TEXT_COLOR);
         font.drawString("Upgrades", UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
-        font.drawString("Drops:", DROPS_X, DROPS_Y - 10, TEXT_COLOR);
+        font.drawString("Loot Pool", DROPS_X, DROPS_Y - 10, TEXT_COLOR);
 
         mobElements.forEach(e -> e.drawForeground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(mouseX, mouseY));
@@ -228,27 +242,27 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
             tooltips.add(tooltip);
         }
 
+        public void unlock() { isLocked = false; }
+
         public void cycle() {
             if (!itemStacks.isEmpty())
                 idx = (idx + 1) % itemStacks.size();
         }
 
         public void drawBackground(int mouseX, int mouseY) {
-            if (itemStacks.isEmpty())
+            if (isLocked)
                 return;
 
-            if (isLocked) {
+            if (itemStacks.isEmpty())
                 return;
-            }
         }
 
         public void drawTooltip(int mouseX, int mouseY)  {
+            if (isLocked)
+                return;
+
             if (itemStacks.isEmpty())
                     return;
-
-            if (isLocked) {
-                return;
-            }
 
             ItemStack itemStack = itemStacks.get(idx);
             List<String> tooltip = tooltips.get(idx);
@@ -263,12 +277,13 @@ public class HeartScreen extends ContainerScreen<HeartContainer> {
 
         public void drawForeground(int mouseX, int mouseY) {
 
-            if (itemStacks.isEmpty())
-                return;
-
             if (isLocked) {
+                fill(x - 1, y - 1, x - 1 + 18, y - 1 + 18, -2130706433);
                 return;
             }
+
+            if (itemStacks.isEmpty())
+                return;
 
             ItemStack itemStack = itemStacks.get(idx);
             setBlitOffset(100);

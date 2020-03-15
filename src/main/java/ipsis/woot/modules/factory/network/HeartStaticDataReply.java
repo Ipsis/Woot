@@ -3,6 +3,7 @@ package ipsis.woot.modules.factory.network;
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.factory.FactoryUIInfo;
 import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
@@ -28,6 +29,7 @@ public class HeartStaticDataReply {
 
     public static HeartStaticDataReply fromBytes(ByteBuf buf) {
         FactoryUIInfo factoryUIInfo = new FactoryUIInfo();
+        factoryUIInfo.factoryTier = Tier.byIndex(buf.readInt());
         factoryUIInfo.recipeEffort = buf.readInt();
         factoryUIInfo.recipeTicks = buf.readInt();
         factoryUIInfo.recipeCostPerTick = buf.readInt();
@@ -60,6 +62,7 @@ public class HeartStaticDataReply {
     }
 
     public void toBytes(ByteBuf buf) {
+        buf.writeInt(info.factoryTier.ordinal());
         buf.writeInt(info.recipeEffort);
         buf.writeInt(info.recipeTicks);
         buf.writeInt(info.recipeCostPerTick);

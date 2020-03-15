@@ -24,6 +24,7 @@ public class FactoryUIInfo {
     public int effortStored;
     public int mobCount;
     public boolean valid = false;
+    public Tier factoryTier = Tier.TIER_1;
 
     public static class Mob {
         public boolean missingIngredients = false;
@@ -42,6 +43,7 @@ public class FactoryUIInfo {
             info.recipeEffort = recipe.getNumUnits();
             info.recipeTicks = recipe.getNumTicks();
             info.recipeCostPerTick = recipe.getUnitsPerTick();
+            info.factoryTier = setup.tier;
 
             int looting = 0;
             for (Map.Entry<PerkType, Integer> entry : setup.getPerks().entrySet()) {

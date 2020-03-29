@@ -1,5 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
+import ipsis.woot.Woot;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.calculators.CalculatorVersion1;
 import ipsis.woot.modules.factory.generators.LootGeneration;
@@ -279,6 +281,33 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     public int getClientProgress() { return consumedUnits; }
     public void setClientProgress(int clientProgress) { this.consumedUnits = clientProgress; }
+
+    /**
+     * Used by the container tracker for the server value
+     */
+    public int getFluidAmount() {
+        if (setup != null) {
+            TileEntity te = world.getTileEntity(setup.getCellPos());
+            if (te instanceof CellTileEntityBase) {
+                return ((CellTileEntityBase) te).tank.getFluidAmount();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Used by the container tracker for the client value
+     */
+    private int fluidAmount = -1;
+    public int getClientFluidAmount() { return fluidAmount; }
+    public void setFluidAmount(int v) {
+        /**
+         * Cannot set the client tank as it is in the cell and we don't have the location
+         * We use a local tracker for the client value only
+         */
+        fluidAmount = v;
+    }
+
     public FactoryUIInfo createFactoryUIInfo() {
         return FactoryUIInfo.create(setup, recipe);
     }

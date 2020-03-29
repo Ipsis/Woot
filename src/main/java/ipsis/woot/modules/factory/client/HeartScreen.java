@@ -2,11 +2,14 @@ package ipsis.woot.modules.factory.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
+import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FactoryUIInfo;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.items.PerkItem;
+import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
 import ipsis.woot.util.WootContainerScreen;
@@ -118,6 +121,11 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             stackElements.forEach(e -> e.cycle());
             renderTime = Util.milliTime();
         }
+
+        if (mouseX > guiLeft + 226 && mouseX < guiLeft + 242 && mouseY > guiTop + 8 && mouseY < guiTop + 92)
+            renderFluidTankTooltip(mouseX, mouseY,
+                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getClientFluidAmount()),
+                SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get());
     }
 
     /**
@@ -219,11 +227,10 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
 
-        /*
         renderFluidTank(226,8,242, 92,
-                container.getTileEntity().getConatus(),
+                container.getTileEntity().getClientFluidAmount(),
                 FactoryConfiguration.CELL_1_CAPACITY.get(),
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getConatus())); */
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()));
     }
 
     class StackElement {

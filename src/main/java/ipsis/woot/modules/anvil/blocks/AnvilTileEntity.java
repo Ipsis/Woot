@@ -2,15 +2,13 @@ package ipsis.woot.modules.anvil.blocks;
 
 import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.modules.anvil.AnvilSetup;
+import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
-import ipsis.woot.mod.ModItems;
 import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.WorldHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -141,7 +139,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
         /**
          * Handle the shard programming
          */
-        if (baseItem.getItem() == ModItems.MOB_SHARD_ITEM) {
+        if (baseItem.getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
             FakeMob fakeMob = MobShardItem.getProgrammedMob(baseItem);
             output = ControllerTileEntity.getItemStack(fakeMob);
         }

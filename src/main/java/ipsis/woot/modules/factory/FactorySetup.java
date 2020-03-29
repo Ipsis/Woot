@@ -9,6 +9,7 @@ import ipsis.woot.modules.factory.blocks.Cell1TileEntity;
 import ipsis.woot.modules.factory.blocks.Cell2TileEntity;
 import ipsis.woot.modules.factory.blocks.Cell3TileEntity;
 import ipsis.woot.modules.factory.blocks.CellBlock;
+import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.block.Block;
@@ -237,4 +238,7 @@ public class FactorySetup {
             PerkItem.XP_2_REGNAME, () -> new PerkItem(Perk.XP_2));
     public static final RegistryObject<PerkItem> XP_3_ITEM = ITEMS.register(
             PerkItem.XP_3_REGNAME, () -> new PerkItem(Perk.XP_3));
+
+    public static final RegistryObject<MobShardItem> MOB_SHARD_ITEM = ITEMS.register(
+            "mobshard", () -> new MobShardItem());
 }

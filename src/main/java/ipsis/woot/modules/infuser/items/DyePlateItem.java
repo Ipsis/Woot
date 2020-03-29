@@ -10,7 +10,7 @@ public class DyePlateItem extends Item {
     final DyeColor color;
 
     public DyePlateItem(DyeColor color) {
-        super(new Item.Properties().group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().maxStackSize(64).group(Woot.setup.getCreativeTab()));
         this.color = color;
     }
 

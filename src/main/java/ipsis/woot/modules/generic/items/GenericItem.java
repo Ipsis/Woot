@@ -15,7 +15,7 @@ public class GenericItem extends Item {
     }
 
     public GenericItem(GenericItemType itemType) {
-        this(itemType, 1);
+        this(itemType, 64);
     }
 
     public GenericItemType genericItemType() { return this.itemType; }

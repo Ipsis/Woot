@@ -34,10 +34,7 @@ public class Registration {
 
         Item.Properties properties = new Item.Properties().group(Woot.setup.getCreativeTab());
 
-        event.getRegistry().register(new MobShardItem());
         event.getRegistry().register(new BlockItem(ModBlocks.TICK_CONVERTER_BLOCK, properties).setRegistryName(Woot.MODID, TickConverterBlock.REGNAME));
-
-
     }
 
     @SubscribeEvent

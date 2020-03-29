@@ -2,11 +2,10 @@ package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
+import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.policy.PolicyRegistry;
-import ipsis.woot.mod.ModItems;
 import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.WootItem;
 import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
@@ -33,13 +32,9 @@ import java.util.List;
  * A shard is full when its kill count hits a predefined level.
  */
 
-public class MobShardItem extends WootItem {
+public class MobShardItem extends Item {
 
-    public static final String REGNAME = "mobshard";
-
-    public MobShardItem() {
-        super(new Item.Properties().maxStackSize(1), REGNAME);
-    }
+    public MobShardItem() { super(new Item.Properties().maxStackSize(1)); }
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -111,7 +106,7 @@ public class MobShardItem extends WootItem {
 
     private static boolean isMatchingMob(ItemStack itemStack, FakeMob fakeMob) {
 
-        if (itemStack.getItem() != ModItems.MOB_SHARD_ITEM)
+        if (itemStack.getItem() != FactorySetup.MOB_SHARD_ITEM.get())
             return false;
 
         if (!isProgrammed(itemStack))
@@ -142,7 +137,7 @@ public class MobShardItem extends WootItem {
 
     private static void incrementKills(ItemStack itemStack, int v) {
 
-        if (itemStack.getItem() != ModItems.MOB_SHARD_ITEM)
+        if (itemStack.getItem() != FactorySetup.MOB_SHARD_ITEM.get())
             return;
 
         FakeMob fakeMob = getProgrammedMob(itemStack);

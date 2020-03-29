@@ -2,7 +2,6 @@ package ipsis.woot.datagen.modules;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.AnvilRecipe;
-import ipsis.woot.mod.ModItems;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.generic.GenericSetup;
@@ -57,7 +56,7 @@ public class Anvil {
                 .build(consumer, new ResourceLocation(Woot.MODID, "anvil/shard_die"));
 
         AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/controller"),
-                Ingredient.fromItems(ModItems.MOB_SHARD_ITEM.getItem()),
+                Ingredient.fromItems(FactorySetup.MOB_SHARD_ITEM.get()),
                 FactorySetup.CONTROLLER_BLOCK.get(),
                 NonNullList.from(Ingredient.EMPTY,
                         Ingredient.fromItems(GenericSetup.PRISM_ITEM.get()),

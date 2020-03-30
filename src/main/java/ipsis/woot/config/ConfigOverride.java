@@ -151,7 +151,7 @@ public class ConfigOverride {
     }
 
     public OverrideKey getKeyByPerk(PerkType perkType, int level) {
-        level = MathHelper.clamp(level, 1, 3);
+        level = MathHelper.clamp(level, 1, 3) - 1;
         return perkMap.get(perkType)[level];
     }
 

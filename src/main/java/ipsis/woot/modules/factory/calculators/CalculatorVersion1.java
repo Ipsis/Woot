@@ -45,7 +45,8 @@ public class CalculatorVersion1 {
         int tempCost = actualCost;
         for (PerkType perkType : setup.getPerks().keySet()) {
             int level = setup.getPerks().get(perkType);
-            if (level > 0) {
+            // Cannot override looting
+            if (perkType != PerkType.LOOTING && level > 0) {
                 ConfigOverride.OverrideKey key = Config.OVERRIDE.getKeyByPerk(perkType, level);
                 int cost = 10; // TODO
                 actualCost += (int) (tempCost / 100.0F * cost);

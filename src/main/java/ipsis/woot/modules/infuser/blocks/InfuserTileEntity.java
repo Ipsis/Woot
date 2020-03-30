@@ -224,7 +224,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
         inputSlots.extractItem(INPUT_SLOT, inputSize, false);
         if (currRecipe.hasAugment())
-            inputSlots.extractItem(INPUT_SLOT, augmentSize, false);
+            inputSlots.extractItem(AUGMENT_SLOT, augmentSize, false);
 
         ItemStack itemStack = currRecipe.getOutput();
         if (itemStack.getItem() == Items.ENCHANTED_BOOK) {

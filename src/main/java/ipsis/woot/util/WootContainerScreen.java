@@ -1,8 +1,6 @@
 package ipsis.woot.util;
 
-import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;
-import ipsis.woot.Woot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -28,18 +26,34 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         super(container, playerInventory, name);
     }
 
-    public void renderEnergyBar(int x1, int y1, int x2, int y2, int curr, int max) {
+    /**
+     * x1, y1 is the bottom right of the energy bar
+     */
+    public void renderEnergyBar(int x1, int y1, int height, int width, int curr, int max) {
         int filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
-        int h = filled * (y2 - y1) / 100;
-        fill(guiLeft + x1, guiTop + y2 - h, guiLeft + x2, guiTop + y2, 0xffff0000);
+        int h = filled * height / 100;
+        fill(guiLeft + x1,
+             guiTop + y1 - h + 1,
+             guiLeft + x1 + width,
+             guiTop + y1 + 1, 0xffff0000);
     }
 
-    public void renderFluidTank(int x1, int y1, int x2, int y2, int curr, int max, FluidStack fluidStack)  {
+    public void renderFluidTank3(int x1, int y1, int x2, int y2, int curr, int max, FluidStack fluidStack)  {
         int filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
-        int h = filled * (y2 - y1) / 100;
-        drawFluid(guiLeft + x1, guiTop + y2 - h , fluidStack, x2 - x1, h);
+        int h = filled * (y2 - y1 + 1) / 100;
+        drawFluid(guiLeft + x1, guiTop + y2 - h + 1, fluidStack, x2 - x1 + 1,  h);
+    }
+
+    /**
+     * x1, y1 is the bottom right of the fluid tank
+     */
+    public void renderFluidTank(int x1, int y1, int height, int width, int curr, int max, FluidStack fluidStack)  {
+        int filled = curr * 100 / max;
+        filled = MathHelper.clamp(filled, 0, 100);
+        int h = filled * height / 100;
+        drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
     }
 
     public void renderHorizontalBar(int x1, int y1, int x2, int y2, int curr, int max, int color) {

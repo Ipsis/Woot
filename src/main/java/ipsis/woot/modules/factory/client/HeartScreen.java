@@ -227,7 +227,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
 
-        renderFluidTank(226,8,242, 92,
+        renderFluidTank3(226,8,242, 92,
                 container.getTileEntity().getClientFluidAmount(),
                 FactoryConfiguration.CELL_1_CAPACITY.get(),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()));

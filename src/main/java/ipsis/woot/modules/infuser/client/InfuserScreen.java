@@ -19,16 +19,26 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
         ySize = 177;
     }
 
+    private static final int ENERGY_LX = 10;
+    private static final int ENERGY_LY = 18;
+    private static final int ENERGY_RX = 25;
+    private static final int ENERGY_RY = 77;
+
+    private static final int TANK_LX = 154;
+    private static final int TANK_LY = 18;
+    private static final int TANK_RX = 169;
+    private static final int TANK_RY = 77;
+
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
 
-        if (mouseX > guiLeft + 154 && mouseX < guiLeft + 169 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
+        if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
             renderFluidTankTooltip(mouseX, mouseY, container.getTileEntity().getTankFluid(),
                     InfuserConfiguration.INFUSER_TANK_CAPACITY.get());
-        if (mouseX > guiLeft + 10 && mouseX < guiLeft + 25 && mouseY > guiTop + 18 && mouseY < guiTop + 77)
+        if (mouseX > guiLeft + ENERGY_LX && mouseX < guiLeft + ENERGY_RX && mouseY > guiTop + ENERGY_LY && mouseY < guiTop + ENERGY_RY)
             renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
     }
@@ -41,10 +51,18 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
         int relY = (this.height - this.ySize) / 2;
         blit(relX, relY, 0, 0, xSize, ySize);
 
-        renderEnergyBar(11, 19, 25, 77,
+        renderEnergyBar(
+                ENERGY_LX,
+                ENERGY_RY,
+                ENERGY_RY - ENERGY_LY + 1,
+                ENERGY_RX - ENERGY_LX + 1,
                 container.getTileEntity().getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
 
-        renderFluidTank(154, 18, 169, 77,
+        renderFluidTank(
+                TANK_LX,
+                TANK_RY,
+                TANK_RY - TANK_LY + 1,
+                TANK_RX - TANK_LX + 1,
                 container.getTileEntity().getTankFluid().getAmount(),
                 InfuserConfiguration.INFUSER_TANK_CAPACITY.get(),
                 container.getTileEntity().getTankFluid());

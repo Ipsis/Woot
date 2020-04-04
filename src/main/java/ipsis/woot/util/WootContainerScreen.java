@@ -39,13 +39,6 @@ public abstract class WootContainerScreen<T extends Container> extends Container
              guiTop + y1 + 1, 0xffff0000);
     }
 
-    public void renderFluidTank3(int x1, int y1, int x2, int y2, int curr, int max, FluidStack fluidStack)  {
-        int filled = curr * 100 / max;
-        filled = MathHelper.clamp(filled, 0, 100);
-        int h = filled * (y2 - y1 + 1) / 100;
-        drawFluid(guiLeft + x1, guiTop + y2 - h + 1, fluidStack, x2 - x1 + 1,  h);
-    }
-
     /**
      * x1, y1 is the bottom right of the fluid tank
      */

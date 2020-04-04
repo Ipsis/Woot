@@ -61,6 +61,10 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
     private int UPGRADES_Y = 76;
     private float DROP_CYCLE_MS = 5000.0F;
     private int TEXT_COLOR = 4210752;
+    private static final int TANK_LX = 226;
+    private static final int TANK_LY = 8;
+    private static final int TANK_RX = 241;
+    private static final int TANK_RY = 91;
 
     private long renderTime;
 
@@ -122,7 +126,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             renderTime = Util.milliTime();
         }
 
-        if (mouseX > guiLeft + 226 && mouseX < guiLeft + 242 && mouseY > guiTop + 8 && mouseY < guiTop + 92)
+        if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
             renderFluidTankTooltip(mouseX, mouseY,
                 new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getClientFluidAmount()),
                 SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get());
@@ -227,7 +231,11 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
 
-        renderFluidTank3(226,8,242, 92,
+        renderFluidTank(
+                TANK_LX,
+                TANK_RY,
+                TANK_RY - TANK_LY + 1,
+                TANK_RX - TANK_LX + 1,
                 container.getTileEntity().getClientFluidAmount(),
                 FactoryConfiguration.CELL_1_CAPACITY.get(),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()));

@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.items;
 
+import ipsis.woot.Woot;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.FactorySetup;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class MobShardItem extends Item {
 
-    public MobShardItem() { super(new Item.Properties().maxStackSize(1)); }
+    public MobShardItem() { super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab())); }
 
     @Override
     public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {

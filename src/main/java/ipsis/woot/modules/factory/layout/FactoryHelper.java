@@ -74,7 +74,7 @@ public class FactoryHelper {
             if (isCorrectBlock(currBlock, correctBlocks))
                 continue;
 
-            if (pb.getFactoryComponent() == FactoryComponent.CELL || pb.getFactoryComponent() == FactoryComponent.CONTROLLER)
+            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER)
                 continue;
 
             Block placeBlock = correctBlocks.get(0);
@@ -96,7 +96,7 @@ public class FactoryHelper {
                 return true;
             } else {
                 // cannot replace block
-                PlayerHelper.sendChatMessage(playerEntity, "Cannot replace block");
+                PlayerHelper.sendChatMessage(playerEntity, "Cannot replace block with " + pb.getFactoryComponent());
                 return false;
             }
         }
@@ -212,13 +212,13 @@ public class FactoryHelper {
                 stacks.add(new ItemStack(FactorySetup.CAP_A_BLOCK.get()));
                 break;
             case CAP_B:
-                stacks.add(new ItemStack(FactorySetup.CAP_A_BLOCK.get()));
+                stacks.add(new ItemStack(FactorySetup.CAP_B_BLOCK.get()));
                 break;
             case CAP_C:
-                stacks.add(new ItemStack(FactorySetup.CAP_A_BLOCK.get()));
+                stacks.add(new ItemStack(FactorySetup.CAP_C_BLOCK.get()));
                 break;
             case CAP_D:
-                stacks.add(new ItemStack(FactorySetup.CAP_A_BLOCK.get()));
+                stacks.add(new ItemStack(FactorySetup.CAP_D_BLOCK.get()));
                 break;
             case IMPORT:
                 stacks.add(new ItemStack(FactorySetup.IMPORT_BLOCK.get()));
@@ -238,30 +238,4 @@ public class FactoryHelper {
 
         return stacks;
     }
-
-    static Block getComponentBlock(FactoryComponent component) {
-        switch (component) {
-            case FACTORY_A: return FactorySetup.FACTORY_A_BLOCK.get();
-            case FACTORY_B: return FactorySetup.FACTORY_B_BLOCK.get();
-            case FACTORY_C: return FactorySetup.FACTORY_C_BLOCK.get();
-            case FACTORY_D: return FactorySetup.FACTORY_D_BLOCK.get();
-            case FACTORY_E: return FactorySetup.FACTORY_E_BLOCK.get();
-            case FACTORY_CONNECT: return FactorySetup.FACTORY_CONNECT_BLOCK.get();
-            case FACTORY_CTR_BASE: return FactorySetup.FACTORY_CTR_BASE_BLOCK.get();
-            case FACTORY_UPGRADE: return FactorySetup.FACTORY_UPGRADE_BLOCK.get();
-            case HEART: return FactorySetup.HEART_BLOCK.get();
-            case CAP_A: return FactorySetup.CAP_A_BLOCK.get();
-            case CAP_B: return FactorySetup.CAP_B_BLOCK.get();
-            case CAP_C: return FactorySetup.CAP_C_BLOCK.get();
-            case CAP_D: return FactorySetup.CAP_D_BLOCK.get();
-            case IMPORT: return FactorySetup.IMPORT_BLOCK.get();
-            case EXPORT: return FactorySetup.EXPORT_BLOCK.get();
-            case CONTROLLER: return FactorySetup.CONTROLLER_BLOCK.get();
-            case CELL: return FactorySetup.CELL_1_BLOCK.get();
-            default: return FactorySetup.FACTORY_A_BLOCK.get();
-        }
-    }
-
-
-
 }

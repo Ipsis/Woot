@@ -38,7 +38,7 @@ public class PlayerHelper {
         if (validStacks.isEmpty())
             return ItemStack.EMPTY;
 
-        if ((playerEntity.isCreative()))
+        if (playerEntity.isCreative())
             return validStacks.get(0);
 
         for (ItemStack itemStack : playerEntity.inventory.mainInventory) {
@@ -47,9 +47,10 @@ public class PlayerHelper {
 
             for (ItemStack c : validStacks) {
                 if (c.getItem() == itemStack.getItem()) {
-                    c.shrink(1);
+                    ItemStack returnStack = itemStack.copy();
+                    itemStack.shrink(1);
                     playerEntity.inventory.markDirty();
-                    return c;
+                    return returnStack;
                 }
             }
         }

@@ -27,26 +27,27 @@ public class AnvilTileEntitySpecialRenderer extends TileEntityRenderer<AnvilTile
 
         ItemStack itemStack = anvilTileEntity.getBaseItem();
         if (!itemStack.isEmpty()) {
-            renderStack(itemStack, matrixStack, iRenderTypeBuffer, 0.5F, 1.0F, 0.5F, combinedLight, combinedOverlay);
+            renderStack(itemStack, matrixStack, iRenderTypeBuffer, 0.5F, 1.05F, 0.5F, combinedLight, combinedOverlay);
         }
 
         ItemStack[] ingredients = anvilTileEntity.getIngredients();
         if (!ingredients[0].isEmpty())
-            renderStack(ingredients[0],  matrixStack, iRenderTypeBuffer, 0.5F + 0.15F, 1.0F, 0.5F, combinedLight, combinedOverlay);
+            renderStack(ingredients[0],  matrixStack, iRenderTypeBuffer, 0.5F, 1.05F, 0.5F - 0.2F, combinedLight, combinedOverlay);
         if (!ingredients[1].isEmpty())
-            renderStack(ingredients[1],  matrixStack, iRenderTypeBuffer, 0.5F - 0.15F, 1.0F, 0.5F, combinedLight, combinedOverlay);
+            renderStack(ingredients[1],  matrixStack, iRenderTypeBuffer, 0.5F, 1.05F, 0.5F + 0.2F, combinedLight, combinedOverlay);
         if (!ingredients[2].isEmpty())
-            renderStack(ingredients[2],  matrixStack, iRenderTypeBuffer, 0.5F, 1.0F, 0.5F + 0.15F, combinedLight, combinedOverlay);
+            renderStack(ingredients[2],  matrixStack, iRenderTypeBuffer, 0.5F, 1.05F, 0.5F - 0.4F, combinedLight, combinedOverlay);
         if (!ingredients[3].isEmpty())
-            renderStack(ingredients[3],  matrixStack, iRenderTypeBuffer, 0.5F, 1.0F, 0.5F - 0.15F, combinedLight, combinedOverlay);
+            renderStack(ingredients[3],  matrixStack, iRenderTypeBuffer, 0.5F, 1.05F, 0.5F + 0.4F, combinedLight, combinedOverlay);
     }
 
     private void renderStack(ItemStack itemStack, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, double x, double y, double z, int combinedLight, int combinedOverlay) {
-        float scale = 0.2F;
+        float scale = 0.20F;
         matrixStack.push();
         matrixStack.translate(x, y, z);
         matrixStack.scale(scale, scale, scale);
         matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
+        matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
 
         Minecraft.getInstance().getItemRenderer().renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrixStack, iRenderTypeBuffer);
         matrixStack.pop();;

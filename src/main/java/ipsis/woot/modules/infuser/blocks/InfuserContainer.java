@@ -169,6 +169,14 @@ public class InfuserContainer extends WootContainer implements FluidStackPacketH
             @Override
             public void set(int i) { tileEntity.setEnergy(i); }
         });
+
+        addIntegerListener(new IntReferenceHolder() {
+            @Override
+            public int get() { return tileEntity.getProgress(); }
+
+            @Override
+            public void set(int i) { tileEntity.setProgress(i); }
+        });
     }
 
     @Override

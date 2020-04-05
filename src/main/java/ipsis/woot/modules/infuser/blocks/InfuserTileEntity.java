@@ -184,6 +184,13 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     private int clientFluidAmount = 0;
     public int getClientFluidAmount() { return clientFluidAmount; }
     public void setClientFluidAmount(int v) { clientFluidAmount = v; }
+
+    private int progress;
+    public int getProgress() {
+        return calculateProgress();
+    }
+    public int getClientProgress() { return progress; }
+    public void setProgress(int v) { progress = v; }
     //endregion
 
     //-------------------------------------------------------------------------

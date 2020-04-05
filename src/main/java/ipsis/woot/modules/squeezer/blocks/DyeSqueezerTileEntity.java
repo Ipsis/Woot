@@ -178,6 +178,13 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public void setWhite(int v) { this.white = v; }
     public int getPure() { return fluidTank.map(h -> h.getFluidAmount()).orElse(0); }
     public void setPure(int v) { fluidTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v))); }
+
+    private int progress;
+    public int getProgress() {
+        return calculateProgress();
+    }
+    public int getClientProgress() { return progress; }
+    public void setProgress(int v) { progress = v; }
     //endregion
 
     //-------------------------------------------------------------------------

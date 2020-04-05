@@ -154,6 +154,13 @@ public class DyeSqueezerContainer extends WootContainer {
             @Override
             public void set(int i) { tileEntity.setEnergy(i); }
         });
+        addIntegerListener(new IntReferenceHolder() {
+            @Override
+            public int get() { return tileEntity.getProgress(); }
+
+            @Override
+            public void set(int i) { tileEntity.setProgress(i); }
+        });
     }
 
     public DyeSqueezerTileEntity getTileEntity() { return tileEntity; }

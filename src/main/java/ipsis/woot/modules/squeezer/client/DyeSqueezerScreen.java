@@ -18,23 +18,28 @@ import net.minecraftforge.fluids.FluidStack;
 public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer> {
 
     private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/squeezer.png");
-
-    public DyeSqueezerScreen(DyeSqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
-        super(container, playerInventory, name);
-        xSize = 180;
-        ySize = 177;
-    }
-
+    private static final int GUI_XSIZE = 180;
+    private static final int GUI_YSIZE = 177;
 
     private static final int ENERGY_LX = 10;
     private static final int ENERGY_LY = 18;
     private static final int ENERGY_RX = 25;
     private static final int ENERGY_RY = 77;
+    private static final int ENERGY_WIDTH = ENERGY_RX - ENERGY_LX + 1;
+    private static final int ENERGY_HEIGHT = ENERGY_RY - ENERGY_LY + 1;
 
     private static final int TANK_LX = 154;
     private static final int TANK_LY = 18;
     private static final int TANK_RX = 169;
     private static final int TANK_RY = 77;
+    private static final int TANK_WIDTH = TANK_RX - TANK_LX + 1;
+    private static final int TANK_HEIGHT = TANK_RY - TANK_LY + 1;
+
+    public DyeSqueezerScreen(DyeSqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
+        super(container, playerInventory, name);
+        xSize = GUI_XSIZE;
+        ySize = GUI_YSIZE;
+    }
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
@@ -42,31 +47,31 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
 
-        if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 30 && mouseY < guiTop + 37)
+        if (isPointInRegion(82, 30, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("Red: %d/%d mb",
                         container.getTileEntity().getRed(),
                         SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
-        if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 40 && mouseY < guiTop + 47)
+        if (isPointInRegion(82, 40, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("Yellow: %d/%d mb",
                         container.getTileEntity().getYellow(),
                         SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
-        if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 50 && mouseY < guiTop + 57)
+        if (isPointInRegion(82, 50, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("Blue: %d/%d mb",
                         container.getTileEntity().getBlue(),
                         SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
-        if (mouseX > guiLeft + 82 && mouseX < guiLeft + 132 && mouseY > guiTop + 60 && mouseY < guiTop + 67)
+        if (isPointInRegion(82, 60, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("White: %d/%d mb",
                         container.getTileEntity().getWhite(),
                         SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
-        if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
+        if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(mouseX, mouseY,
                     new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()),
                     SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get());
-        if (mouseX > guiLeft + ENERGY_LX && mouseX < guiLeft + ENERGY_RX && mouseY > guiTop + ENERGY_LY && mouseY < guiTop + ENERGY_RY)
+        if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
             renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
                     SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get(), 10);
     }
@@ -77,8 +82,13 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
         minecraft.getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        blit(relX, relY, 0, 0, xSize, ySize);
+        blit(relX, relY, 0, 0, this.xSize, this.ySize);
 
+        // Progress
+        int progress = container.getTileEntity().getClientProgress();
+        blit(this.guiLeft + 58, this.guiTop + 30, 180, 0,(int)(19 * (progress / 100.0F)) , 40);
+
+        // NB: The tanks will change the texture so progress has to be above that or rebind the texture
         renderHorizontalGauge(82, 30, 132, 37,
                 container.getTileEntity().getRed(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.RED.getColorValue());
@@ -95,15 +105,15 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
         renderEnergyBar(
                 ENERGY_LX,
                 ENERGY_RY,
-                ENERGY_RY - ENERGY_LY + 1,
-                ENERGY_RX - ENERGY_LX + 1,
+                ENERGY_HEIGHT,
+                ENERGY_WIDTH,
                 container.getTileEntity().getEnergy(), SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get());
 
         renderFluidTank(
                 TANK_LX,
                 TANK_RY,
-                TANK_RY - TANK_LY + 1,
-                TANK_RX - TANK_LX + 1,
+                TANK_HEIGHT,
+                TANK_WIDTH,
                 container.getTileEntity().getPure(), SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(),
                 new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()));
     }

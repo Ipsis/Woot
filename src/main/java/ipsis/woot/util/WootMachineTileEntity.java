@@ -98,10 +98,15 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
         return processRem <= 0 && hasValidInput();
     }
 
+    protected int calculateProgress() {
+        return processMax == 0 ? 0 : 100 - (int)((100.0F / processMax) * processRem);
+    }
+
     protected void processOff() {
         //LOGGER.info("processOff: clearing remainder and recipe");
         isActive = false;
         processRem = 0;
+        processMax = 0;
         clearRecipe();
     }
 

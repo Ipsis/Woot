@@ -20,21 +20,28 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
 
     private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/" + SqueezerSetup.ENCHANT_SQUEEZER_TAG + ".png");
 
-    public EnchantSqueezerScreen(EnchantSqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
-        super(container, playerInventory, name);
-        xSize = 180;
-        ySize = 177;
-    }
+    private static final int GUI_XSIZE = 180;
+    private static final int GUI_YSIZE = 177;
 
     private static final int ENERGY_LX = 10;
     private static final int ENERGY_LY = 18;
     private static final int ENERGY_RX = 25;
     private static final int ENERGY_RY = 77;
+    private static final int ENERGY_WIDTH = ENERGY_RX - ENERGY_LX + 1;
+    private static final int ENERGY_HEIGHT = ENERGY_RY - ENERGY_LY + 1;
 
     private static final int TANK_LX = 154;
     private static final int TANK_LY = 18;
     private static final int TANK_RX = 169;
     private static final int TANK_RY = 77;
+    private static final int TANK_WIDTH = TANK_RX - TANK_LX + 1;
+    private static final int TANK_HEIGHT = TANK_RY - TANK_LY + 1;
+
+    public EnchantSqueezerScreen(EnchantSqueezerContainer container, PlayerInventory playerInventory, ITextComponent name) {
+        super(container, playerInventory, name);
+        xSize = GUI_XSIZE;
+        ySize = GUI_YSIZE;
+    }
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
@@ -42,11 +49,11 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
 
-        if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
+        if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(mouseX, mouseY,
                     new FluidStack(FluidSetup.ENCHANT_FLUID.get(), container.getTileEntity().getEnchant()),
                     SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get());
-        if (mouseX > guiLeft + ENERGY_LX && mouseX < guiLeft + ENERGY_RX && mouseY > guiTop + ENERGY_LY && mouseY < guiTop + ENERGY_RY)
+        if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
             renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
                     SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), 10);
     }
@@ -59,18 +66,22 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
         int relY = (this.height - this.ySize) / 2;
         blit(relX, relY, 0, 0, xSize, ySize);
 
+        // Progress
+        int progress = container.getTileEntity().getClientProgress();
+        blit(this.guiLeft + 116, this.guiTop + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
+
         renderEnergyBar(
                 ENERGY_LX,
                 ENERGY_RY,
-                ENERGY_RY - ENERGY_LY + 1,
-                ENERGY_RX - ENERGY_LX + 1,
+                ENERGY_HEIGHT,
+                ENERGY_WIDTH,
                 container.getTileEntity().getEnergy(), SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get());
 
         renderFluidTank(
                 TANK_LX,
                 TANK_RY,
-                TANK_RY - TANK_LY + 1,
-                TANK_RX - TANK_LX + 1,
+                TANK_HEIGHT,
+                TANK_WIDTH,
                 container.getTileEntity().getEnchant(),
                 SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), container.getTileEntity().getEnchant()));

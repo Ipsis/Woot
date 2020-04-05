@@ -159,6 +159,13 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     public void setEnchant(int v) {
         fluidTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v)));
     }
+
+    private int progress;
+    public int getProgress() {
+        return calculateProgress();
+    }
+    public int getClientProgress() { return progress; }
+    public void setProgress(int v) { progress = v; }
     //endregion
 
     //-------------------------------------------------------------------------

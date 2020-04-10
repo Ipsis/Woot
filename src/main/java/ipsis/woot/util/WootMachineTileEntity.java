@@ -117,4 +117,13 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
         processMax = getRecipeEnergy();
         processRem = getRecipeEnergy();
     }
+
+    public void onContentsChanged(int slot) {
+       if (!isActive)
+           return;
+
+       if (!hasValidInput())
+           processOff();
+    }
+
 }

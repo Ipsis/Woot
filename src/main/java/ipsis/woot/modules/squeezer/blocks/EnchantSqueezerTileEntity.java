@@ -47,7 +47,18 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     public EnchantSqueezerTileEntity() {
         super(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_TILE.get());
-        inputSlots = new ItemStackHandler();
+        inputSlots = new ItemStackHandler(1) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                markDirty();
+                EnchantSqueezerTileEntity.this.onContentsChanged(slot);
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return EnchantmentHelper.isEnchanted(stack);
+            }
+        };
     }
 
     //-------------------------------------------------------------------------
@@ -74,19 +85,6 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     public static int INPUT_SLOT = 0;
     private ItemStackHandler inputSlots;
     private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
-    private IItemHandler createItemHandler() {
-        return new ItemStackHandler(1) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                markDirty();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return EnchantmentHelper.isEnchanted(stack);
-            }
-        };
-    }
     //endregion
 
     //-------------------------------------------------------------------------

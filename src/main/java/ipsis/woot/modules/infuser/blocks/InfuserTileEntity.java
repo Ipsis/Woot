@@ -52,6 +52,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         inputSlots = new ItemStackHandler(2) {
             @Override
             protected void onContentsChanged(int slot) {
+                InfuserTileEntity.this.onContentsChanged(slot);
                 markDirty();
             }
 
@@ -226,14 +227,15 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             return;
         }
 
-        final int inputSize = currRecipe.getIngredient().getMatchingStacks()[0].getCount();
-        final int augmentSize = currRecipe.hasAugment() ? currRecipe.getAugment().getMatchingStacks()[0].getCount() : 1;
+        InfuserRecipe finishedRecipe = currRecipe;
+        final int inputSize = finishedRecipe.getIngredient().getMatchingStacks()[0].getCount();
+        final int augmentSize = finishedRecipe.hasAugment() ? finishedRecipe.getAugment().getMatchingStacks()[0].getCount() : 1;
 
         inputSlots.extractItem(INPUT_SLOT, inputSize, false);
-        if (currRecipe.hasAugment())
+        if (finishedRecipe.hasAugment())
             inputSlots.extractItem(AUGMENT_SLOT, augmentSize, false);
 
-        ItemStack itemStack = currRecipe.getOutput();
+        ItemStack itemStack = finishedRecipe.getOutput();
         if (itemStack.getItem() == Items.ENCHANTED_BOOK) {
             // stack size determines the enchant level, so save it off and reset to single item generated
             int level = itemStack.getCount();
@@ -242,7 +244,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         }
 
         outputSlot.insertItem(OUTPUT_SLOT, itemStack, false);
-        fluidTank.ifPresent(f -> f.drain(currRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
+        fluidTank.ifPresent(f -> f.drain(finishedRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
         markDirty();
     }
 
@@ -267,10 +269,21 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     @Override
     protected boolean hasValidInput() {
+
         if (currRecipe == null)
             getRecipe();
 
-        return currRecipe == null ? false : true;
+        if (currRecipe == null)
+            return false;
+
+        /**
+         *  This is used to both start the processing AND check that the ingredients are still present
+         */
+        if (currRecipe.hasAugment())
+            return currRecipe.getInputs().get(0).get(0).getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount() &&
+                    currRecipe.getAugmentCount() <= inputSlots.getStackInSlot(AUGMENT_SLOT).getCount();
+
+        return currRecipe.getInputs().get(0).get(0).getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
     }
 
     @Override

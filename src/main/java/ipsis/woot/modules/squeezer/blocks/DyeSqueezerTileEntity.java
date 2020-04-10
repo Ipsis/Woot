@@ -50,7 +50,18 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     public DyeSqueezerTileEntity() {
         super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get());
-        inputSlots = new ItemStackHandler();
+        inputSlots = new ItemStackHandler(1) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                DyeSqueezerTileEntity.this.onContentsChanged(slot);
+                markDirty();
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return DyeSqueezerRecipe.isValidInput(stack);
+            }
+        };
     }
 
     //-------------------------------------------------------------------------
@@ -77,19 +88,6 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public static int INPUT_SLOT = 0;
     private ItemStackHandler inputSlots;
     private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
-    private IItemHandler createItemHandler() {
-        return new ItemStackHandler(1) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                markDirty();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return DyeSqueezerRecipe.isValidInput(stack);
-            }
-        };
-    }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -220,10 +218,12 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
             return;
         }
 
-        red += currRecipe.getRed();
-        yellow += currRecipe.getYellow();
-        blue += currRecipe.getBlue();
-        white += currRecipe.getWhite();
+        DyeSqueezerRecipe finishedRecipe = currRecipe;
+
+        red += finishedRecipe.getRed();
+        yellow += finishedRecipe.getYellow();
+        blue += finishedRecipe.getBlue();
+        white += finishedRecipe.getWhite();
         inputSlots.extractItem(INPUT_SLOT, 1, false);
         fluidTank.ifPresent(f -> {
             while (canCreateOutput() && canStoreOutput()) {
@@ -257,7 +257,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (currRecipe == null)
             getRecipe();
 
-        return currRecipe == null ? false : true;
+        if (currRecipe == null)
+            return false;
+
+        return currRecipe.getInputs().get(0).get(0).getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
     }
 
     @Override

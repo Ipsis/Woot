@@ -83,7 +83,7 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
                 TANK_HEIGHT,
                 TANK_WIDTH,
                 container.getTileEntity().getEnchant(),
-                SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(),
+                SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(),
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), container.getTileEntity().getEnchant()));
     }
     

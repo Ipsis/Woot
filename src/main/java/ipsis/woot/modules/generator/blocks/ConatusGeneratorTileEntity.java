@@ -309,12 +309,10 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     }
 
     public void dropContents(World world, BlockPos pos) {
-        for (int i = 0; i < 1; i++) {
-            ItemStack itemStack = inputSlots.getStackInSlot(i);
-            if (!itemStack.isEmpty()) {
-                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-                inputSlots.setStackInSlot(i, ItemStack.EMPTY);
-            }
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (!itemStack.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
         }
 
         markDirty();

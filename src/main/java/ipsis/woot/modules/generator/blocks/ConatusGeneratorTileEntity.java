@@ -2,6 +2,7 @@ package ipsis.woot.modules.generator.blocks;
 
 import ipsis.woot.crafting.ConatusGeneratorRecipe;
 import ipsis.woot.fluilds.network.FluidStackPacket;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.generator.GeneratorConfiguration;
 import ipsis.woot.modules.generator.GeneratorRecipes;
 import ipsis.woot.modules.generator.GeneratorSetup;
@@ -286,10 +287,12 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         }
     }
 
-    public FluidStackPacket getFluidStackPacket() {
-        return new FluidStackPacket(
-                inputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY),
-                outputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+    public TankPacket getInputTankPacket() {
+        return new TankPacket(0, inputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+    }
+
+    public TankPacket getOutputTankPacket() {
+        return new TankPacket(1, outputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
     @Nonnull

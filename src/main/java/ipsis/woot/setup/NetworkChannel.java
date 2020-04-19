@@ -2,6 +2,7 @@ package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.network.FluidStackPacket;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
 import ipsis.woot.modules.oracle.network.SimulatedMobDropsSummaryReply;
 import ipsis.woot.modules.oracle.network.SimulatedMobsReply;
@@ -50,5 +51,10 @@ public class NetworkChannel {
                 5,
                 FluidStackPacket.class,
                 FluidStackPacket::toBytes, FluidStackPacket::fromBytes, FluidStackPacket::handle);
+
+        channel.registerMessage(
+                6,
+                TankPacket.class,
+                TankPacket::toBytes, TankPacket::fromBytes, TankPacket::handle);
     }
 }

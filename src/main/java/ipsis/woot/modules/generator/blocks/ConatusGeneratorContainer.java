@@ -2,9 +2,11 @@ package ipsis.woot.modules.generator.blocks;
 
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.network.FluidStackPacket;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.generator.GeneratorSetup;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.util.FluidStackPacketHandler;
+import ipsis.woot.util.TankPacketHandler;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,7 +27,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.List;
 
-public class ConatusGeneratorContainer extends WootContainer implements FluidStackPacketHandler {
+public class ConatusGeneratorContainer extends WootContainer implements TankPacketHandler {
 
     public ConatusGeneratorTileEntity tileEntity;
 
@@ -98,14 +100,18 @@ public class ConatusGeneratorContainer extends WootContainer implements FluidSta
             List<IContainerListener> iContainerListeners =
                     (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
 
-            if (!tileEntity.getClientInTank().isFluidStackIdentical(tileEntity.getInputTankFluid()) ||
-                !tileEntity.getClientOutTank().isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
-
+            if (!tileEntity.getClientInTank().isFluidStackIdentical(tileEntity.getInputTankFluid())) {
                 tileEntity.setClientInTank(tileEntity.getInputTankFluid().copy());
-                tileEntity.setClientOutTank(tileEntity.getOutputTankFluid().copy());
-
                 for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tileEntity.getFluidStackPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tileEntity.getInputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
+            }
+
+            if (!tileEntity.getClientOutTank().isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
+                tileEntity.setClientOutTank(tileEntity.getOutputTankFluid().copy());
+                for (IContainerListener l : iContainerListeners) {
+                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
@@ -115,13 +121,10 @@ public class ConatusGeneratorContainer extends WootContainer implements FluidSta
     }
 
     @Override
-    public void handlePacket(FluidStackPacket packet) {
-        if (packet.fluidStackList.isEmpty())
-            return;
-
-        if (packet.fluidStackList.size() == 2) {
-            tileEntity.setInputTankFluid(packet.fluidStackList.get((0)));
-            tileEntity.setOutputTankFluid(packet.fluidStackList.get((1)));
-        }
+    public void handlePacket(TankPacket packet) {
+        if (packet.tankId == 0)
+            tileEntity.setInputTankFluid(packet.fluidStack);
+        else if (packet.tankId == 1)
+            tileEntity.setOutputTankFluid(packet.fluidStack);
     }
 }

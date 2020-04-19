@@ -1,10 +1,9 @@
 package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
-import ipsis.woot.crafting.AnvilRecipe;
-import ipsis.woot.crafting.DyeSqueezerRecipe;
-import ipsis.woot.crafting.EnchantSqueezerRecipe;
-import ipsis.woot.crafting.InfuserRecipe;
+import ipsis.woot.crafting.*;
+import ipsis.woot.modules.generator.GeneratorRecipeManager;
+import ipsis.woot.modules.generator.client.ConatusGeneratorScreen;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.client.DyeSqueezerScreen;
@@ -44,7 +43,8 @@ public class WootJeiPlugin implements IModPlugin {
                 new DyeSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new InfuserRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new AnvilRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-                new EnchantSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+                new EnchantSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
+                new ConatusGeneratorRecipeCategory(registration.getJeiHelpers().getGuiHelper())
         );
     }
 
@@ -72,6 +72,7 @@ public class WootJeiPlugin implements IModPlugin {
         registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);
         registration.addRecipes(anvilRecipes, AnvilRecipeCategory.UID);
         registration.addRecipes(infuserRecipes, InfuserRecipeCategory.UID);
+        registration.addRecipes(GeneratorRecipeManager.getRecipes(), ConatusGeneratorRecipeCategory.UID);
 
         /**
          * Enchanted books
@@ -92,6 +93,7 @@ public class WootJeiPlugin implements IModPlugin {
         registration.addRecipeClickArea(InfuserScreen.class, 84, 39, 30, 18, InfuserRecipeCategory.UID);
         registration.addRecipeClickArea(DyeSqueezerScreen.class, 60, 39, 18, 18, DyeSqueezerRecipeCategory.UID);
         registration.addRecipeClickArea(EnchantSqueezerScreen.class, 101, 32, 50, 36, EnchantSqueezerRecipeCategory.UID);
+        registration.addRecipeClickArea(ConatusGeneratorScreen.class, 74, 40, 70, 26, ConatusGeneratorRecipeCategory.UID);
 
     }
 }

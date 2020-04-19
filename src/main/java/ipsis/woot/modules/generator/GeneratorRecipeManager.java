@@ -26,10 +26,6 @@ public class GeneratorRecipeManager {
                 new ItemStack(Items.GUNPOWDER),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000)));
         recipes.add(new ConatusGeneratorRecipe(
-                new FluidStack(Fluids.WATER, 1000),
-                ItemStack.EMPTY,
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000)));
-        recipes.add(new ConatusGeneratorRecipe(
                 new FluidStack(Fluids.LAVA, 1000),
                 new ItemStack(Items.BLAZE_POWDER),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000), 5000));

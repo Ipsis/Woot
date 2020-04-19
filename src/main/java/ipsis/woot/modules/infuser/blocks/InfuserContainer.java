@@ -2,10 +2,10 @@ package ipsis.woot.modules.infuser.blocks;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
-import ipsis.woot.fluilds.network.FluidStackPacket;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.setup.NetworkChannel;
-import ipsis.woot.util.FluidStackPacketHandler;
+import ipsis.woot.util.TankPacketHandler;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,7 +27,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class InfuserContainer extends WootContainer implements FluidStackPacketHandler {
+public class InfuserContainer extends WootContainer implements TankPacketHandler {
 
     public InfuserTileEntity tileEntity;
 
@@ -84,7 +84,7 @@ public class InfuserContainer extends WootContainer implements FluidStackPacketH
                 tileEntity.setClientFluidAmount(tileEntity.getTankFluid().getAmount());
 
                 for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tileEntity.getFluidStackPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tileEntity.getTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
@@ -180,9 +180,8 @@ public class InfuserContainer extends WootContainer implements FluidStackPacketH
     }
 
     @Override
-    public void handlePacket(FluidStackPacket packet) {
-        if (packet.fluidStackList.isEmpty())
-            return;
-        tileEntity.setTankFluid(packet.fluidStackList.get(0));
+    public void handlePacket(TankPacket packet) {
+        if (packet.tankId == 0)
+            tileEntity.setTankFluid(packet.fluidStack);
     }
 }

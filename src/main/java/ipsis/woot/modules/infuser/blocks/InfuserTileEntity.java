@@ -3,6 +3,7 @@ package ipsis.woot.modules.infuser.blocks;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.fluilds.network.FluidStackPacket;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.util.EnchantingHelper;
@@ -319,8 +320,8 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         clearRecipe();
     }
 
-    public FluidStackPacket getFluidStackPacket() {
-        return new FluidStackPacket(fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+    public TankPacket getTankPacket() {
+        return new TankPacket(0, fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
     @Nonnull

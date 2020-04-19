@@ -1,11 +1,9 @@
 package ipsis.woot.modules.generator.blocks;
 
 import ipsis.woot.Woot;
-import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.generator.GeneratorSetup;
 import ipsis.woot.setup.NetworkChannel;
-import ipsis.woot.util.FluidStackPacketHandler;
 import ipsis.woot.util.TankPacketHandler;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;

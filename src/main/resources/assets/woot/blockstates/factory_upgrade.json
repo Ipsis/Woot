@@ -3,13 +3,6 @@
     "upgrade=empty,attached=false": { "model":  "woot:block/factory_upgrade" },
     "upgrade=empty,attached=true": { "model":  "woot:block/factory_upgrade" },
 
-    "upgrade=capacity_1,attached=false": { "model":  "woot:block/factory_upgrade_capacity_1" },
-    "upgrade=capacity_1,attached=true": { "model":  "woot:block/factory_upgrade_capacity_1" },
-    "upgrade=capacity_2,attached=false": { "model":  "woot:block/factory_upgrade_capacity_2" },
-    "upgrade=capacity_2,attached=true": { "model":  "woot:block/factory_upgrade_capacity_2" },
-    "upgrade=capacity_3,attached=false": { "model":  "woot:block/factory_upgrade_capacity_3" },
-    "upgrade=capacity_3,attached=true": { "model":  "woot:block/factory_upgrade_capacity_3" },
-
     "upgrade=efficiency_1,attached=false": { "model":  "woot:block/factory_upgrade_efficiency_1" },
     "upgrade=efficiency_1,attached=true": { "model":  "woot:block/factory_upgrade_efficiency_1" },
     "upgrade=efficiency_2,attached=false": { "model":  "woot:block/factory_upgrade_efficiency_2" },

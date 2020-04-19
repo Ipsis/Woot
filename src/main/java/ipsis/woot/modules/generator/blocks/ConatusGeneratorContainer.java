@@ -1,6 +1,7 @@
 package ipsis.woot.modules.generator.blocks;
 
 import ipsis.woot.Woot;
+import ipsis.woot.crafting.ConatusGeneratorRecipe;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.generator.GeneratorSetup;
 import ipsis.woot.setup.NetworkChannel;
@@ -143,10 +144,11 @@ public class ConatusGeneratorContainer extends WootContainer implements TankPack
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
-                // TODO check if valid input
-                // Player -> input
-                if (!this.mergeItemStack(stack, 0, 1, false))
-                    return ItemStack.EMPTY;
+                if (ConatusGeneratorRecipe.isValidCatalyst(itemStack)) {
+                    // Player -> input
+                    if (!this.mergeItemStack(stack, 0, 1, false))
+                        return ItemStack.EMPTY;
+                }
 
                 // No player to machine supported
                 if (index >= FIRST_PLAYER_SLOT && index <= LAST_PLAYER_SLOT) {

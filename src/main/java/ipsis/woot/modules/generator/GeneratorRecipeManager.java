@@ -12,12 +12,14 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneratorRecipes {
+public class GeneratorRecipeManager {
 
     private static ArrayList<ConatusGeneratorRecipe> recipes = new ArrayList<>();
 
     public static void load(@Nonnull RecipeManager manager) {
         recipes.clear();
+        ConatusGeneratorRecipe.clearValidInputs();
+        ConatusGeneratorRecipe.clearValidCatalysts();
 
         recipes.add(new ConatusGeneratorRecipe(
                 new FluidStack(Fluids.WATER, 1000),
@@ -31,6 +33,12 @@ public class GeneratorRecipes {
                 new FluidStack(Fluids.LAVA, 1000),
                 new ItemStack(Items.BLAZE_POWDER),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000), 5000));
+
+        for (ConatusGeneratorRecipe recipe : recipes) {
+            ConatusGeneratorRecipe.addValidInput(recipe.getInputFluid());
+            if (recipe.hasCatalyst())
+                ConatusGeneratorRecipe.addValidCatalyst(recipe.getCatalyst());
+        }
     }
 
     public static List<ConatusGeneratorRecipe> getRecipes() { return recipes; }

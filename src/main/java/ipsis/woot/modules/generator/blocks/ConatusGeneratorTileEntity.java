@@ -1,12 +1,11 @@
 package ipsis.woot.modules.generator.blocks;
 
 import ipsis.woot.crafting.ConatusGeneratorRecipe;
-import ipsis.woot.fluilds.network.FluidStackPacket;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.generator.GeneratorConfiguration;
-import ipsis.woot.modules.generator.GeneratorRecipes;
+import ipsis.woot.modules.generator.GeneratorRecipeManager;
 import ipsis.woot.modules.generator.GeneratorSetup;
-import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootMachineTileEntity;
@@ -53,7 +52,9 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return super.isItemValid(slot, stack);
+                if (slot == INPUT_SLOT)
+                    return ConatusGeneratorRecipe.isValidCatalyst(stack);
+                return false;
             }
         };
     }
@@ -63,10 +64,12 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     private LazyOptional<FluidTank> inputTank = LazyOptional.of(this::createInputTank);
     private LazyOptional<FluidTank> outputTank = LazyOptional.of(this::createOutputTank);
     private FluidTank createInputTank() {
-        return new FluidTank(GeneratorConfiguration.CONATUS_GEN_INPUT_TANK_CAPACITY.get());
+        return new FluidTank(GeneratorConfiguration.CONATUS_GEN_INPUT_TANK_CAPACITY.get(),
+                h -> ConatusGeneratorRecipe.isValidInput(h));
     }
     private FluidTank createOutputTank() {
-        return new FluidTank(GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get());
+        return new FluidTank(GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get(),
+                h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000)));
     }
 
     public void setInputTankFluid(FluidStack fluid) { inputTank.ifPresent(h -> h.setFluid(fluid));}
@@ -279,7 +282,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
             return;
         }
 
-        for (ConatusGeneratorRecipe recipe : GeneratorRecipes.getRecipes()) {
+        for (ConatusGeneratorRecipe recipe : GeneratorRecipeManager.getRecipes()) {
             if (recipe.matches(inFluid, inputSlots.getStackInSlot(INPUT_SLOT))) {
                 currRecipe = recipe;
                 return;

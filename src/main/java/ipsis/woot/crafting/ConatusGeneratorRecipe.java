@@ -4,6 +4,9 @@ import ipsis.woot.setup.ModDefaults;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConatusGeneratorRecipe {
 
     private final FluidStack inputFluid;
@@ -40,4 +43,34 @@ public class ConatusGeneratorRecipe {
         return input.isFluidEqual(inputFluid) && input.getAmount() >= inputFluid.getAmount();
     }
 
+    /**
+     * Valid inputs
+     */
+    private static List<ItemStack> validCatalysts = new ArrayList<>();
+    public static void clearValidCatalysts() { validCatalysts.clear(); }
+    public static void addValidCatalyst(ItemStack itemStack) { validCatalysts.add(itemStack); }
+    public static boolean isValidCatalyst(ItemStack itemStack) {
+        if (itemStack.isEmpty())
+            return false;
+
+        for (ItemStack i : validCatalysts) {
+            if (i.isItemEqual(itemStack))
+                return true;
+        }
+        return false;
+    }
+
+    private static List<FluidStack> validInputs = new ArrayList<>();
+    public static void clearValidInputs() { validInputs.clear(); }
+    public static void addValidInput(FluidStack fluidStack) { validInputs.add(fluidStack); }
+    public static boolean isValidInput(FluidStack fluidStack) {
+        if (fluidStack.isEmpty())
+            return false;
+
+        for (FluidStack f : validInputs) {
+            if (f.isFluidEqual(fluidStack))
+                return true;
+        }
+        return false;
+    }
 }

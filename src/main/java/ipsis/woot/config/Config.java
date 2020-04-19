@@ -4,6 +4,7 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import ipsis.woot.modules.anvil.AnvilConfiguration;
 import ipsis.woot.modules.factory.FactoryConfiguration;
+import ipsis.woot.modules.generator.GeneratorConfiguration;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.layout.LayoutConfiguration;
 import ipsis.woot.simulator.MobSimulatorConfiguration;
@@ -30,6 +31,7 @@ public class Config {
         AnvilConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         FactoryConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         InfuserConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
+        GeneratorConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         LayoutConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         MobSimulatorConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         SqueezerConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);

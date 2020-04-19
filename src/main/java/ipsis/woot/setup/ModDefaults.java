@@ -31,6 +31,16 @@ public final class ModDefaults {
         public static final int INFUSER_ENERGY_PER_TICK_DEF = 20;
     }
 
+    public static final class Generator {
+        public static final int CONATUS_GEN_INPUT_TANK_CAPACITY_DEF = 10000;
+        public static final int CONATUS_GEN_OUTPUT_TANK_CAPACITY_DEF = 10000;
+        public static final int CONATUS_GEN_MAX_ENERGY_DEF = 10000;
+        public static final int CONATUS_GEN_MAX_ENERGY_RX_DEF = 100;
+        public static final int CONATUS_GEN_MAX_ENERGY_PER_TICK_DEF = 20;
+        public static final int CONATUS_GEN_RECIPE_ENERGY_DEF = 1000;
+
+    }
+
     public static final class Factory {
         public static final int MASS_COUNT_DEF = 1;
         public static final int SPAWN_TICKS_DEF = 16 * 20;

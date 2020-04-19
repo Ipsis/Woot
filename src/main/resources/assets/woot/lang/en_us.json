@@ -39,6 +39,7 @@
   "block.woot.anvil": "Anvil",
   "block.woot.squeezer": "Squeezer",
   "block.woot.enchsqueezer": "Enchantment Squeezer",
+  "block.woot.conatusgenerator": "Conatus Convertor",
   "block.woot.infuser": "Infuser",
   "block.woot.creative_power": "Creative Power (Dev)",
 
@@ -163,5 +164,6 @@
   # Gui
   "gui.woot.infuser.name": "Infuser",
   "gui.woot.enchsqueezer.name": "Enchantment Squeezer",
-  "gui.woot.squeezer.name": "Dye Squeezer"
+  "gui.woot.squeezer.name": "Dye Squeezer",
+  "gui.woot.conatusgenerator.name": "Conatus Convertor"
 }

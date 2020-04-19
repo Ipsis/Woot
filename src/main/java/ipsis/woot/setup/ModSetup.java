@@ -10,6 +10,7 @@ import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.generator.GeneratorSetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.layout.LayoutSetup;
@@ -58,6 +59,7 @@ public class ModSetup {
         ToolsSetup.register();
         DebugSetup.register();
         GenericSetup.register();
+        GeneratorSetup.register();
     }
 
     public void commonSetup(FMLCommonSetupEvent e) {

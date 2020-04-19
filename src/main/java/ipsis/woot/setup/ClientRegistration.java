@@ -4,6 +4,8 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.anvil.client.AnvilTileEntitySpecialRenderer;
 import ipsis.woot.modules.factory.layout.Layout;
+import ipsis.woot.modules.generator.GeneratorSetup;
+import ipsis.woot.modules.generator.client.ConatusGeneratorScreen;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.infuser.items.DyeCasingItem;
@@ -42,6 +44,7 @@ public class ClientRegistration {
         ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), DyeSqueezerScreen::new);
         ScreenManager.registerFactory(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_CONTAINER.get(), EnchantSqueezerScreen::new);
         ScreenManager.registerFactory(InfuserSetup.INFUSER_BLOCK_CONTAINER.get(), InfuserScreen::new);
+        ScreenManager.registerFactory(GeneratorSetup.CONATUS_GENERATOR_BLOCK_CONTAINER.get(), ConatusGeneratorScreen::new);
 
         ItemColors items = Minecraft.getInstance().getItemColors();
         items.register((s, t) -> ((DyePlateItem)s.getItem()).getColor().getColorValue(), InfuserSetup.WHITE_DYE_PLATE_ITEM.get());

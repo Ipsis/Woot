@@ -8,6 +8,7 @@ import ipsis.woot.commands.ModCommands;
 import ipsis.woot.mod.ModFiles;
 import ipsis.woot.modules.anvil.AnvilRecipes;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
+import ipsis.woot.modules.generator.GeneratorRecipes;
 import ipsis.woot.modules.infuser.InfuserRecipes;
 import ipsis.woot.simulator.MobSimulatorSetup;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
@@ -133,6 +134,7 @@ public class ForgeEventHandlers {
         SqueezerRecipes.load(event.getServer().getRecipeManager());
         AnvilRecipes.load(event.getServer().getRecipeManager());
         InfuserRecipes.load(event.getServer().getRecipeManager());
+        GeneratorRecipes.load(event.getServer().getRecipeManager());
     }
 
     @SubscribeEvent

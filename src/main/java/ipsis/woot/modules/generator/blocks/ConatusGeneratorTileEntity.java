@@ -1,6 +1,7 @@
 package ipsis.woot.modules.generator.blocks;
 
 import ipsis.woot.crafting.ConatusGeneratorRecipe;
+import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.modules.generator.GeneratorConfiguration;
 import ipsis.woot.modules.generator.GeneratorRecipes;
 import ipsis.woot.modules.generator.GeneratorSetup;
@@ -171,6 +172,13 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     public int getProgress() { return calculateProgress(); }
     public int getClientProgress() { return progress; }
     public void setProgress(int v) { progress = v; }
+
+    private FluidStack clientInTank = FluidStack.EMPTY;
+    public FluidStack getClientInTank() { return clientInTank; }
+    public void setClientInTank(FluidStack fluidStack) { clientInTank = fluidStack; }
+    private FluidStack clientOutTank = FluidStack.EMPTY;
+    public FluidStack getClientOutTank() { return clientOutTank; }
+    public void setClientOutTank(FluidStack fluidStack) { clientOutTank = fluidStack; }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -231,12 +239,12 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         if (outputTank.map(h -> {
             int amount = currRecipe.getOutputFluid().getAmount();
             int filled = h.fill(new FluidStack(currRecipe.getOutputFluid(), amount), IFluidHandler.FluidAction.SIMULATE);
-            return amount == filled;
+            return amount != filled;
         }).orElse(false)) {
             return false;
         }
 
-        return false;
+        return true;
     }
 
     @Override
@@ -278,6 +286,12 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         }
     }
 
+    public FluidStackPacket getFluidStackPacket() {
+        return new FluidStackPacket(
+                inputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY),
+                outputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+    }
+
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -295,7 +309,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     }
 
     public void dropContents(World world, BlockPos pos) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             ItemStack itemStack = inputSlots.getStackInSlot(i);
             if (!itemStack.isEmpty()) {
                 InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);

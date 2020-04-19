@@ -30,10 +30,12 @@ public class FluidStackPacket {
         FluidStackPacket pkt = new FluidStackPacket();
         int stacks = buf.readInt();
         if (stacks > 0) {
-            if (buf.readBoolean() == true)
-                pkt.fluidStackList.add(FluidStack.readFromPacket(buf));
-            else
-                pkt.fluidStackList.add(FluidStack.EMPTY);
+            for (int i = 0; i < stacks; i++) {
+                if (buf.readBoolean() == true)
+                    pkt.fluidStackList.add(FluidStack.readFromPacket(buf));
+                else
+                    pkt.fluidStackList.add(FluidStack.EMPTY);
+            }
         }
         return pkt;
     }

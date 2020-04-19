@@ -218,9 +218,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
 
         ConatusGeneratorRecipe finishedRecipe = currRecipe;
 
-        if (finishedRecipe.hasCatalyst())
-            inputSlots.extractItem(INPUT_SLOT, finishedRecipe.getCatalyst().getCount(), false);
-
+        inputSlots.extractItem(INPUT_SLOT, finishedRecipe.getCatalyst().getCount(), false);
         inputTank.ifPresent(f -> f.drain(finishedRecipe.getInputFluid().getAmount(),
                 IFluidHandler.FluidAction.EXECUTE));
 
@@ -260,11 +258,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         if (currRecipe == null)
             return false;
 
-        if (currRecipe.hasCatalyst())
-            return currRecipe.hasCatalyst() &&
-                    currRecipe.getCatalyst().getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
-
-        return true;
+        return currRecipe.getCatalyst().getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
     }
 
     @Override

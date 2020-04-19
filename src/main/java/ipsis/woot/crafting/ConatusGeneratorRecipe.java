@@ -25,7 +25,6 @@ public class ConatusGeneratorRecipe {
         this.energy = energy;
     }
 
-    public boolean hasCatalyst() { return !catalyst.isEmpty(); }
     public FluidStack getInputFluid() { return this.inputFluid; }
     public FluidStack getOutputFluid() { return this.outputFluid; }
     public int getEnergy() { return this.energy; }
@@ -35,10 +34,8 @@ public class ConatusGeneratorRecipe {
         if (input.isEmpty())
             return false;
 
-        if (hasCatalyst()) {
-            if (itemStack.isEmpty() || itemStack.getItem() != catalyst.getItem() || itemStack.getCount() < catalyst.getCount())
-                return false;
-        }
+        if (itemStack.isEmpty() || itemStack.getItem() != catalyst.getItem() || itemStack.getCount() < catalyst.getCount())
+            return false;
 
         return input.isFluidEqual(inputFluid) && input.getAmount() >= inputFluid.getAmount();
     }

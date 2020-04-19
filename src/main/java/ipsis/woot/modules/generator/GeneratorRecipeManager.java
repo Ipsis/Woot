@@ -32,8 +32,7 @@ public class GeneratorRecipeManager {
 
         for (ConatusGeneratorRecipe recipe : recipes) {
             ConatusGeneratorRecipe.addValidInput(recipe.getInputFluid());
-            if (recipe.hasCatalyst())
-                ConatusGeneratorRecipe.addValidCatalyst(recipe.getCatalyst());
+            ConatusGeneratorRecipe.addValidCatalyst(recipe.getCatalyst());
         }
     }
 

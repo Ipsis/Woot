@@ -15,6 +15,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
@@ -118,6 +119,60 @@ public class ConatusGeneratorContainer extends WootContainer implements TankPack
         } catch (Throwable e) {
             Woot.setup.getLogger().error("Reflection of container listener failed");
         }
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(PlayerEntity playerEntity, int index) {
+
+        // 0 input slot
+        // 1-> 27 player
+        // 28 -> 36 hotbar
+        // NB: mergeItemStack minIndex(inclusive), maxIndex(exclusive)
+        final int LAST_MACHINE_SLOT = 0;
+        final int FIRST_PLAYER_SLOT = 1;
+        final int LAST_PLAYER_SLOT = FIRST_PLAYER_SLOT + 27 - 1;
+        final int FIRST_HOTBAR_SLOT = LAST_PLAYER_SLOT + 1;
+        final int LAST_HOTBAR_SLOT = FIRST_HOTBAR_SLOT + 9 - 1;
+
+        ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack stack = slot.getStack();
+            itemStack = stack.copy();
+            if (index <= LAST_MACHINE_SLOT) {
+                // Machine -> Player/Hotbar
+                if (!this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_HOTBAR_SLOT + 1, true))
+                    return ItemStack.EMPTY;
+                slot.onSlotChange(stack, itemStack);
+            } else {
+                // TODO check if valid input
+                // Player -> input
+                if (!this.mergeItemStack(stack, 0, 1, false))
+                    return ItemStack.EMPTY;
+
+                // No player to machine supported
+                if (index >= FIRST_PLAYER_SLOT && index <= LAST_PLAYER_SLOT) {
+                    // Player -> Hotbar
+                    if (!this.mergeItemStack(stack, FIRST_HOTBAR_SLOT, LAST_HOTBAR_SLOT + 1, false))
+                        return ItemStack.EMPTY;
+                } else if (index <= LAST_HOTBAR_SLOT && !this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_PLAYER_SLOT + 1, false)) {
+                    // Hotbar -> Player
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (stack.isEmpty())
+                slot.putStack(ItemStack.EMPTY);
+            else
+                slot.onSlotChanged();
+
+            if (stack.getCount() == itemStack.getCount())
+                return ItemStack.EMPTY;
+
+            slot.onTake(playerEntity, stack);
+        }
+
+        return itemStack;
     }
 
     @Override

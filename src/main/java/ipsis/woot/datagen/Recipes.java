@@ -24,5 +24,6 @@ public class Recipes extends RecipeProvider {
         Layout.registerRecipes(consumer);
         Oracle.registerRecipes(consumer);
         Squeezer.registerRecipes(consumer);
+        ConatusGenerator.registerRecipes(consumer);
     }
 }

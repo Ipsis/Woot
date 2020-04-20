@@ -2,7 +2,6 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.*;
-import ipsis.woot.modules.generator.GeneratorRecipeManager;
 import ipsis.woot.modules.generator.client.ConatusGeneratorScreen;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
@@ -14,7 +13,6 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
@@ -57,6 +55,7 @@ public class WootJeiPlugin implements IModPlugin {
         List<IRecipe> dyeRecipes = new ArrayList<>();
         List<IRecipe> anvilRecipes = new ArrayList<>();
         List<IRecipe> infuserRecipes = new ArrayList<>();
+        List<IRecipe> conatusGenRecipes = new ArrayList<>();
         for (IRecipe recipe : recipeManager.getRecipes()) {
             if (recipe instanceof DyeSqueezerRecipe) {
                 dyeRecipes.add(recipe);
@@ -67,12 +66,14 @@ public class WootJeiPlugin implements IModPlugin {
                 infuserRecipes.add(r);
                 if (r.getFluidInput().getAmount() > maxInfuserRecipeMb)
                     maxInfuserRecipeMb = r.getFluidInput().getAmount();
+            } else if (recipe instanceof ConatusGeneratorRecipe) {
+                conatusGenRecipes.add(recipe);
             }
         }
         registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);
         registration.addRecipes(anvilRecipes, AnvilRecipeCategory.UID);
         registration.addRecipes(infuserRecipes, InfuserRecipeCategory.UID);
-        registration.addRecipes(GeneratorRecipeManager.getRecipes(), ConatusGeneratorRecipeCategory.UID);
+        registration.addRecipes(conatusGenRecipes, ConatusGeneratorRecipeCategory.UID);
 
         /**
          * Enchanted books

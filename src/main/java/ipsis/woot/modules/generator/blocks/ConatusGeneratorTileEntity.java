@@ -4,7 +4,6 @@ import ipsis.woot.crafting.ConatusGeneratorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.generator.GeneratorConfiguration;
-import ipsis.woot.modules.generator.GeneratorRecipeManager;
 import ipsis.woot.modules.generator.GeneratorSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
@@ -12,6 +11,7 @@ import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -38,6 +38,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static ipsis.woot.crafting.ConatusGeneratorRecipe.CONATUS_GEN_TYPE;
 
 public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
 
@@ -218,12 +220,12 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
 
         ConatusGeneratorRecipe finishedRecipe = currRecipe;
 
-        inputSlots.extractItem(INPUT_SLOT, finishedRecipe.getCatalyst().getCount(), false);
+        inputSlots.extractItem(INPUT_SLOT, finishedRecipe.getCatalystCount(), false);
         inputTank.ifPresent(f -> f.drain(finishedRecipe.getInputFluid().getAmount(),
                 IFluidHandler.FluidAction.EXECUTE));
 
-        outputTank.ifPresent(f -> f.fill(new FluidStack(finishedRecipe.getOutputFluid(),
-                finishedRecipe.getOutputFluid().getAmount()), IFluidHandler.FluidAction.EXECUTE));
+        outputTank.ifPresent(f -> f.fill(new FluidStack(finishedRecipe.getOutput(),
+                finishedRecipe.getOutput().getAmount()), IFluidHandler.FluidAction.EXECUTE));
         markDirty();
     }
 
@@ -239,8 +241,8 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
 
         // Only start if we can hold the output
         if (outputTank.map(h -> {
-            int amount = currRecipe.getOutputFluid().getAmount();
-            int filled = h.fill(new FluidStack(currRecipe.getOutputFluid(), amount), IFluidHandler.FluidAction.SIMULATE);
+            int amount = currRecipe.getOutput().getAmount();
+            int filled = h.fill(new FluidStack(currRecipe.getOutput(), amount), IFluidHandler.FluidAction.SIMULATE);
             return amount != filled;
         }).orElse(false)) {
             return false;
@@ -258,7 +260,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         if (currRecipe == null)
             return false;
 
-        return currRecipe.getCatalyst().getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
+        return currRecipe.getCatalystCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
     }
 
     @Override
@@ -276,8 +278,12 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
             return;
         }
 
-        for (ConatusGeneratorRecipe recipe : GeneratorRecipeManager.getRecipes()) {
-            if (recipe.matches(inFluid, inputSlots.getStackInSlot(INPUT_SLOT))) {
+        List<ConatusGeneratorRecipe> recipes = world.getRecipeManager().getRecipes(
+                CONATUS_GEN_TYPE,
+                new Inventory(inputSlots.getStackInSlot(INPUT_SLOT)), world);
+
+        for (ConatusGeneratorRecipe recipe : recipes) {
+            if (recipe.getInputFluid().isFluidEqual(inFluid)) {
                 currRecipe = recipe;
                 return;
             }

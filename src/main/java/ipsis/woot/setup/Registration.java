@@ -61,6 +61,7 @@ public class Registration {
         event.getRegistry().register(new DyeSqueezerRecipeSerializer<>(DyeSqueezerRecipe::new).setRegistryName(Woot.MODID, "dyesqueezer"));
         event.getRegistry().register(new AnvilRecipeSerializer<>(AnvilRecipe::new).setRegistryName(Woot.MODID, "anvil"));
         event.getRegistry().register(new InfuserRecipeSerializer<>(InfuserRecipe::new).setRegistryName(Woot.MODID, "infuser"));
+        event.getRegistry().register(new ConatusGeneratorRecipeSerializer<>(ConatusGeneratorRecipe::new).setRegistryName(Woot.MODID, "conatusgen"));
 
     }
 }

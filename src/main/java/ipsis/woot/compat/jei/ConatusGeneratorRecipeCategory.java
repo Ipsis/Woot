@@ -34,9 +34,9 @@ public class ConatusGeneratorRecipeCategory implements IRecipeCategory<ConatusGe
 
     @Override
     public void setIngredients(ConatusGeneratorRecipe conatusGeneratorRecipe, IIngredients iIngredients) {
-        iIngredients.setInput(VanillaTypes.ITEM, conatusGeneratorRecipe.getCatalyst());
+        iIngredients.setInputLists(VanillaTypes.ITEM, conatusGeneratorRecipe.getInputs());
         iIngredients.setInput(VanillaTypes.FLUID, conatusGeneratorRecipe.getInputFluid());
-        iIngredients.setOutput(VanillaTypes.FLUID, conatusGeneratorRecipe.getOutputFluid());
+        iIngredients.setOutput(VanillaTypes.FLUID, conatusGeneratorRecipe.getOutput());
     }
 
     @Override

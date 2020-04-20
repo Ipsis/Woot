@@ -1,44 +1,68 @@
 package ipsis.woot.crafting;
 
+import com.google.gson.JsonObject;
 import ipsis.woot.setup.ModDefaults;
+import ipsis.woot.util.FluidStackHelper;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ObjectHolder;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class ConatusGeneratorRecipe {
+public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
 
+    private final Ingredient catalyst;
+    private final int catalystCount;
     private final FluidStack inputFluid;
-    private final ItemStack catalyst;
     private final FluidStack outputFluid;
     private final int energy;
+    private final ResourceLocation id;
+    private final IRecipeType<?> type;
 
-    public ConatusGeneratorRecipe(FluidStack inputFluid, ItemStack catalyst, FluidStack outputFluid) {
-       this(inputFluid, catalyst, outputFluid, ModDefaults.Generator.CONATUS_GEN_RECIPE_ENERGY_DEF);
-    }
-
-    public ConatusGeneratorRecipe(FluidStack inputFluid, ItemStack catalyst, FluidStack outputFluid, int energy) {
-        this.inputFluid = inputFluid.copy();
-        this.outputFluid = outputFluid.copy();
-        this.catalyst = catalyst.copy();
+    public ConatusGeneratorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
+        this.id = id;
+        this.catalyst = catalyst;
+        this.catalystCount = catalystCount;
+        this.inputFluid = fluidStack;
+        this.outputFluid = outputFluid;
+        this.type = CONATUS_GEN_TYPE;
         this.energy = energy;
+
+        inputs.add(Arrays.asList(catalyst.getMatchingStacks()));
     }
 
+    public static ConatusGeneratorRecipe generatorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
+        return new ConatusGeneratorRecipe(id, catalyst, catalystCount, fluidStack, outputFluid, energy);
+    }
+
+    public Ingredient getCatalyst() { return this.catalyst; }
+    public int getCatalystCount() { return this.catalystCount; }
+    public FluidStack getOutput() { return outputFluid.copy(); }
     public FluidStack getInputFluid() { return this.inputFluid; }
-    public FluidStack getOutputFluid() { return this.outputFluid; }
     public int getEnergy() { return this.energy; }
-    public ItemStack getCatalyst() { return this.catalyst; }
 
-    public boolean matches(FluidStack input, ItemStack itemStack) {
-        if (input.isEmpty())
-            return false;
+    public static final IRecipeType<ConatusGeneratorRecipe> CONATUS_GEN_TYPE = IRecipeType.register("conatusgen");
 
-        if (itemStack.isEmpty() || itemStack.getItem() != catalyst.getItem() || itemStack.getCount() < catalyst.getCount())
-            return false;
-
-        return input.isFluidEqual(inputFluid) && input.getAmount() >= inputFluid.getAmount();
+    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
+        if (this.catalyst == null || this.inputFluid.isEmpty() || this.outputFluid.isEmpty())
+            throw new IllegalStateException("No valid catalyst or fluid for recipe " + id);
+        consumer.accept(new Finished(id, catalyst, catalystCount, inputFluid, outputFluid, energy));
     }
+
 
     /**
      * Valid inputs
@@ -69,5 +93,107 @@ public class ConatusGeneratorRecipe {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Jei
+     */
+    private List<List<ItemStack>> inputs = new ArrayList<>();
+    public List<List<ItemStack>> getInputs() { return inputs; }
+
+    /**
+     * IRecipe
+     * Matches catalyst
+     * Any fluid lookup will have to be done externally from all matching recipes
+     */
+    @Override
+    public boolean matches(IInventory inv, World worldIn) {
+        return catalyst.test(inv.getStackInSlot(0));
+    }
+
+    @Override
+    public ItemStack getCraftingResult(IInventory inv) {
+        return null;
+    }
+
+    @Override
+    public boolean canFit(int width, int height) {
+        return false;
+    }
+
+    @Override
+    public ItemStack getRecipeOutput() {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public ResourceLocation getId() {
+        return id;
+    }
+
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+        return null;
+    }
+
+    @Override
+    public IRecipeType<?> getType() {
+        return type;
+    }
+
+    /**
+     * IFinishedRecipe
+     */
+    public static class Finished implements IFinishedRecipe {
+
+        private final ResourceLocation id;
+        private final Ingredient catalyst;
+        private final int catalystcount;
+        private final FluidStack inputFluid;
+        private final FluidStack outputFluid;
+        private final int energy;
+
+        public Finished(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
+            this.id = id;
+            this.catalyst = catalyst;
+            this.catalystcount = catalystCount;
+            this.inputFluid = fluidStack;
+            this.outputFluid = outputFluid;
+            this.energy = energy;
+        }
+
+        @Override
+        public void serialize(JsonObject json) {
+            json.add("catalyst", this.catalyst.serialize());
+            json.addProperty("catalyst_count", this.catalystcount);
+            json.add("input", FluidStackHelper.create(this.inputFluid));
+            json.add("result", FluidStackHelper.create(this.outputFluid));
+            json.addProperty("energy", this.energy);
+        }
+
+        @Override
+        public ResourceLocation getID() {
+            return id;
+        }
+
+        @Override
+        public IRecipeSerializer<?> getSerializer() {
+            return SERIALIZER;
+        }
+
+        @Nullable
+        @Override
+        public JsonObject getAdvancementJson() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public ResourceLocation getAdvancementID() {
+            return null;
+        }
+
+        @ObjectHolder("woot:conatusgen")
+        public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
     }
 }

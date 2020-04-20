@@ -116,17 +116,14 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                consumedUnits = 0;
                markDirty();
 
-               TileEntity te = world.getTileEntity(setup.getCellPos());
-               if (te instanceof CellTileEntityBase) {
-                   LazyOptional<IFluidHandler> hdlr = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
-                   if (hdlr.isPresent()){
-                       IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
-                       FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
-                       if (fluidStack.getAmount() == recipe.getNumUnits()) {
-                           LOGGER.debug("Generate loot");
-                           iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
-                           LootGeneration.get().generate(this, setup);
-                       }
+               LazyOptional<IFluidHandler> hdlr = setup.getCellFluidHandler(world);
+               if (hdlr.isPresent()){
+                   IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
+                   FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
+                   if (fluidStack.getAmount() == recipe.getNumUnits()) {
+                       LOGGER.debug("Generate loot");
+                       iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
+                       LootGeneration.get().generate(this, setup);
                    }
                }
            }
@@ -285,16 +282,11 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     /**
      * Used by the container tracker for the server value
      */
-    private FluidTank getCell() {
-        if (setup != null && world.getTileEntity(setup.getCellPos()) instanceof CellTileEntityBase)
-                return ((CellTileEntityBase)world.getTileEntity(setup.getCellPos())).tank;
-        return new FluidTank(FluidAttributes.BUCKET_VOLUME);
-    }
     public int getFluidAmount() {
-        return getCell().getFluidAmount();
+        return setup != null ? setup.getCellFluidAmount(world) : 0;
     }
     public int getFluidCapacity() {
-        return getCell().getCapacity();
+        return setup != null ? setup.getCellCapacity() : 0;
     }
 
     /**

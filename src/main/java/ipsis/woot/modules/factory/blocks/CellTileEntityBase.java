@@ -63,8 +63,8 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
                 getCapacity()), IFluidHandler.FluidAction.EXECUTE);
     }
 
-    abstract int getCapacity();
-    abstract int getMaxTransfer();
+    public abstract int getCapacity();
+    public abstract int getMaxTransfer();
 
     /**
      * WootDebug

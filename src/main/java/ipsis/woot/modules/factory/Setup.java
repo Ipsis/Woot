@@ -1,7 +1,9 @@
 package ipsis.woot.modules.factory;
 
+import ipsis.woot.modules.factory.blocks.CellTileEntityBase;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.UpgradeTileEntity;
+import ipsis.woot.modules.factory.calculators.MobParameters;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.layout.PatternBlock;
 import ipsis.woot.util.FakeMob;
@@ -9,6 +11,9 @@ import ipsis.woot.util.helper.MathHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +31,7 @@ public class Setup {
     BlockPos importPos;
     BlockPos exportPos;
     BlockPos cellPos;
+    int cellCapacity;
 
     public List<FakeMob> getMobs() { return mobs; }
     public HashMap<PerkType, Integer> getPerks() { return perks; }
@@ -36,6 +42,21 @@ public class Setup {
         int looting = perks.getOrDefault(PerkType.LOOTING, 0);
         return MathHelper.clampLooting(looting);
     }
+
+    public LazyOptional<IFluidHandler> getCellFluidHandler(World world) {
+        return world.getTileEntity(getCellPos()).getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY);
+    }
+
+    public int getCellFluidAmount(World world) {
+        LazyOptional<IFluidHandler> hdlr = getCellFluidHandler(world);
+        if (hdlr.isPresent()) {
+            IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
+            return iFluidHandler.getFluidInTank(0).getAmount();
+        }
+        return 0;
+    }
+
+    public int getCellCapacity() { return this.cellCapacity; }
 
     Setup() {}
 
@@ -50,6 +71,11 @@ public class Setup {
                 setup.exportPos = new BlockPos(pb.getBlockPos());
             } else if (pb.getFactoryComponent() == FactoryComponent.CELL) {
                 setup.cellPos = new BlockPos(pb.getBlockPos());
+                TileEntity te = world.getTileEntity(setup.cellPos);
+                if (te instanceof CellTileEntityBase)
+                    setup.cellCapacity = ((CellTileEntityBase)te).getCapacity();
+                else
+                    setup.cellCapacity = 0;
             } else if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
 
                 // Factory will only be formed if the controller is valid

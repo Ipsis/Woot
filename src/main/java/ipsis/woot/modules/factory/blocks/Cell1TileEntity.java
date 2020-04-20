@@ -10,12 +10,12 @@ public class Cell1TileEntity extends CellTileEntityBase {
     }
 
     @Override
-    int getCapacity() {
+    public int getCapacity() {
         return FactoryConfiguration.CELL_1_CAPACITY.get();
     }
 
     @Override
-    int getMaxTransfer() {
+    public int getMaxTransfer() {
         return FactoryConfiguration.CELL_1_MAX_TRANSFER.get();
     }
 }

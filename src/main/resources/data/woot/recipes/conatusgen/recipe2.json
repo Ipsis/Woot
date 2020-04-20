@@ -1,0 +1,16 @@
+{
+  "type": "woot:conatusgen",
+  "catalyst": {
+    "tag": "forge:rods/blaze"
+  },
+  "catalyst_count": 1,
+  "input": {
+    "fluid": "minecraft:lava",
+    "amount": 1000
+  },
+  "result": {
+    "fluid": "woot:conatus_fluid",
+    "amount": 1000
+  },
+  "energy": 1000
+}

@@ -4,7 +4,7 @@
     "item": "woot:si_plate"
   },
   "augment": {
-    "tag": "forge:ores/iron"
+    "tag": "forge:ingots/iron"
   },
   "infuse": {
     "fluid": "woot:enchant_fluid",

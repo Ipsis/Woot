@@ -23,9 +23,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -283,23 +285,16 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     /**
      * Used by the container tracker for the server value
      */
+    private FluidTank getCell() {
+        if (setup != null && world.getTileEntity(setup.getCellPos()) instanceof CellTileEntityBase)
+                return ((CellTileEntityBase)world.getTileEntity(setup.getCellPos())).tank;
+        return new FluidTank(FluidAttributes.BUCKET_VOLUME);
+    }
     public int getFluidAmount() {
-        if (setup != null) {
-            TileEntity te = world.getTileEntity(setup.getCellPos());
-            if (te instanceof CellTileEntityBase) {
-                return ((CellTileEntityBase) te).tank.getFluidAmount();
-            }
-        }
-        return 0;
+        return getCell().getFluidAmount();
     }
     public int getFluidCapacity() {
-        if (setup != null) {
-            TileEntity te = world.getTileEntity(setup.getCellPos());
-            if (te instanceof CellTileEntityBase) {
-                return ((CellTileEntityBase) te).tank.getCapacity();
-            }
-        }
-        return 0;
+        return getCell().getCapacity();
     }
 
     /**

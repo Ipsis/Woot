@@ -1,6 +1,5 @@
 package ipsis.woot.modules.factory.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.FactoryUIInfo;
 import ipsis.woot.util.WootContainer;
@@ -73,7 +72,18 @@ public class HeartContainer extends WootContainer {
 
             @Override
             public void set(int i) {
-                tileEntity.setFluidAmount(i);
+                tileEntity.setClientFluidAmount(i);
+            }
+        });
+        addIntegerListener(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getFluidCapacity();
+            }
+
+            @Override
+            public void set(int i) {
+                tileEntity.setClientFluidCapacity(i);
             }
         });
     }

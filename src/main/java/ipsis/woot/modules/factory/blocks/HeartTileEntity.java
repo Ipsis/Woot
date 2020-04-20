@@ -1,7 +1,5 @@
 package ipsis.woot.modules.factory.blocks;
 
-import ipsis.woot.Woot;
-import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.calculators.CalculatorVersion1;
 import ipsis.woot.modules.factory.generators.LootGeneration;
@@ -294,18 +292,36 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         }
         return 0;
     }
+    public int getFluidCapacity() {
+        if (setup != null) {
+            TileEntity te = world.getTileEntity(setup.getCellPos());
+            if (te instanceof CellTileEntityBase) {
+                return ((CellTileEntityBase) te).tank.getCapacity();
+            }
+        }
+        return 0;
+    }
 
     /**
      * Used by the container tracker for the client value
      */
-    private int fluidAmount = -1;
-    public int getClientFluidAmount() { return fluidAmount; }
-    public void setFluidAmount(int v) {
+    private int clientFluidAmount = -1;
+    private int clientFluidCapacity = -1;
+    public int getClientFluidAmount() { return clientFluidAmount; }
+    public void setClientFluidAmount(int v) {
         /**
          * Cannot set the client tank as it is in the cell and we don't have the location
          * We use a local tracker for the client value only
          */
-        fluidAmount = v;
+        clientFluidAmount = v;
+    }
+    public int getClientFluidCapacity() { return clientFluidCapacity; }
+    public void setClientFluidCapacity(int v) {
+        /**
+         * Cannot set the client tank as it is in the cell and we don't have the location
+         * We use a local tracker for the client value only
+         */
+        clientFluidCapacity = v;
     }
 
     public FactoryUIInfo createFactoryUIInfo() {

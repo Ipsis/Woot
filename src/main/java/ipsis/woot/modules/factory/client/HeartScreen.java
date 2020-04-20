@@ -128,8 +128,8 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
             renderFluidTankTooltip(mouseX, mouseY,
-                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getClientFluidAmount()),
-                SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get());
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()),
+                container.getTileEntity().getClientFluidCapacity());
     }
 
     /**
@@ -196,7 +196,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             sync = true;
         }
 
-        addInfoLine(0, "Effort", factoryUIInfo.recipeEffort + " mB");
+        addInfoLine(0, "Conatus Fluid", factoryUIInfo.recipeEffort + " mB");
         addInfoLine(1, "Time", factoryUIInfo.recipeTicks + " ticks");
         //addInfoLine(2, "Rate", factoryUIInfo.recipeCostPerTick + " mb/tick");
         addInfoLine(3, "Progress", container.getProgress() + "%");
@@ -237,7 +237,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 TANK_RY - TANK_LY + 1,
                 TANK_RX - TANK_LX + 1,
                 container.getTileEntity().getClientFluidAmount(),
-                FactoryConfiguration.CELL_1_CAPACITY.get(),
+                container.getTileEntity().getClientFluidCapacity(),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()));
     }
 

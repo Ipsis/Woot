@@ -56,6 +56,7 @@ public class HeartStaticDataReply {
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseSpawnTicks);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseMassCount);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseFluidCost);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkRateValue);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkEfficiencyValue);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkMassValue);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkXpValue);

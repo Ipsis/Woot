@@ -53,6 +53,7 @@ public class ClientFactorySetup {
             mobParam.baseSpawnTicks = buf.readInt();
             mobParam.baseMassCount = buf.readInt();
             mobParam.baseFluidCost = buf.readInt();
+            mobParam.perkRateValue = buf.readInt();
             mobParam.perkEfficiencyValue = buf.readInt();
             mobParam.perkMassValue = buf.readInt();
             mobParam.perkXpValue = buf.readInt();

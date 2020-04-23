@@ -3,7 +3,9 @@ package ipsis.woot.modules.factory.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.modules.factory.MobParam;
 import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
@@ -191,7 +193,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 }
                 if (!mobInfo.fluidIngredients.isEmpty()) {
                     for (FluidStack fluidStack : mobInfo.fluidIngredients)
-                        tooltip.add(fluidStack.getAmount() + "mb " + fluidStack.toString());
+                        tooltip.add("Ingredient: " + fluidStack.getAmount() + "mb " + fluidStack.toString());
                 }
                 mobElements.get(idx).addDrop(controllerStack, tooltip);
                 mobElements.get(idx).unlock();
@@ -202,6 +204,21 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             for (Perk perk : clientFactorySetup.perks) {
                 ItemStack itemStack = PerkItem.getItemStack(perk);
                 List<String> tooltip = getTooltipFromItem(itemStack);
+                for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
+                    MobParam mobParam = clientFactorySetup.mobParams.get(fakeMob);
+                    EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
+                    if (entityType != null) {
+                        ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+                        if (Perk.EFFICIENCY_PERKS.contains(perk))
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkEfficiencyValue));
+                        else if (Perk.RATE_PERKS.contains(perk))
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkRateValue));
+                        else if (Perk.MASS_PERKS.contains(perk))
+                            tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.perkMassValue));
+                        else if (Perk.XP_PERKS.contains(perk))
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkXpValue));
+                    }
+                }
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);
                 upgradeElements.get(idx).unlock();
                 idx = (idx + 1) % upgradeElements.size();

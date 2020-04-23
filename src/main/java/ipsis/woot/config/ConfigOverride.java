@@ -99,12 +99,24 @@ public class ConfigOverride {
             return FactoryConfiguration.UNITS_PER_HEALTH.get();
         if (key == OverrideKey.SHARD_KILLS)
             return FactoryConfiguration.MOB_SHARD_KILLS.get();
+        if (key == OverrideKey.PERK_EFFICIENCY_1_REDUCTION)
+            return FactoryConfiguration.EFFICIENCY_1.get();
+        if (key == OverrideKey.PERK_EFFICIENCY_2_REDUCTION)
+            return FactoryConfiguration.EFFICIENCY_2.get();
+        if (key == OverrideKey.PERK_EFFICIENCY_3_REDUCTION)
+            return FactoryConfiguration.EFFICIENCY_3.get();
         if (key == OverrideKey.PERK_MASS_1_COUNT)
             return FactoryConfiguration.MASS_COUNT_1.get();
         if (key == OverrideKey.PERK_MASS_2_COUNT)
             return FactoryConfiguration.MASS_COUNT_2.get();
         if (key == OverrideKey.PERK_MASS_3_COUNT)
             return FactoryConfiguration.MASS_COUNT_3.get();
+        if (key == OverrideKey.PERK_RATE_1_REDUCTION)
+            return FactoryConfiguration.RATE_1.get();
+        if (key == OverrideKey.PERK_RATE_2_REDUCTION)
+            return FactoryConfiguration.RATE_2.get();
+        if (key == OverrideKey.PERK_RATE_3_REDUCTION)
+            return FactoryConfiguration.RATE_3.get();
 
         return -1;
     }

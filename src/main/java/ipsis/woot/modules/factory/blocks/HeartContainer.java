@@ -1,7 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.factory.FactoryUIInfo;
+import ipsis.woot.modules.factory.client.ClientFactorySetup;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,23 +28,14 @@ public class HeartContainer extends WootContainer {
         return tileEntity.getPos();
     }
 
-    public FactoryUIInfo getFactoryUIInfo() {
-        return tileEntity.factoryUIInfo;
-    }
-
     public int getProgress() {
-        return (int)((100.0F / tileEntity.factoryUIInfo.recipeTicks * tileEntity.getClientProgress()));
+        return (int)((100.0F / tileEntity.clientFactorySetup.recipeTicks * tileEntity.getClientProgress()));
     }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
                 playerIn, FactorySetup.HEART_BLOCK.get());
-    }
-
-    public void handleUIInfo(FactoryUIInfo factoryUIInfo) {
-        // Static data values
-        tileEntity.setFromUIInfo(factoryUIInfo);
     }
 
     @Override
@@ -89,4 +80,11 @@ public class HeartContainer extends WootContainer {
     }
 
     public  HeartTileEntity getTileEntity() { return tileEntity; }
+
+    /**
+     * Client sync
+     */
+    public void handleStaticDataReply(ClientFactorySetup clientFactorySetup) {
+        tileEntity.setClientFactorySetup(clientFactorySetup);
+    }
 }

@@ -3,7 +3,6 @@ package ipsis.woot.modules.factory;
 import ipsis.woot.modules.factory.blocks.CellTileEntityBase;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.UpgradeTileEntity;
-import ipsis.woot.modules.factory.calculators.MobParameters;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.layout.PatternBlock;
 import ipsis.woot.util.FakeMob;

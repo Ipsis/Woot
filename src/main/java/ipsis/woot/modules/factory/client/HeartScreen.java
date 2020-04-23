@@ -3,29 +3,29 @@ package ipsis.woot.modules.factory.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
-import ipsis.woot.modules.factory.FactoryConfiguration;
-import ipsis.woot.modules.factory.FactoryUIInfo;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.items.PerkItem;
-import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
+import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootContainerScreen;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,20 +144,31 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 (float)(xSize / 2 - font.getStringWidth(title.getFormattedText()) / 2),
                 6.0F, TEXT_COLOR); */
 
-        FactoryUIInfo factoryUIInfo = container.getFactoryUIInfo();
-        if (factoryUIInfo == null)
+        ClientFactorySetup clientFactorySetup = container.getTileEntity().clientFactorySetup;
+        if (clientFactorySetup == null)
             return;
 
         if (!sync) {
             int idx = 0;
-            for (ItemStack itemStack : factoryUIInfo.drops) {
-                List<String> tooltip = getTooltipFromItem(itemStack);
-                tooltip.add(String.format("Drop chance: %.2f%%", itemStack.getCount() / 100.0F));
-                stackElements.get(idx).addDrop(itemStack, tooltip);
-                idx = (idx + 1) % stackElements.size();
+
+            // Drops
+            for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
+                ClientFactorySetup.Mob mobInfo = clientFactorySetup.mobInfo.get(fakeMob);
+                for (ItemStack itemStack : mobInfo.drops) {
+                    List<String> tooltip = getTooltipFromItem(itemStack);
+                    EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
+                    if (entityType != null) {
+                        ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+                        tooltip.add(String.format("%s : %.2f%%",
+                                        iTextComponent.getFormattedText(),
+                                        itemStack.getCount() / 100.0F));
+                    }
+                    stackElements.get(idx).addDrop(itemStack, tooltip);
+                    idx = (idx + 1) % stackElements.size();
+                }
             }
 
-            if (factoryUIInfo.factoryTier != Tier.TIER_1) {
+            if (clientFactorySetup.tier != Tier.TIER_1) {
                 for (int i = 0; i < 4; i++) {
                     mobElements.get(i).unlock();
                     upgradeElements.get(i).unlock();
@@ -168,26 +179,28 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             }
 
             idx = 0;
-            for (FactoryUIInfo.Mob mob : factoryUIInfo.mobInfo) {
-                List<String> tooltip = getTooltipFromItem(mob.controller);
-                if (!mob.itemIngredients.isEmpty()) {
-                    for (ItemStack itemStack : mob.itemIngredients) {
+            for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
+                ItemStack controllerStack = ControllerTileEntity.getItemStack(fakeMob);
+                List<String> tooltip = getTooltipFromItem(controllerStack);
+                ClientFactorySetup.Mob mobInfo = clientFactorySetup.mobInfo.get(fakeMob);
+                if (!mobInfo.itemIngredients.isEmpty()) {
+                    for (ItemStack itemStack : mobInfo.itemIngredients) {
                         ITextComponent itextcomponent = (new StringTextComponent("")).appendSibling(itemStack.getDisplayName()).applyTextStyle(itemStack.getRarity().color);
                         tooltip.add("Ingredient: " + itemStack.getCount() + " * " + itextcomponent.getFormattedText());
                     }
                 }
-                if (!mob.fluidIngredients.isEmpty()) {
-                    for (FluidStack fluidStack : mob.fluidIngredients)
+                if (!mobInfo.fluidIngredients.isEmpty()) {
+                    for (FluidStack fluidStack : mobInfo.fluidIngredients)
                         tooltip.add(fluidStack.getAmount() + "mb " + fluidStack.toString());
                 }
-                mobElements.get(idx).addDrop(mob.controller, tooltip);
+                mobElements.get(idx).addDrop(controllerStack, tooltip);
                 mobElements.get(idx).unlock();
                 idx++;
             }
 
             idx = 0;
-            for (Perk upgrade : factoryUIInfo.upgrades) {
-                ItemStack itemStack = PerkItem.getItemStack(upgrade);
+            for (Perk perk : clientFactorySetup.perks) {
+                ItemStack itemStack = PerkItem.getItemStack(perk);
                 List<String> tooltip = getTooltipFromItem(itemStack);
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);
                 upgradeElements.get(idx).unlock();
@@ -196,9 +209,8 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             sync = true;
         }
 
-        addInfoLine(0, "Conatus Fluid", factoryUIInfo.recipeEffort + " mB");
-        addInfoLine(1, "Time", factoryUIInfo.recipeTicks + " ticks");
-        //addInfoLine(2, "Rate", factoryUIInfo.recipeCostPerTick + " mb/tick");
+        addInfoLine(0, "Conatus Fluid", clientFactorySetup.recipeFluid + " mB");
+        addInfoLine(1, "Time", clientFactorySetup.recipeTicks + " ticks");
         addInfoLine(3, "Progress", container.getProgress() + "%");
 
 
@@ -216,7 +228,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         int INFO_Y = 10;
         int TEXT_HEIGHT = 10;
         font.drawString(tag, INFO_X, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
-        font.drawString(value, INFO_X + 60, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
+        font.drawString(value, INFO_X + 80, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
     }
 
     @Override

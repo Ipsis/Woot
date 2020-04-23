@@ -1,95 +1,96 @@
 package ipsis.woot.modules.factory.network;
 
 import io.netty.buffer.ByteBuf;
-import ipsis.woot.modules.factory.FactoryUIInfo;
+import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.Perk;
-import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
+import ipsis.woot.modules.factory.blocks.HeartTileEntity;
+import ipsis.woot.modules.factory.client.ClientFactorySetup;
+import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.simulator.SimulatedMobDropSummary;
+import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
-/**
- * Server -> Client
- */
 public class HeartStaticDataReply {
 
-    public FactoryUIInfo info;
+    public FormedSetup formedSetup;
+    public HeartTileEntity.Recipe recipe;
+    public ClientFactorySetup clientFactorySetup;
 
     public HeartStaticDataReply() { }
-
-    public HeartStaticDataReply(FactoryUIInfo factoryUIInfo) {
-        this.info = factoryUIInfo;
+    public HeartStaticDataReply(FormedSetup formedSetup, HeartTileEntity.Recipe recipe) {
+        this.formedSetup = formedSetup;
+        this.recipe = recipe;
     }
 
     public static HeartStaticDataReply fromBytes(ByteBuf buf) {
-        FactoryUIInfo factoryUIInfo = new FactoryUIInfo();
-        factoryUIInfo.factoryTier = Tier.byIndex(buf.readInt());
-        factoryUIInfo.recipeEffort = buf.readInt();
-        factoryUIInfo.recipeTicks = buf.readInt();
-        factoryUIInfo.recipeCostPerTick = buf.readInt();
-        factoryUIInfo.effortStored = buf.readInt();
-        factoryUIInfo.mobCount = buf.readInt();
-
-        int numUpgrades = buf.readInt();
-        for (int i = 0; i < numUpgrades; i++)
-            factoryUIInfo.upgrades.add(Perk.getPerks(buf.readInt()));
-
-        int numDrops = buf.readInt();
-        for (int i = 0; i < numDrops; i++)
-            factoryUIInfo.drops.add(NetworkTools.readItemStack(buf));
-
-        int numMobs = buf.readInt();
-        for (int i = 0; i < numMobs; i++) {
-            ItemStack controller = NetworkTools.readItemStack(buf);
-            factoryUIInfo.mobs.add(controller);
-            FactoryUIInfo.Mob mob = new FactoryUIInfo.Mob(controller);
-            int numItemIng = buf.readInt();
-            for (int j = 0; j < numItemIng; j++)
-                mob.itemIngredients.add(NetworkTools.readItemStack(buf));
-            int numFluidIng = buf.readInt();
-            for (int j = 0; j < numItemIng; j++) {
-            }
-            factoryUIInfo.mobInfo.add(mob);
-        }
-
-        return new HeartStaticDataReply(factoryUIInfo);
+        HeartStaticDataReply pkt = new HeartStaticDataReply();
+        pkt.clientFactorySetup = ClientFactorySetup.fromBytes(buf);
+        return pkt;
     }
 
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(info.factoryTier.ordinal());
-        buf.writeInt(info.recipeEffort);
-        buf.writeInt(info.recipeTicks);
-        buf.writeInt(info.recipeCostPerTick);
-        buf.writeInt(info.effortStored);
-        buf.writeInt(info.mobCount);
 
-        buf.writeInt(info.upgrades.size());
-        for (Perk upgrade : info.upgrades)
-            buf.writeInt(upgrade.ordinal());
+        buf.writeInt(formedSetup.getTier().ordinal());
+        buf.writeInt(formedSetup.getCellCapacity());
+        buf.writeInt(formedSetup.getCellFluidAmount());
+        buf.writeInt(formedSetup.getLootingLevel());
 
-        buf.writeInt(info.drops.size());
-        for (ItemStack itemStack : info.drops)
-            NetworkTools.writeItemStack(buf, itemStack);
+        buf.writeInt(recipe.getNumTicks());
+        buf.writeInt(recipe.getNumUnits());
 
-        boolean ingTest = true;
-        buf.writeInt(info.mobs.size());
-        for (ItemStack itemStack : info.mobs) {
-            NetworkTools.writeItemStack(buf, itemStack);
-            if (ingTest) {
-                buf.writeInt(1); // number of item ingredients
-                NetworkTools.writeItemStack(buf, new ItemStack(Items.EMERALD, 4));
-                buf.writeInt(0); // number of fluid ingredients
-                ingTest = false;
+        buf.writeInt(formedSetup.getAllMobs().size());
+        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
+            NetworkTools.writeString(buf, fakeMob.toString());
+
+            // Params
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseSpawnTicks);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseMassCount);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseFluidCost);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkEfficiencyValue);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkMassValue);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkXpValue);
+
+            if (recipe.items.containsKey(fakeMob)) {
+                buf.writeInt(recipe.items.get(fakeMob).size());
+                for (ItemStack itemStack : recipe.items.get(fakeMob))
+                    NetworkTools.writeItemStack(buf, itemStack);
             } else {
                 buf.writeInt(0);
+            }
+
+            if (recipe.fluids.containsKey(fakeMob)) {
+                buf.writeInt(0);
+                /*
+                buf.writeInt(recipe.fluids.get(fakeMob).size());
+                for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
+                    NetworkTools.writeItemStack(buf, itemStack); */
+            } else {
                 buf.writeInt(0);
             }
+
+            List<SimulatedMobDropSummary> drops = MobSimulator.getInstance().getDropSummary(fakeMob);
+            buf.writeInt(drops.size());
+            for (SimulatedMobDropSummary drop : drops) {
+                ItemStack itemStack = drop.itemStack.copy();
+                itemStack.setCount((int)(drop.chanceToDrop[formedSetup.getLootingLevel()] * 100.0F));
+                NetworkTools.writeItemStack(buf, itemStack);
+            }
+        }
+
+        buf.writeInt(formedSetup.getAllPerks().size());
+        for (Map.Entry<PerkType, Integer> e : formedSetup.getAllPerks().entrySet()) {
+            Perk perk = Perk.getPerks(e.getKey(), e.getValue());
+            buf.writeInt(perk.ordinal());
         }
     }
 
@@ -98,7 +99,7 @@ public class HeartStaticDataReply {
         if (clientPlayerEntity != null) {
             ctx.get().enqueueWork(() -> {
                 if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof HeartContainer) {
-                    ((HeartContainer) clientPlayerEntity.openContainer).handleUIInfo(info);
+                    ((HeartContainer) clientPlayerEntity.openContainer).handleStaticDataReply(clientFactorySetup);
                     ctx.get().setPacketHandled(true);
                 }
             });

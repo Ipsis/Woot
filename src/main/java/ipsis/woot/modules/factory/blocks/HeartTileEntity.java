@@ -1,16 +1,20 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.modules.factory.*;
-import ipsis.woot.modules.factory.calculators.CalculatorVersion1;
+import ipsis.woot.modules.factory.calculators.CalculatorVersion2;
+import ipsis.woot.modules.factory.client.ClientFactorySetup;
 import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.multiblock.MultiBlockMaster;
+import ipsis.woot.modules.factory.network.HeartStaticDataReply;
 import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -23,15 +27,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,7 +50,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      * Setup will only exist if the layout is formed
      */
     Layout layout;
-    Setup setup;
+    FormedSetup formedSetup;
     Recipe recipe;
     TickTracker tickTracker = new TickTracker();
     boolean loadedFromNBT = false;
@@ -91,10 +94,10 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        layout.tick(tickTracker, this);
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
-               setup = Setup.createFromLayout(world, layout);
+               formedSetup = FormedSetup.createFromValidLayout(world, layout);
 
-               setup.getMobs().forEach(m -> MobSimulator.getInstance().learn(m));
-               recipe = CalculatorVersion1.calculate(setup, world);
+               formedSetup.getAllMobs().forEach(m -> MobSimulator.getInstance().learn(m));
+               recipe = CalculatorVersion2.calculate(formedSetup);
 
                // Restore the progress on load
                if (loadedFromNBT) {
@@ -116,14 +119,14 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                consumedUnits = 0;
                markDirty();
 
-               LazyOptional<IFluidHandler> hdlr = setup.getCellFluidHandler(world);
+               LazyOptional<IFluidHandler> hdlr = formedSetup.getCellFluidHandler();
                if (hdlr.isPresent()){
                    IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
                    FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
                    if (fluidStack.getAmount() == recipe.getNumUnits()) {
                        LOGGER.debug("Generate loot");
                        iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
-                       LootGeneration.get().generate(this, setup);
+                       LootGeneration.get().generate(this, formedSetup);
                    }
                }
            }
@@ -217,6 +220,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
         int numTicks;
         int numUnits;
+        public HashMap<FakeMob, List<ItemStack>> items = new HashMap<>();
+        public HashMap<FakeMob, List<FluidStack>> fluids = new HashMap<>();
 
         public int getNumTicks() {
             return numTicks;
@@ -236,15 +241,34 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
             this.numUnits = MathHelper.clamp(numUnits, 1, Integer.MAX_VALUE);
         }
 
-        public int getUnitsPerTick() {
-            return MathHelper.clamp(numUnits / numTicks, 1, Integer.MAX_VALUE);
+        public void addItem(FakeMob fakeMob, ItemStack itemStack) {
+            if (!items.containsKey(fakeMob))
+                items.put(fakeMob, new ArrayList<>());
+
+            if (!itemStack.isEmpty())
+                items.get(fakeMob).add(itemStack.copy());
+        }
+
+        public void addFluid(FakeMob fakeMob, FluidStack fluidStack) {
+            if (!fluids.containsKey(fakeMob))
+                fluids.put(fakeMob, new ArrayList<>());
+
+            if (!fluidStack.isEmpty())
+                fluids.get(fakeMob).add(fluidStack.copy());
         }
 
         @Override
         public String toString() {
-            return "u:" + numUnits + "/t:" + numTicks;
+            return "Recipe{" +
+                    "numTicks=" + numTicks +
+                    ", numUnits=" + numUnits +
+                    ", items=" + items.size() +
+                    ", fluids=" + fluids.size() +
+                    '}';
         }
     }
+
+
 
     /**
      * WootDebug
@@ -253,7 +277,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> HeartTileEntity");
         debug.add("      layout: " + layout);
-        debug.add("      setup: " + setup);
+        debug.add("      setup: " + formedSetup);
         debug.add("      recipe: " + recipe);
         debug.add("      consumed: " + consumedUnits);
         return debug;
@@ -283,10 +307,10 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      * Used by the container tracker for the server value
      */
     public int getFluidAmount() {
-        return setup != null ? setup.getCellFluidAmount(world) : 0;
+        return formedSetup != null ? formedSetup.getCellFluidAmount() : 0;
     }
     public int getFluidCapacity() {
-        return setup != null ? setup.getCellCapacity() : 0;
+        return formedSetup != null ? formedSetup.getCellCapacity() : 0;
     }
 
     /**
@@ -311,8 +335,21 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         clientFluidCapacity = v;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public ClientFactorySetup clientFactorySetup;
+
+    @OnlyIn(Dist.CLIENT)
+    public void setClientFactorySetup(ClientFactorySetup clientFactorySetup) {
+        this.clientFactorySetup = clientFactorySetup;
+    }
+
+    public HeartStaticDataReply createStaticDataReply2() {
+        return new HeartStaticDataReply(formedSetup, recipe);
+    }
+
+    /*
     public FactoryUIInfo createFactoryUIInfo() {
-        return FactoryUIInfo.create(setup, recipe);
+        return FactoryUIInfo.create(formedSetup, recipe);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -321,5 +358,5 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     @OnlyIn(Dist.CLIENT)
     public void setFromUIInfo(FactoryUIInfo factoryUIInfo) {
         this.factoryUIInfo = factoryUIInfo;
-    }
+    } */
 }

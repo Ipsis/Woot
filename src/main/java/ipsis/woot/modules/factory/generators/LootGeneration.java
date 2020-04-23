@@ -2,6 +2,7 @@ package ipsis.woot.modules.factory.generators;
 
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
+import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.simulator.MobSimulator;
@@ -29,7 +30,7 @@ public class LootGeneration {
     static LootGeneration INSTANCE;
     static { INSTANCE = new LootGeneration(); }
 
-    public void generate(HeartTileEntity heartTileEntity, Setup setup) {
+    public void generate(HeartTileEntity heartTileEntity, FormedSetup setup) {
 
         /**
          * Get the output options
@@ -46,8 +47,8 @@ public class LootGeneration {
             itemHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
         }
 
-        int looting = setup.getLooting();
-        for (FakeMob mob : setup.getMobs()) {
+        int looting = setup.getLootingLevel();
+        for (FakeMob mob : setup.getAllMobs()) {
             int mobCount = Config.OVERRIDE.getIntegerOrDefault(mob, ConfigOverride.OverrideKey.MASS_COUNT);
             LOGGER.debug("generate: {} * {}", mob, mobCount);
             for (int i = 0; i < mobCount; i++) {

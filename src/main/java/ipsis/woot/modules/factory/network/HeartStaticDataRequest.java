@@ -36,11 +36,12 @@ public class HeartStaticDataRequest {
         if (ctx.get().getSender() != null) {
             ctx.get().enqueueWork(() -> {
                 TileEntity te = ctx.get().getSender().world.getTileEntity(pos);
+                /*
                 if (te instanceof HeartTileEntity) {
                     NetworkChannel.channel.sendTo(new HeartStaticDataReply(((HeartTileEntity) te).createFactoryUIInfo()),
                             ctx.get().getSender().connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
                     ctx.get().setPacketHandled(true);
-                }
+                } */
             });
         }
     }

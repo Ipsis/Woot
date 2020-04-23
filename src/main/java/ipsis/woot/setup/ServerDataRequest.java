@@ -2,7 +2,6 @@ package ipsis.woot.setup;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
-import ipsis.woot.modules.factory.network.HeartStaticDataReply;
 import ipsis.woot.modules.oracle.blocks.OracleTileEntity;
 import ipsis.woot.modules.oracle.network.SimulatedMobDropsSummaryReply;
 import ipsis.woot.modules.oracle.network.SimulatedMobsReply;
@@ -64,7 +63,7 @@ public class ServerDataRequest {
                     }
                 } else if (requestType == Type.HEART_STATIC_DATA) {
                     if (te instanceof HeartTileEntity) {
-                        NetworkChannel.channel.sendTo(new HeartStaticDataReply(((HeartTileEntity) te).createFactoryUIInfo()),
+                        NetworkChannel.channel.sendTo((((HeartTileEntity) te).createStaticDataReply2()),
                                 serverPlayerEntity.connection.netManager,
                                 NetworkDirection.PLAY_TO_CLIENT);
                         ctx.get().setPacketHandled(true);

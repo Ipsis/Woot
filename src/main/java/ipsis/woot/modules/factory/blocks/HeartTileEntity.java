@@ -346,17 +346,4 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     public HeartStaticDataReply createStaticDataReply2() {
         return new HeartStaticDataReply(formedSetup, recipe);
     }
-
-    /*
-    public FactoryUIInfo createFactoryUIInfo() {
-        return FactoryUIInfo.create(formedSetup, recipe);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public FactoryUIInfo factoryUIInfo;
-
-    @OnlyIn(Dist.CLIENT)
-    public void setFromUIInfo(FactoryUIInfo factoryUIInfo) {
-        this.factoryUIInfo = factoryUIInfo;
-    } */
 }

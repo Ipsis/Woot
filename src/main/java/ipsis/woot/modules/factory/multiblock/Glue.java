@@ -30,7 +30,7 @@ public class Glue implements MultiBlockGlue {
     @Override
     public void clearMaster() {
         if (hasMaster()) {
-            LOGGER.debug("clearMaster: {}", te.getPos());
+            //LOGGER.debug("clearMaster: {}", te.getPos());
             this.master = null;
             te.getWorld().setBlockState(te.getPos(),
                     te.getBlockState().with(BlockStateProperties.ATTACHED, false), 3);
@@ -47,7 +47,7 @@ public class Glue implements MultiBlockGlue {
             return;
 
         if (this.master == null || !this.master.equals(master)) {
-            LOGGER.debug("setMaster: {} has a new master {}", te.getPos(), master);
+            //LOGGER.debug("setMaster: {} has a new master {}", te.getPos(), master);
             this.master = master;
             te.getWorld().setBlockState(te.getPos(),
                     te.getBlockState().with(BlockStateProperties.ATTACHED, true), 3);
@@ -60,7 +60,7 @@ public class Glue implements MultiBlockGlue {
     @Override
     public void onGoodbye() {
         if (hasMaster()) {
-            LOGGER.debug("onGoodbye: {} has no master", te.getPos());
+            //LOGGER.debug("onGoodbye: {} has no master", te.getPos());
             master.interrupt();
         }
     }
@@ -68,7 +68,7 @@ public class Glue implements MultiBlockGlue {
     @Override
     public void onHello(World world, BlockPos pos) {
         if (!hasMaster()) {
-            LOGGER.debug("onHello: {} find master", te.getPos());
+            //LOGGER.debug("onHello: {} find master", te.getPos());
             MultiBlockMaster tmpMaster = GlueHelper.findMaster(world, iMultiBlockGlueProvider);
             if (tmpMaster != null)
                 tmpMaster.interrupt();

@@ -28,7 +28,7 @@ public class MultiBlockTracker {
 
     List<BlockPos> blocks = new ArrayList<>();
     public void addEntry(BlockPos pos) {
-        LOGGER.debug("Adding entry at {} to block tracker", pos);
+        //LOGGER.debug("Adding entry at {} to block tracker", pos);
         blocks.add(new BlockPos(pos));
     }
 
@@ -37,13 +37,13 @@ public class MultiBlockTracker {
         if (world.isRemote || blocks.isEmpty())
             return;
 
-        LOGGER.debug("Running multiblock tracker");
+        //LOGGER.debug("Running multiblock tracker");
         Iterator<BlockPos> iter = blocks.iterator();
         while (iter.hasNext()) {
             BlockPos pos = iter.next();
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof MultiBlockGlueProvider) {
-                LOGGER.debug("GlueProvider at {} saying hello", pos);
+                //LOGGER.debug("GlueProvider at {} saying hello", pos);
                 ((MultiBlockGlueProvider) te).getGlue().onHello(world, pos);
                 iter.remove();
             }

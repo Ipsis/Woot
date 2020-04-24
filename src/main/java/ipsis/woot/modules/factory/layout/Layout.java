@@ -40,20 +40,20 @@ public class Layout {
 
         AbsolutePattern rescannedPattern = FactoryScanner.scanForTier(world, pos, facing);
         if (absolutePattern == null && rescannedPattern == null) {
-            LOGGER.debug("was:nothing now:nothing");
+            //LOGGER.debug("was:nothing now:nothing");
         } else if (absolutePattern == null && rescannedPattern != null) {
-            LOGGER.debug("was:nothing now:{}", rescannedPattern);
+            //LOGGER.debug("was:nothing now:{}", rescannedPattern);
             FactoryHelper.connectNew(world, rescannedPattern, master);
             absolutePattern = rescannedPattern;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern == null) {
-            LOGGER.debug("was:{} now:nothing", absolutePattern);
+            //LOGGER.debug("was:{} now:nothing", absolutePattern);
             FactoryHelper.disconnectOld(world, absolutePattern);
             absolutePattern = null;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern != null) {
             if (!FactoryScanner.isPatternEqual(world, absolutePattern, rescannedPattern)) {
-                LOGGER.debug("was:{} now:{}", absolutePattern, rescannedPattern);
+                //LOGGER.debug("was:{} now:{}", absolutePattern, rescannedPattern);
                 FactoryHelper.disconnectOld(world, absolutePattern);
                 FactoryHelper.connectNew(world, rescannedPattern, master);
                 absolutePattern = rescannedPattern;

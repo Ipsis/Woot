@@ -3,7 +3,6 @@ package ipsis.woot.modules.factory.generators;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.FormedSetup;
-import ipsis.woot.modules.factory.Setup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;

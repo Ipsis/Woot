@@ -46,7 +46,7 @@ public class FactoryScanner {
                 break;
 
             AbsolutePattern absolutePattern = scanTier(world, tier, origin, facing);
-            LOGGER.debug("scanForTier: {} {}", tier, absolutePattern == null ? "bad" : "good");
+            //LOGGER.debug("scanForTier: {} {}", tier, absolutePattern == null ? "bad" : "good");
             if (absolutePattern != null)
                 return absolutePattern;
         }
@@ -142,7 +142,7 @@ public class FactoryScanner {
                         } else {
                             // This is a valid controller
                             if (primaryControllerPos.equals(p.getBlockPos())) {
-                                Woot.setup.getLogger().debug("compareToWorld: Found primary controller");
+                                //Woot.setup.getLogger().debug("compareToWorld: Found primary controller");
                                 foundPrimaryController = true;
                                 absolutePattern.addMob(fakeMob);
                             }
@@ -173,7 +173,7 @@ public class FactoryScanner {
         if (pattern1 == null || pattern2 == null)
             return false;
 
-        Woot.setup.getLogger().debug("isPatternEqual: pattern1:{} pattern2:{}", pattern1, pattern2);
+        //Woot.setup.getLogger().debug("isPatternEqual: pattern1:{} pattern2:{}", pattern1, pattern2);
         if (pattern1.tier != pattern2.tier)
             return false;
 
@@ -191,7 +191,7 @@ public class FactoryScanner {
             if (!pattern2.perks.contains(p))
                 return false;
 
-        Woot.setup.getLogger().debug("isPatternEqual: old and new patterns are equal");
+        //Woot.setup.getLogger().debug("isPatternEqual: old and new patterns are equal");
         return true;
     }
 }

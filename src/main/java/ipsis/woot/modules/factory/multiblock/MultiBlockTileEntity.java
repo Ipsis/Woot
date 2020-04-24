@@ -32,7 +32,7 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     public void validate() {
         super.validate();
         if (!world.isRemote) {
-            LOGGER.debug("validate");
+            //LOGGER.debug("validate");
             MultiBlockTracker.get().addEntry(pos);
         }
     }
@@ -41,7 +41,7 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     public void remove() {
         super.remove();
         if (!world.isRemote) {
-            LOGGER.debug("remove");
+            //LOGGER.debug("remove");
             glue.onGoodbye();
         }
     }
@@ -50,7 +50,7 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
         if (!world.isRemote) {
-            LOGGER.debug("onChunkUnloaded");
+            //LOGGER.debug("onChunkUnloaded");
             glue.onGoodbye();
         }
     }

@@ -1,5 +1,6 @@
 package ipsis.woot.modules.generator.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.crafting.ConatusGeneratorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
@@ -18,6 +19,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -59,6 +61,33 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
                 return false;
             }
         };
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (world.isRemote)
+            return;
+
+        if (outputTank.map(FluidTank::isEmpty).orElse(true))
+            return;
+
+        for (Direction direction : Direction.values()) {
+            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
+            if (lazyOptional.isPresent()) {
+                IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
+                int amount = outputTank.map(FluidTank::getFluidAmount).orElse(0);
+                if (amount > 0) {
+                    int filled = iFluidHandler.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
+                    outputTank.ifPresent(f -> f.drain(filled, IFluidHandler.FluidAction.EXECUTE));
+                }
+            }
+        }
     }
 
     //-------------------------------------------------------------------------

@@ -12,7 +12,8 @@ public enum FactoryComponent {
     FACTORY_D,
     FACTORY_E,
     FACTORY_CONNECT,
-    FACTORY_CTR_BASE,
+    FACTORY_CTR_BASE_PRI,
+    FACTORY_CTR_BASE_SEC,
     FACTORY_UPGRADE,
     HEART,
     CAP_A,
@@ -45,8 +46,10 @@ public enum FactoryComponent {
             return FactorySetup.FACTORY_E_BLOCK.get().getDefaultState();
         else if (this == FACTORY_CONNECT)
             return FactorySetup.FACTORY_CONNECT_BLOCK.get().getDefaultState();
-        else if (this == FACTORY_CTR_BASE)
-            return FactorySetup.FACTORY_CTR_BASE_BLOCK.get().getDefaultState();
+        else if (this == FACTORY_CTR_BASE_PRI)
+            return FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get().getDefaultState();
+        else if (this == FACTORY_CTR_BASE_SEC)
+            return FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get().getDefaultState();
         else if (this == FACTORY_UPGRADE)
             return FactorySetup.FACTORY_UPGRADE_BLOCK.get().getDefaultState();
         else if (this == CAP_A)

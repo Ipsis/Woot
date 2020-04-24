@@ -35,7 +35,8 @@ public class FactoryBlock extends Block implements FactoryComponentProvider, Woo
     public static final String CAP_C_REGNAME = "cap_c";
     public static final String CAP_D_REGNAME = "cap_d";
     public static final String FACTORY_CONNECT_REGNAME = "factory_connect";
-    public static final String FACTORY_CTR_BASE_REGNAME = "factory_ctr_base";
+    public static final String FACTORY_CTR_BASE_PRI_REGNAME = "factory_ctr_base_pri";
+    public static final String FACTORY_CTR_BASE_SEC_REGNAME = "factory_ctr_base_sec";
     public static final String IMPORT_REGNAME = "import";
     public static final String EXPORT_REGNAME = "export";
 

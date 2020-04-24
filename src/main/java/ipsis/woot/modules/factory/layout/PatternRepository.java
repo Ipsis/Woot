@@ -17,7 +17,6 @@ public class PatternRepository {
     static { INSTANCE = new PatternRepository(); }
 
     public void load() {
-        LOGGER.debug("Creating factory patterns");
         createRawPatterns();
         createPattern(Tier.TIER_1);
         createPattern(Tier.TIER_2);
@@ -216,7 +215,8 @@ public class PatternRepository {
         CHAR_MAPPINGS.put('d', FactoryComponent.FACTORY_D);
         CHAR_MAPPINGS.put('e', FactoryComponent.FACTORY_E);
         CHAR_MAPPINGS.put('z', FactoryComponent.FACTORY_CONNECT);
-        CHAR_MAPPINGS.put('y', FactoryComponent.FACTORY_CTR_BASE);
+        CHAR_MAPPINGS.put('Y', FactoryComponent.FACTORY_CTR_BASE_PRI);
+        CHAR_MAPPINGS.put('y', FactoryComponent.FACTORY_CTR_BASE_SEC);
         CHAR_MAPPINGS.put('U', FactoryComponent.FACTORY_UPGRADE);
         CHAR_MAPPINGS.put('I', FactoryComponent.IMPORT);
         CHAR_MAPPINGS.put('E', FactoryComponent.EXPORT);
@@ -277,7 +277,7 @@ public class PatternRepository {
             },
             {
                     "-------",
-                    "---y---",
+                    "---Y---",
                     "---a---",
                     "-------",
                     "-------",
@@ -373,7 +373,7 @@ public class PatternRepository {
             },
             {
                     "-e---e-",
-                    "edcycde",
+                    "edcYcde",
                     "-caaac-",
                     "-yazay-",
                     "-caaac-",

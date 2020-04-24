@@ -139,8 +139,11 @@ public class FactoryHelper {
             case FACTORY_CONNECT:
                 blocks.add(FactorySetup.FACTORY_CONNECT_BLOCK.get());
                 break;
-            case FACTORY_CTR_BASE:
-                blocks.add(FactorySetup.FACTORY_CTR_BASE_BLOCK.get());
+            case FACTORY_CTR_BASE_PRI:
+                blocks.add(FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get());
+                break;
+            case FACTORY_CTR_BASE_SEC:
+                blocks.add(FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get());
                 break;
             case FACTORY_UPGRADE:
                 blocks.add(FactorySetup.FACTORY_UPGRADE_BLOCK.get());
@@ -199,8 +202,11 @@ public class FactoryHelper {
             case FACTORY_CONNECT:
                 stacks.add(new ItemStack(FactorySetup.FACTORY_CONNECT_BLOCK.get()));
                 break;
-            case FACTORY_CTR_BASE:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_CTR_BASE_BLOCK.get()));
+            case FACTORY_CTR_BASE_PRI:
+                stacks.add(new ItemStack(FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get()));
+                break;
+            case FACTORY_CTR_BASE_SEC:
+                stacks.add(new ItemStack(FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get()));
                 break;
             case FACTORY_UPGRADE:
                 stacks.add(new ItemStack(FactorySetup.FACTORY_UPGRADE_BLOCK.get()));

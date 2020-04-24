@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "attached=true": { "model": "woot:block/factory_ctr_base_sec" },
+    "attached=false": { "model": "woot:block/factory_ctr_base_sec_alone" }
+  }
+}

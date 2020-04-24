@@ -1,0 +1,7 @@
+{
+  "parent": "woot:block/small_cube_all",
+  "textures": {
+    "particle": "woot:block/factory_ctr_base_sec",
+    "all": "woot:block/factory_ctr_base_sec"
+  }
+}

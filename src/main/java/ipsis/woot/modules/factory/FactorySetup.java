@@ -128,11 +128,17 @@ public class FactorySetup {
             FactoryBlock.FACTORY_CONNECT_REGNAME, () ->
                     new BlockItem(FACTORY_CONNECT_BLOCK.get(), Woot.createStandardProperties()));
 
-    public static final RegistryObject<FactoryBlock> FACTORY_CTR_BASE_BLOCK = BLOCKS.register(
-            FactoryBlock.FACTORY_CTR_BASE_REGNAME, () -> new FactoryBlock(FactoryComponent.FACTORY_CTR_BASE));
-    public static final RegistryObject<Item> FACTORY_CTR_BASE_BLOCK_ITEM = ITEMS.register(
-            FactoryBlock.FACTORY_CTR_BASE_REGNAME, () ->
-                    new BlockItem(FACTORY_CTR_BASE_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<FactoryBlock> FACTORY_CTR_BASE_PRI_BLOCK = BLOCKS.register(
+            FactoryBlock.FACTORY_CTR_BASE_PRI_REGNAME, () -> new FactoryBlock(FactoryComponent.FACTORY_CTR_BASE_PRI));
+    public static final RegistryObject<Item> FACTORY_CTR_BASE_PRI_BLOCK_ITEM = ITEMS.register(
+            FactoryBlock.FACTORY_CTR_BASE_PRI_REGNAME, () ->
+                    new BlockItem(FACTORY_CTR_BASE_PRI_BLOCK.get(), Woot.createStandardProperties()));
+
+    public static final RegistryObject<FactoryBlock> FACTORY_CTR_BASE_SEC_BLOCK = BLOCKS.register(
+            FactoryBlock.FACTORY_CTR_BASE_SEC_REGNAME, () -> new FactoryBlock(FactoryComponent.FACTORY_CTR_BASE_SEC));
+    public static final RegistryObject<Item> FACTORY_CTR_BASE_SEC_BLOCK_ITEM = ITEMS.register(
+            FactoryBlock.FACTORY_CTR_BASE_SEC_REGNAME, () ->
+                    new BlockItem(FACTORY_CTR_BASE_SEC_BLOCK.get(), Woot.createStandardProperties()));
 
     public static final RegistryObject<FactoryBlock> IMPORT_BLOCK = BLOCKS.register(
             FactoryBlock.IMPORT_REGNAME, () -> new FactoryBlock(FactoryComponent.IMPORT));
@@ -161,7 +167,8 @@ public class FactorySetup {
                             CAP_C_BLOCK.get(),
                             CAP_D_BLOCK.get(),
                             FACTORY_CONNECT_BLOCK.get(),
-                            FACTORY_CTR_BASE_BLOCK.get()
+                            FACTORY_CTR_BASE_PRI_BLOCK.get(),
+                            FACTORY_CTR_BASE_SEC_BLOCK.get()
                             ).build(null));
 
     public static final String FACTORY_UPGRADE_TAG = "factory_upgrade";

@@ -27,13 +27,14 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
     public boolean tryAddUpgrade(BlockState state, Perk type) {
 
         if (state.get(UpgradeBlock.UPGRADE) == Perk.EMPTY) {
-            // You can add any level 1 upgrade when it is empty
-                world.setBlockState(pos,
-                        state.with(UpgradeBlock.UPGRADE, type), 2);
-                glue.onGoodbye();
-                MultiBlockTracker.get().addEntry(pos);
-                Woot.setup.getLogger().info("tryAddUpgrade: added {}", type);
-                return true;
+                if (Perk.LEVEL_1_PERKS.contains(type)) {
+                    world.setBlockState(pos,
+                            state.with(UpgradeBlock.UPGRADE, type), 2);
+                    glue.onGoodbye();
+                    MultiBlockTracker.get().addEntry(pos);
+                    Woot.setup.getLogger().info("tryAddUpgrade: added {}", type);
+                    return true;
+                }
         } else {
             Perk upgrade = getBlockState().get(UpgradeBlock.UPGRADE);
             PerkType currType = Perk.getType(upgrade);

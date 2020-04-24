@@ -1,7 +1,9 @@
 package ipsis.woot.modules.factory.layout;
 
 import ipsis.woot.modules.factory.FactoryComponent;
+import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.BlockPosHelper;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +22,8 @@ public class AbsolutePattern {
     Tier tier;
     Direction facing;
     List<PatternBlock> blocks = new ArrayList<>();
+    List<Perk> perks = new ArrayList<>();
+    List<FakeMob> mobs = new ArrayList<>();
     public List<PatternBlock> getBlocks() { return Collections.unmodifiableList(blocks); }
 
     public AbsolutePattern(Tier tier) {
@@ -31,6 +35,9 @@ public class AbsolutePattern {
     }
 
     public Tier getTier() { return tier; }
+
+    public void addPerk(Perk perk) { this.perks.add(perk); }
+    public void addMob(FakeMob fakeMob) { this.mobs.add(fakeMob); }
 
     public static AbsolutePattern create(@Nonnull World world, Tier tier, @Nonnull BlockPos origin, Direction facing) {
 
@@ -45,5 +52,15 @@ public class AbsolutePattern {
 
         absolutePattern.facing = facing;
         return absolutePattern;
+    }
+
+    @Override
+    public String toString() {
+        return "AbsolutePattern{" +
+                "tier=" + tier +
+                ", facing=" + facing +
+                ", perks=" + perks +
+                ", mobs=" + mobs +
+                '}';
     }
 }

@@ -2,6 +2,8 @@ package ipsis.woot.modules.factory.layout;
 
 import ipsis.woot.Woot;
 import ipsis.woot.config.Config;
+import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.blocks.UpgradeBlock;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.FactoryComponentProvider;
@@ -109,6 +111,11 @@ public class FactoryScanner {
                 continue;
             }
 
+            if (p.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
+                BlockState blockState = world.getBlockState(p.getBlockPos());
+                absolutePattern.addPerk(blockState.get(UpgradeBlock.UPGRADE));
+            }
+
             /**
              * Fails if the controller is not valid for the tier
              */
@@ -137,6 +144,7 @@ public class FactoryScanner {
                             if (primaryControllerPos.equals(p.getBlockPos())) {
                                 Woot.setup.getLogger().debug("compareToWorld: Found primary controller");
                                 foundPrimaryController = true;
+                                absolutePattern.addMob(fakeMob);
                             }
                         }
                     }
@@ -165,33 +173,23 @@ public class FactoryScanner {
         if (pattern1 == null || pattern2 == null)
             return false;
 
+        Woot.setup.getLogger().debug("isPatternEqual: pattern1:{} pattern2:{}", pattern1, pattern2);
         if (pattern1.tier != pattern2.tier)
             return false;
 
-        List<FakeMob> pattern1Mobs = new ArrayList<>();
-        List<FakeMob> pattern2Mobs = new ArrayList<>();
-
-        for (PatternBlock pb : pattern1.getBlocks()) {
-            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
-                if (te instanceof ControllerTileEntity)
-                    pattern1Mobs.add(((ControllerTileEntity) te).getFakeMob());
-            }
-        }
-
-        for (PatternBlock pb : pattern2.getBlocks()) {
-            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
-                if (te instanceof ControllerTileEntity)
-                    pattern2Mobs.add(((ControllerTileEntity) te).getFakeMob());
-            }
-        }
-
-        if (pattern1Mobs.size() != pattern2Mobs.size())
+        if (pattern1.mobs.size() != pattern2.mobs.size())
             return false;
 
-        if (!pattern1Mobs.equals(pattern2Mobs))
+        for (FakeMob p : pattern1.mobs)
+            if (!pattern2.mobs.contains(p))
+                return false;
+
+        if (pattern1.perks.size() != pattern2.perks.size())
             return false;
+
+        for (Perk p : pattern1.perks)
+            if (!pattern2.perks.contains(p))
+                return false;
 
         Woot.setup.getLogger().debug("isPatternEqual: old and new patterns are equal");
         return true;

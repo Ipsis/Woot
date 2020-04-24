@@ -42,18 +42,18 @@ public class Layout {
         if (absolutePattern == null && rescannedPattern == null) {
             LOGGER.debug("was:nothing now:nothing");
         } else if (absolutePattern == null && rescannedPattern != null) {
-            LOGGER.debug("was:nothing now:{}", rescannedPattern.getTier());
+            LOGGER.debug("was:nothing now:{}", rescannedPattern);
             FactoryHelper.connectNew(world, rescannedPattern, master);
             absolutePattern = rescannedPattern;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern == null) {
-            LOGGER.debug("was:{} now:nothing", absolutePattern.getTier());
+            LOGGER.debug("was:{} now:nothing", absolutePattern);
             FactoryHelper.disconnectOld(world, absolutePattern);
             absolutePattern = null;
             changed = true;
         } else if (absolutePattern != null && rescannedPattern != null) {
             if (!FactoryScanner.isPatternEqual(world, absolutePattern, rescannedPattern)) {
-                LOGGER.debug("was:{} now:{}", absolutePattern.getTier(), rescannedPattern.getTier());
+                LOGGER.debug("was:{} now:{}", absolutePattern, rescannedPattern);
                 FactoryHelper.disconnectOld(world, absolutePattern);
                 FactoryHelper.connectNew(world, rescannedPattern, master);
                 absolutePattern = rescannedPattern;

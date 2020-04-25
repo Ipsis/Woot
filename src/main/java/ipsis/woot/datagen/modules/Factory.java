@@ -9,7 +9,9 @@ import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
@@ -102,5 +104,13 @@ public class Factory {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
+        ShapedRecipeBuilder.shapedRecipe(FactorySetup.XP_SHARD_ITEM.get())
+                .patternLine("sss")
+                .patternLine("sss")
+                .patternLine("sss")
+                .key('s', FactorySetup.XP_SPLINTER_ITEM.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer);
     }
 }

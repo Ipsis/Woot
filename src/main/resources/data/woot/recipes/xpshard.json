@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    "sss",
+    "sss",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "woot:xpsplinter"
+    }
+  },
+  "result": {
+    "item": "woot:xpshard"
+  }
+}

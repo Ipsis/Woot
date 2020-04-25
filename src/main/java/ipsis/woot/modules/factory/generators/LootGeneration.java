@@ -1,10 +1,11 @@
 package ipsis.woot.modules.factory.generators;
 
-import ipsis.woot.config.Config;
-import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.FormedSetup;
+import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
+import ipsis.woot.modules.factory.items.XpShardBaseItem;
 import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.item.ItemStack;
@@ -47,8 +48,9 @@ public class LootGeneration {
         }
 
         int looting = setup.getLootingLevel();
+
         for (FakeMob mob : setup.getAllMobs()) {
-            int mobCount = Config.OVERRIDE.getIntegerOrDefault(mob, ConfigOverride.OverrideKey.MASS_COUNT);
+            int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS));
             LOGGER.debug("generate: {} * {}", mob, mobCount);
             for (int i = 0; i < mobCount; i++) {
                 List<ItemStack> rolledDrops = MobSimulator.getInstance().getRolledDrops(new FakeMobKey(mob, looting));
@@ -72,7 +74,33 @@ public class LootGeneration {
             }
         }
 
+        // Experience
+        if (setup.getAllPerks().containsKey(PerkType.XP)) {
+            int genXp = 0;
+            for (FakeMob mob : setup.getAllMobs()) {
+                int xpPercent = setup.getAllMobParams().get(mob).perkXpValue;
+                int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS));
+                int x = (int) ((SpawnController.get().getMobExperience(mob, setup.getWorld()) / 100.0F) * xpPercent);
+                genXp += (x * mobCount);
+            }
 
+            List<ItemStack> shards = XpShardBaseItem.getShards(genXp);
+            Iterator<LazyOptional<IItemHandler>> iter = itemHandlers.iterator();
+            while (iter.hasNext()) {
+                LazyOptional<IItemHandler> hdlr = iter.next();
+                hdlr.ifPresent(h -> {
+                    for (ItemStack itemStack : shards) {
+                        if (itemStack.isEmpty())
+                            continue;
 
+                        ItemStack result = ItemHandlerHelper.insertItem(h, itemStack.copy(), false);
+                        if (result.isEmpty())
+                            itemStack.setCount(0);
+                        else
+                            itemStack.shrink(itemStack.getCount() - result.getCount());
+                    }
+                });
+            }
+        }
     }
 }

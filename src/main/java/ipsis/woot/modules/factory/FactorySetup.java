@@ -11,6 +11,7 @@ import ipsis.woot.modules.factory.blocks.Cell3TileEntity;
 import ipsis.woot.modules.factory.blocks.CellBlock;
 import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.factory.items.PerkItem;
+import ipsis.woot.modules.factory.items.XpShardBaseItem;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -248,4 +249,9 @@ public class FactorySetup {
 
     public static final RegistryObject<MobShardItem> MOB_SHARD_ITEM = ITEMS.register(
             "mobshard", () -> new MobShardItem());
+
+    public static final RegistryObject<XpShardBaseItem> XP_SHARD_ITEM = ITEMS.register(
+            XpShardBaseItem.SHARD_REGNAME, () -> new XpShardBaseItem(XpShardBaseItem.Variant.SHARD));
+    public static final RegistryObject<XpShardBaseItem> XP_SPLINTER_ITEM = ITEMS.register(
+            XpShardBaseItem.SPLINTER_REGNAME, () -> new XpShardBaseItem(XpShardBaseItem.Variant.SPLINTER));
 }

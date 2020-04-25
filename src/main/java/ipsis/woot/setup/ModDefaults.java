@@ -73,5 +73,8 @@ public final class ModDefaults {
         public static final int RATE_1_DEF = 20;
         public static final int RATE_2_DEF = 50;
         public static final int RATE_3_DEF = 75;
+        public static final int XP_1_DEF = 100;
+        public static final int XP_2_DEF = 125;
+        public static final int XP_3_DEF = 150;
     }
 }

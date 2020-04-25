@@ -69,27 +69,53 @@ public class SpawnController {
     }
 
     Map<String, Integer> mobHealthCache = new HashMap<>();
+    Map<String, Integer> mobXpCache = new HashMap<>();
     public int getMobHealth(@Nonnull FakeMob fakeMob, @Nonnull World world) {
         if (!fakeMob.isValid())
             return -1;
+
+        if (!isCached(fakeMob))
+            updateCache(fakeMob, world);
 
         // Configuration value has priority
         if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.HEALTH))
             return Config.OVERRIDE.getInteger(fakeMob, ConfigOverride.OverrideKey.HEALTH);
 
-        // Check the cache
         String key = fakeMob.toString();
-        if (mobHealthCache.containsKey(key))
-            return mobHealthCache.get(key);
+        return mobHealthCache.get(key);
+    }
 
+    public int getMobExperience(@Nonnull FakeMob fakeMob, @Nonnull World world) {
+        if (!fakeMob.isValid())
+            return -1;
+
+        if (!isCached(fakeMob))
+            updateCache(fakeMob, world);
+
+        // Configuration value has priority
+        if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.XP))
+            return Config.OVERRIDE.getInteger(fakeMob, ConfigOverride.OverrideKey.XP);
+
+        String key = fakeMob.toString();
+        return mobXpCache.get(key);
+    }
+
+    private boolean isCached(@Nonnull FakeMob fakeMob) {
+        return mobHealthCache.containsKey(fakeMob.toString());
+    }
+
+    private void updateCache(@Nonnull FakeMob fakeMob, @Nonnull World world) {
         // Cache miss, create the entity
         Entity entity = createEntity(fakeMob, world, new BlockPos(0, 0, 0));
         if (entity == null || !(entity instanceof LivingEntity))
-            return -1;
+            return;
 
         int health = (int)((LivingEntity) entity).getMaxHealth();
+        // TODO pull xp from LivingEntity
+        int xp = 10;
+        String key = fakeMob.toString();
         mobHealthCache.put(key, health);
-        return health;
+        mobXpCache.put(key, xp);
     }
 
     public boolean isLivingEntity(FakeMob fakeMob, World world) {

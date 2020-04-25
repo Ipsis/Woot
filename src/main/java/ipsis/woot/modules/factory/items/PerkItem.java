@@ -9,9 +9,6 @@ import net.minecraft.item.ItemStack;
 
 public class PerkItem extends Item {
 
-    public static final String CAPACITY_1_REGNAME = "capacity_1";
-    public static final String CAPACITY_2_REGNAME = "capacity_2";
-    public static final String CAPACITY_3_REGNAME = "capacity_3";
     public static final String EFFICIENCY_1_REGNAME = "efficiency_1";
     public static final String EFFICIENCY_2_REGNAME = "efficiency_2";
     public static final String EFFICIENCY_3_REGNAME = "efficiency_3";

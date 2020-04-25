@@ -42,6 +42,9 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue RATE_1;
     public static ForgeConfigSpec.IntValue RATE_2;
     public static ForgeConfigSpec.IntValue RATE_3;
+    public static ForgeConfigSpec.IntValue XP_1;
+    public static ForgeConfigSpec.IntValue XP_2;
+    public static ForgeConfigSpec.IntValue XP_3;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -103,37 +106,46 @@ public class FactoryConfiguration {
             }
             COMMON_BUILDER.pop();
 
-            COMMON_BUILDER.push("upgrades");
+            COMMON_BUILDER.push("perks");
             {
                 EFFICIENCY_1 = COMMON_BUILDER
-                        .comment("Percentage reduction for efficiency 1 upgrade")
+                        .comment("Percentage reduction for efficiency 1 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_1_REDUCTION.name(), Factory.EFFICIENCY_1_DEF, 1, 100);
                 EFFICIENCY_2 = COMMON_BUILDER
-                        .comment("Percentage reduction for efficiency 2 upgrade")
+                        .comment("Percentage reduction for efficiency 2 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_2_REDUCTION.name(), Factory.EFFICIENCY_2_DEF, 1, 100);
                 EFFICIENCY_3 = COMMON_BUILDER
-                        .comment("Percentage reduction for efficiency 3 upgrade")
+                        .comment("Percentage reduction for efficiency 3 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_3_REDUCTION.name(), Factory.EFFICIENCY_3_DEF, 1, 100);
 
                 MASS_COUNT_1 = COMMON_BUILDER
-                        .comment("Number of mobs to spawn for mass 1 upgrade")
+                        .comment("Number of mobs to spawn for mass 1 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_1_COUNT.name(), Factory.MASS_COUNT_1_DEF, 1, 100);
                 MASS_COUNT_2 = COMMON_BUILDER
-                        .comment("Number of mobs to spawn for mass 2 upgrade")
+                        .comment("Number of mobs to spawn for mass 2 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_2_COUNT.name(), Factory.MASS_COUNT_2_DEF, 1, 100);
                 MASS_COUNT_3 = COMMON_BUILDER
-                        .comment("Number of mobs to spawn for mass 3 upgrade")
+                        .comment("Number of mobs to spawn for mass 3 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_3_COUNT.name(), Factory.MASS_COUNT_3_DEF, 1, 100);
 
                 RATE_1 = COMMON_BUILDER
-                        .comment("Percentage reduction in spawn time for rate 1 upgrade")
+                        .comment("Percentage reduction in spawn time for rate 1 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_1_REDUCTION.name(), Factory.RATE_1_DEF, 1, 99);
                 RATE_2 = COMMON_BUILDER
-                        .comment("Percentage reduction in spawn time for rate 2 upgrade")
+                        .comment("Percentage reduction in spawn time for rate 2 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_2_REDUCTION.name(), Factory.RATE_2_DEF, 1, 99);
                 RATE_3 = COMMON_BUILDER
-                        .comment("Percentage reduction in spawn time for rate 3 upgrade")
+                        .comment("Percentage reduction in spawn time for rate 3 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_3_REDUCTION.name(), Factory.RATE_3_DEF, 1, 99);
+                XP_1 = COMMON_BUILDER
+                        .comment("Percentage generate of XP for xp 1 perks")
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_XP_1_PERCENTAGE.name(), Factory.XP_1_DEF, 0, 1000);
+                XP_2 = COMMON_BUILDER
+                        .comment("Percentage generate of XP for xp 2 perks")
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_XP_2_PERCENTAGE.name(), Factory.XP_2_DEF, 0, 1000);
+                XP_3 = COMMON_BUILDER
+                        .comment("Percentage generate of XP for xp 3 perks")
+                        .defineInRange(ConfigOverride.OverrideKey.PERK_XP_3_PERCENTAGE.name(), Factory.XP_3_DEF, 0, 1000);
             }
             COMMON_BUILDER.pop();
 

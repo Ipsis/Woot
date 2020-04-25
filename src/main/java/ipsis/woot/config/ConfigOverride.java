@@ -25,6 +25,8 @@ public class ConfigOverride {
                 new OverrideKey[]{OverrideKey.PERK_MASS_1_COUNT, OverrideKey.PERK_MASS_2_COUNT, OverrideKey.PERK_MASS_3_COUNT});
         perkMap.put(PerkType.RATE,
                 new OverrideKey[]{OverrideKey.PERK_RATE_1_REDUCTION, OverrideKey.PERK_RATE_2_REDUCTION, OverrideKey.PERK_RATE_3_REDUCTION});
+        perkMap.put(PerkType.XP,
+                new OverrideKey[]{OverrideKey.PERK_XP_1_PERCENTAGE, OverrideKey.PERK_XP_2_PERCENTAGE, OverrideKey.PERK_XP_3_PERCENTAGE});
     }
 
     public void add(FakeMob fakeMob, OverrideKey key, int v) {
@@ -117,14 +119,23 @@ public class ConfigOverride {
             return FactoryConfiguration.RATE_2.get();
         if (key == OverrideKey.PERK_RATE_3_REDUCTION)
             return FactoryConfiguration.RATE_3.get();
+        if (key == OverrideKey.PERK_XP_1_PERCENTAGE)
+            return FactoryConfiguration.XP_1.get();
+        if (key == OverrideKey.PERK_XP_2_PERCENTAGE)
+            return FactoryConfiguration.XP_2.get();
+        if (key == OverrideKey.PERK_XP_3_PERCENTAGE)
+            return FactoryConfiguration.XP_3.get();
 
-        return -1;
+        return INVALID_CONFIG_OVERRIDE_DEFAULT;
     }
+
+    public static final int INVALID_CONFIG_OVERRIDE_DEFAULT = -1;
 
     public enum OverrideKey {
         MASS_COUNT,
         SPAWN_TICKS,
         HEALTH,
+        XP,
         UNITS_PER_HEALTH,
         TIER,
         SHARD_KILLS,
@@ -138,6 +149,9 @@ public class ConfigOverride {
         PERK_RATE_1_REDUCTION,
         PERK_RATE_2_REDUCTION,
         PERK_RATE_3_REDUCTION,
+        PERK_XP_1_PERCENTAGE,
+        PERK_XP_2_PERCENTAGE,
+        PERK_XP_3_PERCENTAGE,
         ;
 
         private Class clazz;

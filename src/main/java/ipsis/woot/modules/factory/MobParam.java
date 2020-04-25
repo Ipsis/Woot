@@ -14,4 +14,9 @@ public class MobParam {
     public int perkMassValue = MOB_PARAM_UNDEFINED;
     public int perkRateValue = MOB_PARAM_UNDEFINED;
     public int perkXpValue = MOB_PARAM_UNDEFINED;
+
+    // Mass has a value regardless of perk
+    public int getMobCount(boolean hasMassPerk) {
+        return hasMassPerk ? perkMassValue : baseMassCount;
+    }
 }

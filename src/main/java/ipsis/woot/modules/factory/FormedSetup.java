@@ -58,6 +58,7 @@ public class FormedSetup {
 
     public BlockPos getImportPos() { return this.importPos; }
     public BlockPos getExportPos() { return this.exportPos; }
+    public World getWorld() { return this.world; }
 
     public LazyOptional<IItemHandler> getImportItemHandler() {
         if (world != null) {

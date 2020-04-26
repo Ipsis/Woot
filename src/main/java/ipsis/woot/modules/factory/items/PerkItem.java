@@ -24,6 +24,9 @@ public class PerkItem extends Item {
     public static final String XP_1_REGNAME = "xp_1";
     public static final String XP_2_REGNAME = "xp_2";
     public static final String XP_3_REGNAME = "xp_3";
+    public static final String TIER_SHARD_1_REGNAME = "tier_shard_1";
+    public static final String TIER_SHARD_2_REGNAME = "tier_shard_2";
+    public static final String TIER_SHARD_3_REGNAME = "tier_shard_3";
 
     final Perk perk;
 
@@ -60,6 +63,12 @@ public class PerkItem extends Item {
             return new ItemStack(FactorySetup.RATE_2_ITEM.get());
         else if (perk == Perk.RATE_3)
             return new ItemStack(FactorySetup.RATE_3_ITEM.get());
+        else if (perk == Perk.TIER_SHARD_1)
+            return new ItemStack(FactorySetup.TIER_SHARD_1_ITEM.get());
+        else if (perk == Perk.TIER_SHARD_2)
+            return new ItemStack(FactorySetup.TIER_SHARD_2_ITEM.get());
+        else if (perk == Perk.TIER_SHARD_3)
+            return new ItemStack(FactorySetup.TIER_SHARD_3_ITEM.get());
         else if (perk == Perk.XP_1)
             return new ItemStack(FactorySetup.XP_1_ITEM.get());
         else if (perk == Perk.XP_2)
@@ -72,37 +81,10 @@ public class PerkItem extends Item {
 
     public static ItemStack getItemStack(PerkType type, int level) {
 
-        if (type == PerkType.EFFICIENCY && level == 1)
-            return new ItemStack(FactorySetup.EFFICIENCY_1_ITEM.get());
-        else if (type == PerkType.EFFICIENCY && level == 2)
-            return new ItemStack(FactorySetup.EFFICIENCY_2_ITEM.get());
-        else if (type == PerkType.EFFICIENCY && level == 3)
-            return new ItemStack(FactorySetup.EFFICIENCY_3_ITEM.get());
-        else if (type == PerkType.LOOTING && level == 1)
-            return new ItemStack(FactorySetup.LOOTING_1_ITEM.get());
-        else if (type == PerkType.LOOTING && level == 2)
-            return new ItemStack(FactorySetup.LOOTING_2_ITEM.get());
-        else if (type == PerkType.LOOTING && level == 3)
-            return new ItemStack(FactorySetup.LOOTING_3_ITEM.get());
-        else if (type == PerkType.MASS && level == 1)
-            return new ItemStack(FactorySetup.MASS_1_ITEM.get());
-        else if (type == PerkType.MASS && level == 2)
-            return new ItemStack(FactorySetup.MASS_2_ITEM.get());
-        else if (type == PerkType.MASS && level == 3)
-            return new ItemStack(FactorySetup.MASS_3_ITEM.get());
-        else if (type == PerkType.RATE && level == 1)
-            return new ItemStack(FactorySetup.RATE_1_ITEM.get());
-        else if (type == PerkType.RATE && level == 2)
-            return new ItemStack(FactorySetup.RATE_2_ITEM.get());
-        else if (type == PerkType.RATE && level == 3)
-            return new ItemStack(FactorySetup.RATE_3_ITEM.get());
-        else if (type == PerkType.XP && level == 1)
-            return new ItemStack(FactorySetup.XP_1_ITEM.get());
-        else if (type == PerkType.XP && level == 2)
-            return new ItemStack(FactorySetup.XP_2_ITEM.get());
-        else if (type == PerkType.XP && level == 3)
-            return new ItemStack(FactorySetup.XP_3_ITEM.get());
+        if (level < 1 || level > 3)
+            return ItemStack.EMPTY;
 
-        return ItemStack.EMPTY;
+        Perk perk = Perk.getPerks(type, level);
+        return getItemStack(perk);
     }
 }

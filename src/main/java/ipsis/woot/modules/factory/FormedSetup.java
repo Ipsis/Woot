@@ -1,6 +1,5 @@
 package ipsis.woot.modules.factory;
 
-import io.netty.buffer.ByteBuf;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.blocks.CellTileEntityBase;
@@ -11,7 +10,6 @@ import ipsis.woot.modules.factory.layout.PatternBlock;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.MathHelper;
-import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,6 +36,8 @@ public class FormedSetup {
     private BlockPos exportPos = BlockPos.ZERO;
     private BlockPos cellPos = BlockPos.ZERO;
     private int cellCapacity = 0;
+    private double shardDropChance = 0.0F;
+    private int[] shardDropWeights = new int[]{ 0, 0, 0 };
 
     private FormedSetup() {}
     private FormedSetup(World world, Tier tier) {
@@ -55,6 +55,11 @@ public class FormedSetup {
         }
         return LazyOptional.empty();
     }
+
+    public double getShardDropChance() { return this.shardDropChance; }
+    public int getBasicShardWeight() { return shardDropWeights[0]; }
+    public int getAdvancedShardWeight() { return shardDropWeights[1]; }
+    public int getEliteShardWeight() { return shardDropWeights[2]; }
 
     public BlockPos getImportPos() { return this.importPos; }
     public BlockPos getExportPos() { return this.exportPos; }
@@ -192,6 +197,7 @@ public class FormedSetup {
                          * Tier 1,2 - level 1 upgrades only
                          * Tier 3 - level 1,2 upgrades only
                          * Tier 4+ - all upgrades
+                         * You can still apply them but they don't get the same level if not a high enough tier
                          */
                         if ((formedSetup.tier == Tier.TIER_1 || formedSetup.tier == Tier.TIER_2) && perkLevel > 1)
                             perkLevel = 1;
@@ -199,6 +205,36 @@ public class FormedSetup {
                             perkLevel = 2;
 
                         formedSetup.perks.put(perkType, perkLevel);
+
+                        if (perkType == PerkType.TIER_SHARD) {
+                            if (formedSetup.getTier() == Tier.TIER_1) {
+                                formedSetup.shardDropChance = FactoryConfiguration.T1_FARM_DROP_CHANCE.get();
+                                formedSetup.shardDropWeights[0] = FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(0);
+                                formedSetup.shardDropWeights[1] = FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(1);
+                                formedSetup.shardDropWeights[2] = FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(2);
+                            } else if (formedSetup.getTier() == Tier.TIER_2) {
+                                formedSetup.shardDropChance = FactoryConfiguration.T2_FARM_DROP_CHANCE.get();
+                                formedSetup.shardDropWeights[0] = FactoryConfiguration.T2_FARM_DROP_SHARD_WEIGHTS.get().get(0);
+                                formedSetup.shardDropWeights[1] = FactoryConfiguration.T2_FARM_DROP_SHARD_WEIGHTS.get().get(1);
+                                formedSetup.shardDropWeights[2] = FactoryConfiguration.T2_FARM_DROP_SHARD_WEIGHTS.get().get(2);
+                            } else if (formedSetup.getTier() == Tier.TIER_3) {
+                                formedSetup.shardDropChance = FactoryConfiguration.T3_FARM_DROP_CHANCE.get();
+                                formedSetup.shardDropWeights[0] = FactoryConfiguration.T3_FARM_DROP_SHARD_WEIGHTS.get().get(0);
+                                formedSetup.shardDropWeights[1] = FactoryConfiguration.T3_FARM_DROP_SHARD_WEIGHTS.get().get(1);
+                                formedSetup.shardDropWeights[2] = FactoryConfiguration.T3_FARM_DROP_SHARD_WEIGHTS.get().get(2);
+                            } else if (formedSetup.getTier() == Tier.TIER_4) {
+                                formedSetup.shardDropChance = FactoryConfiguration.T4_FARM_DROP_CHANCE.get();
+                                formedSetup.shardDropWeights[0] = FactoryConfiguration.T4_FARM_DROP_SHARD_WEIGHTS.get().get(0);
+                                formedSetup.shardDropWeights[1] = FactoryConfiguration.T4_FARM_DROP_SHARD_WEIGHTS.get().get(1);
+                                formedSetup.shardDropWeights[2] = FactoryConfiguration.T4_FARM_DROP_SHARD_WEIGHTS.get().get(2);
+                            } else if (formedSetup.getTier() == Tier.TIER_5) {
+                                formedSetup.shardDropChance = FactoryConfiguration.T5_FARM_DROP_CHANCE.get();
+                                formedSetup.shardDropWeights[0] = FactoryConfiguration.T5_FARM_DROP_SHARD_WEIGHTS.get().get(0);
+                                formedSetup.shardDropWeights[1] = FactoryConfiguration.T5_FARM_DROP_SHARD_WEIGHTS.get().get(1);
+                                formedSetup.shardDropWeights[2] = FactoryConfiguration.T5_FARM_DROP_SHARD_WEIGHTS.get().get(2);
+                            }
+
+                        }
                     }
                 }
             } else if (pb.getFactoryComponent() == FactoryComponent.CELL) {

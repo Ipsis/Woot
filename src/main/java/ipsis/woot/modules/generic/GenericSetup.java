@@ -34,4 +34,10 @@ public class GenericSetup {
             "ench_plate_2", () -> new GenericItem(GenericItemType.ENCH_PLATE_2));
     public static final RegistryObject<GenericItem> ENCH_PLATE_3 = ITEMS.register(
             "ench_plate_3", () -> new GenericItem(GenericItemType.ENCH_PLATE_3));
+    public static final RegistryObject<GenericItem> T1_SHARD_ITEM = ITEMS.register(
+            "t1shard", () -> new GenericItem(GenericItemType.BASIC_UP_SHARD));
+    public static final RegistryObject<GenericItem> T2_SHARD_ITEM = ITEMS.register(
+            "t2shard", () -> new GenericItem(GenericItemType.ADVANCED_UP_SHARD));
+    public static final RegistryObject<GenericItem> T3_SHARD_ITEM = ITEMS.register(
+            "t3shard", () -> new GenericItem(GenericItemType.ELITE_UP_SHARD));
 }

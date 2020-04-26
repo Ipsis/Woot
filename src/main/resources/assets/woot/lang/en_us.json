@@ -63,6 +63,9 @@
   "item.woot.rate_1": "Rate 1",
   "item.woot.rate_2": "Rate 2",
   "item.woot.rate_3": "Rate 3",
+  "item.woot.tier_shard_1": "Shard 1",
+  "item.woot.tier_shard_2": "Shard 2",
+  "item.woot.tier_shard_3": "Shard 3",
   "item.woot.xp_1": "XP 1",
   "item.woot.xp_2": "XP 2",
   "item.woot.xp_3": "XP 3",
@@ -77,6 +80,9 @@
   "item.woot.hammer": "YA Hammer",
   "item.woot.xpshard" : "XP Shard",
   "item.woot.xpsplinter" : "XP Splinter",
+  "item.woot.t1shard" : "Upgrade Shard 1",
+  "item.woot.t2shard" : "Upgrade Shard 2",
+  "item.woot.t3shard" : "Upgrade Shard 3",
 
 
   "item.woot.white_dyecasing": "White Dye Casing",

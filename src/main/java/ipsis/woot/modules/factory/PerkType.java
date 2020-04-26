@@ -5,5 +5,6 @@ public enum PerkType {
     LOOTING,
     MASS,
     RATE,
-    XP
+    XP,
+    TIER_SHARD
 }

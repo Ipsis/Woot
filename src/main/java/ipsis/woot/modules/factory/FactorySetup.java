@@ -240,6 +240,13 @@ public class FactorySetup {
     public static final RegistryObject<PerkItem> RATE_3_ITEM = ITEMS.register(
             PerkItem.RATE_3_REGNAME, () -> new PerkItem(Perk.RATE_3));
 
+    public static final RegistryObject<PerkItem> TIER_SHARD_1_ITEM = ITEMS.register(
+            PerkItem.TIER_SHARD_1_REGNAME, () -> new PerkItem(Perk.TIER_SHARD_1));
+    public static final RegistryObject<PerkItem> TIER_SHARD_2_ITEM = ITEMS.register(
+            PerkItem.TIER_SHARD_2_REGNAME, () -> new PerkItem(Perk.TIER_SHARD_2));
+    public static final RegistryObject<PerkItem> TIER_SHARD_3_ITEM = ITEMS.register(
+            PerkItem.TIER_SHARD_3_REGNAME, () -> new PerkItem(Perk.TIER_SHARD_3));
+
     public static final RegistryObject<PerkItem> XP_1_ITEM = ITEMS.register(
             PerkItem.XP_1_REGNAME, () -> new PerkItem(Perk.XP_1));
     public static final RegistryObject<PerkItem> XP_2_ITEM = ITEMS.register(

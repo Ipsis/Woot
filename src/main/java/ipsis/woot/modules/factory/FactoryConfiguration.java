@@ -5,6 +5,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import ipsis.woot.setup.ModDefaults.Factory;
 
+import java.util.List;
+
 public class FactoryConfiguration {
 
     public static final String CATEGORY_FACTORY = "factory";
@@ -45,6 +47,16 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue XP_1;
     public static ForgeConfigSpec.IntValue XP_2;
     public static ForgeConfigSpec.IntValue XP_3;
+    public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
+    public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<List<Integer>> T2_FARM_DROP_SHARD_WEIGHTS;
+    public static ForgeConfigSpec.DoubleValue T3_FARM_DROP_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<List<Integer>> T3_FARM_DROP_SHARD_WEIGHTS;
+    public static ForgeConfigSpec.DoubleValue T4_FARM_DROP_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<List<Integer>> T4_FARM_DROP_SHARD_WEIGHTS;
+    public static ForgeConfigSpec.DoubleValue T5_FARM_DROP_CHANCE;
+    public static ForgeConfigSpec.ConfigValue<List<Integer>> T5_FARM_DROP_SHARD_WEIGHTS;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -137,6 +149,7 @@ public class FactoryConfiguration {
                 RATE_3 = COMMON_BUILDER
                         .comment("Percentage reduction in spawn time for rate 3 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_3_REDUCTION.name(), Factory.RATE_3_DEF, 1, 99);
+
                 XP_1 = COMMON_BUILDER
                         .comment("Percentage generate of XP for xp 1 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_XP_1_PERCENTAGE.name(), Factory.XP_1_DEF, 0, 1000);
@@ -146,6 +159,40 @@ public class FactoryConfiguration {
                 XP_3 = COMMON_BUILDER
                         .comment("Percentage generate of XP for xp 3 perks")
                         .defineInRange(ConfigOverride.OverrideKey.PERK_XP_3_PERCENTAGE.name(), Factory.XP_3_DEF, 0, 1000);
+
+                COMMON_BUILDER.push("tiershard");
+                    T1_FARM_DROP_CHANCE = COMMON_BUILDER
+                        .comment("Chance to drop a tier shard from a Tier 1 factory")
+                        .defineInRange("t1dropchance", Factory.T1_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T1_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                        .comment("Weights of the basic, advanced, elite shard from a Tier 1 factory")
+                        .define("t1dropweights", Factory.T1_SHARD_DROP_WEIGHTS_DEF);
+                    T2_FARM_DROP_CHANCE = COMMON_BUILDER
+                        .comment("Chance to drop a tier shard from a Tier 2 factory")
+                        .defineInRange("t2dropchance", Factory.T2_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T2_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                        .comment("Weights of the basic, advanced, elite shard from a Tier 2 factory")
+                        .define("t2dropweights", Factory.T2_SHARD_DROP_WEIGHTS_DEF);
+                    T3_FARM_DROP_CHANCE = COMMON_BUILDER
+                        .comment("Chance to drop a tier shard from a Tier 3 factory")
+                        .defineInRange("t3dropchance", Factory.T3_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T3_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                        .comment("Weights of the basic, advanced, elite shard from a Tier 3 factory")
+                        .define("t3dropweights", Factory.T3_SHARD_DROP_WEIGHTS_DEF);
+                    T4_FARM_DROP_CHANCE = COMMON_BUILDER
+                        .comment("Chance to drop a tier shard from a Tier 4 factory")
+                        .defineInRange("t4dropchance", Factory.T4_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T4_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                        .comment("Weights of the basic, advanced, elite shard from a Tier 4 factory")
+                        .define("t4dropweights", Factory.T4_SHARD_DROP_WEIGHTS_DEF);
+                    T5_FARM_DROP_CHANCE = COMMON_BUILDER
+                        .comment("Chance to drop a tier shard from a Tier 5 factory")
+                        .defineInRange("t5dropchance", Factory.T5_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T5_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                        .comment("Weights of the basic, advanced, elite shard from a Tier 5 factory")
+                        .define("t5dropweights", Factory.T5_SHARD_DROP_WEIGHTS_DEF);
+                COMMON_BUILDER.pop();
+
             }
             COMMON_BUILDER.pop();
 

@@ -36,6 +36,13 @@
     "upgrade=xp_2,attached=false": { "model":  "woot:block/factory_upgrade_xp_2" },
     "upgrade=xp_2,attached=true": { "model":  "woot:block/factory_upgrade_xp_2" },
     "upgrade=xp_3,attached=false": { "model":  "woot:block/factory_upgrade_xp_3" },
-    "upgrade=xp_3,attached=true": { "model":  "woot:block/factory_upgrade_xp_3" }
+    "upgrade=xp_3,attached=true": { "model":  "woot:block/factory_upgrade_xp_3" },
+
+    "upgrade=tier_shard_1,attached=false": { "model":  "woot:block/factory_upgrade_tier_shard_1" },
+    "upgrade=tier_shard_1,attached=true": { "model":  "woot:block/factory_upgrade_tier_shard_1" },
+    "upgrade=tier_shard_2,attached=false": { "model":  "woot:block/factory_upgrade_tier_shard_2" },
+    "upgrade=tier_shard_2,attached=true": { "model":  "woot:block/factory_upgrade_tier_shard_2" },
+    "upgrade=tier_shard_3,attached=false": { "model":  "woot:block/factory_upgrade_tier_shard_3" },
+    "upgrade=tier_shard_3,attached=true": { "model":  "woot:block/factory_upgrade_tier_shard_3" }
   }
 }

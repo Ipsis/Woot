@@ -1,6 +1,9 @@
 package ipsis.woot.setup;
 
+import com.google.common.collect.Lists;
 import ipsis.woot.modules.squeezer.DyeMakeup;
+
+import java.util.ArrayList;
 
 public final class ModDefaults {
 
@@ -76,5 +79,16 @@ public final class ModDefaults {
         public static final int XP_1_DEF = 100;
         public static final int XP_2_DEF = 125;
         public static final int XP_3_DEF = 150;
+
+        public static final double T1_SHARD_DROP_CHANCE_DEF = 5.0F;
+        public static final double T2_SHARD_DROP_CHANCE_DEF = 10.0F;
+        public static final double T3_SHARD_DROP_CHANCE_DEF = 20.0F;
+        public static final double T4_SHARD_DROP_CHANCE_DEF = 30.0F;
+        public static final double T5_SHARD_DROP_CHANCE_DEF = 40.0F;
+        public static final ArrayList<Integer> T1_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 80, 20, 1);
+        public static final ArrayList<Integer> T2_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 70, 25, 1);
+        public static final ArrayList<Integer> T3_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 60, 30, 1);
+        public static final ArrayList<Integer> T4_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 50, 40, 1);
+        public static final ArrayList<Integer> T5_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 40, 50, 1);
     }
 }

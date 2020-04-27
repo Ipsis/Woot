@@ -2,13 +2,18 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.*;
+import ipsis.woot.modules.anvil.AnvilSetup;
+import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.generator.client.ConatusGeneratorScreen;
+import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
+import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.client.DyeSqueezerScreen;
 import ipsis.woot.modules.squeezer.client.EnchantSqueezerScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -23,6 +28,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @JeiPlugin
@@ -87,6 +93,35 @@ public class WootJeiPlugin implements IModPlugin {
             }
         }
         registration.addRecipes(books, EnchantSqueezerRecipeCategory.UID);
+
+        registration.addIngredientInfo(
+                Arrays.asList(
+                    new ItemStack(GenericSetup.T1_SHARD_ITEM.get()),
+                    new ItemStack(GenericSetup.T2_SHARD_ITEM.get()),
+                    new ItemStack(GenericSetup.T3_SHARD_ITEM.get())
+                    ),
+                VanillaTypes.ITEM, "jei.woot.shard");
+        registration.addIngredientInfo(
+                new ItemStack(AnvilSetup.ANVIL_BLOCK.get()),
+                VanillaTypes.ITEM,
+                "jei.woot.anvil.0",
+                "jei.woot.anvil.1",
+                "jei.woot.anvil.2",
+                "jei.woot.anvil.3"
+        );
+        registration.addIngredientInfo(
+                new ItemStack(LayoutSetup.INTERN_ITEM.get()),
+                VanillaTypes.ITEM,
+                "jei.woot.intern.0",
+                "jei.woot.intern.1"
+        );
+        registration.addIngredientInfo(
+                new ItemStack(FactorySetup.MOB_SHARD_ITEM.get()),
+                VanillaTypes.ITEM,
+                "jei.woot.mob_shard.0",
+                "jei.woot.mob_shard.1",
+                "jei.woot.mob_shard.2"
+        );
     }
 
     @Override

@@ -178,5 +178,17 @@
   "gui.woot.infuser.name": "Infuser",
   "gui.woot.enchsqueezer.name": "Enchantment Squeezer",
   "gui.woot.squeezer.name": "Dye Squeezer",
-  "gui.woot.conatusgenerator.name": "Conatus Convertor"
+  "gui.woot.conatusgenerator.name": "Conatus Convertor",
+
+  # Jei
+  "jei.woot.shard": "Generated from the factory with the Shard perk installed.",
+  "jei.woot.anvil.0": "Used to create controllers.",
+  "jei.woot.anvil.1": "Must be placed on a Magma block.",
+  "jei.woot.anvil.2": "Items are right-clicked onto the top of the anvil to place them.",
+  "jei.woot.anvil.3": "Use the YA Hammer to craft.",
+  "jei.woot.intern.0": "Can be used to auto-build or validate the factory.",
+  "jei.woot.intern.1": "Use on a factory heart to build or validate.",
+  "jei.woot.mob_shard.0": "Hit a mob with the shard to program.",
+  "jei.woot.mob_shard.1": "A number of mobs of that type must then be killed with the shard in your inventory to fully program it.",
+  "jei.woot.mob_shard.2": "Once fully programmed it can be turned into a controller on the anvil."
 }

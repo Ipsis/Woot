@@ -1,12 +1,12 @@
 package ipsis.woot.policy;
 
+import ipsis.woot.config.ConfigPath;
+import ipsis.woot.config.PolicyDefaults;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
 
 public class PolicyConfiguration {
-
-    public static final String CATEGORY_POLICY = "policy";
 
     public static ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
     public static ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_FULL_MOD;
@@ -21,46 +21,56 @@ public class PolicyConfiguration {
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
-        COMMON_BUILDER.comment("Settings for the factory").push(CATEGORY_POLICY);
-        CLIENT_BUILDER.comment("Settings for the factory").push(CATEGORY_POLICY);
+        COMMON_BUILDER.comment("Settings for the factory").push(ConfigPath.Policy.CATEGORY);
+        CLIENT_BUILDER.comment("Settings for the factory").push(ConfigPath.Policy.CATEGORY);
         {
-            COMMON_BUILDER.push("blacklist");
+            COMMON_BUILDER.push(ConfigPath.Policy.CATEGORY_BLACKLIST);
             {
                 CAPTURE_BLACKLIST_FULL_MOD = COMMON_BUILDER
                         .comment("Do not capture any entity from the following mods")
-                        .define("captureFullMod", Defaults.DEFAULT_CAPTURE_BLACKLIST_FULL_MOD);
+                        .define(ConfigPath.Policy.CAPTURE_BLACKLIST_FULL_MOD_TAG,
+                                PolicyDefaults.DEFAULT_CAPTURE_BLACKLIST_FULL_MOD);
                 CAPTURE_BLACKLIST_ENTITY = COMMON_BUILDER
                         .comment("Do not capture the following entities")
-                        .define("captureEntity", Defaults.DEFAULT_CAPTURE_BLACKLIST_ENTITY);
+                        .define(ConfigPath.Policy.CAPTURE_BLACKLIST_ENTITY_TAG,
+                                PolicyDefaults.DEFAULT_CAPTURE_BLACKLIST_ENTITY);
                 LEARN_BLACKLIST_FULL_MOD = COMMON_BUILDER
                         .comment("Do not learn items from the following mods")
-                        .define("learnFullMod", Defaults.DEFAULT_LEARN_BLACKLIST_FULL_MOD);
+                        .define(ConfigPath.Policy.LEARN_BLACKLIST_FULL_MOD_TAG,
+                                PolicyDefaults.DEFAULT_LEARN_BLACKLIST_FULL_MOD);
                 LEARN_BLACKLIST_ITEM = COMMON_BUILDER
                         .comment("Do not learn the following items")
-                        .define("learnItem", Defaults.DEFAULT_LEARN_BLACKLIST_ITEM);
+                        .define(ConfigPath.Policy.LEARN_BLACKLIST_ITEM_TAG,
+                                PolicyDefaults.DEFAULT_LEARN_BLACKLIST_ITEM);
                 GENERATE_BLACKLIST_FULL_MOD = COMMON_BUILDER
                         .comment("Do not generate items from the following mods")
-                        .define("generateFullMod", Defaults.DEFAULT_GENERATE_BLACKLIST_FULL_MOD);
+                        .define(ConfigPath.Policy.GENERATE_BLACKLIST_FULL_MOD_TAG,
+                                PolicyDefaults.DEFAULT_GENERATE_BLACKLIST_FULL_MOD);
                 GENERATE_BLACKLIST_ITEM = COMMON_BUILDER
                         .comment("Do not generate the following items")
-                        .define("generateItem", Defaults.DEFAULT_GENERATE_BLACKLIST_ITEM);
+                        .define(ConfigPath.Policy.GENERATE_BLACKLIST_ITEM_TAG,
+                                PolicyDefaults.DEFAULT_GENERATE_BLACKLIST_ITEM);
                 SHARD_BLACKLIST_FULL_MOD = COMMON_BUILDER
                         .comment("Do not allow shard creation with entities from the following mods")
-                        .define("shardFullMod", Defaults.DEFAULT_SHARD_BLACKLIST_FULL_MOD);
+                        .define(ConfigPath.Policy.SHARD_BLACKLIST_FULL_MOD_TAG,
+                                PolicyDefaults.DEFAULT_SHARD_BLACKLIST_FULL_MOD);
                 SHARD_BLACKLIST_ENTITY = COMMON_BUILDER
                         .comment("Do not allow shard creation with the following entities")
-                        .define("shardEntity", Defaults.DEFAULT_SHARD_BLACKLIST_ENTITY);
+                        .define(ConfigPath.Policy.SHARD_BLACKLIST_ENTITY_TAG,
+                                PolicyDefaults.DEFAULT_SHARD_BLACKLIST_ENTITY);
             }
             COMMON_BUILDER.pop();
 
-            COMMON_BUILDER.push("mob");
+            COMMON_BUILDER.push(ConfigPath.Policy.CATEGORY_MOB);
             {
                 MOB_OVERRIDES = COMMON_BUILDER
                         .comment("A list of mob specific factory configuration values")
-                        .define("mobOverrides", Defaults.DEFAULT_MOB_OVERRIDES);
+                        .define(ConfigPath.Policy.MOB_OVERRIDES_TAG,
+                                PolicyDefaults.DEFAULT_MOB_OVERRIDES);
                 CUSTOM_DROPS_ONLY = COMMON_BUILDER
                         .comment("A list of mobs that should not be simulated and use custom config only")
-                        .define("customDropsOnly", Defaults.DEFAULT_CUSTOM_DROPS_ONLY);
+                        .define(ConfigPath.Policy.CUSTOM_DROPS_ONLY_TAG,
+                                PolicyDefaults.DEFAULT_CUSTOM_DROPS_ONLY);
             }
             COMMON_BUILDER.pop();
 

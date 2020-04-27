@@ -1,0 +1,142 @@
+package ipsis.woot.config;
+
+public class ConfigPath {
+
+    public static final class Anvil {
+        public static final String CATEGORY = "anvil";
+        public static final String PARTICLES_TAG = "particles";
+    }
+
+    public static final class Common {
+        public static final String TANK_CAPACITY_TAG = "tankCapacity";
+        public static final String TANK_RX_TAG = "tankRxPerTick";
+        public static final String INTERNAL_TANK_CAPACITY_TAG = "internalTankCapacity";
+        public static final String INPUT_TANK_CAPACITY_TAG = "inputTankCapacity";
+        public static final String ENERGY_CAPACITY_TAG = "energyCapacity";
+        public static final String ENERGY_RX_TAG = "energyRxPerTick";
+        public static final String ENERGY_USE_PER_TICK_TAG = "energyUsePerTick";
+
+        public static final String TANK_CAPACITY_COMMENT = "Tank capacity (mb)";
+        public static final String TANK_RX_COMMENT = "Tank max transfer rate (mb/t per side)";
+        public static final String INTERNAL_TANK_CAPACITY_COMMENT = "Internal tank capacity (mb)";
+        public static final String INPUT_TANK_CAPACITY_COMMENT = "Input tank capacity (mb)";
+        public static final String ENERGY_CAPACITY_COMMENT = "Energy capacity (mb)";
+        public static final String ENERGY_RX_COMMENT = "Maximum energy that can be received (RF/t)";
+        public static final String ENERGY_USE_PER_TICK_COMMENT = "Energy used per tick (RF)";
+    }
+
+    public static final class Squeezer {
+        public static final String CATEGORY = "squeezer";
+        public static final String CATEGORY_DYE_SQUEEZER = "dye";
+        public static final String CATEGORY_ENCHANT_SQUEEZER = "enchant";
+
+        public static final String ENCH_SQUEEZER_LVL_1_ENCHANT_MB_TAG = "enchantAmountLevel1";
+        public static final String ENCH_SQUEEZER_LVL_2_ENCHANT_MB_TAG = "enchantAmountLevel2";
+        public static final String ENCH_SQUEEZER_LVL_3_ENCHANT_MB_TAG = "enchantAmountLevel3";
+        public static final String ENCH_SQUEEZER_LVL_4_ENCHANT_MB_TAG = "enchantAmountLevel4";
+        public static final String ENCH_SQUEEZER_LVL_5_ENCHANT_MB_TAG = "enchantAmountLevel5";
+        public static final String ENCH_SQUEEZER_EXTRA_ENCHANT_MB_TAG = "enchantAmountPerLevel";
+    }
+
+    public static final class Infuser {
+        public static final String CATEGORY = "infuser";
+    }
+
+    public static final class Layout {
+        public static final String CATEGORY = "layout";
+        public static final String SIMPLE_TAG = "simple";
+        public static final String RENDER_OPACITY_TAG = "renderOpacity";
+        public static final String RENDER_SIZE_TAG = "renderSize";
+    }
+
+    public static final class Generator {
+        public static final String CATEGORY = "conatus_generator";
+    }
+
+    public static final class Simulation {
+        public static final String CATEGORY = "simulation";
+        public static final String TICKS_TAG = "tickRate";
+        public static final String MOB_SAMPLE_SIZE_TAG = "mobSampleSize";
+        public static final String TICKS_PER_SIM_TICK_TAG = "simTickRate";
+        public static final String CELLS_PER_SIM_TICK_TAG = "cellsPerSimTick";
+    }
+
+    public static final class Policy {
+        public static final String CATEGORY = "policy";
+        public static final String CATEGORY_BLACKLIST = "blacklist";
+        public static final String CATEGORY_MOB = "mob";
+
+        public static final String CAPTURE_BLACKLIST_FULL_MOD_TAG = "captureMod";
+        public static final String CAPTURE_BLACKLIST_ENTITY_TAG = "captureEntity";
+        public static final String LEARN_BLACKLIST_FULL_MOD_TAG = "learnMod";
+        public static final String LEARN_BLACKLIST_ITEM_TAG = "learnItem";
+        public static final String GENERATE_BLACKLIST_FULL_MOD_TAG = "generateMod";
+        public static final String GENERATE_BLACKLIST_ITEM_TAG = "generateItem";
+        public static final String SHARD_BLACKLIST_FULL_MOD_TAG = "shardMod";
+        public static final String SHARD_BLACKLIST_ENTITY_TAG = "shardEntity";
+
+        public static final String MOB_OVERRIDES_TAG = "overrides";
+        public static final String CUSTOM_DROPS_ONLY_TAG = "customDropsOnly";
+    }
+
+    public static final class Factory {
+        public static final String CATEGORY = "factory";
+        public static final String CATEGORY_GENERAL = "general";
+        public static final String CATEGORY_BASE = "base";
+        public static final String CATEGORY_CELL1 = "basicCell";
+        public static final String CATEGORY_CELL2 = "advancedCell";
+        public static final String CATEGORY_CELL3 = "premiumCell";
+        public static final String CATEGORY_PERKS = "perks";
+        public static final String CATEGORY_EFFICIENCY = "efficiency";
+        public static final String CATEGORY_MASS = "mass";
+        public static final String CATEGORY_RATE = "rate";
+        public static final String CATEGORY_TIER_SHARD = "tierShard";
+        public static final String CATEGORY_XP = "xp";
+
+        public static final String TICK_ACCELERATION_TAG = "tickAcceleration";
+
+        public static final String TIER_1_MAX_HEALTH_TAG = "t1MaxHealth";
+        public static final String TIER_2_MAX_HEALTH_TAG = "t2MaxHealth";
+        public static final String TIER_3_MAX_HEALTH_TAG = "t3MaxHealth";
+        public static final String TIER_4_MAX_HEALTH_TAG = "t4MaxHealth";
+        public static final String TIER_5_MAX_HEALTH_TAG = "t5MaxHealth";
+
+        public static final String TIER_SHARD_T1_DROP_TAG = "t1DropChance";
+        public static final String TIER_SHARD_T2_DROP_TAG = "t2DropChance";
+        public static final String TIER_SHARD_T3_DROP_TAG = "t3DropChance";
+        public static final String TIER_SHARD_T4_DROP_TAG = "t4DropChance";
+        public static final String TIER_SHARD_T5_DROP_TAG = "t5DropChance";
+        public static final String TIER_SHARD_T1_WEIGHTS_TAG = "t1DropWeights";
+        public static final String TIER_SHARD_T2_WEIGHTS_TAG = "t2DropWeights";
+        public static final String TIER_SHARD_T3_WEIGHTS_TAG = "t3DropWeights";
+        public static final String TIER_SHARD_T4_WEIGHTS_TAG = "t4DropWeights";
+        public static final String TIER_SHARD_T5_WEIGHTS_TAG = "t5DropWeights";
+
+        public static final String TIER_SHARD_L1_ROLLS_TAG = "l1Rolls";
+        public static final String TIER_SHARD_L2_ROLLS_TAG = "l2Rolls";
+        public static final String TIER_SHARD_L3_ROLLS_TAG = "l3Rolls";
+
+        // These support config override
+        public static final String MASS_COUNT_TAG = "massCount";
+        public static final String SPAWN_TICKS_TAG = "spawnTicks";
+        public static final String HEALTH_TAG = "health";
+        public static final String XP_TAG = "xp";
+        public static final String MB_PER_HEALTH_TAG = "mbPerHealth";
+        public static final String FIXED_TIER_TAG = "fixedTier";
+        public static final String SHARD_KILLS_TAG = "shardKills";
+        public static final String FIXED_COST_TAG = "fixedCost";
+        public static final String EFFICIENCY_1_TAG = "l1Reduction";
+        public static final String EFFICIENCY_2_TAG = "l2Reduction";
+        public static final String EFFICIENCY_3_TAG = "l3Reduction";
+        public static final String MASS_1_TAG = "l1MobCount";
+        public static final String MASS_2_TAG = "l2MobCount";
+        public static final String MASS_3_TAG = "l3MobCount";
+        public static final String RATE_1_TAG = "l1Reduction";
+        public static final String RATE_2_TAG = "l2Reduction";
+        public static final String RATE_3_TAG = "l3Reduction";
+        public static final String XP_1_TAG = "l1Generate";
+        public static final String XP_2_TAG = "l2Generate";
+        public static final String XP_3_TAG = "l3Generate";
+
+    }
+}

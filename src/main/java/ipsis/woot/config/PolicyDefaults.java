@@ -1,10 +1,10 @@
-package ipsis.woot.policy;
+package ipsis.woot.config;
 
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 
-public class Defaults {
+public class PolicyDefaults {
 
     public static final ArrayList<String> DEFAULT_CAPTURE_BLACKLIST_FULL_MOD = Lists.newArrayList(
             "botania"
@@ -40,30 +40,30 @@ public class Defaults {
     );
 
     public static final ArrayList<String> DEFAULT_MOB_OVERRIDES = Lists.newArrayList(
-            "minecraft:wither_skeleton,HEALTH,40",
-            "minecraft:wither_skeleton,TIER,3",
-            "minecraft:villager,TIER,3",
-            "minecraft:magma_cube,TIER,2",
-            "minecraft:enderman,TIER,3",
-            "minecraft:villager_golem,TIER,3",
-            "minecraft:guardian,TIER,3",
-            "minecraft:blaze,TIER,2",
-            "minecraft:witch,TIER,2",
-            "minecraft:ghast,TIER,2",
-            "minecraft:zombie_pigman,TIER,2",
+            "minecraft:wither_skeleton,health,40",
+            "minecraft:wither_skeleton,fixedTier,3",
+            "minecraft:villager,fixedTier,3",
+            "minecraft:magma_cube,fixedTier,2",
+            "minecraft:enderman,fixedTier,3",
+            "minecraft:villager_golem,fixedTier,3",
+            "minecraft:guardian,fixedTier,3",
+            "minecraft:blaze,fixedTier,2",
+            "minecraft:witch,fixedTier,2",
+            "minecraft:ghast,fixedTier,2",
+            "minecraft:zombie_pigman,fixedTier,2",
 
-            "minecraft:ender_dragon,HEALTH,500",
-            "minecraft:ender_dragon,SPAWN_TICKS,12000",
-            "minecraft:ender_dragon,TIER,4",
-            "minecraft:ender_dragon,PERK_MASS_1_COUNT,2",
-            "minecraft:ender_dragon,PERK_MASS_2_COUNT,3",
-            "minecraft:ender_dragon,PERK_MASS_3_COUNT,4",
+            "minecraft:ender_dragon,health,500",
+            "minecraft:ender_dragon,spawnTicks,12000",
+            "minecraft:ender_dragon,fixedTier,4",
+            "minecraft:ender_dragon,perkMassl1MobCount,2",
+            "minecraft:ender_dragon,perkMassl2MobCount,3",
+            "minecraft:ender_dragon,perkMassl3MobCount,4",
 
-            "minecraft:minecraft_wither,HEALTH,500",
-            "minecraft:minecraft_wither,SPAWN_TICKS,1200",
-            "minecraft:minecraft_wither,TIER,4",
-            "minecraft:minecraft_wither,PERK_MASS_1_COUNT,2",
-            "minecraft:minecraft_wither,PERK_MASS_2_COUNT,3",
-            "minecraft:minecraft_wither,PERK_MASS_3_COUNT,4"
+            "minecraft:minecraft_wither,health,500",
+            "minecraft:minecraft_wither,spawnTicks,1200",
+            "minecraft:minecraft_wither,fixedTier,4",
+            "minecraft:minecraft_wither,perkMassl1MobCount,2",
+            "minecraft:minecraft_wither,perkMassl2MobCount,3",
+            "minecraft:minecraft_wither,perkMassl3MobCount,4"
     );
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 public class ConfigOverride {
@@ -42,7 +43,7 @@ public class ConfigOverride {
             overrides.put(fakeMob, map);
         }
         map.put(key, v);
-        LOGGER.info("Added integer override if {}:{} -> {}", fakeMob, key, v);
+        LOGGER.info("Added integer override of {}:{} -> {}", fakeMob, key, v);
     }
 
     public boolean hasOverride(FakeMob fakeMob, OverrideKey key) {
@@ -132,47 +133,52 @@ public class ConfigOverride {
     public static final int INVALID_CONFIG_OVERRIDE_DEFAULT = -1;
 
     public enum OverrideKey {
-        MASS_COUNT,
-        SPAWN_TICKS,
-        HEALTH,
-        XP,
-        UNITS_PER_HEALTH,
-        TIER,
-        SHARD_KILLS,
-        FIXED_COST,
-        PERK_EFFICIENCY_1_REDUCTION,
-        PERK_EFFICIENCY_2_REDUCTION,
-        PERK_EFFICIENCY_3_REDUCTION,
-        PERK_MASS_1_COUNT,
-        PERK_MASS_2_COUNT,
-        PERK_MASS_3_COUNT,
-        PERK_RATE_1_REDUCTION,
-        PERK_RATE_2_REDUCTION,
-        PERK_RATE_3_REDUCTION,
-        PERK_XP_1_PERCENTAGE,
-        PERK_XP_2_PERCENTAGE,
-        PERK_XP_3_PERCENTAGE,
+        MASS_COUNT(ConfigPath.Factory.MASS_COUNT_TAG),
+        SPAWN_TICKS(ConfigPath.Factory.SPAWN_TICKS_TAG),
+        HEALTH(ConfigPath.Factory.HEALTH_TAG),
+        XP(ConfigPath.Factory.XP_TAG),
+        UNITS_PER_HEALTH(ConfigPath.Factory.MB_PER_HEALTH_TAG),
+        TIER(ConfigPath.Factory.FIXED_TIER_TAG),
+        SHARD_KILLS(ConfigPath.Factory.SHARD_KILLS_TAG),
+        FIXED_COST(ConfigPath.Factory.FIXED_COST_TAG),
+        PERK_EFFICIENCY_1_REDUCTION("perkEff" + ConfigPath.Factory.EFFICIENCY_1_TAG),
+        PERK_EFFICIENCY_2_REDUCTION("perkEff" + ConfigPath.Factory.EFFICIENCY_2_TAG),
+        PERK_EFFICIENCY_3_REDUCTION("perkEff" + ConfigPath.Factory.EFFICIENCY_3_TAG),
+        PERK_MASS_1_COUNT("perkMass" + ConfigPath.Factory.MASS_1_TAG),
+        PERK_MASS_2_COUNT("perkMass" + ConfigPath.Factory.MASS_2_TAG),
+        PERK_MASS_3_COUNT("perkMass" + ConfigPath.Factory.MASS_3_TAG),
+        PERK_RATE_1_REDUCTION("perkRate" + ConfigPath.Factory.RATE_1_TAG),
+        PERK_RATE_2_REDUCTION("perkRate" + ConfigPath.Factory.RATE_2_TAG),
+        PERK_RATE_3_REDUCTION("perkRate" + ConfigPath.Factory.RATE_3_TAG),
+        PERK_XP_1_PERCENTAGE("perkXp" + ConfigPath.Factory.XP_1_TAG),
+        PERK_XP_2_PERCENTAGE("perkXp" + ConfigPath.Factory.XP_1_TAG),
+        PERK_XP_3_PERCENTAGE("perkXp" + ConfigPath.Factory.XP_1_TAG),
         ;
 
         private Class clazz;
-        private OverrideKey() { this(Integer.class); }
+        private String tag;
+        private OverrideKey(String tag) {
+            this(Integer.class);
+            this.tag = tag;
+        }
         private OverrideKey(Class clazz) { this.clazz = clazz; }
         public Class getClazz() { return clazz; }
+        public String getTag() { return this.tag; }
 
         public static boolean isValidTag(String s) {
             for (OverrideKey k : values()) {
-                if (s.equalsIgnoreCase(k.toString()))
+                if (k.tag.equalsIgnoreCase(s))
                     return true;
             }
             return false;
         }
 
-        public static OverrideKey getFromString(String s) {
+        public static @Nullable OverrideKey getFromString(String s) {
             for (OverrideKey k : values()) {
-                if (s.equalsIgnoreCase(k.toString()))
+                if (k.tag.equalsIgnoreCase(s))
                     return k;
             }
-            return MASS_COUNT;
+            return null;
         }
     }
 

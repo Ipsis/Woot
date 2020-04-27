@@ -1,6 +1,8 @@
 package ipsis.woot.modules.factory;
 
+import ipsis.woot.config.ConfigDefaults;
 import ipsis.woot.config.ConfigOverride;
+import ipsis.woot.config.ConfigPath;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import ipsis.woot.config.ConfigDefaults.Factory;
@@ -29,11 +31,6 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue TIER_3_MAX_UNITS;
     public static ForgeConfigSpec.IntValue TIER_4_MAX_UNITS;
     public static ForgeConfigSpec.IntValue TIER_5_MAX_UNITS;
-    public static ForgeConfigSpec.IntValue TIER_1_UNITS_PER_TICK;
-    public static ForgeConfigSpec.IntValue TIER_2_UNITS_PER_TICK;
-    public static ForgeConfigSpec.IntValue TIER_3_UNITS_PER_TICK;
-    public static ForgeConfigSpec.IntValue TIER_4_UNITS_PER_TICK;
-    public static ForgeConfigSpec.IntValue TIER_5_UNITS_PER_TICK;
 
     public static ForgeConfigSpec.IntValue EFFICIENCY_1;
     public static ForgeConfigSpec.IntValue EFFICIENCY_2;
@@ -63,177 +60,233 @@ public class FactoryConfiguration {
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
-        COMMON_BUILDER.comment("Settings for the factory").push(CATEGORY_FACTORY);
-        CLIENT_BUILDER.comment("Settings for the factory").push(CATEGORY_FACTORY);
+        COMMON_BUILDER.comment("Settings for the factory").push(ConfigPath.Factory.CATEGORY);
+        CLIENT_BUILDER.comment("Settings for the factory").push(ConfigPath.Factory.CATEGORY);
         {
-            TICK_ACCEL = COMMON_BUILDER
-                    .comment("Allow tick acceleration to be used on the factory")
-                    .define("tickAcceleration", true);
-
-            MASS_COUNT = COMMON_BUILDER
-                    .comment("Number of mobs to spawn")
-                    .defineInRange(ConfigOverride.OverrideKey.MASS_COUNT.name(), Factory.MASS_COUNT_DEF, 1, 100);
-
-            SPAWN_TICKS = COMMON_BUILDER
-                    .comment("Number of ticks to spawn a mob")
-                    .defineInRange(ConfigOverride.OverrideKey.SPAWN_TICKS.name(), Factory.SPAWN_TICKS_DEF, 1, 65535);
-            UNITS_PER_HEALTH = COMMON_BUILDER
-                    .comment("Number of units for each health")
-                    .defineInRange(ConfigOverride.OverrideKey.UNITS_PER_HEALTH.name(), Factory.UNITS_PER_HEALTH_DEF, 1, 65535);
-            MOB_SHARD_KILLS = COMMON_BUILDER
-                    .comment("Number of kills to program the shard")
-                    .defineInRange(ConfigOverride.OverrideKey.SHARD_KILLS.name(), Factory.MOB_SHARD_KILLS_DEF, 1, 65535);
-
-            TIER_1_MAX_UNITS = COMMON_BUILDER
-                    .comment("Max units for a tier 1 mob")
-                    .defineInRange("tier1MaxUnits", Factory.TIER_1_MAX_UNITS_DEF, 5, 65535);
-            TIER_2_MAX_UNITS = COMMON_BUILDER
-                    .comment("Max units for a tier 2 mob")
-                    .defineInRange("tier2MaxUnits", Factory.TIER_2_MAX_UNITS_DEF, 5, 65535);
-            TIER_3_MAX_UNITS = COMMON_BUILDER
-                    .comment("Max units for a tier 3 mob")
-                    .defineInRange("tier3MaxUnits", Factory.TIER_3_MAX_UNITS_DEF, 5, 65535);
-            TIER_4_MAX_UNITS = COMMON_BUILDER
-                    .comment("Max units for a tier 4 mob")
-                    .defineInRange("tier4MaxUnits", Factory.TIER_4_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
-            TIER_5_MAX_UNITS = COMMON_BUILDER
-                    .comment("Max units for a tier 5 mob")
-                    .defineInRange("tier5MaxUnits", Factory.TIER_5_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
-
-
-            COMMON_BUILDER.push("cost");
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_GENERAL);
             {
-                TIER_1_UNITS_PER_TICK = COMMON_BUILDER
-                        .comment("Units per tick cost to run a Tier 1 factory")
-                        .defineInRange("tier1UnitsPerTick", Factory.TIER_1_UNITS_PER_TICK_DEF, 1, Integer.MAX_VALUE);
-                TIER_2_UNITS_PER_TICK = COMMON_BUILDER
-                        .comment("Units per tick cost to run a Tier 2 factory")
-                        .defineInRange("tier2UnitsPerTick", Factory.TIER_2_UNITS_PER_TICK_DEF, 1, Integer.MAX_VALUE);
-                TIER_3_UNITS_PER_TICK = COMMON_BUILDER
-                        .comment("Units per tick cost to run a Tier 3 factory")
-                        .defineInRange("tier3UnitsPerTick", Factory.TIER_3_UNITS_PER_TICK_DEF, 1, Integer.MAX_VALUE);
-                TIER_4_UNITS_PER_TICK = COMMON_BUILDER
-                        .comment("Units per tick cost to run a Tier 4 factory")
-                        .defineInRange("tier4UnitsPerTick", Factory.TIER_4_UNITS_PER_TICK_DEF, 1, Integer.MAX_VALUE);
-                TIER_5_UNITS_PER_TICK = COMMON_BUILDER
-                        .comment("Units per tick cost to run a Tier 5 factory")
-                        .defineInRange("tier5UnitsPerTick", Factory.TIER_5_UNITS_PER_TICK_DEF, 1, Integer.MAX_VALUE);
+                TICK_ACCEL = COMMON_BUILDER
+                        .comment("Allow tick acceleration to be used on the factory")
+                        .define(ConfigPath.Factory.TICK_ACCELERATION_TAG, Factory.TICK_ACCELERATION_DEF);
+                TIER_1_MAX_UNITS = COMMON_BUILDER
+                        .comment("Max health for a tier 1 mob")
+                        .defineInRange(ConfigPath.Factory.TIER_1_MAX_HEALTH_TAG,
+                                Factory.TIER_1_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
+                TIER_2_MAX_UNITS = COMMON_BUILDER
+                        .comment("Max health for a tier 2 mob")
+                        .defineInRange(ConfigPath.Factory.TIER_2_MAX_HEALTH_TAG,
+                                Factory.TIER_2_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
+                TIER_3_MAX_UNITS = COMMON_BUILDER
+                        .comment("Max health for a tier 3 mob")
+                        .defineInRange(ConfigPath.Factory.TIER_3_MAX_HEALTH_TAG,
+                                Factory.TIER_3_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
+                TIER_4_MAX_UNITS = COMMON_BUILDER
+                        .comment("Max health for a tier 4 mob")
+                        .defineInRange(ConfigPath.Factory.TIER_4_MAX_HEALTH_TAG,
+                                Factory.TIER_4_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
+                TIER_5_MAX_UNITS = COMMON_BUILDER
+                        .comment("Max health for a tier 5 mob")
+                        .defineInRange(ConfigPath.Factory.TIER_5_MAX_HEALTH_TAG,
+                                Factory.TIER_5_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
             }
             COMMON_BUILDER.pop();
 
-            COMMON_BUILDER.push("perks");
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_BASE);
             {
-                EFFICIENCY_1 = COMMON_BUILDER
-                        .comment("Percentage reduction for efficiency 1 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_1_REDUCTION.name(), Factory.EFFICIENCY_1_DEF, 1, 100);
-                EFFICIENCY_2 = COMMON_BUILDER
-                        .comment("Percentage reduction for efficiency 2 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_2_REDUCTION.name(), Factory.EFFICIENCY_2_DEF, 1, 100);
-                EFFICIENCY_3 = COMMON_BUILDER
-                        .comment("Percentage reduction for efficiency 3 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_EFFICIENCY_3_REDUCTION.name(), Factory.EFFICIENCY_3_DEF, 1, 100);
+                MASS_COUNT = COMMON_BUILDER
+                        .comment("Number of mobs to spawn")
+                        .defineInRange(ConfigPath.Factory.MASS_COUNT_TAG,
+                                Factory.MASS_COUNT_DEF, 1, 100);
 
-                MASS_COUNT_1 = COMMON_BUILDER
-                        .comment("Number of mobs to spawn for mass 1 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_1_COUNT.name(), Factory.MASS_COUNT_1_DEF, 1, 100);
-                MASS_COUNT_2 = COMMON_BUILDER
-                        .comment("Number of mobs to spawn for mass 2 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_2_COUNT.name(), Factory.MASS_COUNT_2_DEF, 1, 100);
-                MASS_COUNT_3 = COMMON_BUILDER
-                        .comment("Number of mobs to spawn for mass 3 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_MASS_3_COUNT.name(), Factory.MASS_COUNT_3_DEF, 1, 100);
-
-                RATE_1 = COMMON_BUILDER
-                        .comment("Percentage reduction in spawn time for rate 1 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_1_REDUCTION.name(), Factory.RATE_1_DEF, 1, 99);
-                RATE_2 = COMMON_BUILDER
-                        .comment("Percentage reduction in spawn time for rate 2 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_2_REDUCTION.name(), Factory.RATE_2_DEF, 1, 99);
-                RATE_3 = COMMON_BUILDER
-                        .comment("Percentage reduction in spawn time for rate 3 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_RATE_3_REDUCTION.name(), Factory.RATE_3_DEF, 1, 99);
-
-                XP_1 = COMMON_BUILDER
-                        .comment("Percentage generate of XP for xp 1 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_XP_1_PERCENTAGE.name(), Factory.XP_1_DEF, 0, 1000);
-                XP_2 = COMMON_BUILDER
-                        .comment("Percentage generate of XP for xp 2 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_XP_2_PERCENTAGE.name(), Factory.XP_2_DEF, 0, 1000);
-                XP_3 = COMMON_BUILDER
-                        .comment("Percentage generate of XP for xp 3 perks")
-                        .defineInRange(ConfigOverride.OverrideKey.PERK_XP_3_PERCENTAGE.name(), Factory.XP_3_DEF, 0, 1000);
-
-                COMMON_BUILDER.push("tiershard");
-                    TIER_SHARD_1 = COMMON_BUILDER
-                            .comment("Number of chance to generate a shard for tier shard 1 perk")
-                            .defineInRange("t1shardrolls", Factory.TIER_SHARD_1_DEF, 0, Integer.MAX_VALUE);
-                    TIER_SHARD_2 = COMMON_BUILDER
-                        .comment("Number of chance to generate a shard for tier shard 2 perk")
-                        .defineInRange("t2shardrolls", Factory.TIER_SHARD_2_DEF, 0, Integer.MAX_VALUE);
-                    TIER_SHARD_3 = COMMON_BUILDER
-                        .comment("Number of chance to generate a shard for tier shard 3 perk")
-                        .defineInRange("t3shardrolls", Factory.TIER_SHARD_3_DEF, 0, Integer.MAX_VALUE);
-                    T1_FARM_DROP_CHANCE = COMMON_BUILDER
-                        .comment("Chance to drop a tier shard from a Tier 1 factory")
-                        .defineInRange("t1dropchance", Factory.T1_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
-                    T1_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                        .comment("Weights of the basic, advanced, elite shard from a Tier 1 factory")
-                        .define("t1dropweights", Factory.T1_SHARD_DROP_WEIGHTS_DEF);
-                    T2_FARM_DROP_CHANCE = COMMON_BUILDER
-                        .comment("Chance to drop a tier shard from a Tier 2 factory")
-                        .defineInRange("t2dropchance", Factory.T2_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
-                    T2_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                        .comment("Weights of the basic, advanced, elite shard from a Tier 2 factory")
-                        .define("t2dropweights", Factory.T2_SHARD_DROP_WEIGHTS_DEF);
-                    T3_FARM_DROP_CHANCE = COMMON_BUILDER
-                        .comment("Chance to drop a tier shard from a Tier 3 factory")
-                        .defineInRange("t3dropchance", Factory.T3_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
-                    T3_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                        .comment("Weights of the basic, advanced, elite shard from a Tier 3 factory")
-                        .define("t3dropweights", Factory.T3_SHARD_DROP_WEIGHTS_DEF);
-                    T4_FARM_DROP_CHANCE = COMMON_BUILDER
-                        .comment("Chance to drop a tier shard from a Tier 4 factory")
-                        .defineInRange("t4dropchance", Factory.T4_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
-                    T4_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                        .comment("Weights of the basic, advanced, elite shard from a Tier 4 factory")
-                        .define("t4dropweights", Factory.T4_SHARD_DROP_WEIGHTS_DEF);
-                    T5_FARM_DROP_CHANCE = COMMON_BUILDER
-                        .comment("Chance to drop a tier shard from a Tier 5 factory")
-                        .defineInRange("t5dropchance", Factory.T5_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
-                    T5_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                        .comment("Weights of the basic, advanced, elite shard from a Tier 5 factory")
-                        .define("t5dropweights", Factory.T5_SHARD_DROP_WEIGHTS_DEF);
-                COMMON_BUILDER.pop();
-
+                SPAWN_TICKS = COMMON_BUILDER
+                        .comment("Number of ticks to spawn a mob")
+                        .defineInRange(ConfigPath.Factory.SPAWN_TICKS_TAG,
+                                Factory.SPAWN_TICKS_DEF, 1, 65535);
+                UNITS_PER_HEALTH = COMMON_BUILDER
+                        .comment("Number of units for each health")
+                        .defineInRange(ConfigPath.Factory.MB_PER_HEALTH_TAG,
+                                Factory.UNITS_PER_HEALTH_DEF, 1, 65535);
+                MOB_SHARD_KILLS = COMMON_BUILDER
+                        .comment("Number of kills to program the shard")
+                        .defineInRange(ConfigPath.Factory.SHARD_KILLS_TAG,
+                                Factory.MOB_SHARD_KILLS_DEF, 1, 65535);
             }
             COMMON_BUILDER.pop();
 
-            COMMON_BUILDER.push("cell");
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_CELL1);
             {
                 CELL_1_CAPACITY = COMMON_BUILDER
-                        .comment("Storage capacity of a basic cell")
+                        .comment(ConfigPath.Common.TANK_CAPACITY_COMMENT)
                         .worldRestart()
-                        .defineInRange("cell1Capacity", Factory.CELL_1_CAPACITY_DEF, 1, Integer.MAX_VALUE);
-                CELL_2_CAPACITY = COMMON_BUILDER
-                        .comment("Storage capacity of an advanced cell")
-                        .worldRestart()
-                        .defineInRange("cell2Capacity", Factory.CELL_2_CAPACITY_DEF, 1, Integer.MAX_VALUE);
-                CELL_3_CAPACITY = COMMON_BUILDER
-                        .comment("Storage capacity of a premium cell")
-                        .worldRestart()
-                        .defineInRange("cell3Capacity", Factory.CELL_3_CAPACITY_DEF, 1, Integer.MAX_VALUE);
+                        .defineInRange(ConfigPath.Common.TANK_CAPACITY_TAG,
+                                Factory.CELL_1_CAPACITY_DEF, 1, Integer.MAX_VALUE);
                 CELL_1_MAX_TRANSFER = COMMON_BUILDER
-                        .comment("Max transfer rate (per-side) of a basic cell")
+                        .comment(ConfigPath.Common.TANK_RX_COMMENT)
                         .worldRestart()
-                        .defineInRange("cell1MaxTransfer", Factory.CELL_1_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+                        .defineInRange(ConfigPath.Common.TANK_RX_TAG,
+                                Factory.CELL_1_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+            }
+            COMMON_BUILDER.pop();
+
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_CELL2);
+            {
+                CELL_2_CAPACITY = COMMON_BUILDER
+                        .comment(ConfigPath.Common.TANK_CAPACITY_COMMENT)
+                        .worldRestart()
+                        .defineInRange(ConfigPath.Common.TANK_CAPACITY_TAG,
+                            Factory.CELL_2_CAPACITY_DEF, 1, Integer.MAX_VALUE);
                 CELL_2_MAX_TRANSFER = COMMON_BUILDER
-                        .comment("Max transfer rate (per-side) of an advanced cell")
+                        .comment(ConfigPath.Common.TANK_RX_COMMENT)
                         .worldRestart()
-                        .defineInRange("cell2MaxTransfer", Factory.CELL_2_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+                        .defineInRange(ConfigPath.Common.TANK_RX_TAG,
+                            Factory.CELL_2_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+            }
+            COMMON_BUILDER.pop();
+
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_CELL3);
+            {
+                CELL_3_CAPACITY = COMMON_BUILDER
+                        .comment(ConfigPath.Common.TANK_CAPACITY_COMMENT)
+                        .worldRestart()
+                        .defineInRange(ConfigPath.Common.TANK_CAPACITY_TAG,
+                            Factory.CELL_3_CAPACITY_DEF, 1, Integer.MAX_VALUE);
                 CELL_3_MAX_TRANSFER = COMMON_BUILDER
-                        .comment("Max transfer rate (per-side) of a premium cell")
+                        .comment(ConfigPath.Common.TANK_RX_COMMENT)
                         .worldRestart()
-                        .defineInRange("cell3MaxTransfer", Factory.CELL_3_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+                        .defineInRange(ConfigPath.Common.TANK_RX_TAG,
+                            Factory.CELL_3_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+            }
+            COMMON_BUILDER.pop();
+
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_PERKS);
+            {
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_EFFICIENCY);
+                {
+                    EFFICIENCY_1 = COMMON_BUILDER
+                            .comment("Percentage reduction for efficiency 1 perks")
+                            .defineInRange(ConfigPath.Factory.EFFICIENCY_1_TAG,
+                                    Factory.EFFICIENCY_1_DEF, 0, 100);
+                    EFFICIENCY_2 = COMMON_BUILDER
+                            .comment("Percentage reduction for efficiency 2 perks")
+                            .defineInRange(ConfigPath.Factory.EFFICIENCY_2_TAG,
+                                    Factory.EFFICIENCY_2_DEF, 0, 100);
+                    EFFICIENCY_3 = COMMON_BUILDER
+                            .comment("Percentage reduction for efficiency 3 perks")
+                            .defineInRange(ConfigPath.Factory.EFFICIENCY_3_TAG,
+                                    Factory.EFFICIENCY_3_DEF, 0, 100);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_MASS);
+                {
+                    MASS_COUNT_1 = COMMON_BUILDER
+                            .comment("Number of mobs to spawn for mass 1 perks")
+                            .defineInRange(ConfigPath.Factory.MASS_1_TAG,
+                                    Factory.MASS_COUNT_1_DEF, 1, 100);
+                    MASS_COUNT_2 = COMMON_BUILDER
+                            .comment("Number of mobs to spawn for mass 2 perks")
+                            .defineInRange(ConfigPath.Factory.MASS_2_TAG,
+                                    Factory.MASS_COUNT_2_DEF, 1, 100);
+                    MASS_COUNT_3 = COMMON_BUILDER
+                            .comment("Number of mobs to spawn for mass 3 perks")
+                            .defineInRange(ConfigPath.Factory.MASS_3_TAG,
+                                    Factory.MASS_COUNT_3_DEF, 1, 100);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_RATE);
+                {
+                    RATE_1 = COMMON_BUILDER
+                            .comment("Percentage reduction in spawn time for rate 1 perks")
+                            .defineInRange(ConfigPath.Factory.RATE_1_TAG,
+                                    Factory.RATE_1_DEF, 1, 99);
+                    RATE_2 = COMMON_BUILDER
+                            .comment("Percentage reduction in spawn time for rate 2 perks")
+                            .defineInRange(ConfigPath.Factory.RATE_2_TAG,
+                                    Factory.RATE_2_DEF, 1, 99);
+                    RATE_3 = COMMON_BUILDER
+                            .comment("Percentage reduction in spawn time for rate 3 perks")
+                            .defineInRange(ConfigPath.Factory.RATE_3_TAG,
+                                    Factory.RATE_3_DEF, 1, 99);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_TIER_SHARD);
+                {
+                    TIER_SHARD_1 = COMMON_BUILDER
+                            .comment("Number of chance to generate a shard for tier shard 1 perk")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_L1_ROLLS_TAG,
+                                    Factory.TIER_SHARD_1_DEF, 0, Integer.MAX_VALUE);
+                    TIER_SHARD_2 = COMMON_BUILDER
+                            .comment("Number of chance to generate a shard for tier shard 2 perk")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_L2_ROLLS_TAG,
+                                    Factory.TIER_SHARD_2_DEF, 0, Integer.MAX_VALUE);
+                    TIER_SHARD_3 = COMMON_BUILDER
+                            .comment("Number of chance to generate a shard for tier shard 3 perk")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_L3_ROLLS_TAG,
+                                    Factory.TIER_SHARD_3_DEF, 0, Integer.MAX_VALUE);
+
+                    T1_FARM_DROP_CHANCE = COMMON_BUILDER
+                            .comment("Chance to drop a tier shard from a Tier 1 factory")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_T1_DROP_TAG,
+                                    Factory.T1_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T2_FARM_DROP_CHANCE = COMMON_BUILDER
+                            .comment("Chance to drop a tier shard from a Tier 2 factory")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_T2_DROP_TAG,
+                                    Factory.T2_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T3_FARM_DROP_CHANCE = COMMON_BUILDER
+                            .comment("Chance to drop a tier shard from a Tier 3 factory")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_T3_DROP_TAG,
+                                    Factory.T3_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T4_FARM_DROP_CHANCE = COMMON_BUILDER
+                            .comment("Chance to drop a tier shard from a Tier 4 factory")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_T4_DROP_TAG,
+                                    Factory.T4_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+                    T5_FARM_DROP_CHANCE = COMMON_BUILDER
+                            .comment("Chance to drop a tier shard from a Tier 5 factory")
+                            .defineInRange(ConfigPath.Factory.TIER_SHARD_T5_DROP_TAG,
+                                    Factory.T5_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
+
+                    T1_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                            .comment("Weights of the basic, advanced, elite shard from a Tier 1 factory")
+                            .define(ConfigPath.Factory.TIER_SHARD_T1_WEIGHTS_TAG,
+                                    Factory.T1_SHARD_DROP_WEIGHTS_DEF);
+                    T2_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                            .comment("Weights of the basic, advanced, elite shard from a Tier 2 factory")
+                            .define(ConfigPath.Factory.TIER_SHARD_T2_WEIGHTS_TAG,
+                                    Factory.T2_SHARD_DROP_WEIGHTS_DEF);
+                    T3_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                            .comment("Weights of the basic, advanced, elite shard from a Tier 3 factory")
+                            .define(ConfigPath.Factory.TIER_SHARD_T3_WEIGHTS_TAG,
+                                    Factory.T3_SHARD_DROP_WEIGHTS_DEF);
+                    T4_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                            .comment("Weights of the basic, advanced, elite shard from a Tier 4 factory")
+                            .define(ConfigPath.Factory.TIER_SHARD_T4_WEIGHTS_TAG,
+                                    Factory.T4_SHARD_DROP_WEIGHTS_DEF);
+                    T5_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
+                            .comment("Weights of the basic, advanced, elite shard from a Tier 5 factory")
+                            .define(ConfigPath.Factory.TIER_SHARD_T5_WEIGHTS_TAG,
+                                    Factory.T5_SHARD_DROP_WEIGHTS_DEF);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_XP);
+                {
+                    XP_1 = COMMON_BUILDER
+                            .comment("Percentage generate of XP for xp 1 perks")
+                            .defineInRange(ConfigPath.Factory.XP_1_TAG,
+                                    Factory.XP_1_DEF, 0, 1000);
+                    XP_2 = COMMON_BUILDER
+                            .comment("Percentage generate of XP for xp 2 perks")
+                            .defineInRange(ConfigPath.Factory.XP_2_TAG,
+                                    Factory.XP_2_DEF, 0, 1000);
+                    XP_3 = COMMON_BUILDER
+                            .comment("Percentage generate of XP for xp 3 perks")
+                            .defineInRange(ConfigPath.Factory.XP_3_TAG,
+                                    Factory.XP_3_DEF, 0, 1000);
+                }
+                COMMON_BUILDER.pop();
+
             }
             COMMON_BUILDER.pop();
         }

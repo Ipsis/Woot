@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public final class ConfigDefaults {
 
+    public static final class Anvil {
+        public static final boolean PARTICLES_DEF = true;
+    }
+
     public static final class Squeezer {
         public static final int DYE_SQUEEZER_TANK_CAPACITY_DEF = 4000;
         public static final int DYE_SQUEEZER_INTERNAL_FLUID_MAX_DEF = DyeMakeup.LCM * 100;
@@ -34,6 +38,12 @@ public final class ConfigDefaults {
         public static final int INFUSER_ENERGY_PER_TICK_DEF = 20;
     }
 
+    public static final class Layout {
+        public static final boolean SIMPLE_DEF = false;
+        public static final double OPACITY_DEF = 0.95D;
+        public static final double SIZE_DEF = 0.35D;
+    }
+
     public static final class Generator {
         public static final int CONATUS_GEN_INPUT_TANK_CAPACITY_DEF = 10000;
         public static final int CONATUS_GEN_OUTPUT_TANK_CAPACITY_DEF = 10000;
@@ -41,10 +51,17 @@ public final class ConfigDefaults {
         public static final int CONATUS_GEN_MAX_ENERGY_RX_DEF = 100;
         public static final int CONATUS_GEN_MAX_ENERGY_PER_TICK_DEF = 20;
         public static final int CONATUS_GEN_RECIPE_ENERGY_DEF = 1000;
+    }
 
+    public static final class Simulation {
+        public static final int TICKS_DEF = 40;
+        public static final int MOB_SAMPLE_SIZE_DEF = 500;
+        public static final int TICKS_PER_SIM_TICK_DEF = 10;
+        public static final int CELLS_PER_SIM_TICK_DEF = 8;
     }
 
     public static final class Factory {
+        public static final boolean TICK_ACCELERATION_DEF = true;
         public static final int MASS_COUNT_DEF = 1;
         public static final int SPAWN_TICKS_DEF = 16 * 20;
         public static final int UNITS_PER_HEALTH_DEF = 1;
@@ -54,11 +71,6 @@ public final class ConfigDefaults {
         public static final int TIER_3_MAX_UNITS_DEF = 60;
         public static final int TIER_4_MAX_UNITS_DEF = Integer.MAX_VALUE;
         public static final int TIER_5_MAX_UNITS_DEF = Integer.MAX_VALUE;
-        public static final int TIER_1_UNITS_PER_TICK_DEF = 5;
-        public static final int TIER_2_UNITS_PER_TICK_DEF = 10;
-        public static final int TIER_3_UNITS_PER_TICK_DEF = 20;
-        public static final int TIER_4_UNITS_PER_TICK_DEF = 30;
-        public static final int TIER_5_UNITS_PER_TICK_DEF = 40;
 
         public static final int CELL_1_CAPACITY_DEF = 10000;
         public static final int CELL_2_CAPACITY_DEF = 100000;

@@ -217,6 +217,12 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                             tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.perkMassValue));
                         else if (Perk.XP_PERKS.contains(perk))
                             tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkXpValue));
+                        else if (Perk.TIER_SHARD_PERKS.contains(perk)) {
+                            tooltip.add(String.format("%d rolls @ %.2f%%", clientFactorySetup.shardRolls, clientFactorySetup.shardDropChance));
+                            tooltip.add(String.format("Basic: %.2f%%", clientFactorySetup.shardDrops[0]));
+                            tooltip.add(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1]));
+                            tooltip.add(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2]));
+                        }
                     }
                 }
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);

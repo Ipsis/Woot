@@ -48,6 +48,21 @@ public class HeartStaticDataReply {
         buf.writeInt(recipe.getNumTicks());
         buf.writeInt(recipe.getNumUnits());
 
+        if (formedSetup.getAllPerks().containsKey(PerkType.TIER_SHARD)) {
+            buf.writeInt(formedSetup.getPerkTierShardValue());
+            buf.writeDouble(formedSetup.getShardDropChance());
+            double full = formedSetup.getBasicShardWeight() + formedSetup.getAdvancedShardWeight() + formedSetup.getEliteShardWeight();
+            buf.writeDouble((100.0F / full) * formedSetup.getBasicShardWeight());
+            buf.writeDouble((100.0F / full) * formedSetup.getAdvancedShardWeight());
+            buf.writeDouble((100.0F / full) * formedSetup.getEliteShardWeight());
+        } else {
+            buf.writeInt(0);
+            buf.writeDouble(0.0F);
+            buf.writeDouble(0.0F);
+            buf.writeDouble(0.0F);
+            buf.writeDouble(0.0F);
+        }
+
         buf.writeInt(formedSetup.getAllMobs().size());
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             NetworkTools.writeString(buf, fakeMob.toString());

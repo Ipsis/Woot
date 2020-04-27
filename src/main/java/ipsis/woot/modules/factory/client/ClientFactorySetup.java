@@ -25,6 +25,11 @@ public class ClientFactorySetup {
     public int recipeTicks = 0;
     public int recipeFluid = 0;
 
+    // shards
+    public int shardRolls = 1;
+    public double shardDropChance = 0.0F;
+    public double[] shardDrops = new double[]{ 0.0F, 0.0F, 0.0F };
+
     public static class Mob {
         public List<ItemStack> itemIngredients = new ArrayList<>();
         public List<FluidStack> fluidIngredients = new ArrayList<>();
@@ -44,6 +49,11 @@ public class ClientFactorySetup {
 
         factorySetup.recipeTicks = buf.readInt();
         factorySetup.recipeFluid = buf.readInt();
+        factorySetup.shardRolls = buf.readInt();
+        factorySetup.shardDropChance = buf.readDouble();
+        factorySetup.shardDrops[0] = buf.readDouble();
+        factorySetup.shardDrops[1] = buf.readDouble();
+        factorySetup.shardDrops[2] = buf.readDouble();
 
         int mobCount = buf.readInt();
         for (int x = 0; x < mobCount; x++) {

@@ -78,7 +78,7 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
             return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 
-        return ActionResultType.SUCCESS;
+        return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
     }
 
     @OnlyIn(Dist.CLIENT)

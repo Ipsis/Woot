@@ -74,7 +74,7 @@ public class FactoryHelper {
             if (isCorrectBlock(currBlock, correctBlocks))
                 continue;
 
-            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER)
+            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER || pb.getFactoryComponent() == FactoryComponent.CELL)
                 continue;
 
             Block placeBlock = correctBlocks.get(0);

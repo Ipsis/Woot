@@ -1,6 +1,6 @@
 package ipsis.woot.modules.generator;
 
-import ipsis.woot.setup.ModDefaults;
+import ipsis.woot.config.ConfigDefaults;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class GeneratorConfiguration {
@@ -22,20 +22,20 @@ public class GeneratorConfiguration {
             CONATUS_GEN_INPUT_TANK_CAPACITY = COMMON_BUILDER
                     .comment("Maximum input tank capacity (in mb)")
                     .defineInRange("inTankMaxCapacity",
-                            ModDefaults.Generator.CONATUS_GEN_INPUT_TANK_CAPACITY_DEF, 1000, Integer.MAX_VALUE);
+                            ConfigDefaults.Generator.CONATUS_GEN_INPUT_TANK_CAPACITY_DEF, 1000, Integer.MAX_VALUE);
             CONATUS_GEN_OUTPUT_TANK_CAPACITY = COMMON_BUILDER
                     .comment("Maximum output tank capacity (in mb)")
                     .defineInRange("outTankMaxCapacity",
-                            ModDefaults.Generator.CONATUS_GEN_OUTPUT_TANK_CAPACITY_DEF, 1000, Integer.MAX_VALUE);
+                            ConfigDefaults.Generator.CONATUS_GEN_OUTPUT_TANK_CAPACITY_DEF, 1000, Integer.MAX_VALUE);
             CONATUS_GEN_MAX_ENERGY = COMMON_BUILDER
                     .comment("Maximum energy capacity (in RF)")
-                    .defineInRange("energyMaxCapacity", ModDefaults.Generator.CONATUS_GEN_MAX_ENERGY_DEF, 0, Integer.MAX_VALUE);
+                    .defineInRange("energyMaxCapacity", ConfigDefaults.Generator.CONATUS_GEN_MAX_ENERGY_DEF, 0, Integer.MAX_VALUE);
             CONATUS_GEN_MAX_ENERGY_RX = COMMON_BUILDER
                     .comment("Maximum energy that can be received (in RF/t)")
-                    .defineInRange("energyMaxRx", ModDefaults.Generator.CONATUS_GEN_MAX_ENERGY_RX_DEF, 0, Integer.MAX_VALUE);
+                    .defineInRange("energyMaxRx", ConfigDefaults.Generator.CONATUS_GEN_MAX_ENERGY_RX_DEF, 0, Integer.MAX_VALUE);
             CONATUS_GEN_ENERGY_PER_TICK = COMMON_BUILDER
                     .comment("How much energy per tick to use (in RF/t)")
-                    .defineInRange("energyPerTick", ModDefaults.Generator.CONATUS_GEN_RECIPE_ENERGY_DEF, 0, Integer.MAX_VALUE);
+                    .defineInRange("energyPerTick", ConfigDefaults.Generator.CONATUS_GEN_RECIPE_ENERGY_DEF, 0, Integer.MAX_VALUE);
             COMMON_BUILDER.pop();
         }
         CLIENT_BUILDER.pop();

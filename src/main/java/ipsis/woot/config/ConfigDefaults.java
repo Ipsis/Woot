@@ -1,11 +1,11 @@
-package ipsis.woot.setup;
+package ipsis.woot.config;
 
 import com.google.common.collect.Lists;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 
 import java.util.ArrayList;
 
-public final class ModDefaults {
+public final class ConfigDefaults {
 
     public static final class Squeezer {
         public static final int DYE_SQUEEZER_TANK_CAPACITY_DEF = 4000;

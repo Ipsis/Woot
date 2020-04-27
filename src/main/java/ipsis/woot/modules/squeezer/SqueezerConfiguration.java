@@ -1,6 +1,6 @@
 package ipsis.woot.modules.squeezer;
 
-import ipsis.woot.setup.ModDefaults.Squeezer;
+import ipsis.woot.config.ConfigDefaults.Squeezer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class SqueezerConfiguration {

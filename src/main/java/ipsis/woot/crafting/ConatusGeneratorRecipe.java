@@ -1,12 +1,9 @@
 package ipsis.woot.crafting;
 
 import com.google.gson.JsonObject;
-import ipsis.woot.setup.ModDefaults;
 import ipsis.woot.util.FluidStackHelper;
 import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;

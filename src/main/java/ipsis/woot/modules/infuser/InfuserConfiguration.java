@@ -2,7 +2,7 @@ package ipsis.woot.modules.infuser;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import ipsis.woot.setup.ModDefaults.Infuser;
+import ipsis.woot.config.ConfigDefaults.Infuser;
 
 public class InfuserConfiguration {
 

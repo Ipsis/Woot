@@ -15,7 +15,7 @@ public class AnvilConfiguration {
         {
             ANVIL_PARTICILES = CLIENT_BUILDER
                     .comment("Anvil generates particles when correctly placed")
-                    .define("anvilParticles", false);
+                    .define("anvilParticles", true);
         }
         COMMON_BUILDER.pop();
         CLIENT_BUILDER.pop();

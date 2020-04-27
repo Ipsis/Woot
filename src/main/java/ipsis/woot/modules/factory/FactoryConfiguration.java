@@ -3,7 +3,7 @@ package ipsis.woot.modules.factory;
 import ipsis.woot.config.ConfigOverride;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import ipsis.woot.setup.ModDefaults.Factory;
+import ipsis.woot.config.ConfigDefaults.Factory;
 
 import java.util.List;
 

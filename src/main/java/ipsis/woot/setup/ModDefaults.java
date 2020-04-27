@@ -79,6 +79,9 @@ public final class ModDefaults {
         public static final int XP_1_DEF = 100;
         public static final int XP_2_DEF = 125;
         public static final int XP_3_DEF = 150;
+        public static final int TIER_SHARD_1_DEF = 1;
+        public static final int TIER_SHARD_2_DEF = 2;
+        public static final int TIER_SHARD_3_DEF = 3;
 
         public static final double T1_SHARD_DROP_CHANCE_DEF = 5.0F;
         public static final double T2_SHARD_DROP_CHANCE_DEF = 10.0F;

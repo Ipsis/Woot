@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "group": "woot",
   "pattern": [
-    " s ",
+    "zs ",
     "sps",
     " s "
   ],
@@ -12,6 +12,9 @@
     },
     "p": {
       "item": "woot:orange_dyeplate"
+    },
+    "z": {
+      "item": "woot:t1shard"
     }
   },
   "result": {

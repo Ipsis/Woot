@@ -47,6 +47,9 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue XP_1;
     public static ForgeConfigSpec.IntValue XP_2;
     public static ForgeConfigSpec.IntValue XP_3;
+    public static ForgeConfigSpec.IntValue TIER_SHARD_1;
+    public static ForgeConfigSpec.IntValue TIER_SHARD_2;
+    public static ForgeConfigSpec.IntValue TIER_SHARD_3;
     public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
@@ -161,6 +164,15 @@ public class FactoryConfiguration {
                         .defineInRange(ConfigOverride.OverrideKey.PERK_XP_3_PERCENTAGE.name(), Factory.XP_3_DEF, 0, 1000);
 
                 COMMON_BUILDER.push("tiershard");
+                    TIER_SHARD_1 = COMMON_BUILDER
+                            .comment("Number of chance to generate a shard for tier shard 1 perk")
+                            .defineInRange("t1shardrolls", Factory.TIER_SHARD_1_DEF, 0, Integer.MAX_VALUE);
+                    TIER_SHARD_2 = COMMON_BUILDER
+                        .comment("Number of chance to generate a shard for tier shard 2 perk")
+                        .defineInRange("t2shardrolls", Factory.TIER_SHARD_2_DEF, 0, Integer.MAX_VALUE);
+                    TIER_SHARD_3 = COMMON_BUILDER
+                        .comment("Number of chance to generate a shard for tier shard 3 perk")
+                        .defineInRange("t3shardrolls", Factory.TIER_SHARD_3_DEF, 0, Integer.MAX_VALUE);
                     T1_FARM_DROP_CHANCE = COMMON_BUILDER
                         .comment("Chance to drop a tier shard from a Tier 1 factory")
                         .defineInRange("t1dropchance", Factory.T1_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);

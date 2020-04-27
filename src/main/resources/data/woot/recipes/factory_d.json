@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "group": "woot",
   "pattern": [
-    " s ",
+    "zsz",
     "sps",
     " s "
   ],
@@ -12,10 +12,13 @@
     },
     "p": {
       "item": "woot:green_dyeplate"
+    },
+    "z": {
+      "item": "woot:t2shard"
     }
   },
   "result": {
     "item": "woot:factory_d",
-    "count": 4
+    "count": 2
   }
 }

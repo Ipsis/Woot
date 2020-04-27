@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.generators;
 
 import ipsis.woot.Woot;
+import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
@@ -117,14 +118,8 @@ public class LootGeneration {
             shards.add(new ShardPerkData(GenericItemType.ADVANCED_UP_SHARD, setup.getAdvancedShardWeight()));
             shards.add(new ShardPerkData(GenericItemType.ELITE_UP_SHARD, setup.getEliteShardWeight()));
 
-            int rolls = 1;
+            int rolls = setup.getPerkTierShardValue();
             List<ItemStack> dropShards = new ArrayList<>();
-            if (setup.getAllPerks().get(PerkType.TIER_SHARD) == 1)
-                rolls = 1;
-            else if (setup.getAllPerks().get(PerkType.TIER_SHARD) == 2)
-                rolls = 2;
-            else if (setup.getAllPerks().get(PerkType.TIER_SHARD) == 3)
-                rolls = 3;
 
             Woot.setup.getLogger().debug("Shard gen installed");
             Woot.setup.getLogger().debug("Level:{} Drop:{} Basic:{} Advanced:{} Elite:{} Rolls:{}",

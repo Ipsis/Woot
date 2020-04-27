@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.generic.GenericSetup;
+import ipsis.woot.modules.generic.items.GenericItem;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
@@ -44,31 +45,34 @@ public class Factory {
                 .build(consumer);
 
         ShapedRecipeBuilder.shapedRecipe(FactorySetup.FACTORY_C_BLOCK.get(), 4)
-                .patternLine(" s ")
+                .patternLine("zs ")
                 .patternLine("sps")
                 .patternLine(" s ")
                 .key('s', Tags.Items.STONE)
                 .key('p', InfuserSetup.ORANGE_DYE_PLATE_ITEM.get())
+                .key('z', GenericSetup.T1_SHARD_ITEM.get())
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(FactorySetup.FACTORY_D_BLOCK.get(), 4)
-                .patternLine(" s ")
+        ShapedRecipeBuilder.shapedRecipe(FactorySetup.FACTORY_D_BLOCK.get(), 2)
+                .patternLine("zsz")
                 .patternLine("sps")
                 .patternLine(" s ")
                 .key('s', Tags.Items.STONE)
                 .key('p', InfuserSetup.GREEN_DYE_PLATE_ITEM.get())
+                .key('z', GenericSetup.T2_SHARD_ITEM.get())
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(FactorySetup.FACTORY_E_BLOCK.get(), 4)
-                .patternLine(" s ")
+        ShapedRecipeBuilder.shapedRecipe(FactorySetup.FACTORY_E_BLOCK.get(), 2)
+                .patternLine("zsz")
                 .patternLine("sps")
-                .patternLine(" s ")
+                .patternLine("zsz")
                 .key('s', Tags.Items.STONE)
                 .key('p', InfuserSetup.PURPLE_DYE_PLATE_ITEM.get())
+                .key('z', GenericSetup.T3_SHARD_ITEM.get())
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);

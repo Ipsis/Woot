@@ -38,6 +38,7 @@ public class FormedSetup {
     private int cellCapacity = 0;
     private double shardDropChance = 0.0F;
     private int[] shardDropWeights = new int[]{ 0, 0, 0 };
+    private int perkTierShardValue = 0;
 
     private FormedSetup() {}
     private FormedSetup(World world, Tier tier) {
@@ -60,6 +61,7 @@ public class FormedSetup {
     public int getBasicShardWeight() { return shardDropWeights[0]; }
     public int getAdvancedShardWeight() { return shardDropWeights[1]; }
     public int getEliteShardWeight() { return shardDropWeights[2]; }
+    public int getPerkTierShardValue() { return perkTierShardValue; }
 
     public BlockPos getImportPos() { return this.importPos; }
     public BlockPos getExportPos() { return this.exportPos; }
@@ -207,6 +209,13 @@ public class FormedSetup {
                         formedSetup.perks.put(perkType, perkLevel);
 
                         if (perkType == PerkType.TIER_SHARD) {
+                            if (perkLevel == 1)
+                                formedSetup.perkTierShardValue = FactoryConfiguration.TIER_SHARD_1.get();
+                            else if (perkLevel == 2)
+                                formedSetup.perkTierShardValue = FactoryConfiguration.TIER_SHARD_2.get();
+                            else if (perkLevel == 3)
+                                formedSetup.perkTierShardValue = FactoryConfiguration.TIER_SHARD_3.get();
+
                             if (formedSetup.getTier() == Tier.TIER_1) {
                                 formedSetup.shardDropChance = FactoryConfiguration.T1_FARM_DROP_CHANCE.get();
                                 formedSetup.shardDropWeights[0] = FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(0);

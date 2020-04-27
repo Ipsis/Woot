@@ -77,6 +77,7 @@
   "item.woot.si_dust": "Stygian Iron Dust",
   "item.woot.si_ingot": "Stygian Iron Ingot",
   "item.woot.si_plate": "Stygian Iron Plate",
+  "item.woot.prism": "Prism",
   "item.woot.hammer": "YA Hammer",
   "item.woot.xpshard" : "XP Shard",
   "item.woot.xpsplinter" : "XP Splinter",
@@ -152,6 +153,8 @@
   "info.woot.mobshard.b.0": "[Kills %d/%d]",
   "info.woot.mobshard.b.1": "[Fully Programmed]",
   "info.woot.cell.0": "Conatus Fluid %d/%dmB",
+  "info.woot.shard.0": "Right click to gain experience",
+  "info.woot.shard.1": "Sneak right click to consume full stack",
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",
@@ -169,6 +172,7 @@
   "chat.woot.intern.validate.noprimary": "No valid primary controller at (%d,%d,%d)",
   "chat.woot.mobshard.failure": "Cannot capture mob",
   "chat.woot.mobshard.success": "Captured mob",
+  "chat.woot.anvil.cold": "Anvil must be sitting on a Magma Block",
 
   # Gui
   "gui.woot.infuser.name": "Infuser",

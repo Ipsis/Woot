@@ -142,6 +142,7 @@ dependencies {
 
     // TOP
     compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version) { transitive = false }
+    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version)
 
     // JEI
     compileOnly fg.deobf("mezz.jei:jei-" + jei_version + ":api")

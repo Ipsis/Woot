@@ -19,6 +19,7 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
 import ipsis.woot.util.helper.SerializationHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ipsis.woot.simulator.MobSimulatorSetup.TARTARUS_DIMENSION_ID;
@@ -85,6 +87,12 @@ public class ForgeEventHandlers {
 
         PlayerEntity killer = (PlayerEntity)event.getSource().getTrueSource();
         LivingEntity victim = event.getEntityLiving();
+
+        if (ignoreDeathEvent(event.getEntity())) {
+            Woot.setup.getLogger().debug("onLivingDeathEvent: duplicate {} {}",
+                    event.getEntity(), event.getEntity().getCachedUniqueIdString());
+            return;
+        }
 
         // Ignore fakeplayer
         if (killer instanceof FakePlayer)
@@ -157,4 +165,22 @@ public class ForgeEventHandlers {
         DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);
     }
 
+    /**
+     * Death cache
+     * Some entities like the EnderDragon generate multiple death events
+     * so we cache the last X here and ignore any duplicates
+     */
+    private final int MAX_UUID_CACHE_SIZE = 10;
+    private List<String> uuidList = new ArrayList<>();
+    private boolean ignoreDeathEvent(Entity entity) {
+        String uuid = entity.getCachedUniqueIdString();
+        if (uuidList.contains(uuid))
+            return true;
+
+        uuidList.add(uuid);
+        if (uuidList.size() > MAX_UUID_CACHE_SIZE)
+            uuidList.remove(0);
+
+        return false;
+    }
 }

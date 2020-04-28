@@ -11,6 +11,7 @@ import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.MathHelper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
@@ -67,22 +68,6 @@ public class FormedSetup {
     public BlockPos getExportPos() { return this.exportPos; }
     public World getWorld() { return this.world; }
 
-    public LazyOptional<IItemHandler> getImportItemHandler() {
-        if (world != null) {
-            TileEntity te = world.getTileEntity(importPos);
-            return te instanceof TileEntity ? te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) : LazyOptional.empty();
-        }
-        return LazyOptional.empty();
-    }
-
-    public LazyOptional<IItemHandler> getExportItemHandler() {
-        if (world != null) {
-            TileEntity te = world.getTileEntity(exportPos);
-            return te instanceof TileEntity ? te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) : LazyOptional.empty();
-        }
-        return LazyOptional.empty();
-    }
-
     public Tier getTier() { return this.tier; }
     public int getCellCapacity() { return this.cellCapacity; }
     public int getCellFluidAmount() {
@@ -94,6 +79,34 @@ public class FormedSetup {
         return 0;
     }
     public int getLootingLevel() { return MathHelper.clampLooting(perks.getOrDefault(PerkType.LOOTING, 0)); }
+
+    public List<LazyOptional<IItemHandler>> getImportHandlers() {
+        List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
+        for (Direction facing : Direction.values()) {
+            if (!world.isBlockLoaded(importPos.offset(facing)))
+                continue;
+            TileEntity te = world.getTileEntity(importPos.offset(facing));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            handlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
+        }
+        return handlers;
+    }
+
+    public List<LazyOptional<IItemHandler>> getExportHandlers() {
+        List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
+        for (Direction facing : Direction.values()) {
+            if (!world.isBlockLoaded(exportPos.offset(facing)))
+                continue;
+            TileEntity te = world.getTileEntity(exportPos.offset(facing));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            handlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
+        }
+        return handlers;
+    }
 
     public int getMaxSpawnTime() {
         int max = 0;

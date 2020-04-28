@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "name": "factory_ctr_base_sec",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "woot:factory_ctr_base_sec"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.calculators.CalculatorVersion2;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
@@ -10,16 +11,19 @@ import ipsis.woot.modules.factory.network.HeartStaticDataReply;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.helper.StorageHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -29,6 +33,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -119,18 +126,72 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                consumedUnits = 0;
                markDirty();
 
-               LazyOptional<IFluidHandler> hdlr = formedSetup.getCellFluidHandler();
-               if (hdlr.isPresent()){
-                   IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
-                   FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
-                   if (fluidStack.getAmount() == recipe.getNumUnits()) {
-                       LOGGER.debug("Generate loot");
-                       iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
-                       LootGeneration.get().generate(this, formedSetup);
+               List<ItemStack> items = createItemIngredients(recipe, formedSetup);
+               List<FluidStack> fluids = createFluidIngredients(recipe, formedSetup);
+
+               if (hasItemIngredients(items, formedSetup) && hasFluidIngredients(fluids, formedSetup)) {
+                   LazyOptional<IFluidHandler> hdlr = formedSetup.getCellFluidHandler();
+                   if (hdlr.isPresent()) {
+                       IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
+                       FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
+                       if (fluidStack.getAmount() == recipe.getNumUnits()) {
+                           LOGGER.debug("Generate loot");
+                           consumeItemIngredients(items, formedSetup);
+                           consumeFluidIngredients(fluids, formedSetup);
+                           iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
+                           LootGeneration.get().generate(this, formedSetup);
+                       }
                    }
                }
            }
        }
+    }
+
+    private List<ItemStack> createItemIngredients(Recipe recipe, FormedSetup formedSetup) {
+        List<ItemStack> items = new ArrayList<>();
+        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
+            if (recipe.items.containsKey(fakeMob)) {
+                for (ItemStack itemStack : recipe.items.get(fakeMob)) {
+                    int count = itemStack.getCount() * formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS));
+                    ItemStack newStack = itemStack.copy();
+                    newStack.setCount(count);
+                    items.add(newStack);
+                }
+            }
+        }
+        return StorageHelper.flattenItemStackList(items);
+    }
+
+    private List<FluidStack> createFluidIngredients(Recipe recipe, FormedSetup formedSetup) {
+        List<FluidStack> fluids = new ArrayList<>();
+        return fluids;
+    }
+
+    private boolean hasItemIngredients(List<ItemStack> items, FormedSetup formedSetup) {
+        if (items.isEmpty())
+            return true;
+
+        for (ItemStack itemStack : items) {
+            int count = StorageHelper.getCount(itemStack, formedSetup.getImportHandlers());
+            if (count == 0 || count < itemStack.getCount())
+                return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
+        if (fluids.isEmpty())
+            return true;
+
+        return true;
+    }
+
+    private void consumeItemIngredients(List<ItemStack> items, FormedSetup formedSetup) {
+
+    }
+
+    private void consumeFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
     }
 
     /**

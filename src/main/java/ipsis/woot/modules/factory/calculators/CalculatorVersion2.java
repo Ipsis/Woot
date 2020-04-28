@@ -1,12 +1,13 @@
 package ipsis.woot.modules.factory.calculators;
 
-import ipsis.woot.config.Config;
-import ipsis.woot.config.ConfigOverride;
+import ipsis.woot.modules.factory.FactoryRecipes;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.util.FakeMob;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fluids.FluidStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,6 +37,17 @@ public class CalculatorVersion2 {
             actualSpawnTicks -= rateSaving;
         }
 
-        return new HeartTileEntity.Recipe(actualSpawnTicks, fluidCost);
+        HeartTileEntity.Recipe recipe = new HeartTileEntity.Recipe(actualSpawnTicks, fluidCost);
+
+        for (FakeMob fakeMob : setup.getAllMobs()) {
+            if (FactoryRecipes.getInstance().hasRecipe(fakeMob)) {
+                for (ItemStack itemStack : FactoryRecipes.getInstance().getItems(fakeMob))
+                    recipe.addItem(fakeMob, itemStack);
+                for (FluidStack fluidStack : FactoryRecipes.getInstance().getFluids(fakeMob))
+                    recipe.addFluid(fakeMob, fluidStack);
+            }
+        }
+
+        return recipe;
     }
 }

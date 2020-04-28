@@ -141,6 +141,7 @@ public class FakeMob {
     private static final String CREEPER = "minecraft:creeper";
     private static final String SLIME = "minecraft:slime";
     private static final String MAGMA_CUBE = "minecraft:magma_cube";
+    private static final String ENDER_DRAGON = "minecraft:ender_dragon";
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
         return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).func_225509_J__();
@@ -161,4 +162,6 @@ public class FakeMob {
     public boolean isSmallMagmaCube() {
         return getEntityKey().equalsIgnoreCase(MAGMA_CUBE) && tag.equalsIgnoreCase(SMALL_TAG);
     }
+
+    public static FakeMob getEnderDragon() { return new FakeMob(ENDER_DRAGON); }
 }

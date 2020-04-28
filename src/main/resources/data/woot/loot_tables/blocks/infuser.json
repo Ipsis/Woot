@@ -7,6 +7,24 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "tank",
+                  "target": "BlockEntityTag.tank",
+                  "op": "replace"
+                },
+                {
+                  "source": "energy",
+                  "target": "BlockEntityTag.energy",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
           "name": "woot:infuser"
         }
       ]

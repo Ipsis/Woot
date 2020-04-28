@@ -1,10 +1,15 @@
 package ipsis.woot.util;
 
+import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 /**
  * Implements a ticking machine with recipes that uses energy
@@ -124,6 +129,16 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
 
        if (!hasValidInput())
            processOff();
+    }
+
+    public void dropContents(List<ItemStack> items) {
+        for (ItemStack itemStack : items) {
+            if (itemStack.isEmpty())
+                continue;
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+        }
+        markDirty();
+        WorldHelper.updateClient(world, pos);
     }
 
 }

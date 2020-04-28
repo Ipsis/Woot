@@ -7,6 +7,29 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "inputTank",
+                  "target": "BlockEntityTag.inputTank",
+                  "op": "replace"
+                },
+                {
+                  "source": "outputTank",
+                  "target": "BlockEntityTag.outputTank",
+                  "op": "replace"
+                },
+                {
+                  "source": "energy",
+                  "target": "BlockEntityTag.energy",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
           "name": "woot:conatusgenerator"
         }
       ]

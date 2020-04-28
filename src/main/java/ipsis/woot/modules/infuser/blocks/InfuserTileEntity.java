@@ -42,6 +42,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ipsis.woot.crafting.InfuserRecipe.INFUSER_TYPE;
@@ -344,23 +345,26 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     public void dropContents(World world, BlockPos pos) {
-        for (int i = 0; i < 2; i++) {
-            ItemStack itemStack = inputSlots.getStackInSlot(i);
-            if (!itemStack.isEmpty()) {
-                InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-                inputSlots.setStackInSlot(i, ItemStack.EMPTY);
-            }
+
+        List<ItemStack> drops = new ArrayList<>();
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (!itemStack.isEmpty()) {
+            drops.add(itemStack);
+            inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
         }
 
-        ItemStack itemStack = outputSlot.getStackInSlot(OUTPUT_SLOT);
+        itemStack = inputSlots.getStackInSlot(AUGMENT_SLOT);
         if (!itemStack.isEmpty()) {
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            drops.add(itemStack);
+            inputSlots.setStackInSlot(AUGMENT_SLOT, ItemStack.EMPTY);
+        }
+
+        itemStack = outputSlot.getStackInSlot(OUTPUT_SLOT);
+        if (!itemStack.isEmpty()) {
+            drops.add(itemStack);
             outputSlot.setStackInSlot(OUTPUT_SLOT, ItemStack.EMPTY);
         }
-
-         markDirty();
-        if (world != null)
-            WorldHelper.updateClient(world, pos);
+        super.dropContents(drops);
     }
 
 }

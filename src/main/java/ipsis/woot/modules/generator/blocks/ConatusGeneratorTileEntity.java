@@ -39,6 +39,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ipsis.woot.crafting.ConatusGeneratorRecipe.CONATUS_GEN_TYPE;
@@ -344,14 +345,13 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     }
 
     public void dropContents(World world, BlockPos pos) {
+
+        List<ItemStack> drops = new ArrayList<>();
         ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
         if (!itemStack.isEmpty()) {
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            drops.add(itemStack);
             inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
         }
-
-        markDirty();
-        if (world != null)
-            WorldHelper.updateClient(world, pos);
+        super.dropContents(drops);
     }
 }

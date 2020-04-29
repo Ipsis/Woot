@@ -7,8 +7,8 @@ import ipsis.woot.modules.layout.LayoutSetup;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -22,14 +22,6 @@ public class LayoutTileEntity extends TileEntity {
     public LayoutTileEntity() {
         super(LayoutSetup.LAYOUT_BLOCK_TILE.get());
     }
-
-    public void setFacing(Direction facing) {
-        this.facing = facing;
-        markDirty();
-        refresh();
-    }
-
-    public Direction getFacing() { return facing; }
 
     public int getLevel() { return level; }
     public int setNextLevel() {
@@ -62,7 +54,7 @@ public class LayoutTileEntity extends TileEntity {
             return;
 
         BlockPos origin = getPos().down(LAYOUT_Y_OFFSET);
-        absolutePattern = AbsolutePattern.create(world, tier, origin, facing);
+        absolutePattern = AbsolutePattern.create(world, tier, origin, world.getBlockState(pos).get(BlockStateProperties.HORIZONTAL_FACING));
     }
 
     public AbsolutePattern getAbsolutePattern() { return absolutePattern; }
@@ -117,17 +109,14 @@ public class LayoutTileEntity extends TileEntity {
     /**
      * NBT
      */
-    Direction facing = Direction.NORTH;
     Tier tier = Tier.TIER_1;
     int level = -1; // level in the structure to show
-    static final String KEY_FACING = "facing";
     static final String KEY_LEVEL = "level";
     static final String KEY_TIER = "tier";
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        compound.putInt(KEY_FACING, facing.ordinal());
         compound.putInt(KEY_LEVEL, level);
         compound.putInt(KEY_TIER, tier.ordinal());
         return compound;
@@ -136,7 +125,6 @@ public class LayoutTileEntity extends TileEntity {
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        facing = Direction.byIndex(compound.getInt(KEY_FACING));
         level = MathHelper.clamp(compound.getInt(KEY_LEVEL), -1, 16);
         tier = Tier.byIndex(compound.getInt(KEY_TIER));
     }

@@ -77,7 +77,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
                     BlockState blockState = block.getFactoryComponent().getDefaultBlockState();
                     if (block.getFactoryComponent() == FactoryComponent.HEART)
-                        blockState = FactorySetup.HEART_BLOCK.get().getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, tileEntityIn.getFacing());
+                        blockState = FactorySetup.HEART_BLOCK.get().getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING,  tileEntityIn.getWorld().getBlockState(tileEntityIn.getPos()).get(BlockStateProperties.HORIZONTAL_FACING));
 
                     Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(blockState,
                             matrixStack, bufferIn, 0x00f000f0, combinedOverlayIn, EmptyModelData.INSTANCE);

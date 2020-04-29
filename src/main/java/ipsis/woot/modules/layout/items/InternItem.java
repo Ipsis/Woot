@@ -196,11 +196,17 @@ public class InternItem extends Item {
             if (pattern != null) {
                 for (FactoryComponent component : FactoryComponent.VALUES) {
                     int count = pattern.getFactoryBlockCount((component));
-                    if (count > 0)
-                        tooltip.add(new StringTextComponent(
-                                String.format(
-                                "%2d * %s",
-                                 count, StringHelper.translate(component.getTranslationKey()))));
+                    if (count > 0) {
+                        String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
+                        if (component == FactoryComponent.CELL)
+                            text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell"));
+                        else if (toolMode == ToolMode.BUILD_1 && component == FactoryComponent.CONTROLLER)
+                            text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
+                        else if (component == FactoryComponent.CONTROLLER)
+                            text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
+
+                        tooltip.add(new StringTextComponent(text));
+                    }
                 }
             }
         }

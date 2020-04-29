@@ -155,6 +155,7 @@
   "info.woot.cell.0": "Conatus Fluid %d/%dmB",
   "info.woot.shard.0": "Right click to gain experience",
   "info.woot.shard.1": "Sneak right click to consume full stack",
+  "info.woot.intern.cell": "Any cell",
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",

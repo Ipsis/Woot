@@ -91,6 +91,10 @@ public class FactoryScanner {
 
             String found = StringHelper.translate(currBlock.getTranslationKey());
             String expected = StringHelper.translate(p.getFactoryComponent().getTranslationKey());
+
+            if (p.getFactoryComponent() == FactoryComponent.CELL)
+                expected = StringHelper.translate("info.woot.intern.cell");
+
             if (!(currBlock instanceof FactoryComponentProvider)) {
                 // Controllers are special as they are optional
                 if (p.getFactoryComponent() != FactoryComponent.CONTROLLER) {

@@ -134,7 +134,7 @@
   "info.woot.intern.0": "§bSneak-right click to change modes",
   "info.woot.intern.1": "§bPlace controllers and cells manually",
   "info.woot.intern.mode.form": "Form the factory",
-  "info.woot.intern.mode.build_1": "Build a Tier 1 factory",
+  "info.woot.intern.mode.build_1": "Build a %s factory",
   "info.woot.intern.mode.build_2": "Build a Tier 2 factory",
   "info.woot.intern.mode.build_3": "Build a Tier 3 factory",
   "info.woot.intern.mode.build_4": "Build a Tier 4 factory",
@@ -155,7 +155,7 @@
   "info.woot.cell.0": "Conatus Fluid %d/%dmB",
   "info.woot.shard.0": "Right click to gain experience",
   "info.woot.shard.1": "Sneak right click to consume full stack",
-  "info.woot.intern.cell": "Any cell",
+  "info.woot.intern.cell": "Cell",
 
   # Chat
   "chat.woot.intern.missingblock": "No %s in inventory",
@@ -171,6 +171,9 @@
   "chat.woot.intern.validate.wrongtier": "Controller at (%d,%d,%d) not valid for %s",
   "chat.woot.intern.validate.blacklisted": "Controller at (%d,%d,%d) is blacklisted",
   "chat.woot.intern.validate.noprimary": "No valid primary controller at (%d,%d,%d)",
+  "chat.woot.intern.validate.start": "Validating %s",
+  "chat.woot.intern.validate.invalid": "Not a valid %s factory",
+  "chat.woot.intern.validate.valid": "Found valid %s factory",
   "chat.woot.mobshard.failure": "Cannot capture mob",
   "chat.woot.mobshard.success": "Captured mob",
   "chat.woot.anvil.cold": "Anvil must be sitting on a Magma Block",
@@ -186,6 +189,13 @@
   "gui.woot.enchsqueezer.name": "Enchantment Squeezer",
   "gui.woot.squeezer.name": "Dye Squeezer",
   "gui.woot.conatusgenerator.name": "Conatus Convertor",
+
+  # Misc
+  "misc.woot.tier_1": "Tier 1",
+  "misc.woot.tier_2": "Tier 2",
+  "misc.woot.tier_3": "Tier 3",
+  "misc.woot.tier_4": "Tier 4",
+  "misc.woot.tier_5": "Tier 5",
 
   # Jei
   "jei.woot.shard": "Generated from the factory with the Shard perk installed.",

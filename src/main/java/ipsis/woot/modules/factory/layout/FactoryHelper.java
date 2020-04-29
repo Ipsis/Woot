@@ -79,7 +79,9 @@ public class FactoryHelper {
 
             Block placeBlock = correctBlocks.get(0);
             if (!PlayerHelper.playerHasFactoryComponent(playerEntity, correctItemStacks)) {
-                PlayerHelper.sendChatMessage(playerEntity, StringHelper.translate("Do not have " + pb.getFactoryComponent()));
+                PlayerHelper.sendChatMessage(playerEntity,
+                        StringHelper.translateFormat("chat.woot.intern.missingblock",
+                                pb.getFactoryComponent().getTranslationKey()));
                 return false;
             }
             if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
@@ -96,7 +98,10 @@ public class FactoryHelper {
                 return true;
             } else {
                 // cannot replace block
-                PlayerHelper.sendChatMessage(playerEntity, "Cannot replace block with " + pb.getFactoryComponent());
+                PlayerHelper.sendChatMessage(playerEntity,
+                        StringHelper.translateFormat("chat.woot.intern.noreplace",
+                                pb.getFactoryComponent().getTranslationKey(),
+                                pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()));
                 return false;
             }
         }
@@ -105,16 +110,19 @@ public class FactoryHelper {
 
     public static void tryValidate(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
 
-        PlayerHelper.sendChatMessage(playerEntity,
-                "Validating " + tier);
+        PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
+                "chat.woot.intern.validate.start", StringHelper.translate(tier.getTranslationKey())));
 
         List<String> feedback = new ArrayList<>();
         AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
         if (!FactoryScanner.compareToWorld(absolutePattern, world, feedback)) {
+            PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
+                    "chat.woot.intern.validate.invalid", StringHelper.translate(tier.getTranslationKey())));
             for (String s : feedback)
                 PlayerHelper.sendChatMessage(playerEntity, s);
         } else {
-            PlayerHelper.sendChatMessage(playerEntity,"Found valid " + tier);
+            PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
+                    "chat.woot.intern.validate.valid", StringHelper.translate(tier.getTranslationKey())));
         }
     }
 

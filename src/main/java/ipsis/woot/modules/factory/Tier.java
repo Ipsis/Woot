@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory;
 
 import java.util.EnumSet;
+import java.util.Locale;
 
 public enum Tier {
 
@@ -46,6 +47,9 @@ public enum Tier {
         if (this == TIER_4) return VALID_FOR_TIER_4.contains(check);
         if (this == TIER_5) return VALID_FOR_TIER_5.contains(check);
         return false;
+    }
 
+    public String getTranslationKey() {
+        return "misc.woot." + this.name().toLowerCase(Locale.ROOT);
     }
 }

@@ -1,10 +1,12 @@
 package ipsis.woot.simulator.spawning;
 
+import ipsis.woot.Woot;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -12,10 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,8 +115,18 @@ public class SpawnController {
             return;
 
         int health = (int)((LivingEntity) entity).getMaxHealth();
-        // TODO pull xp from LivingEntity
-        int xp = 10;
+
+        FakePlayer fakePlayer = FakePlayerPool.getFakePlayer((ServerWorld)world, 0);
+
+        int xp = 1;
+        try {
+            Method getExp = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_70693_a", PlayerEntity.class);
+            getExp.setAccessible(true);
+            xp = (int)getExp.invoke(entity, fakePlayer);
+        } catch (Throwable e) {
+            Woot.setup.getLogger().debug("Reflection of getExperiencePoints failed {}", e);
+        }
+
         String key = fakeMob.toString();
         mobHealthCache.put(key, health);
         mobXpCache.put(key, xp);

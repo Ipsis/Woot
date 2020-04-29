@@ -18,6 +18,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -189,6 +190,34 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //-------------------------------------------------------------------------
     //region Machine Process
     private DyeSqueezerRecipe currRecipe = null;
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (world.isRemote)
+            return;
+
+        if (fluidTank.map(FluidTank::isEmpty).orElse(true))
+            return;
+
+
+        for (Direction direction : Direction.values()) {
+            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
+            if (lazyOptional.isPresent()) {
+                IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
+                int amount = fluidTank.map(FluidTank::getFluidAmount).orElse(0);
+                if (amount > 0) {
+                    int filled = iFluidHandler.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
+                    fluidTank.ifPresent(f -> f.drain(filled, IFluidHandler.FluidAction.EXECUTE));
+                }
+            }
+        }
+    }
 
     @Override
     protected boolean hasEnergy() {

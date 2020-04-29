@@ -174,6 +174,7 @@
   "chat.woot.mobshard.failure": "Cannot capture mob",
   "chat.woot.mobshard.success": "Captured mob",
   "chat.woot.anvil.cold": "Anvil must be sitting on a Magma Block",
+  "chat.woot.anvil.nobase": "Place valid base item first",
   "chat.woot.perk.fail.0": "Only level 1 perks can be added to an empty upgrade block",
   "chat.woot.perk.fail.1": "Cannot add a different perk to an existing one",
   "chat.woot.perk.fail.2": "Max level perk already installed",

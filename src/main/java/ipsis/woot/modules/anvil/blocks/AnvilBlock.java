@@ -5,6 +5,7 @@ import ipsis.woot.modules.anvil.AnvilConfiguration;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -110,6 +112,9 @@ public class AnvilBlock extends Block implements WootDebug {
                         else
                             playerEntity.inventory.setInventorySlotContents( playerEntity.inventory.currentItem, heldItem);
                         playerEntity.openContainer.detectAndSendChanges();
+                    } else {
+                        PlayerHelper.sendActionBarMessage(playerEntity,
+                                new TranslationTextComponent("chat.woot.anvil.nobase").getFormattedText());
                     }
                 } else {
                     // Base item already present

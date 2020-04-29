@@ -149,6 +149,10 @@ public class InternItem extends Item {
                     if (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier())) {
                         if (context.getWorld().isRemote)
                             spawnParticle(context.getWorld(), context.getPos().up(), 10);
+                    } else {
+                        // No more to place then tell the user what is wrong
+                        if (!context.getWorld().isRemote)
+                            FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
                     }
                     result = ActionResultType.SUCCESS;
                 } else if (toolMode.isValidateMode()) {

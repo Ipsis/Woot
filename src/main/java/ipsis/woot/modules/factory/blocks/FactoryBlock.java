@@ -7,6 +7,7 @@ import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
@@ -41,7 +42,7 @@ public class FactoryBlock extends Block implements FactoryComponentProvider, Woo
     public static final String EXPORT_REGNAME = "export";
 
     public FactoryBlock(FactoryComponent component) {
-        super(Block.Properties.create(Material.IRON));
+        super(Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
         this.component = component;
     }

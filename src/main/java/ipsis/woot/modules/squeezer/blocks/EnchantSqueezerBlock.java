@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 public class EnchantSqueezerBlock extends Block {
 
     public EnchantSqueezerBlock() {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
 

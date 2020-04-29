@@ -50,7 +50,7 @@ public class AnvilBlock extends Block implements WootDebug {
     private static final VoxelShape Z_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_Z, PART_MID_Z, PART_UPPER_Z);
 
     public AnvilBlock() {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
 

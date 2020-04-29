@@ -3,6 +3,7 @@ package ipsis.woot.modules.layout.blocks;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +21,7 @@ import javax.annotation.Nullable;
 public class LayoutBlock extends Block {
 
     public LayoutBlock() {
-        super(Block.Properties.create(Material.GLASS));
+        super(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.3F));
     }
 
     @Override

@@ -40,7 +40,7 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
 
     final Class<? extends CellTileEntityBase> tileEntityClazz;
     public CellBlock(Class<? extends CellTileEntityBase> clazz) {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
         this.tileEntityClazz = clazz;
     }

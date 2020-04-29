@@ -31,7 +31,7 @@ import java.util.List;
 public class ConatusGeneratorBlock extends Block implements WootDebug {
 
     public ConatusGeneratorBlock() {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(
                 BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH
         ));

@@ -36,7 +36,7 @@ public class ControllerBlock extends Block implements FactoryComponentProvider, 
 
     public ControllerBlock() {
 
-        super(Properties.create(Material.IRON) .sound(SoundType.METAL));
+        super(Properties.create(Material.IRON) .sound(SoundType.METAL).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
     }
 

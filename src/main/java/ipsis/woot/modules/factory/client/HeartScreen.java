@@ -3,10 +3,7 @@ package ipsis.woot.modules.factory.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
-import ipsis.woot.modules.factory.MobParam;
-import ipsis.woot.modules.factory.Perk;
-import ipsis.woot.modules.factory.PerkType;
-import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.items.PerkItem;
@@ -14,6 +11,7 @@ import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootContainerScreen;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.EntityType;
@@ -141,10 +139,6 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
-        /*
-        font.drawString(title.getFormattedText(),
-                (float)(xSize / 2 - font.getStringWidth(title.getFormattedText()) / 2),
-                6.0F, TEXT_COLOR); */
 
         ClientFactorySetup clientFactorySetup = container.getTileEntity().clientFactorySetup;
         if (clientFactorySetup == null)
@@ -217,13 +211,13 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                             tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.perkMassValue));
                         else if (Perk.XP_PERKS.contains(perk))
                             tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkXpValue));
-                        else if (Perk.TIER_SHARD_PERKS.contains(perk)) {
-                            tooltip.add(String.format("%d rolls @ %.2f%%", clientFactorySetup.shardRolls, clientFactorySetup.shardDropChance));
-                            tooltip.add(String.format("Basic: %.2f%%", clientFactorySetup.shardDrops[0]));
-                            tooltip.add(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1]));
-                            tooltip.add(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2]));
-                        }
                     }
+                }
+                if (Perk.TIER_SHARD_PERKS.contains(perk)) {
+                    tooltip.add(String.format("%d rolls @ %.2f%%", clientFactorySetup.shardRolls, clientFactorySetup.shardDropChance));
+                    tooltip.add(String.format("Basic: %.2f%%", clientFactorySetup.shardDrops[0]));
+                    tooltip.add(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1]));
+                    tooltip.add(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2]));
                 }
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);
                 upgradeElements.get(idx).unlock();
@@ -232,14 +226,17 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             sync = true;
         }
 
-        addInfoLine(0, "Conatus Fluid", clientFactorySetup.recipeFluid + " mB");
-        addInfoLine(1, "Time", clientFactorySetup.recipeTicks + " ticks");
-        addInfoLine(3, "Progress", container.getProgress() + "%");
+
+        addInfoLine(0, StringHelper.translate("gui.woot.heart.0"), title.getFormattedText());
+        addInfoLine(1, StringHelper.translate(
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1).getTranslationKey()), clientFactorySetup.recipeFluid + " mB");
+        addInfoLine(2,StringHelper.translate("gui.woot.heart.1"), clientFactorySetup.recipeTicks + " ticks");
+        addInfoLine(3, StringHelper.translate("gui.woot.heart.2"), container.getProgress() + "%");
 
 
-        font.drawString("Mobs", MOBS_X, MOBS_Y - 10, TEXT_COLOR);
-        font.drawString("Upgrades", UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
-        font.drawString("Loot Pool", DROPS_X, DROPS_Y - 10, TEXT_COLOR);
+        font.drawString(StringHelper.translate("gui.woot.heart.3"), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
+        font.drawString(StringHelper.translate("gui.woot.heart.4"), UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
+        font.drawString(StringHelper.translate("gui.woot.heart.5"), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
 
         mobElements.forEach(e -> e.drawForeground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(mouseX, mouseY));

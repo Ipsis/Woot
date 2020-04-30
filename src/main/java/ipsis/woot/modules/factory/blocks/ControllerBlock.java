@@ -56,23 +56,6 @@ public class ControllerBlock extends Block implements FactoryComponentProvider, 
         return new ControllerTileEntity();
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");
-        if (compoundNBT != null && compoundNBT.contains("mob")) {
-            FakeMob fakeMob = new FakeMob(compoundNBT.getCompound("mob"));
-            if (fakeMob.isValid()) {
-                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
-                if (entityType != null)
-                    tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
-                if (fakeMob.hasTag())
-                    tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
-            }
-        }
-    }
-
     /**
      * Block display since we are less than a full block
      */

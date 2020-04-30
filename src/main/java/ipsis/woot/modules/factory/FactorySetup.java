@@ -9,6 +9,7 @@ import ipsis.woot.modules.factory.blocks.Cell1TileEntity;
 import ipsis.woot.modules.factory.blocks.Cell2TileEntity;
 import ipsis.woot.modules.factory.blocks.Cell3TileEntity;
 import ipsis.woot.modules.factory.blocks.CellBlock;
+import ipsis.woot.modules.factory.items.ControllerBlockItem;
 import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
@@ -64,7 +65,7 @@ public class FactorySetup {
             CONTROLLER_TAG, () -> new ControllerBlock());
     public static final RegistryObject<Item> CONTROLLER_BLOCK_ITEM = ITEMS.register(
             CONTROLLER_TAG, () ->
-                    new BlockItem(CONTROLLER_BLOCK.get(), Woot.createStandardProperties()));
+                    new ControllerBlockItem(CONTROLLER_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CONTROLLER_BLOCK_TILE = TILES.register(
             CONTROLLER_TAG, () ->
                     TileEntityType.Builder.create(ControllerTileEntity::new, CONTROLLER_BLOCK.get()).build(null));

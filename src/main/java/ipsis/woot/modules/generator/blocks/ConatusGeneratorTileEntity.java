@@ -86,6 +86,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
                 if (amount > 0) {
                     int filled = iFluidHandler.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
                     outputTank.ifPresent(f -> f.drain(filled, IFluidHandler.FluidAction.EXECUTE));
+                    markDirty();
                 }
             }
         }

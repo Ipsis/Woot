@@ -85,13 +85,18 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
+        int transfer = 0;
         int capacity = 0;
-        if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_1_BLOCK.get()))
+        if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_1_BLOCK.get())) {
             capacity = FactoryConfiguration.CELL_1_CAPACITY.get();
-        else if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_2_BLOCK.get()))
+            transfer = FactoryConfiguration.CELL_1_MAX_TRANSFER.get();
+        }else if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_2_BLOCK.get())) {
             capacity = FactoryConfiguration.CELL_2_CAPACITY.get();
-        else if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_3_BLOCK.get()))
+            transfer = FactoryConfiguration.CELL_2_MAX_TRANSFER.get();
+        } else if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_3_BLOCK.get())) {
             capacity = FactoryConfiguration.CELL_3_CAPACITY.get();
+            transfer = FactoryConfiguration.CELL_3_MAX_TRANSFER.get();
+        }
 
         int contents = 0;
         CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");
@@ -99,7 +104,8 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(compoundNBT.getCompound("Tank"));
             contents = fluidStack.getAmount();
         }
-        tooltip.add(new TranslationTextComponent("info.woot.cell.0", contents , capacity));
+        tooltip.add(new TranslationTextComponent("info.woot.cell.0", contents, capacity));
+        tooltip.add(new TranslationTextComponent("info.woot.cell.1", transfer));
     }
 
     /**

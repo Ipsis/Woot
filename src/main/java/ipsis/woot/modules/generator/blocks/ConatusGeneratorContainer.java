@@ -10,6 +10,7 @@ import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
@@ -30,6 +31,7 @@ import java.util.List;
 public class ConatusGeneratorContainer extends WootContainer implements TankPacketHandler {
 
     public ConatusGeneratorTileEntity tileEntity;
+    private boolean first = true;
 
     public ConatusGeneratorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(GeneratorSetup.CONATUS_GENERATOR_BLOCK_CONTAINER.get(), windowId);
@@ -100,7 +102,7 @@ public class ConatusGeneratorContainer extends WootContainer implements TankPack
             List<IContainerListener> iContainerListeners =
                     (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
 
-            if (!tileEntity.getClientInTank().isFluidStackIdentical(tileEntity.getInputTankFluid())) {
+            if (first || !tileEntity.getClientInTank().isFluidStackIdentical(tileEntity.getInputTankFluid())) {
                 tileEntity.setClientInTank(tileEntity.getInputTankFluid().copy());
                 for (IContainerListener l : iContainerListeners) {
                     NetworkChannel.channel.sendTo(tileEntity.getInputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
@@ -108,13 +110,15 @@ public class ConatusGeneratorContainer extends WootContainer implements TankPack
                 }
             }
 
-            if (!tileEntity.getClientOutTank().isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
+            if (first || !tileEntity.getClientOutTank().isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
                 tileEntity.setClientOutTank(tileEntity.getOutputTankFluid().copy());
                 for (IContainerListener l : iContainerListeners) {
                     NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
+
+            first = false;
         } catch (Throwable e) {
             Woot.setup.getLogger().error("Reflection of container listener failed");
         }

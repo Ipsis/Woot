@@ -153,6 +153,7 @@
   "info.woot.mobshard.b.0": "[Kills %d/%d]",
   "info.woot.mobshard.b.1": "[Fully Programmed]",
   "info.woot.cell.0": "Conatus Fluid %d/%dmB",
+  "info.woot.cell.1": "Transfer rate %dmB/tick",
   "info.woot.shard.0": "Right click to gain experience",
   "info.woot.shard.1": "Sneak right click to consume full stack",
   "info.woot.intern.cell": "Cell",

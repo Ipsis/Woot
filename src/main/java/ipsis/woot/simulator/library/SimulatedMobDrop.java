@@ -113,6 +113,7 @@ public class SimulatedMobDrop {
     public void addCustomData(int looting, int stackSize, float chance) {
         looting = MathHelper.clampLooting(looting);
         customChanceToDrop[looting] = chance;
+        hasCustom = true;
     }
 
     public void addCustomSize(int looting, int stackSize, float chance) {

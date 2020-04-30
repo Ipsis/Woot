@@ -49,8 +49,7 @@ public final class ConfigDefaults {
         public static final int CONATUS_GEN_OUTPUT_TANK_CAPACITY_DEF = 10000;
         public static final int CONATUS_GEN_MAX_ENERGY_DEF = 10000;
         public static final int CONATUS_GEN_MAX_ENERGY_RX_DEF = 100;
-        public static final int CONATUS_GEN_MAX_ENERGY_PER_TICK_DEF = 20;
-        public static final int CONATUS_GEN_RECIPE_ENERGY_DEF = 1000;
+        public static final int CONATUS_GEN_ENERGY_PER_TICK_DEF = 20;
     }
 
     public static final class Simulation {

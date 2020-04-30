@@ -3,6 +3,7 @@ package ipsis.woot.compat.jei;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.ConatusGeneratorRecipe;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -12,6 +13,8 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -69,5 +72,15 @@ public class ConatusGeneratorRecipeCategory implements IRecipeCategory<ConatusGe
     @Override
     public IDrawable getIcon() {
         return icon;
+    }
+
+    @Override
+    public void draw(ConatusGeneratorRecipe recipe, double mouseX, double mouseY) {
+        IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
+        if (runtime != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
+                    90, 70, 0);
+        }
     }
 }

@@ -37,7 +37,7 @@ public class GeneratorConfiguration {
             CONATUS_GEN_ENERGY_PER_TICK = COMMON_BUILDER
                     .comment(ConfigPath.Common.ENERGY_USE_PER_TICK_COMMENT)
                     .defineInRange(ConfigPath.Common.ENERGY_USE_PER_TICK_TAG,
-                            ConfigDefaults.Generator.CONATUS_GEN_RECIPE_ENERGY_DEF, 0, Integer.MAX_VALUE);
+                            ConfigDefaults.Generator.CONATUS_GEN_ENERGY_PER_TICK_DEF, 0, Integer.MAX_VALUE);
             COMMON_BUILDER.pop();
         }
         CLIENT_BUILDER.pop();

@@ -52,6 +52,17 @@ public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
     public FluidStack getInputFluid() { return this.inputFluid; }
     public int getEnergy() { return this.energy; }
 
+    @Override
+    public String toString() {
+        return "ConatusGeneratorRecipe{" +
+                "catalyst=" + catalyst +
+                ", catalystCount=" + catalystCount +
+                ", inputFluid=" + inputFluid +
+                ", outputFluid=" + outputFluid +
+                ", energy=" + energy +
+                '}';
+    }
+
     public static final IRecipeType<ConatusGeneratorRecipe> CONATUS_GEN_TYPE = IRecipeType.register("conatusgen");
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {

@@ -184,6 +184,8 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         debug.add("      Input Tank " + getInputTankFluid().getTranslationKey() + " " + getInputTankFluid().getAmount());
         debug.add("      Output Tank " + getOutputTankFluid().getTranslationKey() + " " + getOutputTankFluid().getAmount());
         debug.add("      Energy " + getEnergy());
+        if (currRecipe != null)
+            debug.add("      Energy " + currRecipe);
         return debug;
     }
     //endregion

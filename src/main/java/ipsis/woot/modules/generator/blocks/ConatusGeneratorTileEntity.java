@@ -1,6 +1,5 @@
 package ipsis.woot.modules.generator.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.crafting.ConatusGeneratorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
@@ -8,17 +7,17 @@ import ipsis.woot.modules.generator.GeneratorConfiguration;
 import ipsis.woot.modules.generator.GeneratorSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
+import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
-import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -40,11 +39,17 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static ipsis.woot.crafting.ConatusGeneratorRecipe.CONATUS_GEN_TYPE;
 
 public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
+
+    enum Mode {
+        NONE, INPUT, OUTPUT
+    }
+    HashMap<Direction, Mode> settings = new HashMap<>();
 
     public ConatusGeneratorTileEntity() {
         super(GeneratorSetup.CONATUS_GENERATOR_BLOCK_TILE.get());
@@ -62,19 +67,70 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
                 return false;
             }
         };
+
+        for (Direction direction : Direction.values())
+            settings.put(direction, Mode.INPUT);
     }
 
+    public void configureSides() {
+        Direction direction = world.getBlockState(getPos()).get(BlockStateProperties.HORIZONTAL_FACING);
+        if (direction == Direction.NORTH) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.OUTPUT);
+            settings.put(Direction.SOUTH, Mode.OUTPUT);
+            settings.put(Direction.EAST, Mode.INPUT);
+            settings.put(Direction.NORTH, Mode.INPUT);
+        } else if (direction == Direction.SOUTH) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.INPUT);
+            settings.put(Direction.SOUTH, Mode.INPUT);
+            settings.put(Direction.EAST, Mode.OUTPUT);
+            settings.put(Direction.NORTH, Mode.OUTPUT);
+        } else if (direction == Direction.WEST) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.INPUT);
+            settings.put(Direction.SOUTH, Mode.OUTPUT);
+            settings.put(Direction.EAST, Mode.OUTPUT);
+            settings.put(Direction.NORTH, Mode.INPUT);
+        } else if (direction == Direction.EAST) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.OUTPUT);
+            settings.put(Direction.SOUTH, Mode.INPUT);
+            settings.put(Direction.EAST, Mode.INPUT);
+            settings.put(Direction.NORTH, Mode.OUTPUT);
+        }
+    }
+
+    private boolean firstTick = true;
     @Override
     public void tick() {
+
+        if (firstTick && world != null) {
+            configureSides();
+            firstTick = false;
+        }
+
         super.tick();
 
         if (world.isRemote)
             return;
 
-        if (outputTank.map(FluidTank::isEmpty).orElse(true))
+        if (outputTank.map(WootFluidTank::isEmpty).orElse(true))
             return;
 
         for (Direction direction : Direction.values()) {
+
+            if (settings.get(direction) != Mode.OUTPUT)
+                continue;
+
             TileEntity te = world.getTileEntity(getPos().offset(direction));
             if (!(te instanceof TileEntity))
                 continue;
@@ -82,10 +138,10 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
             LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
             if (lazyOptional.isPresent()) {
                 IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
-                int amount = outputTank.map(FluidTank::getFluidAmount).orElse(0);
+                int amount = outputTank.map(WootFluidTank::getFluidAmount).orElse(0);
                 if (amount > 0) {
                     int filled = iFluidHandler.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
-                    outputTank.ifPresent(f -> f.drain(filled, IFluidHandler.FluidAction.EXECUTE));
+                    outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
                     markDirty();
                 }
             }
@@ -95,14 +151,14 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     //-------------------------------------------------------------------------
     //region Tanks
     private LazyOptional<FluidTank> inputTank = LazyOptional.of(this::createInputTank);
-    private LazyOptional<FluidTank> outputTank = LazyOptional.of(this::createOutputTank);
+    private LazyOptional<WootFluidTank> outputTank = LazyOptional.of(this::createOutputTank);
     private FluidTank createInputTank() {
         return new FluidTank(GeneratorConfiguration.CONATUS_GEN_INPUT_TANK_CAPACITY.get(),
                 h -> ConatusGeneratorRecipe.isValidInput(h));
     }
-    private FluidTank createOutputTank() {
-        return new FluidTank(GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get(),
-                h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000)));
+    private WootFluidTank createOutputTank() {
+        return new WootFluidTank(GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get(),
+                h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000))).setAccess(false, true);
     }
 
     public void setInputTankFluid(FluidStack fluid) { inputTank.ifPresent(h -> h.setFluid(fluid));}
@@ -187,6 +243,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         debug.add("      Energy " + getEnergy());
         if (currRecipe != null)
             debug.add("      Energy " + currRecipe);
+        debug.add("      Settings " + settings);
         return debug;
     }
     //endregion
@@ -337,10 +394,15 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return inputSlotHandler.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            if (side == null || side == Direction.WEST || side == Direction.UP)
+            if (side == null) {
                 return inputTank.cast();
-            else
+            } else if (settings.get(side) == Mode.INPUT) {
+                return inputTank.cast();
+            } else if (settings.get(side) == Mode.OUTPUT) {
                 return outputTank.cast();
+            } else {
+                return inputTank.cast();
+            }
         } else if (cap == CapabilityEnergy.ENERGY) {
             return energyStorage.cast();
         }

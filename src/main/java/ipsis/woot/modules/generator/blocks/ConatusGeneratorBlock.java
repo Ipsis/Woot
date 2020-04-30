@@ -1,5 +1,6 @@
 package ipsis.woot.modules.generator.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
@@ -72,7 +73,7 @@ public class ConatusGeneratorBlock extends Block implements WootDebug {
         ItemStack heldItem = player.getHeldItem(handIn);
 
         if (FluidUtil.getFluidHandler(heldItem).isPresent()) {
-            return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+            return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, blockRayTraceResult.getFace()) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
         } else {
             // open the gui
             if (tileEntity instanceof INamedContainerProvider)

@@ -22,13 +22,19 @@ public final class ConfigDefaults {
         public static final int ENCH_SQUEEZER_MAX_ENERGY_DEF = 10000;
         public static final int ENCH_SQUEEZER_MAX_ENERGY_RX_DEF = 100;
         public static final int ENCH_SQUEEZER_ENERGY_PER_TICK_DEF = 20;
-        public static final int ENCH_SQUEEZER_RECIPE_ENERGY_DEF = 1000;
         public static final int ENCH_SQUEEZER_LVL_1_ENCHANT_MB_DEF = 500;
         public static final int ENCH_SQUEEZER_LVL_2_ENCHANT_MB_DEF = 1000;
         public static final int ENCH_SQUEEZER_LVL_3_ENCHANT_MB_DEF = 1500;
         public static final int ENCH_SQUEEZER_LVL_4_ENCHANT_MB_DEF = 2000;
         public static final int ENCH_SQUEEZER_LVL_5_ENCHANT_MB_DEF = 2500;
         public static final int ENCH_SQUEEZER_EXTRA_ENCHANT_MB_DEF = 500;
+
+        public static final int ENCH_SQUEEZER_LVL_1_ENERGY_COST_DEF = 1000;
+        public static final int ENCH_SQUEEZER_LVL_2_ENERGY_COST_DEF = 2000;
+        public static final int ENCH_SQUEEZER_LVL_3_ENERGY_COST_DEF = 3000;
+        public static final int ENCH_SQUEEZER_LVL_4_ENERGY_COST_DEF = 4000;
+        public static final int ENCH_SQUEEZER_LVL_5_ENERGY_COST_DEF = 5000;
+        public static final int ENCH_SQUEEZER_EXTRA_ENERGY_COST_DEF = 1000;
     }
 
     public static final class Infuser {

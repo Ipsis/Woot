@@ -36,6 +36,13 @@ public class ConfigPath {
         public static final String ENCH_SQUEEZER_LVL_4_ENCHANT_MB_TAG = "enchantAmountLevel4";
         public static final String ENCH_SQUEEZER_LVL_5_ENCHANT_MB_TAG = "enchantAmountLevel5";
         public static final String ENCH_SQUEEZER_EXTRA_ENCHANT_MB_TAG = "enchantAmountPerLevel";
+
+        public static final String ENCH_SQUEEZER_LVL_1_ENERGY_COST_TAG = "enchantEnergyLevel1";
+        public static final String ENCH_SQUEEZER_LVL_2_ENERGY_COST_TAG = "enchantEnergyLevel2";
+        public static final String ENCH_SQUEEZER_LVL_3_ENERGY_COST_TAG = "enchantEnergyLevel3";
+        public static final String ENCH_SQUEEZER_LVL_4_ENERGY_COST_TAG = "enchantEnergyLevel4";
+        public static final String ENCH_SQUEEZER_LVL_5_ENERGY_COST_TAG = "enchantEnergyLevel5";
+        public static final String ENCH_SQUEEZER_EXTRA_ENERGY_COST_TAG = "enchantEnergyPerLevel";
     }
 
     public static final class Infuser {

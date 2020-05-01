@@ -16,13 +16,18 @@ public class SqueezerConfiguration {
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_MAX_ENERGY;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_MAX_ENERGY_RX;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_ENERGY_PER_TICK;
-    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_RECIPE_ENERGY;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_1_ENCHANT_MB;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_2_ENCHANT_MB;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_3_ENCHANT_MB;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_4_ENCHANT_MB;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_5_ENCHANT_MB;
     public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_EXTRA_ENCHANT_MB;
+    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_1_ENERGY_COST;
+    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_2_ENERGY_COST;
+    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_3_ENERGY_COST;
+    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_4_ENERGY_COST;
+    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_LVL_5_ENERGY_COST;
+    public static ForgeConfigSpec.IntValue ENCH_SQUEEZER_EXTRA_ENERGY_COST;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -71,10 +76,6 @@ public class SqueezerConfiguration {
                         .comment(ConfigPath.Common.ENERGY_USE_PER_TICK_COMMENT)
                         .defineInRange(ConfigPath.Common.ENERGY_USE_PER_TICK_TAG,
                                 Squeezer.ENCH_SQUEEZER_ENERGY_PER_TICK_DEF, 0, Integer.MAX_VALUE);
-                ENCH_SQUEEZER_RECIPE_ENERGY = COMMON_BUILDER
-                        .comment("How much energy to process one item (in RF/t)")
-                        .defineInRange("energyPerRecipe",
-                                Squeezer.ENCH_SQUEEZER_RECIPE_ENERGY_DEF, 0, Integer.MAX_VALUE);
                 ENCH_SQUEEZER_LVL_1_ENCHANT_MB = COMMON_BUILDER
                         .comment("Amount of fluid for a level I enchantment (in mb)")
                         .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_LVL_1_ENCHANT_MB_TAG,
@@ -99,6 +100,30 @@ public class SqueezerConfiguration {
                         .comment("Amount of extra fluid for each level above 5 (in mb)")
                         .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_EXTRA_ENCHANT_MB_TAG,
                                 Squeezer.ENCH_SQUEEZER_EXTRA_ENCHANT_MB_DEF, 0, Integer.MAX_VALUE);
+                ENCH_SQUEEZER_LVL_1_ENERGY_COST = COMMON_BUILDER
+                        .comment("How much energy to process a level 1 enchanted item (in RF)")
+                        .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_LVL_1_ENERGY_COST_TAG,
+                                Squeezer.ENCH_SQUEEZER_LVL_1_ENERGY_COST_DEF, 0, Integer.MAX_VALUE);
+                ENCH_SQUEEZER_LVL_2_ENERGY_COST = COMMON_BUILDER
+                        .comment("How much energy to process a level 2 enchanted item (in RF)")
+                        .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_LVL_2_ENERGY_COST_TAG,
+                                Squeezer.ENCH_SQUEEZER_LVL_2_ENERGY_COST_DEF, 0, Integer.MAX_VALUE);
+                ENCH_SQUEEZER_LVL_3_ENERGY_COST = COMMON_BUILDER
+                        .comment("How much energy to process a level 3 enchanted item (in RF)")
+                        .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_LVL_3_ENERGY_COST_TAG,
+                                Squeezer.ENCH_SQUEEZER_LVL_3_ENERGY_COST_DEF, 0, Integer.MAX_VALUE);
+                ENCH_SQUEEZER_LVL_4_ENERGY_COST = COMMON_BUILDER
+                        .comment("How much energy to process a level 4 enchanted item (in RF)")
+                        .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_LVL_4_ENERGY_COST_TAG,
+                                Squeezer.ENCH_SQUEEZER_LVL_4_ENERGY_COST_DEF, 0, Integer.MAX_VALUE);
+                ENCH_SQUEEZER_LVL_5_ENERGY_COST = COMMON_BUILDER
+                        .comment("How much energy to process a level 5 enchanted item (in RF)")
+                        .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_LVL_5_ENERGY_COST_TAG,
+                                Squeezer.ENCH_SQUEEZER_LVL_5_ENERGY_COST_DEF, 0, Integer.MAX_VALUE);
+                ENCH_SQUEEZER_EXTRA_ENERGY_COST = COMMON_BUILDER
+                        .comment("Amount of extra energy for each level above 5 (in RF)")
+                        .defineInRange(ConfigPath.Squeezer.ENCH_SQUEEZER_EXTRA_ENERGY_COST_TAG,
+                                Squeezer.ENCH_SQUEEZER_EXTRA_ENERGY_COST_DEF, 0, Integer.MAX_VALUE);
             }
             COMMON_BUILDER.pop();
         }
@@ -115,6 +140,16 @@ public class SqueezerConfiguration {
 
         level -= 5;
         return ENCH_SQUEEZER_LVL_5_ENCHANT_MB.get() + (level * ENCH_SQUEEZER_EXTRA_ENCHANT_MB.get());
+    }
 
+    public static int getEnchantEnergy(int level) {
+        if (level <= 1) return ENCH_SQUEEZER_LVL_1_ENERGY_COST.get();
+        if (level == 2) return ENCH_SQUEEZER_LVL_2_ENERGY_COST.get();
+        if (level == 3) return ENCH_SQUEEZER_LVL_3_ENERGY_COST.get();
+        if (level == 4) return ENCH_SQUEEZER_LVL_4_ENERGY_COST.get();
+        if (level == 5) return ENCH_SQUEEZER_LVL_5_ENERGY_COST.get();
+
+        level -= 5;
+        return ENCH_SQUEEZER_LVL_5_ENERGY_COST.get() + (level * ENCH_SQUEEZER_EXTRA_ENERGY_COST.get());
     }
 }

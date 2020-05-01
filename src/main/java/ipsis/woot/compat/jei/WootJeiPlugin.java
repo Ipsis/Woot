@@ -93,7 +93,7 @@ public class WootJeiPlugin implements IModPlugin {
             for (int i = e.getMinLevel(); i <= e.getMaxLevel(); i++) {
                 ItemStack itemStack = new ItemStack(Items.ENCHANTED_BOOK);
                 itemStack.addEnchantment(e, i);
-                books.add(new EnchantSqueezerRecipe(itemStack, SqueezerConfiguration.getEnchantFluidAmount(i)));
+                books.add(new EnchantSqueezerRecipe(itemStack, SqueezerConfiguration.getEnchantFluidAmount(i), SqueezerConfiguration.getEnchantEnergy(i)));
             }
         }
         registration.addRecipes(books, EnchantSqueezerRecipeCategory.UID);

@@ -225,7 +225,11 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     @Override
     protected int getRecipeEnergy() {
-        return SqueezerConfiguration.ENCH_SQUEEZER_RECIPE_ENERGY.get();
+        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (itemStack.isEmpty())
+            return 0;
+
+        return getEnchantEnergy(itemStack);
     }
 
     @Override
@@ -261,7 +265,6 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             return false;
         }
 
-        Woot.setup.getLogger().debug("canStart: true");
         return true;
     }
 
@@ -307,6 +310,25 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
                 Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
                 if (enchantment != null && compoundNBT.contains("lvl"))
                     amount += SqueezerConfiguration.getEnchantFluidAmount(compoundNBT.getInt("lvl"));
+            }
+        }
+        return amount;
+    }
+
+    private int getEnchantEnergy(ItemStack itemStack) {
+        int amount = 0;
+        if (!itemStack.isEmpty() && EnchantmentHelper.isEnchanted(itemStack)) {
+            ListNBT listNBT;
+            if (itemStack.getItem() == Items.ENCHANTED_BOOK)
+                listNBT = EnchantedBookItem.getEnchantments(itemStack);
+            else
+                listNBT = itemStack.getEnchantmentTagList();
+
+            for (int i = 0; i < listNBT.size(); i++) {
+                CompoundNBT compoundNBT = listNBT.getCompound(i);
+                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
+                if (enchantment != null && compoundNBT.contains("lvl"))
+                    amount += SqueezerConfiguration.getEnchantEnergy(compoundNBT.getInt("lvl"));
             }
         }
         return amount;

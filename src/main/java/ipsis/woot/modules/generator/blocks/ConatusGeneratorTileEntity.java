@@ -39,17 +39,11 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static ipsis.woot.crafting.ConatusGeneratorRecipe.CONATUS_GEN_TYPE;
 
 public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
-
-    enum Mode {
-        NONE, INPUT, OUTPUT
-    }
-    HashMap<Direction, Mode> settings = new HashMap<>();
 
     public ConatusGeneratorTileEntity() {
         super(GeneratorSetup.CONATUS_GENERATOR_BLOCK_TILE.get());
@@ -67,9 +61,6 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
                 return false;
             }
         };
-
-        for (Direction direction : Direction.values())
-            settings.put(direction, Mode.INPUT);
     }
 
     public void configureSides() {
@@ -109,11 +100,13 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         }
     }
 
+
     private boolean firstTick = true;
     @Override
     public void tick() {
 
         if (firstTick && world != null) {
+            // Configure sides needs to access the block state so cannot do onLoad
             configureSides();
             firstTick = false;
         }
@@ -138,9 +131,9 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
             LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
             if (lazyOptional.isPresent()) {
                 IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
-                int amount = outputTank.map(WootFluidTank::getFluidAmount).orElse(0);
-                if (amount > 0) {
-                    int filled = iFluidHandler.fill(new FluidStack(FluidSetup.CONATUS_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
+                FluidStack fluidStack = outputTank.map(WootFluidTank::getFluid).orElse(FluidStack.EMPTY);
+                if (!fluidStack.isEmpty()) {
+                    int filled = iFluidHandler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
                     outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
                     markDirty();
                 }
@@ -314,7 +307,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         inputTank.ifPresent(f -> f.drain(finishedRecipe.getInputFluid().getAmount(),
                 IFluidHandler.FluidAction.EXECUTE));
 
-        outputTank.ifPresent(f -> f.fill(new FluidStack(finishedRecipe.getOutput(),
+        outputTank.ifPresent(f -> f.internalFill(new FluidStack(finishedRecipe.getOutput(),
                 finishedRecipe.getOutput().getAmount()), IFluidHandler.FluidAction.EXECUTE));
         markDirty();
     }
@@ -332,7 +325,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
         // Only start if we can hold the output
         if (outputTank.map(h -> {
             int amount = currRecipe.getOutput().getAmount();
-            int filled = h.fill(new FluidStack(currRecipe.getOutput(), amount), IFluidHandler.FluidAction.SIMULATE);
+            int filled = h.internalFill(new FluidStack(currRecipe.getOutput(), amount), IFluidHandler.FluidAction.SIMULATE);
             return amount != filled;
         }).orElse(false)) {
             return false;

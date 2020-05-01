@@ -13,6 +13,8 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -69,5 +71,15 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
     @Override
     public IDrawable getIcon() {
         return icon;
+    }
+
+    @Override
+    public void draw(EnchantSqueezerRecipe recipe, double mouseX, double mouseY) {
+        IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
+        if (runtime != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            minecraft.fontRenderer.drawString(String.format("%d RF", SqueezerConfiguration.ENCH_SQUEEZER_RECIPE_ENERGY.get()),
+                    70, 70, 0);
+        }
     }
 }

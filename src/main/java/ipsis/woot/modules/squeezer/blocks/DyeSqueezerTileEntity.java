@@ -277,6 +277,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     @Override
     protected boolean canStart() {
+
+        if (energyStorage.map(f -> f.getEnergyStored() <= 0).orElse(true))
+            return false;
+
         if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
@@ -298,7 +302,11 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (currRecipe == null)
             return false;
 
-        return currRecipe.getInputs().get(0).get(0).getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
+        if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
+            return false;
+
+        // stack count is always 1
+        return true;
     }
 
     @Override

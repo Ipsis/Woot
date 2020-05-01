@@ -253,19 +253,28 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     @Override
     protected boolean canStart() {
+
+        if (energyStorage.map(f -> f.getEnergyStored() <= 0).orElse((true)))
+            return false;
+
         ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
         if (itemStack.isEmpty())
             return false;
 
+        if (!EnchantmentHelper.isEnchanted(itemStack))
+            return false;
+
+        // Only start if we can hold the output
         if (outputTank.map(h -> {
             int amount = getEnchantAmount(itemStack);
             int filled = h.internalFill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.SIMULATE);
-            return amount != filled;
+            return amount == filled;
         }).orElse(false)) {
-            return false;
+            // tank can hold the new output fluid
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override

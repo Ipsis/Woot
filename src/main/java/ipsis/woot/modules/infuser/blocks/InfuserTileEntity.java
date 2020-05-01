@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
@@ -303,6 +305,10 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     @Override
     protected boolean canStart() {
+
+        if (energyStorage.map(f -> f.getEnergyStored() <= 0).orElse(true))
+            return false;
+
         if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
@@ -313,11 +319,16 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         if (currRecipe == null)
             return false;
 
-        // Can only start for enchanted books if the output slot is empty
-        if (currRecipe.getOutput().getItem() == Items.ENCHANTED_BOOK && !outputSlot.getStackInSlot(OUTPUT_SLOT).isEmpty())
+        if (currRecipe.hasAugment() && currRecipe.getAugmentCount() > inputSlots.getStackInSlot(AUGMENT_SLOT).getCount())
             return false;
 
-        return true;
+        if (outputSlot.getStackInSlot(OUTPUT_SLOT).isEmpty())
+            return true;
+
+        if (ItemHandlerHelper.canItemStacksStack(currRecipe.getOutput(), outputSlot.getStackInSlot(OUTPUT_SLOT)))
+            return true;
+
+        return false;
     }
 
     @Override
@@ -329,14 +340,13 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         if (currRecipe == null)
             return false;
 
-        /**
-         *  This is used to both start the processing AND check that the ingredients are still present
-         */
-        if (currRecipe.hasAugment())
-            return currRecipe.getInputs().get(0).get(0).getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount() &&
-                    currRecipe.getAugmentCount() <= inputSlots.getStackInSlot(AUGMENT_SLOT).getCount();
+        if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
+            return false;
 
-        return currRecipe.getInputs().get(0).get(0).getCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
+        if (currRecipe.hasAugment() && currRecipe.getAugmentCount() > inputSlots.getStackInSlot(AUGMENT_SLOT).getCount())
+            return false;
+
+        return true;
     }
 
     @Override

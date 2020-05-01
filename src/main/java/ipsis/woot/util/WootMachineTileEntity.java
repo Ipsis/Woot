@@ -82,13 +82,28 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
         }
     }
 
+    /**
+     * All inputs must be present to form a recipe
+     * Energy cell must not be empty
+     * Must be space for all outputs
+     */
+    protected abstract boolean canStart();
+
+    /**
+     * Remove the inputs and generate the outputs
+     */
+    protected abstract void processFinish();
+
+    /**
+     * All inputs must be present to form a recipe
+     * Energy and output space are not valid
+     */
+    protected abstract boolean hasValidInput();
+
     protected abstract boolean hasEnergy();
     protected abstract int useEnergy();
     protected abstract void clearRecipe();
     protected abstract int getRecipeEnergy();
-    protected abstract void processFinish();
-    protected abstract boolean canStart();
-    protected abstract boolean hasValidInput();
     protected abstract boolean isDisabled();
 
     /**

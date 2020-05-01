@@ -313,6 +313,10 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
 
     @Override
     protected boolean canStart() {
+
+        if (energyStorage.map(f -> f.getEnergyStored() <= 0).orElse(true))
+            return false;
+
         if (inputTank.map(f -> f.isEmpty()).orElse(true))
             return false;
 
@@ -321,16 +325,29 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
         if (currRecipe == null)
             return false;
 
+        // Only start if we have enough of the catalyst
+        if (inputSlots.getStackInSlot(INPUT_SLOT).getCount() < currRecipe.getCatalystCount())
+            return false;
+
+        // Only start if we have enough input fluid
+        FluidStack inFluid = inputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
+        if (inFluid.isEmpty())
+            return false;
+
+        if (inFluid.getAmount() < currRecipe.getInputFluid().getAmount())
+            return false;
+
         // Only start if we can hold the output
         if (outputTank.map(h -> {
             int amount = currRecipe.getOutput().getAmount();
             int filled = h.internalFill(new FluidStack(currRecipe.getOutput(), amount), IFluidHandler.FluidAction.SIMULATE);
-            return amount != filled;
+            return amount == filled;
         }).orElse(false)) {
-            return false;
+            // tank can hold the new output fluid
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -342,7 +359,19 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
         if (currRecipe == null)
             return false;
 
-        return currRecipe.getCatalystCount() <= inputSlots.getStackInSlot(INPUT_SLOT).getCount();
+        // Only valid if we have enough of the catalyst
+        if (inputSlots.getStackInSlot(INPUT_SLOT).getCount() < currRecipe.getCatalystCount())
+            return false;
+
+        // Only valid if we have enough input fluid
+        FluidStack inFluid = inputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
+        if (inFluid.isEmpty())
+            return false;
+
+        if (inFluid.getAmount() < currRecipe.getInputFluid().getAmount())
+            return false;
+
+        return true;
     }
 
     @Override
@@ -351,6 +380,9 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     }
     //endregion
 
+    /**
+     * Get the maching recipe for the input item and the input fluid
+     */
     private void getRecipe() {
         clearRecipe();
 
@@ -360,6 +392,13 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             return;
         }
 
+        ItemStack catalyst = inputSlots.getStackInSlot(INPUT_SLOT);
+        if (catalyst.isEmpty()) {
+            clearRecipe();
+            return;
+        }
+
+        // Get a list of recipes with matching catalyst
         List<FluidConvertorRecipe> recipes = world.getRecipeManager().getRecipes(
                 FLUID_CONV_TYPE,
                 new Inventory(inputSlots.getStackInSlot(INPUT_SLOT)), world);

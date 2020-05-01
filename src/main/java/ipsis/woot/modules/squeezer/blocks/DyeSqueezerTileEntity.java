@@ -333,7 +333,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-           super.getCapability(cap, side);
+            return inputSlotHandler.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return outputTank.cast();
         } else if (cap == CapabilityEnergy.ENERGY) {

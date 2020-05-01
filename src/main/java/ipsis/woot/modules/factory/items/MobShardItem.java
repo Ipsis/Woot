@@ -169,9 +169,15 @@ public class MobShardItem extends Item {
         return isProgrammed(itemStack) && isFull(itemStack);
     }
 
+    public static void setJEIEnderShard(ItemStack itemStack) {
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putInt("nbt_jei_shard", 1);
+        itemStack.setTag(nbt);
+    }
+
     @Override
     public boolean hasEffect(ItemStack itemStack) {
-        return isFullyProgrammed(itemStack);
+        return isFullyProgrammed(itemStack) || itemStack.getTag().contains("nbt_jei_shard");
     }
 
     /**

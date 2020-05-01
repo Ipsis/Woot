@@ -18,6 +18,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.*;
+
 public class ConatusGeneratorRecipeCategory implements IRecipeCategory<ConatusGeneratorRecipe> {
 
     public static final ResourceLocation UID = new ResourceLocation(Woot.MODID, "conatusgenerator");
@@ -80,7 +82,7 @@ public class ConatusGeneratorRecipeCategory implements IRecipeCategory<ConatusGe
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
-                    90, 70, 0);
+                    90, 70, Color.BLACK.getRGB());
         }
     }
 }

@@ -2,6 +2,7 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
+import ipsis.woot.crafting.EnchantSqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import mezz.jei.api.constants.VanillaTypes;
@@ -13,6 +14,7 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -55,11 +57,17 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
 
     @Override
     public void draw(DyeSqueezerRecipe recipe, double mouseX, double mouseY) {
-        Minecraft minecraft = Minecraft.getInstance();
-        minecraft.fontRenderer.drawString("Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
-        minecraft.fontRenderer.drawString("Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
-        minecraft.fontRenderer.drawString("Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
-        minecraft.fontRenderer.drawString("White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
+        IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
+        if (runtime != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            minecraft.fontRenderer.drawString("Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString("Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString("Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString("White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
+
+            minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
+                    70.0F, 68.0F, Color.BLACK.getRGB());
+        }
     }
 
     @Override

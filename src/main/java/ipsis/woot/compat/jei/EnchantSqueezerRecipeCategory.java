@@ -18,6 +18,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.*;
+
 public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqueezerRecipe> {
 
     public static final ResourceLocation UID = new ResourceLocation(Woot.MODID, SqueezerSetup.ENCHANT_SQUEEZER_TAG);
@@ -79,7 +81,7 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.fontRenderer.drawString(String.format("%d RF", SqueezerConfiguration.ENCH_SQUEEZER_RECIPE_ENERGY.get()),
-                    70, 70, 0);
+                    70, 70, Color.BLACK.getRGB());
         }
     }
 }

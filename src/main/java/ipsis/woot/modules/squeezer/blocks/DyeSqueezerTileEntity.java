@@ -7,6 +7,7 @@ import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
+import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -66,11 +67,17 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         };
     }
 
+    @Override
+    public void onLoad() {
+        for (Direction direction : Direction.values())
+            settings.put(direction, Mode.OUTPUT);
+    }
+
     //-------------------------------------------------------------------------
     //region Tanks
-    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
-    private FluidTank createTank() {
-        return new FluidTank(SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1)));
+    private LazyOptional<WootFluidTank> outputTank = LazyOptional.of(this::createTank);
+    private WootFluidTank createTank() {
+        return new WootFluidTank(SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1))).setAccess(false, true);
     }
     //endregion
 
@@ -101,7 +108,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         inputSlots.deserializeNBT(invTag);
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
-        fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
+        outputTank.ifPresent(h -> h.readFromNBT(tankTag));
 
         CompoundNBT energyTag = compoundNBT.getCompound("energy");
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
@@ -121,7 +128,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         CompoundNBT invTag = inputSlots.serializeNBT();
         compoundNBT.put("inv", invTag);
 
-        fluidTank.ifPresent(h -> {
+        outputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
             compoundNBT.put("tank", tankTag);
         });
@@ -147,7 +154,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> SqueezerTileEntity");
         debug.add("      r:" + red + " y:" + yellow + " b:" + blue + " w:" + white);
-        fluidTank.ifPresent(h -> debug.add("     p:" + h.getFluidAmount()));
+        outputTank.ifPresent(h -> debug.add("     p:" + h.getFluidAmount()));
         return debug;
     }
     //endregion
@@ -176,8 +183,8 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public void setYellow(int v) { this.yellow = v; }
     public void setBlue(int v) { this.blue = v; }
     public void setWhite(int v) { this.white = v; }
-    public int getPure() { return fluidTank.map(h -> h.getFluidAmount()).orElse(0); }
-    public void setPure(int v) { fluidTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v))); }
+    public int getPure() { return outputTank.map(h -> h.getFluidAmount()).orElse(0); }
+    public void setPure(int v) { outputTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v))); }
 
     private int progress;
     public int getProgress() {
@@ -198,7 +205,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (world.isRemote)
             return;
 
-        if (fluidTank.map(FluidTank::isEmpty).orElse(true))
+        if (outputTank.map(WootFluidTank::isEmpty).orElse(true))
             return;
 
 
@@ -210,10 +217,11 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
             LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
             if (lazyOptional.isPresent()) {
                 IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
-                int amount = fluidTank.map(FluidTank::getFluidAmount).orElse(0);
-                if (amount > 0) {
-                    int filled = iFluidHandler.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
-                    fluidTank.ifPresent(f -> f.drain(filled, IFluidHandler.FluidAction.EXECUTE));
+                FluidStack fluidStack = outputTank.map(WootFluidTank::getFluid).orElse(FluidStack.EMPTY);
+                if (!fluidStack.isEmpty()) {
+                    int filled = iFluidHandler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                    outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
+                    markDirty();
                 }
             }
         }
@@ -255,9 +263,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         blue += finishedRecipe.getBlue();
         white += finishedRecipe.getWhite();
         inputSlots.extractItem(INPUT_SLOT, 1, false);
-        fluidTank.ifPresent(f -> {
+        outputTank.ifPresent(f -> {
             while (canCreateOutput() && canStoreOutput()) {
-                f.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
+                f.internalFill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
                 red -= DyeMakeup.LCM;
                 yellow -= DyeMakeup.LCM;
                 blue -= DyeMakeup.LCM;
@@ -319,18 +327,15 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     }
 
     private boolean canCreateOutput() { return red >= DyeMakeup.LCM && yellow >= DyeMakeup.LCM && blue >= DyeMakeup.LCM && white >= DyeMakeup.LCM; }
-    private boolean canStoreOutput() { return fluidTank.map(h -> h.fill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.SIMULATE ) == DyeMakeup.LCM * 4).orElse(false); }
+    private boolean canStoreOutput() { return outputTank.map(h -> h.internalFill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.SIMULATE ) == DyeMakeup.LCM * 4).orElse(false); }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (side == null || side == Direction.UP || side == Direction.WEST)
-                return inputSlotHandler.cast();
-            else
-                super.getCapability(cap, side);
+           super.getCapability(cap, side);
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return fluidTank.cast();
+            return outputTank.cast();
         } else if (cap == CapabilityEnergy.ENERGY) {
             return energyStorage.cast();
         }

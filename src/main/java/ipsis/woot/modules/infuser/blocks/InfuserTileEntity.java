@@ -22,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -71,19 +72,69 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         outputWrappedSlot= new OutputOnlyItemStackHandler(outputSlot);
     }
 
+    public void configureSides() {
+        Direction direction = world.getBlockState(getPos()).get(BlockStateProperties.HORIZONTAL_FACING);
+        if (direction == Direction.NORTH) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.OUTPUT);
+            settings.put(Direction.SOUTH, Mode.OUTPUT);
+            settings.put(Direction.EAST, Mode.INPUT);
+            settings.put(Direction.NORTH, Mode.INPUT);
+        } else if (direction == Direction.SOUTH) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.INPUT);
+            settings.put(Direction.SOUTH, Mode.INPUT);
+            settings.put(Direction.EAST, Mode.OUTPUT);
+            settings.put(Direction.NORTH, Mode.OUTPUT);
+        } else if (direction == Direction.WEST) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.INPUT);
+            settings.put(Direction.SOUTH, Mode.OUTPUT);
+            settings.put(Direction.EAST, Mode.OUTPUT);
+            settings.put(Direction.NORTH, Mode.INPUT);
+        } else if (direction == Direction.EAST) {
+            settings.put(Direction.UP, Mode.INPUT);
+            settings.put(Direction.DOWN, Mode.OUTPUT);
+
+            settings.put(Direction.WEST, Mode.OUTPUT);
+            settings.put(Direction.SOUTH, Mode.INPUT);
+            settings.put(Direction.EAST, Mode.INPUT);
+            settings.put(Direction.NORTH, Mode.OUTPUT);
+        }
+    }
+
+    private boolean firstTick = true;
+
+    @Override
+    public void tick() {
+        if (firstTick && world != null) {
+            // Configure sides needs to access the block state so cannot do onLoad
+            configureSides();
+            firstTick = false;
+        }
+
+        super.tick();
+    }
+
     //-------------------------------------------------------------------------
     //region Tanks
-    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
+    private LazyOptional<FluidTank> inputTank = LazyOptional.of(this::createTank);
     private FluidTank createTank() {
         return new FluidTank(InfuserConfiguration.INFUSER_TANK_CAPACITY.get(), h -> InfuserRecipe.isValidFluid(h));
     }
 
     public void setTankFluid(FluidStack fluidStack) {
-        fluidTank.ifPresent(h -> h.setFluid(fluidStack));
+        inputTank.ifPresent(h -> h.setFluid(fluidStack));
     }
 
     public FluidStack getTankFluid() {
-        return fluidTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
+        return inputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY);
     }
     //endregion
 
@@ -125,7 +176,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         outputSlot.deserializeNBT(invOutputTag);
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
-        fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
+        inputTank.ifPresent(h -> h.readFromNBT(tankTag));
 
         CompoundNBT energyTag = compoundNBT.getCompound("energy");
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
@@ -142,7 +193,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         CompoundNBT invOutputTag = outputSlot.serializeNBT();
         compoundNBT.put("invOutput", invOutputTag);
 
-        fluidTank.ifPresent(h -> {
+        inputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
             compoundNBT.put("tank", tankTag);
         });
@@ -246,7 +297,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         }
 
         outputSlot.insertItem(OUTPUT_SLOT, itemStack, false);
-        fluidTank.ifPresent(f -> f.drain(finishedRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
+        inputTank.ifPresent(f -> f.drain(finishedRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
         markDirty();
     }
 
@@ -255,7 +306,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
-        if (fluidTank.map(f -> f.isEmpty()).orElse(true))
+        if (inputTank.map(f -> f.isEmpty()).orElse(true))
             return false;
 
         getRecipe();
@@ -295,7 +346,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     //endregion
 
     private void getRecipe() {
-        if (fluidTank.map(h -> h.isEmpty()).orElse(false)) {
+        if (inputTank.map(h -> h.isEmpty()).orElse(false)) {
             clearRecipe();
             return;
         }
@@ -309,7 +360,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
         if (!recipes.isEmpty()) {
             // Already checked for empty so this should always be !empty
-            FluidStack fluidStack = fluidTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
+            FluidStack fluidStack = inputTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
             for (InfuserRecipe r : recipes) {
                 if (r.getFluidInput().isFluidEqual(fluidStack)) {
                     currRecipe = r;
@@ -322,7 +373,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     public TankPacket getTankPacket() {
-        return new TankPacket(0, fluidTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+        return new TankPacket(0, inputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
     @Nonnull
@@ -332,12 +383,14 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             if (side == null)
                 // eg. player is in the gui
                 return allSlotHandler.cast();
-            else if (side == Direction.UP || side == Direction.EAST)
+            else if (settings.get(side) == Mode.INPUT)
                 return inputSlotHandler.cast();
-            else if (side == Direction.DOWN || side == Direction.WEST)
+            else if (settings.get(side) == Mode.OUTPUT)
                 return outputWrappedSlotHandler.cast();
+            else
+                return allSlotHandler.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return fluidTank.cast();
+            return inputTank.cast();
         } else if (cap == CapabilityEnergy.ENERGY) {
             return energyStorage.cast();
         }

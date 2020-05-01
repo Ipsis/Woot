@@ -40,7 +40,7 @@
   "block.woot.anvil": "Stygian Anvil",
   "block.woot.squeezer": "Squeezer",
   "block.woot.enchsqueezer": "Enchantment Squeezer",
-  "block.woot.conatusgenerator": "Conatus Convertor",
+  "block.woot.fluidconvertor": "Fluid Convertor",
   "block.woot.infuser": "Infuser",
   "block.woot.creative_power": "Creative Power (Dev)",
 
@@ -189,7 +189,7 @@
   "gui.woot.infuser.name": "Infuser",
   "gui.woot.enchsqueezer.name": "Enchantment Squeezer",
   "gui.woot.squeezer.name": "Dye Squeezer",
-  "gui.woot.conatusgenerator.name": "Conatus Convertor",
+  "gui.woot.fluidconvertor.name": "Fluid Convertor",
   "gui.woot.oracle.name": "Oracle Of Drops",
   "gui.woot.heart.0": "Factory",
   "gui.woot.heart.1": "Spawn Time",

@@ -1,18 +1,18 @@
-package ipsis.woot.modules.generator.client;
+package ipsis.woot.modules.fluidconvertor.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
-import ipsis.woot.modules.generator.GeneratorConfiguration;
-import ipsis.woot.modules.generator.blocks.ConatusGeneratorContainer;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
+import ipsis.woot.modules.fluidconvertor.blocks.FluidConvertorContainer;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.util.WootContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class ConatusGeneratorScreen extends WootContainerScreen<ConatusGeneratorContainer> {
+public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorContainer> {
 
-    private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/conatusgenerator.png");
+    private ResourceLocation GUI = new ResourceLocation(Woot.MODID, "textures/gui/fluidconvertor.png");
 
     private static final int GUI_XSIZE = 180;
     private static final int GUI_YSIZE = 177;
@@ -37,7 +37,7 @@ public class ConatusGeneratorScreen extends WootContainerScreen<ConatusGenerator
     private static final int OUT_TANK_WIDTH = OUT_TANK_RX - OUT_TANK_LX + 1;
     private static final int OUT_TANK_HEIGHT = OUT_TANK_RY - OUT_TANK_LY + 1;
 
-    public ConatusGeneratorScreen(ConatusGeneratorContainer container, PlayerInventory playerInventory, ITextComponent name) {
+    public FluidConvertorScreen(FluidConvertorContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
         xSize = GUI_XSIZE;
         ySize = GUI_YSIZE;
@@ -51,10 +51,10 @@ public class ConatusGeneratorScreen extends WootContainerScreen<ConatusGenerator
 
         if (isPointInRegion(IN_TANK_LX, IN_TANK_LY, IN_TANK_WIDTH, IN_TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(mouseX, mouseY, container.getTileEntity().getInputTankFluid(),
-                    GeneratorConfiguration.CONATUS_GEN_INPUT_TANK_CAPACITY.get());
+                    FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get());
         if (isPointInRegion(OUT_TANK_LX, OUT_TANK_LY, OUT_TANK_WIDTH, OUT_TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(mouseX, mouseY, container.getTileEntity().getOutputTankFluid(),
-                    GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get());
+                    FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
             renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
@@ -85,7 +85,7 @@ public class ConatusGeneratorScreen extends WootContainerScreen<ConatusGenerator
                 IN_TANK_HEIGHT,
                 IN_TANK_WIDTH,
                 container.getTileEntity().getInputTankFluid().getAmount(),
-                GeneratorConfiguration.CONATUS_GEN_INPUT_TANK_CAPACITY.get(),
+                FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get(),
                 container.getTileEntity().getInputTankFluid());
 
         renderFluidTank(
@@ -94,7 +94,7 @@ public class ConatusGeneratorScreen extends WootContainerScreen<ConatusGenerator
                 OUT_TANK_HEIGHT,
                 OUT_TANK_WIDTH,
                 container.getTileEntity().getOutputTankFluid().getAmount(),
-                GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get(),
+                FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get(),
                 container.getTileEntity().getOutputTankFluid());
     }
 

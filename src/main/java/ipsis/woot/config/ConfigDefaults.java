@@ -38,10 +38,10 @@ public final class ConfigDefaults {
     }
 
     public static final class Infuser {
-        public static final int INFUSER_TANK_CAPACITY_DEF = 5000;
-        public static final int INFUSER_MAX_ENERGY_DEF = 10000;
-        public static final int INFUSER_MAX_ENERGY_RX_DEF = 100;
-        public static final int INFUSER_ENERGY_PER_TICK_DEF = 20;
+        public static final int TANK_CAPACITY_DEF = 5000;
+        public static final int MAX_ENERGY_DEF = 10000;
+        public static final int MAX_ENERGY_RX_DEF = 100;
+        public static final int ENERGY_PER_TICK_DEF = 20;
     }
 
     public static final class Layout {
@@ -50,12 +50,12 @@ public final class ConfigDefaults {
         public static final double SIZE_DEF = 0.35D;
     }
 
-    public static final class Generator {
-        public static final int CONATUS_GEN_INPUT_TANK_CAPACITY_DEF = 10000;
-        public static final int CONATUS_GEN_OUTPUT_TANK_CAPACITY_DEF = 10000;
-        public static final int CONATUS_GEN_MAX_ENERGY_DEF = 10000;
-        public static final int CONATUS_GEN_MAX_ENERGY_RX_DEF = 100;
-        public static final int CONATUS_GEN_ENERGY_PER_TICK_DEF = 20;
+    public static final class FluidConvertor {
+        public static final int INPUT_TANK_CAPACITY_DEF = 10000;
+        public static final int OUTPUT_TANK_CAPACITY_DEF = 10000;
+        public static final int MAX_ENERGY_DEF = 10000;
+        public static final int MAX_ENERGY_RX_DEF = 100;
+        public static final int ENERGY_PER_TICK_DEF = 20;
     }
 
     public static final class Simulation {

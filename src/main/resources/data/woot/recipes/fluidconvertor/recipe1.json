@@ -1,11 +1,11 @@
 {
-  "type": "woot:conatusgen",
+  "type": "woot:fluidconvertor",
   "catalyst": {
-    "tag": "forge:rods/blaze"
+    "tag": "forge:gunpowder"
   },
   "catalyst_count": 1,
   "input": {
-    "fluid": "minecraft:lava",
+    "fluid": "minecraft:water",
     "amount": 1000
   },
   "result": {

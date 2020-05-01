@@ -1,6 +1,5 @@
-package ipsis.woot.modules.generator.blocks;
+package ipsis.woot.modules.fluidconvertor.blocks;
 
-import ipsis.woot.Woot;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
@@ -29,9 +28,9 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ConatusGeneratorBlock extends Block implements WootDebug {
+public class FluidConvertorBlock extends Block implements WootDebug {
 
-    public ConatusGeneratorBlock() {
+    public FluidConvertorBlock() {
         super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
         setDefaultState(getStateContainer().getBaseState().with(
                 BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH
@@ -58,7 +57,7 @@ public class ConatusGeneratorBlock extends Block implements WootDebug {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new ConatusGeneratorTileEntity();
+        return new FluidConvertorTileEntity();
     }
 
     @Override
@@ -66,10 +65,10 @@ public class ConatusGeneratorBlock extends Block implements WootDebug {
         if (worldIn.isRemote)
             return ActionResultType.SUCCESS;
 
-        if (!(worldIn.getTileEntity(pos) instanceof ConatusGeneratorTileEntity))
+        if (!(worldIn.getTileEntity(pos) instanceof FluidConvertorTileEntity))
             throw new IllegalStateException("Tile entity is missing");
 
-        ConatusGeneratorTileEntity tileEntity = (ConatusGeneratorTileEntity) worldIn.getTileEntity(pos);
+        FluidConvertorTileEntity tileEntity = (FluidConvertorTileEntity) worldIn.getTileEntity(pos);
         ItemStack heldItem = player.getHeldItem(handIn);
 
         if (FluidUtil.getFluidHandler(heldItem).isPresent()) {
@@ -88,8 +87,8 @@ public class ConatusGeneratorBlock extends Block implements WootDebug {
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof ConatusGeneratorTileEntity)
-                ((ConatusGeneratorTileEntity) te).dropContents(worldIn, pos);
+            if (te instanceof FluidConvertorTileEntity)
+                ((FluidConvertorTileEntity) te).dropContents(worldIn, pos);
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
     }
@@ -99,7 +98,7 @@ public class ConatusGeneratorBlock extends Block implements WootDebug {
 
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add("====> ConatusGeneratorBlock");
+        debug.add("====> " + this.getClass().toString());
         DebugItem.getTileEntityDebug(debug, itemUseContext);
         return debug;
     }

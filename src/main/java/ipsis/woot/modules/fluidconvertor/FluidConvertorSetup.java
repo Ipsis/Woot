@@ -1,9 +1,9 @@
-package ipsis.woot.modules.generator;
+package ipsis.woot.modules.fluidconvertor;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.generator.blocks.ConatusGeneratorBlock;
-import ipsis.woot.modules.generator.blocks.ConatusGeneratorContainer;
-import ipsis.woot.modules.generator.blocks.ConatusGeneratorTileEntity;
+import ipsis.woot.modules.fluidconvertor.blocks.FluidConvertorBlock;
+import ipsis.woot.modules.fluidconvertor.blocks.FluidConvertorContainer;
+import ipsis.woot.modules.fluidconvertor.blocks.FluidConvertorTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.container.ContainerType;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class GeneratorSetup {
+public class FluidConvertorSetup {
 
     public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Woot.MODID);
     public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Woot.MODID);
@@ -24,26 +24,26 @@ public class GeneratorSetup {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Woot.MODID);
 
     public static void register() {
-        Woot.setup.getLogger().info("GeneratorSetup: register");
+        Woot.setup.getLogger().info("FluidConvertor: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         TILES.register(FMLJavaModLoadingContext.get().getModEventBus());
         CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final String CONATUS_GENERATOR_TAG = "conatusgenerator";
-    public static final RegistryObject<ConatusGeneratorBlock> CONATUS_GENERATOR_BLOCK = BLOCKS.register(
-            CONATUS_GENERATOR_TAG, () -> new ConatusGeneratorBlock());
-    public static final RegistryObject<Item> CONATUS_GENERATOR_ITEM = ITEMS.register(
-            CONATUS_GENERATOR_TAG, () ->
-                    new BlockItem(CONATUS_GENERATOR_BLOCK.get(), Woot.createStandardProperties()));
-    public static final RegistryObject<TileEntityType<?>> CONATUS_GENERATOR_BLOCK_TILE = TILES.register(
-            CONATUS_GENERATOR_TAG, () ->
-                    TileEntityType.Builder.create(ConatusGeneratorTileEntity::new,
-                            CONATUS_GENERATOR_BLOCK.get()).build((null)));
-    public static final RegistryObject<ContainerType<ConatusGeneratorContainer>> CONATUS_GENERATOR_BLOCK_CONTAINER = CONTAINERS.register(
-            CONATUS_GENERATOR_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new ConatusGeneratorContainer(
+    public static final String FLUID_CONVERTOR_TAG = "fluidconvertor";
+    public static final RegistryObject<FluidConvertorBlock> FLUID_CONVERTOR_BLOCK = BLOCKS.register(
+            FLUID_CONVERTOR_TAG, () -> new FluidConvertorBlock());
+    public static final RegistryObject<Item> FLUID_CONVERTOR_ITEM = ITEMS.register(
+            FLUID_CONVERTOR_TAG, () ->
+                    new BlockItem(FLUID_CONVERTOR_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> FLUID_CONVERTOR_BLOCK_TILE = TILES.register(
+            FLUID_CONVERTOR_TAG, () ->
+                    TileEntityType.Builder.create(FluidConvertorTileEntity::new,
+                            FLUID_CONVERTOR_BLOCK.get()).build((null)));
+    public static final RegistryObject<ContainerType<FluidConvertorContainer>> FLUID_CONVERTOR_BLOCK_CONTATAINER = CONTAINERS.register(
+            FLUID_CONVERTOR_TAG, () ->
+                    IForgeContainerType.create((windowId, inv, data) -> new FluidConvertorContainer(
                             windowId,
                             Minecraft.getInstance().world,
                             data.readBlockPos(),

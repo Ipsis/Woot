@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
+public class FluidConvertorRecipe implements IRecipe<IInventory> {
 
     private final Ingredient catalyst;
     private final int catalystCount;
@@ -30,20 +30,20 @@ public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
     private final ResourceLocation id;
     private final IRecipeType<?> type;
 
-    public ConatusGeneratorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
+    public FluidConvertorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
         this.id = id;
         this.catalyst = catalyst;
         this.catalystCount = catalystCount;
         this.inputFluid = fluidStack;
         this.outputFluid = outputFluid;
-        this.type = CONATUS_GEN_TYPE;
+        this.type = FLUID_CONV_TYPE;
         this.energy = energy;
 
         inputs.add(Arrays.asList(catalyst.getMatchingStacks()));
     }
 
-    public static ConatusGeneratorRecipe generatorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
-        return new ConatusGeneratorRecipe(id, catalyst, catalystCount, fluidStack, outputFluid, energy);
+    public static FluidConvertorRecipe convertorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
+        return new FluidConvertorRecipe(id, catalyst, catalystCount, fluidStack, outputFluid, energy);
     }
 
     public Ingredient getCatalyst() { return this.catalyst; }
@@ -54,7 +54,7 @@ public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
 
     @Override
     public String toString() {
-        return "ConatusGeneratorRecipe{" +
+        return "FluidConvertorRecipe{" +
                 "catalyst=" + catalyst +
                 ", catalystCount=" + catalystCount +
                 ", inputFluid=" + inputFluid +
@@ -63,7 +63,7 @@ public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
                 '}';
     }
 
-    public static final IRecipeType<ConatusGeneratorRecipe> CONATUS_GEN_TYPE = IRecipeType.register("conatusgen");
+    public static final IRecipeType<FluidConvertorRecipe> FLUID_CONV_TYPE = IRecipeType.register("fluidconvertor");
 
     public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         if (this.catalyst == null || this.inputFluid.isEmpty() || this.outputFluid.isEmpty())
@@ -201,7 +201,7 @@ public class ConatusGeneratorRecipe implements IRecipe<IInventory> {
             return null;
         }
 
-        @ObjectHolder("woot:conatusgen")
+        @ObjectHolder("woot:fluidconvertor")
         public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
     }
 }

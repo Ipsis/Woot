@@ -1,16 +1,15 @@
-package ipsis.woot.modules.generator.blocks;
+package ipsis.woot.modules.fluidconvertor.blocks;
 
 import ipsis.woot.Woot;
-import ipsis.woot.crafting.ConatusGeneratorRecipe;
+import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.network.TankPacket;
-import ipsis.woot.modules.generator.GeneratorSetup;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.util.TankPacketHandler;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
@@ -28,14 +27,14 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.List;
 
-public class ConatusGeneratorContainer extends WootContainer implements TankPacketHandler {
+public class FluidConvertorContainer extends WootContainer implements TankPacketHandler {
 
-    public ConatusGeneratorTileEntity tileEntity;
+    public FluidConvertorTileEntity tileEntity;
     private boolean first = true;
 
-    public ConatusGeneratorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        super(GeneratorSetup.CONATUS_GENERATOR_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = (ConatusGeneratorTileEntity)world.getTileEntity(pos);
+    public FluidConvertorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        super(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK_CONTATAINER.get(), windowId);
+        tileEntity = (FluidConvertorTileEntity)world.getTileEntity(pos);
 
         addOwnSlots();
         addPlayerSlots(playerInventory);
@@ -71,10 +70,10 @@ public class ConatusGeneratorContainer extends WootContainer implements TankPack
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
-                playerIn, GeneratorSetup.CONATUS_GENERATOR_BLOCK.get());
+                playerIn, FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get());
     }
 
-    public ConatusGeneratorTileEntity getTileEntity() { return tileEntity; }
+    public FluidConvertorTileEntity getTileEntity() { return tileEntity; }
 
     public void addListeners() {
         addIntegerListener(new IntReferenceHolder() {
@@ -148,7 +147,7 @@ public class ConatusGeneratorContainer extends WootContainer implements TankPack
                     return ItemStack.EMPTY;
                 slot.onSlotChange(stack, itemStack);
             } else {
-                if (ConatusGeneratorRecipe.isValidCatalyst(itemStack)) {
+                if (FluidConvertorRecipe.isValidCatalyst(itemStack)) {
                     // Player -> input
                     if (!this.mergeItemStack(stack, 0, 1, false))
                         return ItemStack.EMPTY;

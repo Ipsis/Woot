@@ -56,8 +56,8 @@ public class ConfigPath {
         public static final String RENDER_SIZE_TAG = "renderSize";
     }
 
-    public static final class Generator {
-        public static final String CATEGORY = "conatus_generator";
+    public static final class FluidConvertor {
+        public static final String CATEGORY = "fluid_convertor";
     }
 
     public static final class Simulation {

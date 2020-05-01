@@ -13,11 +13,11 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class ConatusGeneratorRecipeSerializer<T extends ConatusGeneratorRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements  IRecipeSerializer<T> {
+public class FluidConvertorRecipeSerializer<T extends FluidConvertorRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements  IRecipeSerializer<T> {
 
-    private final ConatusGeneratorRecipeSerializer.IFactory<T> factory;
+    private final FluidConvertorRecipeSerializer.IFactory<T> factory;
 
-    public ConatusGeneratorRecipeSerializer(ConatusGeneratorRecipeSerializer.IFactory<T> factory) {
+    public FluidConvertorRecipeSerializer(FluidConvertorRecipeSerializer.IFactory<T> factory) {
         this.factory = factory;
     }
 
@@ -50,7 +50,7 @@ public class ConatusGeneratorRecipeSerializer<T extends ConatusGeneratorRecipe> 
 
     }
 
-    public interface IFactory<T extends ConatusGeneratorRecipe> {
+    public interface IFactory<T extends FluidConvertorRecipe> {
         T create(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy);
     }
 }

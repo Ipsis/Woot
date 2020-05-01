@@ -6,7 +6,6 @@ import ipsis.woot.modules.factory.blocks.TickConverterBlock;
 import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.simulator.MobSimulatorSetup;
-import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.simulator.tartarus.TartarusModDimension;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -61,7 +60,7 @@ public class Registration {
         event.getRegistry().register(new DyeSqueezerRecipeSerializer<>(DyeSqueezerRecipe::new).setRegistryName(Woot.MODID, "dyesqueezer"));
         event.getRegistry().register(new AnvilRecipeSerializer<>(AnvilRecipe::new).setRegistryName(Woot.MODID, "anvil"));
         event.getRegistry().register(new InfuserRecipeSerializer<>(InfuserRecipe::new).setRegistryName(Woot.MODID, "infuser"));
-        event.getRegistry().register(new ConatusGeneratorRecipeSerializer<>(ConatusGeneratorRecipe::new).setRegistryName(Woot.MODID, "conatusgen"));
+        event.getRegistry().register(new FluidConvertorRecipeSerializer<>(FluidConvertorRecipe::new).setRegistryName(Woot.MODID, "fluidconvertor"));
 
     }
 }

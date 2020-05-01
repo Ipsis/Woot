@@ -1,10 +1,10 @@
-package ipsis.woot.modules.generator.blocks;
+package ipsis.woot.modules.fluidconvertor.blocks;
 
-import ipsis.woot.crafting.ConatusGeneratorRecipe;
+import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
-import ipsis.woot.modules.generator.GeneratorConfiguration;
-import ipsis.woot.modules.generator.GeneratorSetup;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootFluidTank;
@@ -41,23 +41,23 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ipsis.woot.crafting.ConatusGeneratorRecipe.CONATUS_GEN_TYPE;
+import static ipsis.woot.crafting.FluidConvertorRecipe.FLUID_CONV_TYPE;
 
-public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
+public class FluidConvertorTileEntity extends WootMachineTileEntity implements WootDebug, INamedContainerProvider {
 
-    public ConatusGeneratorTileEntity() {
-        super(GeneratorSetup.CONATUS_GENERATOR_BLOCK_TILE.get());
+    public FluidConvertorTileEntity() {
+        super(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK_TILE.get());
         inputSlots = new ItemStackHandler(1) {
             @Override
             protected void onContentsChanged(int slot) {
-                ConatusGeneratorTileEntity.this.onContentsChanged(slot);
+                FluidConvertorTileEntity.this.onContentsChanged(slot);
                 markDirty();
             }
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 if (slot == INPUT_SLOT)
-                    return ConatusGeneratorRecipe.isValidCatalyst(stack);
+                    return FluidConvertorRecipe.isValidCatalyst(stack);
                 return false;
             }
         };
@@ -146,11 +146,10 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     private LazyOptional<FluidTank> inputTank = LazyOptional.of(this::createInputTank);
     private LazyOptional<WootFluidTank> outputTank = LazyOptional.of(this::createOutputTank);
     private FluidTank createInputTank() {
-        return new FluidTank(GeneratorConfiguration.CONATUS_GEN_INPUT_TANK_CAPACITY.get(),
-                h -> ConatusGeneratorRecipe.isValidInput(h));
+        return new FluidTank(FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get());
     }
     private WootFluidTank createOutputTank() {
-        return new WootFluidTank(GeneratorConfiguration.CONATUS_GEN_OUTPUT_TANK_CAPACITY.get(),
+        return new WootFluidTank(FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get(),
                 h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000))).setAccess(false, true);
     }
 
@@ -165,7 +164,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     //region Energy
     private LazyOptional<WootEnergyStorage> energyStorage = LazyOptional.of(this::createEnergy);
     private WootEnergyStorage createEnergy() {
-        return new WootEnergyStorage(GeneratorConfiguration.CONATUS_GEN_MAX_ENERGY.get(), GeneratorConfiguration.CONATUS_GEN_MAX_ENERGY_RX.get());
+        return new WootEnergyStorage(FluidConvertorConfiguration.FLUID_CONV_MAX_ENERGY.get(), FluidConvertorConfiguration.FLUID_CONV_MAX_ENERGY_RX.get());
     }
 
     public int getEnergy() {
@@ -230,7 +229,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     //region WootDebug
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
-        debug.add("====> ConatusGeneratorTileEntity");
+        debug.add("====> " + this.getClass().toString());
         debug.add("      Input Tank " + getInputTankFluid().getTranslationKey() + " " + getInputTankFluid().getAmount());
         debug.add("      Output Tank " + getOutputTankFluid().getTranslationKey() + " " + getOutputTankFluid().getAmount());
         debug.add("      Energy " + getEnergy());
@@ -245,13 +244,13 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
     //region Container
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("gui.woot.conatusgenerator.name");
+        return new TranslationTextComponent("gui.woot.fluidconvertor.name");
     }
 
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new ConatusGeneratorContainer(i, world, pos, playerInventory, playerEntity);
+        return new FluidConvertorContainer(i, world, pos, playerInventory, playerEntity);
     }
     //endregion
 
@@ -272,7 +271,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
 
     //-------------------------------------------------------------------------
     //region Machine Process
-    private ConatusGeneratorRecipe currRecipe = null;
+    private FluidConvertorRecipe currRecipe = null;
 
     @Override
     protected boolean hasEnergy() {
@@ -281,7 +280,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
 
     @Override
     protected int useEnergy() {
-        return energyStorage.map(e -> e.extractEnergy(GeneratorConfiguration.CONATUS_GEN_ENERGY_PER_TICK.get(), false)).orElse(0);
+        return energyStorage.map(e -> e.extractEnergy(FluidConvertorConfiguration.FLUID_CONV_ENERYG_PER_TICK.get(), false)).orElse(0);
     }
 
     @Override
@@ -301,7 +300,7 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
             return;
         }
 
-        ConatusGeneratorRecipe finishedRecipe = currRecipe;
+        FluidConvertorRecipe finishedRecipe = currRecipe;
 
         inputSlots.extractItem(INPUT_SLOT, finishedRecipe.getCatalystCount(), false);
         inputTank.ifPresent(f -> f.drain(finishedRecipe.getInputFluid().getAmount(),
@@ -361,11 +360,11 @@ public class ConatusGeneratorTileEntity extends WootMachineTileEntity implements
             return;
         }
 
-        List<ConatusGeneratorRecipe> recipes = world.getRecipeManager().getRecipes(
-                CONATUS_GEN_TYPE,
+        List<FluidConvertorRecipe> recipes = world.getRecipeManager().getRecipes(
+                FLUID_CONV_TYPE,
                 new Inventory(inputSlots.getStackInSlot(INPUT_SLOT)), world);
 
-        for (ConatusGeneratorRecipe recipe : recipes) {
+        for (FluidConvertorRecipe recipe : recipes) {
             if (recipe.getInputFluid().isFluidEqual(inFluid)) {
                 currRecipe = recipe;
                 return;

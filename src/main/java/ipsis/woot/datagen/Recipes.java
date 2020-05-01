@@ -1,8 +1,6 @@
 package ipsis.woot.datagen;
 
 import ipsis.woot.datagen.modules.*;
-import ipsis.woot.modules.anvil.AnvilRecipes;
-import ipsis.woot.modules.infuser.InfuserRecipes;
 import net.minecraft.data.*;
 
 import java.util.function.Consumer;
@@ -24,6 +22,6 @@ public class Recipes extends RecipeProvider {
         Layout.registerRecipes(consumer);
         Oracle.registerRecipes(consumer);
         Squeezer.registerRecipes(consumer);
-        ConatusGenerator.registerRecipes(consumer);
+        FluidConvertor.registerRecipes(consumer);
     }
 }

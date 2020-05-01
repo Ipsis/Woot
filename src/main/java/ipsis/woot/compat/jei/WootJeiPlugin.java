@@ -4,7 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.*;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.generator.client.ConatusGeneratorScreen;
+import ipsis.woot.modules.fluidconvertor.client.FluidConvertorScreen;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.layout.LayoutSetup;
@@ -52,7 +52,7 @@ public class WootJeiPlugin implements IModPlugin {
                 new InfuserRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new AnvilRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
                 new EnchantSqueezerRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-                new ConatusGeneratorRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+                new FluidConvertorRecipeCategory(registration.getJeiHelpers().getGuiHelper())
         );
     }
 
@@ -76,14 +76,14 @@ public class WootJeiPlugin implements IModPlugin {
                 infuserRecipes.add(r);
                 if (r.getFluidInput().getAmount() > maxInfuserRecipeMb)
                     maxInfuserRecipeMb = r.getFluidInput().getAmount();
-            } else if (recipe instanceof ConatusGeneratorRecipe) {
+            } else if (recipe instanceof FluidConvertorRecipe) {
                 conatusGenRecipes.add(recipe);
             }
         }
         registration.addRecipes(dyeRecipes, DyeSqueezerRecipeCategory.UID);
         registration.addRecipes(anvilRecipes, AnvilRecipeCategory.UID);
         registration.addRecipes(infuserRecipes, InfuserRecipeCategory.UID);
-        registration.addRecipes(conatusGenRecipes, ConatusGeneratorRecipeCategory.UID);
+        registration.addRecipes(conatusGenRecipes, FluidConvertorRecipeCategory.UID);
 
         /**
          * Enchanted books
@@ -133,7 +133,7 @@ public class WootJeiPlugin implements IModPlugin {
         registration.addRecipeClickArea(InfuserScreen.class, 84, 39, 30, 18, InfuserRecipeCategory.UID);
         registration.addRecipeClickArea(DyeSqueezerScreen.class, 60, 39, 18, 18, DyeSqueezerRecipeCategory.UID);
         registration.addRecipeClickArea(EnchantSqueezerScreen.class, 101, 32, 50, 36, EnchantSqueezerRecipeCategory.UID);
-        registration.addRecipeClickArea(ConatusGeneratorScreen.class, 74, 40, 70, 26, ConatusGeneratorRecipeCategory.UID);
+        registration.addRecipeClickArea(FluidConvertorScreen.class, 74, 40, 70, 26, FluidConvertorRecipeCategory.UID);
     }
 
     @Override

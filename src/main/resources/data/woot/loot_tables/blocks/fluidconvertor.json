@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "conatusgenerator",
+      "name": "fluidconvertor",
       "rolls": 1,
       "entries": [
         {
@@ -30,7 +30,7 @@
               ]
             }
           ],
-          "name": "woot:conatusgenerator"
+          "name": "woot:fluidconvertor"
         }
       ]
     }

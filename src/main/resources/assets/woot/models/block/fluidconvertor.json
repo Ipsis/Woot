@@ -2,7 +2,7 @@
   "parent": "block/orientable",
   "textures": {
     "top": "woot:block/factory",
-    "front": "woot:block/conatusgenerator",
+    "front": "woot:block/fluidconvertor",
     "side": "woot:block/factory"
   }
 }

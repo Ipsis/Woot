@@ -1,6 +1,8 @@
 package ipsis.woot.modules.squeezer.blocks;
 
+import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.modules.infuser.blocks.InfuserTileEntity;
+import ipsis.woot.util.WootDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -10,6 +12,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -24,8 +27,9 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class EnchantSqueezerBlock extends Block {
+public class EnchantSqueezerBlock extends Block implements WootDebug {
 
     public EnchantSqueezerBlock() {
         super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
@@ -86,5 +90,16 @@ public class EnchantSqueezerBlock extends Block {
             super.onReplaced(state, worldIn, pos, newState, isMoving);
         }
     }
+
+    //-------------------------------------------------------------------------
+    //region WootDebug
+
+    @Override
+    public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
+        debug.add("====> EnchantSqueezerBlock");
+        DebugItem.getTileEntityDebug(debug, itemUseContext);
+        return debug;
+    }
+    //endregion
 
 }

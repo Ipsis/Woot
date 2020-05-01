@@ -1,10 +1,12 @@
 package ipsis.woot.modules.squeezer.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
+import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.EnchantmentHelper;
 import ipsis.woot.util.helper.WorldHelper;
@@ -20,6 +22,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -62,11 +65,50 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         };
     }
 
+    @Override
+    public void onLoad() {
+        for (Direction direction : Direction.values())
+            settings.put(direction, Mode.OUTPUT);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (world.isRemote)
+            return;
+
+
+        if (outputTank.map(WootFluidTank::isEmpty).orElse(true))
+            return;
+
+        for (Direction direction : Direction.values()) {
+
+            if (settings.get(direction) != Mode.OUTPUT)
+                continue;
+
+            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
+            if (lazyOptional.isPresent()) {
+                IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
+                FluidStack fluidStack = outputTank.map(WootFluidTank::getFluid).orElse(FluidStack.EMPTY);
+                if (!fluidStack.isEmpty()) {
+                    int filled = iFluidHandler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                    outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
+                    markDirty();
+                }
+            }
+        }
+    }
+
     //-------------------------------------------------------------------------
     //region Tanks
-    private LazyOptional<FluidTank> fluidTank = LazyOptional.of(this::createTank);
-    private FluidTank createTank() {
-        return new FluidTank(SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1)));
+    private LazyOptional<WootFluidTank> outputTank = LazyOptional.of(this::createTank);
+    private WootFluidTank createTank() {
+        return new WootFluidTank(SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1))).setAccess(false, true);
     }
     //endregion
 
@@ -96,7 +138,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         inputSlots.deserializeNBT(invTag);
 
         CompoundNBT tankTag = compoundNBT.getCompound("tank");
-        fluidTank.ifPresent(h -> h.readFromNBT(tankTag));
+        outputTank.ifPresent(h -> h.readFromNBT(tankTag));
 
         CompoundNBT energyTag = compoundNBT.getCompound("energy");
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
@@ -109,7 +151,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         CompoundNBT invTag = inputSlots.serializeNBT();
         compoundNBT.put("inv", invTag);
 
-        fluidTank.ifPresent(h -> {
+        outputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
             compoundNBT.put("tank", tankTag);
         });
@@ -128,9 +170,10 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     @Override
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> EnchantSqueezerTileEntity");
-        fluidTank.ifPresent(h -> {
+        outputTank.ifPresent(h -> {
             debug.add("     p:" + h.getFluidAmount());
         });
+        debug.add("      Settings " + settings);
         return debug;
     }
     //endregion
@@ -152,11 +195,11 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     //-------------------------------------------------------------------------
     //region Client sync
     public int getEnchant() {
-        return fluidTank.map(h -> h.getFluidAmount()).orElse(0);
+        return outputTank.map(h -> h.getFluidAmount()).orElse(0);
     }
 
     public void setEnchant(int v) {
-        fluidTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v)));
+        outputTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v)));
     }
 
     private int progress;
@@ -197,8 +240,8 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         inputSlots.extractItem(INPUT_SLOT, 1, false);
 
         int amount = getEnchantAmount(itemStack);
-        fluidTank.ifPresent(h -> {
-            h.fill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
+        outputTank.ifPresent(h -> {
+            h.internalFill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
         });
 
         markDirty();
@@ -210,14 +253,15 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         if (itemStack.isEmpty())
             return false;
 
-        if (fluidTank.map(h -> {
+        if (outputTank.map(h -> {
             int amount = getEnchantAmount(itemStack);
-            int filled = h.fill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.SIMULATE);
+            int filled = h.internalFill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.SIMULATE);
             return amount != filled;
         }).orElse(false)) {
             return false;
         }
 
+        Woot.setup.getLogger().debug("canStart: true");
         return true;
     }
 
@@ -240,10 +284,9 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (side == null || side == Direction.UP || side == Direction.EAST)
                 return inputSlotHandler.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            return fluidTank.cast();
+            return outputTank.cast();
         } else if (cap == CapabilityEnergy.ENERGY) {
             return energyStorage.cast();
         }

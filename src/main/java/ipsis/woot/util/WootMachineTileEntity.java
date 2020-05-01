@@ -3,12 +3,15 @@ package ipsis.woot.util;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,11 +24,19 @@ import java.util.List;
  */
 public abstract class WootMachineTileEntity extends TileEntity implements ITickableTileEntity {
 
+    protected enum Mode {
+        NONE, INPUT, OUTPUT
+    }
+    protected HashMap<Direction, Mode> settings = new HashMap<>();
+
     protected static final Logger LOGGER = LogManager.getLogger();
 
     public WootMachineTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
+        for (Direction direction : Direction.values())
+            settings.put(direction, Mode.NONE);
     }
+
 
     @Override
     public void tick() {

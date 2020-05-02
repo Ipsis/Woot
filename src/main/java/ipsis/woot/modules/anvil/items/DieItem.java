@@ -2,8 +2,6 @@ package ipsis.woot.modules.anvil.items;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.AnvilSetup;
-import ipsis.woot.modules.anvil.DieType;
-import ipsis.woot.setup.ModSetup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -35,8 +33,14 @@ public class DieItem extends Item {
             return new ItemStack(AnvilSetup.PLATE_DIE_ITEM.get());
         if (dieType == DieType.SHARD)
             return new ItemStack(AnvilSetup.SHARD_DIE_ITEM.get());
+        if (dieType == DieType.DYE)
+            return new ItemStack(AnvilSetup.DYE_DIE_ITEM.get());
         return ItemStack.EMPTY;
     }
 
-
+    public enum DieType {
+        PLATE,
+        SHARD,
+        DYE
+    }
 }

@@ -3,7 +3,7 @@
   "group": "woot",
   "pattern": [
     "grg",
-    "ygb",
+    "ytb",
     "gwg"
   ],
   "key": {
@@ -21,6 +21,9 @@
     },
     "w": {
       "tag": "forge:dyes/white"
+    },
+    "t": {
+      "item": "minecraft:torch"
     }
   },
   "result": {

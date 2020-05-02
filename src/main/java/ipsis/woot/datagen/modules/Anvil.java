@@ -55,6 +55,13 @@ public class Anvil {
                         Ingredient.fromItems(Blocks.OBSIDIAN)))
                 .build(consumer, new ResourceLocation(Woot.MODID, "anvil/shard_die"));
 
+        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/dye_die"),
+                Ingredient.fromItems(Items.GUNPOWDER),
+                AnvilSetup.DYE_DIE_ITEM.get(),
+                NonNullList.from(Ingredient.EMPTY,
+                        Ingredient.fromItems(Blocks.OBSIDIAN)))
+                .build(consumer, new ResourceLocation(Woot.MODID, "anvil/dye_die"));
+
         AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/controller"),
                 Ingredient.fromItems(FactorySetup.MOB_SHARD_ITEM.get()),
                 FactorySetup.CONTROLLER_BLOCK.get(),

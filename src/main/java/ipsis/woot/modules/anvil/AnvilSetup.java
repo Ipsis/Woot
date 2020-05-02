@@ -43,7 +43,9 @@ public class AnvilSetup {
     public static final RegistryObject<HammerItem> HAMMER_ITEM = ITEMS.register(
             "hammer", () -> new HammerItem());
     public static final RegistryObject<DieItem> PLATE_DIE_ITEM = ITEMS.register(
-            "plate_die", () -> new DieItem(DieType.PLATE));
+            "plate_die", () -> new DieItem(DieItem.DieType.PLATE));
     public static final RegistryObject<DieItem> SHARD_DIE_ITEM = ITEMS.register(
-            "shard_die", () -> new DieItem(DieType.SHARD));
+            "shard_die", () -> new DieItem(DieItem.DieType.SHARD));
+    public static final RegistryObject<DieItem> DYE_DIE_ITEM = ITEMS.register(
+            "dye_die", () -> new DieItem(DieItem.DieType.DYE));
 }

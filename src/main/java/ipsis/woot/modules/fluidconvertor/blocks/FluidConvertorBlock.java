@@ -1,17 +1,22 @@
 package ipsis.woot.modules.fluidconvertor.blocks;
 
 import ipsis.woot.modules.debug.items.DebugItem;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
+import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +25,13 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -103,4 +113,47 @@ public class FluidConvertorBlock extends Block implements WootDebug {
         return debug;
     }
     //endregion
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+
+        CompoundNBT nbt = stack.getChildTag("BlockEntityTag");
+        if (nbt == null)
+            return;
+
+        if (nbt.contains("energy")) {
+            CompoundNBT nbtEnergy = nbt.getCompound("energy");
+            tooltip.add(new TranslationTextComponent("info.woot.energy",
+                    nbtEnergy.getInt("energy"), FluidConvertorConfiguration.FLUID_CONV_MAX_ENERGY.get()));
+        }
+
+        if (nbt.contains("inputTank")) {
+            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(nbt.getCompound("inputTank"));
+            if (!fluidStack.isEmpty()) {
+                tooltip.add(new TranslationTextComponent("info.woot.input_tank",
+                        StringHelper.translate(fluidStack.getTranslationKey()),
+                        fluidStack.getAmount(),
+                        FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get()));
+            } else {
+                tooltip.add(new TranslationTextComponent("info.woot.input_tank.empty",
+                        FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get()));
+            }
+
+        }
+
+        if (nbt.contains("outputTank")) {
+            FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(nbt.getCompound("outputTank"));
+            if (!fluidStack.isEmpty()) {
+                tooltip.add(new TranslationTextComponent("info.woot.output_tank",
+                        StringHelper.translate(fluidStack.getTranslationKey()),
+                        fluidStack.getAmount(),
+                        FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get()));
+            } else {
+                tooltip.add(new TranslationTextComponent("info.woot.output_tank.empty",
+                    FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get()));
+            }
+        }
+    }
 }

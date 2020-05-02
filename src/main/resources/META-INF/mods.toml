@@ -1,17 +1,13 @@
-modLoader="javafml" #mandatory
-loaderVersion="[31,)" #mandatory (24 is current forge version)
-issueTrackerURL="https://github.com/Ipsis/Woot/issues" #optional
-#displayURL="http://example.com/" #optional
-credits="McJty, Draco18s, Forge Devs"
-authors="Ipsis" #optional
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/Ipsis/Woot/issues"
 
-[[mods]] #mandatory
-modId="woot" #mandatory
-version="${file.jarVersion}" #mandatory
-displayName="Woot" #mandatory
-description='''
-A big, bad, magic, multiblock.
-Aparrently you will either love it or hate it.
-There is no inbetween.
-'''
+[[mods]]
+modId="woot"
+version="${file.jarVersion}"
+displayName="Woot"
+authors="Ipsis"
+credits="McJty, Draco18s, Forge Devs"
+description='''A big, bad, magic, multiblock for mob drops. Aparrently you will either love it or hate it. There is no inbetween.'''
+
 

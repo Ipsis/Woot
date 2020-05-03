@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " 1 ",
+    "eee",
+    " 2 "
+  ],
+  "key": {
+    "e": {
+      "item": "woot:ench_plate_3"
+    },
+    "1": {
+      "item": "minecraft:diamond_sword"
+    },
+    "2": {
+      "item": "minecraft:lapis_block"
+    }
+  },
+  "result": {
+    "item": "woot:looting_3"
+  }
+}

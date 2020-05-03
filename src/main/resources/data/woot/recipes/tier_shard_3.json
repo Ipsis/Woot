@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " 1 ",
+    "eee",
+    " 2 "
+  ],
+  "key": {
+    "e": {
+      "item": "woot:ench_plate_3"
+    },
+    "1": {
+      "item": "minecraft:golden_carrot"
+    },
+    "2": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "result": {
+    "item": "woot:tier_shard_3"
+  }
+}

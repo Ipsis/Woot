@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " 1 ",
+    "e e",
+    " 2 "
+  ],
+  "key": {
+    "e": {
+      "item": "woot:ench_plate_2"
+    },
+    "1": {
+      "item": "minecraft:magma_cream"
+    },
+    "2": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "result": {
+    "item": "woot:mass_2"
+  }
+}

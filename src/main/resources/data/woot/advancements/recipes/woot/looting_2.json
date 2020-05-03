@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "woot:looting_2"
+    ]
+  },
+  "criteria": {
+    "cobblestone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:cobblestone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "woot:looting_2"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cobblestone",
+      "has_the_recipe"
+    ]
+  ]
+}

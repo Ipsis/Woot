@@ -1,0 +1,15 @@
+{
+  "name": "Tier Shard Perk",
+  "icon": "woot:tier_shard_1",
+  "category": "woot:perk_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "To upgrade the factory beyond Tier 2 requires tier shards. This perk will cause these shards to be generated. There are a number of chances to create a shard and that shard can by from any of the tiers."
+    },
+    {
+      "type": "text",
+      "text": "High levels of this perk both increase the number of shards than can be generated at once and increase the chances of higher tier shards being produced."
+    }
+  ]
+}

@@ -127,6 +127,9 @@
   "item.woot.ench_plate_2": "Theoricus Plate",
   "item.woot.ench_plate_3": "Zelator Plate",
 
+  "item.woot.wootguide.name": "Woot Guide",
+  "item.woot.wootguide.landing": "A guide to building and running your Woot mob factory.",
+
   # Fluids
   "fluid.woot.conatus_fluid": "Conatus Fluid",
   "fluid.woot.puredye_fluid": "Pure Dye Fluid",

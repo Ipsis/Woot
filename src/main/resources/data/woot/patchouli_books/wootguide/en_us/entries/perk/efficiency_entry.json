@@ -1,0 +1,11 @@
+{
+  "name": "Efficiency Perk",
+  "icon": "woot:efficiency_1",
+  "category": "woot:perk_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The efficiency perk reduces the amount of fluid required to spawn a single mob. Higher levels of this perk increase the reduction."
+    }
+  ]
+}

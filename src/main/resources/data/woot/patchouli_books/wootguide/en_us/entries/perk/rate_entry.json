@@ -1,0 +1,11 @@
+{
+  "name": "Rate Perk",
+  "icon": "woot:rate_1",
+  "category": "woot:perk_category",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This perk decreases the time taken for the factory to produce items. Higher levels of the perk decrease the time by a larger amount."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "attached=true": { "model": "woot:block/cell_4" },
+    "attached=false": { "model": "woot:block/cell_4" }
+  }
+}

@@ -44,16 +44,8 @@ public class FactoryHelper {
         }
     }
 
-    static boolean isCorrectBlock(FactoryComponentProvider provider, FactoryComponent component) {
-        return provider.getFactoryComponent() == component;
-    }
-
     static boolean isCorrectBlock(Block block, List<Block> validBlocks) {
-        for (Block b : validBlocks) {
-            if (block == b)
-                return true;
-        }
-        return false;
+        return validBlocks.contains(block);
     }
 
 
@@ -67,8 +59,8 @@ public class FactoryHelper {
             BlockState currState = world.getBlockState(pb.getBlockPos());
             Block currBlock = currState.getBlock();
 
-            List<Block> correctBlocks = getComponentBlocks(pb.getFactoryComponent());
-            List<ItemStack> correctItemStacks = getComponentStacks(pb.getFactoryComponent());
+            List<Block> correctBlocks = pb.getFactoryComponent().getBlocks();
+            List<ItemStack> correctItemStacks = pb.getFactoryComponent().getStacks();
 
             // Is it the correct block already
             if (isCorrectBlock(currBlock, correctBlocks))
@@ -124,134 +116,5 @@ public class FactoryHelper {
             PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
                     "chat.woot.intern.validate.valid", StringHelper.translate(tier.getTranslationKey())));
         }
-    }
-
-    static List<Block> getComponentBlocks(FactoryComponent component) {
-        List<Block> blocks = new ArrayList<>();
-        switch (component) {
-            case FACTORY_A:
-                blocks.add(FactorySetup.FACTORY_A_BLOCK.get());
-                break;
-            case FACTORY_B:
-                blocks.add(FactorySetup.FACTORY_B_BLOCK.get());
-                break;
-            case FACTORY_C:
-                blocks.add(FactorySetup.FACTORY_C_BLOCK.get());
-                break;
-            case FACTORY_D:
-                blocks.add(FactorySetup.FACTORY_D_BLOCK.get());
-                break;
-            case FACTORY_E:
-                blocks.add(FactorySetup.FACTORY_E_BLOCK.get());
-                break;
-            case FACTORY_CONNECT:
-                blocks.add(FactorySetup.FACTORY_CONNECT_BLOCK.get());
-                break;
-            case FACTORY_CTR_BASE_PRI:
-                blocks.add(FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get());
-                break;
-            case FACTORY_CTR_BASE_SEC:
-                blocks.add(FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get());
-                break;
-            case FACTORY_UPGRADE:
-                blocks.add(FactorySetup.FACTORY_UPGRADE_BLOCK.get());
-                break;
-            case HEART:
-                blocks.add(FactorySetup.HEART_BLOCK.get());
-                break;
-            case CAP_A:
-                blocks.add(FactorySetup.CAP_A_BLOCK.get());
-                break;
-            case CAP_B:
-                blocks.add(FactorySetup.CAP_B_BLOCK.get());
-                break;
-            case CAP_C:
-                blocks.add(FactorySetup.CAP_C_BLOCK.get());
-                break;
-            case CAP_D:
-                blocks.add(FactorySetup.CAP_D_BLOCK.get());
-                break;
-            case IMPORT:
-                blocks.add(FactorySetup.IMPORT_BLOCK.get());
-                break;
-            case EXPORT:
-                blocks.add(FactorySetup.EXPORT_BLOCK.get());
-                break;
-            case CONTROLLER:
-                blocks.add(FactorySetup.CONTROLLER_BLOCK.get());
-                break;
-            case CELL:
-                blocks.add(FactorySetup.CELL_1_BLOCK.get());
-                blocks.add(FactorySetup.CELL_2_BLOCK.get());
-                blocks.add(FactorySetup.CELL_3_BLOCK.get());
-                blocks.add(FactorySetup.CELL_4_BLOCK.get());
-                break;
-        }
-        return blocks;
-    }
-
-    public static List<ItemStack> getComponentStacks(FactoryComponent component) {
-        List<ItemStack> stacks = new ArrayList<>();
-        switch (component) {
-            case FACTORY_A:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_A_BLOCK.get()));
-                break;
-            case FACTORY_B:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_B_BLOCK.get()));
-                break;
-            case FACTORY_C:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_C_BLOCK.get()));
-                break;
-            case FACTORY_D:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_D_BLOCK.get()));
-                break;
-            case FACTORY_E:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_E_BLOCK.get()));
-                break;
-            case FACTORY_CONNECT:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_CONNECT_BLOCK.get()));
-                break;
-            case FACTORY_CTR_BASE_PRI:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get()));
-                break;
-            case FACTORY_CTR_BASE_SEC:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get()));
-                break;
-            case FACTORY_UPGRADE:
-                stacks.add(new ItemStack(FactorySetup.FACTORY_UPGRADE_BLOCK.get()));
-                break;
-            case HEART:
-                stacks.add(new ItemStack(FactorySetup.HEART_BLOCK.get()));
-                break;
-            case CAP_A:
-                stacks.add(new ItemStack(FactorySetup.CAP_A_BLOCK.get()));
-                break;
-            case CAP_B:
-                stacks.add(new ItemStack(FactorySetup.CAP_B_BLOCK.get()));
-                break;
-            case CAP_C:
-                stacks.add(new ItemStack(FactorySetup.CAP_C_BLOCK.get()));
-                break;
-            case CAP_D:
-                stacks.add(new ItemStack(FactorySetup.CAP_D_BLOCK.get()));
-                break;
-            case IMPORT:
-                stacks.add(new ItemStack(FactorySetup.IMPORT_BLOCK.get()));
-                break;
-            case EXPORT:
-                stacks.add(new ItemStack(FactorySetup.EXPORT_BLOCK.get()));
-                break;
-            case CONTROLLER:
-                stacks.add(new ItemStack(FactorySetup.CONTROLLER_BLOCK.get()));
-                break;
-            case CELL:
-                stacks.add(new ItemStack(FactorySetup.CELL_1_BLOCK.get()));
-                stacks.add(new ItemStack(FactorySetup.CELL_2_BLOCK.get()));
-                stacks.add(new ItemStack(FactorySetup.CELL_3_BLOCK.get()));
-                stacks.add(new ItemStack(FactorySetup.CELL_4_BLOCK.get()));
-                break;
-        }
-
-        return stacks;
     }
 }

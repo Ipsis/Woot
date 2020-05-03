@@ -87,15 +87,18 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
         super.addInformation(stack, worldIn, tooltip, flagIn);
         int transfer = 0;
         int capacity = 0;
-        if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_1_BLOCK.get())) {
+        if (stack.getItem() == FactorySetup.CELL_1_BLOCK.get().asItem()) {
             capacity = FactoryConfiguration.CELL_1_CAPACITY.get();
             transfer = FactoryConfiguration.CELL_1_MAX_TRANSFER.get();
-        }else if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_2_BLOCK.get())) {
+        } else if (stack.getItem() == FactorySetup.CELL_2_BLOCK.get().asItem()) {
             capacity = FactoryConfiguration.CELL_2_CAPACITY.get();
             transfer = FactoryConfiguration.CELL_2_MAX_TRANSFER.get();
-        } else if (stack.getItem() == Item.getItemFromBlock(FactorySetup.CELL_3_BLOCK.get())) {
+        } else if (stack.getItem() == FactorySetup.CELL_3_BLOCK.get().asItem()) {
             capacity = FactoryConfiguration.CELL_3_CAPACITY.get();
             transfer = FactoryConfiguration.CELL_3_MAX_TRANSFER.get();
+        } else if (stack.getItem() == FactorySetup.CELL_4_BLOCK.get().asItem()) {
+            capacity = FactoryConfiguration.CELL_4_CAPACITY.get();
+            transfer = FactoryConfiguration.CELL_4_MAX_TRANSFER.get();
         }
 
         int contents = 0;

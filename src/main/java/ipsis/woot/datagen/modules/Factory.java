@@ -94,7 +94,7 @@ public class Factory {
                 .patternLine("sps")
                 .patternLine(" s ")
                 .key('s', Tags.Items.STONE)
-                .key('p', InfuserSetup.LIGHT_BLUE_DYE_CASING_ITEM.get())
+                .key('p', InfuserSetup.LIGHT_BLUE_DYE_PLATE_ITEM.get())
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
@@ -173,14 +173,13 @@ public class Factory {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        /*
         ShapelessRecipeBuilder.shapelessRecipe(FactorySetup.CELL_4_BLOCK.get())
                 .addIngredient(FactorySetup.CELL_3_BLOCK.get())
                 .addIngredient(GenericSetup.ENCH_PLATE_3.get())
                 .addIngredient(GenericSetup.ENCH_PLATE_3.get())
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer); */
+                .build(consumer);
 
         /**
          * Other

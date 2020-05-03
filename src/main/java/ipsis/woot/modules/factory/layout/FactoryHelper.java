@@ -184,6 +184,7 @@ public class FactoryHelper {
                 blocks.add(FactorySetup.CELL_1_BLOCK.get());
                 blocks.add(FactorySetup.CELL_2_BLOCK.get());
                 blocks.add(FactorySetup.CELL_3_BLOCK.get());
+                blocks.add(FactorySetup.CELL_4_BLOCK.get());
                 break;
         }
         return blocks;
@@ -247,6 +248,7 @@ public class FactoryHelper {
                 stacks.add(new ItemStack(FactorySetup.CELL_1_BLOCK.get()));
                 stacks.add(new ItemStack(FactorySetup.CELL_2_BLOCK.get()));
                 stacks.add(new ItemStack(FactorySetup.CELL_3_BLOCK.get()));
+                stacks.add(new ItemStack(FactorySetup.CELL_4_BLOCK.get()));
                 break;
         }
 

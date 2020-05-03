@@ -11,8 +11,6 @@ import java.util.List;
 
 public class FactoryConfiguration {
 
-    public static final String CATEGORY_FACTORY = "factory";
-
     public static ForgeConfigSpec.BooleanValue TICK_ACCEL;
 
     public static ForgeConfigSpec.IntValue CELL_1_CAPACITY;
@@ -21,6 +19,8 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue CELL_2_MAX_TRANSFER;
     public static ForgeConfigSpec.IntValue CELL_3_CAPACITY;
     public static ForgeConfigSpec.IntValue CELL_3_MAX_TRANSFER;
+    public static ForgeConfigSpec.IntValue CELL_4_CAPACITY;
+    public static ForgeConfigSpec.IntValue CELL_4_MAX_TRANSFER;
 
     public static ForgeConfigSpec.IntValue MASS_COUNT;
     public static ForgeConfigSpec.IntValue SPAWN_TICKS;
@@ -155,6 +155,21 @@ public class FactoryConfiguration {
                         .worldRestart()
                         .defineInRange(ConfigPath.Common.TANK_RX_TAG,
                             Factory.CELL_3_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+            }
+            COMMON_BUILDER.pop();
+
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_CELL4);
+            {
+                CELL_4_CAPACITY = COMMON_BUILDER
+                        .comment(ConfigPath.Common.TANK_CAPACITY_COMMENT)
+                        .worldRestart()
+                        .defineInRange(ConfigPath.Common.TANK_CAPACITY_TAG,
+                                Factory.CELL_4_CAPACITY_DEF, 1, Integer.MAX_VALUE);
+                CELL_4_MAX_TRANSFER = COMMON_BUILDER
+                        .comment(ConfigPath.Common.TANK_RX_COMMENT)
+                        .worldRestart()
+                        .defineInRange(ConfigPath.Common.TANK_RX_TAG,
+                                Factory.CELL_4_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
             }
             COMMON_BUILDER.pop();
 

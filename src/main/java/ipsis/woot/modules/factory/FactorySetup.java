@@ -213,6 +213,16 @@ public class FactorySetup {
             CELL_3_TAG, () ->
                     TileEntityType.Builder.create(Cell3TileEntity::new, CELL_3_BLOCK.get()).build(null));
 
+    public static final String CELL_4_TAG = "cell_4";
+    public static final RegistryObject<CellBlock> CELL_4_BLOCK = BLOCKS.register(
+            CELL_4_TAG, () -> new CellBlock(Cell3TileEntity.class));
+    public static final RegistryObject<Item> CELL_4_BLOCK_ITEM = ITEMS.register(
+            CELL_4_TAG, () ->
+                    new BlockItem(CELL_4_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> CELL_4_BLOCK_TILE = TILES.register(
+            CELL_4_TAG, () ->
+                    TileEntityType.Builder.create(Cell4TileEntity::new, CELL_4_BLOCK.get()).build(null));
+
     public static final RegistryObject<PerkItem> EFFICIENCY_1_ITEM = ITEMS.register(
             PerkItem.EFFICIENCY_1_REGNAME, () -> new PerkItem(Perk.EFFICIENCY_1));
     public static final RegistryObject<PerkItem> EFFICIENCY_2_ITEM = ITEMS.register(

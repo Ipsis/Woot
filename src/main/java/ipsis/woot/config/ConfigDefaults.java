@@ -79,10 +79,12 @@ public final class ConfigDefaults {
 
         public static final int CELL_1_CAPACITY_DEF = 10000;
         public static final int CELL_2_CAPACITY_DEF = 100000;
-        public static final int CELL_3_CAPACITY_DEF = Integer.MAX_VALUE;
+        public static final int CELL_3_CAPACITY_DEF = 1000000;
+        public static final int CELL_4_CAPACITY_DEF = Integer.MAX_VALUE;
         public static final int CELL_1_MAX_TRANSFER_DEF = 1000;
         public static final int CELL_2_MAX_TRANSFER_DEF = 10000;
         public static final int CELL_3_MAX_TRANSFER_DEF = 100000;
+        public static final int CELL_4_MAX_TRANSFER_DEF = 1000000;
 
         public static final int EFFICIENCY_1_DEF = 15;
         public static final int EFFICIENCY_2_DEF = 25;

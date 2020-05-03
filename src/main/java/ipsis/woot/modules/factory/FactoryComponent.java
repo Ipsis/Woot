@@ -1,7 +1,10 @@
 package ipsis.woot.modules.factory;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public enum FactoryComponent {
@@ -31,6 +34,60 @@ public enum FactoryComponent {
 
     public static boolean isSameComponentFuzzy(FactoryComponent componentA, FactoryComponent componentB) {
         return componentA == componentB;
+    }
+
+    public ItemStack getItemStack() {
+        if (this == FACTORY_A)
+            return new ItemStack(FactorySetup.FACTORY_A_BLOCK.get());
+        else if (this == FACTORY_B)
+            return new ItemStack(FactorySetup.FACTORY_B_BLOCK.get());
+        else if (this == FACTORY_C)
+            return new ItemStack(FactorySetup.FACTORY_C_BLOCK.get());
+        else if (this == FACTORY_D)
+            return new ItemStack(FactorySetup.FACTORY_D_BLOCK.get());
+        else if (this == FACTORY_E)
+            return new ItemStack(FactorySetup.FACTORY_E_BLOCK.get());
+        else if (this == FACTORY_CONNECT)
+            return new ItemStack(FactorySetup.FACTORY_CONNECT_BLOCK.get());
+        else if (this == FACTORY_CTR_BASE_PRI)
+            return new ItemStack(FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get());
+        else if (this == FACTORY_CTR_BASE_SEC)
+            return new ItemStack(FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get());
+        else if (this == FACTORY_UPGRADE)
+            return new ItemStack(FactorySetup.FACTORY_UPGRADE_BLOCK.get());
+        else if (this == HEART)
+            return new ItemStack(FactorySetup.HEART_BLOCK.get());
+        else if (this == CAP_A)
+            return new ItemStack(FactorySetup.CAP_A_BLOCK.get());
+        else if (this == CAP_B)
+            return new ItemStack(FactorySetup.CAP_B_BLOCK.get());
+        else if (this == CAP_C)
+            return new ItemStack(FactorySetup.CAP_C_BLOCK.get());
+        else if (this == CAP_D)
+            return new ItemStack(FactorySetup.CAP_D_BLOCK.get());
+        else if (this == IMPORT)
+            return new ItemStack(FactorySetup.IMPORT_BLOCK.get());
+        else if (this == EXPORT)
+            return new ItemStack(FactorySetup.EXPORT_BLOCK.get());
+        else if (this == CONTROLLER)
+            return new ItemStack(FactorySetup.CONTROLLER_BLOCK.get());
+        else if (this == CELL)
+            return new ItemStack(FactorySetup.CELL_1_BLOCK.get());
+
+        throw new IllegalArgumentException("FactoryComponent missing mapping");
+    }
+
+    public List<ItemStack> getStacks() {
+        List<ItemStack> stacks = new ArrayList<>();
+        if (this == CELL) {
+            stacks.add(new ItemStack(FactorySetup.CELL_1_BLOCK.get()));
+            stacks.add(new ItemStack(FactorySetup.CELL_2_BLOCK.get()));
+            stacks.add(new ItemStack(FactorySetup.CELL_3_BLOCK.get()));
+            stacks.add(new ItemStack(FactorySetup.CELL_4_BLOCK.get()));
+        } else {
+            stacks.add(this.getItemStack());
+        }
+        return stacks;
     }
 
     public BlockState getDefaultBlockState() {

@@ -93,6 +93,7 @@ public class ConfigPath {
         public static final String CATEGORY_CELL1 = "basicCell";
         public static final String CATEGORY_CELL2 = "advancedCell";
         public static final String CATEGORY_CELL3 = "premiumCell";
+        public static final String CATEGORY_CELL4 = "ultimateCell";
         public static final String CATEGORY_PERKS = "perks";
         public static final String CATEGORY_EFFICIENCY = "efficiency";
         public static final String CATEGORY_MASS = "mass";

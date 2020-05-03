@@ -58,6 +58,9 @@ public class FactoryBlock extends Block implements FactoryComponentProvider, Woo
     private final VoxelShape shape = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        if (this.component == FactoryComponent.FACTORY_UPGRADE)
+            return super.getShape(state, worldIn, pos, context);
+        
         if (state.get(BlockStateProperties.ATTACHED))
             return VoxelShapes.fullCube();
         else

@@ -81,8 +81,7 @@ public class ModSetup {
             JsonObject jsonObject = JSONUtils.fromJson(GSON, new FileReader(dropFile), JsonObject.class);
             MobSimulator.getInstance().fromJson(jsonObject);
         } catch (Exception exception) {
-            Woot.setup.getLogger().error("Failed to load loot file {}", dropFile.getAbsolutePath());
-            exception.printStackTrace();
+            Woot.setup.getLogger().warn("Failed to load loot file {}", dropFile.getAbsolutePath());
         }
         setupPlugins();
         CustomDropsLoader.load();

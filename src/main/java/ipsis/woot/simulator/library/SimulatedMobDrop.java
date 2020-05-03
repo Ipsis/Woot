@@ -4,12 +4,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import ipsis.woot.Woot;
+import ipsis.woot.simulator.DropStackData;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.helper.JsonHelper;
 import ipsis.woot.util.helper.MathHelper;
+import ipsis.woot.util.helper.RandomHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 import javax.annotation.Nonnull;
@@ -64,40 +67,30 @@ public class SimulatedMobDrop {
             // Custom drops default to stack size of 1 if nothing specified
             stackSize = 1;
         } else if (hasCustom && !customStackSize.isEmpty()) {
-            // The custom drop sizes are the percentage drop chance
-            double completeWeight = 0.0F;
+
+            List<DropStackData> dropstacks = new ArrayList<>();
             for (Map.Entry<Integer, Float> entry : customStackSize.get(looting).entrySet())
-                completeWeight += entry.getValue();
+                dropstacks.add(new DropStackData(entry.getKey(), (int)(entry.getValue() * 1000)));
 
-            double r = Math.random() * completeWeight;
-            double countWeight = 0.0F;
+            DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
+            stackSize = chosen.stackSize;
 
-            for (Map.Entry<Integer, Float> entry : customStackSize.get(looting).entrySet()) {
-                countWeight += entry.getValue();
-                if (countWeight >= r) {
-                    stackSize = entry.getKey();
-                    break;
-                }
-            }
+            Woot.setup.getLogger().info("customDrop: {} chosen {}",
+                    dropstacks, stackSize);
+
         } else if (!hasCustom && simulatedStackSize.isEmpty()) {
             // Not really possible
             stackSize = 1;
         } else {
-            // The simulated drop sizes are just the number of times the drop occurred
-            double completeWeight = 0.0F;
+            List<DropStackData> dropstacks = new ArrayList<>();
             for (Map.Entry<Integer, Integer> entry : simulatedStackSize.get(looting).entrySet())
-                completeWeight += (float)entry.getValue();
+                dropstacks.add(new DropStackData(entry.getKey(), entry.getValue()));
 
-            double r = Math.random() * completeWeight;
-            double countWeight = 0.0F;
+            DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
+            stackSize = chosen.stackSize;
 
-            for (Map.Entry<Integer, Integer> entry : simulatedStackSize.get(looting).entrySet()) {
-                countWeight += (float)entry.getValue();
-                if (countWeight >= r) {
-                    stackSize = entry.getKey();
-                    break;
-                }
-            }
+            Woot.setup.getLogger().info("simulatedDrop: {} chosen {}",
+                    dropstacks, stackSize);
         }
         return stackSize;
     }
@@ -132,10 +125,8 @@ public class SimulatedMobDrop {
     public @Nonnull ItemStack getRolledDrop(int looting) {
         ItemStack dropStack = ItemStack.EMPTY;
         float dropChance = calculateDropChance(looting);
-        float roll = MobSimulator.RANDOM.nextFloat() * 100.0F; // 0.0(inclusive) -> 1.0 exclusive
 
-        MobSimulator.LOGGER.debug("getRolledDrop:chance {} roll {}", dropChance, roll);
-        if (dropChance == 100.0F || roll <= dropChance) {
+        if (RandomHelper.rollPercentage(dropChance)) {
             dropStack = itemStack.copy();
             dropStack.setCount(calculateDropSize(looting));
         }

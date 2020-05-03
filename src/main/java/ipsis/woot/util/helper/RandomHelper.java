@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class RandomHelper {
 
-    private static final Random RANDOM = new Random();
+    public static final Random RANDOM = new Random();
 
     private static final float PERCENT_MIN = 0.0F;
     private static final float PERCENT_MAX = 100.0F;

@@ -149,6 +149,9 @@ public class FactoryScanner {
                                 //Woot.setup.getLogger().debug("compareToWorld: Found primary controller");
                                 foundPrimaryController = true;
                                 absolutePattern.addMob(fakeMob);
+                            } else {
+                                //Woot.setup.getLogger().debug("compareToWorld: Found secondary controller");
+                                absolutePattern.addMob(fakeMob);
                             }
                         }
                     }

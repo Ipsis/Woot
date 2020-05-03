@@ -66,14 +66,12 @@ public class Infuser {
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
         ShapedRecipeBuilder.shapedRecipe(InfuserSetup.INFUSER_BLOCK.get())
-                .patternLine("idi")
-                .patternLine("gbg")
-                .patternLine("ioi")
-                .key('i', GenericSetup.SI_PLATE_ITEM.get())
+                .patternLine(" d ")
+                .patternLine(" c ")
+                .patternLine(" b ")
                 .key('d', Blocks.DROPPER)
-                .key('o', Tags.Items.OBSIDIAN)
+                .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
                 .key('b', Items.BUCKET)
-                .key('g', Tags.Items.GLASS)
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);

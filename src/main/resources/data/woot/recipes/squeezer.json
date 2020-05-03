@@ -2,22 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "group": "woot",
   "pattern": [
-    "ipi",
-    "dbd",
-    "ioi"
+    "dpd",
+    "dcd",
+    "dbd"
   ],
   "key": {
-    "i": {
-      "item": "woot:si_plate"
-    },
     "p": {
       "item": "minecraft:piston"
     },
     "d": {
       "tag": "forge:dyes"
     },
-    "o": {
-      "tag": "forge:obsidian"
+    "c": {
+      "item": "woot:machine_casing"
     },
     "b": {
       "item": "minecraft:bucket"

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " s ",
+    "sps",
+    " s "
+  ],
+  "key": {
+    "s": {
+      "tag": "forge:stone"
+    },
+    "p": {
+      "item": "woot:lime_dyeplate"
+    }
+  },
+  "result": {
+    "item": "woot:factory_ctr_base_sec"
+  }
+}

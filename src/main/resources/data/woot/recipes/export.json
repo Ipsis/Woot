@@ -2,19 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "group": "woot",
   "pattern": [
-    "ibi",
+    "   ",
     " c ",
-    "ihi"
+    " h "
   ],
   "key": {
-    "i": {
-      "item": "woot:si_plate"
-    },
-    "b": {
-      "item": "minecraft:bucket"
-    },
     "c": {
-      "tag": "forge:chests"
+      "item": "woot:machine_casing"
     },
     "h": {
       "item": "minecraft:hopper"

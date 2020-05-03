@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " s ",
+    " c ",
+    "bfb"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:brewing_stand"
+    },
+    "c": {
+      "item": "woot:machine_casing"
+    },
+    "b": {
+      "item": "minecraft:bucket"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "woot:fluidconvertor"
+  }
+}

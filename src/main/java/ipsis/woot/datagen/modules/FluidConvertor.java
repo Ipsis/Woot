@@ -3,8 +3,15 @@ package ipsis.woot.datagen.modules;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
+import ipsis.woot.modules.generic.GenericSetup;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -16,6 +23,17 @@ public class FluidConvertor {
 
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
+        ShapedRecipeBuilder.shapedRecipe(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
+                .patternLine(" s ")
+                .patternLine(" c ")
+                .patternLine("bfb")
+                .key('s', Blocks.BREWING_STAND)
+                .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
+                .key('b', Items.BUCKET)
+                .key('f', Blocks.FURNACE)
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer);
 
         ResourceLocation rl = new ResourceLocation(Woot.MODID, "fluidconvertor/recipe1");
         FluidConvertorRecipe.convertorRecipe(

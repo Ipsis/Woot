@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "woot",
+  "ingredients": [
+    {
+      "tag": "forge:dyes/purple"
+    },
+    {
+      "item": "woot:dye_die"
+    },
+    {
+      "item": "woot:hammer"
+    }
+  ],
+  "result": {
+    "item": "woot:purple_dyecasing",
+    "count": 16
+  }
+}

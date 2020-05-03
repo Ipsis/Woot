@@ -2,6 +2,7 @@ package ipsis.woot.datagen.modules;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.AnvilSetup;
+import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.infuser.items.DyeCasingItem;
@@ -12,9 +13,11 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -24,7 +27,7 @@ public class Generic {
 
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shapedRecipe(GenericSetup.SI_DUST_ITEM.get(), 3)
+        ShapedRecipeBuilder.shapedRecipe(GenericSetup.SI_DUST_ITEM.get(), 1)
                 .patternLine(" i ")
                 .patternLine("n n")
                 .patternLine(" s ")
@@ -33,7 +36,19 @@ public class Generic {
                 .key('s', Blocks.SOUL_SAND)
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+                .build(consumer, new ResourceLocation(Woot.MODID, "si_dust_1"));
+
+        ShapedRecipeBuilder.shapedRecipe(GenericSetup.SI_DUST_ITEM.get(), 3)
+                .patternLine(" i ")
+                .patternLine("nhn")
+                .patternLine(" s ")
+                .key('i', Tags.Items.INGOTS_IRON)
+                .key('n', Tags.Items.NETHERRACK)
+                .key('s', Blocks.SOUL_SAND)
+                .key('h', AnvilSetup.HAMMER_ITEM.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer, new ResourceLocation(Woot.MODID, "si_dust_2"));
 
         CookingRecipeBuilder.smeltingRecipe(
                 Ingredient.fromItems(GenericSetup.SI_DUST_ITEM.get()),
@@ -46,6 +61,24 @@ public class Generic {
                 .addIngredient(Ingredient.fromItems(GenericSetup.SI_INGOT_ITEM.get()))
                 .addIngredient(AnvilSetup.PLATE_DIE_ITEM.get())
                 .addIngredient(Ingredient.fromItems(AnvilSetup.HAMMER_ITEM.get()))
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(FactorySetup.MOB_SHARD_ITEM.get())
+                .addIngredient(Ingredient.fromItems(Items.ENDER_PEARL))
+                .addIngredient(AnvilSetup.SHARD_DIE_ITEM.get())
+                .addIngredient(Ingredient.fromItems(AnvilSetup.HAMMER_ITEM.get()))
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer);
+
+        ShapedRecipeBuilder.shapedRecipe(GenericSetup.MACHINE_CASING_ITEM.get())
+                .patternLine(" p ")
+                .patternLine("pcp")
+                .patternLine(" p ")
+                .key('p', GenericSetup.SI_PLATE_ITEM.get())
+                .key('c', Tags.Items.CHESTS)
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);

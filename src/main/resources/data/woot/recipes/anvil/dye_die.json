@@ -1,0 +1,14 @@
+{
+  "type": "woot:anvil",
+  "base": {
+    "item": "minecraft:gunpowder"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "result": {
+    "item": "woot:dye_die"
+  }
+}

@@ -2,28 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "group": "woot",
   "pattern": [
-    "ipi",
-    "tbg",
-    "ioi"
+    "tpt",
+    "tct",
+    "tbt"
   ],
   "key": {
-    "i": {
-      "item": "woot:si_plate"
-    },
     "p": {
       "item": "minecraft:piston"
     },
-    "t": {
-      "item": "minecraft:book"
-    },
-    "g": {
-      "item": "minecraft:glass_bottle"
-    },
-    "o": {
-      "tag": "forge:obsidian"
+    "c": {
+      "item": "woot:machine_casing"
     },
     "b": {
       "item": "minecraft:bucket"
+    },
+    "t": {
+      "item": "minecraft:book"
     }
   },
   "result": {

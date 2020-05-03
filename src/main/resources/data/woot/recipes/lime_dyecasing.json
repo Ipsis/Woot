@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "woot",
+  "ingredients": [
+    {
+      "tag": "forge:dyes/lime"
+    },
+    {
+      "item": "woot:dye_die"
+    },
+    {
+      "item": "woot:hammer"
+    }
+  ],
+  "result": {
+    "item": "woot:lime_dyecasing",
+    "count": 16
+  }
+}

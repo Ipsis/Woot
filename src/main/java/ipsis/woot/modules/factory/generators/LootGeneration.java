@@ -5,7 +5,7 @@ import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
-import ipsis.woot.modules.generic.GenericItemType;
+import ipsis.woot.modules.generic.items.GenericItem;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
@@ -85,9 +85,9 @@ public class LootGeneration {
         if (setup.getAllPerks().containsKey(PerkType.TIER_SHARD)) {
 
             List<ShardPerkData> shards = new ArrayList<>();
-            shards.add(new ShardPerkData(GenericItemType.BASIC_UP_SHARD, setup.getBasicShardWeight()));
-            shards.add(new ShardPerkData(GenericItemType.ADVANCED_UP_SHARD, setup.getAdvancedShardWeight()));
-            shards.add(new ShardPerkData(GenericItemType.ELITE_UP_SHARD, setup.getEliteShardWeight()));
+            shards.add(new ShardPerkData(GenericItem.GenericItemType.BASIC_UP_SHARD, setup.getBasicShardWeight()));
+            shards.add(new ShardPerkData(GenericItem.GenericItemType.ADVANCED_UP_SHARD, setup.getAdvancedShardWeight()));
+            shards.add(new ShardPerkData(GenericItem.GenericItemType.ELITE_UP_SHARD, setup.getEliteShardWeight()));
 
             int rolls = setup.getPerkTierShardValue();
             List<ItemStack> dropShards = new ArrayList<>();

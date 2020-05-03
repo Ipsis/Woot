@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "woot",
+  "ingredients": [
+    {
+      "tag": "forge:dyes/green"
+    },
+    {
+      "item": "woot:dye_die"
+    },
+    {
+      "item": "woot:hammer"
+    }
+  ],
+  "result": {
+    "item": "woot:green_dyecasing",
+    "count": 16
+  }
+}

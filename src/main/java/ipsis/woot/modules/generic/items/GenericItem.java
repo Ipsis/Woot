@@ -1,8 +1,6 @@
 package ipsis.woot.modules.generic.items;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.generic.GenericItemType;
-import ipsis.woot.setup.ModSetup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -23,5 +21,19 @@ public class GenericItem extends Item {
     @Override
     public boolean hasEffect(ItemStack stack) {
         return itemType == GenericItemType.ENCH_PLATE_1 || itemType == GenericItemType.ENCH_PLATE_2 || itemType == GenericItemType.ENCH_PLATE_3;
+    }
+
+    public enum GenericItemType {
+        SI_INGOT,
+        SI_DUST,
+        SI_PLATE,
+        PRISM,
+        ENCH_PLATE_1,
+        ENCH_PLATE_2,
+        ENCH_PLATE_3,
+        BASIC_UP_SHARD,
+        ADVANCED_UP_SHARD,
+        ELITE_UP_SHARD,
+        MACHINE_CASING
     }
 }

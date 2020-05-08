@@ -120,8 +120,8 @@ public class FormedSetup {
     public int getMinRateValue() {
         int min = 0;
         for (MobParam mobParam : mobParams.values()) {
-            if (mobParam.perkRateValue < min)
-                min = mobParam.perkRateValue;
+            if (mobParam.hasPerkRateValue() && mobParam.getPerkRateValue() < min)
+                min = mobParam.getPerkRateValue();
         }
         return min;
     }
@@ -144,32 +144,32 @@ public class FormedSetup {
             if (perks.containsKey(PerkType.EFFICIENCY)) {
                 int perkLevel = perks.getOrDefault(PerkType.EFFICIENCY, 0);
                 if (perkLevel > 0)
-                    param.perkEfficiencyValue = Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.EFFICIENCY, perkLevel));
+                    param.setPerkEfficiencyValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
+                            Config.OVERRIDE.getKeyByPerk(PerkType.EFFICIENCY, perkLevel)));
             }
 
             // Mass
             if (perks.containsKey(PerkType.MASS)) {
                 int perkLevel = perks.getOrDefault(PerkType.MASS, 0);
                 if (perkLevel > 0)
-                    param.perkMassValue = Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.MASS, perkLevel));
+                    param.setPerkMassValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
+                            Config.OVERRIDE.getKeyByPerk(PerkType.MASS, perkLevel)));
             }
 
             // Rate
             if (perks.containsKey(PerkType.RATE)) {
                 int perkLevel = perks.getOrDefault(PerkType.RATE, 0);
                 if (perkLevel > 0)
-                    param.perkRateValue = Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.RATE, perkLevel));
+                    param.setPerkRateValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
+                            Config.OVERRIDE.getKeyByPerk(PerkType.RATE, perkLevel)));
             }
 
             // Xp
             if (perks.containsKey(PerkType.XP)) {
                 int perkLevel = perks.getOrDefault(PerkType.XP, 0);
                 if (perkLevel > 0)
-                    param.perkXpValue = Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.XP, perkLevel));
+                    param.setPerkXpValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
+                            Config.OVERRIDE.getKeyByPerk(PerkType.XP, perkLevel)));
             }
 
             mobParams.put(fakeMob, param);

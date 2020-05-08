@@ -63,10 +63,10 @@ public class ClientFactorySetup {
             mobParam.baseSpawnTicks = buf.readInt();
             mobParam.baseMassCount = buf.readInt();
             mobParam.baseFluidCost = buf.readInt();
-            mobParam.perkRateValue = buf.readInt();
-            mobParam.perkEfficiencyValue = buf.readInt();
-            mobParam.perkMassValue = buf.readInt();
-            mobParam.perkXpValue = buf.readInt();
+            mobParam.setPerkRateValue(buf.readInt());
+            mobParam.setPerkEfficiencyValue(buf.readInt());
+            mobParam.setPerkMassValue(buf.readInt());
+            mobParam.setPerkXpValue(buf.readInt());
             factorySetup.controllerMobs.add(fakeMob);
             factorySetup.mobParams.put(fakeMob, mobParam);
 

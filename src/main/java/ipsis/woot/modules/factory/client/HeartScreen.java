@@ -204,13 +204,13 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     if (entityType != null) {
                         ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
                         if (Perk.EFFICIENCY_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkEfficiencyValue));
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkEfficiencyValue()));
                         else if (Perk.RATE_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkRateValue));
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkRateValue()));
                         else if (Perk.MASS_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.perkMassValue));
+                            tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.getMobCount(true)));
                         else if (Perk.XP_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.perkXpValue));
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkXpValue()));
                     }
                 }
                 if (Perk.TIER_SHARD_PERKS.contains(perk)) {

@@ -70,7 +70,7 @@ public class LootGeneration {
         if (setup.getAllPerks().containsKey(PerkType.XP)) {
             int genXp = 0;
             for (FakeMob mob : setup.getAllMobs()) {
-                int xpPercent = setup.getAllMobParams().get(mob).perkXpValue;
+                int xpPercent = setup.getAllMobParams().get(mob).getPerkXpValue();
                 int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS));
                 int x = (int) ((SpawnController.get().getMobExperience(mob, setup.getWorld()) / 100.0F) * xpPercent);
                 genXp += (x * mobCount);

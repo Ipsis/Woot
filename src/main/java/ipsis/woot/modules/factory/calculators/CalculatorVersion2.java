@@ -17,24 +17,35 @@ public class CalculatorVersion2 {
 
     public static HeartTileEntity.Recipe calculate(FormedSetup setup) {
 
-        int baseSpawnTicks = setup.getMaxSpawnTime();
+        int baseSpawnTicks = setup.getMaxSpawnTime(); // HIgh spawn time across all mobs
         int actualSpawnTicks = baseSpawnTicks;
-        int resolvedRate = setup.getMinRateValue();
+
+        LOGGER.debug("Calculator baseSpawnTicks:{} actualSpawnTick:{}",
+                baseSpawnTicks, actualSpawnTicks);
+        for (FakeMob fakeMob : setup.getAllMobs())
+            LOGGER.debug("Calulator mob:{} params:{}", fakeMob, setup.getAllMobParams().get(fakeMob));
 
         int fluidCost = 0;
         for (FakeMob fakeMob : setup.getAllMobs()) {
-            int mobFluidCost = setup.getAllMobParams().get(fakeMob).baseFluidCost * setup.getAllMobParams().get(fakeMob).perkMassValue;
+            int mobFluidCost = setup.getAllMobParams().get(fakeMob).baseFluidCost * setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS));
+            LOGGER.debug("Calculator mob:{} fluidCost:{}", fakeMob, mobFluidCost);
             if (setup.getAllPerks().containsKey(PerkType.EFFICIENCY)) {
-                int fluidSaving = (int)(mobFluidCost / 100.0F) * setup.getAllMobParams().get(fakeMob).perkEfficiencyValue;
+                LOGGER.debug("Calculator: EFFICIENCY");
+                int fluidSaving = (int)(mobFluidCost / 100.0F) * setup.getAllMobParams().get(fakeMob).getPerkEfficiencyValue();
                 mobFluidCost -= fluidSaving;
                 mobFluidCost = MathHelper.clamp(mobFluidCost, 0, Integer.MAX_VALUE);
+                LOGGER.debug("Calculator: saving of {}mB -> {}mB", fluidSaving, mobFluidCost);
             }
             fluidCost += mobFluidCost;
         }
+        LOGGER.debug("Calculator fluidCost:{}", fluidCost);
 
         if (setup.getAllPerks().containsKey(PerkType.RATE)) {
-            int rateSaving = (int)(baseSpawnTicks / 100.0F) * resolvedRate;
+            LOGGER.debug("Calculator: RATE");
+            // Lowest reduction in rate across all mobs
+            int rateSaving = (int)(baseSpawnTicks / 100.0F) * setup.getMinRateValue();
             actualSpawnTicks -= rateSaving;
+            LOGGER.debug("Calculator: {} @ {} -> {}", baseSpawnTicks, rateSaving, actualSpawnTicks);
         }
 
         HeartTileEntity.Recipe recipe = new HeartTileEntity.Recipe(actualSpawnTicks, fluidCost);

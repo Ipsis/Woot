@@ -4,19 +4,45 @@ package ipsis.woot.modules.factory;
  * Mob specific values
  */
 public class MobParam {
-    public static final int MOB_PARAM_UNDEFINED = -1;
+    private static final int MOB_PARAM_UNDEFINED = -1;
     public int baseSpawnTicks;
     public int baseMassCount;
     public int baseFluidCost;
 
     // Perk values
-    public int perkEfficiencyValue = MOB_PARAM_UNDEFINED;
-    public int perkMassValue = MOB_PARAM_UNDEFINED;
-    public int perkRateValue = MOB_PARAM_UNDEFINED;
-    public int perkXpValue = MOB_PARAM_UNDEFINED;
+    private int perkEfficiencyValue = MOB_PARAM_UNDEFINED;
+    private int perkMassValue = MOB_PARAM_UNDEFINED;
+    private int perkRateValue = MOB_PARAM_UNDEFINED;
+    private int perkXpValue = MOB_PARAM_UNDEFINED;
 
     // Mass has a value regardless of perk
     public int getMobCount(boolean hasMassPerk) {
         return hasMassPerk ? perkMassValue : baseMassCount;
+    }
+
+    public boolean hasPerkEfficiencyValue() { return perkEfficiencyValue != MOB_PARAM_UNDEFINED; }
+    public boolean hasPerkRateValue() { return perkRateValue != MOB_PARAM_UNDEFINED; }
+    public boolean hasPerkXpValue() { return perkXpValue != MOB_PARAM_UNDEFINED; }
+
+    public int getPerkEfficiencyValue() { return perkEfficiencyValue; }
+    public int getPerkRateValue() { return perkRateValue; }
+    public int getPerkXpValue() { return perkXpValue; }
+
+    public void setPerkEfficiencyValue(int v) { perkEfficiencyValue = v;}
+    public void setPerkMassValue(int v) { perkMassValue = v;}
+    public void setPerkRateValue(int v) { perkRateValue = v;}
+    public void setPerkXpValue(int v) { perkXpValue = v;}
+
+    @Override
+    public String toString() {
+        return "MobParam{" +
+                "baseSpawnTicks=" + baseSpawnTicks +
+                ", baseMassCount=" + baseMassCount +
+                ", baseFluidCost=" + baseFluidCost +
+                ", perkEfficiencyValue=" + perkEfficiencyValue +
+                ", perkMassValue=" + perkMassValue +
+                ", perkRateValue=" + perkRateValue +
+                ", perkXpValue=" + perkXpValue +
+                '}';
     }
 }

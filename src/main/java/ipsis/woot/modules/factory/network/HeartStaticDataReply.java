@@ -71,10 +71,10 @@ public class HeartStaticDataReply {
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseSpawnTicks);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseMassCount);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseFluidCost);
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkRateValue);
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkEfficiencyValue);
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkMassValue);
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).perkXpValue);
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkRateValue());
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkEfficiencyValue());
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS)));
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkXpValue());
 
             if (recipe.items.containsKey(fakeMob)) {
                 buf.writeInt(recipe.items.get(fakeMob).size());

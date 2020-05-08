@@ -118,12 +118,19 @@ public class FormedSetup {
     }
 
     public int getMinRateValue() {
-        int min = 0;
+
+        boolean hasPerk = false;
+        int min = Integer.MAX_VALUE;
         for (MobParam mobParam : mobParams.values()) {
-            if (mobParam.hasPerkRateValue() && mobParam.getPerkRateValue() < min)
+            if (mobParam.hasPerkRateValue() && mobParam.getPerkRateValue() < min) {
                 min = mobParam.getPerkRateValue();
+                hasPerk = true;
+            }
         }
-        return min;
+
+        // If there is no perk present then the rate reduction will be 0
+        // Otherwise it is the smalled reduction across all the mobs
+        return hasPerk ? min : 0;
     }
 
     private void setupMobParams() {

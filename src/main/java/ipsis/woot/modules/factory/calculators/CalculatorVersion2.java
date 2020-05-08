@@ -43,9 +43,9 @@ public class CalculatorVersion2 {
         if (setup.getAllPerks().containsKey(PerkType.RATE)) {
             LOGGER.debug("Calculator: RATE");
             // Lowest reduction in rate across all mobs
-            int rateSaving = (int)(baseSpawnTicks / 100.0F) * setup.getMinRateValue();
+            int rateSaving = (int)((baseSpawnTicks / 100.0F) * setup.getMinRateValue());
             actualSpawnTicks -= rateSaving;
-            LOGGER.debug("Calculator: {} @ {} -> {}", baseSpawnTicks, rateSaving, actualSpawnTicks);
+            LOGGER.debug("Calculator: {} @ {}% -> {}", baseSpawnTicks, setup.getMinRateValue(), actualSpawnTicks);
         }
 
         HeartTileEntity.Recipe recipe = new HeartTileEntity.Recipe(actualSpawnTicks, fluidCost);

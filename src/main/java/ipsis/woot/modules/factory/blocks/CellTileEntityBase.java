@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemUseContext;
@@ -33,8 +34,8 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if (compound.contains("Tank"))
-            tank.readFromNBT(compound.getCompound("Tank"));
+        if (compound.contains(ModNBT.TANK_TAG))
+            tank.readFromNBT(compound.getCompound(ModNBT.TANK_TAG));
     }
 
     @Override
@@ -42,7 +43,7 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
         super.write(compound);
         CompoundNBT tankNBT = new CompoundNBT();
         tank.writeToNBT(tankNBT);
-        compound.put("Tank", tankNBT);
+        compound.put(ModNBT.TANK_TAG, tankNBT);
         return compound;
     }
 

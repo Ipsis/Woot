@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.Woot;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.calculators.CalculatorVersion2;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
@@ -13,6 +14,7 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.StorageHelper;
 import ipsis.woot.util.helper.StringHelper;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -202,9 +204,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if (compound.contains("progress")) {
+        if (compound.contains(ModNBT.Heart.PROGRESS_TAG)) {
             loadedFromNBT = true;
-            consumedUnits = compound.getInt("progress");
+            consumedUnits = compound.getInt(ModNBT.Heart.PROGRESS_TAG);
             LOGGER.debug("read: loading progress " + consumedUnits);
         }
     }
@@ -213,7 +215,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         if (isFormed() && recipe != null) {
-            compound.putInt("progress", consumedUnits);
+            compound.putInt(ModNBT.Heart.PROGRESS_TAG, consumedUnits);
             LOGGER.debug("write: saving progress " + consumedUnits);
         }
         return compound;

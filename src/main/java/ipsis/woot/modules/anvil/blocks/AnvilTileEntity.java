@@ -1,6 +1,7 @@
 package ipsis.woot.modules.anvil.blocks;
 
 import ipsis.woot.crafting.AnvilRecipe;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
@@ -9,6 +10,7 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -163,12 +165,12 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
     @Override
     public void read(CompoundNBT compoundNBT) {
         super.read(compoundNBT);
-        if (compoundNBT.hasUniqueId("base")) {
+        if (compoundNBT.contains(ModNBT.Anvil.BASE_ITEM_TAG)) {
 
-            ListNBT listNBT = compoundNBT.getList("ingredients", 10);
+            ListNBT listNBT = compoundNBT.getList(ModNBT.INVENTORY_TAG, 10);
             for (int i = 0; i < listNBT.size(); i++) {
                 CompoundNBT itemTags = listNBT.getCompound(i);
-                int j = itemTags.getInt("slot");
+                int j = itemTags.getInt(ModNBT.INVENTORY_SLOT_TAG);
                 if (j >= 0 && j < ingredients.length) {
                     ingredients[j] = ItemStack.read(itemTags);
                 }
@@ -179,20 +181,23 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
         super.write(compoundNBT);
-        CompoundNBT compoundNBT1 = new CompoundNBT();
-        baseItem.write(compoundNBT1);
-        compoundNBT.put("base", compoundNBT1);
 
-        ListNBT listNBT = new ListNBT();
-        for (int i = 0; i < ingredients.length; i++) {
-            if (!ingredients[i].isEmpty()) {
-                CompoundNBT itemTags = new CompoundNBT();
-                itemTags.putInt("slot", i);
-                ingredients[i].write(itemTags);
-                listNBT.add(itemTags);
+        if (!baseItem.isEmpty()) {
+            CompoundNBT compoundNBT1 = new CompoundNBT();
+            baseItem.write(compoundNBT1);
+            compoundNBT.put(ModNBT.Anvil.BASE_ITEM_TAG, compoundNBT1);
+
+            ListNBT listNBT = new ListNBT();
+            for (int i = 0; i < ingredients.length; i++) {
+                if (!ingredients[i].isEmpty()) {
+                    CompoundNBT itemTags = new CompoundNBT();
+                    itemTags.putInt(ModNBT.INVENTORY_SLOT_TAG, i);
+                    ingredients[i].write(itemTags);
+                    listNBT.add(itemTags);
+                }
             }
+            compoundNBT.put(ModNBT.INVENTORY_TAG, listNBT);
         }
-        compoundNBT.put("ingredients", listNBT);
         return compoundNBT;
     }
 

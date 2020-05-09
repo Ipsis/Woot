@@ -2,6 +2,7 @@ package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.WootDebug;
@@ -134,13 +135,13 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     //region NBT
     @Override
     public void read(CompoundNBT compoundNBT) {
-        CompoundNBT invTag = compoundNBT.getCompound("inv");
+        CompoundNBT invTag = compoundNBT.getCompound(ModNBT.INPUT_INVENTORY_TAG);
         inputSlots.deserializeNBT(invTag);
 
-        CompoundNBT tankTag = compoundNBT.getCompound("tank");
+        CompoundNBT tankTag = compoundNBT.getCompound(ModNBT.OUTPUT_TANK_TAG);
         outputTank.ifPresent(h -> h.readFromNBT(tankTag));
 
-        CompoundNBT energyTag = compoundNBT.getCompound("energy");
+        CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
         super.read(compoundNBT);
@@ -149,16 +150,16 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
         CompoundNBT invTag = inputSlots.serializeNBT();
-        compoundNBT.put("inv", invTag);
+        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG, invTag);
 
         outputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
-            compoundNBT.put("tank", tankTag);
+            compoundNBT.put(ModNBT.OUTPUT_TANK_TAG, tankTag);
         });
 
         energyStorage.ifPresent(h -> {
             CompoundNBT energyTag = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
-            compoundNBT.put("energy", energyTag);
+            compoundNBT.put(ModNBT.ENERGY_TAG, energyTag);
         });
 
         return super.write(compoundNBT);

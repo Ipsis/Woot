@@ -1,0 +1,43 @@
+Anvil:
+  compound (MobNBT.Anvil.BASE_ITEN_TAG)
+  compound (MobNBT.INVENTORY_TAG)
+    compound (MobNBT.INVENTORY_SLOT_TAG)
+
+Cell:
+   compound (MobNBT.TANK_TAG)
+
+Controller:
+    compound "mob"
+        FakeMob
+
+Heart:
+    integer (MobNBT.Heart.PROGRESS_TAG)
+
+Fluid Convertor:
+    compound (MobNBT.INPUT_INVENTORY_TAG)
+    compound (MobNBT.INPUT_TANK_TAG)
+    compound (MobNBT.OUTPUT_TANK_TAG)
+    compound (MobNBT.ENERGY_TAG)
+
+Infuser:
+    compound (MobNBT.INPUT_INVENTORY_TAG)
+    compound (MobNBT.OUTPUT_INVENTORY_TAG)
+    compound (MobNBT.INPUT_TANK_TAG)
+    compound (MobNBT.ENERGY_TAG)
+
+Dye Squeezer:
+    compound (MobNBT.INPUT_INVENTORY_TAG)
+    compound (MobNBT.OUTPUT_TANK_TAG)
+    compound (MobNBT.ENERGY_TAG)
+    compound (MobNBT.DyeSqueezer.INTERNAL_DYE_TANKS_TAG)
+        Integer (MobNBT.DyeSqueezer.RED_TAG)
+        Integer (MobNBT.DyeSqueezer.YELLOW_TAG)
+        Integer (MobNBT.DyeSqueezer.BLUE_TAG)
+        Integer (MobNBT.DyeSqueezer.WHITE_TAG)
+
+Enchant Squeezer:
+    compound (MobNBT.INPUT_INVENTORY_TAG)
+    compound (MobNBT.OUTPUT_TANK_TAG)
+    compound (MobNBT.ENERGY_TAG)
+
+

@@ -3,6 +3,7 @@ package ipsis.woot.modules.fluidconvertor.blocks;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.util.WootDebug;
@@ -185,16 +186,16 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     @Override
     public void read(CompoundNBT compoundNBT) {
 
-        CompoundNBT invInputTag = compoundNBT.getCompound("invInput");
+        CompoundNBT invInputTag = compoundNBT.getCompound(ModNBT.INPUT_INVENTORY_TAG);
         inputSlots.deserializeNBT(invInputTag);
 
-        CompoundNBT inputTankTag = compoundNBT.getCompound("inputTank");
+        CompoundNBT inputTankTag = compoundNBT.getCompound(ModNBT.INPUT_TANK_TAG);
         inputTank.ifPresent(h -> h.readFromNBT(inputTankTag));
 
-        CompoundNBT outputTankTag = compoundNBT.getCompound("outputTank");
+        CompoundNBT outputTankTag = compoundNBT.getCompound(ModNBT.OUTPUT_TANK_TAG);
         outputTank.ifPresent(h -> h.readFromNBT(outputTankTag));
 
-        CompoundNBT energyTag = compoundNBT.getCompound("energy");
+        CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
         super.read(compoundNBT);
@@ -204,21 +205,21 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     public CompoundNBT write(CompoundNBT compoundNBT) {
 
         CompoundNBT invInputTag = inputSlots.serializeNBT();
-        compoundNBT.put("invInput", invInputTag);
+        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG, invInputTag);
 
         inputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
-            compoundNBT.put("inputTank", tankTag);
+            compoundNBT.put(ModNBT.INPUT_TANK_TAG, tankTag);
         });
 
         outputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
-            compoundNBT.put("outputTank", tankTag);
+            compoundNBT.put(ModNBT.OUTPUT_TANK_TAG, tankTag);
         });
 
         energyStorage.ifPresent(h -> {
             CompoundNBT energyTag = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
-            compoundNBT.put("energy", energyTag);
+            compoundNBT.put(ModNBT.ENERGY_TAG, energyTag);
         });
 
         return super.write(compoundNBT);

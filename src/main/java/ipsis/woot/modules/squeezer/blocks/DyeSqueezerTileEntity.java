@@ -2,6 +2,7 @@ package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
@@ -104,21 +105,21 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     @Override
     public void read(CompoundNBT compoundNBT) {
-        CompoundNBT invTag = compoundNBT.getCompound("inv");
+        CompoundNBT invTag = compoundNBT.getCompound(ModNBT.INPUT_INVENTORY_TAG);
         inputSlots.deserializeNBT(invTag);
 
-        CompoundNBT tankTag = compoundNBT.getCompound("tank");
+        CompoundNBT tankTag = compoundNBT.getCompound(ModNBT.OUTPUT_TANK_TAG);
         outputTank.ifPresent(h -> h.readFromNBT(tankTag));
 
-        CompoundNBT energyTag = compoundNBT.getCompound("energy");
+        CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
-        if (compoundNBT.contains("dye")) {
-            CompoundNBT dyeTag = compoundNBT.getCompound("dye");
-            red = dyeTag.getInt("red");
-            yellow = dyeTag.getInt("yellow");
-            blue = dyeTag.getInt("blue");
-            white = dyeTag.getInt("white");
+        if (compoundNBT.contains(ModNBT.DyeSqueezer.INTERNAL_DYE_TANKS_TAG)) {
+            CompoundNBT dyeTag = compoundNBT.getCompound(ModNBT.DyeSqueezer.INTERNAL_DYE_TANKS_TAG);
+            red = dyeTag.getInt(ModNBT.DyeSqueezer.RED_TAG);
+            yellow = dyeTag.getInt(ModNBT.DyeSqueezer.YELLOW_TAG);
+            blue = dyeTag.getInt(ModNBT.DyeSqueezer.BLUE_TAG);
+            white = dyeTag.getInt(ModNBT.DyeSqueezer.WHITE_TAG);
         }
         super.read(compoundNBT);
     }
@@ -126,24 +127,24 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
         CompoundNBT invTag = inputSlots.serializeNBT();
-        compoundNBT.put("inv", invTag);
+        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG, invTag);
 
         outputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
-            compoundNBT.put("tank", tankTag);
+            compoundNBT.put(ModNBT.OUTPUT_TANK_TAG, tankTag);
         });
 
         energyStorage.ifPresent(h -> {
             CompoundNBT energyTag = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
-            compoundNBT.put("energy", energyTag);
+            compoundNBT.put(ModNBT.ENERGY_TAG, energyTag);
         });
 
         CompoundNBT dyeTag = new CompoundNBT();
-        dyeTag.putInt("red", red);
-        dyeTag.putInt("yellow", yellow);
-        dyeTag.putInt("blue", blue);
-        dyeTag.putInt("white", white);
-        compoundNBT.put("dye", dyeTag);
+        dyeTag.putInt(ModNBT.DyeSqueezer.RED_TAG, red);
+        dyeTag.putInt(ModNBT.DyeSqueezer.YELLOW_TAG, yellow);
+        dyeTag.putInt(ModNBT.DyeSqueezer.BLUE_TAG, blue);
+        dyeTag.putInt(ModNBT.DyeSqueezer.WHITE_TAG, white);
+        compoundNBT.put(ModNBT.DyeSqueezer.INTERNAL_DYE_TANKS_TAG, dyeTag);
         return super.write(compoundNBT);
     }
     //endregion

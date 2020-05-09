@@ -13,18 +13,18 @@
               "source": "block_entity",
               "ops": [
                 {
-                  "source": "inputTank",
-                  "target": "BlockEntityTag.inputTank",
+                  "source": "InputTank",
+                  "target": "BlockEntityTag.InputTank",
                   "op": "replace"
                 },
                 {
-                  "source": "outputTank",
-                  "target": "BlockEntityTag.outputTank",
+                  "source": "OutputTank",
+                  "target": "BlockEntityTag.OutputTank",
                   "op": "replace"
                 },
                 {
-                  "source": "energy",
-                  "target": "BlockEntityTag.energy",
+                  "source": "Energy",
+                  "target": "BlockEntityTag.Energy",
                   "op": "replace"
                 }
               ]

@@ -7,7 +7,7 @@ Cell:
    compound (MobNBT.TANK_TAG)
 
 Controller:
-    compound "mob"
+    compound (ModNBT.Controller.MOB_TAG)
         FakeMob
 
 Heart:

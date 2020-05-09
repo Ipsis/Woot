@@ -26,4 +26,8 @@ public class ModNBT {
     public static class Anvil {
         public static final String BASE_ITEM_TAG = "BaseItem";
     }
+
+    public static class Controller {
+        public static final String MOB_TAG = "Mob";
+    }
 }

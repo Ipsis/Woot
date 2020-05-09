@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.blocks;
 
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.mod.ModBlocks;
@@ -25,8 +26,8 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
     @Override
     public void read(CompoundNBT compoundNBT) {
         super.read(compoundNBT);
-        if (compoundNBT.contains("mob")) {
-            CompoundNBT nbt = compoundNBT.getCompound("mob");
+        if (compoundNBT.contains(ModNBT.Controller.MOB_TAG)) {
+            CompoundNBT nbt = compoundNBT.getCompound(ModNBT.Controller.MOB_TAG);
             fakeMob = new FakeMob(nbt);
         }
     }
@@ -36,7 +37,7 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
         super.write(compoundNBT);
         CompoundNBT nbt = new CompoundNBT();
         FakeMob.writeToNBT(fakeMob, nbt);
-        compoundNBT.put("mob", nbt);
+        compoundNBT.put(ModNBT.Controller.MOB_TAG, nbt);
         return compoundNBT;
     }
 
@@ -53,7 +54,7 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
         CompoundNBT compoundNBT = itemStack.getOrCreateChildTag("BlockEntityTag");
         CompoundNBT nbt = new CompoundNBT();
         FakeMob.writeToNBT(fakeMob, nbt);
-        compoundNBT.put("mob", nbt);
+        compoundNBT.put(ModNBT.Controller.MOB_TAG, nbt);
         return itemStack;
     }
 

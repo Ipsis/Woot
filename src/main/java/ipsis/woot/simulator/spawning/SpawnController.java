@@ -75,6 +75,9 @@ public class SpawnController {
     Map<String, Integer> mobHealthCache = new HashMap<>();
     Map<String, Integer> mobXpCache = new HashMap<>();
     public int getMobHealth(@Nonnull FakeMob fakeMob, @Nonnull World world) {
+        if (world.isRemote)
+            return -1;
+
         if (!fakeMob.isValid())
             return -1;
 
@@ -90,6 +93,9 @@ public class SpawnController {
     }
 
     public int getMobExperience(@Nonnull FakeMob fakeMob, @Nonnull World world) {
+        if (world.isRemote)
+            return -1;
+
         if (!fakeMob.isValid())
             return -1;
 

@@ -13,8 +13,8 @@
               "source": "block_entity",
               "ops": [
                 {
-                  "source": "mob",
-                  "target": "BlockEntityTag.mob",
+                  "source": "Mob",
+                  "target": "BlockEntityTag.Mob",
                   "op": "replace"
                 }
               ]

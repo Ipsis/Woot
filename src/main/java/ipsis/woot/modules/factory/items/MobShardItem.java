@@ -81,8 +81,8 @@ public class MobShardItem extends Item {
     /**
      * NBT
      */
-    private static final String NBT_MOB = "mob";
-    private static final String NBT_KILLS = "kills";
+    private static final String NBT_MOB = "Mob";
+    private static final String NBT_KILLS = "Kills";
 
     public static boolean isProgrammed(ItemStack itemStack) {
         return getProgrammedMob(itemStack).isValid();

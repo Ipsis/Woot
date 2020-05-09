@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.config.Config;
+import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.block.Block;
@@ -32,8 +33,8 @@ public class ControllerBlockItem extends BlockItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");
-        if (compoundNBT != null && compoundNBT.contains("mob")) {
-            FakeMob fakeMob = new FakeMob(compoundNBT.getCompound("mob"));
+        if (compoundNBT != null && compoundNBT.contains(ModNBT.Controller.MOB_TAG)) {
+            FakeMob fakeMob = new FakeMob(compoundNBT.getCompound(ModNBT.Controller.MOB_TAG));
             if (fakeMob.isValid()) {
                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                 if (entityType != null)

@@ -98,8 +98,9 @@ public class HeartStaticDataReply {
             buf.writeInt(drops.size());
             for (SimulatedMobDropSummary drop : drops) {
                 ItemStack itemStack = drop.itemStack.copy();
-                itemStack.setCount((int)(drop.chanceToDrop[formedSetup.getLootingLevel()] * 100.0F));
+                itemStack.setCount((int)(drop.chanceToDrop[formedSetup.getLootingLevel()] * 1000.0F));
                 NetworkTools.writeItemStack(buf, itemStack);
+                buf.writeFloat(drop.chanceToDrop[formedSetup.getLootingLevel()]);
             }
         }
 

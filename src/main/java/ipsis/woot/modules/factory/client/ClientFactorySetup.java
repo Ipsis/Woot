@@ -81,8 +81,12 @@ public class ClientFactorySetup {
             }
 
             int drops = buf.readInt();
-            for (int y = 0; y < drops; y++)
-                mob.drops.add(NetworkTools.readItemStack(buf));
+            for (int y = 0; y < drops; y++) {
+                ItemStack itemStack = NetworkTools.readItemStack(buf);
+                itemStack.setCount((int)(buf.readFloat() * 100.0F));
+                if (!itemStack.isEmpty())
+                    mob.drops.add(itemStack);
+            }
 
             factorySetup.mobInfo.put(fakeMob, mob);
         }

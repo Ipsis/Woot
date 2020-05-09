@@ -4,8 +4,16 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.PerkType;
+import ipsis.woot.util.helper.StringHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class PerkItem extends Item {
 
@@ -86,5 +94,23 @@ public class PerkItem extends Item {
 
         Perk perk = Perk.getPerks(type, level);
         return getItemStack(perk);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+
+        if (Perk.TIER_SHARD_PERKS.contains(perk))
+            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.tier_shard")));
+        else if (Perk.XP_PERKS.contains(perk))
+            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.xp")));
+        else if (Perk.RATE_PERKS.contains(perk))
+            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.rate")));
+        else if (Perk.MASS_PERKS.contains(perk))
+            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.mass")));
+        else if (Perk.LOOTING_PERKS.contains(perk))
+            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.looting")));
+        else if (Perk.EFFICIENCY_PERKS.contains(perk))
+            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.efficiency")));
     }
 }

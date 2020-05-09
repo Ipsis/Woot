@@ -79,6 +79,24 @@ public class InternItem extends Item {
         }
 
         public Tier getTier() { return this.tier; }
+
+        public String getTranslationKey() {
+            if (this == BUILD_1)
+                return "info.woot.intern.mode.build_1";
+            else if (this == BUILD_2)
+                return "info.woot.intern.mode.build_2";
+            else if (this == BUILD_3)
+                return "info.woot.intern.mode.build_3";
+            else if (this == BUILD_4)
+                return "info.woot.intern.mode.build_4";
+            else if (this == BUILD_4)
+                return "info.woot.intern.mode.build_5";
+            else if (this == VALIDATE_1)
+                return "info.woot.intern.mode.validate_1";
+
+            return "bob";
+
+        }
     }
 
     @Override
@@ -96,7 +114,20 @@ public class InternItem extends Item {
                 ToolMode mode = getToolModeFromStack(itemStack);
                 mode = mode.getNext();
                 setToolModeInStack(itemStack, mode);
-                PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translate("info.woot.intern.mode." + getToolModeFromStack(itemStack).toString().toLowerCase(Locale.ROOT)));
+                if (mode.isBuildMode()) {
+                    PlayerHelper.sendActionBarMessage(playerEntity,
+                            StringHelper.translateFormat(
+                                    "info.woot.intern.mode.build",
+                                    StringHelper.translate(mode.getTier().getTranslationKey())));
+                } else if (mode.isValidateMode()) {
+                    PlayerHelper.sendActionBarMessage(playerEntity,
+                            StringHelper.translateFormat(
+                                    "info.woot.intern.mode.validate",
+                                    StringHelper.translate(mode.getTier().getTranslationKey())));
+                } else if (mode == ToolMode.FORM) {
+                    PlayerHelper.sendActionBarMessage(playerEntity,
+                            StringHelper.translate("info.woot.intern.mode.form"));
+                }
             }
             return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
         }

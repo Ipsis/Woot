@@ -79,24 +79,6 @@ public class InternItem extends Item {
         }
 
         public Tier getTier() { return this.tier; }
-
-        public String getTranslationKey() {
-            if (this == BUILD_1)
-                return "info.woot.intern.mode.build_1";
-            else if (this == BUILD_2)
-                return "info.woot.intern.mode.build_2";
-            else if (this == BUILD_3)
-                return "info.woot.intern.mode.build_3";
-            else if (this == BUILD_4)
-                return "info.woot.intern.mode.build_4";
-            else if (this == BUILD_4)
-                return "info.woot.intern.mode.build_5";
-            else if (this == VALIDATE_1)
-                return "info.woot.intern.mode.validate_1";
-
-            return "bob";
-
-        }
     }
 
     @Override
@@ -164,9 +146,10 @@ public class InternItem extends Item {
 
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+
         ActionResultType result = ActionResultType.PASS;
         ItemStack itemStack = context.getItem();
-        if (!context.getPlayer().func_226563_dT_()) {
+        if (!context.getPlayer().func_226563_dT_() && !context.getWorld().isRemote) {
             Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
             if (b instanceof HeartBlock) {
                 BlockState blockState = context.getWorld().getBlockState(context.getPos());
@@ -177,11 +160,11 @@ public class InternItem extends Item {
                     if (te instanceof HeartTileEntity)
                         ((HeartTileEntity) te).interrupt();
                 } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
-                    if (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier())) {
+                    FactoryHelper.BuildResult buildResult = (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier()));
+                    if (buildResult == FactoryHelper.BuildResult.SUCCESS) {
                         if (context.getWorld().isRemote)
                             spawnParticle(context.getWorld(), context.getPos().up(), 10);
-                    } else {
-                        // No more to place then tell the user what is wrong
+                    } else if (buildResult == FactoryHelper.BuildResult.ALL_BLOCKS_PLACED) {
                         if (!context.getWorld().isRemote)
                             FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
                     }

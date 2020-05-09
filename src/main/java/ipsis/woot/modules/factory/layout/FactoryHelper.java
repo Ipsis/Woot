@@ -1,8 +1,6 @@
 package ipsis.woot.modules.factory.layout;
 
 import ipsis.woot.modules.factory.FactoryComponent;
-import ipsis.woot.modules.factory.FactoryComponentProvider;
-import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.multiblock.MultiBlockGlueProvider;
 import ipsis.woot.modules.factory.multiblock.MultiBlockMaster;
@@ -49,11 +47,19 @@ public class FactoryHelper {
     }
 
 
-    public static boolean tryBuild(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
+    public enum BuildResult {
+        ERROR,
+        SUCCESS,
+        NO_BLOCK_IN_INV,
+        ALL_BLOCKS_PLACED
+    }
+    public static BuildResult tryBuild(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
+        if (!playerEntity.isAllowEdit()) {
+            PlayerHelper.sendChatMessage(playerEntity, StringHelper.translate("chat.woot.intern.noedit"));
+            return BuildResult.ERROR;
+        }
 
-        if (!playerEntity.isAllowEdit())
-            return false;
-
+        boolean allPlaced = true;
         AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
         for (PatternBlock pb : absolutePattern.getBlocks()) {
             BlockState currState = world.getBlockState(pb.getBlockPos());
@@ -69,12 +75,14 @@ public class FactoryHelper {
             if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER || pb.getFactoryComponent() == FactoryComponent.CELL)
                 continue;
 
+            allPlaced = false;
+
             Block placeBlock = correctBlocks.get(0);
             if (!PlayerHelper.playerHasFactoryComponent(playerEntity, correctItemStacks)) {
                 PlayerHelper.sendChatMessage(playerEntity,
                         StringHelper.translateFormat("chat.woot.intern.missingblock",
-                                pb.getFactoryComponent().getTranslationKey()));
-                return false;
+                                StringHelper.translate(pb.getFactoryComponent().getTranslationKey())));
+                return BuildResult.NO_BLOCK_IN_INV;
             }
             if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
                 ItemStack takenStack = PlayerHelper.takeFactoryComponent(playerEntity, correctItemStacks);
@@ -84,20 +92,20 @@ public class FactoryHelper {
                     world.setBlockState(pb.getBlockPos(), placeBlock.getDefaultState(), 11);
                     if (ForgeEventFactory.onBlockPlace(playerEntity, blockSnapshot, Direction.UP)) {
                         blockSnapshot.restore(true, false);
-                        return false;
+                        return BuildResult.ERROR;
                     }
                 }
-                return true;
+                return BuildResult.SUCCESS;
             } else {
                 // cannot replace block
                 PlayerHelper.sendChatMessage(playerEntity,
                         StringHelper.translateFormat("chat.woot.intern.noreplace",
-                                pb.getFactoryComponent().getTranslationKey(),
+                                StringHelper.translate(pb.getFactoryComponent().getTranslationKey()),
                                 pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()));
-                return false;
+                return BuildResult.ERROR;
             }
         }
-        return false;
+        return allPlaced ? BuildResult.ALL_BLOCKS_PLACED : BuildResult.ERROR;
     }
 
     public static void tryValidate(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
@@ -108,10 +116,12 @@ public class FactoryHelper {
         List<String> feedback = new ArrayList<>();
         AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
         if (!FactoryScanner.compareToWorld(absolutePattern, world, feedback)) {
+            PlayerHelper.sendChatMessage(playerEntity, "----");
             PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
                     "chat.woot.intern.validate.invalid", StringHelper.translate(tier.getTranslationKey())));
             for (String s : feedback)
                 PlayerHelper.sendChatMessage(playerEntity, s);
+            PlayerHelper.sendChatMessage(playerEntity, "----");
         } else {
             PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
                     "chat.woot.intern.validate.valid", StringHelper.translate(tier.getTranslationKey())));

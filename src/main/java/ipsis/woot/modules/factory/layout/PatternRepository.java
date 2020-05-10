@@ -178,7 +178,7 @@ public class PatternRepository {
 
         final String TIER_2_PATTERN = "[cde234]";
         final String TIER_3_PATTERN = "[de34]";
-        final String TIER_4_PATTERN = "[e3]";
+        final String TIER_4_PATTERN = "[e4]";
         final String TIER_5_PATTERN = "";
         addTier(Tier.TIER_1, "", LAYOUT1);
         addTier(Tier.TIER_2, TIER_2_PATTERN, LAYOUT);

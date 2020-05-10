@@ -20,8 +20,8 @@
   "block.woot.factory_d": "Cerulean Block",
   "block.woot.factory_e": "Byzantium Block",
   "block.woot.factory_connect": "Factory Connector",
-  "block.woot.factory_ctr_base_pri": "Primary Controller Base",
-  "block.woot.factory_ctr_base_sec": "Secondary Controller Base",
+  "block.woot.factory_ctr_base_pri": "Primary Base",
+  "block.woot.factory_ctr_base_sec": "Secondary Base",
   "block.woot.factory_upgrade": "Perk Slot",
   "block.woot.heart": "Heart",
   "block.woot.layout": "Layout Guide",
@@ -124,7 +124,7 @@
   "item.woot.ench_plate_3": "Magus Plate",
 
   "item.woot.wootguide.name": "Woot Guide",
-  "item.woot.wootguide.landing": "A guide to building and running your Woot mob factory.",
+  "item.woot.wootguide.landing": "A guide to the big, bad, magic multiblock Mob Factory. Like Marmite, you will either love it or hate it - you choose.",
 
   # Fluids
   "fluid.woot.conatus_fluid": "Conatus Fluid",

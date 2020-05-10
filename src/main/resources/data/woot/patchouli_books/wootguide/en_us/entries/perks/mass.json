@@ -1,0 +1,20 @@
+{
+  "name": "Rampage",
+  "category": "woot:perks",
+  "icon": "woot:mass_1",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Rampage perk increases the number of mobs spawned by the factory. Higher levels of this perk will spawn more mobs. When a factory contains multiple mobs, then the mob with the smallest mass number will be used."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:mass_1",
+      "recipe2": "woot:mass_2"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:mass_3"
+    }
+  ]
+}

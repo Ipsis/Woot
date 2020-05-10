@@ -1,0 +1,11 @@
+{
+  "name": "Amber Block",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_b",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_b"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Primary Base",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_ctr_base_pri",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A valid $(item)Mob Controller$(0) $(#f00)must$() be placed on this block for the factory to form."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_ctr_base_pri"
+    }
+  ]
+}

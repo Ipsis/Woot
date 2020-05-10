@@ -1,0 +1,11 @@
+{
+  "name": "Byzantium Block",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_e",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_e"
+    }
+  ]
+}

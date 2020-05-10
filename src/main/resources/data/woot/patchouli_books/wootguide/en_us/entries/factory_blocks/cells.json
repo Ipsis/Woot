@@ -1,0 +1,21 @@
+{
+  "name": "Conatus Cells",
+  "category": "woot:factory_blocks",
+  "icon": "woot:cell_4",
+  "pages": [
+    {
+      "type": "text",
+      "text": "There are four types of Conatus Cell. Each is compatible with all factories tiers. The only differences are the amount of fluid they can hold and the transfer rate. Fluid can be inserted or removed from any side."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:cell_1",
+      "recipe2": "woot:cell_2"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:cell_3",
+      "recipe2": "woot:cell_4"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Injection Press",
+  "category": "woot:machines",
+  "icon": "woot:infuser",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Injection Press injects fluids into items. It can be used with Pure Dye to create Dye Plates. It can be used with Liquid Enchant to create factory upgrade plates and enchanted books."
+    },
+    {
+      "type": "text",
+      "text": "Items can be inserted from the top, left and front sides. Output items can be removed from the bottom, right and back sides. Fluids can be inserted via any side."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:infuser"
+    }
+  ]
+}

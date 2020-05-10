@@ -1,0 +1,19 @@
+{
+  "name": "Fluid Vat",
+  "category": "woot:machines",
+  "icon": "woot:fluidconvertor",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Woot factory runs on Conatus Fluid, which is primarily generated with the Fluid Vat. The machine takes a fluid and a catalyst, then converts that into Conatus Fluid. Different fluid/catalyst combinations give differing amounts on Conatus Fluid."
+    },
+    {
+      "type": "text",
+      "text": "Items can be inserted from any side. Input fluids can be inserted from the left, top or front. Output fluids can be removed from the bottom, back and right sides."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:fluidconvertor"
+    }
+  ]
+}

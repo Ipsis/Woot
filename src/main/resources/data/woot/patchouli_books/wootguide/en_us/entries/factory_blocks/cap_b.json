@@ -1,0 +1,11 @@
+{
+  "name": "Practicus Cap",
+  "category": "woot:factory_blocks",
+  "icon": "woot:cap_b",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:cap_b"
+    }
+  ]
+}

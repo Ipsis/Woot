@@ -1,0 +1,15 @@
+{
+  "name": "Credits",
+  "category": "woot:basics",
+  "icon": "minecraft:book_and_quill",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Some appreciation for others in the Minecraft modding community. I don't interact with other modders, however their mods sources and tools have been a great help while developing Woot - they make not all like this mod, but I appreciate their contributions to the Minecraft modding scene."
+    },
+    {
+      "type": "text",
+      "text": "$(li)The Forge developmess$(li)Vazkii - for Patchouli$(li)McJty - for his modding tutorials$(li)The Forge Forum members that help with my questions."
+    }
+  ]
+}

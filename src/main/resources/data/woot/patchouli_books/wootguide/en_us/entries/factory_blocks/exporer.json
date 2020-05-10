@@ -1,0 +1,15 @@
+{
+  "name": "Loot Exporter",
+  "category": "woot:factory_blocks",
+  "icon": "woot:export",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This block is used by the factory for generating the loot drops. A chest or tank must be adjacent to any side of this block. If there is no space in the attached blocks, then the items will not be generated."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:export"
+    }
+  ]
+}

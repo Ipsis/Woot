@@ -1,0 +1,15 @@
+{
+  "name": "Ingredient Importer",
+  "category": "woot:factory_blocks",
+  "icon": "woot:import",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This block is used by the factory for importing ingredients that are required to spawn the mob. A chest or tank must be adjacent to any side of this block and contain the specified ingredients to complete the spawn process and generate loot."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:import"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Perk Slot",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_upgrade",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Perks are applied to the ${item}Perk Slot${0}. A ${item}Perk Slot${0} can accept a single type of perk. An empty ${item}Perk Slot${0} can take any level I perk. All previous levels of perk must be applied before the next level is accepted. Different tiers of factory have a maximum level of perk that they will work with."
+    },
+    {
+      "type": "text",
+      "text": "Higher tier perks can be applied to lower tier factories, however the factory will ignore any perk benefits over its level capacity."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_upgrade"
+    }
+  ]
+}

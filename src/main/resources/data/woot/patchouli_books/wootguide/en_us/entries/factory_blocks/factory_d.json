@@ -1,0 +1,11 @@
+{
+  "name": "Cerulean Block",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_d",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_d"
+    }
+  ]
+}

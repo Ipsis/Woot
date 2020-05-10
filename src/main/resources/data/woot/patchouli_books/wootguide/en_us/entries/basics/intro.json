@@ -1,0 +1,16 @@
+{
+  "name": "What is this mod for",
+  "category": "woot:basics",
+  "icon": "minecraft:book",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Woot provides a solution to the ago old Minecraft problem of - $(#f00)I WANT ALL THE MOB DROPS!.$() The traditional solution is to spawn mobs as quickly as possible, kill them automatically and then pick up all the drops that they leave behind."
+    },
+    {
+      "type": "text",
+      "text": "There are many interesting ways to perform this operation, the main drawback is that there are lots of entities generated and when scaled up on a server can impact performance. Woot gives you a mob farm/factory without generating all those messy entities and hopefully takes a bit of load off your server. It is also for lazy people like me that don't like building mob farms."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Celadon Block",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_c",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_c"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Enchant Liquifier",
+  "category": "woot:machines",
+  "icon": "woot:enchsqueezer",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Enchant Liquifier takes enchanted items (books, swords etc), extracts the enchantments from them and creates Liquid Enchant fluid. Higher level enchants create more fluid."
+    },
+    {
+      "type": "text",
+      "text": "Items can be inserted from any side. Liquid Enchant can be extracted from any side. The Enchant Liquifier will automatically output to an adjacent fluid handler."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:enchsqueezer"
+    }
+  ]
+}

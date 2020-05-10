@@ -1,0 +1,19 @@
+{
+  "name": "Dye Liquifier",
+  "category": "woot:machines",
+  "icon": "woot:squeezer",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Dye Liquifier takes dye items, or items that can creates dyes and converts them into red, yellow, blue and white fluids. These are then combined into Pure Dye which can be used to create dye casings or any color in the Injection Press."
+    },
+    {
+      "type": "text",
+      "text": "Items can be inserted from any side. Pure Dye can be extracted from any side. The Dye Liquifier will automatically output to an adjacent fluid handler."
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:squeezer"
+    }
+  ]
+}

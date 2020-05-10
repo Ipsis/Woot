@@ -1,0 +1,11 @@
+{
+  "name": "Magister Cap",
+  "category": "woot:factory_blocks",
+  "icon": "woot:cap_d",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:cap_d"
+    }
+  ]
+}

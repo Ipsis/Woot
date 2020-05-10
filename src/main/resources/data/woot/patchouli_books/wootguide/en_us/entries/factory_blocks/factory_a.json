@@ -1,0 +1,11 @@
+{
+  "name": "Amaranth Block",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_a",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_a"
+    }
+  ]
+}

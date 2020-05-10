@@ -1,0 +1,15 @@
+{
+  "name": "Mob Controller",
+  "category": "woot:factory_blocks",
+  "icon": "woot:controller",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Mob Controller tells the factory which mob you would like to spawn. However not all factories are created equal. Each Mob Controller requires a minimum tier of factory to use. The tier can be seen on the Mob Controller tooltip."
+    },
+    {
+      "type": "text",
+      "text": "The Mob Controller is created on the Stygian Anvil by combining a fully programmed Mob Shard with a Prism."
+    }
+  ]
+}

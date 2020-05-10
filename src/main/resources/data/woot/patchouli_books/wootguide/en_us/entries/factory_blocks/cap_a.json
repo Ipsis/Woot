@@ -1,0 +1,11 @@
+{
+  "name": "Theoricus Cap",
+  "category": "woot:factory_blocks",
+  "icon": "woot:cap_a",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:cap_a"
+    }
+  ]
+}

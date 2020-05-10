@@ -1,0 +1,11 @@
+{
+  "name": "Factory Connector",
+  "category": "woot:factory_blocks",
+  "icon": "woot:factory_connect",
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "woot:factory_connect"
+    }
+  ]
+}

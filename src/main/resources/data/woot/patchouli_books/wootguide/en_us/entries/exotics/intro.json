@@ -1,0 +1,11 @@
+{
+  "name": "What are exotics for?",
+  "category": "woot:exotics",
+  "icon": "minecraft:book",
+  "pages": [
+    {
+      "type": "text",
+      "text": "What are exotics for and where to get them."
+    }
+  ]
+}

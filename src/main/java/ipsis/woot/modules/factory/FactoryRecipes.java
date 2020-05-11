@@ -54,20 +54,15 @@ public class FactoryRecipes {
     public void load() {
 
         List<FakeMob> mobs = new ArrayList<>();
-        mobs.add(FakeMob.getEnderDragon());
-        mobs.add(new FakeMob("minecraft:spider"));
+        mobs.add(FakeMob.getWither());
 
         List<List<ItemStack>> items = new ArrayList<>();
         items.add(
                 Lists.newArrayList( // Ender Dragon
                     new ItemStack(Items.SOUL_SAND, 4),
                     new ItemStack(Items.WITHER_SKELETON_SKULL, 3)));
-        items.add(
-                Lists.newArrayList(
-                        new ItemStack(Items.GUNPOWDER, 4)));
 
         List<List<FluidStack>> fluids = new ArrayList<>();
-        fluids.add(Lists.newArrayList());
         fluids.add(Lists.newArrayList());
 
         if (mobs.size() != items.size() || mobs.size() != fluids.size()) {

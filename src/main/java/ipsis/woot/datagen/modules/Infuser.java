@@ -67,11 +67,12 @@ public class Infuser {
 
         ShapedRecipeBuilder.shapedRecipe(InfuserSetup.INFUSER_BLOCK.get())
                 .patternLine(" d ")
-                .patternLine(" c ")
+                .patternLine("pcp")
                 .patternLine(" b ")
                 .key('d', Blocks.DROPPER)
                 .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
                 .key('b', Items.BUCKET)
+                .key('p', Blocks.PISTON)
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);

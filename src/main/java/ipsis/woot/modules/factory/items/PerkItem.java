@@ -1,9 +1,7 @@
 package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.factory.Perk;
-import ipsis.woot.modules.factory.PerkType;
+import ipsis.woot.modules.factory.*;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -100,17 +98,113 @@ public class PerkItem extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        if (Perk.TIER_SHARD_PERKS.contains(perk))
+        if (Perk.TIER_SHARD_PERKS.contains(perk)) {
             tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.tier_shard")));
-        else if (Perk.XP_PERKS.contains(perk))
+            if (Perk.getLevel(perk) == 1) {
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                        "info.woot.perk.tier_shard.0",
+                        FactoryConfiguration.TIER_SHARD_1.get())));
+            } else if (Perk.getLevel(perk) == 2) {
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                        "info.woot.perk.tier_shard.0",
+                        FactoryConfiguration.TIER_SHARD_2.get())));
+            } else if (Perk.getLevel(perk) == 3) {
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                        "info.woot.perk.tier_shard.0",
+                        FactoryConfiguration.TIER_SHARD_3.get())));
+            }
+
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.1",
+                    StringHelper.translate(Tier.TIER_1.getTranslationKey()),
+                    FactoryConfiguration.T1_FARM_DROP_CHANCE.get())));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.2",
+                    FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(0),
+                    FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(1),
+                    FactoryConfiguration.T1_FARM_DROP_SHARD_WEIGHTS.get().get(2))));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.1",
+                    StringHelper.translate(Tier.TIER_2.getTranslationKey()),
+                    FactoryConfiguration.T2_FARM_DROP_CHANCE.get())));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.2",
+                    FactoryConfiguration.T2_FARM_DROP_SHARD_WEIGHTS.get().get(0),
+                    FactoryConfiguration.T2_FARM_DROP_SHARD_WEIGHTS.get().get(1),
+                    FactoryConfiguration.T2_FARM_DROP_SHARD_WEIGHTS.get().get(2))));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.1",
+                    StringHelper.translate(Tier.TIER_3.getTranslationKey()),
+                    FactoryConfiguration.T3_FARM_DROP_CHANCE.get())));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.2",
+                    FactoryConfiguration.T3_FARM_DROP_SHARD_WEIGHTS.get().get(0),
+                    FactoryConfiguration.T3_FARM_DROP_SHARD_WEIGHTS.get().get(1),
+                    FactoryConfiguration.T3_FARM_DROP_SHARD_WEIGHTS.get().get(2))));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.1",
+                    StringHelper.translate(Tier.TIER_4.getTranslationKey()),
+                    FactoryConfiguration.T4_FARM_DROP_CHANCE.get())));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.2",
+                    FactoryConfiguration.T4_FARM_DROP_SHARD_WEIGHTS.get().get(0),
+                    FactoryConfiguration.T4_FARM_DROP_SHARD_WEIGHTS.get().get(1),
+                    FactoryConfiguration.T4_FARM_DROP_SHARD_WEIGHTS.get().get(2))));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.1",
+                    StringHelper.translate(Tier.TIER_5.getTranslationKey()),
+                    FactoryConfiguration.T5_FARM_DROP_CHANCE.get())));
+            tooltip.add(new TranslationTextComponent(StringHelper.translateFormat(
+                    "info.woot.perk.tier_shard.2",
+                    FactoryConfiguration.T5_FARM_DROP_SHARD_WEIGHTS.get().get(0),
+                    FactoryConfiguration.T5_FARM_DROP_SHARD_WEIGHTS.get().get(1),
+                    FactoryConfiguration.T5_FARM_DROP_SHARD_WEIGHTS.get().get(2))));
+        } else if (Perk.XP_PERKS.contains(perk)) {
             tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.xp")));
-        else if (Perk.RATE_PERKS.contains(perk))
+            if (Perk.getLevel(perk) == 1)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.xp.0",
+                        FactoryConfiguration.XP_1.get())));
+            else if (Perk.getLevel(perk) == 2)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.xp.0",
+                        FactoryConfiguration.XP_2.get())));
+            else if (Perk.getLevel(perk) == 3)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.xp.0",
+                        FactoryConfiguration.XP_3.get())));
+        } else if (Perk.RATE_PERKS.contains(perk)) {
             tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.rate")));
-        else if (Perk.MASS_PERKS.contains(perk))
+            if (Perk.getLevel(perk) == 1)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.rate.0",
+                        FactoryConfiguration.RATE_1.get())));
+            else if (Perk.getLevel(perk) == 2)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.rate.0",
+                        FactoryConfiguration.RATE_2.get())));
+            else if (Perk.getLevel(perk) == 3)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.rate.0",
+                        FactoryConfiguration.RATE_3.get())));
+        } else if (Perk.MASS_PERKS.contains(perk)) {
             tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.mass")));
-        else if (Perk.LOOTING_PERKS.contains(perk))
-            tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.looting")));
-        else if (Perk.EFFICIENCY_PERKS.contains(perk))
+            if (Perk.getLevel(perk) == 1)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.mass.0",
+                        FactoryConfiguration.MASS_COUNT_1.get())));
+            else if (Perk.getLevel(perk) == 2)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.mass.0",
+                        FactoryConfiguration.MASS_COUNT_2.get())));
+            else if (Perk.getLevel(perk) == 3)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.mass.0",
+                        FactoryConfiguration.MASS_COUNT_3.get())));
+        } else if (Perk.LOOTING_PERKS.contains(perk)) {
+           tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.looting")));
+        } else if (Perk.EFFICIENCY_PERKS.contains(perk)) {
             tooltip.add(new TranslationTextComponent(StringHelper.translate("info.woot.perk.efficiency")));
+            if (Perk.getLevel(perk) == 1)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.efficiency.0",
+                        FactoryConfiguration.EFFICIENCY_1.get())));
+            else if (Perk.getLevel(perk) == 2)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.efficiency.0",
+                        FactoryConfiguration.EFFICIENCY_2.get())));
+            else if (Perk.getLevel(perk) == 3)
+                tooltip.add(new TranslationTextComponent(StringHelper.translateFormat("info.woot.perk.efficiency.0",
+                        FactoryConfiguration.EFFICIENCY_3.get())));
+        }
     }
 }

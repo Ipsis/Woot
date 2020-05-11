@@ -17,6 +17,7 @@ public enum Tier {
     static final EnumSet<Tier> VALID_FOR_TIER_3 = EnumSet.range(TIER_1, TIER_3);
     static final EnumSet<Tier> VALID_FOR_TIER_4 = EnumSet.range(TIER_1, TIER_4);
     static final EnumSet<Tier> VALID_FOR_TIER_5 = EnumSet.range(TIER_1, TIER_5);
+    public static final EnumSet<Tier> VALID_TIERS = EnumSet.range(TIER_1, TIER_5);
 
     public static Tier[] VALUES = values();
 

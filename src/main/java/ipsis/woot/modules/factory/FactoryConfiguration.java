@@ -229,57 +229,57 @@ public class FactoryConfiguration {
                 COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_TIER_SHARD);
                 {
                     TIER_SHARD_1 = COMMON_BUILDER
-                            .comment("Number of chance to generate a shard for tier shard 1 perk")
+                            .comment("Number of chances to generate essence for tier 1 perk")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_L1_ROLLS_TAG,
                                     Factory.TIER_SHARD_1_DEF, 0, Integer.MAX_VALUE);
                     TIER_SHARD_2 = COMMON_BUILDER
-                            .comment("Number of chance to generate a shard for tier shard 2 perk")
+                            .comment("Number of chances to generate essence for tier 2 perk")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_L2_ROLLS_TAG,
                                     Factory.TIER_SHARD_2_DEF, 0, Integer.MAX_VALUE);
                     TIER_SHARD_3 = COMMON_BUILDER
-                            .comment("Number of chance to generate a shard for tier shard 3 perk")
+                            .comment("Number of chances to generate essence for tier 3 perk")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_L3_ROLLS_TAG,
                                     Factory.TIER_SHARD_3_DEF, 0, Integer.MAX_VALUE);
 
                     T1_FARM_DROP_CHANCE = COMMON_BUILDER
-                            .comment("Chance to drop a tier shard from a Tier 1 factory")
+                            .comment("Chance to drop essence from a Tier 1 factory")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_T1_DROP_TAG,
                                     Factory.T1_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
                     T2_FARM_DROP_CHANCE = COMMON_BUILDER
-                            .comment("Chance to drop a tier shard from a Tier 2 factory")
+                            .comment("Chance to drop essence from a Tier 2 factory")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_T2_DROP_TAG,
                                     Factory.T2_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
                     T3_FARM_DROP_CHANCE = COMMON_BUILDER
-                            .comment("Chance to drop a tier shard from a Tier 3 factory")
+                            .comment("Chance to drop essence from a Tier 3 factory")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_T3_DROP_TAG,
                                     Factory.T3_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
                     T4_FARM_DROP_CHANCE = COMMON_BUILDER
-                            .comment("Chance to drop a tier shard from a Tier 4 factory")
+                            .comment("Chance to drop essence from a Tier 4 factory")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_T4_DROP_TAG,
                                     Factory.T4_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
                     T5_FARM_DROP_CHANCE = COMMON_BUILDER
-                            .comment("Chance to drop a tier shard from a Tier 5 factory")
+                            .comment("Chance to drop essence from a Tier 5 factory")
                             .defineInRange(ConfigPath.Factory.TIER_SHARD_T5_DROP_TAG,
                                     Factory.T5_SHARD_DROP_CHANCE_DEF, 0.0F, 100.0F);
 
                     T1_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                            .comment("Weights of the basic, advanced, elite shard from a Tier 1 factory")
+                            .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 1 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T1_WEIGHTS_TAG,
                                     Factory.T1_SHARD_DROP_WEIGHTS_DEF);
                     T2_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                            .comment("Weights of the basic, advanced, elite shard from a Tier 2 factory")
+                            .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 2 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T2_WEIGHTS_TAG,
                                     Factory.T2_SHARD_DROP_WEIGHTS_DEF);
                     T3_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                            .comment("Weights of the basic, advanced, elite shard from a Tier 3 factory")
+                            .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 3 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T3_WEIGHTS_TAG,
                                     Factory.T3_SHARD_DROP_WEIGHTS_DEF);
                     T4_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                            .comment("Weights of the basic, advanced, elite shard from a Tier 4 factory")
+                            .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 4 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T4_WEIGHTS_TAG,
                                     Factory.T4_SHARD_DROP_WEIGHTS_DEF);
                     T5_FARM_DROP_SHARD_WEIGHTS = COMMON_BUILDER
-                            .comment("Weights of the basic, advanced, elite shard from a Tier 5 factory")
+                            .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 5 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T5_WEIGHTS_TAG,
                                     Factory.T5_SHARD_DROP_WEIGHTS_DEF);
                 }

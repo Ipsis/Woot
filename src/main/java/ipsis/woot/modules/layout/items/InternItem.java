@@ -50,7 +50,6 @@ public class InternItem extends Item {
     }
 
     public enum ToolMode {
-        FORM(Tier.UNKNOWN),
         BUILD_1(Tier.TIER_1),
         BUILD_2(Tier.TIER_2),
         BUILD_3(Tier.TIER_3),
@@ -106,9 +105,6 @@ public class InternItem extends Item {
                             StringHelper.translateFormat(
                                     "info.woot.intern.mode.validate",
                                     StringHelper.translate(mode.getTier().getTranslationKey())));
-                } else if (mode == ToolMode.FORM) {
-                    PlayerHelper.sendActionBarMessage(playerEntity,
-                            StringHelper.translate("info.woot.intern.mode.form"));
                 }
             }
             return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
@@ -155,11 +151,7 @@ public class InternItem extends Item {
                 BlockState blockState = context.getWorld().getBlockState(context.getPos());
                 Direction facing = blockState.get(BlockStateProperties.HORIZONTAL_FACING);
                 ToolMode toolMode = getToolModeFromStack(itemStack);
-                if (toolMode == ToolMode.FORM) {
-                    TileEntity te = context.getWorld().getTileEntity(context.getPos());
-                    if (te instanceof HeartTileEntity)
-                        ((HeartTileEntity) te).interrupt();
-                } else if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
+                if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
                     FactoryHelper.BuildResult buildResult = (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier()));
                     if (buildResult == FactoryHelper.BuildResult.SUCCESS) {
                         if (context.getWorld().isRemote)

@@ -24,6 +24,7 @@ public class AbsolutePattern {
     List<PatternBlock> blocks = new ArrayList<>();
     List<Perk> perks = new ArrayList<>();
     List<FakeMob> mobs = new ArrayList<>();
+    List<BlockPos> validControllerPos = new ArrayList<>();
     public List<PatternBlock> getBlocks() { return Collections.unmodifiableList(blocks); }
 
     public AbsolutePattern(Tier tier) {
@@ -40,6 +41,9 @@ public class AbsolutePattern {
     public void addMob(FakeMob fakeMob) { this.mobs.add(fakeMob); }
     public void clearMobs() { this.mobs.clear(); }
     public List<FakeMob> getMobs() { return Collections.unmodifiableList(mobs); }
+    public void addControllerPos(BlockPos blockPos) { this.validControllerPos.add(blockPos); }
+    public void clearControllerPos() { this.validControllerPos.clear(); }
+    public boolean isValidControllerPos(BlockPos blockPos) { return this.validControllerPos.contains(blockPos); }
 
     public static AbsolutePattern create(@Nonnull World world, Tier tier, @Nonnull BlockPos origin, Direction facing) {
 

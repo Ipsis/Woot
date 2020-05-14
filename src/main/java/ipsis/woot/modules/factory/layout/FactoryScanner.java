@@ -149,6 +149,7 @@ public class FactoryScanner {
                                     absolutePattern.getTier()));
                         } else {
                             // This is a valid controller
+                            absolutePattern.addControllerPos(p.getBlockPos());
                             if (primaryControllerPos.equals(p.getBlockPos())) {
                                 Woot.setup.getLogger().debug("compareToWorld: Found primary controller {}", fakeMob);
                                 foundPrimaryController = true;
@@ -171,8 +172,10 @@ public class FactoryScanner {
         }
 
         //feedback.forEach(s -> LOGGER.debug("compareToWorld: {}", s));
-        if (valid == false)
+        if (valid == false) {
             absolutePattern.clearMobs();
+            absolutePattern.clearControllerPos();
+        }
         LOGGER.debug("compareToWorld: {}", absolutePattern);
         return valid;
     }

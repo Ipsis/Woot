@@ -34,6 +34,9 @@ public class FactoryHelper {
 
     public static void connectNew(World world, AbsolutePattern absolutePattern, MultiBlockMaster master) {
         for (PatternBlock pb : absolutePattern.getBlocks()) {
+            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER && !absolutePattern.isValidControllerPos(pb.getBlockPos()))
+                continue;
+
             if (world.isBlockLoaded(pb.getBlockPos())) {
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
                 if (te instanceof MultiBlockGlueProvider)

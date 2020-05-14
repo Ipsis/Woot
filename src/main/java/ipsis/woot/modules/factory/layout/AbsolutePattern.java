@@ -38,6 +38,8 @@ public class AbsolutePattern {
 
     public void addPerk(Perk perk) { this.perks.add(perk); }
     public void addMob(FakeMob fakeMob) { this.mobs.add(fakeMob); }
+    public void clearMobs() { this.mobs.clear(); }
+    public List<FakeMob> getMobs() { return Collections.unmodifiableList(mobs); }
 
     public static AbsolutePattern create(@Nonnull World world, Tier tier, @Nonnull BlockPos origin, Direction facing) {
 

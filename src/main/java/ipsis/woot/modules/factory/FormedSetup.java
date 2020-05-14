@@ -200,15 +200,12 @@ public class FormedSetup {
     public static FormedSetup createFromValidLayout(World world, Layout layout) {
         FormedSetup formedSetup = new FormedSetup(world, layout.getAbsolutePattern().getTier());
 
+        // Mobs are already validated
+        for (FakeMob fakeMob : layout.getAbsolutePattern().getMobs())
+            formedSetup.controllerMobs.add(new FakeMob(fakeMob));
+
         for (PatternBlock pb : layout.getAbsolutePattern().getBlocks()) {
-            if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
-                if (te instanceof ControllerTileEntity) {
-                    FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
-                    if (fakeMob.isValid())
-                        formedSetup.controllerMobs.add(fakeMob);
-                }
-            } else if (pb.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
+            if (pb.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
                 if (te instanceof UpgradeTileEntity) {
                     Perk perk = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));

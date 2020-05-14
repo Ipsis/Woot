@@ -66,6 +66,8 @@ public class FactoryScanner {
         boolean valid = true;
         boolean foundPrimaryController = false;
 
+        Woot.setup.getLogger().debug("compareToWorld: {}", absolutePattern.getTier());
+
         BlockPos heartPos = null;
         for (PatternBlock p : absolutePattern.getBlocks()) {
             if (p.getFactoryComponent() == FactoryComponent.HEART)
@@ -135,10 +137,12 @@ public class FactoryScanner {
                          * Ignore if wrong tier
                          */
                         if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation())) {
+                            Woot.setup.getLogger().debug("compareToWorld:    {} is invalid policy", fakeMob);
                             feedback.add(StringHelper.translateFormat(
                                     "chat.woot.intern.validate.blacklisted",
                                     p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()));
                         } else if (!absolutePattern.getTier().isValidForTier(mobTier)) {
+                            Woot.setup.getLogger().debug("compareToWorld: {} is invalid tier", fakeMob);
                             feedback.add(StringHelper.translateFormat(
                                     "chat.woot.intern.validate.wrongtier",
                                     p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(),
@@ -146,11 +150,11 @@ public class FactoryScanner {
                         } else {
                             // This is a valid controller
                             if (primaryControllerPos.equals(p.getBlockPos())) {
-                                //Woot.setup.getLogger().debug("compareToWorld: Found primary controller");
+                                Woot.setup.getLogger().debug("compareToWorld: Found primary controller {}", fakeMob);
                                 foundPrimaryController = true;
                                 absolutePattern.addMob(fakeMob);
                             } else {
-                                //Woot.setup.getLogger().debug("compareToWorld: Found secondary controller");
+                                Woot.setup.getLogger().debug("compareToWorld: Found valid secondary controller {}", fakeMob);
                                 absolutePattern.addMob(fakeMob);
                             }
                         }
@@ -167,6 +171,9 @@ public class FactoryScanner {
         }
 
         //feedback.forEach(s -> LOGGER.debug("compareToWorld: {}", s));
+        if (valid == false)
+            absolutePattern.clearMobs();
+        LOGGER.debug("compareToWorld: {}", absolutePattern);
         return valid;
     }
 

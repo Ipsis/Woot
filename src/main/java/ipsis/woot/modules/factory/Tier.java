@@ -1,5 +1,7 @@
 package ipsis.woot.modules.factory;
 
+import ipsis.woot.Woot;
+
 import java.util.EnumSet;
 import java.util.Locale;
 

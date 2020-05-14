@@ -59,11 +59,11 @@ public class PolicyDefaults {
             "minecraft:ender_dragon,perkMassl2MobCount,3",
             "minecraft:ender_dragon,perkMassl3MobCount,4",
 
-            "minecraft:minecraft_wither,health,500",
-            "minecraft:minecraft_wither,spawnTicks,1200",
-            "minecraft:minecraft_wither,fixedTier,4",
-            "minecraft:minecraft_wither,perkMassl1MobCount,2",
-            "minecraft:minecraft_wither,perkMassl2MobCount,3",
-            "minecraft:minecraft_wither,perkMassl3MobCount,4"
+            "minecraft:wither,health,500",
+            "minecraft:wither,spawnTicks,1200",
+            "minecraft:wither,fixedTier,4",
+            "minecraft:wither,perkMassl1MobCount,2",
+            "minecraft:wither,perkMassl2MobCount,3",
+            "minecraft:wither,perkMassl3MobCount,4"
     );
 }

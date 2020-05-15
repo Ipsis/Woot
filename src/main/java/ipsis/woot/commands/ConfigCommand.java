@@ -13,7 +13,7 @@ public class ConfigCommand {
 
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("config")
-                .requires(cs -> cs.hasPermissionLevel(0))
+                .requires(cs -> cs.hasPermissionLevel(CommandHelper.CONFIG_COMMAND_LEVEL))
                 .then(Commands.argument("entity", StringArgumentType.string())
                         .then(Commands.argument("key", StringArgumentType.string())
                                 .executes(ctx -> showConfig(ctx.getSource(), StringArgumentType.getString(ctx, "entity"), StringArgumentType.getString(ctx, "key")))));

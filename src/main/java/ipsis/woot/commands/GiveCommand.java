@@ -29,7 +29,7 @@ public class GiveCommand {
 
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("give")
-                .requires(cs -> cs.hasPermissionLevel(0))
+                .requires(cs -> cs.hasPermissionLevel(CommandHelper.GIVE_COMMAND_LEVEL))
                 .then(
                         Commands.argument("target", EntityArgument.player())
                         .then(

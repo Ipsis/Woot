@@ -42,7 +42,7 @@ public class SimulationCommand {
     private static class LearnCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("learn")
-                    .requires(cs -> cs.hasPermissionLevel(0))
+                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_LEARN_COMMAND_LEVEL))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                 .executes(ctx -> learnEntity(
@@ -63,7 +63,7 @@ public class SimulationCommand {
     private static class RollDropsCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("roll")
-                    .requires(cs -> cs.hasPermissionLevel(0))
+                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_ROLL_DROPS_COMMAND_LEVEL))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                     .then (
@@ -91,7 +91,7 @@ public class SimulationCommand {
     private static class DumpCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("dump")
-                    .requires(cs -> cs.hasPermissionLevel(0))
+                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_DUMP_COMMAND_LEVEL))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                     .executes(ctx -> dumpEntity(
@@ -165,7 +165,7 @@ public class SimulationCommand {
     private static class StatusCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("status")
-                    .requires(cs -> cs.hasPermissionLevel(0))
+                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_STATUS_COMMAND_LEVEL))
                     .executes(ctx -> status(ctx.getSource()));
         }
     }

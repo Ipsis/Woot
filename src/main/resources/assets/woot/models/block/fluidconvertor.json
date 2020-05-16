@@ -1,8 +1,8 @@
 {
   "parent": "block/orientable",
   "textures": {
-    "top": "woot:block/factory",
+    "side": "woot:block/factory",
     "front": "woot:block/fluidconvertor",
-    "side": "woot:block/factory"
+    "top": "woot:block/factory"
   }
 }

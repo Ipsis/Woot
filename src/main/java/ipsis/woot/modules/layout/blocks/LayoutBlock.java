@@ -60,7 +60,7 @@ public class LayoutBlock extends Block {
             TileEntity te = worldIn.getTileEntity(pos);
             if (te instanceof LayoutTileEntity) {
                 LayoutTileEntity layout = (LayoutTileEntity)te;
-                if (player.func_226563_dT_()) {
+                if (player.isCrouching()) {
                     layout.setNextLevel();
                 } else {
                     layout.setNextTier();

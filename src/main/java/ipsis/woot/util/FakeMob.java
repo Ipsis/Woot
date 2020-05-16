@@ -57,8 +57,7 @@ public class FakeMob {
             else
                 setInfo(mobEntity.getEntityString(), LARGE_TAG);
         } else if (isChargedCreeper(mobEntity)) {
-            if (((CreeperEntity)mobEntity).func_225509_J__())
-                setInfo(mobEntity.getEntityString(), CHARGED_TAG);
+            setInfo(mobEntity.getEntityString(), CHARGED_TAG);
         } else {
             setInfo(mobEntity.getEntityString(), EMPTY_TAG);
         }
@@ -145,7 +144,7 @@ public class FakeMob {
     private static final String WITHER = "minecraft:wither";
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
-        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).func_225509_J__();
+        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).isCharged();
     }
 
     private boolean isSlime(MobEntity mobEntity) { return mobEntity instanceof SlimeEntity; }

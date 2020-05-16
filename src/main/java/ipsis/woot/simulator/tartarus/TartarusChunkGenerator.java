@@ -76,7 +76,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
     }
 
     @Override
-    public void func_225551_a_(WorldGenRegion worldGenRegion, IChunk iChunk) {
+    public void generateSurface(WorldGenRegion worldGenRegion, IChunk iChunk) {
 
         /**
          * This is all based off chunk coordinates - therefore 0->16

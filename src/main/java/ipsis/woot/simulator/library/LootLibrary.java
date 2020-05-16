@@ -52,6 +52,10 @@ public class LootLibrary {
         return count;
     }
 
+    public void flush(@Nonnull  FakeMob fakeMob) {
+        mobs.remove(fakeMob);
+    }
+
     public @Nonnull List<SimulatedMobDropSummary> getDropSummary(@Nonnull FakeMob fakeMob) {
         List<SimulatedMobDropSummary> drops = new ArrayList<>();
         SimulatedMob simulatedMob = mobs.get(fakeMob);

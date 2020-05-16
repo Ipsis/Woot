@@ -35,6 +35,7 @@ public class SimulationCommand {
         return Commands.literal("simulation")
                 .then(LearnCommand.register())
                 .then(DumpCommand.register())
+                .then(FlushCommand.register())
                 .then(StatusCommand.register())
                 .then(RollDropsCommand.register());
     }
@@ -109,6 +110,27 @@ public class SimulationCommand {
         }
     }
 
+    private static class FlushCommand {
+        static ArgumentBuilder<CommandSource, ?> register() {
+            return Commands.literal("flush")
+                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_FLUSH_COMMAND_LEVEL))
+                    .then(
+                            Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
+                                    .executes(ctx -> flushEntity(
+                                            ctx.getSource(),
+                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"), ""))
+                                    .then(
+                                            Commands.argument("tag", StringArgumentType.string())
+                                                    .executes(ctx -> flushEntity(
+                                                            ctx.getSource(),
+                                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"),
+                                                            StringArgumentType.getString(ctx, "tag")))
+                                    )
+
+                    );
+        }
+    }
+
     private static int rollDrops(CommandSource source, ResourceLocation resourceLocation, String tag, int looting) throws CommandSyntaxException {
 
         FakeMob fakeMob;
@@ -178,6 +200,20 @@ public class SimulationCommand {
                  ipsis.woot.simulator.MobSimulator.getInstance().getWaiting().stream().map(
                          FakeMobKey::toString).collect(Collectors.joining(","))), true);
 
+         return 0;
+     }
+
+     private static int flushEntity(CommandSource source, ResourceLocation resourceLocation, String tag) throws CommandSyntaxException {
+         FakeMob fakeMob;
+         if (tag.equalsIgnoreCase(""))
+             fakeMob = new FakeMob(resourceLocation.toString());
+         else
+             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
+
+         if (fakeMob.isValid()) {
+             MobSimulator.getInstance().flush(fakeMob);
+             MobSimulator.getInstance().learn(fakeMob);
+         }
          return 0;
      }
 }

@@ -1,6 +1,7 @@
 package ipsis.woot.simulator;
 
 import com.google.gson.JsonObject;
+import ipsis.woot.Woot;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.simulator.library.LootLibrary;
 import ipsis.woot.simulator.tartarus.Cell;
@@ -111,6 +112,11 @@ public class MobSimulator {
         if (!FakeMob.isInEntityList(fakeMob))
             return false;
 
+        if (library.getKnownMobs().contains(fakeMob)) {
+            Woot.setup.getLogger().debug("learn {} already known", fakeMob);
+            return false;
+        }
+
         if (!PolicyRegistry.get().canSimulate(fakeMob.getResourceLocation()))
             return false;
 
@@ -121,6 +127,11 @@ public class MobSimulator {
         }
 
         return true;
+    }
+
+    public void flush(@Nonnull FakeMob fakeMob) {
+        if (fakeMob.isValid())
+            library.flush(fakeMob);
     }
 
     /**
@@ -151,6 +162,7 @@ public class MobSimulator {
         if (currTicks < MobSimulatorConfiguration.SIMULATION_TICKS_PER_SIM_TICK.get())
             return;
 
+
         int cellsProcessed = 0;
         for (int i = 0; i < cells.length && cellsProcessed <= MobSimulatorConfiguration.SIMULATION_CELLS_PER_SIM_TICK.get(); i++) {
             Cell cell = cells[i];
@@ -167,19 +179,19 @@ public class MobSimulator {
             cellsProcessed++;
         }
 
-        Iterator iterator = waitingForCell.iterator();
-        if (iterator.hasNext()) {
-            for (int i = 0; i < cells.length; i++) {
-                FakeMobKey fakeMobKey = (FakeMobKey)iterator.next();
-                Cell cell = cells[i];
-                if (!cell.isOccupied()) {
-                    cell.setMob(fakeMobKey);
-                    cell.run(world);
-                    iterator.remove();;
+        if (!waitingForCell.isEmpty()) {
+            Iterator iterator = waitingForCell.iterator();
+            while (iterator.hasNext()) {
+                FakeMobKey fakeMobKey = (FakeMobKey) iterator.next();
+                for (Cell cell : cells) {
+                    if (!cell.isOccupied()) {
+                        Woot.setup.getLogger().debug("Allocated {} to cell {}", fakeMobKey, cell);
+                        cell.setMob(fakeMobKey);
+                        cell.run(world);
+                        iterator.remove();
+                        break;
+                    }
                 }
-
-                if (!iterator.hasNext())
-                    break;
             }
         }
     }

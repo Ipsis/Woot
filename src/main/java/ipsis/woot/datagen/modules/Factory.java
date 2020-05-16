@@ -108,7 +108,7 @@ public class Factory {
                 .patternLine("psx")
                 .key('s', Tags.Items.STONE)
                 .key('p', InfuserSetup.BLUE_DYE_PLATE_ITEM.get())
-                .key('p', InfuserSetup.LIGHT_BLUE_DYE_PLATE_ITEM.get())
+                .key('x', InfuserSetup.LIGHT_BLUE_DYE_PLATE_ITEM.get())
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);

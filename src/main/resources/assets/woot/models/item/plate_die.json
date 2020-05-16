@@ -1,6 +1,6 @@
 {
-  "parent": "item/handheld",
+  "parent": "item/generated",
   "textures": {
-    "layer0": "woot:item/plate_die"
+    "layer0": "woot:item/dye_die"
   }
 }

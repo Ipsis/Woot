@@ -5,6 +5,11 @@ NetworkTools:
         Source  - https://github.com/McJty/TheOneProbe
         License - https://github.com/McJty/TheOneProbe/blob/1.10/LICENCE
 
+BaseItemModelProvider
+    From McJty's McJtyLib BaseIemModelProvider.java
+        Source  - https://github.com/McJtyMods/McJtyLib
+        License - https://github.com/McJtyMods/McJtyLib/blob/1.15/LICENSE
+
 OutputOnlyItemStackHandler
     From Dracos18s ReasonableRealism's OutputItemStackHandler.java
         Source  - https://github.com/Draco18s/ReasonableRealism

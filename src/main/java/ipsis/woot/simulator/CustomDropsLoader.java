@@ -43,7 +43,6 @@ public class CustomDropsLoader {
 
         /**
          * Test only entries
-         */
         FakeMob pig = new FakeMob("minecraft:pig");
         itemStack = new ItemStack(Items.DRAGON_EGG);
         stackSizes.clear();
@@ -53,6 +52,7 @@ public class CustomDropsLoader {
         stackSizes.put(6, 5);
         MobSimulator.getInstance().learnCustomDrop(
                 new FakeMobKey(pig, 0), itemStack, 100.0F, stackSizes);
+         */
     }
 
 

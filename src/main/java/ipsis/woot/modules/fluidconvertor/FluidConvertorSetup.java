@@ -10,6 +10,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -43,10 +44,12 @@ public class FluidConvertorSetup {
                             FLUID_CONVERTOR_BLOCK.get()).build((null)));
     public static final RegistryObject<ContainerType<FluidConvertorContainer>> FLUID_CONVERTOR_BLOCK_CONTATAINER = CONTAINERS.register(
             FLUID_CONVERTOR_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new FluidConvertorContainer(
-                            windowId,
-                            Minecraft.getInstance().world,
-                            data.readBlockPos(),
-                            inv,
-                            Minecraft.getInstance().player)));
+                    IForgeContainerType.create((windowId, inv, data) -> {
+                        return new FluidConvertorContainer(
+                                windowId,
+                                Woot.proxy.getClientWorld(),
+                                data.readBlockPos(),
+                                inv,
+                                Woot.proxy.getClientPlayer());
+                    }));
 }

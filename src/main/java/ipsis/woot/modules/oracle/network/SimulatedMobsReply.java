@@ -7,6 +7,8 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;
@@ -36,14 +38,11 @@ public class SimulatedMobsReply {
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
-        if (clientPlayerEntity != null) {
-            ctx.get().enqueueWork(() -> {
-                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof OracleContainer) {
-                    ((OracleContainer) clientPlayerEntity.openContainer).handleSimulatedMobsReply(this);
-                    ctx.get().setPacketHandled(true);
-                }
-            });
-        }
+        ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            final ClientPlayerEntity player = Minecraft.getInstance().player;
+            if (player.openContainer instanceof OracleContainer)
+                ((OracleContainer) player.openContainer).handleSimulatedMobsReply(this);
+            ctx.get().setPacketHandled(true);
+        })) ;
     }
 }

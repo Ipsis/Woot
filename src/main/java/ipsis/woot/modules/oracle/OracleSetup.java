@@ -43,10 +43,12 @@ public class OracleSetup {
 
     public static final RegistryObject<ContainerType<OracleContainer>> ORACLE_BLOCK_CONTAINER = CONTAINERS.register(
             ORACLE_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new OracleContainer(
-                            windowId,
-                            Minecraft.getInstance().world,
-                            data.readBlockPos(),
-                            inv,
-                            Minecraft.getInstance().player)));
+                    IForgeContainerType.create((windowId, inv, data) -> {
+                        return new OracleContainer(
+                                windowId,
+                                Woot.proxy.getClientWorld(),
+                                data.readBlockPos(),
+                                inv,
+                                Woot.proxy.getClientPlayer());
+                    }));
 }

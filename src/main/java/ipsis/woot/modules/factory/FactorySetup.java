@@ -20,6 +20,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -53,12 +54,14 @@ public class FactorySetup {
 
     public static final RegistryObject<ContainerType<HeartContainer>> HEART_BLOCK_CONTAINER = CONTAINERS.register(
             HEART_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new HeartContainer(
-                            windowId,
-                            Minecraft.getInstance().world,
-                            data.readBlockPos(),
-                            inv,
-                            Minecraft.getInstance().player)));
+                    IForgeContainerType.create((windowId, inv, data) -> {
+                        return new HeartContainer(
+                                windowId,
+                                Woot.proxy.getClientWorld(),
+                                data.readBlockPos(),
+                                inv,
+                                Woot.proxy.getClientPlayer());
+                    }));
 
     public static final String CONTROLLER_TAG = "controller";
     public static final RegistryObject<ControllerBlock> CONTROLLER_BLOCK = BLOCKS.register(

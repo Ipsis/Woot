@@ -7,6 +7,7 @@ import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
+import ipsis.woot.modules.oracle.blocks.OracleContainer;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
@@ -14,6 +15,8 @@ import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.List;
@@ -112,14 +115,11 @@ public class HeartStaticDataReply {
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
-        if (clientPlayerEntity != null) {
-            ctx.get().enqueueWork(() -> {
-                if (clientPlayerEntity != null && clientPlayerEntity.openContainer instanceof HeartContainer) {
-                    ((HeartContainer) clientPlayerEntity.openContainer).handleStaticDataReply(clientFactorySetup);
-                    ctx.get().setPacketHandled(true);
-                }
-            });
-        }
+        ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            final ClientPlayerEntity player = Minecraft.getInstance().player;
+            if (player.openContainer instanceof HeartContainer)
+                ((HeartContainer) player.openContainer).handleStaticDataReply(clientFactorySetup);
+            ctx.get().setPacketHandled(true);
+        })) ;
     }
 }

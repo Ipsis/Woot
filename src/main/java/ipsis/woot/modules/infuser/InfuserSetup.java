@@ -13,6 +13,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -45,12 +46,14 @@ public class InfuserSetup {
                     TileEntityType.Builder.create(InfuserTileEntity::new, INFUSER_BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<InfuserContainer>> INFUSER_BLOCK_CONTAINER = CONTAINERS.register(
             INFUSER_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new InfuserContainer(
-                            windowId,
-                            Minecraft.getInstance().world,
-                            data.readBlockPos(),
-                            inv,
-                            Minecraft.getInstance().player)));
+                    IForgeContainerType.create((windowId, inv, data) -> {
+                        return new InfuserContainer(
+                                windowId,
+                                Woot.proxy.getClientWorld(),
+                                data.readBlockPos(),
+                                inv,
+                                Woot.proxy.getClientPlayer());
+                    }));
 
     /**
      * Dye Shards

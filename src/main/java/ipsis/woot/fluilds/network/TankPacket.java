@@ -4,7 +4,9 @@ import ipsis.woot.util.TankPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -37,15 +39,12 @@ public class TankPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ClientPlayerEntity clientPlayerEntity = Minecraft.getInstance().player;
-        if (clientPlayerEntity != null) {
-            ctx.get().enqueueWork(() -> {
-                if (clientPlayerEntity.openContainer instanceof TankPacketHandler) {
-                    ((TankPacketHandler) clientPlayerEntity.openContainer).handlePacket(this);
-                    ctx.get().setPacketHandled(true);
-                }
-            });
-        }
+        ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            final ClientPlayerEntity player = Minecraft.getInstance().player;
+            if (player.openContainer instanceof TankPacketHandler)
+                ((TankPacketHandler) player.openContainer).handlePacket(this);
+            ctx.get().setPacketHandled(true);
+        })) ;
     }
 
 }

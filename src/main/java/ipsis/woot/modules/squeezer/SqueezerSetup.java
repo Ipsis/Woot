@@ -41,12 +41,14 @@ public class SqueezerSetup {
 
     public static final RegistryObject<ContainerType<DyeSqueezerContainer>> SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
             SQUEEZER_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new DyeSqueezerContainer(
-                            windowId,
-                            Minecraft.getInstance().world,
-                            data.readBlockPos(),
-                            inv,
-                            Minecraft.getInstance().player)));
+                    IForgeContainerType.create((windowId, inv, data) -> {
+                        return new DyeSqueezerContainer(
+                                windowId,
+                                Woot.proxy.getClientWorld(),
+                                data.readBlockPos(),
+                                inv,
+                                Woot.proxy.getClientPlayer());
+                    }));
 
     public static final String ENCHANT_SQUEEZER_TAG = "enchsqueezer";
     public static final RegistryObject<EnchantSqueezerBlock> ENCHANT_SQUEEZER_BLOCK = BLOCKS.register(
@@ -60,10 +62,12 @@ public class SqueezerSetup {
 
     public static final RegistryObject<ContainerType<EnchantSqueezerContainer>> ENCHANT_SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
             ENCHANT_SQUEEZER_TAG, () ->
-                    IForgeContainerType.create((windowId, inv, data) -> new EnchantSqueezerContainer(
-                            windowId,
-                            Minecraft.getInstance().world,
-                            data.readBlockPos(),
-                            inv,
-                            Minecraft.getInstance().player)));
+                    IForgeContainerType.create((windowId, inv, data) -> {
+                        return new EnchantSqueezerContainer(
+                                windowId,
+                                Woot.proxy.getClientWorld(),
+                                data.readBlockPos(),
+                                inv,
+                                Woot.proxy.getClientPlayer());
+                    }));
 }

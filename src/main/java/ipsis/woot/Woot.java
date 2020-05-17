@@ -11,10 +11,10 @@ import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.oracle.OracleSetup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.tools.ToolsSetup;
-import ipsis.woot.setup.ModSetup;
-import ipsis.woot.setup.Registration;
+import ipsis.woot.setup.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -30,6 +30,10 @@ public class Woot {
 
     public static final String MODID = "woot";
     public static ModSetup setup = new ModSetup();
+    public static final IProxy proxy = DistExecutor.runForDist(
+            () -> () -> new ClientProxy(),
+            () -> () -> new ServerProxy()
+    );
 
     public Woot() {
 

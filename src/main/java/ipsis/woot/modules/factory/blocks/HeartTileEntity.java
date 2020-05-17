@@ -226,7 +226,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     @Override
     public void interrupt() {
-        LOGGER.debug("interrupt layout:" + layout);
+        //LOGGER.debug("interrupt layout:" + layout);
         if (layout != null)
             layout.setDirty();
     }

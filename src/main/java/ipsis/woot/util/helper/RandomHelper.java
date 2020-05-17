@@ -13,11 +13,15 @@ public class RandomHelper {
     private static final float PERCENT_MAX = 100.0F;
     public static boolean rollPercentage(double limit) {
         limit = MathHelper.clamp(limit, PERCENT_MIN, PERCENT_MAX);
-        if (limit == PERCENT_MAX)
+        if (limit == PERCENT_MAX) {
+            Woot.setup.getLogger().debug("rollPercentage: guaranteed drop");
             return true;
+        } else if (limit == PERCENT_MIN) {
+            return false;
+        }
 
         double x = (Math.random() * ((PERCENT_MAX - PERCENT_MIN) + 1)) + PERCENT_MIN;
-        Woot.setup.getLogger().debug("rollPercentage: limit:{} x:{}", limit, x);
+        Woot.setup.getLogger().debug("rollPercentage: rolled:{} limit:{}", x, limit);
         return x <= limit;
     }
 }

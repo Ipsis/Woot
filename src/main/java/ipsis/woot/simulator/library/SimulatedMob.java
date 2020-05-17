@@ -18,6 +18,7 @@ import net.minecraft.util.JSONUtils;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SimulatedMob {
@@ -73,15 +74,15 @@ public class SimulatedMob {
         simulatedMobDrop.addSimulatedData(looting, itemStack.getCount());
     }
 
-    public void addCustomDrop(int looting, ItemStack itemStack, float dropChance) {
-        if (itemStack.isEmpty() || itemStack.getCount() == 0)
+    public void addCustomDrop(int looting, @Nonnull ItemStack itemStack, float dropChance, HashMap<Integer, Integer> stackSizes) {
+        if (itemStack.isEmpty())
             return;
 
         SimulatedMobDrop simulatedMobDrop = getOrCreateSimulatedMobDrop(itemStack);
         if (!simulatedMobDrops.contains(simulatedMobDrop))
             simulatedMobDrops.add(simulatedMobDrop);
 
-        simulatedMobDrop.addCustomData(looting, itemStack.getCount(), dropChance);
+        simulatedMobDrop.addCustomDrop(looting, dropChance, stackSizes);
     }
 
     public @Nonnull List<SimulatedMobDropSummary> getDropSummary() {
@@ -92,6 +93,7 @@ public class SimulatedMob {
 
 
     public @Nonnull List<ItemStack> getRolledDrops(int looting) {
+        Woot.setup.getLogger().debug("getRolledDrop: *** looting {}:{}", looting, fakeMob);
         List<ItemStack> drops = new ArrayList<>();
         looting = MathHelper.clampLooting(looting);
         for (SimulatedMobDrop drop : simulatedMobDrops) {

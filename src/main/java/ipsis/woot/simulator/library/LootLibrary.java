@@ -39,9 +39,17 @@ public class LootLibrary {
         drops.forEach(d -> simulatedMob.addSimulatedDrop(fakeMobKey.getLooting(), d));
     }
 
-    public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack drop, float dropChance) {
+    /**
+     * Add a custom item to drop
+     * @param fakeMobKey
+     * @param drop - the itemstack to drop and its default stacksize
+     * @param dropChance - chance to drop the item
+     * @param stackSizes - optional map of stacksize/weight - overrides the drop stacksize
+     */
+    public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack drop, float dropChance, HashMap<Integer, Integer> stackSizes) {
+
         SimulatedMob simulatedMob = getOrCreateSimulatedMob(fakeMobKey.getMob());
-        simulatedMob.addCustomDrop(fakeMobKey.getLooting(), drop, dropChance);
+        simulatedMob.addCustomDrop(fakeMobKey.getLooting(), drop, dropChance, stackSizes);
     }
 
     public int getSimulatedKills(@Nonnull FakeMobKey fakeMobKey) {

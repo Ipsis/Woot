@@ -17,10 +17,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SimulatedMobDrop {
 
@@ -31,7 +28,7 @@ public class SimulatedMobDrop {
     protected SimulatedMob simulatedMob;
 
     protected List<HashMap<Integer, Integer>> simulatedStackSize;
-    protected List<HashMap<Integer, Float>> customStackSize;
+    protected List<HashMap<Integer, Integer>> customStackSize;
 
     private SimulatedMobDrop(){}
     public SimulatedMobDrop(ItemStack itemStack, SimulatedMob simulatedMob) {
@@ -46,6 +43,19 @@ public class SimulatedMobDrop {
             simulatedStackSize.add(i, new HashMap<>());
             customStackSize.add(i, new HashMap<>());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "SimulatedMobDrop{" +
+                "itemStack=" + itemStack +
+                ", simulatedDropCount=" + Arrays.toString(simulatedDropCount) +
+                ", customChanceToDrop=" + Arrays.toString(customChanceToDrop) +
+                ", hasCustom=" + hasCustom +
+                ", simulatedMob=" + simulatedMob +
+                ", simulatedStackSize=" + simulatedStackSize +
+                ", customStackSize=" + customStackSize +
+                '}';
     }
 
     private float calculateDropChance(int looting) {
@@ -63,35 +73,72 @@ public class SimulatedMobDrop {
     private int calculateDropSize(int looting) {
         int stackSize = 1;
         looting = MathHelper.clampLooting(looting);
-        if (hasCustom && customStackSize.isEmpty()) {
-            // Custom drops default to stack size of 1 if nothing specified
-            stackSize = 1;
-        } else if (hasCustom && !customStackSize.isEmpty()) {
 
+        HashMap<Integer, Integer> stackWeights;
+        if (hasCustom)
+            stackWeights = customStackSize.get(looting);
+        else
+            stackWeights = simulatedStackSize.get(looting);
+
+
+        if (!stackWeights.isEmpty()) {
             List<DropStackData> dropstacks = new ArrayList<>();
-            for (Map.Entry<Integer, Float> entry : customStackSize.get(looting).entrySet())
-                dropstacks.add(new DropStackData(entry.getKey(), (int)(entry.getValue() * 1000)));
-
-            DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
-            stackSize = chosen.stackSize;
-
-            Woot.setup.getLogger().info("customDrop: {} chosen {}",
-                    dropstacks, stackSize);
-
-        } else if (!hasCustom && simulatedStackSize.isEmpty()) {
-            // Not really possible
-            stackSize = 1;
-        } else {
-            List<DropStackData> dropstacks = new ArrayList<>();
-            for (Map.Entry<Integer, Integer> entry : simulatedStackSize.get(looting).entrySet())
+            Woot.setup.getLogger().debug("calculateDropSize: {}", stackWeights);
+            for (Map.Entry<Integer, Integer> entry : stackWeights.entrySet())
                 dropstacks.add(new DropStackData(entry.getKey(), entry.getValue()));
 
-            DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
-            stackSize = chosen.stackSize;
-
-            Woot.setup.getLogger().info("simulatedDrop: {} chosen {}",
-                    dropstacks, stackSize);
+            if (WeightedRandom.getTotalWeight(dropstacks) > 0) {
+                DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
+                stackSize = chosen.stackSize;
+            }
+            Woot.setup.getLogger().debug("calculateDropSize: custom:{} {} chosen {}",
+                    hasCustom, dropstacks, stackSize);
         }
+
+        /*
+        if (hasCustom) {
+            HashMap<Integer, Integer> stackSizes = customStackSize.get(looting);
+            if (stackSizes.isEmpty()) {
+                Woot.setup.getLogger().debug("calculateDropSize: no custom stack sizes default to 1");
+                stackSize = 1;
+            } else {
+                List<DropStackData> dropstacks = new ArrayList<>();
+                Woot.setup.getLogger().debug("calculateDropSize: {}", stackSizes);
+                for (Map.Entry<Integer, Integer> entry : stackSizes.entrySet())
+                    dropstacks.add(new DropStackData(entry.getKey(), entry.getValue()));
+
+                if (WeightedRandom.getTotalWeight(dropstacks) == 0) {
+                    stackSize = 1;
+                } else {
+                    DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
+                    stackSize = chosen.stackSize;
+                }
+                Woot.setup.getLogger().debug("customDrop: {} chosen {}",
+                        dropstacks, stackSize);
+            }
+        } else {
+            HashMap<Integer, Integer> stackSizes = simulatedStackSize.get(looting);
+            if (stackSizes.isEmpty()) {
+                Woot.setup.getLogger().debug("calculateDropSize: no simulated stack sizes default to 1");
+                stackSize = 1;
+            } else {
+                List<DropStackData> dropstacks = new ArrayList<>();
+                Woot.setup.getLogger().debug("calculateDropSize: {}", stackSizes);
+                for (Map.Entry<Integer, Integer> entry : stackSizes.entrySet())
+                    dropstacks.add(new DropStackData(entry.getKey(), entry.getValue()));
+
+                if (WeightedRandom.getTotalWeight(dropstacks) == 0) {
+                    stackSize = 1;
+                } else {
+                    DropStackData chosen = WeightedRandom.getRandomItem(RandomHelper.RANDOM, dropstacks);
+                    stackSize = chosen.stackSize;
+                }
+
+                Woot.setup.getLogger().debug("simulatedDrop: {} chosen {}",
+                        dropstacks, stackSize);
+            }
+        } */
+
         return stackSize;
     }
 
@@ -103,15 +150,15 @@ public class SimulatedMobDrop {
         simulatedStackSize.get(looting).put(stackSize, count + 1);
     }
 
-    public void addCustomData(int looting, int stackSize, float chance) {
+    public void addCustomDrop(int looting, float dropChance, HashMap<Integer, Integer> stackSizes) {
         looting = MathHelper.clampLooting(looting);
-        customChanceToDrop[looting] = chance;
+        customChanceToDrop[looting] = dropChance;
         hasCustom = true;
-    }
-
-    public void addCustomSize(int looting, int stackSize, float chance) {
-        looting = MathHelper.clampLooting(looting);
-        customStackSize.get(looting).put(stackSize, chance);
+        Woot.setup.getLogger().debug("SimulatedMobDrop looting:{} {} custom drop chance:{}", looting, itemStack, dropChance);
+        for (Map.Entry<Integer, Integer> entry : stackSizes.entrySet()) {
+            customStackSize.get(looting).put(entry.getKey(), entry.getValue());
+            Woot.setup.getLogger().debug("SimulatedMobDrop custom drop size {} weight:{}", entry.getKey(), entry.getValue());
+        }
     }
 
     public SimulatedMobDropSummary createSummary() {
@@ -125,13 +172,14 @@ public class SimulatedMobDrop {
     public @Nonnull ItemStack getRolledDrop(int looting) {
         ItemStack dropStack = ItemStack.EMPTY;
         float dropChance = calculateDropChance(looting);
+        MobSimulator.LOGGER.debug("getRolledDrop: rolling looting:{} for {} @ {}%", looting, itemStack, dropChance);
 
         if (RandomHelper.rollPercentage(dropChance)) {
             dropStack = itemStack.copy();
             dropStack.setCount(calculateDropSize(looting));
+            MobSimulator.LOGGER.debug("getRolledDrop: success looting:{} stack:{}", looting, dropStack);
         }
 
-        MobSimulator.LOGGER.debug("getRolledDrop:{} {}", looting, dropStack);
         return dropStack;
     }
 

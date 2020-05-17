@@ -141,13 +141,9 @@ public class MobSimulator {
         library.learnSimulatedDrops(fakeMobKey, drops);
     }
 
-    public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack itemStack, float dropChance) {
-        library.learnCustomDrop(fakeMobKey, itemStack, dropChance);
-    }
 
-    public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack itemStack, int count, float dropChance) {
-        itemStack.setCount(count);
-        library.learnCustomDrop(fakeMobKey, itemStack, dropChance);
+    public void learnCustomDrop(@Nonnull FakeMobKey fakeMobKey, @Nonnull ItemStack drop, float dropChance, HashMap<Integer, Integer> stackSizes) {
+        library.learnCustomDrop(fakeMobKey, drop, dropChance, stackSizes);
     }
 
     public boolean isEqualForLearning(@Nonnull ItemStack a, @Nonnull ItemStack b) {

@@ -60,9 +60,9 @@ public final class ConfigDefaults {
 
     public static final class Simulation {
         public static final int TICKS_DEF = 40;
-        public static final int MOB_SAMPLE_SIZE_DEF = 500;
+        public static final int MOB_SAMPLE_SIZE_DEF = 1000;
         public static final int TICKS_PER_SIM_TICK_DEF = 10;
-        public static final int CELLS_PER_SIM_TICK_DEF = 8;
+        public static final int CELLS_PER_SIM_TICK_DEF = 32;
     }
 
     public static final class Factory {

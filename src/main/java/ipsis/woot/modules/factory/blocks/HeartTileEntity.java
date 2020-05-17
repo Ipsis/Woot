@@ -89,6 +89,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
     @Override
     public void tick() {
+        if (world == null)
+            return;
+
        if (world.isRemote)
            return;
 
@@ -253,7 +256,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
             boolean realTick = false;
             long currGameTime = world.getGameTime();
-            if (FactoryConfiguration.TICK_ACCEL.get() == true || lastGameTime != currGameTime) {
+            if (FactoryConfiguration.TICK_ACCEL.get() || lastGameTime != currGameTime) {
                 // actual time has passed - no acceleration
                 lastGameTime = currGameTime;
                 realTick = true;

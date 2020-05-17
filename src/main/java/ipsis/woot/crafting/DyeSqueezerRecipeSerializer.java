@@ -2,6 +2,7 @@ package ipsis.woot.crafting;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import ipsis.woot.Woot;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
@@ -22,11 +23,34 @@ public class DyeSqueezerRecipeSerializer<T extends DyeSqueezerRecipe> extends Fo
     @Nullable
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
-        return null;
+        try {
+            Ingredient ingredient = Ingredient.read(buffer);
+            int energy = buffer.readInt();
+            int red = buffer.readInt();
+            int yellow = buffer.readInt();
+            int blue = buffer.readInt();
+            int white = buffer.readInt();
+            return this.factory.create(recipeId, ingredient, energy, red, yellow, blue, white);
+        } catch (Exception e) {
+            Woot.setup.getLogger().error("DyeSqueezerRecipeSerializer:read", e);
+            throw e;
+        }
     }
 
     @Override
     public void write(PacketBuffer buffer, T recipe) {
+        //Woot.setup.getLogger().debug("DyeSqueezerRecipeSerializer:write");
+        try {
+            recipe.getIngredient().write(buffer);
+            buffer.writeInt(recipe.getEnergy());
+            buffer.writeInt(recipe.getRed());
+            buffer.writeInt(recipe.getYellow());
+            buffer.writeInt(recipe.getBlue());
+            buffer.writeInt(recipe.getWhite());
+        } catch (Exception e) {
+            Woot.setup.getLogger().error("DyeSqueezerRecipeSerializer:write", e);
+            throw e;
+        }
     }
 
     @Override
@@ -40,7 +64,6 @@ public class DyeSqueezerRecipeSerializer<T extends DyeSqueezerRecipe> extends Fo
         int blue = JSONUtils.getInt(json, "blue", 0);
         int white = JSONUtils.getInt(json, "white", 0);
 
-        // If we return null then the recipe wont be used but we can still use the load process
         return this.factory.create(recipeId, ingredient, energy, red, yellow, blue, white);
     }
 

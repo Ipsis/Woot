@@ -169,7 +169,7 @@ public class InfuserRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return null;
+        return SERIALIZER;
     }
 
     @Override
@@ -243,10 +243,9 @@ public class InfuserRecipe implements IRecipe<IInventory> {
         public ResourceLocation getAdvancementID() {
             return null;
         }
-
-        @ObjectHolder("woot:infuser")
-        public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
     }
 
+    @ObjectHolder("woot:infuser")
+    public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
 
 }

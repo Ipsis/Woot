@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import ipsis.woot.Woot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -29,27 +30,38 @@ public class AnvilRecipeSerializer<T extends AnvilRecipe> extends ForgeRegistryE
     @Nullable
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
-        String s = buffer.readString(32767);
-        Ingredient baseIngredient = Ingredient.read(buffer);
+        try {
+            Ingredient baseIngredient = Ingredient.read(buffer);
+            NonNullList<Ingredient> ingredients = NonNullList.create();
+            int ingCount = buffer.readShort();
+            if (ingCount != 0) {
+                for (int i = 0; i < ingCount; i++)
+                    ingredients.add(Ingredient.read(buffer));
+            }
 
-        NonNullList<Ingredient> ingredients = NonNullList.create();
-        int ingCount = buffer.readShort();
-        if (ingCount != 0) {
-            for (int i = 0; i < ingCount; i++)
-                ingredients.add(Ingredient.read(buffer));
+            ItemStack result = buffer.readItemStack();
+            return this.factory.create(recipeId, baseIngredient, result.getItem(), result.getCount(), ingredients);
+
+        } catch (Exception e) {
+            Woot.setup.getLogger().error("AnvilRecipeSerializer:read", e);
+            throw e;
         }
-
-        ItemStack result = buffer.readItemStack();
-        return this.factory.create(recipeId, baseIngredient, result.getItem(), result.getCount(), ingredients);
     }
 
     @Override
     public void write(PacketBuffer buffer, T recipe) {
-        recipe.getBaseIngredient().write(buffer);
-        buffer.writeShort(recipe.getIngredients().size());
-        for (Ingredient ingredient : recipe.getIngredients())
-            ingredient.write(buffer);
-        buffer.writeItemStack(recipe.getOutput());
+        //Woot.setup.getLogger().debug("AnvilRecipeSerializer:write");
+        try {
+            recipe.getBaseIngredient().write(buffer);
+            buffer.writeShort(recipe.getIngredients().size());
+            for (Ingredient ingredient : recipe.getIngredients())
+                ingredient.write(buffer);
+            buffer.writeItemStack(recipe.getOutput());
+        } catch (Exception e) {
+            Woot.setup.getLogger().error("AnvilRecipeSerializer:write", e);
+            throw e;
+        }
+
     }
 
     @Override

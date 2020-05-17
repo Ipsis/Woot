@@ -141,7 +141,7 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return null;
+        return SERIALIZER;
     }
 
     @Override
@@ -200,8 +200,8 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
         public ResourceLocation getAdvancementID() {
             return null;
         }
-
-        @ObjectHolder("woot:fluidconvertor")
-        public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
     }
+
+    @ObjectHolder("woot:fluidconvertor")
+    public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
 }

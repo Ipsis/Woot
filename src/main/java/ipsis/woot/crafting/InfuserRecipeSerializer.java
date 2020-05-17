@@ -2,7 +2,9 @@ package ipsis.woot.crafting;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import ipsis.woot.Woot;
 import ipsis.woot.util.FluidStackHelper;
+import ipsis.woot.util.FluidStackPacketHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -48,12 +50,42 @@ public class InfuserRecipeSerializer<T extends InfuserRecipe> extends ForgeRegis
     @Nullable
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
-        return null;
+        try {
+            Ingredient augment = Ingredient.EMPTY;
+            Ingredient ingredient = Ingredient.read(buffer);
+            FluidStack fluidStack = buffer.readFluidStack();
+            int augmentCount = buffer.readInt();
+            if (augmentCount > 0)
+                augment = Ingredient.read(buffer);
+
+            int energy = buffer.readInt();
+            ItemStack result = buffer.readItemStack();
+            return this.factory.create(recipeId, ingredient, augment, augmentCount, fluidStack, result.getItem(), result.getCount(), energy);
+        } catch (Exception e) {
+            Woot.setup.getLogger().error("InfuserRecipeSerializer:read", e);
+            throw e;
+        }
     }
+
 
     @Override
     public void write(PacketBuffer buffer, T recipe) {
-
+        //Woot.setup.getLogger().debug("InfuserRecipeSerializer:write");
+        try {
+            recipe.getIngredient().write(buffer);
+            buffer.writeFluidStack(recipe.getFluidInput());
+            if (recipe.hasAugment()) {
+                buffer.writeInt(recipe.getAugmentCount());
+                recipe.getAugment().write(buffer);
+            } else {
+                buffer.writeInt(0);
+            }
+            buffer.writeInt(recipe.getEnergy());
+            buffer.writeItemStack(recipe.getOutput());
+        } catch (Exception e) {
+            Woot.setup.getLogger().error("InfuserRecipeSerializer:write", e);
+            throw e;
+        }
     }
 
     public interface IFactory<T extends InfuserRecipe> {

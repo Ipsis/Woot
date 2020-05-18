@@ -3,15 +3,18 @@
   "group": "woot",
   "pattern": [
     " s ",
-    "sps",
-    " s "
+    "s s",
+    "psx"
   ],
   "key": {
     "s": {
       "tag": "forge:stone"
     },
     "p": {
-      "item": "woot:light_blue_dyeplate"
+      "item": "woot:magenta_dyecasing"
+    },
+    "x": {
+      "item": "woot:pink_dyeplate"
     }
   },
   "result": {

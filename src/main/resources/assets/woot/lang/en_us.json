@@ -36,13 +36,13 @@
   "block.woot.cell_2": "Advanced Conatus Cell",
   "block.woot.cell_3": "Premium Conatus Cell",
   "block.woot.cell_4": "Ultimate Conatus Cell",
-  "block.woot.tick_conv": "Tick Converter (Dev)",
   "block.woot.oracle": "Dee's Oracle",
   "block.woot.anvil": "Stygian Anvil",
   "block.woot.squeezer": "Dye Liquifier",
   "block.woot.enchsqueezer": "Enchant Liquifier",
   "block.woot.fluidconvertor": "Fluid Vat",
   "block.woot.infuser": "Injection Press",
+  "block.woot.creative_conatus": "Creative Conatus (Dev)",
   "block.woot.creative_power": "Creative Power (Dev)",
 
   # Item Names

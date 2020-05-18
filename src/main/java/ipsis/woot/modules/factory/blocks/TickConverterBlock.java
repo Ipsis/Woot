@@ -1,20 +1,18 @@
 package ipsis.woot.modules.factory.blocks;
 
-import ipsis.woot.util.WootBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
-public class TickConverterBlock extends WootBlock {
-
-    public static final String REGNAME = "tick_conv";
+public class TickConverterBlock extends Block {
 
     public TickConverterBlock() {
-        super(Block.Properties.create(Material.IRON), REGNAME);
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL));
     }
 
     @Override

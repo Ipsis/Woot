@@ -4,6 +4,8 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.debug.blocks.CreativePowerBlock;
 import ipsis.woot.modules.debug.blocks.CreativePowerTileEntity;
 import ipsis.woot.modules.debug.items.DebugItem;
+import ipsis.woot.modules.factory.blocks.TickConverterBlock;
+import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -38,4 +40,14 @@ public class DebugSetup {
     public static final RegistryObject<TileEntityType<?>> CREATIVE_POWER_BLOCK_TILE = TILES.register(
             CREATIVE_POWER_TAG, () ->
                     TileEntityType.Builder.create(CreativePowerTileEntity::new, CREATIVE_POWER_BLOCK.get()).build(null));
+
+    public static final String CREATIVE_CONATUS_TAG = "creative_conatus";
+    public static final RegistryObject<TickConverterBlock> CREATIVE_CONATUS_BLOCK = BLOCKS.register(
+            CREATIVE_CONATUS_TAG, () -> new TickConverterBlock());
+    public static final RegistryObject<Item> CREATIVE_CONATUS_BLOCK_ITEM = ITEMS.register(
+            CREATIVE_CONATUS_TAG, () ->
+                    new BlockItem(CREATIVE_CONATUS_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> CREATIVE_CONATUS_BLOCK_TILE = TILES.register(
+            CREATIVE_CONATUS_TAG, () ->
+                    TileEntityType.Builder.create(TickConverterTileEntity::new, CREATIVE_CONATUS_BLOCK.get()).build(null));
 }

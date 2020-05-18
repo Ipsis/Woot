@@ -3,7 +3,6 @@ package ipsis.woot.modules.factory.blocks;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
-import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import net.minecraft.item.ItemStack;

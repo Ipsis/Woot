@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "tick_conv",
+      "name": "creative_conatus",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "woot:tick_conv"
+          "name": "woot:creative_conatus"
         }
       ]
     }

@@ -1,7 +1,6 @@
 package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
-import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
@@ -11,11 +10,7 @@ import ipsis.woot.modules.oracle.OracleSetup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.oss.BaseBlockStateProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 
 public class Blocks extends BaseBlockStateProvider {
 
@@ -55,7 +50,7 @@ public class Blocks extends BaseBlockStateProvider {
         sideOnlyBlock(OracleSetup.ORACLE_BLOCK.get(), "oracle", "block/oracle");
         machineBlock(SqueezerSetup.SQUEEZER_BLOCK.get(), "squeezer", "block/squeezer");
         machineBlock(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get(), "enchsqueezer", "block/enchsqueezer");
-        singleTextureBlock(ModBlocks.TICK_CONVERTER_BLOCK, "tick_conv", "block/tick_conv");
+        singleTextureBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "creative_conatus", "block/creative_conatus");
         singleTextureBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "creative_power", "block/creative_power");
     }
 }

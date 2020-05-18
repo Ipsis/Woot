@@ -2,8 +2,6 @@ package ipsis.woot.datagen;
 
 
 import ipsis.woot.Woot;
-import ipsis.woot.datagen.modules.FluidConvertor;
-import ipsis.woot.mod.ModBlocks;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
@@ -132,7 +130,7 @@ public class Items extends BaseItemModelProvider {
         parentedBlock(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get(), "block/enchsqueezer");
 
         itemHandheld(DebugSetup.DEBUG_ITEM.get(), "item/debug");
-        parentedBlock(ModBlocks.TICK_CONVERTER_BLOCK, "block/tick_conv");
+        parentedBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "block/creative_conatus");
         parentedBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "block/creative_power");
     }
 

@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "woot:block/tick_conv"
+    "all": "woot:block/creative_conatus"
   }
 }

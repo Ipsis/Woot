@@ -1,6 +1,6 @@
 package ipsis.woot.modules.factory.blocks;
 
-import ipsis.woot.mod.ModBlocks;
+import ipsis.woot.modules.debug.DebugSetup;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -13,7 +13,7 @@ import net.minecraft.util.Direction;
 public class TickConverterTileEntity extends TileEntity implements ITickableTileEntity {
 
     public TickConverterTileEntity() {
-        super(ModBlocks.TICK_CONVERTER_BLOCK_TILE);
+        super(DebugSetup.CREATIVE_CONATUS_BLOCK_TILE.get());
     }
 
     @Override

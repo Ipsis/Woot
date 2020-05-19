@@ -1,7 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "particle": "woot:block/factory_upgrade",
     "all": "woot:item/tier_shard_1"
   }
 }

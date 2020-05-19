@@ -1,6 +1,10 @@
 {
   "variants": {
-    "attached=true": { "model": "woot:block/factory_d" },
-    "attached=false": { "model": "woot:block/factory_d_alone" }
+    "attached=false": {
+      "model": "woot:block/factory_d_alone"
+    },
+    "attached=true": {
+      "model": "woot:block/factory_d"
+    }
   }
 }

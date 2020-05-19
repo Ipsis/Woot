@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "woot:block/creative_power" }
+    "": {
+      "model": "woot:block/creative_power"
+    }
   }
 }

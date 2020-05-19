@@ -1,7 +1,6 @@
 {
   "parent": "woot:block/small_cube_all",
   "textures": {
-    "particle": "woot:block/controller",
     "all": "woot:block/controller"
   }
 }

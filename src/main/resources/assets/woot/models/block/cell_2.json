@@ -1,8 +1,6 @@
 {
-  "parent": "block/cube_bottom_top",
+  "parent": "block/cube_all",
   "textures": {
-    "side": "woot:block/cell_2",
-    "bottom": "woot:block/factory",
-    "top": "woot:block/factory"
+    "all": "woot:block/cell_2"
   }
 }

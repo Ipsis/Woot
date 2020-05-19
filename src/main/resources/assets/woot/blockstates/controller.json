@@ -1,6 +1,10 @@
 {
   "variants": {
-    "attached=true": { "model": "woot:block/controller" },
-    "attached=false": { "model": "woot:block/controller_alone" }
+    "attached=false": {
+      "model": "woot:block/controller_alone"
+    },
+    "attached=true": {
+      "model": "woot:block/controller"
+    }
   }
 }

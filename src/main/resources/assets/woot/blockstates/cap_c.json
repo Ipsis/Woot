@@ -1,6 +1,10 @@
 {
   "variants": {
-    "attached=true": { "model": "woot:block/cap_c" },
-    "attached=false": { "model": "woot:block/cap_c_alone" }
+    "attached=false": {
+      "model": "woot:block/cap_c_alone"
+    },
+    "attached=true": {
+      "model": "woot:block/cap_c"
+    }
   }
 }

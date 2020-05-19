@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "woot:block/oracle" }
+    "": {
+      "model": "woot:block/oracle"
+    }
   }
 }

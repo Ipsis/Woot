@@ -27,10 +27,10 @@ public class UpgradeBlock extends FactoryBlock {
         this.setDefaultState(getStateContainer().getBaseState().with(UPGRADE, Perk.EMPTY).with(BlockStateProperties.ATTACHED, false));
     }
 
-    public static final EnumProperty<Perk> UPGRRADE_TYPE;
-    static { UPGRRADE_TYPE = EnumProperty.create("upgrade", Perk.class); }
+    public static final EnumProperty<Perk> UPGRADE_TYPE;
+    static { UPGRADE_TYPE = EnumProperty.create("upgrade", Perk.class); }
 
-    public static final EnumProperty<Perk> UPGRADE = UPGRRADE_TYPE;
+    public static final EnumProperty<Perk> UPGRADE = UPGRADE_TYPE;
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {

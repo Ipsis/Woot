@@ -37,7 +37,10 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 
     public void machineBlock(Block block, String modelName, String textureName) {
         ModelFile modelFile = frontBasedModel(modelName, modLoc(textureName));
-        simpleBlock(block, modelFile);
+        horizontalBlock(block,
+                new ResourceLocation(Woot.MODID, "block/factory"),
+                modLoc(textureName),
+                new ResourceLocation(Woot.MODID, "block/factory"));
     }
 
     public void sideOnlyBlock(Block block, String modelName, String textureName) {

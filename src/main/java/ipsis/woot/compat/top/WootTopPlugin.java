@@ -1,6 +1,5 @@
 package ipsis.woot.compat.top;
 
-import com.google.common.base.Function;
 import ipsis.woot.Woot;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.BlockState;
@@ -10,6 +9,7 @@ import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nullable;
+import java.util.function.Function;
 
 public class WootTopPlugin {
 
@@ -43,6 +43,7 @@ public class WootTopPlugin {
 
                 @Override
                 public void addProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, PlayerEntity playerEntity, World world, BlockState blockState, IProbeHitData iProbeHitData) {
+
                 }
             });
 

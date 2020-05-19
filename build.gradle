@@ -141,7 +141,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     // TOP
-    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version) { transitive = false }
+    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version + ":api")
     runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version)
 
     // JEI

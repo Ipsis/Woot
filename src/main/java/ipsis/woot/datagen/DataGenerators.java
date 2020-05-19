@@ -17,7 +17,7 @@ public class DataGenerators {
         if (event.includeClient()) {
             generator.addProvider(new Items(generator, event.getExistingFileHelper()));
             generator.addProvider(new Blocks(generator, event.getExistingFileHelper()));
-
+            generator.addProvider(new Languages(generator, "en_us"));
         }
     }
 }

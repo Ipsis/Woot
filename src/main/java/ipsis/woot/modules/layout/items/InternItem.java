@@ -200,8 +200,11 @@ public class InternItem extends Item {
         tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.1")));
 
         ToolMode toolMode = getToolModeFromStack(stack);
-        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.mode." + toolMode.toString().toLowerCase(Locale.ROOT))));
+
         if (toolMode.isBuildMode()) {
+            tooltip.add(new StringTextComponent(StringHelper.translateFormat(
+                            "info.woot.intern.mode.build",
+                            StringHelper.translate(toolMode.getTier().getTranslationKey()))));
             PatternRepository.Pattern pattern = PatternRepository.get().getPattern(toolMode.getTier());
             if (pattern != null) {
                 for (FactoryComponent component : FactoryComponent.VALUES) {
@@ -219,6 +222,10 @@ public class InternItem extends Item {
                     }
                 }
             }
+        } else if (toolMode.isValidateMode()) {
+            tooltip.add(new StringTextComponent(StringHelper.translateFormat(
+                    "info.woot.intern.mode.validate",
+                    StringHelper.translate(toolMode.getTier().getTranslationKey()))));
         }
     }
 }

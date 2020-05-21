@@ -49,6 +49,13 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
     }
 
+    public void renderFluidTank(int x1, int y1, int height, int width, int max, FluidStack fluidStack)  {
+        int filled = fluidStack.getAmount() * 100 / max;
+        filled = MathHelper.clamp(filled, 0, 100);
+        int h = filled * height / 100;
+        drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
+    }
+
     public void renderHorizontalBar(int x1, int y1, int x2, int y2, int curr, int max, int color) {
         int filled = curr * max / 100;
         filled = MathHelper.clamp(filled, 0, 100);

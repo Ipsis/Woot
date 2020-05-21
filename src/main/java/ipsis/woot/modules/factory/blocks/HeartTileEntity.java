@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.Woot;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.calculators.CalculatorVersion2;
@@ -368,42 +369,20 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         return new HeartContainer(windowId, world, pos, playerInventory, playerEntity);
     }
 
-    /**
-     * Client sync data
-     */
-    public int getClientProgress() { return consumedUnits; }
-    public void setClientProgress(int clientProgress) { this.consumedUnits = clientProgress; }
-
-    /**
-     * Used by the container tracker for the server value
-     */
-    public int getFluidAmount() {
-        return formedSetup != null ? formedSetup.getCellFluidAmount() : 0;
-    }
     public int getFluidCapacity() {
         return formedSetup != null ? formedSetup.getCellCapacity() : 0;
     }
-
-    /**
-     * Used by the container tracker for the client value
-     */
-    private int clientFluidAmount = -1;
-    private int clientFluidCapacity = -1;
-    public int getClientFluidAmount() { return clientFluidAmount; }
-    public void setClientFluidAmount(int v) {
-        /**
-         * Cannot set the client tank as it is in the cell and we don't have the location
-         * We use a local tracker for the client value only
-         */
-        clientFluidAmount = v;
+    public FluidStack getTankFluid() {
+        return formedSetup != null ?
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), formedSetup.getCellFluidAmount()) :
+                FluidStack.EMPTY;
     }
-    public int getClientFluidCapacity() { return clientFluidCapacity; }
-    public void setClientFluidCapacity(int v) {
-        /**
-         * Cannot set the client tank as it is in the cell and we don't have the location
-         * We use a local tracker for the client value only
-         */
-        clientFluidCapacity = v;
+
+    public int getProgress() {
+        if (formedSetup == null)
+            return 0;
+
+        return (int)((100.0F / recipe.getNumTicks() * consumedUnits));
     }
 
     @OnlyIn(Dist.CLIENT)

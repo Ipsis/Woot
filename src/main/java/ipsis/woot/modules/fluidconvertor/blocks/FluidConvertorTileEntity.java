@@ -154,9 +154,6 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
                 h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000))).setAccess(false, true);
     }
 
-    public void setInputTankFluid(FluidStack fluid) { inputTank.ifPresent(h -> h.setFluid(fluid));}
-    public void setOutputTankFluid(FluidStack fluid) { outputTank.ifPresent(h -> h.setFluid(fluid));}
-
     public FluidStack getInputTankFluid() { return inputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY); }
     public FluidStack getOutputTankFluid() { return outputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY); }
     //endregion
@@ -255,20 +252,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     }
     //endregion
 
-    //-------------------------------------------------------------------------
-    //region Client Sync
-    private int progress;
     public int getProgress() { return calculateProgress(); }
-    public int getClientProgress() { return progress; }
-    public void setProgress(int v) { progress = v; }
-
-    private FluidStack clientInTank = FluidStack.EMPTY;
-    public FluidStack getClientInTank() { return clientInTank; }
-    public void setClientInTank(FluidStack fluidStack) { clientInTank = fluidStack; }
-    private FluidStack clientOutTank = FluidStack.EMPTY;
-    public FluidStack getClientOutTank() { return clientOutTank; }
-    public void setClientOutTank(FluidStack fluidStack) { clientOutTank = fluidStack; }
-    //endregion
 
     //-------------------------------------------------------------------------
     //region Machine Process
@@ -410,14 +394,6 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
                 return;
             }
         }
-    }
-
-    public TankPacket getInputTankPacket() {
-        return new TankPacket(0, inputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
-    }
-
-    public TankPacket getOutputTankPacket() {
-        return new TankPacket(1, outputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
     @Nonnull

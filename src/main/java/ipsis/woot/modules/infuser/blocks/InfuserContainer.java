@@ -19,6 +19,9 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -72,6 +75,18 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
         }
     }
 
+
+    private int progress = 0;
+    private FluidStack inputFluid = FluidStack.EMPTY;
+    private int energy = 0;
+
+    @OnlyIn(Dist.CLIENT)
+    public int getProgress() { return this.progress; }
+    @OnlyIn(Dist.CLIENT)
+    public int getEnergy() { return this.energy; }
+    @OnlyIn(Dist.CLIENT)
+    public FluidStack getInputFluid() { return inputFluid; }
+
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
@@ -80,26 +95,24 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
             List<IContainerListener> iContainerListeners =
                     (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
 
-            if (tileEntity.getTankFluid().getAmount() != tileEntity.getClientFluidAmount()) {
-                tileEntity.setClientFluidAmount(tileEntity.getTankFluid().getAmount());
-
+            if (!inputFluid.isFluidStackIdentical(tileEntity.getTankFluid())) {
+                inputFluid = tileEntity.getTankFluid().copy();
+                TankPacket tankPacket = new TankPacket(0, inputFluid);
                 for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tileEntity.getTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
         } catch (Throwable e) {
             Woot.setup.getLogger().error("Reflection of container listener failed");
         }
-}
+    }
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
                 playerIn, InfuserSetup.INFUSER_BLOCK.get());
     }
-
-    public InfuserTileEntity getTileEntity() { return tileEntity; }
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerEntity, int index) {
@@ -167,7 +180,7 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
             public int get() { return tileEntity.getEnergy(); }
 
             @Override
-            public void set(int i) { tileEntity.setEnergy(i); }
+            public void set(int i) { energy = i; }
         });
 
         addIntegerListener(new IntReferenceHolder() {
@@ -175,13 +188,13 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
             public int get() { return tileEntity.getProgress(); }
 
             @Override
-            public void set(int i) { tileEntity.setProgress(i); }
+            public void set(int i) { progress = i; }
         });
     }
 
     @Override
     public void handlePacket(TankPacket packet) {
         if (packet.tankId == 0)
-            tileEntity.setTankFluid(packet.fluidStack);
+            inputFluid = packet.fluidStack;
     }
 }

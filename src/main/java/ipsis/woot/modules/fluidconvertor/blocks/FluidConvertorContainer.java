@@ -19,6 +19,8 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -30,7 +32,6 @@ import java.util.List;
 public class FluidConvertorContainer extends WootContainer implements TankPacketHandler {
 
     public FluidConvertorTileEntity tileEntity;
-    private boolean first = true;
 
     public FluidConvertorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK_CONTATAINER.get(), windowId);
@@ -39,8 +40,6 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
         addOwnSlots();
         addPlayerSlots(playerInventory);
         addListeners();
-        tileEntity.setClientOutTank(FluidStack.EMPTY);
-        tileEntity.setClientInTank(FluidStack.EMPTY);
     }
 
     private void addOwnSlots() {
@@ -73,7 +72,20 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
                 playerIn, FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get());
     }
 
-    public FluidConvertorTileEntity getTileEntity() { return tileEntity; }
+    private FluidStack inputFluid = FluidStack.EMPTY;
+    private FluidStack outputFluid = FluidStack.EMPTY;
+    private int progress = 0;
+    private int energy = 0;
+
+    @OnlyIn(Dist.CLIENT)
+    public int getProgress() { return this.progress; }
+    @OnlyIn(Dist.CLIENT)
+    public int getEnergy() { return this.energy; }
+    @OnlyIn(Dist.CLIENT)
+    public FluidStack getInputFluid() { return inputFluid; }
+    @OnlyIn(Dist.CLIENT)
+    public FluidStack getOutputFluid() { return outputFluid; }
+
 
     public void addListeners() {
         addIntegerListener(new IntReferenceHolder() {
@@ -81,15 +93,15 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
             public int get() { return tileEntity.getEnergy(); }
 
             @Override
-            public void set(int i) { tileEntity.setEnergy(i); }
+            public void set(int i) { energy = i; }
         });
 
-        addIntegerListener(new IntReferenceHolder() {
+        addShortListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getProgress(); }
 
             @Override
-            public void set(int i) { tileEntity.setProgress(i); }
+            public void set(int i) { progress = i; }
         });
     }
 
@@ -101,23 +113,23 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
             List<IContainerListener> iContainerListeners =
                     (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
 
-            if (first || !tileEntity.getClientInTank().isFluidStackIdentical(tileEntity.getInputTankFluid())) {
-                tileEntity.setClientInTank(tileEntity.getInputTankFluid().copy());
+            if (!inputFluid.isFluidStackIdentical(tileEntity.getInputTankFluid())) {
+                inputFluid = tileEntity.getInputTankFluid().copy();
+                TankPacket tankPacket = new TankPacket(0, inputFluid);
                 for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tileEntity.getInputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
 
-            if (first || !tileEntity.getClientOutTank().isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
-                tileEntity.setClientOutTank(tileEntity.getOutputTankFluid().copy());
+            if (!outputFluid.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
+                outputFluid = tileEntity.getOutputTankFluid().copy();
+                TankPacket tankPacket = new TankPacket(1, outputFluid);
                 for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
-
-            first = false;
         } catch (Throwable e) {
             Woot.setup.getLogger().error("Reflection of container listener failed");
         }
@@ -181,8 +193,8 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
     @Override
     public void handlePacket(TankPacket packet) {
         if (packet.tankId == 0)
-            tileEntity.setInputTankFluid(packet.fluidStack);
+            inputFluid = packet.fluidStack;
         else if (packet.tankId == 1)
-            tileEntity.setOutputTankFluid(packet.fluidStack);
+            outputFluid = packet.fluidStack;
     }
 }

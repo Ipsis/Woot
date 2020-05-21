@@ -43,10 +43,10 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
         this.renderHoveredToolTip(mouseX, mouseY);
 
         if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY, container.getTileEntity().getTankFluid(),
+            renderFluidTankTooltip(mouseX, mouseY, container.getInputFluid(),
                     InfuserConfiguration.INFUSER_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
+            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
     }
 
@@ -59,7 +59,7 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
         blit(relX, relY, 0, 0, this.xSize, this.ySize);
 
         // Progress
-        int progress = container.getTileEntity().getClientProgress();
+        int progress = container.getProgress();
         blit(this.guiLeft + 90, this.guiTop + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
 
         renderEnergyBar(
@@ -67,16 +67,15 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
                 ENERGY_RY,
                 ENERGY_HEIGHT,
                 ENERGY_WIDTH,
-                container.getTileEntity().getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
+                container.getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
 
         renderFluidTank(
                 TANK_LX,
                 TANK_RY,
                 TANK_HEIGHT,
                 TANK_WIDTH,
-                container.getTileEntity().getTankFluid().getAmount(),
                 InfuserConfiguration.INFUSER_TANK_CAPACITY.get(),
-                container.getTileEntity().getTankFluid());
+                container.getInputFluid());
 
     }
 

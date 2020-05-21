@@ -238,16 +238,9 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     //-------------------------------------------------------------------------
     //region Client sync
-    private int clientFluidAmount = 0;
-    public int getClientFluidAmount() { return clientFluidAmount; }
-    public void setClientFluidAmount(int v) { clientFluidAmount = v; }
-
-    private int progress;
     public int getProgress() {
         return calculateProgress();
     }
-    public int getClientProgress() { return progress; }
-    public void setProgress(int v) { progress = v; }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -381,10 +374,6 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         }
 
         clearRecipe();
-    }
-
-    public TankPacket getTankPacket() {
-        return new TankPacket(0, inputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
     @Nonnull

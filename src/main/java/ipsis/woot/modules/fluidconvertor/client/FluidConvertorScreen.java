@@ -50,13 +50,13 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
         this.renderHoveredToolTip(mouseX, mouseY);
 
         if (isPointInRegion(IN_TANK_LX, IN_TANK_LY, IN_TANK_WIDTH, IN_TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY, container.getTileEntity().getInputTankFluid(),
+            renderFluidTankTooltip(mouseX, mouseY, container.getInputFluid(),
                     FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get());
         if (isPointInRegion(OUT_TANK_LX, OUT_TANK_LY, OUT_TANK_WIDTH, OUT_TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY, container.getTileEntity().getOutputTankFluid(),
+            renderFluidTankTooltip(mouseX, mouseY, container.getOutputFluid(),
                     FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
+            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
     }
 
@@ -69,7 +69,7 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
         blit(relX, relY, 0, 0, this.xSize, this.ySize);
 
         // Progress
-        int progress = container.getTileEntity().getClientProgress();
+        int progress = container.getProgress();
         blit(this.guiLeft + 73, this.guiTop + 39, 180, 0,(int)(72 * (progress / 100.0F)) , 28);
 
         renderEnergyBar(
@@ -77,25 +77,23 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
                 ENERGY_RY,
                 ENERGY_HEIGHT,
                 ENERGY_WIDTH,
-                container.getTileEntity().getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
+                container.getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
 
         renderFluidTank(
                 IN_TANK_LX,
                 IN_TANK_RY,
                 IN_TANK_HEIGHT,
                 IN_TANK_WIDTH,
-                container.getTileEntity().getInputTankFluid().getAmount(),
                 FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get(),
-                container.getTileEntity().getInputTankFluid());
+                container.getInputFluid());
 
         renderFluidTank(
                 OUT_TANK_LX,
                 OUT_TANK_RY,
                 OUT_TANK_HEIGHT,
                 OUT_TANK_WIDTH,
-                container.getTileEntity().getOutputTankFluid().getAmount(),
                 FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get(),
-                container.getTileEntity().getOutputTankFluid());
+                container.getOutputFluid());
     }
 
     @Override

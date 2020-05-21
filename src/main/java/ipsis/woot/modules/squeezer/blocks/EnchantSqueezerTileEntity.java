@@ -111,6 +111,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     private WootFluidTank createTank() {
         return new WootFluidTank(SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1))).setAccess(false, true);
     }
+    public FluidStack getOutputTankFluid() { return outputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY); }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -195,20 +196,9 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     //-------------------------------------------------------------------------
     //region Client sync
-    public int getEnchant() {
-        return outputTank.map(h -> h.getFluidAmount()).orElse(0);
-    }
-
-    public void setEnchant(int v) {
-        outputTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), v)));
-    }
-
-    private int progress;
     public int getProgress() {
         return calculateProgress();
     }
-    public int getClientProgress() { return progress; }
-    public void setProgress(int v) { progress = v; }
     //endregion
 
     //-------------------------------------------------------------------------

@@ -51,10 +51,10 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
 
         if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(mouseX, mouseY,
-                    new FluidStack(FluidSetup.ENCHANT_FLUID.get(), container.getTileEntity().getEnchant()),
+                    container.getOutputFluid(),
                     SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
+            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
                     SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), 10);
     }
 
@@ -67,7 +67,7 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
         blit(relX, relY, 0, 0, xSize, ySize);
 
         // Progress
-        int progress = container.getTileEntity().getClientProgress();
+        int progress = container.getProgress();
         blit(this.guiLeft + 116, this.guiTop + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
 
         renderEnergyBar(
@@ -75,16 +75,16 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
                 ENERGY_RY,
                 ENERGY_HEIGHT,
                 ENERGY_WIDTH,
-                container.getTileEntity().getEnergy(), SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get());
+                container.getEnergy(),
+                SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get());
 
         renderFluidTank(
                 TANK_LX,
                 TANK_RY,
                 TANK_HEIGHT,
                 TANK_WIDTH,
-                container.getTileEntity().getEnchant(),
                 SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(),
-                new FluidStack(FluidSetup.ENCHANT_FLUID.get(), container.getTileEntity().getEnchant()));
+                container.getOutputFluid());
     }
     
     @Override

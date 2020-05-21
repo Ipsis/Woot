@@ -49,30 +49,30 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
 
         if (isPointInRegion(82, 30, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("Red: %d/%d mb",
-                        container.getTileEntity().getRed(),
+                        container.getRedDyeAmount(),
                         SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(82, 40, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("Yellow: %d/%d mb",
-                        container.getTileEntity().getYellow(),
-                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
+                    container.getYellowDyeAmount(),
+                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(82, 50, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("Blue: %d/%d mb",
-                        container.getTileEntity().getBlue(),
+                        container.getBlueDyeAmount(),
                         SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(82, 60, 51, 8, mouseX, mouseY))
             renderTooltip(String.format("White: %d/%d mb",
-                        container.getTileEntity().getWhite(),
-                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
+                    container.getWhiteDyeAmount(),
+                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(mouseX, mouseY,
-                    new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()),
+                    container.getPureDye(),
                     SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getTileEntity().getEnergy(),
+            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
                     SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get(), 10);
     }
 
@@ -85,21 +85,21 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
         blit(relX, relY, 0, 0, this.xSize, this.ySize);
 
         // Progress
-        int progress = container.getTileEntity().getClientProgress();
+        int progress = container.getProgress();
         blit(this.guiLeft + 58, this.guiTop + 30, 180, 0,(int)(19 * (progress / 100.0F)) , 40);
 
         // NB: The tanks will change the texture so progress has to be above that or rebind the texture
         renderHorizontalGauge(82, 30, 132, 37,
-                container.getTileEntity().getRed(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
+                container.getRedDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.RED.getColorValue());
         renderHorizontalGauge(82, 40, 132, 47,
-                container.getTileEntity().getYellow(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
+                container.getYellowDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.YELLOW.getColorValue());
         renderHorizontalGauge(82, 50, 132, 57,
-                container.getTileEntity().getBlue(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
+                container.getBlueDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.BLUE.getColorValue());
         renderHorizontalGauge(82, 60, 132, 67,
-                container.getTileEntity().getWhite(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
+                container.getWhiteDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.WHITE.getColorValue());
 
         renderEnergyBar(
@@ -107,15 +107,15 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
                 ENERGY_RY,
                 ENERGY_HEIGHT,
                 ENERGY_WIDTH,
-                container.getTileEntity().getEnergy(), SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get());
+                container.getEnergy(), SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get());
 
         renderFluidTank(
                 TANK_LX,
                 TANK_RY,
                 TANK_HEIGHT,
                 TANK_WIDTH,
-                container.getTileEntity().getPure(), SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(),
-                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), container.getTileEntity().getPure()));
+                SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(),
+                container.getPureDye());
     }
 
     @Override

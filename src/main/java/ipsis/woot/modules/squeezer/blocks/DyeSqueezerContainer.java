@@ -1,22 +1,35 @@
 package ipsis.woot.modules.squeezer.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
+import ipsis.woot.setup.NetworkChannel;
+import ipsis.woot.util.TankPacketHandler;
 import ipsis.woot.util.WootContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class DyeSqueezerContainer extends WootContainer {
+import java.util.List;
+
+public class DyeSqueezerContainer extends WootContainer implements TankPacketHandler {
 
     public DyeSqueezerTileEntity tileEntity;
 
@@ -111,58 +124,97 @@ public class DyeSqueezerContainer extends WootContainer {
         return itemStack;
     }
 
+    private int red = 0;
+    private int yellow = 0;
+    private int blue = 0;
+    private int white = 0;
+    private int progress = 0;
+    private FluidStack pureDye = FluidStack.EMPTY;
+    private int energy = 0;
+
+    @OnlyIn(Dist.CLIENT)
+    public int getRedDyeAmount() { return this.red; }
+    @OnlyIn(Dist.CLIENT)
+    public int getYellowDyeAmount() { return this.yellow; }
+    @OnlyIn(Dist.CLIENT)
+    public int getBlueDyeAmount() { return this.blue; }
+    @OnlyIn(Dist.CLIENT)
+    public int getWhiteDyeAmount() { return this.white; }
+    @OnlyIn(Dist.CLIENT)
+    public int getProgress() { return this.progress; }
+    @OnlyIn(Dist.CLIENT)
+    public FluidStack getPureDye() { return this.pureDye; }
+    @OnlyIn(Dist.CLIENT)
+    public int getEnergy() { return this.energy; }
 
     public void addListeners() {
-        addIntegerListener(new IntReferenceHolder() {
+        addShortListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getRed(); }
 
             @Override
-            public void set(int i) { tileEntity.setRed(i); }
+            public void set(int i) { red = i; }
         });
-        addIntegerListener(new IntReferenceHolder() {
+        addShortListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getBlue(); }
 
             @Override
-            public void set(int i) { tileEntity.setBlue(i); }
+            public void set(int i) { blue = i; }
         });
-        addIntegerListener(new IntReferenceHolder() {
+        addShortListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getWhite(); }
 
             @Override
-            public void set(int i) { tileEntity.setWhite(i); }
+            public void set(int i) { white = i; }
         });
-        addIntegerListener(new IntReferenceHolder() {
+        addShortListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getYellow(); }
 
             @Override
-            public void set(int i) { tileEntity.setYellow(i); }
-        });
-        addIntegerListener(new IntReferenceHolder() {
-            @Override
-            public int get() { return tileEntity.getPure(); }
-
-            @Override
-            public void set(int i) { tileEntity.setPure(i); }
+            public void set(int i) { yellow = i; }
         });
         addIntegerListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getEnergy(); }
 
             @Override
-            public void set(int i) { tileEntity.setEnergy(i); }
+            public void set(int i) { energy = i; }
         });
-        addIntegerListener(new IntReferenceHolder() {
+        addShortListener(new IntReferenceHolder() {
             @Override
             public int get() { return tileEntity.getProgress(); }
 
             @Override
-            public void set(int i) { tileEntity.setProgress(i); }
+            public void set(int i) { progress = i; }
         });
     }
 
-    public DyeSqueezerTileEntity getTileEntity() { return tileEntity; }
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+
+        try {
+            List<IContainerListener> iContainerListeners =
+                    (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
+
+            if (!pureDye.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
+                pureDye = tileEntity.getOutputTankFluid().copy();
+                for (IContainerListener l : iContainerListeners) {
+                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
+            }
+        } catch (Throwable e) {
+            Woot.setup.getLogger().error("Reflection of container listener failed");
+        }
+    }
+
+    @Override
+    public void handlePacket(TankPacket packet) {
+        if (packet.tankId == 0)
+            pureDye = packet.fluidStack;
+    }
 }

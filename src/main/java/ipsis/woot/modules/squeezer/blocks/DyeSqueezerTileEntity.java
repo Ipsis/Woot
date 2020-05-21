@@ -2,6 +2,7 @@ package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
@@ -80,6 +81,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     private WootFluidTank createTank() {
         return new WootFluidTank(SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get(), h -> h.isFluidEqual(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1))).setAccess(false, true);
     }
+    public FluidStack getOutputTankFluid() { return outputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY); }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -174,26 +176,11 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     }
     //endregion
 
-    //-------------------------------------------------------------------------
-    //region Client sync
     public int getRed() { return this.red; }
     public int getYellow() { return this.yellow; }
     public int getBlue() { return this.blue; }
     public int getWhite() { return this.white; }
-    public void setRed(int v) { this.red = v; }
-    public void setYellow(int v) { this.yellow = v; }
-    public void setBlue(int v) { this.blue = v; }
-    public void setWhite(int v) { this.white = v; }
-    public int getPure() { return outputTank.map(h -> h.getFluidAmount()).orElse(0); }
-    public void setPure(int v) { outputTank.ifPresent(h -> h.setFluid(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), v))); }
-
-    private int progress;
-    public int getProgress() {
-        return calculateProgress();
-    }
-    public int getClientProgress() { return progress; }
-    public void setProgress(int v) { progress = v; }
-    //endregion
+    public int getProgress() { return calculateProgress(); }
 
     //-------------------------------------------------------------------------
     //region Machine Process
@@ -360,6 +347,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
             inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
         }
         super.dropContents(drops);
+    }
+
+    public TankPacket getOutputTankPacket() {
+        return new TankPacket(0, outputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
     }
 
 }

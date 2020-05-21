@@ -128,8 +128,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
             renderFluidTankTooltip(mouseX, mouseY,
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()),
-                container.getTileEntity().getClientFluidCapacity());
+                container.getInputFluid(), container.getCapacity());
     }
 
     /**
@@ -268,9 +267,8 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 TANK_RY,
                 TANK_RY - TANK_LY + 1,
                 TANK_RX - TANK_LX + 1,
-                container.getTileEntity().getClientFluidAmount(),
-                container.getTileEntity().getClientFluidCapacity(),
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), container.getTileEntity().getClientFluidAmount()));
+                container.getCapacity(),
+                container.getInputFluid());
     }
 
     class StackElement {

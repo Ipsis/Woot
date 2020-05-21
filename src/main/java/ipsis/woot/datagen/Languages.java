@@ -159,6 +159,10 @@ public class Languages extends LanguageProvider {
         add("fluid.woot.puredye_fluid", "Pure Dye Fluid");
         add("fluid.woot.enchant_fluid", "Liquid Enchant");
 
+        add("item.woot.conatus_fluid_bucket", "Conatus Bucket");
+        add("item.woot.enchant_fluid_bucket", "Liquid Enchant Bucket");
+        add("item.woot.puredye_fluid_bucket", "Pure Dye Bucket");
+
         // Tooltips
         add("info.woot.intern", "§aUse on the factory heart to form, build or validate a factory");
         add("info.woot.intern.0", "§bSneak-right click to change modes");
@@ -200,7 +204,6 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.xp.0", "Generate %d%% of mob experience");
 
         // Chat
-
         add("chat.woot.intern.noedit", "Player is not allowed to edit");
         add("chat.woot.intern.missingblock", "No %s in inventory");
         add("chat.woot.intern.noreplace", "Cannot replace %s at (%d,%d,%d)");

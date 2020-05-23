@@ -28,6 +28,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -37,12 +38,14 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static ipsis.woot.crafting.DyeSqueezerRecipe.DYE_SQUEEZER_TYPE;
 
@@ -55,19 +58,28 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     public DyeSqueezerTileEntity() {
         super(SqueezerSetup.SQUEEZER_BLOCK_TILE.get());
-        inputSlots = new ItemStackHandler(1) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                DyeSqueezerTileEntity.this.onContentsChanged(slot);
-                markDirty();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return DyeSqueezerRecipe.isValidInput(stack);
-            }
-        };
     }
+
+    public final IItemHandler inventory = new ItemStackHandler(1)
+    {
+        @Override
+        protected void onContentsChanged(int slot) {
+            DyeSqueezerTileEntity.this.onContentsChanged(slot);
+            markDirty();
+        }
+
+        public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
+            return slot == 0 ? DyeSqueezerRecipe.isValidInput(stack) : false;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (!isItemValidForSlot(slot, stack))
+                return stack;
+            return super.insertItem(slot, stack, simulate);
+        }
+    };
 
     @Override
     public void onLoad() {
@@ -98,8 +110,8 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //-------------------------------------------------------------------------
     //region Inventory
     public static int INPUT_SLOT = 0;
-    private ItemStackHandler inputSlots;
-    private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
+    private final LazyOptional<IItemHandler> inventoryGetter = LazyOptional.of(() -> inventory);
+    public IItemHandler getInventory() { return inventory; }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -107,8 +119,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     @Override
     public void read(CompoundNBT compoundNBT) {
-        CompoundNBT invTag = compoundNBT.getCompound(ModNBT.INPUT_INVENTORY_TAG);
-        inputSlots.deserializeNBT(invTag);
+
+        if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
+            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
+                    inventory, null, compoundNBT.getList(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
 
         CompoundNBT tankTag = compoundNBT.getCompound(ModNBT.OUTPUT_TANK_TAG);
         outputTank.ifPresent(h -> h.readFromNBT(tankTag));
@@ -128,8 +142,8 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
-        CompoundNBT invTag = inputSlots.serializeNBT();
-        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG, invTag);
+        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
+                Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null)));
 
         outputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
@@ -250,7 +264,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         yellow += finishedRecipe.getYellow();
         blue += finishedRecipe.getBlue();
         white += finishedRecipe.getWhite();
-        inputSlots.extractItem(INPUT_SLOT, 1, false);
+        inventory.extractItem(INPUT_SLOT, 1, false);
         outputTank.ifPresent(f -> {
             while (canCreateOutput() && canStoreOutput()) {
                 f.internalFill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
@@ -269,7 +283,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (energyStorage.map(f -> f.getEnergyStored() <= 0).orElse(true))
             return false;
 
-        if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
+        if (inventory.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
         getRecipe();
@@ -290,7 +304,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (currRecipe == null)
             return false;
 
-        if (inputSlots.getStackInSlot(INPUT_SLOT).isEmpty())
+        if (inventory.getStackInSlot(INPUT_SLOT).isEmpty())
             return false;
 
         // stack count is always 1
@@ -305,7 +319,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     private void getRecipe() {
         currRecipe = world.getRecipeManager().getRecipe(DYE_SQUEEZER_TYPE,
-                new Inventory(inputSlots.getStackInSlot(INPUT_SLOT)),
+                new Inventory(inventory.getStackInSlot(INPUT_SLOT)),
                 world).orElse(null);
     }
 
@@ -329,7 +343,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return inputSlotHandler.cast();
+            return inventoryGetter.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             return outputTank.cast();
         } else if (cap == CapabilityEnergy.ENERGY) {
@@ -341,10 +355,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public void dropContents(World world, BlockPos pos) {
 
         List<ItemStack> drops = new ArrayList<>();
-        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        ItemStack itemStack = inventory.getStackInSlot(INPUT_SLOT).copy();
         if (!itemStack.isEmpty()) {
             drops.add(itemStack);
-            inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
+            inventory.insertItem(INPUT_SLOT, ItemStack.EMPTY, false);
         }
         super.dropContents(drops);
     }

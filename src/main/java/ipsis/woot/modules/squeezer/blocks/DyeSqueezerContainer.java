@@ -25,6 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.List;
@@ -36,17 +37,13 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
     public DyeSqueezerContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), windowId);
         tileEntity = (DyeSqueezerTileEntity)world.getTileEntity(pos);
-        addOwnSlots();
+        addOwnSlots(tileEntity.getInventory());
         addPlayerSlots(playerInventory);
         addListeners();
     }
 
-    private void addOwnSlots() {
-        tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent((
-                iItemHandler -> {
-                    addSlot(new SlotItemHandler(iItemHandler, 0, 39, 40));
-                }
-                ));
+    private void addOwnSlots(IItemHandler inv) {
+        this.addSlot(new SlotItemHandler(inv, 0, 39, 40));
     }
 
     private void addPlayerSlots(IInventory playerInventory) {

@@ -5,6 +5,7 @@ import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
+import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -77,7 +78,7 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
 
     @Override
     public String getTitle() {
-        return "Dye Squeezer";
+        return StringHelper.translate("gui.woot.squeezer.name");
     }
 
     @Override

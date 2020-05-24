@@ -3,6 +3,7 @@ package ipsis.woot.compat.jei;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -62,7 +63,7 @@ public class FluidConvertorRecipeCategory implements IRecipeCategory<FluidConver
 
     @Override
     public String getTitle() {
-        return "Fluid Convertor";
+        return StringHelper.translate("gui.woot.fluidconvertor.name");
     }
 
     @Override

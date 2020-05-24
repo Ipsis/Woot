@@ -92,7 +92,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             if (!(te instanceof TileEntity))
                 continue;
 
-            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
+            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite());
             if (lazyOptional.isPresent()) {
                 IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
                 FluidStack fluidStack = outputTank.map(WootFluidTank::getFluid).orElse(FluidStack.EMPTY);

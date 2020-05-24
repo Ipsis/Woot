@@ -234,6 +234,7 @@ public class Languages extends LanguageProvider {
         add("chat.woot.perk.fail.4", "Can only add the same perk with level %d");
 
         // Gui
+        add("gui.woot.anvil.name", "Stygian Anvil");
         add("gui.woot.infuser.name", "Injection Press");
         add("gui.woot.enchsqueezer.name", "Enchant Liquifier");
         add("gui.woot.squeezer.name", "Dye Liquifier");

@@ -1,0 +1,16 @@
+{
+  "type": "woot:fluidconvertor",
+  "catalyst": {
+    "item": "minecraft:magma_block"
+  },
+  "catalyst_count": 1,
+  "input": {
+    "fluid": "woot:enchant_fluid",
+    "amount": 1000
+  },
+  "result": {
+    "fluid": "woot:conatus_fluid",
+    "amount": 1250
+  },
+  "energy": 1000
+}

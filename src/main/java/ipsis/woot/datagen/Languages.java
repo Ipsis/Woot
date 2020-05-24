@@ -158,10 +158,12 @@ public class Languages extends LanguageProvider {
         add("fluid.woot.conatus_fluid", "Conatus Fluid");
         add("fluid.woot.puredye_fluid", "Pure Dye Fluid");
         add("fluid.woot.enchant_fluid", "Liquid Enchant");
+        add("fluid.woot.mob_essence_fluid", "Purge Fluid");
 
         add("item.woot.conatus_fluid_bucket", "Conatus Bucket");
         add("item.woot.enchant_fluid_bucket", "Liquid Enchant Bucket");
         add("item.woot.puredye_fluid_bucket", "Pure Dye Bucket");
+        add("item.woot.mob_essence_fluid_bucket", "Purge Fluid Bucket");
 
         // Tooltips
         add("info.woot.intern", "§aUse on the factory heart to form, build or validate a factory");

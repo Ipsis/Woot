@@ -11,6 +11,7 @@ import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -31,6 +32,11 @@ public class Infuser {
     private static final ResourceLocation PRISM_RL = new ResourceLocation(Woot.MODID,"infuser/prism");
     private static final int PRISM_ENERGY_COST = 1000;
     private static final int PRISM_FLUID_COST = 1000;
+
+    private static final ResourceLocation MAGMA_BLOCK_RL = new ResourceLocation(Woot.MODID,"infuser/magmablock1");
+    private static final ResourceLocation MAGMA_BLOCK_RL2 = new ResourceLocation(Woot.MODID,"infuser/magmablock2");
+    private static final int MAGMA_BLOCK_ENERGY_COST = 1000;
+    private static final int MAGMA_BLOCK_FLUID_COST = 1000;
 
     private static final ResourceLocation ENCH_BOOK_1_RL = new ResourceLocation(Woot.MODID,"infuser/ench_book_1");
     private static final ResourceLocation ENCH_BOOK_2_RL = new ResourceLocation(Woot.MODID,"infuser/ench_book_2");
@@ -83,6 +89,22 @@ public class Infuser {
                 new FluidStack(FluidSetup.PUREDYE_FLUID.get(),PRISM_FLUID_COST),
                 GenericSetup.PRISM_ITEM.get(), PRISM_ENERGY_COST)
                 .build(consumer, PRISM_RL);
+
+        InfuserRecipe.infuserRecipe(MAGMA_BLOCK_RL,
+                Ingredient.fromTag(Tags.Items.STONE),
+                Ingredient.EMPTY, 0,
+                new FluidStack(Fluids.LAVA, MAGMA_BLOCK_FLUID_COST),
+                Blocks.MAGMA_BLOCK,
+                MAGMA_BLOCK_ENERGY_COST)
+                .build(consumer, MAGMA_BLOCK_RL);
+
+        InfuserRecipe.infuserRecipe(MAGMA_BLOCK_RL2,
+                Ingredient.fromTag(Tags.Items.OBSIDIAN),
+                Ingredient.EMPTY, 0,
+                new FluidStack(Fluids.LAVA, MAGMA_BLOCK_FLUID_COST),
+                Blocks.MAGMA_BLOCK, 2,
+                MAGMA_BLOCK_ENERGY_COST)
+                .build(consumer, MAGMA_BLOCK_RL2);
 
         ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
         InfuserRecipe.infuserRecipe(ENCH_BOOK_1_RL,

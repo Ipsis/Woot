@@ -1,0 +1,16 @@
+{
+  "type": "woot:fluidconvertor",
+  "catalyst": {
+    "item": "minecraft:bone"
+  },
+  "catalyst_count": 1,
+  "input": {
+    "fluid": "minecraft:water",
+    "amount": 1000
+  },
+  "result": {
+    "fluid": "woot:mob_essence_fluid",
+    "amount": 1000
+  },
+  "energy": 1000
+}

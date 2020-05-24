@@ -1,0 +1,15 @@
+{
+  "type": "woot:infuser",
+  "ingredient": {
+    "tag": "forge:obsidian"
+  },
+  "infuse": {
+    "fluid": "minecraft:lava",
+    "amount": 1000
+  },
+  "result": {
+    "item": "minecraft:magma_block",
+    "count": 2
+  },
+  "energy": 1000
+}

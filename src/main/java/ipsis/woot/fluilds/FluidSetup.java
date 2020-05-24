@@ -105,10 +105,38 @@ public class FluidSetup {
             .bucket(ENCHANT_FLUID_BUCKET)
             .block(ENCHANT_FLUID_BLOCK);
 
+    /**
+     * Mob Essence
+     */
+    public static final ResourceLocation MOB_ESSENCE_STILL = new ResourceLocation("woot:block/mob_essence_still");
+    public static final ResourceLocation MOB_ESSENCE_FLOWING = new ResourceLocation("woot:block/mob_essence_flow");
+
+    public static RegistryObject<FlowingFluid> MOB_ESSENCE_FLUID = FLUIDS.register("mob_essence_fluid", () -> new ForgeFlowingFluid.Source(FluidSetup.MOB_ESSENCE_FLUID_PROPERTIES));
+    public static RegistryObject<FlowingFluid> MOB_ESSENCE_FLUID_FLOWING = FLUIDS.register("mob_essence_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSetup.MOB_ESSENCE_FLUID_PROPERTIES));
+    public static RegistryObject<FlowingFluidBlock> MOB_ESSENCE_FLUID_BLOCK = BLOCKS.register("mob_essence_fluid_block",
+            () -> new FlowingFluidBlock(MOB_ESSENCE_FLUID,
+                    Block.Properties.create(Material.WATER)
+                            .doesNotBlockMovement()
+                            .hardnessAndResistance(100.0F)
+                            .noDrops()));
+    public static RegistryObject<Item> MOB_ESSENCE_FLUID_BUCKET = ITEMS.register("mob_essence_fluid_bucket",
+            () -> new BucketItem(MOB_ESSENCE_FLUID,
+                    new Item.Properties()
+                            .containerItem(Items.BUCKET)
+                            .maxStackSize(1)
+                            .group(Woot.setup.getCreativeTab())));
+    public static final ForgeFlowingFluid.Properties MOB_ESSENCE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            MOB_ESSENCE_FLUID,
+            MOB_ESSENCE_FLUID_FLOWING,
+            FluidAttributes.builder(MOB_ESSENCE_STILL, MOB_ESSENCE_FLOWING).viscosity(6000))
+            .bucket(MOB_ESSENCE_FLUID_BUCKET)
+            .block(MOB_ESSENCE_FLUID_BLOCK);
+
     public static void register() {
         Woot.setup.getLogger().info("FluidSetup: register");
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         FLUIDS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
+
 }

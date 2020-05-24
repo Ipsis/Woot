@@ -3,6 +3,7 @@ package ipsis.woot.datagen.modules;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
+import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
@@ -13,6 +14,7 @@ import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
@@ -35,21 +37,64 @@ public class FluidConvertor {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        ResourceLocation rl = new ResourceLocation(Woot.MODID, "fluidconvertor/recipe1");
+        /**
+         * Conatus
+         */
+        ResourceLocation rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus1");
         FluidConvertorRecipe.convertorRecipe(
                 rl,
-                Ingredient.fromTag(Tags.Items.GUNPOWDER), 1,
-                new FluidStack(Fluids.WATER, 1000),
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000),
+                Ingredient.fromItems(Items.MAGMA_BLOCK), 1,
+                new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1000),
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1250),
                 1000).build(consumer, rl);
 
-        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/recipe2");
+        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus2");
         FluidConvertorRecipe.convertorRecipe(
                 rl,
-                Ingredient.fromTag(Tags.Items.RODS_BLAZE), 1,
-                new FluidStack(Fluids.LAVA, 1000),
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000),
+                Ingredient.fromItems(Items.END_STONE), 1,
+                new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1000),
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1450),
                 1000).build(consumer, rl);
 
+        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus3");
+        FluidConvertorRecipe.convertorRecipe(
+                rl,
+                Ingredient.fromItems(FactorySetup.XP_SHARD_ITEM.get()), 1,
+                new FluidStack(FluidSetup.MOB_ESSENCE_FLUID.get(), 1000),
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 2000),
+                1000).build(consumer, rl);
+
+        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus4");
+        FluidConvertorRecipe.convertorRecipe(
+                rl,
+                Ingredient.fromItems(FactorySetup.XP_SPLINTER_ITEM.get()), 1,
+                new FluidStack(FluidSetup.MOB_ESSENCE_FLUID.get(), 1000),
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 200),
+                1000).build(consumer, rl);
+
+        /**
+         * Purge Fluid
+         */
+        Ingredient[] ingredients = {
+                Ingredient.fromItems(Items.ROTTEN_FLESH),
+                Ingredient.fromItems(Items.BONE),
+                Ingredient.fromItems(Items.BLAZE_ROD),
+                Ingredient.fromItems(Items.ENDER_PEARL),
+        };
+        int[] outputAmount = { 1000, 1000, 2000, 4000 };
+
+        if (ingredients.length == outputAmount.length) {
+            for (int i = 0; i < ingredients.length; i++) {
+                rl = new ResourceLocation(Woot.MODID, "fluidconvertor/purge" + i);
+                FluidConvertorRecipe.convertorRecipe(
+                        rl,
+                        ingredients[i], 1,
+                        new FluidStack(Fluids.WATER, 1000),
+                        new FluidStack(FluidSetup.MOB_ESSENCE_FLUID.get(), outputAmount[i]),
+                        1000).build(consumer, rl);
+            }
+        } else {
+            Woot.setup.getLogger().error("FluidConvertor recipes ingredients != outputAmount");
+        }
     }
 }

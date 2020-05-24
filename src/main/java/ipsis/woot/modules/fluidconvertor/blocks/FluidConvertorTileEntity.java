@@ -129,7 +129,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             if (!(te instanceof TileEntity))
                 continue;
 
-            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction);
+            LazyOptional<IFluidHandler> lazyOptional = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite());
             if (lazyOptional.isPresent()) {
                 IFluidHandler iFluidHandler = lazyOptional.orElseThrow(NullPointerException::new);
                 FluidStack fluidStack = outputTank.map(WootFluidTank::getFluid).orElse(FluidStack.EMPTY);
@@ -150,8 +150,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
         return new FluidTank(FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get());
     }
     private WootFluidTank createOutputTank() {
-        return new WootFluidTank(FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get(),
-                h -> h.isFluidEqual(new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1000))).setAccess(false, true);
+        return new WootFluidTank(FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get()).setAccess(false, true);
     }
 
     public FluidStack getInputTankFluid() { return inputTank.map(h -> h.getFluid()).orElse(FluidStack.EMPTY); }

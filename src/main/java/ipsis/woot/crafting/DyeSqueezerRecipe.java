@@ -1,6 +1,7 @@
 package ipsis.woot.crafting;
 
 import com.google.gson.JsonObject;
+import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import net.minecraft.data.IFinishedRecipe;

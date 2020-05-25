@@ -26,6 +26,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.dimension.Dimension;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
@@ -143,6 +144,15 @@ public class ForgeEventHandlers {
         AnvilRecipes.load(event.getServer().getRecipeManager());
         InfuserRecipes.load(event.getServer().getRecipeManager());
         FluidConvertorRecipes.load(event.getServer().getRecipeManager());
+    }
+
+    @SubscribeEvent
+    public void onRecipesUpdatedEvent(final RecipesUpdatedEvent event) {
+        Woot.setup.getLogger().info("onRecipesUpdatedEvent");
+        SqueezerRecipes.load(event.getRecipeManager());
+        AnvilRecipes.load(event.getRecipeManager());
+        InfuserRecipes.load(event.getRecipeManager());
+        FluidConvertorRecipes.load(event.getRecipeManager());
     }
 
     @SubscribeEvent

@@ -1,11 +1,13 @@
 package ipsis.woot.modules.fluidconvertor.blocks;
 
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
+import ipsis.woot.modules.squeezer.blocks.DyeSqueezerTileEntity;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootFluidTank;
@@ -26,6 +28,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -41,6 +44,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static ipsis.woot.crafting.FluidConvertorRecipe.FLUID_CONV_TYPE;
 
@@ -48,21 +52,30 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
 
     public FluidConvertorTileEntity() {
         super(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK_TILE.get());
-        inputSlots = new ItemStackHandler(1) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                FluidConvertorTileEntity.this.onContentsChanged(slot);
-                markDirty();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (slot == INPUT_SLOT)
-                    return FluidConvertorRecipe.isValidCatalyst(stack);
-                return false;
-            }
-        };
     }
+
+    public final IItemHandler inventory = new ItemStackHandler(1)
+    {
+        @Override
+        protected void onContentsChanged(int slot) {
+            FluidConvertorTileEntity.this.onContentsChanged(slot);
+            markDirty();
+        }
+
+        public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
+            if (slot == INPUT_SLOT)
+                return FluidConvertorRecipe.isValidCatalyst(stack);
+            return false;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (!isItemValidForSlot(slot, stack))
+                return stack;
+            return super.insertItem(slot, stack, simulate);
+        }
+    };
 
     public void configureSides() {
         Direction direction = world.getBlockState(getPos()).get(BlockStateProperties.HORIZONTAL_FACING);
@@ -173,8 +186,8 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     //-------------------------------------------------------------------------
     //region Inventory
     public static final int INPUT_SLOT = 0;
-    private ItemStackHandler inputSlots;
-    private final LazyOptional<IItemHandler> inputSlotHandler = LazyOptional.of(() -> inputSlots);
+    private final LazyOptional<IItemHandler> inventoryGetter = LazyOptional.of(() -> inventory);
+    public IItemHandler getInventory() { return inventory; }
     //endregion
 
     //-------------------------------------------------------------------------
@@ -182,8 +195,9 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     @Override
     public void read(CompoundNBT compoundNBT) {
 
-        CompoundNBT invInputTag = compoundNBT.getCompound(ModNBT.INPUT_INVENTORY_TAG);
-        inputSlots.deserializeNBT(invInputTag);
+        if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
+            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
+                    inventory, null, compoundNBT.getList(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
 
         CompoundNBT inputTankTag = compoundNBT.getCompound(ModNBT.INPUT_TANK_TAG);
         inputTank.ifPresent(h -> h.readFromNBT(inputTankTag));
@@ -200,8 +214,8 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
 
-        CompoundNBT invInputTag = inputSlots.serializeNBT();
-        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG, invInputTag);
+        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
+                Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null)));
 
         inputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());
@@ -286,7 +300,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
 
         FluidConvertorRecipe finishedRecipe = currRecipe;
 
-        inputSlots.extractItem(INPUT_SLOT, finishedRecipe.getCatalystCount(), false);
+        inventory.extractItem(INPUT_SLOT, finishedRecipe.getCatalystCount(), false);
         inputTank.ifPresent(f -> f.drain(finishedRecipe.getInputFluid().getAmount(),
                 IFluidHandler.FluidAction.EXECUTE));
 
@@ -310,7 +324,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             return false;
 
         // Only start if we have enough of the catalyst
-        if (inputSlots.getStackInSlot(INPUT_SLOT).getCount() < currRecipe.getCatalystCount())
+        if (inventory.getStackInSlot(INPUT_SLOT).getCount() < currRecipe.getCatalystCount())
             return false;
 
         // Only start if we have enough input fluid
@@ -344,7 +358,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             return false;
 
         // Only valid if we have enough of the catalyst
-        if (inputSlots.getStackInSlot(INPUT_SLOT).getCount() < currRecipe.getCatalystCount())
+        if (inventory.getStackInSlot(INPUT_SLOT).getCount() < currRecipe.getCatalystCount())
             return false;
 
         // Only valid if we have enough input fluid
@@ -376,7 +390,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             return;
         }
 
-        ItemStack catalyst = inputSlots.getStackInSlot(INPUT_SLOT);
+        ItemStack catalyst = inventory.getStackInSlot(INPUT_SLOT);
         if (catalyst.isEmpty()) {
             clearRecipe();
             return;
@@ -385,7 +399,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
         // Get a list of recipes with matching catalyst
         List<FluidConvertorRecipe> recipes = world.getRecipeManager().getRecipes(
                 FLUID_CONV_TYPE,
-                new Inventory(inputSlots.getStackInSlot(INPUT_SLOT)), world);
+                new Inventory(inventory.getStackInSlot(INPUT_SLOT)), world);
 
         for (FluidConvertorRecipe recipe : recipes) {
             if (recipe.getInputFluid().isFluidEqual(inFluid)) {
@@ -399,7 +413,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return inputSlotHandler.cast();
+            return inventoryGetter.cast();
         } else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             if (side == null) {
                 return inputTank.cast();
@@ -419,10 +433,10 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     public void dropContents(World world, BlockPos pos) {
 
         List<ItemStack> drops = new ArrayList<>();
-        ItemStack itemStack = inputSlots.getStackInSlot(INPUT_SLOT);
+        ItemStack itemStack = inventory.getStackInSlot(INPUT_SLOT);
         if (!itemStack.isEmpty()) {
             drops.add(itemStack);
-            inputSlots.setStackInSlot(INPUT_SLOT, ItemStack.EMPTY);
+            inventory.insertItem(INPUT_SLOT, ItemStack.EMPTY, false);
         }
         super.dropContents(drops);
     }

@@ -31,6 +31,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -48,6 +49,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static ipsis.woot.crafting.InfuserRecipe.INFUSER_TYPE;
 
@@ -172,11 +174,13 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     @Override
     public void read(CompoundNBT compoundNBT) {
 
-        CompoundNBT invInputTag = compoundNBT.getCompound(ModNBT.INPUT_INVENTORY_TAG);
-        inputSlots.deserializeNBT(invInputTag);
+        if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
+            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
+                    inputSlots, null, compoundNBT.getList(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
 
-        CompoundNBT invOutputTag = compoundNBT.getCompound(ModNBT.OUTPUT_INVENTORY_TAG);
-        outputSlot.deserializeNBT(invOutputTag);
+        if (compoundNBT.contains(ModNBT.OUTPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
+            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
+                    outputSlot, null, compoundNBT.getList(ModNBT.OUTPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
 
         CompoundNBT tankTag = compoundNBT.getCompound(ModNBT.INPUT_TANK_TAG);
         inputTank.ifPresent(h -> h.readFromNBT(tankTag));
@@ -190,11 +194,11 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
 
-        CompoundNBT invInputTag = inputSlots.serializeNBT();
-        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG, invInputTag);
+        compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
+                Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inputSlots, null)));
 
-        CompoundNBT invOutputTag = outputSlot.serializeNBT();
-        compoundNBT.put(ModNBT.OUTPUT_INVENTORY_TAG, invOutputTag);
+        compoundNBT.put(ModNBT.OUTPUT_INVENTORY_TAG,
+                Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(outputSlot, null)));
 
         inputTank.ifPresent(h -> {
             CompoundNBT tankTag = h.writeToNBT(new CompoundNBT());

@@ -1,6 +1,7 @@
 package ipsis.woot.modules.fluidconvertor.blocks;
 
 import ipsis.woot.Woot;
+import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
@@ -133,58 +134,59 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerEntity, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
 
-        // 0 input slot
-        // 1-> 27 player
-        // 28 -> 36 hotbar
-        // NB: mergeItemStack minIndex(inclusive), maxIndex(exclusive)
-        final int LAST_MACHINE_SLOT = 0;
-        final int FIRST_PLAYER_SLOT = 1;
-        final int LAST_PLAYER_SLOT = FIRST_PLAYER_SLOT + 27 - 1;
-        final int FIRST_HOTBAR_SLOT = LAST_PLAYER_SLOT + 1;
-        final int LAST_HOTBAR_SLOT = FIRST_HOTBAR_SLOT + 9 - 1;
-
-        ItemStack itemStack = ItemStack.EMPTY;
+        // Based off Gigaherz Elements Of Power code
         Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack stack = slot.getStack();
-            itemStack = stack.copy();
-            if (index <= LAST_MACHINE_SLOT) {
-                // Machine -> Player/Hotbar
-                if (!this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_HOTBAR_SLOT + 1, true))
-                    return ItemStack.EMPTY;
-                slot.onSlotChange(stack, itemStack);
+        if (slot == null || !slot.getHasStack())
+            return ItemStack.EMPTY;
+
+        ItemStack stack = slot.getStack();
+        ItemStack stackCopy = stack.copy();
+
+        int startIndex;
+        int endIndex;
+
+        final int MACHINE_INV_SIZE = 1;
+        final int PLAYER_INV_SIZE = 27;
+        final int TOOLBAR_INV_SIZE = 9;
+
+        if (index >= MACHINE_INV_SIZE) {
+            // player slot
+            if (FluidConvertorRecipe.isValidCatalyst(stack)) {
+                // -> machine
+                startIndex = 0;
+                endIndex = MACHINE_INV_SIZE;
+            } else if (index < PLAYER_INV_SIZE + MACHINE_INV_SIZE) {
+                // -> toolbar
+                startIndex = PLAYER_INV_SIZE + MACHINE_INV_SIZE;
+                endIndex = startIndex + TOOLBAR_INV_SIZE;
+            } else if (index >= PLAYER_INV_SIZE + MACHINE_INV_SIZE) {
+                // -> player
+                startIndex = MACHINE_INV_SIZE;
+                endIndex = startIndex + PLAYER_INV_SIZE;
             } else {
-                if (FluidConvertorRecipe.isValidCatalyst(itemStack)) {
-                    // Player -> input
-                    if (!this.mergeItemStack(stack, 0, 1, false))
-                        return ItemStack.EMPTY;
-                }
-
-                // No player to machine supported
-                if (index >= FIRST_PLAYER_SLOT && index <= LAST_PLAYER_SLOT) {
-                    // Player -> Hotbar
-                    if (!this.mergeItemStack(stack, FIRST_HOTBAR_SLOT, LAST_HOTBAR_SLOT + 1, false))
-                        return ItemStack.EMPTY;
-                } else if (index <= LAST_HOTBAR_SLOT && !this.mergeItemStack(stack, FIRST_PLAYER_SLOT, LAST_PLAYER_SLOT + 1, false)) {
-                    // Hotbar -> Player
-                    return ItemStack.EMPTY;
-                }
-            }
-
-            if (stack.isEmpty())
-                slot.putStack(ItemStack.EMPTY);
-            else
-                slot.onSlotChanged();
-
-            if (stack.getCount() == itemStack.getCount())
                 return ItemStack.EMPTY;
-
-            slot.onTake(playerEntity, stack);
+            }
+        } else {
+            // machine slot
+            startIndex = MACHINE_INV_SIZE;
+            endIndex = startIndex + PLAYER_INV_SIZE + TOOLBAR_INV_SIZE;
         }
 
-        return itemStack;
+        if (!this.mergeItemStack(stack, startIndex, endIndex, false))
+            return ItemStack.EMPTY;
+
+        if (stack.getCount() == 0)
+            slot.putStack(ItemStack.EMPTY);
+        else
+            slot.onSlotChanged();
+
+        if (stack.getCount() == stackCopy.getCount())
+            return ItemStack.EMPTY;
+
+        slot.onTake(playerIn, stack);
+        return stackCopy;
     }
 
     @Override

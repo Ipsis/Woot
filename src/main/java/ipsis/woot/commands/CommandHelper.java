@@ -10,5 +10,7 @@ public class CommandHelper {
     public static final int SIMULATION_STATUS_COMMAND_LEVEL = 0; // Read only info
     public static final int SIMULATION_ROLL_DROPS_COMMAND_LEVEL = 0; // Read only info
 
+    public static final int MOB_INFO_COMMAND_LEVEL = 0; // Read only info
+
     public static final int GIVE_COMMAND_LEVEL = 2; // Same as vanilla give
 }

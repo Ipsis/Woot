@@ -8,6 +8,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
+import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.command.CommandSource;
@@ -139,7 +140,7 @@ public class SimulationCommand {
         else
             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
-        if (fakeMob.isValid()) {
+        if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             List<ItemStack> drops = MobSimulator.getInstance().getRolledDrops(new FakeMobKey(fakeMob, looting));
             source.sendFeedback(new TranslationTextComponent(TAG + "roll",
                     fakeMob, looting,
@@ -157,7 +158,7 @@ public class SimulationCommand {
         else
             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
-        if (fakeMob.isValid()) {
+        if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             boolean result = ipsis.woot.simulator.MobSimulator.getInstance().learn(fakeMob);
             if (result)
                 source.sendFeedback(new TranslationTextComponent(TAG + "learn.ok", resourceLocation.toString()), true);
@@ -176,7 +177,7 @@ public class SimulationCommand {
         else
             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
-        if (fakeMob.isValid()) {
+        if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             for (SimulatedMobDropSummary summary : ipsis.woot.simulator.MobSimulator.getInstance().getDropSummary(fakeMob))
                 source.sendFeedback(new TranslationTextComponent(TAG + "dump.drop", summary), true);
         }
@@ -210,7 +211,7 @@ public class SimulationCommand {
          else
              fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
-         if (fakeMob.isValid()) {
+         if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
              MobSimulator.getInstance().flush(fakeMob);
              MobSimulator.getInstance().learn(fakeMob);
          }

@@ -64,6 +64,7 @@
   "commands.woot.simulation.roll": "{0} Looting {1} dropped {2}",
   "commands.woot.simulation.status.simulating": "Simulating {0}",
   "commands.woot.simulation.status.waiting": "Waiting for cell {0}",
+  "commands.woot.mob.info.summary": "{0} Health {1} XP {2} Tier {3}",
   "fluid.woot.conatus_fluid": "Conatus Fluid",
   "fluid.woot.enchant_fluid": "Liquid Enchant",
   "fluid.woot.mob_essence_fluid": "Purge Fluid",

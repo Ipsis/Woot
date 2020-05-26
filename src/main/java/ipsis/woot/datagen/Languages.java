@@ -153,6 +153,7 @@ public class Languages extends LanguageProvider {
         add("commands.woot.simulation.status.waiting", "Waiting for cell {0}");
         add("commands.woot.simulation.dump.drop", "Drops {0}");
         add("commands.woot.simulation.roll", "{0} Looting {1} dropped {2}");
+        add("commands.woot.mob.info.summary", "{0} Health {1} XP {2} Tier {3}");
 
         // Fluids
         add("fluid.woot.conatus_fluid", "Conatus Fluid");

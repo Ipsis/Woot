@@ -38,9 +38,33 @@ public class FluidConvertor {
                 .build(consumer);
 
         /**
-         * Conatus
+         * Contaus Fluid
          */
-        ResourceLocation rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus1");
+        Ingredient[] conatus_ingredients = {
+                Ingredient.fromItems(FactorySetup.XP_SHARD_ITEM.get()),
+                Ingredient.fromItems(FactorySetup.XP_SPLINTER_ITEM.get()),
+                Ingredient.fromItems(Items.REDSTONE),
+                Ingredient.fromItems(GenericSetup.T1_SHARD_ITEM.get()),
+                Ingredient.fromItems(GenericSetup.T2_SHARD_ITEM.get()),
+                Ingredient.fromItems(GenericSetup.T2_SHARD_ITEM.get())
+        };
+        ResourceLocation rl;
+        int[] conatus_outputAmount = { 1000, 100, 1000, 1250, 2500, 5000 };
+        if (conatus_ingredients.length == conatus_outputAmount.length) {
+            for (int i = 0; i < conatus_ingredients.length; i++) {
+                rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus" + i);
+                FluidConvertorRecipe.convertorRecipe(
+                        rl,
+                        conatus_ingredients[i], 1,
+                        new FluidStack(FluidSetup.MOB_ESSENCE_FLUID.get(), 1000),
+                        new FluidStack(FluidSetup.CONATUS_FLUID.get(), conatus_outputAmount[i]),
+                        1000).build(consumer, rl);
+            }
+        } else {
+            Woot.setup.getLogger().error("FluidConvertor recipes ingredients != outputAmount");
+        }
+
+        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus_ench1");
         FluidConvertorRecipe.convertorRecipe(
                 rl,
                 Ingredient.fromItems(Items.MAGMA_BLOCK), 1,
@@ -48,28 +72,12 @@ public class FluidConvertor {
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1250),
                 1000).build(consumer, rl);
 
-        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus2");
+        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus_ench2");
         FluidConvertorRecipe.convertorRecipe(
                 rl,
                 Ingredient.fromItems(Items.END_STONE), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1000),
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1450),
-                1000).build(consumer, rl);
-
-        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus3");
-        FluidConvertorRecipe.convertorRecipe(
-                rl,
-                Ingredient.fromItems(FactorySetup.XP_SHARD_ITEM.get()), 1,
-                new FluidStack(FluidSetup.MOB_ESSENCE_FLUID.get(), 1000),
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 2000),
-                1000).build(consumer, rl);
-
-        rl = new ResourceLocation(Woot.MODID, "fluidconvertor/conatus4");
-        FluidConvertorRecipe.convertorRecipe(
-                rl,
-                Ingredient.fromItems(FactorySetup.XP_SPLINTER_ITEM.get()), 1,
-                new FluidStack(FluidSetup.MOB_ESSENCE_FLUID.get(), 1000),
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 200),
                 1000).build(consumer, rl);
 
         /**

@@ -1,11 +1,11 @@
 {
   "type": "woot:fluidconvertor",
   "catalyst": {
-    "item": "woot:t1shard"
+    "item": "minecraft:magma_block"
   },
   "catalyst_count": 1,
   "input": {
-    "fluid": "woot:mob_essence_fluid",
+    "fluid": "woot:enchant_fluid",
     "amount": 1000
   },
   "result": {

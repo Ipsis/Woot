@@ -69,7 +69,7 @@ public final class ConfigDefaults {
         public static final boolean TICK_ACCELERATION_DEF = true;
         public static final int MASS_COUNT_DEF = 1;
         public static final int SPAWN_TICKS_DEF = 16 * 20;
-        public static final int UNITS_PER_HEALTH_DEF = 1;
+        public static final int UNITS_PER_HEALTH_DEF = 10;
         public static final int MOB_SHARD_KILLS_DEF = 5;
         public static final int TIER_1_MAX_UNITS_DEF = 20;
         public static final int TIER_2_MAX_UNITS_DEF = 40;
@@ -77,14 +77,15 @@ public final class ConfigDefaults {
         public static final int TIER_4_MAX_UNITS_DEF = Integer.MAX_VALUE;
         public static final int TIER_5_MAX_UNITS_DEF = Integer.MAX_VALUE;
 
-        public static final int CELL_1_CAPACITY_DEF = 10000;
-        public static final int CELL_2_CAPACITY_DEF = 100000;
-        public static final int CELL_3_CAPACITY_DEF = 1000000;
-        public static final int CELL_4_CAPACITY_DEF = Integer.MAX_VALUE;
+        private static final int BUCKET_CAPACITY = 1000;
+        public static final int CELL_1_CAPACITY_DEF = BUCKET_CAPACITY * 10;
+        public static final int CELL_2_CAPACITY_DEF = BUCKET_CAPACITY * 50;
+        public static final int CELL_3_CAPACITY_DEF = BUCKET_CAPACITY * 100;
+        public static final int CELL_4_CAPACITY_DEF = BUCKET_CAPACITY * 1000;
         public static final int CELL_1_MAX_TRANSFER_DEF = 1000;
-        public static final int CELL_2_MAX_TRANSFER_DEF = 10000;
-        public static final int CELL_3_MAX_TRANSFER_DEF = 100000;
-        public static final int CELL_4_MAX_TRANSFER_DEF = 1000000;
+        public static final int CELL_2_MAX_TRANSFER_DEF = 5000;
+        public static final int CELL_3_MAX_TRANSFER_DEF = 10000;
+        public static final int CELL_4_MAX_TRANSFER_DEF = 25000;
 
         public static final int EFFICIENCY_1_DEF = 15;
         public static final int EFFICIENCY_2_DEF = 25;

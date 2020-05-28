@@ -1,16 +1,16 @@
 {
   "type": "woot:fluidconvertor",
   "catalyst": {
-    "item": "minecraft:end_stone"
+    "item": "minecraft:redstone"
   },
   "catalyst_count": 1,
   "input": {
-    "fluid": "woot:enchant_fluid",
+    "fluid": "woot:mob_essence_fluid",
     "amount": 1000
   },
   "result": {
     "fluid": "woot:conatus_fluid",
-    "amount": 1450
+    "amount": 1000
   },
   "energy": 1000
 }

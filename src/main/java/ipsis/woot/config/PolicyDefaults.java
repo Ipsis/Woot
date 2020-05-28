@@ -40,7 +40,6 @@ public class PolicyDefaults {
     );
 
     public static final ArrayList<String> DEFAULT_MOB_OVERRIDES = Lists.newArrayList(
-            "minecraft:wither_skeleton,health,40",
             "minecraft:wither_skeleton,fixedTier,4",
             "minecraft:villager,fixedTier,4",
             "minecraft:magma_cube,fixedTier,3",
@@ -52,14 +51,20 @@ public class PolicyDefaults {
             "minecraft:ghast,fixedTier,3",
             "minecraft:zombie_pigman,fixedTier,3",
 
+            "minecraft:iron_golem,xp,20",
+            "minecraft:bat,xp,1",
+            "minecraft:snow_golem,xp,1",
+            "minecraft:villager,xp,2",
+            "minecraft:wandering_villager,xp,2",
+
             "minecraft:ender_dragon,health,500",
             "minecraft:ender_dragon,spawnTicks,12000",
             "minecraft:ender_dragon,fixedTier,5",
+            "minecraft:ender_dragon,xp,500",
             "minecraft:ender_dragon,perkMassl1MobCount,2",
             "minecraft:ender_dragon,perkMassl2MobCount,3",
             "minecraft:ender_dragon,perkMassl3MobCount,4",
 
-            "minecraft:wither,health,500",
             "minecraft:wither,spawnTicks,1200",
             "minecraft:wither,fixedTier,5",
             "minecraft:wither,perkMassl1MobCount,2",

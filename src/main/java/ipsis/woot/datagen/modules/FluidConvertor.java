@@ -46,7 +46,7 @@ public class FluidConvertor {
                 Ingredient.fromItems(Items.REDSTONE),
                 Ingredient.fromItems(GenericSetup.T1_SHARD_ITEM.get()),
                 Ingredient.fromItems(GenericSetup.T2_SHARD_ITEM.get()),
-                Ingredient.fromItems(GenericSetup.T2_SHARD_ITEM.get())
+                Ingredient.fromItems(GenericSetup.T3_SHARD_ITEM.get())
         };
         ResourceLocation rl;
         int[] conatus_outputAmount = { 1000, 100, 1000, 1250, 2500, 5000 };

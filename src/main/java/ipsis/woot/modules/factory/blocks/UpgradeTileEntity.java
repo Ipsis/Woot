@@ -36,7 +36,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
                         state.with(UpgradeBlock.UPGRADE, type), 2);
                 glue.onGoodbye();
                 MultiBlockTracker.get().addEntry(pos);
-                Woot.setup.getLogger().info("tryAddUpgrade: added {}", type);
+                Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
                 return true;
             } else {
                 PlayerHelper.sendChatMessage(
@@ -83,7 +83,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
                     state.with(UpgradeBlock.UPGRADE, type), 2);
             glue.onGoodbye();
             MultiBlockTracker.get().addEntry(pos);
-            Woot.setup.getLogger().info("tryAddUpgrade: added {}", type);
+            Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
             return true;
         }
     }

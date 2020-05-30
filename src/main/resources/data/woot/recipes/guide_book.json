@@ -1,0 +1,21 @@
+{
+"type": "minecraft:crafting_shapeless",
+"group": "woot",
+"ingredients": [
+{
+"item": "minecraft:book"
+},
+{
+"item": "minecraft:bone"
+},
+  {
+    "item": "minecraft:rotten_flesh"
+  }
+],
+"result": {
+  "item": "patchouli:guide_book",
+  "nbt": {
+    "patchouli:book": "woot:wootguide"
+  }
+}
+}

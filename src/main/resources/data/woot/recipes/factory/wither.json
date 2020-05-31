@@ -2,7 +2,7 @@
   "type": "woot:factory",
   "mob": "minecraft:wither",
   "items": [
-    { "item": "minecraft:wither_skelton_skull", "count": 3 },
+    { "item": "minecraft:wither_skeleton_skull", "count": 3 },
     { "item": "minecraft:soul_sand", "count": 4 }
   ],
   "fluids": [

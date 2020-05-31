@@ -10,6 +10,7 @@ import ipsis.woot.modules.anvil.AnvilRecipes;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorRecipes;
 import ipsis.woot.modules.infuser.InfuserRecipes;
+import ipsis.woot.simulator.CustomDropsLoader;
 import ipsis.woot.simulator.MobSimulatorSetup;
 import ipsis.woot.modules.squeezer.SqueezerRecipes;
 import ipsis.woot.modules.factory.items.MobShardItem;
@@ -144,6 +145,7 @@ public class ForgeEventHandlers {
         AnvilRecipes.load(event.getServer().getRecipeManager());
         InfuserRecipes.load(event.getServer().getRecipeManager());
         FluidConvertorRecipes.load(event.getServer().getRecipeManager());
+        CustomDropsLoader.load(event.getServer().getRecipeManager());
     }
 
     @SubscribeEvent

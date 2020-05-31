@@ -82,7 +82,6 @@ public class ModSetup {
             Woot.setup.getLogger().warn("Failed to load loot file {}", dropFile.getAbsolutePath());
         }
         setupPlugins();
-        CustomDropsLoader.load();
     }
 
     public void clientSetup(FMLClientSetupEvent e) {

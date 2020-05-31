@@ -5,6 +5,6 @@
     { "item": "minecraft:wither_skeleton_skull", "count": 3 },
     { "item": "minecraft:soul_sand", "count": 4 }
   ],
-  "fluids": [
-  ]
+  "fluids": [ ],
+  "drops": [ ]
 }

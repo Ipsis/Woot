@@ -20,21 +20,24 @@ public class FactoryRecipe implements IRecipe<IInventory> {
     private final NonNullList<ItemStack> items;
     private final NonNullList<FluidStack> fluids;
     private final FakeMob fakeMob;
+    private final NonNullList<Drop> drops;
 
     @ObjectHolder("woot:factory")
     public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
 
-    public FactoryRecipe(ResourceLocation id, FakeMob fakeMob, NonNullList<ItemStack> items, NonNullList<FluidStack> fluids) {
+    public FactoryRecipe(ResourceLocation id, FakeMob fakeMob, NonNullList<ItemStack> items, NonNullList<FluidStack> fluids, NonNullList<Drop> drops) {
         this.id = id;
         this.type = FACTORY_TYPE;
         this.items = items;
         this.fluids = fluids;
         this.fakeMob = fakeMob;
+        this.drops = drops;
     }
 
     public FakeMob getFakeMob() { return this.fakeMob; }
     public NonNullList<ItemStack> getItems() { return this.items; }
     public NonNullList<FluidStack> getFluids() { return this.fluids; }
+    public NonNullList<Drop> getDrops() { return this.drops; }
 
     // IRecipe<IInventory>
     @Override
@@ -70,5 +73,11 @@ public class FactoryRecipe implements IRecipe<IInventory> {
     @Override
     public IRecipeType<?> getType() {
         return type;
+    }
+
+    public static class Drop {
+        public ItemStack itemStack;
+        public int[] stackSizes = new int[4];
+        public float[] dropChance = new float[4];
     }
 }

@@ -4,6 +4,17 @@
   "items": [
     { "item": "minecraft:end_crystal", "count": 4 }
   ],
-  "fluids": [
+  "fluids": [ ],
+  "drops": [
+    {
+      "item":  "minecraft:dragon_egg",
+      "sizes": [ 1, 1, 1, 1 ],
+      "chances": [ 100.0, 100.0, 100.0, 100.0 ]
+    },
+    {
+      "item": "minecraft:dragon_breath",
+      "sizes": [ 2, 4, 6, 8 ],
+      "chances": [ 100.0, 100.0, 100.0, 100.0 ]
+    }
   ]
 }

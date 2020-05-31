@@ -39,36 +39,59 @@ public class PolicyDefaults {
             "minecraft:ender_dragon"
     );
 
-    public static final ArrayList<String> DEFAULT_MOB_OVERRIDES = Lists.newArrayList(
-            "minecraft:wither_skeleton,fixedTier,4",
-            "minecraft:villager,fixedTier,4",
-            "minecraft:magma_cube,fixedTier,3",
-            "minecraft:enderman,fixedTier,4",
-            "minecraft:villager_golem,fixedTier,4",
-            "minecraft:guardian,fixedTier,4",
-            "minecraft:blaze,fixedTier,3",
-            "minecraft:witch,fixedTier,3",
-            "minecraft:ghast,fixedTier,3",
-            "minecraft:zombie_pigman,fixedTier,3",
-
-            "minecraft:iron_golem,xp,20",
-            "minecraft:bat,xp,1",
-            "minecraft:snow_golem,xp,1",
-            "minecraft:villager,xp,2",
-            "minecraft:wandering_villager,xp,2",
-
-            "minecraft:ender_dragon,health,500",
-            "minecraft:ender_dragon,spawnTicks,12000",
-            "minecraft:ender_dragon,fixedTier,5",
-            "minecraft:ender_dragon,xp,500",
-            "minecraft:ender_dragon,perkMassl1MobCount,2",
-            "minecraft:ender_dragon,perkMassl2MobCount,3",
-            "minecraft:ender_dragon,perkMassl3MobCount,4",
-
-            "minecraft:wither,spawnTicks,1200",
-            "minecraft:wither,fixedTier,5",
-            "minecraft:wither,perkMassl1MobCount,2",
-            "minecraft:wither,perkMassl2MobCount,3",
-            "minecraft:wither,perkMassl3MobCount,4"
+    public static final ArrayList<String> DEFAULT_MOB_MASS_COUNT = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_SPAWN_TICKS = Lists.newArrayList(
+            "minecraft:wither,1200",
+            "minecraft:ender_dragon,12000"
     );
+    public static final ArrayList<String> DEFAULT_MOB_HEALTH = Lists.newArrayList(
+            "minecraft:ender_dragon,500"
+    );
+    public static final ArrayList<String> DEFAULT_MOB_UNITS_PER_HEALTH = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_XP = Lists.newArrayList(
+            "minecraft:iron_golem,20",
+            "minecraft:bat,1",
+            "minecraft:snow_golem,1",
+            "minecraft:villager,2",
+            "minecraft:wandering_villager,2",
+            "minecraft:ender_dragon,500"
+    );
+    public static final ArrayList<String> DEFAULT_MOB_TIER = Lists.newArrayList(
+            "minecraft:wither_skeleton,4",
+            "minecraft:villager,4",
+            "minecraft:magma_cube,3",
+            "minecraft:enderman,4",
+            "minecraft:villager_golem,4",
+            "minecraft:guardian,4",
+            "minecraft:blaze,3",
+            "minecraft:witch,3",
+            "minecraft:ghast,3",
+            "minecraft:zombie_pigman,3",
+            "minecraft:ender_dragon,5",
+            "minecraft:wither,5"
+    );
+    public static final ArrayList<String> DEFAULT_MOB_SHARD_KILLS = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_FIXED_COST = Lists.newArrayList();
+
+    public static final ArrayList<String> DEFAULT_MOB_PERK_EFFICIENCY_1 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_EFFICIENCY_2 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_EFFICIENCY_3 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_MASS_1 = Lists.newArrayList(
+            "minecraft:ender_dragon,2",
+            "minecraft:wither,2"
+    );
+    public static final ArrayList<String> DEFAULT_MOB_PERK_MASS_2 = Lists.newArrayList(
+            "minecraft:ender_dragon,3",
+            "minecraft:wither,3"
+    );
+    public static final ArrayList<String> DEFAULT_MOB_PERK_MASS_3 = Lists.newArrayList(
+            "minecraft:ender_dragon,4",
+            "minecraft:wither,4"
+    );
+    public static final ArrayList<String> DEFAULT_MOB_PERK_RATE_1 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_RATE_2 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_RATE_3 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_XP_1 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_XP_2 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_XP_3 = Lists.newArrayList();
 }

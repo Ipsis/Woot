@@ -8,7 +8,6 @@ import java.util.List;
 
 public class PolicyConfiguration {
 
-    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_OVERRIDES;
     public static ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_FULL_MOD;
     public static ForgeConfigSpec.ConfigValue<List<String>> CAPTURE_BLACKLIST_ENTITY;
     public static ForgeConfigSpec.ConfigValue<List<String>> LEARN_BLACKLIST_FULL_MOD;
@@ -18,6 +17,28 @@ public class PolicyConfiguration {
     public static ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_FULL_MOD;
     public static ForgeConfigSpec.ConfigValue<List<String>> SHARD_BLACKLIST_ENTITY;
     public static ForgeConfigSpec.ConfigValue<List<String>> CUSTOM_DROPS_ONLY;
+
+    // Override values
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_MASS_COUNT;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_SPAWN_TICKS;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_HEALTH;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_UNITS_PER_HEALTH;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_XP;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_TIER;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_SHARD_KILLS;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_FIXED_COST;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_EFFICIENCY_1;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_EFFICIENCY_2;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_EFFICIENCY_3;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_MASS_1;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_MASS_2;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_MASS_3;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_RATE_1;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_RATE_2;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_RATE_3;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_XP_1;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_XP_2;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_XP_3;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -63,14 +84,99 @@ public class PolicyConfiguration {
 
             COMMON_BUILDER.push(ConfigPath.Policy.CATEGORY_MOB);
             {
-                MOB_OVERRIDES = COMMON_BUILDER
-                        .comment("A list of mob specific factory configuration values")
-                        .define(ConfigPath.Policy.MOB_OVERRIDES_TAG,
-                                PolicyDefaults.DEFAULT_MOB_OVERRIDES);
+                MOB_MASS_COUNT = COMMON_BUILDER
+                    .comment("Override default mass count for a mob")
+                    .define(ConfigPath.Policy.MOB_MASS_COUNT_TAG,
+                            PolicyDefaults.DEFAULT_MOB_MASS_COUNT);
+                MOB_SPAWN_TICKS = COMMON_BUILDER
+                        .comment("Override default spawn ticks for a mob")
+                        .define(ConfigPath.Policy.MOB_SPAWN_TICKS_TAG,
+                                PolicyDefaults.DEFAULT_MOB_SPAWN_TICKS);
+                MOB_HEALTH = COMMON_BUILDER
+                        .comment("Override default health for a mob")
+                        .define(ConfigPath.Policy.MOB_HEALTH_TAG,
+                                PolicyDefaults.DEFAULT_MOB_HEALTH);
+                MOB_UNITS_PER_HEALTH = COMMON_BUILDER
+                        .comment("Override default units per health for a mob")
+                        .define(ConfigPath.Policy.MOB_UNITS_PER_HEALTH_TAG,
+                                PolicyDefaults.DEFAULT_MOB_UNITS_PER_HEALTH);
+                MOB_XP = COMMON_BUILDER
+                        .comment("Override default xp for a mob")
+                        .define(ConfigPath.Policy.MOB_XP_TAG,
+                                PolicyDefaults.DEFAULT_MOB_XP);
+                MOB_TIER = COMMON_BUILDER
+                        .comment("Override default tier for a mob")
+                        .define(ConfigPath.Policy.MOB_TIER_TAG,
+                                PolicyDefaults.DEFAULT_MOB_TIER);
+                MOB_SHARD_KILLS = COMMON_BUILDER
+                        .comment("Override default shard kills for a mob")
+                        .define(ConfigPath.Policy.MOB_SHARD_KILLS_TAG,
+                                PolicyDefaults.DEFAULT_MOB_SHARD_KILLS);
+                MOB_FIXED_COST = COMMON_BUILDER
+                        .comment("Set a fixed cost for a mob")
+                        .define(ConfigPath.Policy.MOB_FIXED_COST_TAG,
+                                PolicyDefaults.DEFAULT_MOB_FIXED_COST);
+
                 CUSTOM_DROPS_ONLY = COMMON_BUILDER
                         .comment("A list of mobs that should not be simulated and use custom config only")
                         .define(ConfigPath.Policy.CUSTOM_DROPS_ONLY_TAG,
                                 PolicyDefaults.DEFAULT_CUSTOM_DROPS_ONLY);
+
+                COMMON_BUILDER.push(ConfigPath.Policy.CATEGORY_PERK);
+                {
+                    MOB_PERK_EFFICIENCY_1 = COMMON_BUILDER
+                            .comment("Set efficiency perk level 1 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_EFFICIENCY_1_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_EFFICIENCY_1);
+                    MOB_PERK_EFFICIENCY_2 = COMMON_BUILDER
+                            .comment("Set efficiency perk level 2 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_EFFICIENCY_2_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_EFFICIENCY_2);
+                    MOB_PERK_EFFICIENCY_3 = COMMON_BUILDER
+                            .comment("Set efficiency perk level 3 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_EFFICIENCY_3_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_EFFICIENCY_3);
+
+                    MOB_PERK_MASS_1 = COMMON_BUILDER
+                            .comment("Set mass perk level 1 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_MASS_1_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_MASS_1);
+                    MOB_PERK_MASS_2 = COMMON_BUILDER
+                            .comment("Set mass perk level 2 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_MASS_2_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_MASS_2);
+                    MOB_PERK_MASS_3 = COMMON_BUILDER
+                            .comment("Set mass perk level 3 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_MASS_3_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_MASS_3);
+
+                    MOB_PERK_RATE_1 = COMMON_BUILDER
+                            .comment("Set rate perk level 1 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_RATE_1_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_RATE_1);
+                    MOB_PERK_RATE_2 = COMMON_BUILDER
+                            .comment("Set rate perk level 2 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_RATE_2_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_RATE_2);
+                    MOB_PERK_RATE_3 = COMMON_BUILDER
+                            .comment("Set rate perk level 3 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_RATE_3_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_RATE_3);
+
+                    MOB_PERK_XP_1 = COMMON_BUILDER
+                            .comment("Set xp perk level 1 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_XP_1_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_XP_1);
+                    MOB_PERK_XP_2 = COMMON_BUILDER
+                            .comment("Set xp perk level 2 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_XP_2_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_XP_2);
+                    MOB_PERK_XP_3 = COMMON_BUILDER
+                            .comment("Set xp perk level 3 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_XP_3_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_XP_3);
+                }
+
             }
             COMMON_BUILDER.pop();
 

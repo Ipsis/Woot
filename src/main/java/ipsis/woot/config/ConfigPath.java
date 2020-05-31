@@ -72,6 +72,7 @@ public class ConfigPath {
         public static final String CATEGORY = "policy";
         public static final String CATEGORY_BLACKLIST = "blacklist";
         public static final String CATEGORY_MOB = "mob";
+        public static final String CATEGORY_PERK = "perk";
 
         public static final String CAPTURE_BLACKLIST_FULL_MOD_TAG = "captureMod";
         public static final String CAPTURE_BLACKLIST_ENTITY_TAG = "captureEntity";
@@ -82,8 +83,27 @@ public class ConfigPath {
         public static final String SHARD_BLACKLIST_FULL_MOD_TAG = "shardMod";
         public static final String SHARD_BLACKLIST_ENTITY_TAG = "shardEntity";
 
-        public static final String MOB_OVERRIDES_TAG = "overrides";
         public static final String CUSTOM_DROPS_ONLY_TAG = "customDropsOnly";
+        public static final String MOB_MASS_COUNT_TAG = "massCount";
+        public static final String MOB_SPAWN_TICKS_TAG = "spawnTicks";
+        public static final String MOB_HEALTH_TAG = "health";
+        public static final String MOB_UNITS_PER_HEALTH_TAG = "unitsPerHealth";
+        public static final String MOB_XP_TAG = "xp";
+        public static final String MOB_TIER_TAG = "tier";
+        public static final String MOB_SHARD_KILLS_TAG = "shardKills";
+        public static final String MOB_FIXED_COST_TAG = "fixedCost";
+        public static final String MOB_PERK_EFFICIENCY_1_TAG = "efficiency1";
+        public static final String MOB_PERK_EFFICIENCY_2_TAG = "efficiency2";
+        public static final String MOB_PERK_EFFICIENCY_3_TAG = "efficiency3";
+        public static final String MOB_PERK_MASS_1_TAG = "mass1";
+        public static final String MOB_PERK_MASS_2_TAG = "mass2";
+        public static final String MOB_PERK_MASS_3_TAG = "mass3";
+        public static final String MOB_PERK_RATE_1_TAG = "rate1";
+        public static final String MOB_PERK_RATE_2_TAG = "rate2";
+        public static final String MOB_PERK_RATE_3_TAG = "rate3";
+        public static final String MOB_PERK_XP_1_TAG = "xp1";
+        public static final String MOB_PERK_XP_2_TAG = "xp2";
+        public static final String MOB_PERK_XP_3_TAG = "xp3";
     }
 
     public static final class Factory {

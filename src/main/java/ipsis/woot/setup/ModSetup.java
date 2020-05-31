@@ -9,7 +9,6 @@ import ipsis.woot.config.OverrideLoader;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
-import ipsis.woot.modules.factory.FactoryRecipes;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.generic.GenericSetup;
@@ -73,7 +72,6 @@ public class ModSetup {
         PatternRepository.get().load();
         OverrideLoader.loadFromConfig();
         PolicyRegistry.get().loadFromConfig();
-        FactoryRecipes.getInstance().load();
 
         File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

@@ -1,12 +1,8 @@
 package ipsis.woot.modules.factory.calculators;
 
-import ipsis.woot.Woot;
 import ipsis.woot.crafting.FactoryRecipe;
-import ipsis.woot.crafting.FluidConvertorRecipe;
-import ipsis.woot.modules.factory.FactoryRecipes;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
-import ipsis.woot.modules.factory.blocks.ControllerBlock;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.util.FakeMob;
@@ -18,8 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-
-import static ipsis.woot.crafting.FluidConvertorRecipe.FLUID_CONV_TYPE;
 
 public class CalculatorVersion2 {
 

@@ -1,0 +1,9 @@
+{
+  "type": "woot:factory",
+  "mob": "minecraft:ender_dragon",
+  "items": [
+    { "item": "minecraft:end_crystal", "count": 4 }
+  ],
+  "fluids": [
+  ]
+}

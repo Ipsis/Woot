@@ -1,15 +1,25 @@
 package ipsis.woot.modules.factory.calculators;
 
+import ipsis.woot.Woot;
+import ipsis.woot.crafting.FactoryRecipe;
+import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.modules.factory.FactoryRecipes;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
+import ipsis.woot.modules.factory.blocks.ControllerBlock;
+import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.util.FakeMob;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
+
+import static ipsis.woot.crafting.FluidConvertorRecipe.FLUID_CONV_TYPE;
 
 public class CalculatorVersion2 {
 
@@ -51,11 +61,18 @@ public class CalculatorVersion2 {
         HeartTileEntity.Recipe recipe = new HeartTileEntity.Recipe(actualSpawnTicks, fluidCost);
 
         for (FakeMob fakeMob : setup.getAllMobs()) {
-            if (FactoryRecipes.getInstance().hasRecipe(fakeMob)) {
-                for (ItemStack itemStack : FactoryRecipes.getInstance().getItems(fakeMob))
-                    recipe.addItem(fakeMob, itemStack);
-                for (FluidStack fluidStack : FactoryRecipes.getInstance().getFluids(fakeMob))
-                    recipe.addFluid(fakeMob, fluidStack);
+            ItemStack controller = ControllerTileEntity.getItemStack(fakeMob);
+            List<FactoryRecipe> recipes = setup.getWorld().getRecipeManager().getRecipes(
+                    FactoryRecipe.FACTORY_TYPE,
+                    new Inventory(controller), setup.getWorld());
+            for (FactoryRecipe factoryRecipe : recipes) {
+                if (factoryRecipe.getFakeMob().equals(fakeMob)) {
+                    for (ItemStack itemStack : factoryRecipe.getItems())
+                        recipe.addItem(fakeMob, itemStack.copy());
+                    for (FluidStack fluidStack : factoryRecipe.getFluids())
+                        recipe.addFluid(fakeMob, fluidStack);
+                    break;
+                }
             }
         }
 

@@ -53,6 +53,7 @@ public class Registration {
         event.getRegistry().register(new AnvilRecipeSerializer<>(AnvilRecipe::new).setRegistryName(Woot.MODID, "anvil"));
         event.getRegistry().register(new InfuserRecipeSerializer<>(InfuserRecipe::new).setRegistryName(Woot.MODID, "infuser"));
         event.getRegistry().register(new FluidConvertorRecipeSerializer<>(FluidConvertorRecipe::new).setRegistryName(Woot.MODID, "fluidconvertor"));
+        event.getRegistry().register(new FactoryRecipeSerializer<>(FactoryRecipe::new).setRegistryName(Woot.MODID, "factory"));
 
     }
 }

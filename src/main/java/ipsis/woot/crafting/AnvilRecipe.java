@@ -44,7 +44,7 @@ public class AnvilRecipe implements IRecipe<IInventory> {
         this.type = ANVIL_TYPE;
 
 
-        if (baseIngredient.getMatchingStacks().length == 0 && baseIngredient.getMatchingStacks()[0].getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
+        if (baseIngredient.getMatchingStacks().length == 1 && baseIngredient.getMatchingStacks()[0].getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
             ItemStack itemStack = new ItemStack(FactorySetup.MOB_SHARD_ITEM.get());
             MobShardItem.setJEIEnderShard(itemStack);
             inputs.add(Arrays.asList(itemStack));

@@ -67,7 +67,7 @@ public class Anvil {
                 FactorySetup.CONTROLLER_BLOCK.get(),
                 NonNullList.from(Ingredient.EMPTY,
                         Ingredient.fromItems(GenericSetup.PRISM_ITEM.get()),
-                        Ingredient.fromItems(Blocks.COBBLESTONE)))
+                        Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get())))
                 .build(consumer, new ResourceLocation(Woot.MODID, "anvil/controller"));
 
 

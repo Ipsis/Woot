@@ -1,7 +1,7 @@
 {
   "type": "woot:fluidconvertor",
   "catalyst": {
-    "item": "woot:t2shard"
+    "item": "woot:t3shard"
   },
   "catalyst_count": 1,
   "input": {

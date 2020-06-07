@@ -2,6 +2,9 @@ package ipsis.woot.crafting;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.factory.items.MobShardItem;
+import mezz.jei.api.constants.VanillaTypes;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -40,7 +43,15 @@ public class AnvilRecipe implements IRecipe<IInventory> {
         this.ingredients = ingredients;
         this.type = ANVIL_TYPE;
 
-        inputs.add(Arrays.asList(baseIngredient.getMatchingStacks()));
+
+        if (baseIngredient.getMatchingStacks().length == 0 && baseIngredient.getMatchingStacks()[0].getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
+            ItemStack itemStack = new ItemStack(FactorySetup.MOB_SHARD_ITEM.get());
+            MobShardItem.setJEIEnderShard(itemStack);
+            inputs.add(Arrays.asList(itemStack));
+        } else {
+            inputs.add(Arrays.asList(baseIngredient.getMatchingStacks()));
+        }
+
         for (Ingredient i : ingredients)
             inputs.add(Arrays.asList(i.getMatchingStacks()));
     }

@@ -40,22 +40,8 @@ public class AnvilRecipeCategory implements IRecipeCategory<AnvilRecipe>, IToolt
 
     @Override
     public void setIngredients(AnvilRecipe anvilRecipe, IIngredients iIngredients) {
-
-        if (anvilRecipe.getBaseIngredient().getMatchingStacks().length == 1) {
-            if (anvilRecipe.getBaseIngredient().getMatchingStacks()[0].getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
-                ItemStack itemStack = new ItemStack(FactorySetup.MOB_SHARD_ITEM.get());
-                MobShardItem.setJEIEnderShard(itemStack);
-                iIngredients.setInput(VanillaTypes.ITEM, itemStack);
-            } else {
-                iIngredients.setInputLists(VanillaTypes.ITEM, anvilRecipe.getInputs());
-            }
-        } else {
-            iIngredients.setInputLists(VanillaTypes.ITEM, anvilRecipe.getInputs());
-        }
-
+        iIngredients.setInputLists(VanillaTypes.ITEM, anvilRecipe.getInputs());
         iIngredients.setOutput(VanillaTypes.ITEM, anvilRecipe.getOutput());
-
-
     }
 
     @Override

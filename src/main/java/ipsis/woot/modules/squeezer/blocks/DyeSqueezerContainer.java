@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -22,13 +21,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
-import java.util.List;
 
 public class DyeSqueezerContainer extends WootContainer implements TankPacketHandler {
 
@@ -197,19 +192,12 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
 
-        try {
-            List<IContainerListener> iContainerListeners =
-                    (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
-
-            if (!pureDye.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
-                pureDye = tileEntity.getOutputTankFluid().copy();
-                for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
-                            NetworkDirection.PLAY_TO_CLIENT);
-                }
+        if (!pureDye.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
+            pureDye = tileEntity.getOutputTankFluid().copy();
+            for (IContainerListener l : listeners) {
+                NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                        NetworkDirection.PLAY_TO_CLIENT);
             }
-        } catch (Throwable e) {
-            Woot.setup.getLogger().error("Reflection of container listener failed");
         }
     }
 

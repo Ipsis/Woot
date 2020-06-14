@@ -19,10 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.network.NetworkDirection;
-
-import java.util.List;
 
 public class HeartContainer extends WootContainer implements TankPacketHandler  {
 
@@ -53,22 +50,14 @@ public class HeartContainer extends WootContainer implements TankPacketHandler  
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
 
-        try {
-            List<IContainerListener> iContainerListeners =
-                    (List<IContainerListener>) ObfuscationReflectionHelper.getPrivateValue(Container.class, this, "listeners");
-
-            if (!inputFluid.isFluidStackIdentical(tileEntity.getTankFluid())) {
-                inputFluid = tileEntity.getTankFluid().copy();
-                TankPacket tankPacket = new TankPacket(0, inputFluid);
-                for (IContainerListener l : iContainerListeners) {
-                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
-                            NetworkDirection.PLAY_TO_CLIENT);
-                }
+        if (!inputFluid.isFluidStackIdentical(tileEntity.getTankFluid())) {
+            inputFluid = tileEntity.getTankFluid().copy();
+            TankPacket tankPacket = new TankPacket(0, inputFluid);
+            for (IContainerListener l : listeners) {
+                NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                        NetworkDirection.PLAY_TO_CLIENT);
             }
-        } catch (Throwable e) {
-            Woot.setup.getLogger().error("Reflection of container listener failed");
         }
-
     }
 
     private int progress = 0;

@@ -2,6 +2,14 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.2-1.1.0.1] - 2020-06-14
+### Added
+### Changed
+- Fixed gui with tanks not updating [#431]
+- Blacklisted Evokers due to a fatal crash [#432]
+-- This is due to potion effects being applied to the FakePlayer
+## Removed
+
 ## [1.15.2-1.1.0.0] - 2020-06-07
 ### Added
 - Mod version now includes the Minecraft version

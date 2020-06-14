@@ -11,6 +11,7 @@ public class PolicyDefaults {
     );
 
     public static final ArrayList<String> DEFAULT_CAPTURE_BLACKLIST_ENTITY = Lists.newArrayList(
+            "minecraft:evoker"
     );
 
     public static final ArrayList<String> DEFAULT_LEARN_BLACKLIST_FULL_MOD = Lists.newArrayList(

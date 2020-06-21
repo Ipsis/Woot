@@ -3,6 +3,8 @@ package ipsis.woot.simulator.spawning;
 import com.mojang.authlib.GameProfile;
 import ipsis.woot.Woot;
 import ipsis.woot.util.helper.MathHelper;
+import ipsis.woot.util.oss.WootFakePlayer;
+import ipsis.woot.util.oss.WootFakePlayerFactory;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -11,7 +13,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -32,9 +33,9 @@ public class FakePlayerPool {
     private static final GameProfile GP_LOOT_2 = new GameProfile(UUID.nameUUIDFromBytes(LOOT_2.getBytes()), LOOT_2);
     private static final GameProfile GP_LOOT_3 = new GameProfile(UUID.nameUUIDFromBytes(LOOT_3.getBytes()), LOOT_3);
 
-    private static Map<Integer, FakePlayer> fakePlayerMap;
+    private static Map<Integer, WootFakePlayer> fakePlayerMap;
 
-    private static void addFakePlayer(@Nonnull FakePlayer fakePlayer, int looting, Enchantment enchantment) {
+    private static void addFakePlayer(@Nonnull WootFakePlayer fakePlayer, int looting, Enchantment enchantment) {
         ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
         if (looting > 0 && enchantment != null)
             sword.addEnchantment(enchantment, looting);
@@ -48,10 +49,10 @@ public class FakePlayerPool {
         if (enchantment == null)
             Woot.setup.getLogger().warn("FakePlayerPool failed to find looting enchantment");
 
-        addFakePlayer(FakePlayerFactory.get(world, GP_LOOT_0), 0, enchantment);
-        addFakePlayer(FakePlayerFactory.get(world, GP_LOOT_1), 1, enchantment);
-        addFakePlayer(FakePlayerFactory.get(world, GP_LOOT_2), 2, enchantment);
-        addFakePlayer(FakePlayerFactory.get(world, GP_LOOT_3), 3, enchantment);
+        addFakePlayer(WootFakePlayerFactory.get(world, GP_LOOT_0), 0, enchantment);
+        addFakePlayer(WootFakePlayerFactory.get(world, GP_LOOT_1), 1, enchantment);
+        addFakePlayer(WootFakePlayerFactory.get(world, GP_LOOT_2), 2, enchantment);
+        addFakePlayer(WootFakePlayerFactory.get(world, GP_LOOT_3), 3, enchantment);
     }
 
     public static @Nullable FakePlayer getFakePlayer(@Nonnull ServerWorld world, int looting) {

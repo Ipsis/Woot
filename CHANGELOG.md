@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.2-1.1.0.2] - 2020-06-21
+### Added
+### Changed
+- Added temporary fix for NPE on Evokers/Vidicators etc [#432]
+  - This is based on Darkhax's fix in DarkUtilities
+## Removed
+
 ## [1.15.2-1.1.0.1] - 2020-06-14
 ### Added
 ### Changed

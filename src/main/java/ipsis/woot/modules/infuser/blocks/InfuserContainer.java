@@ -91,8 +91,10 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
             inputFluid = tileEntity.getTankFluid().copy();
             TankPacket tankPacket = new TankPacket(0, inputFluid);
             for (IContainerListener l : listeners) {
-                NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
-                        NetworkDirection.PLAY_TO_CLIENT);
+                if (l instanceof ServerPlayerEntity) {
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
             }
         }
     }

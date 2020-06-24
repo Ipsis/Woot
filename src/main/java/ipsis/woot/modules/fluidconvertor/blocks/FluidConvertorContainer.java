@@ -104,8 +104,10 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
             inputFluid = tileEntity.getInputTankFluid().copy();
             TankPacket tankPacket = new TankPacket(0, inputFluid);
             for (IContainerListener l : listeners) {
-                NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
-                        NetworkDirection.PLAY_TO_CLIENT);
+                if (l instanceof ServerPlayerEntity) {
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
             }
         }
 
@@ -113,8 +115,10 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
             outputFluid = tileEntity.getOutputTankFluid().copy();
             TankPacket tankPacket = new TankPacket(1, outputFluid);
             for (IContainerListener l : listeners) {
-                NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
-                        NetworkDirection.PLAY_TO_CLIENT);
+                if (l instanceof ServerPlayerEntity) {
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
             }
         }
     }

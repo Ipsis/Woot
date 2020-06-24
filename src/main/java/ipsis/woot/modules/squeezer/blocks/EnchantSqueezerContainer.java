@@ -157,8 +157,10 @@ public class EnchantSqueezerContainer extends WootContainer implements TankPacke
             outputFluid = tileEntity.getOutputTankFluid().copy();
             TankPacket tankPacket = new TankPacket(0, outputFluid);
             for (IContainerListener l : listeners) {
-                NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
-                        NetworkDirection.PLAY_TO_CLIENT);
+                if (l instanceof ServerPlayerEntity) {
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
             }
         }
     }

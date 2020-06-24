@@ -2,10 +2,16 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.2-1.1.0.3] - TBD
+### Added
+### Changed
+- Fix crash when running with FTBQuests due to invalid listener casting [#434]
+## Removed
+
 ## [1.15.2-1.1.0.2] - 2020-06-21
 ### Added
 ### Changed
-- Added temporary fix for NPE on Evokers/Vidicators etc [#432]
+- Added temporary fix for NPE on Evokers/Vindicators etc [#432]
   - This is based on Darkhax's fix in DarkUtilities
 ## Removed
 

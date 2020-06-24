@@ -195,8 +195,10 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
         if (!pureDye.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
             pureDye = tileEntity.getOutputTankFluid().copy();
             for (IContainerListener l : listeners) {
-                NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
-                        NetworkDirection.PLAY_TO_CLIENT);
+                if (l instanceof ServerPlayerEntity) {
+                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                            NetworkDirection.PLAY_TO_CLIENT);
+                }
             }
         }
     }

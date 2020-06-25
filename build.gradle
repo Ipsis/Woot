@@ -35,7 +35,7 @@ repositories {
     }
 }
 
-version = "${minecraft_version}-1.1.0.2"
+version = "${minecraft_version}-1.1.0.3"
 group = 'ipsis.woot'
 archivesBaseName = 'woot'
 

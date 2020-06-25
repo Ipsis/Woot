@@ -2,7 +2,7 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.15.2-1.1.0.3] - TBD
+## [1.15.2-1.1.0.3] - 2020-06-25
 ### Added
 ### Changed
 - Fix crash when running with FTBQuests due to invalid listener casting [#434]

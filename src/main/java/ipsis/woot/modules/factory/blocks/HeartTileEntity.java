@@ -385,6 +385,13 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         return (int)((100.0F / recipe.getNumTicks() * consumedUnits));
     }
 
+    public List<FakeMob> getFormedMobs() {
+        List<FakeMob> mobs = new ArrayList<>();
+        if (isFormed())
+            mobs.addAll(formedSetup.getAllMobs());
+        return mobs;
+    }
+
     @OnlyIn(Dist.CLIENT)
     public ClientFactorySetup clientFactorySetup;
 

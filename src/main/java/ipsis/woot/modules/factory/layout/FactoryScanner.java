@@ -102,7 +102,7 @@ public class FactoryScanner {
                 if (p.getFactoryComponent() != FactoryComponent.CONTROLLER) {
                     feedback.add(StringHelper.translateFormat(
                             "chat.woot.intern.validate.missing",
-                            expected, p.getBlockPos().getX(), p.getBlockPos().getZ(), p.getBlockPos().getZ()));
+                            expected, p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()));
                     valid = false;
                 }
                 continue;

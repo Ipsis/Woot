@@ -335,19 +335,21 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     }
 
     private boolean canStoreInternal(DyeSqueezerRecipe recipe) {
-        if (dumpExcess)
-            return true;
 
-        if (recipe.getRed() + red > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-        if (recipe.getYellow() + yellow > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-        if (recipe.getBlue() + blue > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
-        if (recipe.getWhite() + white > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
-            return false;
+        boolean redHasSpace = recipe.getRed() + red <= SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get();
+        boolean yellowHasSpace = recipe.getYellow() + yellow <= SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get();
+        boolean blueHasSpace = recipe.getBlue() + blue <= SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get();
+        boolean whiteHasSpace = recipe.getWhite() + white <= SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get();
 
-        return true;
+        if (dumpExcess) {
+            // Must be space for at least on recipe output
+            return recipe.getRed() > 0 && redHasSpace ||
+                   recipe.getYellow() > 0 && yellowHasSpace ||
+                   recipe.getBlue() > 0 && blueHasSpace ||
+                   recipe.getWhite() > 0 && whiteHasSpace;
+        }
+
+        return redHasSpace && yellowHasSpace && blueHasSpace && whiteHasSpace;
     }
 
     private boolean canCreateOutput() { return red >= DyeMakeup.LCM && yellow >= DyeMakeup.LCM && blue >= DyeMakeup.LCM && white >= DyeMakeup.LCM; }

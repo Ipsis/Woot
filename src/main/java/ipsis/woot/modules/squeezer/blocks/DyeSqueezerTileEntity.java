@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -135,6 +136,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
             blue = dyeTag.getInt(ModNBT.DyeSqueezer.BLUE_TAG);
             white = dyeTag.getInt(ModNBT.DyeSqueezer.WHITE_TAG);
         }
+
+        if (compoundNBT.contains(ModNBT.DyeSqueezer.EXCESS_TAG)) {
+            dumpExcess = compoundNBT.getBoolean(ModNBT.DyeSqueezer.EXCESS_TAG);
+        }
         super.read(compoundNBT);
     }
 
@@ -159,6 +164,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         dyeTag.putInt(ModNBT.DyeSqueezer.BLUE_TAG, blue);
         dyeTag.putInt(ModNBT.DyeSqueezer.WHITE_TAG, white);
         compoundNBT.put(ModNBT.DyeSqueezer.INTERNAL_DYE_TANKS_TAG, dyeTag);
+        compoundNBT.putBoolean(ModNBT.DyeSqueezer.EXCESS_TAG, dumpExcess);
         return super.write(compoundNBT);
     }
     //endregion
@@ -192,6 +198,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public int getYellow() { return this.yellow; }
     public int getBlue() { return this.blue; }
     public int getWhite() { return this.white; }
+    public boolean getDumpExcess() { return this.dumpExcess; }
     public int getProgress() { return calculateProgress(); }
 
     //-------------------------------------------------------------------------
@@ -262,6 +269,12 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         yellow += finishedRecipe.getYellow();
         blue += finishedRecipe.getBlue();
         white += finishedRecipe.getWhite();
+
+        red = MathHelper.clamp(red, 0, SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get());
+        yellow = MathHelper.clamp(yellow, 0, SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get());
+        blue = MathHelper.clamp(blue, 0, SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get());
+        white = MathHelper.clamp(white, 0, SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get());
+
         inventory.extractItem(INPUT_SLOT, 1, false);
         outputTank.ifPresent(f -> {
             while (canCreateOutput() && canStoreOutput()) {
@@ -322,6 +335,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     }
 
     private boolean canStoreInternal(DyeSqueezerRecipe recipe) {
+        if (dumpExcess)
+            return true;
+
         if (recipe.getRed() + red > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
             return false;
         if (recipe.getYellow() + yellow > SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())
@@ -363,6 +379,11 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     public TankPacket getOutputTankPacket() {
         return new TankPacket(0, outputTank.map(f -> f.getFluid()).orElse(FluidStack.EMPTY));
+    }
+
+    private boolean dumpExcess = false;
+    public void toggleDumpExcess() {
+        dumpExcess = !dumpExcess;
     }
 
 }

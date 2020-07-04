@@ -127,6 +127,7 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
     private int progress = 0;
     private FluidStack pureDye = FluidStack.EMPTY;
     private int energy = 0;
+    private boolean dumpExcess = false;
 
     @OnlyIn(Dist.CLIENT)
     public int getRedDyeAmount() { return this.red; }
@@ -142,6 +143,8 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
     public FluidStack getPureDye() { return this.pureDye; }
     @OnlyIn(Dist.CLIENT)
     public int getEnergy() { return this.energy; }
+    @OnlyIn(Dist.CLIENT)
+    public boolean getDumpExcess() { return this.dumpExcess; }
 
     public void addListeners() {
         addShortListener(new IntReferenceHolder() {
@@ -185,6 +188,13 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
 
             @Override
             public void set(int i) { progress = i; }
+        });
+        addShortListener(new IntReferenceHolder() {
+            @Override
+            public int get() { return tileEntity.getDumpExcess() ? 1 : 0; }
+
+            @Override
+            public void set(int i) { dumpExcess = i == 1; }
         });
     }
 

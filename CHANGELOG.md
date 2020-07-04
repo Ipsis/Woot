@@ -4,8 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.15.2-1.X.Y.Z] - Not released
 ### Added
+- Using glowstone on the Dye Liquifier to swap internal tank mode between dump/static
 ### Changed
 - Fix internal displaying missing block as (x,z,z) instead of (x,y,z) [#436]
+- Remove all entities in the simulation cell after sweeping the drops [#419]
 ## Removed
 
 ## [1.15.2-1.1.0.3] - 2020-06-25

@@ -3,6 +3,7 @@ package ipsis.woot.modules.squeezer.blocks;
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,6 +16,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -80,11 +82,17 @@ public class DyeSqueezerBlock extends Block implements WootDebug {
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
             return FluidUtil.interactWithFluidHandler(playerEntity, hand, world, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 
-        // open the gui
-        if (squeezer instanceof INamedContainerProvider)
-            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, squeezer, squeezer.getPos());
-        else
-            throw new IllegalStateException("Named container provider is missing");
+        if (heldItem.getItem() == Items.GLOWSTONE_DUST) {
+            squeezer.toggleDumpExcess();
+            PlayerHelper.sendActionBarMessage(playerEntity,
+                    squeezer.getDumpExcess() ? "Dumping excess" : "Strict internal tanks");
+        } else {
+            // open the gui
+            if (squeezer instanceof INamedContainerProvider)
+                NetworkHooks.openGui((ServerPlayerEntity) playerEntity, squeezer, squeezer.getPos());
+            else
+                throw new IllegalStateException("Named container provider is missing");
+        }
 
         return ActionResultType.SUCCESS; // Block was activated
     }
@@ -115,6 +123,7 @@ public class DyeSqueezerBlock extends Block implements WootDebug {
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
+        tooltip.add(new TranslationTextComponent("info.woot.squeezer.glow"));
         CompoundNBT nbt = stack.getChildTag("BlockEntityTag");
         if (nbt == null)
             return;

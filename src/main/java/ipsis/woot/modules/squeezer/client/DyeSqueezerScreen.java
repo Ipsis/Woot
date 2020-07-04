@@ -122,5 +122,8 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String text = title.getFormattedText();
         this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
+
+        String text2 = container.getDumpExcess() ? "Dumping" : "Strict";
+        this.font.drawString(text2, 82.0F, 70.0F, 4210752);
     }
 }

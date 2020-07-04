@@ -92,6 +92,8 @@ public class WootTopPlugin {
                             iProbeInfo.text(TextStyleClass.LABEL + "Yellow: " + TextStyleClass.INFO + dte.getYellow() + "mb");
                             iProbeInfo.text(TextStyleClass.LABEL + "Blue:   " + TextStyleClass.INFO + dte.getBlue() + "mb");
                             iProbeInfo.text(TextStyleClass.LABEL + "White:  " + TextStyleClass.INFO + dte.getWhite() + "mb");
+                            iProbeInfo.text(TextStyleClass.LABEL + "Tanks:  " +
+                                    TextStyleClass.INFO +  (dte.getDumpExcess() ? "Dumping" : "Strict"));
                         }
                     } else if (block instanceof HeartBlock) {
                         TileEntity te = world.getTileEntity(iProbeHitData.getPos());

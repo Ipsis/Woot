@@ -21,6 +21,7 @@ public class ModNBT {
         public static final String YELLOW_TAG = "Yellow";
         public static final String BLUE_TAG = "Blue";
         public static final String WHITE_TAG = "White";
+        public static final String EXCESS_TAG = "Excess";
     }
 
     public static class Anvil {

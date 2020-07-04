@@ -3,6 +3,7 @@ package ipsis.woot.compat.jei;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
+import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.helper.StringHelper;
@@ -51,9 +52,9 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
         itemStacks.init(0, true, 38, 39);
         itemStacks.set(iIngredients);
 
-        IGuiFluidStackGroup fluidStacks = iRecipeLayout.getFluidStacks();
-        fluidStacks.init(0, false, 154, 40, 16, 16, 1000, true, null);
-        fluidStacks.set(iIngredients);
+/*        IGuiFluidStackGroup fluidStacks = iRecipeLayout.getFluidStacks();
+        fluidStacks.init(0, false, 154, 40, 16, 16, DyeMakeup.LCM, false, null);
+        fluidStacks.set(iIngredients); */
     }
 
     @Override

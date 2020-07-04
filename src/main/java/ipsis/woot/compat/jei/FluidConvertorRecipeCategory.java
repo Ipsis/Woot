@@ -51,8 +51,8 @@ public class FluidConvertorRecipeCategory implements IRecipeCategory<FluidConver
         itemStacks.set(iIngredients);
 
         IGuiFluidStackGroup fluidStacks = iRecipeLayout.getFluidStacks();
-        fluidStacks.init(0, true, 46, 18, 16, 60, 10000, true, null);
-        fluidStacks.init(1, false, 154, 18, 16, 60, 10000, true, null);
+        fluidStacks.init(0, true, 46, 18, 16, 60, WootJeiPlugin.maxFluidConvRecipeInputMb, false, null);
+        fluidStacks.init(1, false, 154, 18, 16, 60, WootJeiPlugin.maxFluidConvRecipeOutputMb, false, null);
         fluidStacks.set(iIngredients);
     }
 

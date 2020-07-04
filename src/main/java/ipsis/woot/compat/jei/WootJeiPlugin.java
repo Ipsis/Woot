@@ -2,12 +2,14 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.*;
+import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.fluidconvertor.client.FluidConvertorScreen;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.layout.LayoutSetup;
+import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.client.DyeSqueezerScreen;
 import ipsis.woot.modules.squeezer.client.EnchantSqueezerScreen;
@@ -26,6 +28,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -36,7 +39,10 @@ import java.util.List;
 @JeiPlugin
 public class WootJeiPlugin implements IModPlugin {
 
-    public static int maxInfuserRecipeMb = 1000;
+    public static int maxInfuserRecipeMb = 1;
+    public static int maxFluidConvRecipeInputMb = 1;
+    public static int maxFluidConvRecipeOutputMb = 1;
+    public static int maxEnchantRecipeMb = 1;
 
     @Nullable public static IJeiRuntime jeiRuntime;
 
@@ -77,6 +83,11 @@ public class WootJeiPlugin implements IModPlugin {
                 if (r.getFluidInput().getAmount() > maxInfuserRecipeMb)
                     maxInfuserRecipeMb = r.getFluidInput().getAmount();
             } else if (recipe instanceof FluidConvertorRecipe) {
+                FluidConvertorRecipe r = (FluidConvertorRecipe)recipe;
+                if (r.getInputFluid().getAmount() > maxFluidConvRecipeInputMb)
+                    maxFluidConvRecipeInputMb = r.getInputFluid().getAmount();
+                if (r.getOutput().getAmount() > maxFluidConvRecipeOutputMb)
+                    maxFluidConvRecipeOutputMb = r.getOutput().getAmount();
                 conatusGenRecipes.add(recipe);
             }
         }
@@ -84,6 +95,9 @@ public class WootJeiPlugin implements IModPlugin {
         registration.addRecipes(anvilRecipes, AnvilRecipeCategory.UID);
         registration.addRecipes(infuserRecipes, InfuserRecipeCategory.UID);
         registration.addRecipes(conatusGenRecipes, FluidConvertorRecipeCategory.UID);
+
+        Woot.setup.getLogger().debug("registerRecipes: infuser {} conv {} {}",
+                maxInfuserRecipeMb, maxFluidConvRecipeInputMb, maxFluidConvRecipeOutputMb);
 
         /**
          * Enchanted books
@@ -94,6 +108,8 @@ public class WootJeiPlugin implements IModPlugin {
                 ItemStack itemStack = new ItemStack(Items.ENCHANTED_BOOK);
                 itemStack.addEnchantment(e, i);
                 books.add(new EnchantSqueezerRecipe(itemStack, SqueezerConfiguration.getEnchantFluidAmount(i), SqueezerConfiguration.getEnchantEnergy(i)));
+                if (SqueezerConfiguration.getEnchantFluidAmount(i) > maxEnchantRecipeMb)
+                    maxEnchantRecipeMb = SqueezerConfiguration.getEnchantFluidAmount(i);
             }
         }
         registration.addRecipes(books, EnchantSqueezerRecipeCategory.UID);
@@ -125,6 +141,11 @@ public class WootJeiPlugin implements IModPlugin {
                 "jei.woot.mob_shard.0",
                 "jei.woot.mob_shard.1",
                 "jei.woot.mob_shard.2"
+        );
+        registration.addIngredientInfo(
+                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), 1000),
+                VanillaTypes.FLUID,
+                "jei.woot.puredye"
         );
     }
 

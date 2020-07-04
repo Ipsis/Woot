@@ -52,7 +52,7 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
         itemStacks.set(iIngredients);
 
         IGuiFluidStackGroup fluidStacks = iRecipeLayout.getFluidStacks();
-        fluidStacks.init(0, false, 154, 18, 16, 60, 1000, true, null);
+        fluidStacks.init(0, false, 154, 18, 16, 60, WootJeiPlugin.maxEnchantRecipeMb, false, null);
         fluidStacks.set(iIngredients);
     }
 

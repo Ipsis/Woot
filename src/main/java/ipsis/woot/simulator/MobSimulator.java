@@ -171,6 +171,7 @@ public class MobSimulator {
                 cell.free();
             else
                 cell.run(world);
+            cell.clean(world);
 
             cellsProcessed++;
         }

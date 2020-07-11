@@ -2,7 +2,7 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.15.2-1.X.Y.Z] - Not released
+## [1.15.2-1.1.1.0] - 2020-07-11
 ### Added
 - Using glowstone on the Dye Liquifier to swap internal tank mode between dump/static
 - Added some basic TOP support

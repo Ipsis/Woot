@@ -46,20 +46,24 @@ public class FakeMob {
     public FakeMob(MobEntity mobEntity) {
         this();
 
-        if (isSlime(mobEntity)) {
-            if (((SlimeEntity)mobEntity).isSmallSlime())
-                setInfo(mobEntity.getEntityString(), SMALL_TAG);
-            else
-                setInfo(mobEntity.getEntityString(), LARGE_TAG);
-        } else if (isMagmaCube(mobEntity)) {
-            if (((MagmaCubeEntity)mobEntity).isSmallSlime())
-                setInfo(mobEntity.getEntityString(), SMALL_TAG);
-            else
-                setInfo(mobEntity.getEntityString(), LARGE_TAG);
-        } else if (isChargedCreeper(mobEntity)) {
-            setInfo(mobEntity.getEntityString(), CHARGED_TAG);
+        if (mobEntity.getEntityString() == null) {
+            setInfo(INVALID_ENTITY_KEY, EMPTY_TAG);
         } else {
-            setInfo(mobEntity.getEntityString(), EMPTY_TAG);
+            if (isSlime(mobEntity)) {
+                if (((SlimeEntity) mobEntity).isSmallSlime())
+                    setInfo(mobEntity.getEntityString(), SMALL_TAG);
+                else
+                    setInfo(mobEntity.getEntityString(), LARGE_TAG);
+            } else if (isMagmaCube(mobEntity)) {
+                if (((MagmaCubeEntity) mobEntity).isSmallSlime())
+                    setInfo(mobEntity.getEntityString(), SMALL_TAG);
+                else
+                    setInfo(mobEntity.getEntityString(), LARGE_TAG);
+            } else if (isChargedCreeper(mobEntity)) {
+                setInfo(mobEntity.getEntityString(), CHARGED_TAG);
+            } else {
+                setInfo(mobEntity.getEntityString(), EMPTY_TAG);
+            }
         }
     }
 

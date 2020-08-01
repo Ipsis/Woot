@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.2-1.1.1.1] - 2020-08-01
+### Added
+### Changed
+- Fix incorrect tier displayed in the controller tooltip [#438]
+- Check MobEntity.getEntityString returning null and Woot then causing a crash [#440]
+## Removed
+
 ## [1.15.2-1.1.1.0] - 2020-07-11
 ### Added
 - Using glowstone on the Dye Liquifier to swap internal tank mode between dump/static

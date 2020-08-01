@@ -7,5 +7,6 @@
 
 ## Links
 * [Downloads](http://minecraft.curseforge.com/projects/woot/files)
+* [Wiki](https://github.com/Ipsis/Woot/wiki)
 
 [License LGPLv3](License)

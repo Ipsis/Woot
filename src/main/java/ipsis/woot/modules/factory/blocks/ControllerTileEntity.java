@@ -1,7 +1,9 @@
 package ipsis.woot.modules.factory.blocks;
 
+import ipsis.woot.config.Config;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
@@ -42,6 +44,13 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
 
     public FakeMob getFakeMob() {
         return fakeMob;
+    }
+
+    public Tier getTier() {
+        if (fakeMob == null || !fakeMob.isValid())
+            return Tier.UNKNOWN;
+
+        return Config.OVERRIDE.getMobTier(fakeMob, world);
     }
 
     public static ItemStack getItemStack(FakeMob fakeMob) {

@@ -4,6 +4,7 @@ import ipsis.woot.config.Config;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
@@ -42,10 +43,7 @@ public class ControllerBlockItem extends BlockItem {
                 if (fakeMob.hasTag())
                     tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
 
-                if (worldIn != null) {
-                    Tier mobTier = Config.OVERRIDE.getMobTier(fakeMob, worldIn);
-                    tooltip.add(new TranslationTextComponent((mobTier.getTranslationKey())));
-                }
+                tooltip.add(new TranslationTextComponent("info.woot.controller.0"));
             }
         }
     }

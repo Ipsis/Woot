@@ -205,6 +205,7 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.tier_shard.2", "Essence weights w%d/w%d/w%d");
         add("info.woot.perk.xp", "Generate experience");
         add("info.woot.perk.xp.0", "Generate %d%% of mob experience");
+        add("info.woot.controller.0", "Right-click for required tier information");
 
         // Chat
         add("chat.woot.intern.noedit", "Player is not allowed to edit");

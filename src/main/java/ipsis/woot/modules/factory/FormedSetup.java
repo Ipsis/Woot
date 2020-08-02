@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory;
 
+import ipsis.woot.Woot;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.blocks.CellTileEntityBase;
@@ -223,6 +224,7 @@ public class FormedSetup {
                         else if (formedSetup.tier == Tier.TIER_3 && perkLevel > 2)
                             perkLevel = 2;
 
+                        Woot.setup.getLogger().debug("createFromValidLayout: adding perk {}/{}", perkType, perkLevel);
                         formedSetup.perks.put(perkType, perkLevel);
 
                         if (perkType == PerkType.TIER_SHARD) {

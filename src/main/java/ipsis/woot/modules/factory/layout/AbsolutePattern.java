@@ -38,6 +38,7 @@ public class AbsolutePattern {
     public Tier getTier() { return tier; }
 
     public void addPerk(Perk perk) { this.perks.add(perk); }
+    public void clearPerks() { this.perks.clear(); }
     public void addMob(FakeMob fakeMob) { this.mobs.add(fakeMob); }
     public void clearMobs() { this.mobs.clear(); }
     public List<FakeMob> getMobs() { return Collections.unmodifiableList(mobs); }

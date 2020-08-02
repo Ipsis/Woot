@@ -43,7 +43,7 @@ public class MultiBlockTracker {
             BlockPos pos = iter.next();
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof MultiBlockGlueProvider) {
-                //LOGGER.debug("GlueProvider at {} saying hello", pos);
+                //LOGGER.debug("GlueProvider at {} saying hello {}", pos, te);
                 ((MultiBlockGlueProvider) te).getGlue().onHello(world, pos);
                 iter.remove();
             }

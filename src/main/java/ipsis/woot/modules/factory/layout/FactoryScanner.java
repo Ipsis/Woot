@@ -119,7 +119,8 @@ public class FactoryScanner {
 
             if (p.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
                 BlockState blockState = world.getBlockState(p.getBlockPos());
-                absolutePattern.addPerk(blockState.get(UpgradeBlock.UPGRADE));
+                if (blockState.get(UpgradeBlock.UPGRADE) != Perk.EMPTY)
+                    absolutePattern.addPerk(blockState.get(UpgradeBlock.UPGRADE));
             }
 
             /**
@@ -175,6 +176,7 @@ public class FactoryScanner {
         if (valid == false) {
             absolutePattern.clearMobs();
             absolutePattern.clearControllerPos();
+            absolutePattern.clearPerks();
         }
         LOGGER.debug("compareToWorld: {}", absolutePattern);
         return valid;
@@ -204,8 +206,9 @@ public class FactoryScanner {
         if (pattern1.perks.size() != pattern2.perks.size())
             return false;
 
-        for (Perk p : pattern1.perks)
-            if (!pattern2.perks.contains(p))
+        // Does the new perk setup equal the old setup
+        for (Perk p : pattern2.perks)
+            if (!pattern1.perks.contains(p))
                 return false;
 
         //Woot.setup.getLogger().debug("isPatternEqual: old and new patterns are equal");

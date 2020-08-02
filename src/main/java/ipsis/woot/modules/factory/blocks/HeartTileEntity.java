@@ -110,6 +110,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
                formedSetup = FormedSetup.createFromValidLayout(world, layout);
+               LOGGER.debug("formedSetup: {}", formedSetup);
 
                formedSetup.getAllMobs().forEach(m -> MobSimulator.getInstance().learn(m));
                recipe = CalculatorVersion2.calculate(formedSetup);

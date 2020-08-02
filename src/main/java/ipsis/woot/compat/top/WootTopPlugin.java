@@ -2,10 +2,8 @@ package ipsis.woot.compat.top;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
-import ipsis.woot.modules.factory.blocks.ControllerBlock;
-import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
-import ipsis.woot.modules.factory.blocks.HeartBlock;
-import ipsis.woot.modules.factory.blocks.HeartTileEntity;
+import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.blocks.*;
 import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.modules.layout.blocks.LayoutBlock;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
@@ -66,12 +64,12 @@ public class WootTopPlugin {
                     if (block instanceof ControllerBlock) {
                         TileEntity te = world.getTileEntity(iProbeHitData.getPos());
                         if (te instanceof ControllerTileEntity) {
-                            ControllerTileEntity cte = (ControllerTileEntity)te;
+                            ControllerTileEntity cte = (ControllerTileEntity) te;
                             FakeMob fakeMob = cte.getFakeMob();
                             if (probeMode == ProbeMode.DEBUG) {
                                 iProbeInfo.text(
                                         TextStyleClass.LABEL + "Mob: " +
-                                        TextStyleClass.INFO + fakeMob.toString());
+                                                TextStyleClass.INFO + fakeMob.toString());
                             } else {
                                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                                 if (entityType != null) {
@@ -80,8 +78,18 @@ public class WootTopPlugin {
                                         name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
                                     iProbeInfo.text(
                                             TextStyleClass.LABEL + "Mob: " +
-                                            TextStyleClass.INFO + name);
+                                                    TextStyleClass.INFO + name);
                                 }
+                            }
+                        }
+                    } else if (block instanceof UpgradeBlock) {
+                        TileEntity te = world.getTileEntity(iProbeHitData.getPos());
+                        if (te instanceof UpgradeTileEntity) {
+                           UpgradeTileEntity ute = (UpgradeTileEntity)te;
+                            Perk perk = ute.getUpgrade(blockState);
+                            if (perk != Perk.EMPTY) {
+                                String text = StringHelper.translate("item.woot." + perk.getName());
+                                iProbeInfo.text(TextStyleClass.LABEL + "Perk: " + TextStyleClass.INFO + text);
                             }
                         }
                     } else if (block instanceof DyeSqueezerBlock) {

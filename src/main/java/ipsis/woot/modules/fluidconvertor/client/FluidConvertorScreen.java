@@ -1,5 +1,6 @@
 package ipsis.woot.modules.fluidconvertor.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
@@ -44,35 +45,36 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.drawMouseoverTooltip(matrixStack, mouseX, mouseY);
 
         if (isPointInRegion(IN_TANK_LX, IN_TANK_LY, IN_TANK_WIDTH, IN_TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY, container.getInputFluid(),
+            renderFluidTankTooltip(matrixStack, mouseX, mouseY, container.getInputFluid(),
                     FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get());
         if (isPointInRegion(OUT_TANK_LX, OUT_TANK_LY, OUT_TANK_WIDTH, OUT_TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY, container.getOutputFluid(),
+            renderFluidTankTooltip(matrixStack, mouseX, mouseY, container.getOutputFluid(),
                     FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
+            renderEnergyTooltip(matrixStack, mouseX, mouseY, container.getEnergy(),
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bindTexture(GUI);
+        getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        blit(relX, relY, 0, 0, this.xSize, this.ySize);
+        drawTexture(matrixStack, relX, relY, 0, 0, this.xSize, this.ySize);
 
         // Progress
         int progress = container.getProgress();
-        blit(this.guiLeft + 73, this.guiTop + 39, 180, 0,(int)(72 * (progress / 100.0F)) , 28);
+        drawTexture(matrixStack, this.guiLeft + 73, this.guiTop + 39, 180, 0,(int)(72 * (progress / 100.0F)) , 28);
 
         renderEnergyBar(
+                matrixStack,
                 ENERGY_LX,
                 ENERGY_RY,
                 ENERGY_HEIGHT,
@@ -80,6 +82,7 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
                 container.getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
 
         renderFluidTank(
+                matrixStack,
                 IN_TANK_LX,
                 IN_TANK_RY,
                 IN_TANK_HEIGHT,
@@ -88,6 +91,7 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
                 container.getInputFluid());
 
         renderFluidTank(
+                matrixStack,
                 OUT_TANK_LX,
                 OUT_TANK_RY,
                 OUT_TANK_HEIGHT,
@@ -95,11 +99,4 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
                 FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get(),
                 container.getOutputFluid());
     }
-
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = title.getFormattedText();
-        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
-    }
-
 }

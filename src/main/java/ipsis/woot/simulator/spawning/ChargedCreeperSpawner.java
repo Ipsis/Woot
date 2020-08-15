@@ -14,11 +14,14 @@ public class ChargedCreeperSpawner extends AbstractMobSpawner {
         if (!(mobEntity instanceof CreeperEntity))
             return;
 
+        // TODO Creeper onStruckByLightning
+        /*
         if (fakeMob.isChargedCreeper())
-            mobEntity.onStruckByLightning(new LightningBoltEntity(world,
-                        mobEntity.getPosition().getX(),
-                        mobEntity.getPosition().getY(),
-                        mobEntity.getPosition().getZ(),
-                        true));
+            mobEntity.onStruckByLightning(
+                    new LightningBoltEntity(world,
+                        mobEntity.getX(),
+                        mobEntity.getY(),
+                        mobEntity.getZ(),
+                        true)); */
     }
 }

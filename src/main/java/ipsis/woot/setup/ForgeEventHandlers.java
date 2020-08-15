@@ -26,14 +26,11 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.dimension.Dimension;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig;
@@ -121,6 +118,8 @@ public class ForgeEventHandlers {
         if (event.phase == TickEvent.Phase.START)
             return;
 
+        // TODO onWorldTick for simulator
+        /*
         Dimension dimension = event.world.getDimension();
         if (dimension.getType() != TARTARUS_DIMENSION_TYPE) {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
@@ -129,7 +128,7 @@ public class ForgeEventHandlers {
             }
         } else {
             ipsis.woot.simulator.MobSimulator.getInstance().tick(event.world);
-        }
+        } */
     }
 
     @SubscribeEvent
@@ -140,7 +139,8 @@ public class ForgeEventHandlers {
     @SubscribeEvent
     public void onServerStarting(final FMLServerStartingEvent event) {
         Woot.setup.getLogger().info("onServerStarting");
-        ModCommands.register(event.getCommandDispatcher());
+        // TODO ModCommands.register
+        //ModCommands.register(event.getCommandDispatcher());
         SqueezerRecipes.load(event.getServer().getRecipeManager());
         AnvilRecipes.load(event.getServer().getRecipeManager());
         InfuserRecipes.load(event.getServer().getRecipeManager());
@@ -166,6 +166,8 @@ public class ForgeEventHandlers {
         SerializationHelper.writeJsonFile(dropFile, GSON.toJson(jsonObject));
     }
 
+    // TODO onDimensionRegistry
+    /*
     @SubscribeEvent
     public void onDimensionRegistry(final RegisterDimensionsEvent event) {
         Woot.setup.getLogger().info("onDimensionRegistry");
@@ -175,7 +177,7 @@ public class ForgeEventHandlers {
                 null,
                 true);
         DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);
-    }
+    } */
 
     /**
      * Death cache

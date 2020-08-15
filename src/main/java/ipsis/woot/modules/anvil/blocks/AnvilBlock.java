@@ -83,10 +83,10 @@ public class AnvilBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onUse(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
 
         if (world.isRemote)
-            super.onBlockActivated(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
+            super.onUse(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
 
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof AnvilTileEntity) {
@@ -113,8 +113,7 @@ public class AnvilBlock extends Block implements WootDebug {
                             playerEntity.inventory.setInventorySlotContents( playerEntity.inventory.currentItem, heldItem);
                         playerEntity.openContainer.detectAndSendChanges();
                     } else {
-                        PlayerHelper.sendActionBarMessage(playerEntity,
-                                new TranslationTextComponent("chat.woot.anvil.nobase").getFormattedText());
+                        playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.anvil.nobase"), true);
                     }
                 } else {
                     // Base item already present

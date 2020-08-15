@@ -61,10 +61,10 @@ public class HeartBlock extends Block implements FactoryComponentProvider, WootD
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
         if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
+            return super.onUse(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
         if (player.getHeldItemMainhand().getItem() == LayoutSetup.INTERN_ITEM.get() || player.getHeldItemMainhand().getItem() == DebugSetup.DEBUG_ITEM.get()) {
                 // intern is used on the heart, so cannot open the gui

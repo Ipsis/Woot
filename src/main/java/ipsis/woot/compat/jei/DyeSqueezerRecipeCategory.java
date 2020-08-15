@@ -1,5 +1,6 @@
 package ipsis.woot.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
@@ -58,16 +59,16 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
     }
 
     @Override
-    public void draw(DyeSqueezerRecipe recipe, double mouseX, double mouseY) {
+    public void draw(DyeSqueezerRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.drawString("Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
-            minecraft.fontRenderer.drawString("Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
-            minecraft.fontRenderer.drawString("Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
-            minecraft.fontRenderer.drawString("White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.draw(matrixStack, "Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.draw(matrixStack, "Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.draw(matrixStack, "Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.draw(matrixStack, "White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
 
-            minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
         }
     }

@@ -71,7 +71,7 @@ public class FluidConvertorBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
         if (worldIn.isRemote)
             return ActionResultType.SUCCESS;
 

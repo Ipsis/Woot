@@ -171,8 +171,9 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     //-------------------------------------------------------------------------
     //region NBT
+
     @Override
-    public void read(CompoundNBT compoundNBT) {
+    public void deserializeNBT(CompoundNBT compoundNBT) {
 
         if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
             CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
@@ -188,7 +189,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
-        super.read(compoundNBT);
+        super.deserializeNBT(compoundNBT);
     }
 
     @Override

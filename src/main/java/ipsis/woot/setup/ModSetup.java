@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
-import ipsis.woot.compat.top.WootTopPlugin;
+//import ipsis.woot.compat.top.WootTopPlugin;
 import ipsis.woot.config.OverrideLoader;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
@@ -15,7 +15,6 @@ import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.oracle.OracleSetup;
-import ipsis.woot.simulator.CustomDropsLoader;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.policy.PolicyRegistry;
@@ -89,7 +88,7 @@ public class ModSetup {
     }
 
     public void setupPlugins() {
-        WootTopPlugin.init();
+        //WootTopPlugin.init();
     }
 
     public Logger getLogger() { return logger; }

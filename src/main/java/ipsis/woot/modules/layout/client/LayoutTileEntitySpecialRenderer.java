@@ -98,8 +98,8 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
             maxY += 1.0F;
             maxZ += 1.0F;
             matrixStack.translate(0.0F, 0.0F, 0.0F);
-            IVertexBuilder iVertexBuilder = bufferIn.getBuffer(RenderType.LINES);
-            WorldRenderer.drawBoundingBox(matrixStack, iVertexBuilder,
+            IVertexBuilder iVertexBuilder = bufferIn.getBuffer(RenderType.field_228614_Q_);
+            WorldRenderer.drawBox(matrixStack, iVertexBuilder,
                 minX, minY, minZ, maxX, maxY, maxZ,
                0.9F, 0.9F, 0.9F, 1.0F, 0.5F, 0.5F, 0.5F);
         }

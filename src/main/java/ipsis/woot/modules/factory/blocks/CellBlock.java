@@ -66,7 +66,7 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
+    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
         if (worldIn.isRemote)
             return ActionResultType.SUCCESS;
 
@@ -78,7 +78,7 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
             return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
+        return super.onUse(state, worldIn, pos, player, handIn, p_225533_6_);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -91,7 +91,7 @@ public class FactoryHelper {
                 ItemStack takenStack = PlayerHelper.takeFactoryComponent(playerEntity, correctItemStacks);
                 if (!takenStack.isEmpty()) {
 
-                    BlockSnapshot blockSnapshot = BlockSnapshot.getBlockSnapshot(world, pos);
+                    BlockSnapshot blockSnapshot = BlockSnapshot.create(world, pos);
                     world.setBlockState(pb.getBlockPos(), placeBlock.getDefaultState(), 11);
                     if (ForgeEventFactory.onBlockPlace(playerEntity, blockSnapshot, Direction.UP)) {
                         blockSnapshot.restore(true, false);

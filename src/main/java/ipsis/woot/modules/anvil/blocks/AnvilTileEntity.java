@@ -126,9 +126,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
          * Check anvil is hot
          */
         if (!AnvilSetup.ANVIL_BLOCK.get().isAnvilHot(world, pos)) {
-            PlayerHelper.sendActionBarMessage(
-                    playerEntity,
-                    new TranslationTextComponent("chat.woot.anvil.cold").getFormattedText());
+            playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.anvil.cold"), true);
             return;
         }
 
@@ -162,9 +160,10 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
     /**
      * NBT
      */
+
     @Override
-    public void read(CompoundNBT compoundNBT) {
-        super.read(compoundNBT);
+    public void deserializeNBT(CompoundNBT compoundNBT) {
+        super.deserializeNBT(compoundNBT);
         if (compoundNBT.contains(ModNBT.Anvil.BASE_ITEM_TAG)) {
 
             ListNBT listNBT = compoundNBT.getList(ModNBT.INVENTORY_TAG, 10);
@@ -216,7 +215,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(pkt.getNbtCompound());
+        this.deserializeNBT(pkt.getNbtCompound());
     }
 
     /**

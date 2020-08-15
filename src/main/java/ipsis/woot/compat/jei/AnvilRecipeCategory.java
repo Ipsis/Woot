@@ -18,6 +18,8 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.List;
 
@@ -45,11 +47,11 @@ public class AnvilRecipeCategory implements IRecipeCategory<AnvilRecipe>, IToolt
     }
 
     @Override
-    public void onTooltip(int i, boolean b, ItemStack itemStack, List<String> list) {
+    public void onTooltip(int i, boolean b, ItemStack itemStack, List<ITextComponent> list) {
         if (i == 0) {
-            list.add("Base Item");
+            list.add(new StringTextComponent("Base Item"));
             if (itemStack.getItem() instanceof DieItem)
-                list.add("Not consumed on crafting");
+                list.add(new StringTextComponent("Not consumed on crafting"));
         }
     }
 

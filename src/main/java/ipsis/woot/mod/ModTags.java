@@ -4,28 +4,18 @@ import ipsis.woot.Woot;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.util.ResourceLocation;
 
 public class ModTags {
 
     public static class Blocks
     {
-        public static final Tag<Block> FACTORY_BLOCK = tag("factory_blocks");
-
-        private static Tag<Block> tag(String name)
-        {
-            return new BlockTags.Wrapper(new ResourceLocation(Woot.MODID, name));
-        }
+        public static final ITag.INamedTag<Block> FACTORY_BLOCK = BlockTags.makeWrapperTag(Woot.MODID + ":" + "factory_block");
     }
 
     public static class Items {
-        public static final Tag<Item> FACTORY_BLOCK = tag("factory_blocks");
-
-        private static Tag<Item> tag(String name)
-        {
-            return new ItemTags.Wrapper(new ResourceLocation(Woot.MODID, name));
-        }
+        public static final ITag.INamedTag<Item> FACTORY_BLOCK = ItemTags.makeWrapperTag(Woot.MODID + ":" + "factory_block");
     }
 }

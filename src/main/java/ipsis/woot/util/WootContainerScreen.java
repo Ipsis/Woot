@@ -1,5 +1,6 @@
 package ipsis.woot.util;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -13,6 +14,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
@@ -29,11 +31,12 @@ public abstract class WootContainerScreen<T extends Container> extends Container
     /**
      * x1, y1 is the bottom right of the energy bar
      */
-    public void renderEnergyBar(int x1, int y1, int height, int width, int curr, int max) {
+    public void renderEnergyBar(MatrixStack matrixStack, int x1, int y1, int height, int width, int curr, int max) {
         int filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
-        fill(guiLeft + x1,
+        fill(matrixStack,
+                guiLeft + x1,
              guiTop + y1 - h + 1,
              guiLeft + x1 + width,
              guiTop + y1 + 1, 0xffff0000);
@@ -49,47 +52,49 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
     }
 
-    public void renderFluidTank(int x1, int y1, int height, int width, int max, FluidStack fluidStack)  {
+    public void renderFluidTank(MatrixStack matrixStack, int x1, int y1, int height, int width, int max, FluidStack fluidStack)  {
         int filled = fluidStack.getAmount() * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
         drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
     }
 
-    public void renderHorizontalBar(int x1, int y1, int x2, int y2, int curr, int max, int color) {
+    public void renderHorizontalBar(MatrixStack matrixStack, int x1, int y1, int x2, int y2, int curr, int max, int color) {
         int filled = curr * max / 100;
         filled = MathHelper.clamp(filled, 0, 100);
         int l = filled * (x2 - x1) / 100;
-        fill(guiLeft + x1, guiTop + y2,
+        fill(matrixStack, guiLeft + x1, guiTop + y2,
                 guiLeft + x2 + l, guiTop + y2, color);
     }
 
-    public void renderHorizontalGauge(int x1, int y1, int x2, int y2, int curr, int max, int color) {
-        fill(guiLeft + x1, guiTop + y1, guiLeft + x2, guiTop + y2, color);
+    public void renderHorizontalGauge(MatrixStack matrixStack, int x1, int y1, int x2, int y2, int curr, int max, int color) {
+        fill(matrixStack, guiLeft + x1, guiTop + y1, guiLeft + x2, guiTop + y2, color);
         int p = curr * (x2 - x1) / max;
         for (int i = 0; i < p; i++)
-            vLine(guiLeft + x1 + 1 + i,
+            drawVerticalLine(
+                    matrixStack,
+                    guiLeft + x1 + 1 + i,
                     guiTop + y1,
                     guiTop + y2 - 1,
                     i % 2 == 0 ? color : 0xff000000);
     }
 
-    public void renderFluidTankTooltip(int mouseX, int mouseY, FluidStack fluidStack, int capacity) {
-        List<String> tooltip = new ArrayList<>();
+    public void renderFluidTankTooltip(MatrixStack matrixStack, int mouseX, int mouseY, FluidStack fluidStack, int capacity) {
+        List<ITextComponent> tooltip = new ArrayList<>();
         if (!fluidStack.isEmpty()) {
-            tooltip.add(fluidStack.getDisplayName().getFormattedText());
-            tooltip.add(String.format("%d/%d mb", fluidStack.getAmount(), capacity));
+            tooltip.add(fluidStack.getDisplayName());
+            tooltip.add(new StringTextComponent(String.format("%d/%d mb", fluidStack.getAmount(), capacity)));
         } else {
-            tooltip.add(String.format("0/%d mb", capacity));
+            tooltip.add(new StringTextComponent(String.format("0/%d mb", capacity)));
         }
-        renderTooltip(tooltip, mouseX, mouseY);
+        renderTooltip(matrixStack, tooltip, mouseX, mouseY);
     }
 
-    public void renderEnergyTooltip(int mouseX, int mouseY, int curr, int capacity, int rate) {
-        List<String> tooltip = Arrays.asList(
-                String.format("%d/%d RF", curr, capacity),
-                String.format("%d RF/tick", rate));
-        renderTooltip(tooltip, mouseX, mouseY);
+    public void renderEnergyTooltip(MatrixStack matrixStack, int mouseX, int mouseY, int curr, int capacity, int rate) {
+        List<ITextComponent> tooltip = Arrays.asList(
+                new StringTextComponent(String.format("%d/%d RF", curr, capacity)),
+                new StringTextComponent( String.format("%d RF/tick", rate)));
+        renderTooltip(matrixStack, tooltip, mouseX, mouseY);
     }
 
     public void drawFluid(int x, int y, FluidStack fluid, int width, int height) {
@@ -101,7 +106,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         int color = fluid.getFluid().getAttributes().getColor(fluid);
         setGLColorFromInt(color);
         ResourceLocation resourceLocation = fluid.getFluid().getAttributes().getStillTexture();
-        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(resourceLocation);
+        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getSpriteAtlas(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(resourceLocation);
         drawTiledTexture(x, y, textureAtlasSprite, width, height);
     }
 
@@ -141,10 +146,10 @@ public abstract class WootContainerScreen<T extends Container> extends Container
 
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos(x, y + height, this.itemRenderer.zLevel).tex(minU, minV + (maxV - minV) * height / 16F).endVertex();
-        buffer.pos(x + width, y + height, this.itemRenderer.zLevel).tex(minU + (maxU - minU) * width / 16F, minV + (maxV - minV) * height / 16F).endVertex();
-        buffer.pos(x + width, y, this.itemRenderer.zLevel).tex(minU + (maxU - minU) * width / 16F, minV).endVertex();
-        buffer.pos(x, y, this.itemRenderer.zLevel).tex(minU, minV).endVertex();
+        buffer.vertex(x, y + height, this.itemRenderer.zLevel).texture(minU, minV + (maxV - minV) * height / 16F).endVertex();
+        buffer.vertex(x + width, y + height, this.itemRenderer.zLevel).texture(minU + (maxU - minU) * width / 16F, minV + (maxV - minV) * height / 16F).endVertex();
+        buffer.vertex(x + width, y, this.itemRenderer.zLevel).texture(minU + (maxU - minU) * width / 16F, minV).endVertex();
+        buffer.vertex(x, y, this.itemRenderer.zLevel).texture(minU, minV).endVertex();
         Tessellator.getInstance().draw();
     }
 }

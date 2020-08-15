@@ -15,6 +15,7 @@ import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -88,9 +89,9 @@ public class Generic {
          */
         class Casing {
             RegistryObject<DyeCasingItem> casing;
-            Tag<Item> tag;
+            ITag.INamedTag<Item> tag;
 
-            public Casing(RegistryObject<DyeCasingItem> casing, Tag<Item> tag) {
+            public Casing(RegistryObject<DyeCasingItem> casing, ITag.INamedTag<Item> tag) {
                 this.casing = casing;
                 this.tag = tag;
             }

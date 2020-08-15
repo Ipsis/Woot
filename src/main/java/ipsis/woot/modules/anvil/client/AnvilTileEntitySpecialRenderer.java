@@ -1,17 +1,14 @@
 package ipsis.woot.modules.anvil.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.modules.anvil.blocks.AnvilTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Vector3d;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -46,8 +43,8 @@ public class AnvilTileEntitySpecialRenderer extends TileEntityRenderer<AnvilTile
         matrixStack.push();
         matrixStack.translate(x, y, z);
         matrixStack.scale(scale, scale, scale);
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
+        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+        matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
 
         Minecraft.getInstance().getItemRenderer().renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrixStack, iRenderTypeBuffer);
         matrixStack.pop();;

@@ -1,5 +1,6 @@
 package ipsis.woot.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
@@ -20,6 +21,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.awt.*;
 import java.util.List;
@@ -49,22 +52,22 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
     }
 
     @Override
-    public void onTooltip(int slot, boolean isInput, ItemStack itemStack, List<String> list) {
+    public void onTooltip(int slot, boolean b, ItemStack itemStack, List<ITextComponent> list) {
 
         if (slot != 2)
             return;
 
         if (itemStack.getItem() == Items.ENCHANTED_BOOK || itemStack.isEnchanted()) {
             if (itemStack.getCount() == 1)
-                list.add("Random enchantment I");
+                list.add(new StringTextComponent("Random enchantment I"));
             else if (itemStack.getCount() == 2)
-                list.add("Random enchantment II");
+                list.add(new StringTextComponent("Random enchantment II"));
             else if (itemStack.getCount() == 3)
-                list.add("Random enchantment III");
+                list.add(new StringTextComponent("Random enchantment III"));
             else if (itemStack.getCount() == 4)
-                list.add("Random enchantment IV");
+                list.add(new StringTextComponent("Random enchantment IV"));
             else if (itemStack.getCount() == 5)
-                list.add("Random enchantment V");
+                list.add(new StringTextComponent("Random enchantment V"));
         }
     }
 
@@ -103,12 +106,11 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
     }
 
     @Override
-    public void draw(InfuserRecipe recipe, double mouseX, double mouseY) {
-
+    public void draw(InfuserRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
         }
     }

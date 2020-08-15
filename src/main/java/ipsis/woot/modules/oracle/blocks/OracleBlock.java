@@ -36,9 +36,9 @@ public class OracleBlock extends Block {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
         if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
+            return super.onUse(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
         TileEntity te = worldIn.getTileEntity((pos));
         if (te instanceof INamedContainerProvider)

@@ -55,14 +55,12 @@ public class MobShardItem extends Item {
             return false;
 
         if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation())) {
-            PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
-                    new TranslationTextComponent("chat.woot.mobshard.failure").getFormattedText());
+            ((PlayerEntity)attacker).sendStatusMessage(new TranslationTextComponent("chat.woot.mobshard.failure"), true);
             return false;
         }
 
         setProgrammedMob(stack, fakeMob);
-        PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
-                new TranslationTextComponent("chat.woot.mobshard.success").getFormattedText());
+        ((PlayerEntity)attacker).sendStatusMessage(new TranslationTextComponent("chat.woot.mobshard.success"), true);
         return true;
 
     }

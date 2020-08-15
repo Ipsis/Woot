@@ -38,7 +38,7 @@ public class UpgradeBlock extends FactoryBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
         if (!worldIn.isRemote) {
             ItemStack itemStack = player.getHeldItem(handIn);
@@ -55,7 +55,7 @@ public class UpgradeBlock extends FactoryBlock {
             }
         }
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
+        return super.onUse(state, worldIn, pos, player, handIn, blockRayTraceResult);
     }
 
     @Override

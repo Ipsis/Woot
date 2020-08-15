@@ -1,5 +1,6 @@
 package ipsis.woot.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
@@ -77,11 +78,11 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
     }
 
     @Override
-    public void draw(EnchantSqueezerRecipe recipe, double mouseX, double mouseY) {
+    public void draw(EnchantSqueezerRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70, 70, Color.BLACK.getRGB());
         }
     }

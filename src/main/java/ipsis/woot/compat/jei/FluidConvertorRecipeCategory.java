@@ -1,5 +1,6 @@
 package ipsis.woot.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.FluidConvertorRecipe;
 import ipsis.woot.modules.infuser.InfuserSetup;
@@ -77,11 +78,11 @@ public class FluidConvertorRecipeCategory implements IRecipeCategory<FluidConver
     }
 
     @Override
-    public void draw(FluidConvertorRecipe recipe, double mouseX, double mouseY) {
+    public void draw(FluidConvertorRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.drawString(String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     90, 70, Color.BLACK.getRGB());
         }
     }

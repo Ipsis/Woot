@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ToolsSetup {
 
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Woot.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Woot.MODID);
 
     public static void register() {
         Woot.setup.getLogger().info("ToolsSetup: register");

@@ -146,8 +146,10 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     //-------------------------------------------------------------------------
     //region NBT
+
+
     @Override
-    public void read(CompoundNBT compoundNBT) {
+    public void deserializeNBT(CompoundNBT compoundNBT) {
         if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
             CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
                     inventory, null, compoundNBT.getList(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
@@ -158,7 +160,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
 
-        super.read(compoundNBT);
+        super.deserializeNBT(compoundNBT);
     }
 
     @Override

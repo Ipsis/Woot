@@ -99,17 +99,17 @@ public class XpShardBaseItem extends Item {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 
         if (worldIn.isRemote)
-            return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+            return ActionResult.pass(playerIn.getHeldItem(handIn));
 
         ItemStack itemStack = playerIn.getHeldItem(handIn);
         if (itemStack.isEmpty())
-            return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+            return ActionResult.pass(playerIn.getHeldItem(handIn));
 
         worldIn.playSound(
                 null,
-                playerIn.getPosX(),
-                playerIn.getPosY(),
-                playerIn.getPosZ(),
+                playerIn.getX(),
+                playerIn.getY(),
+                playerIn.getZ(),
                 SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
                 SoundCategory.PLAYERS,
                 0.2F,
@@ -119,7 +119,7 @@ public class XpShardBaseItem extends Item {
             // Fake player can only use one at a time
             worldIn.addEntity(new ExperienceOrbEntity(
                             worldIn,
-                            playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(),
+                            playerIn.getX(), playerIn.getY(), playerIn.getZ(),
                             1));
             itemStack.shrink(1);
         } else {
@@ -138,7 +138,7 @@ public class XpShardBaseItem extends Item {
                 playerIn.giveExperiencePoints(xp);
             }
         }
-        return ActionResult.resultSuccess(itemStack);
+        return ActionResult.success(itemStack);
     }
 
     @OnlyIn(Dist.CLIENT)

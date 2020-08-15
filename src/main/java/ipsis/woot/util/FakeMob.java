@@ -148,7 +148,8 @@ public class FakeMob {
     private static final String WITHER = "minecraft:wither";
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
-        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).isCharged();
+        // shouldRenderOverlay reports the POWERED state of the entity
+        return mobEntity instanceof CreeperEntity && ((CreeperEntity) mobEntity).shouldRenderOverlay();
     }
 
     private boolean isSlime(MobEntity mobEntity) { return mobEntity instanceof SlimeEntity; }

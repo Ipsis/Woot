@@ -4,6 +4,7 @@ import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.layout.AbsolutePattern;
 import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.modules.layout.LayoutSetup;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -85,7 +86,7 @@ public class LayoutTileEntity extends TileEntity {
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+        deserializeNBT(pkt.getNbtCompound());
         refresh();
     }
 
@@ -101,8 +102,8 @@ public class LayoutTileEntity extends TileEntity {
     }
 
     @Override
-    public void handleUpdateTag(CompoundNBT tag) {
-        read(tag);
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+        deserializeNBT(tag);
         refresh();
     }
 
@@ -123,8 +124,8 @@ public class LayoutTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void deserializeNBT(CompoundNBT compound) {
+        super.deserializeNBT(compound);
         level = MathHelper.clamp(compound.getInt(KEY_LEVEL), -1, 16);
         tier = Tier.byIndex(compound.getInt(KEY_TIER));
     }

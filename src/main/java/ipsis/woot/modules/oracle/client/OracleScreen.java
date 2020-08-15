@@ -1,5 +1,6 @@
 package ipsis.woot.modules.oracle.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.oracle.blocks.OracleContainer;
@@ -14,6 +15,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -33,18 +35,18 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bindTexture(GUI);
+        getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        blit(relX, relY, 0, 0, xSize, ySize);
+        drawTexture(matrixStack, relX, relY, 0, 0, xSize, ySize);
 
         if (!container.simulatedDrops.isEmpty()) {
             int currRow = 0;
@@ -54,7 +56,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                 int stackX = guiLeft + (currCol * 18) + 10;
                 int stackY = guiTop + (currRow * 18) + 41;
 
-                RenderHelper.enableStandardItemLighting();
+                RenderHelper.enable();
                 itemRenderer.renderItemIntoGUI(summary.itemStack, stackX, stackY);
 
                 currCol++;
@@ -67,22 +69,23 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = title.getFormattedText();
-        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
+    protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.drawForeground(matrixStack, mouseX, mouseY);
 
         if (container.simulatedMobs.isEmpty()) {
             String mob = "N/A";
-            this.font.drawString(mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
+            this.textRenderer.draw(matrixStack, mob, (float)(this.xSize / 2 - this.textRenderer.getStringWidth(mob) / 2), 25.0F, 4210752);
         } else {
             FakeMob fakeMob = container.simulatedMobs.get(mobIndex);
             EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
+            // TODO add entity text
+            /*
             if (entityType != null) {
                 String mob = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
                 if (fakeMob.hasTag())
                     mob += "[" + fakeMob.getTag() + "]";
-                this.font.drawString(mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
-            }
+                this.textRenderer.draw(matrixStack, mob, (float)(this.xSize / 2 - this.textRenderer.getStringWidth(mob) / 2), 25.0F, 4210752);
+            } */
         }
 
         if (!container.simulatedDrops.isEmpty()) {
@@ -97,13 +100,13 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                 if (mouseX - guiLeft > stackX && mouseX - guiLeft <= stackX + 20 && mouseY - guiTop >= stackY && mouseY - guiTop <= stackY + 20) {
                     FontRenderer fontRenderer = summary.itemStack.getItem().getFontRenderer(summary.itemStack);
                     if (fontRenderer == null)
-                        fontRenderer = font;
-                    List<String> tooltip = getTooltipFromItem(summary.itemStack);
-                    tooltip.add(String.format("No looting : %.2f%%", summary.chanceToDrop[0]));
-                    tooltip.add(String.format("Looting 1 : %.2f%%", summary.chanceToDrop[1]));
-                    tooltip.add(String.format("Looting 2 : %.2f%%", summary.chanceToDrop[2]));
-                    tooltip.add(String.format("Looting 3: %.2f%%", summary.chanceToDrop[3]));
-                    renderTooltip(tooltip, mouseX - guiLeft, mouseY - guiTop, fontRenderer);
+                        fontRenderer = textRenderer;
+                    List<ITextComponent> tooltip = getTooltipFromItem(summary.itemStack);
+                    tooltip.add(new StringTextComponent(String.format("No looting : %.2f%%", summary.chanceToDrop[0])));
+                    tooltip.add(new StringTextComponent(String.format("Looting 1 : %.2f%%", summary.chanceToDrop[1])));
+                    tooltip.add(new StringTextComponent(String.format("Looting 2 : %.2f%%", summary.chanceToDrop[2])));
+                    tooltip.add(new StringTextComponent(String.format("Looting 3: %.2f%%", summary.chanceToDrop[3])));
+                    renderTooltip(matrixStack, tooltip, mouseX - guiLeft, mouseY - guiTop);
                     break;
                 }
 
@@ -127,7 +130,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
         this.nextMobButton = this.addButton(new Button(
                 this.guiLeft + 9 + (8 * 18),
-                this.guiTop + 18, 18, 18, ">",
+                this.guiTop + 18, 18, 18, new StringTextComponent(">"),
                 h -> {
                     if (!container.simulatedMobs.isEmpty()) {
                         mobIndex = (mobIndex + 1);
@@ -138,7 +141,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
         this.prevMobButton = this.addButton(new Button(
                 this.guiLeft + 9,
-                this.guiTop + 18, 18, 18, "<",
+                this.guiTop + 18, 18, 18, new StringTextComponent("<"),
                 h -> {
                     if (!container.simulatedMobs.isEmpty()) {
                         mobIndex = (mobIndex - 1);

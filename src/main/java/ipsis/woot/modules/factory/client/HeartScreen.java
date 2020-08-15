@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
@@ -106,16 +107,15 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
      *     draw dragged itemstack
      *
      */
-
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.drawMouseoverTooltip(matrixStack, mouseX, mouseY);
 
-        mobElements.forEach(e -> e.drawTooltip(mouseX, mouseY));
-        upgradeElements.forEach(e -> e.drawTooltip(mouseX, mouseY));
-        stackElements.forEach(e -> e.drawTooltip(mouseX, mouseY));
+        mobElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
+        upgradeElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
+        stackElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
 
         if (renderTime == 0L)
             renderTime = Util.milliTime();
@@ -127,7 +127,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         }
 
         if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
-            renderFluidTankTooltip(mouseX, mouseY,
+            renderFluidTankTooltip(matrixStack, mouseX, mouseY,
                 container.getInputFluid(), container.getCapacity());
     }
 
@@ -135,10 +135,9 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
      * 0,0 is top left hand corner of the gui texture
      */
     private boolean sync = false;
+
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
-
+    protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
         ClientFactorySetup clientFactorySetup = container.getTileEntity().clientFactorySetup;
         if (clientFactorySetup == null)
             return;
@@ -150,13 +149,15 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
                 ClientFactorySetup.Mob mobInfo = clientFactorySetup.mobInfo.get(fakeMob);
                 for (ItemStack itemStack : mobInfo.drops) {
-                    List<String> tooltip = getTooltipFromItem(itemStack);
+                    List<ITextComponent> tooltip = getTooltipFromItem(itemStack);
                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                     if (entityType != null) {
                         ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+                        // TODO add entity to tooltip
+                        /*
                         tooltip.add(String.format("%s : %.2f%%",
                                         iTextComponent.getFormattedText(),
-                                        itemStack.getCount() / 100.0F));
+                                        itemStack.getCount() / 100.0F)); */
                     }
                     stackElements.get(idx).addDrop(itemStack, tooltip);
                     idx = (idx + 1) % stackElements.size();
@@ -176,17 +177,21 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             idx = 0;
             for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
                 ItemStack controllerStack = ControllerTileEntity.getItemStack(fakeMob);
-                List<String> tooltip = getTooltipFromItem(controllerStack);
+                List<ITextComponent> tooltip = getTooltipFromItem(controllerStack);
                 ClientFactorySetup.Mob mobInfo = clientFactorySetup.mobInfo.get(fakeMob);
                 if (!mobInfo.itemIngredients.isEmpty()) {
                     for (ItemStack itemStack : mobInfo.itemIngredients) {
-                        ITextComponent itextcomponent = (new StringTextComponent("")).appendSibling(itemStack.getDisplayName()).applyTextStyle(itemStack.getRarity().color);
-                        tooltip.add("Ingredient: " + itemStack.getCount() + " * " + itextcomponent.getFormattedText());
+                        ITextComponent itextcomponent = (new StringTextComponent("")).append(itemStack.getDisplayName()).formatted(itemStack.getRarity().color);
+                        // TODO add ingredient text
+                        // tooltip.add("Ingredient: " + itemStack.getCount() + " * " + itextcomponent.getFormattedText());
                     }
                 }
                 if (!mobInfo.fluidIngredients.isEmpty()) {
                     for (FluidStack fluidStack : mobInfo.fluidIngredients)
-                        tooltip.add("Ingredient: " + fluidStack.getAmount() + "mb " + fluidStack.toString());
+                        tooltip.add(new StringTextComponent(String.format(
+                                "Ingredient: %dmb %s",
+                                fluidStack.getAmount(),
+                                fluidStack.toString())));
                 }
                 mobElements.get(idx).addDrop(controllerStack, tooltip);
                 mobElements.get(idx).unlock();
@@ -196,12 +201,14 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             idx = 0;
             for (Perk perk : clientFactorySetup.perks) {
                 ItemStack itemStack = PerkItem.getItemStack(perk);
-                List<String> tooltip = getTooltipFromItem(itemStack);
+                List<ITextComponent> tooltip = getTooltipFromItem(itemStack);
                 for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
                     MobParam mobParam = clientFactorySetup.mobParams.get(fakeMob);
                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                     if (entityType != null) {
                         ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+                        // TODO tooltip
+                        /*
                         if (Perk.EFFICIENCY_PERKS.contains(perk))
                             tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkEfficiencyValue()));
                         else if (Perk.RATE_PERKS.contains(perk))
@@ -209,14 +216,14 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                         else if (Perk.MASS_PERKS.contains(perk))
                             tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.getMobCount(true)));
                         else if (Perk.XP_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkXpValue()));
+                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkXpValue())); */
                     }
                 }
                 if (Perk.TIER_SHARD_PERKS.contains(perk)) {
-                    tooltip.add(String.format("%d rolls @ %.2f%%", clientFactorySetup.shardRolls, clientFactorySetup.shardDropChance));
-                    tooltip.add(String.format("Basic: %.2f%%", clientFactorySetup.shardDrops[0]));
-                    tooltip.add(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1]));
-                    tooltip.add(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2]));
+                    tooltip.add(new StringTextComponent(String.format("%d rolls @ %.2f%%", clientFactorySetup.shardRolls, clientFactorySetup.shardDropChance)));
+                    tooltip.add(new StringTextComponent(String.format("Basic: %.2f%%", clientFactorySetup.shardDrops[0])));
+                    tooltip.add(new StringTextComponent(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1])));
+                    tooltip.add(new StringTextComponent(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2])));
                 }
                 upgradeElements.get(idx).addDrop(itemStack, tooltip);
                 upgradeElements.get(idx).unlock();
@@ -226,43 +233,45 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         }
 
 
-        addInfoLine(0, StringHelper.translate("gui.woot.heart.0"), title.getFormattedText());
-        addInfoLine(1, StringHelper.translate(
+        // TODO add title
+        //addInfoLine(matrixStack, 0, StringHelper.translate("gui.woot.heart.0"), title.getFormattedText());
+        addInfoLine(matrixStack, 1, StringHelper.translate(
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1).getTranslationKey()), clientFactorySetup.recipeFluid + " mB");
-        addInfoLine(2,StringHelper.translate("gui.woot.heart.1"), clientFactorySetup.recipeTicks + " ticks");
-        addInfoLine(3, StringHelper.translate("gui.woot.heart.2"), container.getProgress() + "%");
+        addInfoLine(matrixStack, 2,StringHelper.translate("gui.woot.heart.1"), clientFactorySetup.recipeTicks + " ticks");
+        addInfoLine(matrixStack, 3, StringHelper.translate("gui.woot.heart.2"), container.getProgress() + "%");
 
 
-        font.drawString(StringHelper.translate("gui.woot.heart.3"), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
-        font.drawString(StringHelper.translate("gui.woot.heart.4"), UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
-        font.drawString(StringHelper.translate("gui.woot.heart.5"), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
+        textRenderer.draw(matrixStack, StringHelper.translate("gui.woot.heart.3"), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
+        textRenderer.draw(matrixStack, StringHelper.translate("gui.woot.heart.4"), UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
+        textRenderer.draw(matrixStack, StringHelper.translate("gui.woot.heart.5"), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
 
-        mobElements.forEach(e -> e.drawForeground(mouseX, mouseY));
-        upgradeElements.forEach(e -> e.drawForeground(mouseX, mouseY));
-        stackElements.forEach(e -> e.drawForeground(mouseX, mouseY));
+        mobElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
+        upgradeElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
+        stackElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
     }
 
-    private void addInfoLine(int offset, String tag, String value) {
+    private void addInfoLine(MatrixStack matrixStack, int offset, String tag, String value) {
         int INFO_X = 10;
         int INFO_Y = 10;
         int TEXT_HEIGHT = 10;
-        font.drawString(tag, INFO_X, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
-        font.drawString(value, INFO_X + 80, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
+        textRenderer.draw(matrixStack, tag, INFO_X, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
+        textRenderer.draw(matrixStack, value, INFO_X + 80, INFO_Y + (TEXT_HEIGHT * offset), TEXT_COLOR);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bindTexture(GUI);
+        getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (width - xSize) / 2;
         int relY = (height - ySize) / 2;
-        blit(relX, relY, 0, 0, xSize, ySize);
+        drawTexture(matrixStack, relX, relY, 0, 0, xSize, ySize);
 
         mobElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
 
         renderFluidTank(
+                matrixStack,
                 TANK_LX,
                 TANK_RY,
                 TANK_RY - TANK_LY + 1,
@@ -277,7 +286,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         boolean isLocked = false;
         int idx = 0;
         List<ItemStack> itemStacks = new ArrayList<>();
-        List<List<String>> tooltips = new ArrayList<>();
+        List<List<ITextComponent>> tooltips = new ArrayList<>();
         public StackElement(int x, int y, boolean locked) {
             this.x = x;
             this.y = y;
@@ -288,7 +297,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             this(x, y, false);
         }
 
-        public void addDrop(ItemStack itemStack, List<String> tooltip) {
+        public void addDrop(ItemStack itemStack, List<ITextComponent> tooltip) {
             isLocked = false;
             itemStacks.add(itemStack);
             tooltips.add(tooltip);
@@ -309,7 +318,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 return;
         }
 
-        public void drawTooltip(int mouseX, int mouseY)  {
+        public void drawTooltip(MatrixStack matrixStack, int mouseX, int mouseY)  {
             if (isLocked)
                 return;
 
@@ -317,20 +326,20 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     return;
 
             ItemStack itemStack = itemStacks.get(idx);
-            List<String> tooltip = tooltips.get(idx);
+            List<ITextComponent> tooltip = tooltips.get(idx);
             if (isPointInRegion(x, y, 16, 16, mouseX, mouseY)) {
                 FontRenderer fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
                 if (fontRenderer == null)
-                    fontRenderer = font;
-                renderTooltip(tooltip, mouseX, mouseY, fontRenderer);
+                    fontRenderer = textRenderer;
+                renderTooltip(matrixStack, tooltip, mouseX, mouseY);
             }
         }
 
 
-        public void drawForeground(int mouseX, int mouseY) {
+        public void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
 
             if (isLocked) {
-                fill(x - 1, y - 1, x - 1 + 18, y - 1 + 18, -2130706433);
+                fill(matrixStack, x - 1, y - 1, x - 1 + 18, y - 1 + 18, -2130706433);
                 return;
             }
 
@@ -338,14 +347,14 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 return;
 
             ItemStack itemStack = itemStacks.get(idx);
-            setBlitOffset(100);
+            setZOffset(100);
             itemRenderer.zLevel = 100.0F;
-            RenderHelper.enableStandardItemLighting();
+            RenderHelper.enable();
             GlStateManager.enableDepthTest();
             itemRenderer.renderItemIntoGUI(itemStack, x, y);
             RenderHelper.disableStandardItemLighting();
             itemRenderer.zLevel = 0.0F;
-            setBlitOffset(0);
+            setZOffset(0);
         }
     }
 }

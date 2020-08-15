@@ -28,40 +28,40 @@ public class RenderHelper {
         float maxV = texture.getMaxV();
 
         // xy anti-clockwise - front
-        worldRenderer.pos(-size, -size, size).tex(maxU, maxV).endVertex();
-        worldRenderer.pos(size, -size, size).tex(minU, maxV).endVertex();
-        worldRenderer.pos(size, size, size).tex(minU, minV).endVertex();
-        worldRenderer.pos(-size, size, size).tex(maxU, minV).endVertex();
+        worldRenderer.vertex(-size, -size, size).texture(maxU, maxV).endVertex();
+        worldRenderer.vertex(size, -size, size).texture(minU, maxV).endVertex();
+        worldRenderer.vertex(size, size, size).texture(minU, minV).endVertex();
+        worldRenderer.vertex(-size, size, size).texture(maxU, minV).endVertex();
 
         // xy clockwise - back
-        worldRenderer.pos(-size, -size, -size).tex(maxU, maxV).endVertex();
-        worldRenderer.pos(-size, size, -size).tex(maxU, minV).endVertex();
-        worldRenderer.pos(size, size, -size).tex(minU, minV).endVertex();
-        worldRenderer.pos(size, -size, -size).tex(minU, maxV).endVertex();
+        worldRenderer.vertex(-size, -size, -size).texture(maxU, maxV).endVertex();
+        worldRenderer.vertex(-size, size, -size).texture(maxU, minV).endVertex();
+        worldRenderer.vertex(size, size, -size).texture(minU, minV).endVertex();
+        worldRenderer.vertex(size, -size, -size).texture(minU, maxV).endVertex();
 
         // anti-clockwise - left
-        worldRenderer.pos(-size, -size, -size).tex(minU, minV).endVertex();
-        worldRenderer.pos(-size, -size, size).tex(minU, maxV).endVertex();
-        worldRenderer.pos(-size, size, size).tex(maxU, maxV).endVertex();
-        worldRenderer.pos(-size, size, -size).tex(maxU, minV).endVertex();
+        worldRenderer.vertex(-size, -size, -size).texture(minU, minV).endVertex();
+        worldRenderer.vertex(-size, -size, size).texture(minU, maxV).endVertex();
+        worldRenderer.vertex(-size, size, size).texture(maxU, maxV).endVertex();
+        worldRenderer.vertex(-size, size, -size).texture(maxU, minV).endVertex();
 
         // clockwise - right
-        worldRenderer.pos(size, -size, -size).tex(minU, minV).endVertex();
-        worldRenderer.pos(size, size, -size).tex(maxU, minV).endVertex();
-        worldRenderer.pos(size, size, size).tex(maxU, maxV).endVertex();
-        worldRenderer.pos(size, -size, size).tex(minU, maxV).endVertex();
+        worldRenderer.vertex(size, -size, -size).texture(minU, minV).endVertex();
+        worldRenderer.vertex(size, size, -size).texture(maxU, minV).endVertex();
+        worldRenderer.vertex(size, size, size).texture(maxU, maxV).endVertex();
+        worldRenderer.vertex(size, -size, size).texture(minU, maxV).endVertex();
 
         // anticlockwise - top
-        worldRenderer.pos(-size, size, -size).tex(minU, minV).endVertex();
-        worldRenderer.pos(-size, size, size).tex(minU, maxV).endVertex();
-        worldRenderer.pos(size, size, size).tex(maxU, maxV).endVertex();
-        worldRenderer.pos(size, size, -size).tex(maxU, minV).endVertex();
+        worldRenderer.vertex(-size, size, -size).texture(minU, minV).endVertex();
+        worldRenderer.vertex(-size, size, size).texture(minU, maxV).endVertex();
+        worldRenderer.vertex(size, size, size).texture(maxU, maxV).endVertex();
+        worldRenderer.vertex(size, size, -size).texture(maxU, minV).endVertex();
 
         // clockwise - bottom
-        worldRenderer.pos(-size, -size, -size).tex(minU, minV).endVertex();
-        worldRenderer.pos(size, -size, -size).tex(maxU, minV).endVertex();
-        worldRenderer.pos(size, -size, size).tex(maxU, maxV).endVertex();
-        worldRenderer.pos(-size, -size, size).tex(minU, maxV).endVertex();
+        worldRenderer.vertex(-size, -size, -size).texture(minU, minV).endVertex();
+        worldRenderer.vertex(size, -size, -size).texture(maxU, minV).endVertex();
+        worldRenderer.vertex(size, -size, size).texture(maxU, maxV).endVertex();
+        worldRenderer.vertex(-size, -size, size).texture(minU, maxV).endVertex();
 
         tessellator.draw();
     }
@@ -76,40 +76,40 @@ public class RenderHelper {
         worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 
         // xy anti-clockwise - front
-        worldRenderer.pos(-size, -size, size).endVertex();
-        worldRenderer.pos(size, -size, size).endVertex();
-        worldRenderer.pos(size, size, size).endVertex();
-        worldRenderer.pos(-size, size, size).endVertex();
+        worldRenderer.vertex(-size, -size, size).endVertex();
+        worldRenderer.vertex(size, -size, size).endVertex();
+        worldRenderer.vertex(size, size, size).endVertex();
+        worldRenderer.vertex(-size, size, size).endVertex();
 
         // xy clockwise - back
-        worldRenderer.pos(-size, -size, -size).endVertex();
-        worldRenderer.pos(-size, size, -size).endVertex();
-        worldRenderer.pos(size, size, -size).endVertex();
-        worldRenderer.pos(size, -size, -size).endVertex();
+        worldRenderer.vertex(-size, -size, -size).endVertex();
+        worldRenderer.vertex(-size, size, -size).endVertex();
+        worldRenderer.vertex(size, size, -size).endVertex();
+        worldRenderer.vertex(size, -size, -size).endVertex();
 
         // anti-clockwise - left
-        worldRenderer.pos(-size, -size, -size).endVertex();
-        worldRenderer.pos(-size, -size, size).endVertex();
-        worldRenderer.pos(-size, size, size).endVertex();
-        worldRenderer.pos(-size, size, -size).endVertex();
+        worldRenderer.vertex(-size, -size, -size).endVertex();
+        worldRenderer.vertex(-size, -size, size).endVertex();
+        worldRenderer.vertex(-size, size, size).endVertex();
+        worldRenderer.vertex(-size, size, -size).endVertex();
 
         // clockwise - right
-        worldRenderer.pos(size, -size, -size).endVertex();
-        worldRenderer.pos(size, size, -size).endVertex();
-        worldRenderer.pos(size, size, size).endVertex();
-        worldRenderer.pos(size, -size, size).endVertex();
+        worldRenderer.vertex(size, -size, -size).endVertex();
+        worldRenderer.vertex(size, size, -size).endVertex();
+        worldRenderer.vertex(size, size, size).endVertex();
+        worldRenderer.vertex(size, -size, size).endVertex();
 
         // anticlockwise - top
-        worldRenderer.pos(-size, size, -size).endVertex();
-        worldRenderer.pos(-size, size, size).endVertex();
-        worldRenderer.pos(size, size, size).endVertex();
-        worldRenderer.pos(size, size, -size).endVertex();
+        worldRenderer.vertex(-size, size, -size).endVertex();
+        worldRenderer.vertex(-size, size, size).endVertex();
+        worldRenderer.vertex(size, size, size).endVertex();
+        worldRenderer.vertex(size, size, -size).endVertex();
 
         // clockwise - bottom
-        worldRenderer.pos(-size, -size, -size).endVertex();
-        worldRenderer.pos(size, -size, -size).endVertex();
-        worldRenderer.pos(size, -size, size).endVertex();
-        worldRenderer.pos(-size, -size, size).endVertex();
+        worldRenderer.vertex(-size, -size, -size).endVertex();
+        worldRenderer.vertex(size, -size, -size).endVertex();
+        worldRenderer.vertex(size, -size, size).endVertex();
+        worldRenderer.vertex(-size, -size, size).endVertex();
 
         tessellator.draw();
     }

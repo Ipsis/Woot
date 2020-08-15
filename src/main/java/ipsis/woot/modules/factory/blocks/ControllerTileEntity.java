@@ -24,9 +24,10 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
     /**
      * NBT
      */
+
     @Override
-    public void read(CompoundNBT compoundNBT) {
-        super.read(compoundNBT);
+    public void deserializeNBT(CompoundNBT compoundNBT) {
+        super.deserializeNBT(compoundNBT);
         if (compoundNBT.contains(ModNBT.Controller.MOB_TAG)) {
             CompoundNBT nbt = compoundNBT.getCompound(ModNBT.Controller.MOB_TAG);
             fakeMob = new FakeMob(nbt);

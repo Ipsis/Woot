@@ -206,9 +206,10 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     /**
      * NBT
      */
+
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void deserializeNBT(CompoundNBT compound) {
+        super.deserializeNBT(compound);
         if (compound.contains(ModNBT.Heart.PROGRESS_TAG)) {
             loadedFromNBT = true;
             consumedUnits = compound.getInt(ModNBT.Heart.PROGRESS_TAG);

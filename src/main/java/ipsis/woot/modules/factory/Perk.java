@@ -29,6 +29,7 @@ public enum Perk implements IStringSerializable {
 
     public static Perk[] VALUES = values();
     public String getName() { return name().toLowerCase(Locale.ROOT); }
+    public String getString() { return getName(); }
 
     public static Perk getPerks(int index) {
         index = MathHelper.clamp(index, 0, VALUES.length);

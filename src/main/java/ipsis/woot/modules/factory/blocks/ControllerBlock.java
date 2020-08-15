@@ -78,9 +78,9 @@ public class ControllerBlock extends Block implements FactoryComponentProvider, 
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+            return super.onUse(state, worldIn, pos, player, handIn, hit);
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof ControllerTileEntity) {

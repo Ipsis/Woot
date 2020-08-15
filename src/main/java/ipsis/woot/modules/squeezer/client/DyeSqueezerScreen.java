@@ -1,5 +1,6 @@
 package ipsis.woot.modules.squeezer.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
@@ -42,67 +44,68 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.drawMouseoverTooltip(matrixStack, mouseX, mouseY);
 
         if (isPointInRegion(82, 30, 51, 8, mouseX, mouseY))
-            renderTooltip(String.format("Red: %d/%d mb",
+            renderTooltip(matrixStack, new StringTextComponent(String.format("Red: %d/%d mb",
                         container.getRedDyeAmount(),
-                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
+                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
                     mouseX, mouseY);
         if (isPointInRegion(82, 40, 51, 8, mouseX, mouseY))
-            renderTooltip(String.format("Yellow: %d/%d mb",
+            renderTooltip(matrixStack, new StringTextComponent(String.format("Yellow: %d/%d mb",
                     container.getYellowDyeAmount(),
-                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
+                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
                     mouseX, mouseY);
         if (isPointInRegion(82, 50, 51, 8, mouseX, mouseY))
-            renderTooltip(String.format("Blue: %d/%d mb",
+            renderTooltip(matrixStack, new StringTextComponent(String.format("Blue: %d/%d mb",
                         container.getBlueDyeAmount(),
-                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
+                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
                     mouseX, mouseY);
         if (isPointInRegion(82, 60, 51, 8, mouseX, mouseY))
-            renderTooltip(String.format("White: %d/%d mb",
+            renderTooltip(matrixStack, new StringTextComponent(String.format("White: %d/%d mb",
                     container.getWhiteDyeAmount(),
-                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
+                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
                     mouseX, mouseY);
         if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY,
+            renderFluidTankTooltip(matrixStack, mouseX, mouseY,
                     container.getPureDye(),
                     SqueezerConfiguration.DYE_SQUEEZER_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
+            renderEnergyTooltip(matrixStack, mouseX, mouseY, container.getEnergy(),
                     SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get(), 10);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bindTexture(GUI);
+        getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        blit(relX, relY, 0, 0, this.xSize, this.ySize);
+        drawTexture(matrixStack, relX, relY, 0, 0, this.xSize, this.ySize);
 
         // Progress
         int progress = container.getProgress();
-        blit(this.guiLeft + 58, this.guiTop + 30, 180, 0,(int)(19 * (progress / 100.0F)) , 40);
+        drawTexture(matrixStack, this.guiLeft + 58, this.guiTop + 30, 180, 0,(int)(19 * (progress / 100.0F)) , 40);
 
         // NB: The tanks will change the texture so progress has to be above that or rebind the texture
-        renderHorizontalGauge(82, 30, 132, 37,
+        renderHorizontalGauge(matrixStack, 82, 30, 132, 37,
                 container.getRedDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.RED.getColorValue());
-        renderHorizontalGauge(82, 40, 132, 47,
+        renderHorizontalGauge(matrixStack, 82, 40, 132, 47,
                 container.getYellowDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.YELLOW.getColorValue());
-        renderHorizontalGauge(82, 50, 132, 57,
+        renderHorizontalGauge(matrixStack, 82, 50, 132, 57,
                 container.getBlueDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.BLUE.getColorValue());
-        renderHorizontalGauge(82, 60, 132, 67,
+        renderHorizontalGauge(matrixStack, 82, 60, 132, 67,
                 container.getWhiteDyeAmount(), SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get(),
                 0xff000000 | DyeColor.WHITE.getColorValue());
 
         renderEnergyBar(
+                matrixStack,
                 ENERGY_LX,
                 ENERGY_RY,
                 ENERGY_HEIGHT,
@@ -110,6 +113,7 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
                 container.getEnergy(), SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get());
 
         renderFluidTank(
+                matrixStack,
                 TANK_LX,
                 TANK_RY,
                 TANK_HEIGHT,
@@ -119,11 +123,10 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = title.getFormattedText();
-        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
+    protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.drawForeground(matrixStack, mouseX, mouseY);
 
         String text2 = container.getDumpExcess() ? "Dumping" : "Strict";
-        this.font.drawString(text2, 82.0F, 70.0F, 4210752);
+        this.textRenderer.draw(matrixStack, text2, 82.0F, 70.0F, 4210752);
     }
 }

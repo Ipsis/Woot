@@ -71,7 +71,7 @@ public class GiveCommand {
                     itemEntity.makeFakeItem();
 
                 target.world.playSound(null,
-                        target.getPosX(), target.getPosY(), target.getPosZ(),
+                        target.getX(), target.getY(), target.getZ(),
                         SoundEvents.ENTITY_ITEM_PICKUP,
                         SoundCategory.PLAYERS,
                         0.2F,

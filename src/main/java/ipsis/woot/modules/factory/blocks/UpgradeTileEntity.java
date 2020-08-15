@@ -39,9 +39,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
                 Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
                 return true;
             } else {
-                PlayerHelper.sendChatMessage(
-                        playerEntity,
-                        new TranslationTextComponent("chat.woot.perk.fail.0").getFormattedText());
+                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.0"), false);
                 return false;
             }
         } else {
@@ -52,30 +50,22 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
             int currLevel = Perk.getLevel(upgrade);
             int addLevel = Perk.getLevel(type);
             if (currType != addType) {
-                PlayerHelper.sendChatMessage(
-                        playerEntity,
-                        new TranslationTextComponent("chat.woot.perk.fail.1").getFormattedText());
+                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.1"), false);
                 return false;
             }
 
             if (currLevel == 3) {
-                PlayerHelper.sendChatMessage(
-                        playerEntity,
-                        new TranslationTextComponent("chat.woot.perk.fail.2", currLevel).getFormattedText());
+                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.2"), false);
                 return false;
             }
 
             if (currLevel == addLevel) {
-                PlayerHelper.sendChatMessage(
-                        playerEntity,
-                        new TranslationTextComponent("chat.woot.perk.fail.3", currLevel).getFormattedText());
+                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.4"), false);
                 return false;
             }
 
             if (currLevel + 1 != addLevel) {
-                PlayerHelper.sendChatMessage(
-                        playerEntity,
-                        new TranslationTextComponent("chat.woot.perk.fail.4", currLevel + 1).getFormattedText());
+                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.4", currLevel + 1), false);
                 return false;
             }
 

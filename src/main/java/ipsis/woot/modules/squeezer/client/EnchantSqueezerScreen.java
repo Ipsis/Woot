@@ -1,5 +1,6 @@
 package ipsis.woot.modules.squeezer.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
@@ -44,33 +45,34 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.drawMouseoverTooltip(matrixStack, mouseX, mouseY);
 
         if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(mouseX, mouseY,
+            renderFluidTankTooltip(matrixStack, mouseX, mouseY,
                     container.getOutputFluid(),
                     SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get());
         if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(mouseX, mouseY, container.getEnergy(),
+            renderEnergyTooltip(matrixStack, mouseX, mouseY, container.getEnergy(),
                     SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(), 10);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bindTexture(GUI);
+        getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        blit(relX, relY, 0, 0, xSize, ySize);
+        drawTexture(matrixStack, relX, relY, 0, 0, xSize, ySize);
 
         // Progress
         int progress = container.getProgress();
-        blit(this.guiLeft + 116, this.guiTop + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
+        drawTexture(matrixStack, this.guiLeft + 116, this.guiTop + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
 
         renderEnergyBar(
+                matrixStack,
                 ENERGY_LX,
                 ENERGY_RY,
                 ENERGY_HEIGHT,
@@ -79,17 +81,12 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
                 SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get());
 
         renderFluidTank(
+                matrixStack,
                 TANK_LX,
                 TANK_RY,
                 TANK_HEIGHT,
                 TANK_WIDTH,
                 SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get(),
                 container.getOutputFluid());
-    }
-    
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = title.getFormattedText();
-        this.font.drawString(text, (float)(this.xSize / 2 - this.font.getStringWidth(text) / 2), 6.0F, 4210752);
     }
 }

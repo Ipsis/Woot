@@ -45,7 +45,7 @@ public class SpawnController {
         MobEntity mobEntity = (MobEntity)entity;
 
         mobEntity.onInitialSpawn(world,
-                world.getDifficultyForLocation(new BlockPos(entity)),
+                world.getDifficultyForLocation(new BlockPos(entity.getBlockPos())),
                 SpawnReason.SPAWNER,
                 null, null);
 

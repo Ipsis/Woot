@@ -1,6 +1,7 @@
 package ipsis.woot.modules.squeezer;
 
 import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -35,9 +36,9 @@ public enum DyeMakeup {
     private int blue;
     private int white;
     private String tag;
-    private Tag<Item> itemTag;
+    private ITag.INamedTag<Item> itemTag;
 
-    DyeMakeup(String tag, int red, int yellow, int blue, int white, Tag<Item> itemTag) {
+    DyeMakeup(String tag, int red, int yellow, int blue, int white, ITag.INamedTag<Item> itemTag) {
         this.tag = tag;
         this.red = red;
         this.yellow = yellow;
@@ -51,7 +52,7 @@ public enum DyeMakeup {
     public int getBlue() { return this.blue; }
     public int getWhite() { return this.white; }
     public ResourceLocation getForgeTag() { return new ResourceLocation("forge", "dyes/" + this.tag); }
-    public Tag<Item> getItemTag() { return itemTag; }
+    public ITag.INamedTag<Item> getItemTag() { return itemTag; }
 
     public static final DyeMakeup[] VALUES = DyeMakeup.values();
 }

@@ -69,7 +69,7 @@ public class DyeSqueezerBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
         if (world.isRemote)
             return ActionResultType.SUCCESS;
 

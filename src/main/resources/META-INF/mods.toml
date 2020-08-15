@@ -1,6 +1,7 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[32,)"
 issueTrackerURL="https://github.com/Ipsis/Woot/issues"
+license="LGPLv3 (https://github.com/Ipsis/Woot/blob/1.15.x/LICENSE)"
 
 [[mods]]
 modId="woot"

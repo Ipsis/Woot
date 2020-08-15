@@ -2,15 +2,11 @@ package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.*;
-import ipsis.woot.modules.factory.blocks.TickConverterBlock;
-import ipsis.woot.simulator.MobSimulatorSetup;
-import ipsis.woot.simulator.tartarus.TartarusModDimension;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,11 +35,13 @@ public class Registration {
         Woot.setup.getLogger().info("registerEnchantments");
     }
 
+    // TODO registerDimensions
+    /*
     @SubscribeEvent
     public static void registerDimensions(final RegistryEvent.Register<ModDimension> event) {
         Woot.setup.getLogger().info("registerDimensions");
         event.getRegistry().register(new TartarusModDimension().setRegistryName(MobSimulatorSetup.TARTARUS_DIMENSION_ID));
-    }
+    } */
 
     @SubscribeEvent
     public static void registerRecipeSerializer(final RegistryEvent.Register<IRecipeSerializer<?>> event) {

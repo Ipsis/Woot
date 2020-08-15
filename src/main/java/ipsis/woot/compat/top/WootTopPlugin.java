@@ -1,5 +1,5 @@
 package ipsis.woot.compat.top;
-
+/*
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.Perk;
@@ -153,4 +153,4 @@ public class WootTopPlugin {
             return null;
         }
     }
-}
+} */

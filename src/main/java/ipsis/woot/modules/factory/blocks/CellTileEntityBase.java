@@ -32,8 +32,8 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void deserializeNBT(CompoundNBT compound) {
+        super.deserializeNBT(compound);
         if (compound.contains(ModNBT.TANK_TAG))
             tank.readFromNBT(compound.getCompound(ModNBT.TANK_TAG));
     }

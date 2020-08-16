@@ -5,12 +5,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.WorldGenRegion;
+import net.minecraft.world.gen.*;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.gen.feature.template.TemplateManager;
 
 import java.util.*;
 
@@ -81,7 +83,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
         /**
          * This is all based off chunk coordinates - therefore 0->16
          */
-        Woot.setup.getLogger().info("generateSurface: {}", iChunk);
+        Woot.setup.getLogger().debug("generateSurface: {}", iChunk);
 
         BlockState blockState = Blocks.AIR.getDefaultState();
         BlockPos.Mutable pos = new BlockPos.Mutable();
@@ -94,7 +96,7 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
         }
 
         if (iChunk.getPos().x == WORK_CHUNK_X && iChunk.getPos().z == WORK_CHUNK_Z) {
-            Woot.setup.getLogger().info("generateSurface: work chunk creating cells");
+            Woot.setup.getLogger().debug("generateSurface: work chunk creating cells");
             BlockState wallState = Blocks.GLASS.getDefaultState();
             calcCellStructures();
 
@@ -107,6 +109,22 @@ public class TartarusChunkGenerator extends ChunkGenerator<TartarusChunkGenerato
         }
     }
 
+    @Override
+    public void decorate(WorldGenRegion region) {
+    }
+
+    @Override
+    public boolean hasStructure(Biome biomeIn, Structure<? extends IFeatureConfig> structureIn) {
+        return false;
+    }
+
+    @Override
+    public void generateStructures(BiomeManager p_227058_1_, IChunk p_227058_2_, ChunkGenerator<?> p_227058_3_, TemplateManager p_227058_4_) {
+    }
+
+    @Override
+    public void func_225550_a_(BiomeManager p_225550_1_, IChunk p_225550_2_, GenerationStage.Carving p_225550_3_) {
+    }
 
     @Override
     public int getGroundHeight() {

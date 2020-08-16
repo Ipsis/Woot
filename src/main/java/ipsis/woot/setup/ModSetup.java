@@ -21,6 +21,7 @@ import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.mod.ModFiles;
 import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.simulator.MobSimulatorSetup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.JSONUtils;
@@ -71,6 +72,7 @@ public class ModSetup {
         PatternRepository.get().load();
         OverrideLoader.loadFromConfig();
         PolicyRegistry.get().loadFromConfig();
+        MobSimulatorSetup.init();
 
         File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

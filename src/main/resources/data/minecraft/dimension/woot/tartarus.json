@@ -1,0 +1,6 @@
+{
+  "type": "woot:mobsimulator",
+  "generator": {
+    "type": "woot:simulation_cells"
+    }
+}

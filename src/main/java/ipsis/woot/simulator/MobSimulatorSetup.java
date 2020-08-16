@@ -1,17 +1,21 @@
 package ipsis.woot.simulator;
 
 import ipsis.woot.Woot;
+import ipsis.woot.simulator.tartarus.TartarusChunkGenerator;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.DimensionType;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class MobSimulatorSetup {
 
-    public static final ResourceLocation TARTARUS_DIMENSION_ID = new ResourceLocation(Woot.MODID, "tartarus");
+    public static final RegistryKey<DimensionType> TARTARUS_DIMENSION_TYPE = RegistryKey.of(
+            Registry.DIMENSION_TYPE_KEY, new ResourceLocation(Woot.MODID + ":mobsimulator"));
 
-    // TODO dimensions
-    /*
-    @ObjectHolder(Woot.MODID + ":tartarus")
-    public static ModDimension TARTARUS; */
-    public static DimensionType TARTARUS_DIMENSION_TYPE;
+    public static void init() {
+        Registry.register(
+                Registry.CHUNK_GENERATOR,
+                Woot.MODID + ":simulation_cells",
+                TartarusChunkGenerator.codecTartarusChunk);
+    }
 }

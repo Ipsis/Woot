@@ -35,14 +35,6 @@ public class Registration {
         Woot.setup.getLogger().info("registerEnchantments");
     }
 
-    // TODO registerDimensions
-    /*
-    @SubscribeEvent
-    public static void registerDimensions(final RegistryEvent.Register<ModDimension> event) {
-        Woot.setup.getLogger().info("registerDimensions");
-        event.getRegistry().register(new TartarusModDimension().setRegistryName(MobSimulatorSetup.TARTARUS_DIMENSION_ID));
-    } */
-
     @SubscribeEvent
     public static void registerRecipeSerializer(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
         Woot.setup.getLogger().info("registerRecipeSerializer");

@@ -26,6 +26,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.DimensionType;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -41,9 +42,6 @@ import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static ipsis.woot.simulator.MobSimulatorSetup.TARTARUS_DIMENSION_ID;
-import static ipsis.woot.simulator.MobSimulatorSetup.TARTARUS_DIMENSION_TYPE;
 
 public class ForgeEventHandlers {
 
@@ -119,17 +117,16 @@ public class ForgeEventHandlers {
         if (event.phase == TickEvent.Phase.START)
             return;
 
-        // TODO onWorldTick for simulator
-        /*
-        Dimension dimension = event.world.getDimension();
-        if (dimension.getType() != TARTARUS_DIMENSION_TYPE) {
+
+        DimensionType dimensionType = event.world.getDimension();
+        if (dimensionType.equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
+            MobSimulator.getInstance().tick(event.world);
+        } else {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
                 lastWorldTick += MULTI_BLOCK_TRACKER_DELAY;
                 MultiBlockTracker.get().run(event.world);
             }
-        } else {
-            ipsis.woot.simulator.MobSimulator.getInstance().tick(event.world);
-        } */
+        }
     }
 
     @SubscribeEvent
@@ -162,7 +159,7 @@ public class ForgeEventHandlers {
         ModCommands.register(event.getDispatcher());
     }
 
-                                  @SubscribeEvent
+    @SubscribeEvent
     public void onServerStop(final FMLServerStoppingEvent event) {
         Woot.setup.getLogger().info("onServerStop");
         JsonObject jsonObject = MobSimulator.getInstance().toJson();
@@ -170,19 +167,6 @@ public class ForgeEventHandlers {
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         SerializationHelper.writeJsonFile(dropFile, GSON.toJson(jsonObject));
     }
-
-    // TODO onDimensionRegistry
-    /*
-    @SubscribeEvent
-    public void onDimensionRegistry(final RegisterDimensionsEvent event) {
-        Woot.setup.getLogger().info("onDimensionRegistry");
-        TARTARUS_DIMENSION_TYPE = DimensionManager.registerOrGetDimension(
-                TARTARUS_DIMENSION_ID,
-                MobSimulatorSetup.TARTARUS,
-                null,
-                true);
-        DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);
-    } */
 
     /**
      * Death cache

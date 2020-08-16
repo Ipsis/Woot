@@ -28,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -139,8 +140,6 @@ public class ForgeEventHandlers {
     @SubscribeEvent
     public void onServerStarting(final FMLServerStartingEvent event) {
         Woot.setup.getLogger().info("onServerStarting");
-        // TODO ModCommands.register
-        //ModCommands.register(event.getCommandDispatcher());
         SqueezerRecipes.load(event.getServer().getRecipeManager());
         AnvilRecipes.load(event.getServer().getRecipeManager());
         InfuserRecipes.load(event.getServer().getRecipeManager());
@@ -158,6 +157,12 @@ public class ForgeEventHandlers {
     }
 
     @SubscribeEvent
+    public void onRegisterCommandsEvent(final RegisterCommandsEvent event) {
+        Woot.setup.getLogger().info("onRegisterCommandsEvent");
+        ModCommands.register(event.getDispatcher());
+    }
+
+                                  @SubscribeEvent
     public void onServerStop(final FMLServerStoppingEvent event) {
         Woot.setup.getLogger().info("onServerStop");
         JsonObject jsonObject = MobSimulator.getInstance().toJson();

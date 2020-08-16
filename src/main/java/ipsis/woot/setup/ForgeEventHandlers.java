@@ -20,6 +20,7 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
 import ipsis.woot.util.helper.SerializationHelper;
+import ipsis.woot.util.oss.WootFakePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -33,6 +34,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -175,6 +177,14 @@ public class ForgeEventHandlers {
                 null,
                 true);
         DimensionManager.keepLoaded(TARTARUS_DIMENSION_TYPE, true);
+    }
+
+    @SubscribeEvent
+    public void onLivingExperienceDrop(final LivingExperienceDropEvent event) {
+        if (event.getAttackingPlayer() instanceof WootFakePlayer) {
+            // This is not a real kill, so dont spawn the XP
+            event.setCanceled(true);
+        }
     }
 
     /**

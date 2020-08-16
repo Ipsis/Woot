@@ -34,8 +34,8 @@ public class TartarusChunkGenerator extends ChunkGenerator {
         super(new SingleBiomeProvider(Biomes.PLAINS), new DimensionStructuresSettings(false));
     }
 
-    private static final int WORK_CHUNK_X = 0;
-    private static final int WORK_CHUNK_Z = 0;
+    public static final int WORK_CHUNK_X = 0;
+    public static final int WORK_CHUNK_Z = 0;
 
     private List<BlockPos> cell0Blocks;
     private List<BlockPos> cell1Blocks;
@@ -102,7 +102,7 @@ public class TartarusChunkGenerator extends ChunkGenerator {
         /**
          * This is all based off chunk coordinates - therefore 0->16
          */
-        Woot.setup.getLogger().info("generateSurface: {}", iChunk);
+        Woot.setup.getLogger().debug("generateSurface: {}", iChunk);
 
         BlockState blockState = Blocks.AIR.getDefaultState();
         BlockPos.Mutable pos = new BlockPos.Mutable();
@@ -115,7 +115,7 @@ public class TartarusChunkGenerator extends ChunkGenerator {
         }
 
         if (iChunk.getPos().x == WORK_CHUNK_X && iChunk.getPos().z == WORK_CHUNK_Z) {
-            Woot.setup.getLogger().info("generateSurface: work chunk creating cells");
+            Woot.setup.getLogger().debug("generateSurface: work chunk creating cells");
             BlockState wallState = Blocks.GLASS.getDefaultState();
             calcCellStructures();
 

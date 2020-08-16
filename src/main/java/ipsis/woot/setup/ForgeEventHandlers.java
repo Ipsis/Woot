@@ -16,10 +16,12 @@ import ipsis.woot.modules.squeezer.SqueezerRecipes;
 import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.simulator.spawning.FakePlayerPool;
 import ipsis.woot.simulator.MobSimulator;
+import ipsis.woot.simulator.tartarus.TartarusChunkGenerator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.ItemEntityHelper;
 import ipsis.woot.util.helper.SerializationHelper;
+import ipsis.woot.util.oss.WootFakePlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -27,12 +29,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig;
@@ -119,7 +124,7 @@ public class ForgeEventHandlers {
 
 
         DimensionType dimensionType = event.world.getDimension();
-        if (dimensionType.equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
+        if (event.world.getDimensionRegistryKey().equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
             MobSimulator.getInstance().tick(event.world);
         } else {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
@@ -142,6 +147,22 @@ public class ForgeEventHandlers {
         InfuserRecipes.load(event.getServer().getRecipeManager());
         FluidConvertorRecipes.load(event.getServer().getRecipeManager());
         CustomDropsLoader.load(event.getServer().getRecipeManager());
+
+        for (ServerWorld dim : event.getServer().getWorlds()) {
+            if (dim.getDimensionRegistryKey().equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
+                Woot.setup.getLogger().debug("onServerStarting: force load Tartarus Cells");
+                dim.forceChunk(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingExperienceDrop(final LivingExperienceDropEvent event) {
+        if (event.getAttackingPlayer() instanceof WootFakePlayer) {
+            // This is not a real kill, so dont spawn the XP
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent

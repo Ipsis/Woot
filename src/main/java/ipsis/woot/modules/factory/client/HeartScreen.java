@@ -153,11 +153,8 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                     if (entityType != null) {
                         ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
-                        // TODO add entity to tooltip
-                        /*
-                        tooltip.add(String.format("%s : %.2f%%",
-                                        iTextComponent.getFormattedText(),
-                                        itemStack.getCount() / 100.0F)); */
+                        tooltip.add(new StringTextComponent(String.format("%s : %.2f%%",
+                                iTextComponent.getString(), itemStack.getCount() / 100.0F)));
                     }
                     stackElements.get(idx).addDrop(itemStack, tooltip);
                     idx = (idx + 1) % stackElements.size();
@@ -182,8 +179,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 if (!mobInfo.itemIngredients.isEmpty()) {
                     for (ItemStack itemStack : mobInfo.itemIngredients) {
                         ITextComponent itextcomponent = (new StringTextComponent("")).append(itemStack.getDisplayName()).formatted(itemStack.getRarity().color);
-                        // TODO add ingredient text
-                        // tooltip.add("Ingredient: " + itemStack.getCount() + " * " + itextcomponent.getFormattedText());
+                        tooltip.add(new StringTextComponent(String.format("Ingredient: %d * %s", itemStack.getCount(), itextcomponent.getString())));
                     }
                 }
                 if (!mobInfo.fluidIngredients.isEmpty()) {
@@ -207,16 +203,14 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                     if (entityType != null) {
                         ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
-                        // TODO tooltip
-                        /*
                         if (Perk.EFFICIENCY_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkEfficiencyValue()));
+                            tooltip.add(new StringTextComponent(String.format("%s : %d%%", iTextComponent.getString(), mobParam.getPerkEfficiencyValue())));
                         else if (Perk.RATE_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkRateValue()));
+                            tooltip.add(new StringTextComponent(String.format("%s : %d%%", iTextComponent.getString(), mobParam.getPerkRateValue())));
                         else if (Perk.MASS_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d mobs", iTextComponent.getFormattedText(), mobParam.getMobCount(true)));
+                            tooltip.add(new StringTextComponent(String.format("%s : %d mobs", iTextComponent.getString(), mobParam.getMobCount(true))));
                         else if (Perk.XP_PERKS.contains(perk))
-                            tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkXpValue())); */
+                            tooltip.add(new StringTextComponent(String.format("%s : %d%%", iTextComponent.getString(), mobParam.getPerkXpValue())));
                     }
                 }
                 if (Perk.TIER_SHARD_PERKS.contains(perk)) {
@@ -232,9 +226,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             sync = true;
         }
 
-
-        // TODO add title
-        //addInfoLine(matrixStack, 0, StringHelper.translate("gui.woot.heart.0"), title.getFormattedText());
+        addInfoLine(matrixStack, 0, StringHelper.translate("gui.woot.heart.0"), title.getString());
         addInfoLine(matrixStack, 1, StringHelper.translate(
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1).getTranslationKey()), clientFactorySetup.recipeFluid + " mB");
         addInfoLine(matrixStack, 2,StringHelper.translate("gui.woot.heart.1"), clientFactorySetup.recipeTicks + " ticks");

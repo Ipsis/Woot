@@ -14,9 +14,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -70,7 +68,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
     @Override
     protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.drawForeground(matrixStack, mouseX, mouseY);
+        this.textRenderer.draw(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 
         if (container.simulatedMobs.isEmpty()) {
             String mob = "N/A";
@@ -78,14 +76,12 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
         } else {
             FakeMob fakeMob = container.simulatedMobs.get(mobIndex);
             EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
-            // TODO add entity text
-            /*
             if (entityType != null) {
-                String mob = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+                String mob = new TranslationTextComponent(entityType.getTranslationKey()).getString();
                 if (fakeMob.hasTag())
                     mob += "[" + fakeMob.getTag() + "]";
                 this.textRenderer.draw(matrixStack, mob, (float)(this.xSize / 2 - this.textRenderer.getStringWidth(mob) / 2), 25.0F, 4210752);
-            } */
+            }
         }
 
         if (!container.simulatedDrops.isEmpty()) {

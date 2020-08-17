@@ -126,8 +126,17 @@ public class LayoutTileEntity extends TileEntity {
     @Override
     public void deserializeNBT(CompoundNBT compound) {
         super.deserializeNBT(compound);
+        readFromNBT(compound);
+    }
+
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        super.fromTag(blockState, compoundNBT);
+        readFromNBT(compoundNBT);
+    }
+
+    private void readFromNBT(CompoundNBT compound) {
         level = MathHelper.clamp(compound.getInt(KEY_LEVEL), -1, 16);
         tier = Tier.byIndex(compound.getInt(KEY_TIER));
     }
-
 }

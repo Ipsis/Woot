@@ -10,6 +10,7 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -160,12 +161,20 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
     /**
      * NBT
      */
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        super.fromTag(blockState, compoundNBT);
+        readFromNBT(compoundNBT);
+    }
 
     @Override
     public void deserializeNBT(CompoundNBT compoundNBT) {
         super.deserializeNBT(compoundNBT);
-        if (compoundNBT.contains(ModNBT.Anvil.BASE_ITEM_TAG)) {
+        readFromNBT(compoundNBT);
+    }
 
+    private void readFromNBT(CompoundNBT compoundNBT) {
+        if (compoundNBT.contains(ModNBT.Anvil.BASE_ITEM_TAG)) {
             ListNBT listNBT = compoundNBT.getList(ModNBT.INVENTORY_TAG, 10);
             for (int i = 0; i < listNBT.size(); i++) {
                 CompoundNBT itemTags = listNBT.getCompound(i);

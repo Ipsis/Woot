@@ -15,6 +15,7 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.StorageHelper;
 import ipsis.woot.util.helper.StringHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -210,6 +211,16 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     @Override
     public void deserializeNBT(CompoundNBT compound) {
         super.deserializeNBT(compound);
+        readFromNBT(compound);
+    }
+
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        super.fromTag(blockState, compoundNBT);
+        readFromNBT(compoundNBT);
+    }
+
+    private void readFromNBT(CompoundNBT compound) {
         if (compound.contains(ModNBT.Heart.PROGRESS_TAG)) {
             loadedFromNBT = true;
             consumedUnits = compound.getInt(ModNBT.Heart.PROGRESS_TAG);

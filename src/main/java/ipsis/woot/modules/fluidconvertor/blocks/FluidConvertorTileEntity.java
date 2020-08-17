@@ -12,6 +12,7 @@ import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -194,7 +195,17 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     //region NBT
     @Override
     public void deserializeNBT(CompoundNBT compoundNBT) {
+        readFromNBT(compoundNBT);
+        super.deserializeNBT(compoundNBT);
+    }
 
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        readFromNBT(compoundNBT);
+        super.fromTag(blockState, compoundNBT);
+    }
+
+    private void readFromNBT(CompoundNBT compoundNBT) {
         if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
             CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
                     inventory, null, compoundNBT.getList(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
@@ -207,8 +218,6 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
 
         CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
-
-        super.deserializeNBT(compoundNBT);
     }
 
     @Override

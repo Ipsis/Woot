@@ -4,6 +4,7 @@ import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.util.WootDebug;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
@@ -34,6 +35,16 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     @Override
     public void deserializeNBT(CompoundNBT compound) {
         super.deserializeNBT(compound);
+        readFromNBT(compound);
+    }
+
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        super.fromTag(blockState, compoundNBT);
+        readFromNBT(compoundNBT);
+    }
+
+    private void readFromNBT(CompoundNBT compound) {
         if (compound.contains(ModNBT.TANK_TAG))
             tank.readFromNBT(compound.getCompound(ModNBT.TANK_TAG));
     }

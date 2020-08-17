@@ -7,6 +7,7 @@ import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,14 +25,10 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
     /**
      * NBT
      */
-
     @Override
     public void deserializeNBT(CompoundNBT compoundNBT) {
         super.deserializeNBT(compoundNBT);
-        if (compoundNBT.contains(ModNBT.Controller.MOB_TAG)) {
-            CompoundNBT nbt = compoundNBT.getCompound(ModNBT.Controller.MOB_TAG);
-            fakeMob = new FakeMob(nbt);
-        }
+        readFromNBT(compoundNBT);
     }
 
     @Override
@@ -41,6 +38,19 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
         FakeMob.writeToNBT(fakeMob, nbt);
         compoundNBT.put(ModNBT.Controller.MOB_TAG, nbt);
         return compoundNBT;
+    }
+
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        super.fromTag(blockState, compoundNBT);
+        readFromNBT(compoundNBT);
+    }
+
+    private void readFromNBT(CompoundNBT compoundNBT) {
+        if (compoundNBT.contains(ModNBT.Controller.MOB_TAG)) {
+            CompoundNBT nbt = compoundNBT.getCompound(ModNBT.Controller.MOB_TAG);
+            fakeMob = new FakeMob(nbt);
+        }
     }
 
     public FakeMob getFakeMob() {

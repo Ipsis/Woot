@@ -12,6 +12,7 @@ import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.EnchantmentHelper;
 import ipsis.woot.util.helper.WorldHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -146,10 +147,19 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
     //-------------------------------------------------------------------------
     //region NBT
-
-
     @Override
     public void deserializeNBT(CompoundNBT compoundNBT) {
+        readfromNBT(compoundNBT);
+        super.deserializeNBT(compoundNBT);
+    }
+
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        readfromNBT(compoundNBT);
+        super.fromTag(blockState, compoundNBT);
+    }
+
+    public void readfromNBT(CompoundNBT compoundNBT) {
         if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
             CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
                     inventory, null, compoundNBT.getList(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_COMPOUND));
@@ -159,8 +169,6 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
 
         CompoundNBT energyTag = compoundNBT.getCompound(ModNBT.ENERGY_TAG);
         energyStorage.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(energyTag));
-
-        super.deserializeNBT(compoundNBT);
     }
 
     @Override

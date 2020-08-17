@@ -11,6 +11,7 @@ import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -115,10 +116,19 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
     //-------------------------------------------------------------------------
     //region NBT
-
+    @Override
+    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+        readFromNBT(compoundNBT);
+        super.fromTag(blockState, compoundNBT);
+    }
 
     @Override
     public void deserializeNBT(CompoundNBT compoundNBT) {
+        readFromNBT(compoundNBT);
+        super.deserializeNBT(compoundNBT);
+    }
+
+    private void readFromNBT(CompoundNBT compoundNBT) {
 
         if (compoundNBT.contains(ModNBT.INPUT_INVENTORY_TAG, Constants.NBT.TAG_LIST))
             CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(
@@ -141,8 +151,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (compoundNBT.contains(ModNBT.DyeSqueezer.EXCESS_TAG)) {
             dumpExcess = compoundNBT.getBoolean(ModNBT.DyeSqueezer.EXCESS_TAG);
         }
-        super.deserializeNBT(compoundNBT);
     }
+
+
 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {

@@ -5,6 +5,7 @@ import ipsis.woot.modules.factory.MobParam;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.NetworkHelper;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -77,7 +78,7 @@ public class ClientFactorySetup {
 
             int fluidCount = buf.readInt();
             for (int y = 0; y < fluidCount; y++) {
-                //mob.fluidIngredients.add(NetworkTools.readItemStack(buf));
+                mob.fluidIngredients.add(NetworkHelper.readFluidStack(buf));
             }
 
             int drops = buf.readInt();

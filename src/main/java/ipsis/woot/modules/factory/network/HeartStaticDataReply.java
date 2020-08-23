@@ -11,11 +11,13 @@ import ipsis.woot.modules.oracle.blocks.OracleContainer;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.NetworkHelper;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -88,11 +90,9 @@ public class HeartStaticDataReply {
             }
 
             if (recipe.fluids.containsKey(fakeMob)) {
-                buf.writeInt(0);
-                /*
                 buf.writeInt(recipe.fluids.get(fakeMob).size());
                 for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
-                    NetworkTools.writeItemStack(buf, itemStack); */
+                    NetworkHelper.writeFluidStack(buf, fluidStack);
             } else {
                 buf.writeInt(0);
             }

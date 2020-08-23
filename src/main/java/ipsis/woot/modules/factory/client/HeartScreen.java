@@ -186,7 +186,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 }
                 if (!mobInfo.fluidIngredients.isEmpty()) {
                     for (FluidStack fluidStack : mobInfo.fluidIngredients)
-                        tooltip.add("Ingredient: " + fluidStack.getAmount() + "mb " + fluidStack.toString());
+                        tooltip.add("Ingredient: " + fluidStack.getAmount() + "mb " + StringHelper.translate(fluidStack.getTranslationKey()));
                 }
                 mobElements.get(idx).addDrop(controllerStack, tooltip);
                 mobElements.get(idx).unlock();

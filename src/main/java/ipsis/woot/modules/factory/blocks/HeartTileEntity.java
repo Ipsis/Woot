@@ -193,6 +193,12 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         if (fluids.isEmpty())
             return true;
 
+        for (FluidStack fluidStack : fluids) {
+            int amount = StorageHelper.getAmount(fluidStack, formedSetup.getImportFluidHandlers());
+            if (amount == 0 || amount < fluidStack.getAmount())
+                return false;
+        }
+
         return true;
     }
 

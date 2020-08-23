@@ -95,6 +95,20 @@ public class FormedSetup {
         return handlers;
     }
 
+    public List<LazyOptional<IFluidHandler>> getImportFluidHandlers() {
+        List<LazyOptional<IFluidHandler>> handlers = new ArrayList<>();
+        for (Direction facing : Direction.values()) {
+            if (!world.isBlockLoaded(importPos.offset(facing)))
+                continue;
+            TileEntity te = world.getTileEntity(importPos.offset(facing));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            handlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite()));
+        }
+        return handlers;
+    }
+
     public List<LazyOptional<IItemHandler>> getExportHandlers() {
         List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {

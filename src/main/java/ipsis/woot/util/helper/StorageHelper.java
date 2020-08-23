@@ -2,6 +2,8 @@ package ipsis.woot.util.helper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -71,5 +73,26 @@ public class StorageHelper {
         }
 
         return count.get();
+    }
+
+    public static int getAmount(FluidStack fluidStack, List<LazyOptional<IFluidHandler>> hdlrs) {
+
+        AtomicInteger count = new AtomicInteger();
+        for (LazyOptional<IFluidHandler> hdlr : hdlrs) {
+            hdlr.ifPresent(h -> {
+
+                for (int slot = 0; slot < h.getTanks(); slot++) {
+                    FluidStack slotStack = h.getFluidInTank(slot);
+                    if (slotStack.isEmpty())
+                        continue;
+
+                    if (FluidStack.areFluidStackTagsEqual(fluidStack, slotStack))
+                        count.getAndAdd(slotStack.getAmount());
+                }
+            });
+        }
+
+        return count.get();
+
     }
 }

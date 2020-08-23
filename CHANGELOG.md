@@ -2,6 +2,15 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.2-1.1.1.2] - 2020-08-23
+### Added
+### Changed
+- Add TOP perk names when looking at perk slots
+- Fix perks not being recognised correctly when applying to formed factory [#441]
+- Cancel XP drops from Woot FakePlayer mob simulation, as this way causing fountains of XP in Tartarus
+- Fix up the world gen in Tartarus, which prevented me from visiting it when testing
+## Removed
+
 ## [1.15.2-1.1.1.1] - 2020-08-01
 ### Added
 ### Changed

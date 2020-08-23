@@ -197,7 +197,38 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     private void consumeItemIngredients(List<ItemStack> items, FormedSetup formedSetup) {
+        if (items.isEmpty())
+            return;
 
+        for (LazyOptional<IItemHandler> hdlr : formedSetup.getImportHandlers()) {
+            if (items.isEmpty())
+                break;
+
+            hdlr.ifPresent(h -> {
+                for (ItemStack itemStack : items) {
+                    if (itemStack.isEmpty())
+                        continue;
+
+                    Woot.setup.getLogger().debug("consumeItemIngredients: to consume {}", itemStack);
+
+                    for (int slot = 0; slot < h.getSlots(); slot++) {
+                        ItemStack slotStack = h.getStackInSlot(slot);
+                        if (!slotStack.isEmpty() && ItemStack.areItemsEqual(itemStack, slotStack)) {
+
+                            int consumed = 0;
+                            if (itemStack.getCount() > slotStack.getCount())
+                                consumed = slotStack.getCount();
+                            else
+                                consumed = itemStack.getCount();
+
+                            Woot.setup.getLogger().debug("consumeItemIngredients: consumed {}", consumed);
+                            slotStack.shrink(consumed);
+                            itemStack.shrink(consumed);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void consumeFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {

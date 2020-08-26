@@ -18,6 +18,7 @@ import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -173,6 +174,16 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
     private List<FluidStack> createFluidIngredients(Recipe recipe, FormedSetup formedSetup) {
         List<FluidStack> fluids = new ArrayList<>();
+        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
+            if (recipe.fluids.containsKey(fakeMob)) {
+                for (FluidStack fluidStack : recipe.fluids.get(fakeMob)) {
+                    int amount = fluidStack.getAmount() * formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS));
+                    FluidStack newStack = fluidStack.copy();
+                    newStack.setAmount(amount);
+                    fluids.add(newStack);
+                }
+            }
+        }
         return fluids;
     }
 
@@ -238,6 +249,29 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     private void consumeFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
+        if (fluids.isEmpty())
+            return;
+
+        for (LazyOptional<IFluidHandler> hdlr : formedSetup.getImportFluidHandlers()) {
+            if (fluids.isEmpty())
+                break;
+
+            hdlr.ifPresent(h -> {
+                for (FluidStack fluidStack : fluids) {
+                    if (fluidStack.isEmpty())
+                        continue;
+
+                    Woot.setup.getLogger().debug("consumeFluidIngredients: to consume {}", fluidStack);
+
+                    FluidStack drainedStack = h.drain(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                    int consumed = drainedStack.getAmount();
+                    fluidStack.setAmount(fluidStack.getAmount() - consumed);
+                    if (fluidStack.getAmount() < 0)
+                        fluidStack.setAmount(0);
+                    Woot.setup.getLogger().debug("consumeFluidIngredients: consumed {}", consumed);
+                }
+            });
+        }
     }
 
     /**

@@ -2,6 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.2-1.1.1.?] - ??
+### Added
+- Added fluid ingredients
+### Changed
+- Fixed item ingredients not being consumed
+### Removed
+
 ## [1.15.2-1.1.1.2] - 2020-08-23
 ### Added
 ### Changed
@@ -9,14 +16,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fix perks not being recognised correctly when applying to formed factory [#441]
 - Cancel XP drops from Woot FakePlayer mob simulation, as this way causing fountains of XP in Tartarus
 - Fix up the world gen in Tartarus, which prevented me from visiting it when testing
-## Removed
+### Removed
 
 ## [1.15.2-1.1.1.1] - 2020-08-01
 ### Added
 ### Changed
 - Fix incorrect tier displayed in the controller tooltip [#438]
 - Check MobEntity.getEntityString returning null and Woot then causing a crash [#440]
-## Removed
+### Removed
 
 ## [1.15.2-1.1.1.0] - 2020-07-11
 ### Added
@@ -26,20 +33,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Fix internal displaying missing block as (x,z,z) instead of (x,y,z) [#436]
 - Remove all entities in the simulation cell after sweeping the drops [#419]
-## Removed
+### Removed
 
 ## [1.15.2-1.1.0.3] - 2020-06-25
 ### Added
 ### Changed
 - Fix crash when running with FTBQuests due to invalid listener casting [#434]
-## Removed
+### Removed
 
 ## [1.15.2-1.1.0.2] - 2020-06-21
 ### Added
 ### Changed
 - Added temporary fix for NPE on Evokers/Vindicators etc [#432]
   - This is based on Darkhax's fix in DarkUtilities
-## Removed
+### Removed
 
 ## [1.15.2-1.1.0.1] - 2020-06-14
 ### Added
@@ -47,7 +54,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fixed gui with tanks not updating [#431]
 - Blacklisted Evokers due to a fatal crash [#432]
   - This is due to potion effects being applied to the FakePlayer
-## Removed
+### Removed
 
 ## [1.15.2-1.1.0.0] - 2020-06-07
 ### Added
@@ -59,7 +66,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fixed Anvil JEI recipe not showing controller recipe [#429]
 - Override of mob specific configuration (policy.mob) has been made more user friendly
 - Changed controller recipe to use SI plate not cobblestone
-## Removed
+### Removed
 - Stuff that has been removed
 
 ## [1.15.2-1.0.0.0] - 2020-05-30

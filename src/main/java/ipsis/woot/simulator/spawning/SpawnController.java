@@ -29,12 +29,12 @@ public class SpawnController {
     static SpawnController INSTANCE;
     static { INSTANCE = new SpawnController(); }
 
-    public void spawnKill(@Nonnull FakeMobKey fakeMobKey, @Nonnull World world, @Nonnull BlockPos spawnPos) {
+    public void spawnKill(@Nonnull FakeMobKey fakeMobKey, @Nonnull ServerWorld world, @Nonnull BlockPos spawnPos) {
 
         if (!fakeMobKey.getMob().isValid())
             return;
 
-        FakePlayer fakePlayer = FakePlayerPool.getFakePlayer((ServerWorld)world, fakeMobKey.getLooting());
+        FakePlayer fakePlayer = FakePlayerPool.getFakePlayer(world, fakeMobKey.getLooting());
         if (fakePlayer == null)
             return;
 

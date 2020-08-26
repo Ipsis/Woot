@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -65,8 +66,8 @@ public class Cell {
     }
 
     public void run(@Nonnull World world) {
-        if (isOccupied())
-            SpawnController.get().spawnKill(fakeMobKey, world, spawnPos);
+        if (isOccupied() && world instanceof ServerWorld)
+            SpawnController.get().spawnKill(fakeMobKey, (ServerWorld)world, spawnPos);
     }
 
 }

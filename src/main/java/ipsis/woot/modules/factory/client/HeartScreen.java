@@ -323,7 +323,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 FontRenderer fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
                 if (fontRenderer == null)
                     fontRenderer = textRenderer;
-                renderTooltip(matrixStack, tooltip, mouseX, mouseY);
+                func_243308_b(matrixStack, tooltip, mouseX, mouseY);
             }
         }
 

@@ -124,7 +124,7 @@ public class ForgeEventHandlers {
 
 
         DimensionType dimensionType = event.world.getDimension();
-        if (event.world.getDimensionRegistryKey().equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
+        if (event.world.getDimension().equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
             MobSimulator.getInstance().tick(event.world);
         } else {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
@@ -149,7 +149,7 @@ public class ForgeEventHandlers {
         CustomDropsLoader.load(event.getServer().getRecipeManager());
 
         for (ServerWorld dim : event.getServer().getWorlds()) {
-            if (dim.getDimensionRegistryKey().equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
+            if (dim.getDimension().equals(MobSimulatorSetup.TARTARUS_DIMENSION_TYPE)) {
                 Woot.setup.getLogger().debug("onServerStarting: force load Tartarus Cells");
                 dim.forceChunk(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
                 break;

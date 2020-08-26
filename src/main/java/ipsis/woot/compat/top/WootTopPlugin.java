@@ -1,5 +1,5 @@
 package ipsis.woot.compat.top;
-/*
+
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.Perk;
@@ -67,18 +67,14 @@ public class WootTopPlugin {
                             ControllerTileEntity cte = (ControllerTileEntity) te;
                             FakeMob fakeMob = cte.getFakeMob();
                             if (probeMode == ProbeMode.DEBUG) {
-                                iProbeInfo.text(
-                                        TextStyleClass.LABEL + "Mob: " +
-                                                TextStyleClass.INFO + fakeMob.toString());
+                                iProbeInfo.text(CompoundText.createLabelInfo("Mob:", fakeMob.toString()));
                             } else {
                                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                                 if (entityType != null) {
-                                    String name = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+                                    String name = new TranslationTextComponent(entityType.getTranslationKey()).getString();
                                     if (fakeMob.hasTag())
                                         name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
-                                    iProbeInfo.text(
-                                            TextStyleClass.LABEL + "Mob: " +
-                                                    TextStyleClass.INFO + name);
+                                    iProbeInfo.text(CompoundText.createLabelInfo("Mob:", name));
                                 }
                             }
                         }
@@ -89,35 +85,33 @@ public class WootTopPlugin {
                             Perk perk = ute.getUpgrade(blockState);
                             if (perk != Perk.EMPTY) {
                                 String text = StringHelper.translate("item.woot." + perk.getName());
-                                iProbeInfo.text(TextStyleClass.LABEL + "Perk: " + TextStyleClass.INFO + text);
+                                iProbeInfo.text(CompoundText.createLabelInfo("Perk:", text));
                             }
                         }
                     } else if (block instanceof DyeSqueezerBlock) {
                         TileEntity te = world.getTileEntity(iProbeHitData.getPos());
                         if (te instanceof DyeSqueezerTileEntity) {
                             DyeSqueezerTileEntity dte = (DyeSqueezerTileEntity)te;
-                            iProbeInfo.text(TextStyleClass.LABEL + "Red:    " + TextStyleClass.INFO + dte.getRed() + "mb");
-                            iProbeInfo.text(TextStyleClass.LABEL + "Yellow: " + TextStyleClass.INFO + dte.getYellow() + "mb");
-                            iProbeInfo.text(TextStyleClass.LABEL + "Blue:   " + TextStyleClass.INFO + dte.getBlue() + "mb");
-                            iProbeInfo.text(TextStyleClass.LABEL + "White:  " + TextStyleClass.INFO + dte.getWhite() + "mb");
-                            iProbeInfo.text(TextStyleClass.LABEL + "Tanks:  " +
-                                    TextStyleClass.INFO +  (dte.getDumpExcess() ? "Dumping" : "Strict"));
+                            iProbeInfo.text(CompoundText.createLabelInfo("Red:", dte.getRed() + "mb"));
+                            iProbeInfo.text(CompoundText.createLabelInfo("Yellow:", dte.getYellow() + "mb"));
+                            iProbeInfo.text(CompoundText.createLabelInfo("Blue:", dte.getBlue() + "mb"));
+                            iProbeInfo.text(CompoundText.createLabelInfo("White:", dte.getWhite() + "mb"));
+                            iProbeInfo.text(CompoundText.createLabelInfo("Tanks:", dte.getDumpExcess() ? "Dumping" : "Strict"));
                         }
                     } else if (block instanceof HeartBlock) {
                         TileEntity te = world.getTileEntity(iProbeHitData.getPos());
                         if (te instanceof HeartTileEntity) {
                             HeartTileEntity hte = (HeartTileEntity)te;
                             if (hte.isFormed()) {
-                                iProbeInfo.text(TextStyleClass.LABEL + "Progress: " + TextStyleClass.INFO + hte.getProgress() + "%");
+                                iProbeInfo.text(CompoundText.createLabelInfo("Progress:", hte.getProgress() + "%"));
                                 for (FakeMob fakeMob : hte.getFormedMobs()) {
                                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                                     if (entityType != null) {
-                                        String name = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+                                        String name = new TranslationTextComponent(entityType.getTranslationKey()).getString();
                                         if (fakeMob.hasTag())
                                             name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
                                         iProbeInfo.text(
-                                                TextStyleClass.LABEL + "Mob: " +
-                                                        TextStyleClass.INFO + name);
+                                                CompoundText.createLabelInfo("Mob:", name));
                                     }
                                 }
                             }
@@ -126,7 +120,7 @@ public class WootTopPlugin {
                         TileEntity te = world.getTileEntity(iProbeHitData.getPos());
                         if (te instanceof LayoutTileEntity) {
                             LayoutTileEntity lte = (LayoutTileEntity)te;
-                            iProbeInfo.text(TextStyleClass.LABEL + "Tier: " + TextStyleClass.INFO + StringHelper.translate(lte.getTier().getTranslationKey()));
+                            iProbeInfo.text(CompoundText.createLabelInfo("Tier:", StringHelper.translate(lte.getTier().getTranslationKey())));
 
                             if (playerEntity.isCrouching()) {
                                 PatternRepository.Pattern pattern = PatternRepository.get().getPattern(lte.getTier());
@@ -140,7 +134,7 @@ public class WootTopPlugin {
                                             else if (component == FactoryComponent.CONTROLLER)
                                                 text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
 
-                                            iProbeInfo.text(TextStyleClass.INFO + text);
+                                            iProbeInfo.text(CompoundText.create().text(text));
                                         }
                                     }
                                 }
@@ -153,4 +147,4 @@ public class WootTopPlugin {
             return null;
         }
     }
-} */
+}

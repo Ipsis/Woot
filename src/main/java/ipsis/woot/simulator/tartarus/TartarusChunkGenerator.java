@@ -8,9 +8,12 @@ import ipsis.woot.Woot;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.Blockreader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.SingleBiomeProvider;
@@ -25,14 +28,18 @@ import java.util.*;
 
 public class TartarusChunkGenerator extends ChunkGenerator {
 
-    public static final TartarusChunkGenerator INSTANCE = new TartarusChunkGenerator();
-    public static final Codec<TartarusChunkGenerator> codecTartarusChunk = MapCodec.of(Encoder.empty(), Decoder.unit(() -> {
-                return INSTANCE;
-            })).stable().codec();
+    public static final Codec<TartarusChunkGenerator> codecTartarusChunk =
+            RegistryLookupCodec.func_244331_a(Registry.BIOME_KEY)
+                    .xmap(TartarusChunkGenerator::new, TartarusChunkGenerator::getBiome).stable().codec();
 
-    private TartarusChunkGenerator() {
-        super(new SingleBiomeProvider(Biomes.PLAINS), new DimensionStructuresSettings(false));
+    private TartarusChunkGenerator(Registry<Biome> biome) {
+        super(new SingleBiomeProvider(biome.func_243576_d(Biomes.PLAINS)), new DimensionStructuresSettings(false));
+        this.biome = biome;
     }
+
+    public Registry<Biome> getBiome() { return this.biome; }
+
+    private final Registry<Biome> biome;
 
     public static final int WORK_CHUNK_X = 0;
     public static final int WORK_CHUNK_Z = 0;

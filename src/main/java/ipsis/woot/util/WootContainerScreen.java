@@ -87,14 +87,14 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         } else {
             tooltip.add(new StringTextComponent(String.format("0/%d mb", capacity)));
         }
-        renderTooltip(matrixStack, tooltip, mouseX, mouseY);
+        func_243308_b(matrixStack, tooltip, mouseX, mouseY);
     }
 
     public void renderEnergyTooltip(MatrixStack matrixStack, int mouseX, int mouseY, int curr, int capacity, int rate) {
         List<ITextComponent> tooltip = Arrays.asList(
                 new StringTextComponent(String.format("%d/%d RF", curr, capacity)),
                 new StringTextComponent( String.format("%d RF/tick", rate)));
-        renderTooltip(matrixStack, tooltip, mouseX, mouseY);
+        func_243308_b(matrixStack, tooltip, mouseX, mouseY);
     }
 
     public void drawFluid(int x, int y, FluidStack fluid, int width, int height) {

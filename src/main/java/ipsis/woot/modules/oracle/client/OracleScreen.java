@@ -68,7 +68,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
     @Override
     protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.textRenderer.draw(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+        this.textRenderer.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 
         if (container.simulatedMobs.isEmpty()) {
             String mob = "N/A";
@@ -102,7 +102,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                     tooltip.add(new StringTextComponent(String.format("Looting 1 : %.2f%%", summary.chanceToDrop[1])));
                     tooltip.add(new StringTextComponent(String.format("Looting 2 : %.2f%%", summary.chanceToDrop[2])));
                     tooltip.add(new StringTextComponent(String.format("Looting 3: %.2f%%", summary.chanceToDrop[3])));
-                    renderTooltip(matrixStack, tooltip, mouseX - guiLeft, mouseY - guiTop);
+                    func_243308_b(matrixStack, tooltip, mouseX - guiLeft, mouseY - guiTop);
                     break;
                 }
 

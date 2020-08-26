@@ -62,8 +62,7 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
                 ItemStack itemStack = CraftingHelper.getItemStack(jsonObject, true);
                 if (!itemStack.isEmpty()) {
 
-                    FactoryRecipe.Drop drop = new FactoryRecipe.Drop();
-                    drop.itemStack = itemStack;
+                    FactoryRecipe.Drop drop = new FactoryRecipe.Drop(itemStack);
 
                     JsonArray sizeArray = JSONUtils.getJsonArray(jsonObject, "sizes");
                     JsonArray chanceArray = JSONUtils.getJsonArray(jsonObject, "chances");

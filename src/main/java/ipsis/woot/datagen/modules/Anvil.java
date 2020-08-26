@@ -1,7 +1,6 @@
 package ipsis.woot.datagen.modules;
 
-import ipsis.woot.Woot;
-import ipsis.woot.crafting.AnvilRecipe;
+import ipsis.woot.crafting.AnvilRecipeBuilder;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.generic.GenericSetup;
@@ -11,8 +10,6 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
@@ -41,35 +38,29 @@ public class Anvil {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/plate_die"),
-                Ingredient.fromItems(Items.STONE_SLAB),
-                AnvilSetup.PLATE_DIE_ITEM.get(),
-                NonNullList.from(Ingredient.EMPTY,
-                        Ingredient.fromItems(Blocks.OBSIDIAN)))
-                .build(consumer, new ResourceLocation(Woot.MODID, "anvil/plate_die"));
+        AnvilRecipeBuilder.anvilRecipe(
+                AnvilSetup.PLATE_DIE_ITEM.get(), 1,
+                Ingredient.fromItems(Items.STONE_SLAB))
+                .addIngredient(Ingredient.fromItems(Blocks.OBSIDIAN))
+                .build(consumer, "plate_die");
 
-        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/shard_die"),
-                Ingredient.fromItems(Items.QUARTZ),
-                AnvilSetup.SHARD_DIE_ITEM.get(),
-                NonNullList.from(Ingredient.EMPTY,
-                        Ingredient.fromItems(Blocks.OBSIDIAN)))
-                .build(consumer, new ResourceLocation(Woot.MODID, "anvil/shard_die"));
+        AnvilRecipeBuilder.anvilRecipe(
+                AnvilSetup.SHARD_DIE_ITEM.get(), 1,
+                Ingredient.fromItems(Items.QUARTZ))
+                .addIngredient(Ingredient.fromItems(Blocks.OBSIDIAN))
+                .build(consumer, "shard_die");
 
-        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/dye_die"),
-                Ingredient.fromItems(Items.GUNPOWDER),
-                AnvilSetup.DYE_DIE_ITEM.get(),
-                NonNullList.from(Ingredient.EMPTY,
-                        Ingredient.fromItems(Blocks.OBSIDIAN)))
-                .build(consumer, new ResourceLocation(Woot.MODID, "anvil/dye_die"));
+        AnvilRecipeBuilder.anvilRecipe(
+                AnvilSetup.DYE_DIE_ITEM.get(), 1,
+                Ingredient.fromItems(Items.GUNPOWDER))
+                .addIngredient(Ingredient.fromItems(Blocks.OBSIDIAN))
+                .build(consumer, "dye_die");
 
-        AnvilRecipe.anvilRecipe(new ResourceLocation(Woot.MODID, "anvil/controller"),
-                Ingredient.fromItems(FactorySetup.MOB_SHARD_ITEM.get()),
-                FactorySetup.CONTROLLER_BLOCK.get(),
-                NonNullList.from(Ingredient.EMPTY,
-                        Ingredient.fromItems(GenericSetup.PRISM_ITEM.get()),
-                        Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get())))
-                .build(consumer, new ResourceLocation(Woot.MODID, "anvil/controller"));
-
-
+        AnvilRecipeBuilder.anvilRecipe(
+                FactorySetup.CONTROLLER_BLOCK.get(), 1,
+                Ingredient.fromItems(FactorySetup.MOB_SHARD_ITEM.get()))
+                .addIngredient(Ingredient.fromItems(GenericSetup.PRISM_ITEM.get()))
+                .addIngredient(Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()))
+                .build(consumer, "controller");
     }
 }

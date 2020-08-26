@@ -26,6 +26,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static ipsis.woot.crafting.AnvilRecipeBuilder.SERIALIZER;
+
 public class AnvilRecipe implements IRecipe<IInventory> {
 
     private final NonNullList<Ingredient> ingredients;
@@ -61,16 +63,6 @@ public class AnvilRecipe implements IRecipe<IInventory> {
     public ItemStack getOutput() { return new ItemStack(result, count); }
 
     public static final IRecipeType<AnvilRecipe> ANVIL_TYPE = IRecipeType.register("anvil");
-
-    @ObjectHolder("woot:anvil")
-    public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
-
-    public static AnvilRecipe anvilRecipe(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, NonNullList<Ingredient> ingredients) {
-        return new AnvilRecipe(id, baseIngredient, result, 1, ingredients);
-    }
-    public static AnvilRecipe anvilRecipe(ResourceLocation id, Ingredient baseIngredient, IItemProvider result, int count, NonNullList<Ingredient> ingredients) {
-        return new AnvilRecipe(id, baseIngredient, result, count, ingredients);
-    }
 
     /**
      * Valid inputs
@@ -156,67 +148,4 @@ public class AnvilRecipe implements IRecipe<IInventory> {
     public IRecipeType<?> getType() {
         return type;
     }
-
-    /**
-     * IFinishedRecipe
-     */
-    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
-        if (this.baseIngredient == null)
-            throw new IllegalStateException("No valid base ingredient for recipe " + id);
-        consumer.accept(new Finished(id, this.baseIngredient, this.result, this.count, this.ingredients));
-    }
-    public static class Finished implements IFinishedRecipe {
-
-        private final NonNullList<Ingredient> ingredients;
-        private final Ingredient baseIngredient;
-        private final Item result;
-        private final int count;
-        private final ResourceLocation id;
-
-        public Finished(ResourceLocation id, Ingredient baseIngredient, Item result, int count, NonNullList<Ingredient> ingredients) {
-            this.id = id;
-            this.baseIngredient = baseIngredient;
-            this.result = result;
-            this.count = count;
-            this.ingredients = ingredients;
-        }
-
-        @Override
-        public void serialize(JsonObject json) {
-            json.add("base", this.baseIngredient.serialize());
-            JsonArray array = new JsonArray();
-            for (Ingredient i : this.ingredients)
-                array.add(i.serialize());
-            json.add("ingredients", array);
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
-            if (this.count > 1)
-                jsonObject.addProperty("count", this.count);
-            json.add("result", jsonObject);
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return id;
-        }
-
-        @Override
-        public IRecipeSerializer<?> getSerializer() {
-            return SERIALIZER;
-        }
-
-        @Nullable
-        @Override
-        public JsonObject getAdvancementJson() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementID() {
-            return null;
-        }
-    }
-
-
 }

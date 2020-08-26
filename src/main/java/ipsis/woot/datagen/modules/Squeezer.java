@@ -2,6 +2,7 @@ package ipsis.woot.datagen.modules;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
+import ipsis.woot.crafting.DyeSqueezerRecipeBuilder;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
@@ -53,9 +54,12 @@ public class Squeezer {
          * Vanilla dyes
          */
         for (DyeMakeup d : DyeMakeup.values()) {
-            ResourceLocation rl = new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name().toLowerCase(Locale.ROOT));
             Woot.setup.getLogger().info("Generating Dye Squeezer recipe for {}", d);
-                DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromTag(d.getItemTag()), DYE_ENERGY_COST, d) .build(consumer, rl);
+            DyeSqueezerRecipeBuilder.dyeSqueezerRecipe(
+                    Ingredient.fromTag(d.getItemTag()),
+                    DYE_ENERGY_COST,
+                    d.getRed(), d.getYellow(), d.getBlue(), d.getWhite())
+                    .build(consumer, d.name().toLowerCase(Locale.ROOT));
         }
 
         /**
@@ -96,8 +100,14 @@ public class Squeezer {
         };
         for (VanillaDyes d : dyes) {
             Woot.setup.getLogger().info("Generating Dye Squeezer recipe for {}", d.name);
-            ResourceLocation rl = new ResourceLocation(Woot.MODID, "dyesqueezer/" + d.name);
-            DyeSqueezerRecipe.dyeSqueezerRecipe(rl, Ingredient.fromItems(d.item), DYE_ENERGY_COST, d.dyeMakeup) .build(consumer, rl);
+            DyeSqueezerRecipeBuilder.dyeSqueezerRecipe(
+                    Ingredient.fromItems(d.item),
+                    DYE_ENERGY_COST,
+                    d.dyeMakeup.getRed(),
+                    d.dyeMakeup.getYellow(),
+                    d.dyeMakeup.getBlue(),
+                    d.dyeMakeup.getWhite())
+                    .build(consumer, d.name);
         }
     }
 }

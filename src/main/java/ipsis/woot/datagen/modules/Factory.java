@@ -1,6 +1,8 @@
 package ipsis.woot.datagen.modules;
 
 import ipsis.woot.Woot;
+import ipsis.woot.crafting.FactoryRecipe;
+import ipsis.woot.crafting.FactoryRecipeBuilder;
 import ipsis.woot.mod.ModTags;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
@@ -9,11 +11,14 @@ import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.generic.items.GenericItem;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.util.FakeMob;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.Tags;
@@ -317,5 +322,22 @@ public class Factory {
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
+
+        FactoryRecipeBuilder.factoryRecipe(new FakeMob("minecraft:ender_dragon"))
+                .addIngredient(new ItemStack(Items.END_CRYSTAL, 4))
+                .addDrop(new FactoryRecipe.Drop(
+                        new ItemStack(Blocks.DRAGON_EGG),
+                        1, 1, 1, 1,
+                        100.0F, 100.0F, 100.0F, 100.0F))
+                .addDrop(new FactoryRecipe.Drop(
+                        new ItemStack(Items.DRAGON_BREATH),
+                        2, 4, 6, 8,
+                        100.0F, 100.0F, 100.0F, 100.0F))
+                .build(consumer, "ender_dragon");
+
+        FactoryRecipeBuilder.factoryRecipe(new FakeMob("minecraft:wither"))
+                .addIngredient(new ItemStack(Items.WITHER_SKELETON_SKULL, 3))
+                .addIngredient(new ItemStack(Blocks.SOUL_SAND, 4))
+                .build(consumer, "wither");
     }
 }

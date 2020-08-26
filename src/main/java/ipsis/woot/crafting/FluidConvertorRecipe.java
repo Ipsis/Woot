@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static ipsis.woot.crafting.FluidConvertorRecipeBuilder.SERIALIZER;
+
 public class FluidConvertorRecipe implements IRecipe<IInventory> {
 
     private final Ingredient catalyst;
@@ -42,10 +44,6 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
         inputs.add(Arrays.asList(catalyst.getMatchingStacks()));
     }
 
-    public static FluidConvertorRecipe convertorRecipe(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
-        return new FluidConvertorRecipe(id, catalyst, catalystCount, fluidStack, outputFluid, energy);
-    }
-
     public Ingredient getCatalyst() { return this.catalyst; }
     public int getCatalystCount() { return this.catalystCount; }
     public FluidStack getOutput() { return outputFluid.copy(); }
@@ -64,12 +62,6 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
     }
 
     public static final IRecipeType<FluidConvertorRecipe> FLUID_CONV_TYPE = IRecipeType.register("fluidconvertor");
-
-    public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
-        if (this.catalyst == null || this.inputFluid.isEmpty() || this.outputFluid.isEmpty())
-            throw new IllegalStateException("No valid catalyst or fluid for recipe " + id);
-        consumer.accept(new Finished(id, catalyst, catalystCount, inputFluid, outputFluid, energy));
-    }
 
 
     /**
@@ -149,59 +141,4 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
         return type;
     }
 
-    /**
-     * IFinishedRecipe
-     */
-    public static class Finished implements IFinishedRecipe {
-
-        private final ResourceLocation id;
-        private final Ingredient catalyst;
-        private final int catalystcount;
-        private final FluidStack inputFluid;
-        private final FluidStack outputFluid;
-        private final int energy;
-
-        public Finished(ResourceLocation id, Ingredient catalyst, int catalystCount, FluidStack fluidStack, FluidStack outputFluid, int energy) {
-            this.id = id;
-            this.catalyst = catalyst;
-            this.catalystcount = catalystCount;
-            this.inputFluid = fluidStack;
-            this.outputFluid = outputFluid;
-            this.energy = energy;
-        }
-
-        @Override
-        public void serialize(JsonObject json) {
-            json.add("catalyst", this.catalyst.serialize());
-            json.addProperty("catalyst_count", this.catalystcount);
-            json.add("input", FluidStackHelper.create(this.inputFluid));
-            json.add("result", FluidStackHelper.create(this.outputFluid));
-            json.addProperty("energy", this.energy);
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return id;
-        }
-
-        @Override
-        public IRecipeSerializer<?> getSerializer() {
-            return SERIALIZER;
-        }
-
-        @Nullable
-        @Override
-        public JsonObject getAdvancementJson() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementID() {
-            return null;
-        }
-    }
-
-    @ObjectHolder("woot:fluidconvertor")
-    public static final IRecipeSerializer<IRecipe<?>> SERIALIZER = null;
 }

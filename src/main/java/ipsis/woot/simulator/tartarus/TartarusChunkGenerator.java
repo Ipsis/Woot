@@ -1,9 +1,6 @@
 package ipsis.woot.simulator.tartarus;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Decoder;
-import com.mojang.serialization.Encoder;
-import com.mojang.serialization.MapCodec;
 import ipsis.woot.Woot;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

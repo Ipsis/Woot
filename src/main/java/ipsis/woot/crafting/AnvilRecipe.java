@@ -2,6 +2,7 @@ package ipsis.woot.crafting;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.items.MobShardItem;
 import mezz.jei.api.constants.VanillaTypes;
@@ -62,7 +63,7 @@ public class AnvilRecipe implements IRecipe<IInventory> {
     public NonNullList<Ingredient> getIngredients() { return this.ingredients; }
     public ItemStack getOutput() { return new ItemStack(result, count); }
 
-    public static final IRecipeType<AnvilRecipe> ANVIL_TYPE = IRecipeType.register("anvil");
+    public static final IRecipeType<AnvilRecipe> ANVIL_TYPE = IRecipeType.register(Woot.MODID + ":anvil");
 
     /**
      * Valid inputs

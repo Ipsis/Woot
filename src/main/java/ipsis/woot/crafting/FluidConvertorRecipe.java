@@ -1,6 +1,7 @@
 package ipsis.woot.crafting;
 
 import com.google.gson.JsonObject;
+import ipsis.woot.Woot;
 import ipsis.woot.util.FluidStackHelper;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.inventory.IInventory;
@@ -61,7 +62,7 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
                 '}';
     }
 
-    public static final IRecipeType<FluidConvertorRecipe> FLUID_CONV_TYPE = IRecipeType.register("fluidconvertor");
+    public static final IRecipeType<FluidConvertorRecipe> FLUID_CONV_TYPE = IRecipeType.register(Woot.MODID + ":fluidconvertor");
 
 
     /**

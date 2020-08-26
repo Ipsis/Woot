@@ -1,5 +1,6 @@
 package ipsis.woot.crafting;
 
+import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import net.minecraft.inventory.IInventory;
@@ -72,7 +73,7 @@ public class DyeSqueezerRecipe implements IRecipe<IInventory>  {
     private List<List<ItemStack>> inputs = new ArrayList<>();
     public List<List<ItemStack>> getInputs() { return inputs; }
 
-    public static final IRecipeType<DyeSqueezerRecipe> DYE_SQUEEZER_TYPE = IRecipeType.register("dyesqueezer");
+    public static final IRecipeType<DyeSqueezerRecipe> DYE_SQUEEZER_TYPE = IRecipeType.register(Woot.MODID + ":dyesqueezer");
 
     /**
      * IRecipe

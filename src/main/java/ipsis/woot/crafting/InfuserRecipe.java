@@ -1,5 +1,6 @@
 package ipsis.woot.crafting;
 
+import ipsis.woot.Woot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -58,7 +59,7 @@ public class InfuserRecipe implements IRecipe<IInventory> {
     public FluidStack getFluidInput() { return this.fluid; }
     public int getEnergy() { return this.energy; }
 
-    public static final IRecipeType<InfuserRecipe> INFUSER_TYPE = IRecipeType.register("infuser");
+    public static final IRecipeType<InfuserRecipe> INFUSER_TYPE = IRecipeType.register(Woot.MODID + ":infuser");
 
     /**
      * Jei

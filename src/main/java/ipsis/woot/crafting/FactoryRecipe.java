@@ -1,5 +1,6 @@
 package ipsis.woot.crafting;
 
+import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 public class FactoryRecipe implements IRecipe<IInventory> {
 
-    public static final IRecipeType<FactoryRecipe> FACTORY_TYPE = IRecipeType.register("factory");
+    public static final IRecipeType<FactoryRecipe> FACTORY_TYPE = IRecipeType.register(Woot.MODID + ":factory");
     private final ResourceLocation id;
     private final IRecipeType<?> type;
     private final NonNullList<ItemStack> items;

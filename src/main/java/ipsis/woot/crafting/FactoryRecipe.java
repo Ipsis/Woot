@@ -79,5 +79,24 @@ public class FactoryRecipe implements IRecipe<IInventory> {
         public ItemStack itemStack;
         public int[] stackSizes = new int[4];
         public float[] dropChance = new float[4];
+
+        public Drop(ItemStack itemStack) {
+            this.itemStack = itemStack;
+
+        }
+
+        public Drop(ItemStack itemStack, int s0, int s1, int s2, int s3, float d0, float d1, float d2, float d3) {
+            this.itemStack = itemStack;
+            this.stackSizes[0] = s0;
+            this.stackSizes[1] = s1;
+            this.stackSizes[2] = s2;
+            this.stackSizes[3] = s3;
+            this.dropChance[0] = d0;
+            this.dropChance[1] = d1;
+            this.dropChance[2] = d2;
+            this.dropChance[3] = d3;
+        }
+
+
     }
 }

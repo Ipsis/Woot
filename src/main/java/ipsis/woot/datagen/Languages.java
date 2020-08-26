@@ -191,6 +191,7 @@ public class Languages extends LanguageProvider {
         add("info.woot.input_tank.empty", "Input Tank: 0/%d mB");
         add("info.woot.output_tank", "Output Tank: %s %d/%d mB");
         add("info.woot.output_tank.empty", "Output Tank: 0/%d mB");
+        add("info.woot.squeezer.glow", "Use glowstone on machine to swap dump/strict mode");
         add("info.woot.squeezer.0", "Internal: R:%dmB Y:%dmB B:%dmB W:%dmB");
         add("info.woot.perk.efficiency", "Use less Conatus fluid");
         add("info.woot.perk.efficiency.0", "Use %d%% less fluid");

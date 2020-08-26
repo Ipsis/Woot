@@ -2,6 +2,7 @@ package ipsis.woot.datagen.modules;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
+import ipsis.woot.crafting.InfuserRecipeBuilder;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
@@ -16,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -83,79 +85,78 @@ public class Infuser {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
-        InfuserRecipe.infuserRecipe(PRISM_RL,
+        InfuserRecipeBuilder.infuserRecipe(
+                GenericSetup.PRISM_ITEM.get(), 1,
                 Ingredient.fromTag(Tags.Items.GLASS),
                 Ingredient.EMPTY, 0,
-                new FluidStack(FluidSetup.PUREDYE_FLUID.get(),PRISM_FLUID_COST),
-                GenericSetup.PRISM_ITEM.get(), PRISM_ENERGY_COST)
-                .build(consumer, PRISM_RL);
+                new FluidStack(FluidSetup.PUREDYE_FLUID.get(), PRISM_FLUID_COST),
+                PRISM_ENERGY_COST).build(consumer, "prism");
 
-        InfuserRecipe.infuserRecipe(MAGMA_BLOCK_RL,
+        InfuserRecipeBuilder.infuserRecipe(
+                Blocks.MAGMA_BLOCK.asItem(), 1,
                 Ingredient.fromTag(Tags.Items.STONE),
                 Ingredient.EMPTY, 0,
                 new FluidStack(Fluids.LAVA, MAGMA_BLOCK_FLUID_COST),
-                Blocks.MAGMA_BLOCK,
-                MAGMA_BLOCK_ENERGY_COST)
-                .build(consumer, MAGMA_BLOCK_RL);
+                MAGMA_BLOCK_ENERGY_COST).build(consumer, "magmablock1");
 
-        InfuserRecipe.infuserRecipe(MAGMA_BLOCK_RL2,
+        InfuserRecipeBuilder.infuserRecipe(
+                Blocks.MAGMA_BLOCK.asItem(), 2,
                 Ingredient.fromTag(Tags.Items.OBSIDIAN),
                 Ingredient.EMPTY, 0,
                 new FluidStack(Fluids.LAVA, MAGMA_BLOCK_FLUID_COST),
-                Blocks.MAGMA_BLOCK, 2,
-                MAGMA_BLOCK_ENERGY_COST)
-                .build(consumer, MAGMA_BLOCK_RL2);
+                MAGMA_BLOCK_ENERGY_COST).build(consumer, "magmablock2");
 
         ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-        InfuserRecipe.infuserRecipe(ENCH_BOOK_1_RL,
+        InfuserRecipeBuilder.infuserRecipe(
+                book.getItem(),  1,
                 Ingredient.fromItems(Items.BOOK),
                 Ingredient.fromItems(Items.LAPIS_LAZULI), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_1_FLUID_COST),
-                book.getItem(),  1, ENCH_BOOK_1_ENERGY_COST)
-                .build(consumer, ENCH_BOOK_1_RL);
-        InfuserRecipe.infuserRecipe(ENCH_BOOK_2_RL,
+                ENCH_BOOK_1_ENERGY_COST).build(consumer, "ench_book_1");
+        InfuserRecipeBuilder.infuserRecipe(
+                book.getItem(),  2,
                 Ingredient.fromItems(Items.BOOK),
                 Ingredient.fromItems(Items.LAPIS_LAZULI), 2,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_2_FLUID_COST),
-                book.getItem(), 2, ENCH_BOOK_2_ENERGY_COST)
-                .build(consumer, ENCH_BOOK_2_RL);
-        InfuserRecipe.infuserRecipe(ENCH_BOOK_3_RL,
+                ENCH_BOOK_2_ENERGY_COST).build(consumer, "ench_book_2");
+        InfuserRecipeBuilder.infuserRecipe(
+                book.getItem(),  3,
                 Ingredient.fromItems(Items.BOOK),
                 Ingredient.fromItems(Items.LAPIS_LAZULI), 3,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_3_FLUID_COST),
-                book.getItem(), 3, ENCH_BOOK_3_ENERGY_COST)
-                .build(consumer, ENCH_BOOK_3_RL);
-        InfuserRecipe.infuserRecipe(ENCH_BOOK_4_RL,
+                ENCH_BOOK_3_ENERGY_COST).build(consumer, "ench_book_3");
+        InfuserRecipeBuilder.infuserRecipe(
+                book.getItem(),  4,
                 Ingredient.fromItems(Items.BOOK),
                 Ingredient.fromItems(Items.LAPIS_LAZULI), 4,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_4_FLUID_COST),
-                book.getItem(), 4, ENCH_BOOK_4_ENERGY_COST)
-                .build(consumer, ENCH_BOOK_4_RL);
-        InfuserRecipe.infuserRecipe(ENCH_BOOK_5_RL,
+                ENCH_BOOK_4_ENERGY_COST).build(consumer, "ench_book_4");
+        InfuserRecipeBuilder.infuserRecipe(
+                book.getItem(),  5,
                 Ingredient.fromItems(Items.BOOK),
                 Ingredient.fromItems(Items.LAPIS_LAZULI), 5,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_5_FLUID_COST),
-                book.getItem(), 5, ENCH_BOOK_5_ENERGY_COST)
-                .build(consumer, ENCH_BOOK_5_RL);
+                ENCH_BOOK_5_ENERGY_COST).build(consumer, "ench_book_5");
 
-        InfuserRecipe.infuserRecipe(ENCH_PLATE_1_RL,
+        InfuserRecipeBuilder.infuserRecipe(
+                GenericSetup.ENCH_PLATE_1.get(), 1,
                 Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()),
                 Ingredient.fromTag(Tags.Items.INGOTS_IRON), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_PLATE_1_FLUID_COST),
-                GenericSetup.ENCH_PLATE_1.get(), ENCH_PLATE_1_ENERGY_COST)
-                .build(consumer, ENCH_PLATE_1_RL);
-        InfuserRecipe.infuserRecipe(ENCH_PLATE_2_RL,
+                ENCH_PLATE_1_ENERGY_COST).build(consumer, "ench_plate_1");
+        InfuserRecipeBuilder.infuserRecipe(
+                GenericSetup.ENCH_PLATE_2.get(), 1,
                 Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()),
                 Ingredient.fromTag(Tags.Items.INGOTS_GOLD), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_PLATE_2_FLUID_COST),
-                GenericSetup.ENCH_PLATE_2.get(), ENCH_PLATE_2_ENERGY_COST)
-                .build(consumer, ENCH_PLATE_2_RL);
-        InfuserRecipe.infuserRecipe(ENCH_PLATE_3_RL,
+                ENCH_PLATE_2_ENERGY_COST).build(consumer, "ench_plate_2");
+        InfuserRecipeBuilder.infuserRecipe(
+                GenericSetup.ENCH_PLATE_3.get(), 1,
                 Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()),
                 Ingredient.fromTag(Tags.Items.GEMS_DIAMOND), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_PLATE_3_FLUID_COST),
-                GenericSetup.ENCH_PLATE_3.get(), ENCH_PLATE_3_ENERGY_COST)
-                .build(consumer, ENCH_PLATE_3_RL);
+                ENCH_PLATE_3_ENERGY_COST).build(consumer, "ench_plate_3");
+
 
         /**
          * Plates
@@ -164,12 +165,10 @@ public class Infuser {
             RegistryObject<DyeCasingItem> casing;
             RegistryObject<DyePlateItem> plate;
             String name;
-            ResourceLocation rl;
             public Plate(RegistryObject<DyeCasingItem> casing, RegistryObject<DyePlateItem> plate, String name) {
                 this.casing = casing;
                 this.plate = plate;
-                this.name = name;
-                this.rl = new ResourceLocation(Woot.MODID, "infuser/" + name + "_plate");
+                this.name = name + "_plate";
             }
         }
         Plate[] plates = {
@@ -193,12 +192,12 @@ public class Infuser {
 
         for (Plate p : plates) {
             Woot.setup.getLogger().info("Generating Infuser recipe for {} plate", p.name);
-            InfuserRecipe.infuserRecipe(p.rl,
+            InfuserRecipeBuilder.infuserRecipe(
+                    p.plate.get(), 1,
                     Ingredient.fromItems(p.casing.get()),
                     Ingredient.EMPTY, 0,
                     new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DYE_FLUID_COST),
-                    p.plate.get(), DYE_ENERGY_COST)
-                    .build(consumer, p.rl);
+                    DYE_ENERGY_COST).build(consumer, p.name);
         }
 
     }

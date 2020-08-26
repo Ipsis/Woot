@@ -27,8 +27,8 @@ no loot learning can occur.
 ### Changed
 ### Fixed
 - Added check for health/xp cache miss [#459]
-- Change MultiBlockTracker to notify after list operations [#460]
 ### Removed
+- Change MultiBlockTracker to notify after list operations [#460]
 
 ## [1.16.3-1.0.0.1] - 2020-10-31
 ### Added
@@ -46,10 +46,10 @@ no loot learning can occur.
   - Custom recipe file for sheep can still be used to provide non-wool drops.
 ### Changed
 - Default drop rates for Byzantium now increase per factory tier
-### Fixed
 - Fixed gui text alignment for inventory
 - Fixed blocks placed against Layout Guide vanishing from users hand. Layout Guide now needs an empty hand to change tiers and layers.
 ### Removed
+### Fixed
 
 
 

@@ -84,14 +84,13 @@ public class InternItem extends Item {
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity playerEntity, Hand hand) {
 
         ItemStack itemStack = playerEntity.getHeldItem(hand);
+        playerEntity.setActiveHand(hand);
+        if (!world.isRemote) {
+            if (playerEntity.isSneaking()) {
+                RayTraceResult rayTraceResult = rayTrace(world, playerEntity, RayTraceContext.FluidMode.NONE);
+                if (rayTraceResult != null && rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
+                    return super.onItemRightClick(world, playerEntity, hand);
 
-        // Sneak click not on block to cycle
-        if (playerEntity.isCrouching()) {
-            RayTraceResult rayTraceResult = rayTrace(world, playerEntity, RayTraceContext.FluidMode.NONE);
-            if (rayTraceResult != null && rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
-                return new ActionResult<>(ActionResultType.PASS, itemStack);
-
-            if (!world.isRemote) {
                 ToolMode mode = getToolModeFromStack(itemStack);
                 mode = mode.getNext();
                 setToolModeInStack(itemStack, mode);
@@ -107,9 +106,8 @@ public class InternItem extends Item {
                                     StringHelper.translate(mode.getTier().getTranslationKey())));
                 }
             }
-            return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
         }
-        return new ActionResult<>(ActionResultType.PASS, itemStack);
+        return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
     }
 
     /**
@@ -145,7 +143,8 @@ public class InternItem extends Item {
 
         ActionResultType result = ActionResultType.PASS;
         ItemStack itemStack = context.getItem();
-        if (!context.getPlayer().isCrouching() && !context.getWorld().isRemote) {
+
+        if (!context.getPlayer().isSneaking() && !context.getWorld().isRemote) {
             Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
             if (b instanceof HeartBlock) {
                 BlockState blockState = context.getWorld().getBlockState(context.getPos());

@@ -124,7 +124,7 @@ public class XpShardBaseItem extends Item {
             itemStack.shrink(1);
         } else {
             int xp = 0;
-            if (playerIn.isCrouching()) {
+            if (playerIn.isSneaking()) {
                 // Consume the whole stack
                 xp = getXp(itemStack) * itemStack.getCount();
                 if (!playerIn.isCreative())

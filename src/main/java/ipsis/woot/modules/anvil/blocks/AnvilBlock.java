@@ -93,7 +93,7 @@ public class AnvilBlock extends Block implements WootDebug {
             AnvilTileEntity anvil = (AnvilTileEntity)te;
             ItemStack heldItem = playerEntity.getHeldItem(hand);
 
-            if (playerEntity.isCrouching() && heldItem.isEmpty()) {
+            if (playerEntity.isSneaking() && heldItem.isEmpty()) {
                 // Sneak with empty hand to empty
                 anvil.dropItem(playerEntity);
             } else if (heldItem.getItem() == AnvilSetup.HAMMER_ITEM.get()) {

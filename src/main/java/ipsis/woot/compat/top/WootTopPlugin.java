@@ -122,7 +122,7 @@ public class WootTopPlugin {
                             LayoutTileEntity lte = (LayoutTileEntity)te;
                             iProbeInfo.text(CompoundText.createLabelInfo("Tier:", StringHelper.translate(lte.getTier().getTranslationKey())));
 
-                            if (playerEntity.isCrouching()) {
+                            if (playerEntity.isSneaking()) {
                                 PatternRepository.Pattern pattern = PatternRepository.get().getPattern(lte.getTier());
                                 if (pattern != null) {
                                     for (FactoryComponent component : FactoryComponent.VALUES) {

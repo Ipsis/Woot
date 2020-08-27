@@ -31,4 +31,9 @@ public class BlockTagsGen extends BlockTagsProvider {
                 FactorySetup.FACTORY_UPGRADE_BLOCK.get()
         );
     }
+
+    @Override
+    public String getName() {
+        return "Woot Block Tags";
+    }
 }

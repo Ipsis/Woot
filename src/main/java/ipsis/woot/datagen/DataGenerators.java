@@ -1,5 +1,6 @@
 package ipsis.woot.datagen;
 
+import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -13,6 +14,9 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         if (event.includeServer()) {
             generator.addProvider(new Recipes(generator));
+            BlockTagsProvider blockTagsProvider = new BlockTagsGen(generator);
+            generator.addProvider(blockTagsProvider);
+            generator.addProvider(new ItemTagsGen(generator, blockTagsProvider));
         }
         if (event.includeClient()) {
             generator.addProvider(new Items(generator, event.getExistingFileHelper()));

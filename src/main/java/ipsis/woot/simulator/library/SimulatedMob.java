@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.realmsclient.util.JsonUtils;
 import ipsis.woot.Woot;
+import ipsis.woot.modules.factory.generators.WoolGenerator;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
@@ -121,7 +122,10 @@ public class SimulatedMob {
 
             JsonArray dropsArray = new JsonArray();
             {
-                simulatedMobDrops.forEach(d -> dropsArray.add(d.toJson()));
+                simulatedMobDrops.forEach(d -> {
+                    if (!d.hasCustom)
+                        dropsArray.add(d.toJson());
+                });
             }
             jsonObject.add(TAG_DROPS, dropsArray);
         }
@@ -154,8 +158,12 @@ public class SimulatedMob {
                 throw new JsonSyntaxException("Simulated drop must be an object");
 
             SimulatedMobDrop simulatedMobDrop = SimulatedMobDrop.fromJson(simulatedMob, (JsonObject)jsonElement);
-            if (simulatedMobDrop != null)
-                simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+            if (simulatedMobDrop != null) {
+                if (fakeMob.isSheep() && !WoolGenerator.isWoolDrop(simulatedMobDrop.itemStack))
+                    simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+                else
+                    simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+            }
 
         }
 

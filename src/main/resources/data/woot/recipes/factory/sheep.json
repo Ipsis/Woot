@@ -1,0 +1,248 @@
+{
+  "type": "woot:factory",
+  "mob": "minecraft:sheep",
+  "items": [],
+  "fluids": [],
+  "drops": [
+    {
+      "item": "minecraft:black_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:blue_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:brown_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:cyan_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:gray_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:green_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:light_blue_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:light_gray_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:lime_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:magenta_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:orange_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:pink_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:purple_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:red_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:white_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    },
+    {
+      "item": "minecraft:yellow_wool",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        6.25,
+        6.25,
+        6.25,
+        6.25
+      ]
+    }
+  ]
+}

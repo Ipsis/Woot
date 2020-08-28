@@ -339,5 +339,25 @@ public class Factory {
                 .addIngredient(new ItemStack(Items.WITHER_SKELETON_SKULL, 3))
                 .addIngredient(new ItemStack(Blocks.SOUL_SAND, 4))
                 .build(consumer, "wither");
+
+        float chance = 100.0F/16.0F;
+        FactoryRecipeBuilder.factoryRecipe(new FakeMob("minecraft:sheep"))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.BLACK_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.BLUE_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.BROWN_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.CYAN_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.GRAY_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.GREEN_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.LIGHT_BLUE_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.LIGHT_GRAY_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.LIME_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.MAGENTA_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.ORANGE_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.PINK_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.PURPLE_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.RED_WOOL), 1, 1, 1, 1,  chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.WHITE_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .addDrop(new FactoryRecipe.Drop(new ItemStack(Items.YELLOW_WOOL), 1, 1, 1, 1, chance, chance, chance, chance))
+                .build(consumer, "sheep");
     }
 }

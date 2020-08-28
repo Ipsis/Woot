@@ -128,7 +128,7 @@ public class Blocks extends BaseBlockStateProvider {
         factory0 = models().cubeBottomTop("factory_e", modLoc("block/factory_e"),
                 modLoc("block/factory"), modLoc("block/factory"));
         factory1 = models().withExistingParent("factory_e_alone", modLoc("block/small_cube_all"))
-                .texture("all", modLoc("block/factory_d"));
+                .texture("all", modLoc("block/factory_e"));
         builder = getVariantBuilder(FactorySetup.FACTORY_E_BLOCK.get());
         builder.partialState().with(BlockStateProperties.ATTACHED, true)
                 .modelForState().modelFile(factory0).addModel();

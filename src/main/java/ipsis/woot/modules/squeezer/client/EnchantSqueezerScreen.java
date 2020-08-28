@@ -42,6 +42,7 @@ public class EnchantSqueezerScreen extends WootContainerScreen<EnchantSqueezerCo
         super(container, playerInventory, name);
         xSize = GUI_XSIZE;
         ySize = GUI_YSIZE;
+        playerInventoryTitleY = ySize - 94;
     }
 
     @Override

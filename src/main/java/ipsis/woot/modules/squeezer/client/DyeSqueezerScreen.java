@@ -41,6 +41,7 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
         super(container, playerInventory, name);
         xSize = GUI_XSIZE;
         ySize = GUI_YSIZE;
+        playerInventoryTitleY = ySize - 94;
     }
 
     @Override

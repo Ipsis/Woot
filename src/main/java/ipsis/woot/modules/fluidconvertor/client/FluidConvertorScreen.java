@@ -42,6 +42,7 @@ public class FluidConvertorScreen extends WootContainerScreen<FluidConvertorCont
         super(container, playerInventory, name);
         xSize = GUI_XSIZE;
         ySize = GUI_YSIZE;
+        playerInventoryTitleY = ySize - 94;
     }
 
     @Override

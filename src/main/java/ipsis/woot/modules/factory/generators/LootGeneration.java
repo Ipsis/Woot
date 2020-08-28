@@ -38,17 +38,6 @@ public class LootGeneration {
          * Get the output options
          */
         List<LazyOptional<IItemHandler>> itemHandlers = setup.getExportHandlers();
-        /*
-        for (Direction facing : Direction.values()) {
-            if (!heartTileEntity.getWorld().isBlockLoaded(setup.getExportPos().offset(facing)))
-                continue;
-
-            TileEntity te = heartTileEntity.getWorld().getTileEntity(setup.getExportPos().offset(facing));
-            if (!(te instanceof TileEntity))
-                continue;
-
-            itemHandlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
-        } */
 
         int looting = setup.getLootingLevel();
 
@@ -62,6 +51,17 @@ public class LootGeneration {
             for (int i = 0; i < mobCount; i++)
                 rolledDrops.addAll(MobSimulator.getInstance().getRolledDrops(fakeMobKey));
 
+            // Strip out all learned wool drops for vanilla sheep
+            // Add custom drop wool drops
+            if (fakeMobKey.getMob().isSheep()) {
+                for (ItemStack itemStack : rolledDrops) {
+                    if (WoolGenerator.isWoolDrop(itemStack))
+                        itemStack.setCount(0);
+                }
+
+                for (int i = 0; i < mobCount; i++)
+                    rolledDrops.add(WoolGenerator.getWoolDrop(fakeMobKey.getMob()));
+            }
         }
         StorageHelper.insertItems(rolledDrops, itemHandlers);
 

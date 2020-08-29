@@ -120,6 +120,7 @@
   "info.woot.shard.0": "Right click to gain experience",
   "info.woot.shard.1": "Sneak right click to consume full stack",
   "info.woot.squeezer.0": "Internal: R:%dmB Y:%dmB B:%dmB W:%dmB",
+  "info.woot.squeezer.glow": "Use glowstone on machine to swap dump/strict mode",
   "item.woot.black_dyecasing": "Black Dye Casing",
   "item.woot.black_dyeplate": "Black Dye Plate",
   "item.woot.blue_dyecasing": "Blue Dye Casing",

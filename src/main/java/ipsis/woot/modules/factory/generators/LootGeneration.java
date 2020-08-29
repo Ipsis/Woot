@@ -1,11 +1,13 @@
 package ipsis.woot.modules.factory.generators;
 
 import ipsis.woot.Woot;
+import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
 import ipsis.woot.modules.generic.items.GenericItem;
+import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
@@ -27,10 +29,15 @@ public class LootGeneration {
 
     static final Logger LOGGER = LogManager.getLogger();
     static final Random RANDOM = new Random();
+    static final SkullGenerator SKULL_GENERATOR = new SkullGenerator();
 
     public static LootGeneration get() { return INSTANCE; }
     static LootGeneration INSTANCE;
     static { INSTANCE = new LootGeneration(); }
+
+    public void loadFromConfig() {
+        SKULL_GENERATOR.loadFromConfig(PolicyConfiguration.MOB_PERK_HEADLESS_SKULLS.get());
+    }
 
     public void generate(HeartTileEntity heartTileEntity, FormedSetup setup) {
 
@@ -98,7 +105,7 @@ public class LootGeneration {
                     setup.getShardDropChance(), setup.getBasicShardWeight(), setup.getAdvancedShardWeight(), setup.getEliteShardWeight(), rolls);
 
             for (int i = 0; i < rolls; i++) {
-                if (RandomHelper.rollPercentage(setup.getShardDropChance())) {
+                if (RandomHelper.rollPercentage(setup.getShardDropChance(), "shardGen")) {
                     ShardPerkData chosenShard = WeightedRandom.getRandomItem(RANDOM, shards);
                     dropShards.add(chosenShard.getItemStack());
                 }
@@ -106,6 +113,13 @@ public class LootGeneration {
 
             // Unused shards just thrown away
             StorageHelper.insertItems(dropShards, itemHandlers);
+        }
+
+        // Skull gen
+        if (setup.getAllPerks().containsKey(PerkType.HEADLESS)) {
+            List<ItemStack> skulls = new ArrayList<>();
+            setup.getAllMobs().forEach(m -> skulls.add(SKULL_GENERATOR.getSkullDrop(m, setup.getAllMobParams().get(m).getPerkHeadlessValue())));
+            StorageHelper.insertItems(skulls, itemHandlers);
         }
     }
 }

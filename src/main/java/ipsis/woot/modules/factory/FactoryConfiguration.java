@@ -47,6 +47,9 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue TIER_SHARD_1;
     public static ForgeConfigSpec.IntValue TIER_SHARD_2;
     public static ForgeConfigSpec.IntValue TIER_SHARD_3;
+    public static ForgeConfigSpec.IntValue HEADLESS_1;
+    public static ForgeConfigSpec.IntValue HEADLESS_2;
+    public static ForgeConfigSpec.IntValue HEADLESS_3;
     public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
@@ -282,6 +285,23 @@ public class FactoryConfiguration {
                             .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 5 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T5_WEIGHTS_TAG,
                                     Factory.T5_SHARD_DROP_WEIGHTS_DEF);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_HEADLESS);
+                {
+                    HEADLESS_1 = COMMON_BUILDER
+                            .comment("Percentage chance to drop a skull for headless 1 perks")
+                            .defineInRange(ConfigPath.Factory.HEADLESS_1_TAG,
+                                    Factory.HEADLESS_1_DEF, 0, 1000);
+                    HEADLESS_2 = COMMON_BUILDER
+                            .comment("Percentage chance to drop a skull for headless 2 perks")
+                            .defineInRange(ConfigPath.Factory.HEADLESS_2_TAG,
+                                    Factory.HEADLESS_2_DEF, 0, 1000);
+                    HEADLESS_3 = COMMON_BUILDER
+                            .comment("Percentage chance to drop a skull for headless 3 perks")
+                            .defineInRange(ConfigPath.Factory.HEADLESS_3_TAG,
+                                    Factory.HEADLESS_3_DEF, 0, 1000);
                 }
                 COMMON_BUILDER.pop();
 

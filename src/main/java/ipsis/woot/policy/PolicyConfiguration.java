@@ -39,6 +39,10 @@ public class PolicyConfiguration {
     public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_XP_1;
     public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_XP_2;
     public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_XP_3;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_HEADLESS_1;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_HEADLESS_2;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_HEADLESS_3;
+    public static ForgeConfigSpec.ConfigValue<List<String>> MOB_PERK_HEADLESS_SKULLS;
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 
@@ -175,6 +179,24 @@ public class PolicyConfiguration {
                             .comment("Set xp perk level 3 for a mob")
                             .define(ConfigPath.Policy.MOB_PERK_XP_3_TAG,
                                     PolicyDefaults.DEFAULT_MOB_PERK_XP_3);
+
+                    MOB_PERK_HEADLESS_1 = COMMON_BUILDER
+                            .comment("Set headless perk level 1 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_HEADLESS_1_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_HEADLESS_1);
+                    MOB_PERK_HEADLESS_2 = COMMON_BUILDER
+                            .comment("Set headless perk level 2 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_HEADLESS_2_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_HEADLESS_2);
+                    MOB_PERK_HEADLESS_3 = COMMON_BUILDER
+                            .comment("Set headless perk level 3 for a mob")
+                            .define(ConfigPath.Policy.MOB_PERK_HEADLESS_3_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_HEADLESS_3);
+
+                    MOB_PERK_HEADLESS_SKULLS = COMMON_BUILDER
+                            .comment("A list of mobs and their skull drop")
+                            .define(ConfigPath.Policy.MOB_PERK_HEADLESS_SKULLS_TAG,
+                                    PolicyDefaults.DEFAULT_MOB_PERK_HEADLESS_SKULLS);
                 }
 
             }

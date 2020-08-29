@@ -377,6 +377,28 @@ public class Blocks extends BaseBlockStateProvider {
                 .with(UpgradeBlock.UPGRADE, Perk.XP_3)
                 .modelForState().modelFile(upgrade3).addModel();
 
+        upgrade1 = models().cubeAll("factory_upgrade_headless_1", modLoc("item/headless_1"));
+        upgrade2 = models().cubeAll("factory_upgrade_headless_2", modLoc("item/headless_2"));
+        upgrade3 = models().cubeAll("factory_upgrade_headless_3", modLoc("item/headless_3"));
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_2)
+                .modelForState().modelFile(upgrade2).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_2)
+                .modelForState().modelFile(upgrade2).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_3)
+                .modelForState().modelFile(upgrade3).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_3)
+                .modelForState().modelFile(upgrade3).addModel();
+
 
         machineBlock(FactorySetup.HEART_BLOCK.get(), "heart", "block/heart");
         machineBlock(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "fluidconvertor", "block/fluidconvertor");

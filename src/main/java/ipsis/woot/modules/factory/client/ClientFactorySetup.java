@@ -68,6 +68,7 @@ public class ClientFactorySetup {
             mobParam.setPerkEfficiencyValue(buf.readInt());
             mobParam.setPerkMassValue(buf.readInt());
             mobParam.setPerkXpValue(buf.readInt());
+            mobParam.setPerkHeadlessValue(buf.readInt());
             factorySetup.controllerMobs.add(fakeMob);
             factorySetup.mobParams.put(fakeMob, mobParam);
 

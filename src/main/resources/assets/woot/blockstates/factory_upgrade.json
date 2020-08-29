@@ -113,6 +113,24 @@
     },
     "attached=true,upgrade=xp_3": {
       "model": "woot:block/factory_upgrade_xp_3"
+    },
+    "attached=false,upgrade=headless_1": {
+      "model": "woot:block/factory_upgrade_headless_1"
+    },
+    "attached=true,upgrade=headless_1": {
+      "model": "woot:block/factory_upgrade_headless_1"
+    },
+    "attached=false,upgrade=headless_2": {
+      "model": "woot:block/factory_upgrade_headless_2"
+    },
+    "attached=true,upgrade=headless_2": {
+      "model": "woot:block/factory_upgrade_headless_2"
+    },
+    "attached=false,upgrade=headless_3": {
+      "model": "woot:block/factory_upgrade_headless_3"
+    },
+    "attached=true,upgrade=headless_3": {
+      "model": "woot:block/factory_upgrade_headless_3"
     }
   }
 }

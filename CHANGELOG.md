@@ -9,9 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - This gives an equal chance to drop each color.
   - Custom recipe file for sheep wool drops is for display only.
   - Custom recipe file for sheep can still be used to provide non-wool drops.
+- Added sounds for intern block placement (succeed and fail)
+- Added Head Start Perk for skull drops configurable via common.toml
 ### Changed
 - Fixed item ingredients not being consumed
 - Fixed Byzantium Block placing with incorrect texture
+- Expanded heart gui loot display by two rows
 ### Removed
 
 ## [1.15.2-1.1.1.2] - 2020-08-23

@@ -44,7 +44,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
     public HeartScreen(HeartContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
         xSize = 252;
-        ySize = 152;
+        ySize = 188;
     }
 
     private List<StackElement> stackElements = new ArrayList<>();
@@ -52,7 +52,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
     private List<StackElement> upgradeElements = new ArrayList<>();
 
     private int DROPS_COLS = 13;
-    private int DROPS_ROWS = 2;
+    private int DROPS_ROWS = 4;
     private int DROPS_X = 10;
     private int DROPS_Y = 110;
     private int MOBS_X = 10;

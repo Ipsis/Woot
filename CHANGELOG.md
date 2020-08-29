@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [1.15.2-1.1.1.?] - ??
 ### Added
 - Added fluid ingredients
+- Add vanilla sheep wool drops. 
+  - This gives an equal chance to drop each color.
+  - Custom recipe file for sheep wool drops is for display only.
+  - Custom recipe file for sheep can still be used to provide non-wool drops.
 ### Changed
 - Fixed item ingredients not being consumed
 - Fixed Byzantium Block placing with incorrect texture

@@ -268,6 +268,13 @@ public class FactorySetup {
     public static final RegistryObject<PerkItem> XP_3_ITEM = ITEMS.register(
             PerkItem.XP_3_REGNAME, () -> new PerkItem(Perk.XP_3));
 
+    public static final RegistryObject<PerkItem> HEADLESS_1_ITEM = ITEMS.register(
+            PerkItem.HEADLESS_1_REGNAME, () -> new PerkItem(Perk.HEADLESS_1));
+    public static final RegistryObject<PerkItem> HEADLESS_2_ITEM = ITEMS.register(
+            PerkItem.HEADLESS_2_REGNAME, () -> new PerkItem(Perk.HEADLESS_2));
+    public static final RegistryObject<PerkItem> HEADLESS_3_ITEM = ITEMS.register(
+            PerkItem.HEADLESS_3_REGNAME, () -> new PerkItem(Perk.HEADLESS_3));
+
     public static final RegistryObject<MobShardItem> MOB_SHARD_ITEM = ITEMS.register(
             "mobshard", () -> new MobShardItem());
 

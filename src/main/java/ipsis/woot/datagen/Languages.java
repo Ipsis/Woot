@@ -77,6 +77,9 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.XP_1_ITEM.get(), "Wisdom I Perk");
         add(FactorySetup.XP_2_ITEM.get(), "Wisdom II Perk");
         add(FactorySetup.XP_3_ITEM.get(), "Wisdom III Perk");
+        add(FactorySetup.HEADLESS_1_ITEM.get(), "Head Start I Perk");
+        add(FactorySetup.HEADLESS_2_ITEM.get(), "Head Start II Perk");
+        add(FactorySetup.HEADLESS_3_ITEM.get(), "Head Start III Perk");
         add(FactorySetup.MOB_SHARD_ITEM.get(), "Mob Shard");
         add(FactorySetup.XP_SHARD_ITEM.get(), "Experience Shard");
         add(FactorySetup.XP_SPLINTER_ITEM.get(), "Experience Splinter");
@@ -203,6 +206,8 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.mass.0", "Spawn %d mobs");
         add("info.woot.perk.rate", "Speeds up the spawn time");
         add("info.woot.perk.rate.0", "Reduce spawn time by %d%%");
+        add("info.woot.perk.headless", "Generate skulls");
+        add("info.woot.perk.headless.0", "Chance to drop a skull %d%%");
         add("info.woot.perk.tier_shard", "Generate essence to upgrade the factory");
         add("info.woot.perk.tier_shard.0", "%d chances to drop essence");
         add("info.woot.perk.tier_shard.1", "- %s drop chance %.02f%%");

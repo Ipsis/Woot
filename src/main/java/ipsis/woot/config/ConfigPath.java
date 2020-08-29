@@ -104,6 +104,10 @@ public class ConfigPath {
         public static final String MOB_PERK_XP_1_TAG = "xp1";
         public static final String MOB_PERK_XP_2_TAG = "xp2";
         public static final String MOB_PERK_XP_3_TAG = "xp3";
+        public static final String MOB_PERK_HEADLESS_1_TAG = "headless1";
+        public static final String MOB_PERK_HEADLESS_2_TAG = "headless2";
+        public static final String MOB_PERK_HEADLESS_3_TAG = "headless3";
+        public static final String MOB_PERK_HEADLESS_SKULLS_TAG = "headlessSkulls";
     }
 
     public static final class Factory {
@@ -119,6 +123,7 @@ public class ConfigPath {
         public static final String CATEGORY_MASS = "mass";
         public static final String CATEGORY_RATE = "rate";
         public static final String CATEGORY_TIER_SHARD = "tierShard";
+        public static final String CATEGORY_HEADLESS = "headless";
         public static final String CATEGORY_XP = "xp";
 
         public static final String TICK_ACCELERATION_TAG = "tickAcceleration";
@@ -165,6 +170,9 @@ public class ConfigPath {
         public static final String XP_1_TAG = "l1Generate";
         public static final String XP_2_TAG = "l2Generate";
         public static final String XP_3_TAG = "l3Generate";
+        public static final String HEADLESS_1_TAG = "l1HeadlessChance";
+        public static final String HEADLESS_2_TAG = "l2HeadlessChance";
+        public static final String HEADLESS_3_TAG = "l3HeadlessChance";
 
     }
 }

@@ -194,6 +194,14 @@ public class FormedSetup {
                             Config.OVERRIDE.getKeyByPerk(PerkType.XP, perkLevel)));
             }
 
+            // Headless
+            if (perks.containsKey(PerkType.HEADLESS)) {
+                int perkLevel = perks.getOrDefault(PerkType.HEADLESS, 0);
+                if (perkLevel > 0)
+                    param.setPerkHeadlessValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
+                            Config.OVERRIDE.getKeyByPerk(PerkType.HEADLESS, perkLevel)));
+            }
+
             mobParams.put(fakeMob, param);
         }
     }

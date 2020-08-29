@@ -102,6 +102,9 @@ public final class ConfigDefaults {
         public static final int TIER_SHARD_1_DEF = 1;
         public static final int TIER_SHARD_2_DEF = 2;
         public static final int TIER_SHARD_3_DEF = 3;
+        public static final int HEADLESS_1_DEF = 25;
+        public static final int HEADLESS_2_DEF = 50;
+        public static final int HEADLESS_3_DEF = 80;
 
         public static final double T1_SHARD_DROP_CHANCE_DEF = 5.0F;
         public static final double T2_SHARD_DROP_CHANCE_DEF = 10.0F;

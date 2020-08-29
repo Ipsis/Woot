@@ -174,10 +174,9 @@ public class SimulatedMobDrop {
         float dropChance = calculateDropChance(looting);
         MobSimulator.LOGGER.debug("getRolledDrop: rolling looting:{} for {} @ {}%", looting, itemStack, dropChance);
 
-        if (RandomHelper.rollPercentage(dropChance)) {
+        if (RandomHelper.rollPercentage(dropChance, "getRolledDrop")) {
             dropStack = itemStack.copy();
             dropStack.setCount(calculateDropSize(looting));
-            MobSimulator.LOGGER.debug("getRolledDrop: success looting:{} stack:{}", looting, dropStack);
         }
 
         return dropStack;

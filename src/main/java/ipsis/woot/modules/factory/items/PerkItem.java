@@ -33,6 +33,9 @@ public class PerkItem extends Item {
     public static final String TIER_SHARD_1_REGNAME = "tier_shard_1";
     public static final String TIER_SHARD_2_REGNAME = "tier_shard_2";
     public static final String TIER_SHARD_3_REGNAME = "tier_shard_3";
+    public static final String HEADLESS_1_REGNAME = "headless_1";
+    public static final String HEADLESS_2_REGNAME = "headless_2";
+    public static final String HEADLESS_3_REGNAME = "headless_3";
 
     final Perk perk;
 
@@ -81,6 +84,12 @@ public class PerkItem extends Item {
             return new ItemStack(FactorySetup.XP_2_ITEM.get());
         else if (perk == Perk.XP_3)
             return new ItemStack(FactorySetup.XP_3_ITEM.get());
+        else if (perk == Perk.HEADLESS_1)
+            return new ItemStack(FactorySetup.HEADLESS_1_ITEM.get());
+        else if (perk == Perk.HEADLESS_2)
+            return new ItemStack(FactorySetup.HEADLESS_2_ITEM.get());
+        else if (perk == Perk.HEADLESS_3)
+            return new ItemStack(FactorySetup.HEADLESS_3_ITEM.get());
 
         return ItemStack.EMPTY;
     }

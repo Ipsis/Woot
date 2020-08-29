@@ -28,6 +28,8 @@ public class ConfigOverride {
                 new OverrideKey[]{OverrideKey.PERK_RATE_1_REDUCTION, OverrideKey.PERK_RATE_2_REDUCTION, OverrideKey.PERK_RATE_3_REDUCTION});
         perkMap.put(PerkType.XP,
                 new OverrideKey[]{OverrideKey.PERK_XP_1_PERCENTAGE, OverrideKey.PERK_XP_2_PERCENTAGE, OverrideKey.PERK_XP_3_PERCENTAGE});
+        perkMap.put(PerkType.HEADLESS,
+                new OverrideKey[]{OverrideKey.PERK_HEADLESS_1_PERCENTAGE, OverrideKey.PERK_HEADLESS_2_PERCENTAGE, OverrideKey.PERK_HEADLESS_3_PERCENTAGE});
     }
 
     public void add(FakeMob fakeMob, OverrideKey key, int v) {
@@ -126,6 +128,12 @@ public class ConfigOverride {
             return FactoryConfiguration.XP_2.get();
         if (key == OverrideKey.PERK_XP_3_PERCENTAGE)
             return FactoryConfiguration.XP_3.get();
+        if (key == OverrideKey.PERK_HEADLESS_1_PERCENTAGE)
+            return FactoryConfiguration.HEADLESS_1.get();
+        if (key == OverrideKey.PERK_HEADLESS_2_PERCENTAGE)
+            return FactoryConfiguration.HEADLESS_2.get();
+        if (key == OverrideKey.PERK_HEADLESS_3_PERCENTAGE)
+            return FactoryConfiguration.HEADLESS_3.get();
 
         return INVALID_CONFIG_OVERRIDE_DEFAULT;
     }
@@ -153,6 +161,9 @@ public class ConfigOverride {
         PERK_XP_1_PERCENTAGE("perkXp" + ConfigPath.Factory.XP_1_TAG),
         PERK_XP_2_PERCENTAGE("perkXp" + ConfigPath.Factory.XP_1_TAG),
         PERK_XP_3_PERCENTAGE("perkXp" + ConfigPath.Factory.XP_1_TAG),
+        PERK_HEADLESS_1_PERCENTAGE("perkHeadless" + ConfigPath.Factory.HEADLESS_1_TAG),
+        PERK_HEADLESS_2_PERCENTAGE("perkHeadless" + ConfigPath.Factory.HEADLESS_2_TAG),
+        PERK_HEADLESS_3_PERCENTAGE("perkHeadless" + ConfigPath.Factory.HEADLESS_3_TAG)
         ;
 
         private Class clazz;

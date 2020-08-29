@@ -28,7 +28,11 @@ public enum Perk implements IStringSerializable {
     TIER_SHARD_3,
     XP_1,
     XP_2,
-    XP_3;
+    XP_3,
+    HEADLESS_1,
+    HEADLESS_2,
+    HEADLESS_3
+    ;
 
     public static Perk[] VALUES = values();
     public String getName() { return name().toLowerCase(Locale.ROOT); }
@@ -39,10 +43,9 @@ public enum Perk implements IStringSerializable {
         return VALUES[index];
     }
 
-
-    public static final EnumSet<Perk> LEVEL_1_PERKS = EnumSet.of(EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, TIER_SHARD_1, XP_1);
-    public static final EnumSet<Perk> LEVEL_2_PERKS = EnumSet.of(EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, TIER_SHARD_2, XP_2);
-    public static final EnumSet<Perk> LEVEL_3_PERKS = EnumSet.of(EFFICIENCY_3, LOOTING_3, MASS_3, RATE_3, TIER_SHARD_3, XP_3);
+    public static final EnumSet<Perk> LEVEL_1_PERKS = EnumSet.of(EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, TIER_SHARD_1, XP_1, HEADLESS_1);
+    public static final EnumSet<Perk> LEVEL_2_PERKS = EnumSet.of(EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, TIER_SHARD_2, XP_2, HEADLESS_2);
+    public static final EnumSet<Perk> LEVEL_3_PERKS = EnumSet.of(EFFICIENCY_3, LOOTING_3, MASS_3, RATE_3, TIER_SHARD_3, XP_3, HEADLESS_3);
 
     public static final EnumSet<Perk> EFFICIENCY_PERKS = EnumSet.of(EFFICIENCY_1, EFFICIENCY_2, EFFICIENCY_3);
     public static final EnumSet<Perk> LOOTING_PERKS = EnumSet.of(LOOTING_1, LOOTING_2, LOOTING_3);
@@ -50,6 +53,7 @@ public enum Perk implements IStringSerializable {
     public static final EnumSet<Perk> RATE_PERKS = EnumSet.of(RATE_1, RATE_2, RATE_3);
     public static final EnumSet<Perk> XP_PERKS = EnumSet.of(XP_1, XP_2, XP_3);
     public static final EnumSet<Perk> TIER_SHARD_PERKS = EnumSet.of(TIER_SHARD_1, TIER_SHARD_2, TIER_SHARD_3);
+    public static final EnumSet<Perk> HEADLESS_PERKS = EnumSet.of(HEADLESS_1, HEADLESS_2, HEADLESS_3);
 
     public static Perk getPerks(PerkType type, int level) {
         // Hmmmm, not sure about this
@@ -67,6 +71,8 @@ public enum Perk implements IStringSerializable {
             upgrade = XP_PERKS.toArray(new Perk[0])[level];
         } else if (type == PerkType.TIER_SHARD) {
             upgrade = TIER_SHARD_PERKS.toArray(new Perk[0])[level];
+        } else if (type == PerkType.HEADLESS) {
+            upgrade = HEADLESS_PERKS.toArray(new Perk[0])[level];
         }
         return upgrade;
     }
@@ -82,6 +88,8 @@ public enum Perk implements IStringSerializable {
             return PerkType.RATE;
         if (TIER_SHARD_PERKS.contains(perk))
             return PerkType.TIER_SHARD;
+        if (HEADLESS_PERKS.contains(perk))
+            return PerkType.HEADLESS;
 
         return PerkType.XP;
     }
@@ -109,6 +117,8 @@ public enum Perk implements IStringSerializable {
             return new TranslationTextComponent("info.woot.perk.tier_shard");
         if (XP_PERKS.contains(this))
             return new TranslationTextComponent("info.woot.perk.xp");
+        if (HEADLESS_PERKS.contains(this))
+            return new TranslationTextComponent("info.woot.perk.headless");
 
         return new TranslationTextComponent("");
     }
@@ -145,6 +155,12 @@ public enum Perk implements IStringSerializable {
             tooltips.add(new TranslationTextComponent("info.woot.perk.xp.0", FactoryConfiguration.XP_2.get()));
         else if (XP_PERKS.contains(this) && getLevel(this) == 3)
             tooltips.add(new TranslationTextComponent("info.woot.perk.xp.0", FactoryConfiguration.XP_3.get()));
+        else if (HEADLESS_PERKS.contains(this) && getLevel(this) == 1)
+            tooltips.add(new TranslationTextComponent("info.woot.perk.headless.0", FactoryConfiguration.HEADLESS_1.get()));
+        else if (HEADLESS_PERKS.contains(this) && getLevel(this) == 2)
+            tooltips.add(new TranslationTextComponent("info.woot.perk.headless.0", FactoryConfiguration.HEADLESS_2.get()));
+        else if (HEADLESS_PERKS.contains(this) && getLevel(this) == 3)
+            tooltips.add(new TranslationTextComponent("info.woot.perk.headless.0", FactoryConfiguration.HEADLESS_3.get()));
 
         return tooltips;
     }

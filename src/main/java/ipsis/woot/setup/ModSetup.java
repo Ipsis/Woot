@@ -10,6 +10,7 @@ import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.generic.GenericSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;
@@ -73,6 +74,7 @@ public class ModSetup {
         OverrideLoader.loadFromConfig();
         PolicyRegistry.get().loadFromConfig();
         MobSimulatorSetup.init();
+        LootGeneration.get().loadFromConfig();
 
         File dropFile = ModFiles.INSTANCE.getLootFile();
         Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

@@ -147,6 +147,9 @@ public class FakeMob {
     private static final String ENDER_DRAGON = "minecraft:ender_dragon";
     private static final String WITHER = "minecraft:wither";
     private static final String SHEEP = "minecraft:sheep";
+    private static final String SKELETON = "minecraft:skeleton";
+    private static final String WITHER_SKELETON = "minecraft:wither_skeleton";
+    private static final String ZOMBIE = "minecraft:zombie";
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
         // shouldRenderOverlay reports the POWERED state of the entity
@@ -158,7 +161,7 @@ public class FakeMob {
     private boolean isMagmaCube(MobEntity mobEntity) { return mobEntity instanceof MagmaCubeEntity; }
 
     public boolean isChargedCreeper() {
-        return getEntityKey().equalsIgnoreCase(CREEPER) && tag.equalsIgnoreCase(CHARGED_TAG);
+        return isCreeper() && tag.equalsIgnoreCase(CHARGED_TAG);
     }
 
     public boolean isSmallSlime() {
@@ -171,6 +174,22 @@ public class FakeMob {
 
     public boolean isSheep() {
         return getEntityKey().equalsIgnoreCase(SHEEP);
+    }
+
+    public boolean isSkeleton() {
+        return getEntityKey().equalsIgnoreCase(SKELETON);
+    }
+
+    public boolean isWitherSkeleton() {
+        return getEntityKey().equalsIgnoreCase(WITHER_SKELETON);
+    }
+
+    public boolean isZombie() {
+        return getEntityKey().equalsIgnoreCase(ZOMBIE);
+    }
+
+    public boolean isCreeper() {
+        return getEntityKey().equalsIgnoreCase(CREEPER);
     }
 
     public static FakeMob getEnderDragon() { return new FakeMob(ENDER_DRAGON); }

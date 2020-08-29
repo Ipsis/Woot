@@ -1,7 +1,6 @@
 package ipsis.woot.modules.squeezer.blocks;
 
 import ipsis.woot.modules.debug.items.DebugItem;
-import ipsis.woot.modules.infuser.blocks.InfuserTileEntity;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.StringHelper;
@@ -26,8 +25,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -124,19 +121,20 @@ public class EnchantSqueezerBlock extends Block implements WootDebug {
 
         if (nbt.contains("energy")) {
             CompoundNBT nbtEnergy = nbt.getCompound("energy");
-            tooltip.add(new TranslationTextComponent("info.woot.energy",
+            tooltip.add(StringHelper.translate("info.woot.energy",
                     nbtEnergy.getInt("energy"), SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get()));
         }
 
         if (nbt.contains("tank")) {
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(nbt.getCompound("tank"));
             if (!fluidStack.isEmpty()) {
-                tooltip.add(new TranslationTextComponent("info.woot.output_tank",
-                        StringHelper.translate(fluidStack.getTranslationKey()),
-                        fluidStack.getAmount(),
+                tooltip.add(StringHelper.translate(
+                        "info.woot.output_tank",
+                        StringHelper.translate(fluidStack.getTranslationKey()).getUnformattedComponentText(),
                         SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get()));
             } else {
-                tooltip.add(new TranslationTextComponent("info.woot.output_tank.empty",
+                tooltip.add(StringHelper.translate(
+                        "info.woot.output_tank.empty",
                         SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get()));
             }
         }

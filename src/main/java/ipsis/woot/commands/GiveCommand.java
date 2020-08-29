@@ -6,6 +6,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
@@ -17,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class GiveCommand {
@@ -84,10 +84,11 @@ public class GiveCommand {
                     itemEntity.setOwnerId(target.getUniqueID());
                 }
             }
-            source.sendFeedback(new TranslationTextComponent("commands.woot.give.ok",
+            source.sendFeedback(
+                    StringHelper.translate("commands.woot.give.ok",
                     target.getDisplayName(), resourceLocation.toString()), true);
         } else {
-            source.sendFeedback(new TranslationTextComponent("commands.woot.give.fail",
+            source.sendFeedback(StringHelper.translate("commands.woot.give.fail",
                     resourceLocation.toString()), true);
         }
 

@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -39,11 +38,11 @@ public class ControllerBlockItem extends BlockItem {
             if (fakeMob.isValid()) {
                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                 if (entityType != null)
-                    tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
+                    tooltip.add(StringHelper.translate(entityType.getTranslationKey()));
                 if (fakeMob.hasTag())
                     tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
 
-                tooltip.add(new TranslationTextComponent("info.woot.controller.0"));
+                tooltip.add(StringHelper.translate("info.woot.controller.0"));
             }
         }
     }

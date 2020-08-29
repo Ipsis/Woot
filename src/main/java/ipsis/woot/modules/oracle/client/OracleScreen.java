@@ -5,6 +5,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.oracle.blocks.OracleContainer;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -14,7 +15,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -78,7 +78,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
             FakeMob fakeMob = container.simulatedMobs.get(mobIndex);
             EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
             if (entityType != null) {
-                String mob = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+                String mob = StringHelper.translate(entityType.getTranslationKey()).getUnformattedComponentText();
                 if (fakeMob.hasTag())
                     mob += "[" + fakeMob.getTag() + "]";
                 this.font.drawString(mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
@@ -99,10 +99,10 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                     if (fontRenderer == null)
                         fontRenderer = font;
                     List<String> tooltip = getTooltipFromItem(summary.itemStack);
-                    tooltip.add(String.format("No looting : %.2f%%", summary.chanceToDrop[0]));
-                    tooltip.add(String.format("Looting 1 : %.2f%%", summary.chanceToDrop[1]));
-                    tooltip.add(String.format("Looting 2 : %.2f%%", summary.chanceToDrop[2]));
-                    tooltip.add(String.format("Looting 3: %.2f%%", summary.chanceToDrop[3]));
+                    tooltip.add(StringHelper.translate("gui.woot.oracle.looting.0", summary.chanceToDrop[0]).getUnformattedComponentText());
+                    tooltip.add(StringHelper.translate("gui.woot.oracle.looting.1", summary.chanceToDrop[1]).getUnformattedComponentText());
+                    tooltip.add(StringHelper.translate("gui.woot.oracle.looting.2", summary.chanceToDrop[2]).getUnformattedComponentText());
+                    tooltip.add(StringHelper.translate("gui.woot.oracle.looting.3", summary.chanceToDrop[3]).getUnformattedComponentText());
                     renderTooltip(tooltip, mouseX - guiLeft, mouseY - guiTop, fontRenderer);
                     break;
                 }

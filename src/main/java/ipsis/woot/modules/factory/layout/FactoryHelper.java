@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -58,7 +59,7 @@ public class FactoryHelper {
     }
     public static BuildResult tryBuild(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
         if (!playerEntity.isAllowEdit()) {
-            PlayerHelper.sendChatMessage(playerEntity, StringHelper.translate("chat.woot.intern.noedit"));
+            playerEntity.sendStatusMessage(StringHelper.translate("chat.woot.intern.noedit"), false);
             return BuildResult.ERROR;
         }
 
@@ -82,9 +83,9 @@ public class FactoryHelper {
 
             Block placeBlock = correctBlocks.get(0);
             if (!PlayerHelper.playerHasFactoryComponent(playerEntity, correctItemStacks)) {
-                PlayerHelper.sendChatMessage(playerEntity,
-                        StringHelper.translateFormat("chat.woot.intern.missingblock",
-                                StringHelper.translate(pb.getFactoryComponent().getTranslationKey())));
+                playerEntity.sendStatusMessage(
+                        StringHelper.translate("chat.woot.intern.missingblock",
+                                StringHelper.translate(pb.getFactoryComponent().getTranslationKey()).getUnformattedComponentText()), false);
                 return BuildResult.NO_BLOCK_IN_INV;
             }
             if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
@@ -101,10 +102,10 @@ public class FactoryHelper {
                 return BuildResult.SUCCESS;
             } else {
                 // cannot replace block
-                PlayerHelper.sendChatMessage(playerEntity,
-                        StringHelper.translateFormat("chat.woot.intern.noreplace",
-                                StringHelper.translate(pb.getFactoryComponent().getTranslationKey()),
-                                pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()));
+                playerEntity.sendStatusMessage(
+                        StringHelper.translate("chat.woot.intern.noreplace",
+                            StringHelper.translate(pb.getFactoryComponent().getTranslationKey()).getUnformattedComponentText(),
+                            pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()), false);
                 return BuildResult.ERROR;
             }
         }
@@ -113,21 +114,24 @@ public class FactoryHelper {
 
     public static void tryValidate(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
 
-        PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
-                "chat.woot.intern.validate.start", StringHelper.translate(tier.getTranslationKey())));
+        playerEntity.sendStatusMessage(
+                StringHelper.translate("chat.woot.intern.validate.start",
+                        StringHelper.translate(tier.getTranslationKey()).getUnformattedComponentText()), true);
 
         List<String> feedback = new ArrayList<>();
         AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
         if (!FactoryScanner.compareToWorld(absolutePattern, world, feedback)) {
-            PlayerHelper.sendChatMessage(playerEntity, "----");
-            PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
-                    "chat.woot.intern.validate.invalid", StringHelper.translate(tier.getTranslationKey())));
+            playerEntity.sendStatusMessage(new StringTextComponent("----"), false);
+            playerEntity.sendStatusMessage(
+                    StringHelper.translate("chat.woot.intern.validate.invalid",
+                            StringHelper.translate(tier.getTranslationKey()).getUnformattedComponentText()), true);
             for (String s : feedback)
-                PlayerHelper.sendChatMessage(playerEntity, s);
-            PlayerHelper.sendChatMessage(playerEntity, "----");
+                playerEntity.sendStatusMessage(new StringTextComponent(s), false);
+            playerEntity.sendStatusMessage(new StringTextComponent("----"), false);
         } else {
-            PlayerHelper.sendActionBarMessage(playerEntity, StringHelper.translateFormat(
-                    "chat.woot.intern.validate.valid", StringHelper.translate(tier.getTranslationKey())));
+            playerEntity.sendStatusMessage(
+                    StringHelper.translate("chat.woot.intern.validate.valid",
+                            StringHelper.translate(tier.getTranslationKey()).getUnformattedComponentText()), true);
         }
     }
 }

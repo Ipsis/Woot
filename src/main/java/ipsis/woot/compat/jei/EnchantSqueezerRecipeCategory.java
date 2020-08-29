@@ -2,7 +2,6 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
-import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
@@ -63,7 +62,7 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
 
     @Override
     public String getTitle() {
-        return StringHelper.translate("gui.woot.enchsqueezer.name");
+        return StringHelper.translate("gui.woot.enchsqueezer.name").getUnformattedComponentText();
     }
 
     @Override

@@ -10,14 +10,12 @@ import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class MobCommand {
@@ -66,7 +64,7 @@ public class MobCommand {
             int xp = SpawnController.get().getMobExperience(fakeMob, source.getWorld());
             Tier mobTier = Config.OVERRIDE.getMobTier(fakeMob, source.getWorld());
 
-            source.sendFeedback(new TranslationTextComponent(TAG + "info.summary", fakeMob, health, xp, mobTier), true);
+            source.sendFeedback(StringHelper.translate(TAG + "info.summary", fakeMob, health, xp, mobTier), true);
         }
 
         return 0;

@@ -2,15 +2,14 @@ package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -146,7 +145,7 @@ public class XpShardBaseItem extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        tooltip.add(new TranslationTextComponent("info.woot.shard.0"));
-        tooltip.add(new TranslationTextComponent("info.woot.shard.1"));
+        tooltip.add(StringHelper.translate("info.woot.shard.0"));
+        tooltip.add(StringHelper.translate("info.woot.shard.1"));
     }
 }

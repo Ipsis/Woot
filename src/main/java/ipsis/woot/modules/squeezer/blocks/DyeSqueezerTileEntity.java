@@ -11,6 +11,7 @@ import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -24,7 +25,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
@@ -184,7 +184,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //region Container
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("gui.woot.squeezer.name");
+        return StringHelper.translate("gui.woot.squeezer.name");
     }
 
     @Nullable

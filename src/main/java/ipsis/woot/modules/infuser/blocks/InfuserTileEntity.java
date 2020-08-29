@@ -11,6 +11,7 @@ import ipsis.woot.util.EnchantingHelper;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootMachineTileEntity;
+import ipsis.woot.util.helper.StringHelper;
 import ipsis.woot.util.helper.WorldHelper;
 import ipsis.woot.util.oss.OutputOnlyItemStackHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +29,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
@@ -229,7 +229,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     //region Container
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("gui.woot.infuser.name");
+        return StringHelper.translate("gui.woot.infuser.name");
     }
 
     @Nullable

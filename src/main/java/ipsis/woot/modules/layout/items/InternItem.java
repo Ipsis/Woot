@@ -4,10 +4,8 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.HeartBlock;
-import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.layout.FactoryHelper;
 import ipsis.woot.modules.factory.layout.PatternRepository;
-import ipsis.woot.setup.ModSetup;
 import ipsis.woot.util.helper.PlayerHelper;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
@@ -20,7 +18,6 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -29,7 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,7 +34,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * This is the main tool for the mod.
@@ -96,15 +92,15 @@ public class InternItem extends Item {
                 mode = mode.getNext();
                 setToolModeInStack(itemStack, mode);
                 if (mode.isBuildMode()) {
-                    PlayerHelper.sendActionBarMessage(playerEntity,
-                            StringHelper.translateFormat(
+                    playerEntity.sendStatusMessage(
+                            StringHelper.translate(
                                     "info.woot.intern.mode.build",
-                                    StringHelper.translate(mode.getTier().getTranslationKey())));
+                                    StringHelper.translate(mode.getTier().getTranslationKey()).getUnformattedComponentText()), true);
                 } else if (mode.isValidateMode()) {
-                    PlayerHelper.sendActionBarMessage(playerEntity,
-                            StringHelper.translateFormat(
+                    playerEntity.sendStatusMessage(
+                            StringHelper.translate(
                                     "info.woot.intern.mode.validate",
-                                    StringHelper.translate(mode.getTier().getTranslationKey())));
+                                    StringHelper.translate(mode.getTier().getTranslationKey()).getUnformattedComponentText()), true);
                 }
             }
             return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
@@ -195,37 +191,36 @@ public class InternItem extends Item {
 
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern")));
-        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.0")));
-        tooltip.add(new StringTextComponent(StringHelper.translate("info.woot.intern.1")));
+        tooltip.add(StringHelper.translate("info.woot.intern"));
+        tooltip.add(StringHelper.translate("info.woot.intern.0"));
+        tooltip.add(StringHelper.translate("info.woot.intern.1"));
 
         ToolMode toolMode = getToolModeFromStack(stack);
 
         if (toolMode.isBuildMode()) {
-            tooltip.add(new StringTextComponent(StringHelper.translateFormat(
-                            "info.woot.intern.mode.build",
-                            StringHelper.translate(toolMode.getTier().getTranslationKey()))));
+            tooltip.add(StringHelper.translate("info.woot.intern.mode.build",
+                    StringHelper.translate(toolMode.getTier().getTranslationKey()).getUnformattedComponentText()));
             PatternRepository.Pattern pattern = PatternRepository.get().getPattern(toolMode.getTier());
             if (pattern != null) {
                 for (FactoryComponent component : FactoryComponent.VALUES) {
                     int count = pattern.getFactoryBlockCount((component));
                     if (count > 0) {
-                        String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
-                        if (component == FactoryComponent.CELL)
-                            text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell"));
-                        else if (toolMode == ToolMode.BUILD_1 && component == FactoryComponent.CONTROLLER)
-                            text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
-                        else if (component == FactoryComponent.CONTROLLER)
-                            text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
-
-                        tooltip.add(new StringTextComponent(text));
+                        String key = "info.woot.intern.other.count";
+                        TranslationTextComponent text = StringHelper.translate(component.getTranslationKey());
+                       if (component == FactoryComponent.CELL) {
+                           text = StringHelper.translate("info.woot.intern.cell");
+                       } else if (toolMode == ToolMode.BUILD_1 && component == FactoryComponent.CONTROLLER) {
+                           key = "info.woot.intern.controller.count.0";
+                       } else if (component == FactoryComponent.CONTROLLER) {
+                           key = "info.woot.intern.controller.count.1";
+                       }
+                       tooltip.add(StringHelper.translate(key, count, text.getUnformattedComponentText()));
                     }
                 }
             }
         } else if (toolMode.isValidateMode()) {
-            tooltip.add(new StringTextComponent(StringHelper.translateFormat(
-                    "info.woot.intern.mode.validate",
-                    StringHelper.translate(toolMode.getTier().getTranslationKey()))));
+            tooltip.add(StringHelper.translate("info.woot.intern.mode.validate",
+                    StringHelper.translate(toolMode.getTier().getTranslationKey()).getUnformattedComponentText()));
         }
     }
 }

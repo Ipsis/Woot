@@ -4,8 +4,6 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.anvil.items.DieItem;
-import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -73,7 +71,7 @@ public class AnvilRecipeCategory implements IRecipeCategory<AnvilRecipe>, IToolt
 
     @Override
     public String getTitle() {
-       return StringHelper.translate("gui.woot.anvil.name");
+        return StringHelper.translate("gui.woot.anvil.name").getUnformattedComponentText();
     }
 
     @Override

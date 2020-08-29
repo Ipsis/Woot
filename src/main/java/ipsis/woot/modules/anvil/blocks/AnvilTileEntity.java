@@ -9,8 +9,8 @@ import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
+import ipsis.woot.util.helper.StringHelper;
 import ipsis.woot.util.helper.WorldHelper;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -23,7 +23,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -126,9 +125,7 @@ public class AnvilTileEntity extends TileEntity implements WootDebug {
          * Check anvil is hot
          */
         if (!AnvilSetup.ANVIL_BLOCK.get().isAnvilHot(world, pos)) {
-            PlayerHelper.sendActionBarMessage(
-                    playerEntity,
-                    new TranslationTextComponent("chat.woot.anvil.cold").getFormattedText());
+            playerEntity.sendStatusMessage(StringHelper.translate("chat.woot.anvil.cold"), true);
             return;
         }
 

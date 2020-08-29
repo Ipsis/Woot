@@ -8,6 +8,7 @@ import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.PlayerHelper;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +20,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -55,14 +55,14 @@ public class MobShardItem extends Item {
             return false;
 
         if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation())) {
-            PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
-                    new TranslationTextComponent("chat.woot.mobshard.failure").getFormattedText());
+            if (attacker instanceof PlayerEntity)
+                ((PlayerEntity)attacker).sendStatusMessage(StringHelper.translate("chat.woot.mobshard.failure"), true);
             return false;
         }
 
         setProgrammedMob(stack, fakeMob);
-        PlayerHelper.sendActionBarMessage((PlayerEntity)attacker,
-                new TranslationTextComponent("chat.woot.mobshard.success").getFormattedText());
+        if (attacker instanceof PlayerEntity)
+            ((PlayerEntity)attacker).sendStatusMessage(StringHelper.translate("chat.woot.mobshard.success"), true);
         return true;
 
     }
@@ -188,28 +188,28 @@ public class MobShardItem extends Item {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        tooltip.add(new TranslationTextComponent("info.woot.mobshard.0"));
-        tooltip.add(new TranslationTextComponent("info.woot.mobshard.1"));
-        tooltip.add(new TranslationTextComponent("info.woot.mobshard.2"));
-        tooltip.add(new TranslationTextComponent("info.woot.mobshard.3"));
+        tooltip.add(StringHelper.translate("info.woot.mobshard.0"));
+        tooltip.add(StringHelper.translate("info.woot.mobshard.1"));
+        tooltip.add(StringHelper.translate("info.woot.mobshard.2"));
+        tooltip.add(StringHelper.translate("info.woot.mobshard.3"));
 
         FakeMob fakeMob = getProgrammedMob(stack);
         if (!fakeMob.isValid()) {
-            tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.0"));
+            tooltip.add(StringHelper.translate("info.woot.mobshard.a.0"));
             return;
         }
 
         EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
         if (entityType != null)
-            tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
+            tooltip.add(StringHelper.translate(entityType.getTranslationKey()));
         if (fakeMob.hasTag())
             tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
 
         int killCount = stack.getTag().getInt(NBT_KILLS);
         if (isFull(stack)) {
-            tooltip.add(new TranslationTextComponent("info.woot.mobshard.a.1"));
+            tooltip.add(StringHelper.translate("info.woot.mobshard.a.1"));
         } else {
-            tooltip.add(new TranslationTextComponent("info.woot.mobshard.b.0",
+            tooltip.add(StringHelper.translate("info.woot.mobshard.b.0",
                     killCount,
                     Config.OVERRIDE.getIntegerOrDefault(fakeMob, ConfigOverride.OverrideKey.SHARD_KILLS)));
         }

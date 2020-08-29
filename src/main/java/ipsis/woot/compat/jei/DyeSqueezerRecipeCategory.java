@@ -2,16 +2,12 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
-import ipsis.woot.crafting.EnchantSqueezerRecipe;
-import ipsis.woot.modules.squeezer.DyeMakeup;
-import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
-import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -79,7 +75,7 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
 
     @Override
     public String getTitle() {
-        return StringHelper.translate("gui.woot.squeezer.name");
+        return StringHelper.translate("gui.woot.squeezer.name").getUnformattedComponentText();
     }
 
     @Override

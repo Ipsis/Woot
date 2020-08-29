@@ -7,7 +7,6 @@ import ipsis.woot.modules.factory.blocks.*;
 import ipsis.woot.modules.factory.layout.PatternRepository;
 import ipsis.woot.modules.layout.blocks.LayoutBlock;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
-import ipsis.woot.modules.layout.items.InternItem;
 import ipsis.woot.modules.squeezer.blocks.DyeSqueezerBlock;
 import ipsis.woot.modules.squeezer.blocks.DyeSqueezerTileEntity;
 import ipsis.woot.util.FakeMob;
@@ -19,7 +18,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
@@ -73,7 +71,7 @@ public class WootTopPlugin {
                             } else {
                                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                                 if (entityType != null) {
-                                    String name = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+                                    String name = StringHelper.translate(entityType.getTranslationKey()).getUnformattedComponentText();
                                     if (fakeMob.hasTag())
                                         name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
                                     iProbeInfo.text(
@@ -88,7 +86,7 @@ public class WootTopPlugin {
                            UpgradeTileEntity ute = (UpgradeTileEntity)te;
                             Perk perk = ute.getUpgrade(blockState);
                             if (perk != Perk.EMPTY) {
-                                String text = StringHelper.translate("item.woot." + perk.getName());
+                                String text = StringHelper.translate("item.woot." + perk.getName()).getUnformattedComponentText();
                                 iProbeInfo.text(TextStyleClass.LABEL + "Perk: " + TextStyleClass.INFO + text);
                             }
                         }
@@ -112,7 +110,7 @@ public class WootTopPlugin {
                                 for (FakeMob fakeMob : hte.getFormedMobs()) {
                                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                                     if (entityType != null) {
-                                        String name = new TranslationTextComponent(entityType.getTranslationKey()).getFormattedText();
+                                        String name = StringHelper.translate(entityType.getTranslationKey()).getUnformattedComponentText();
                                         if (fakeMob.hasTag())
                                             name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
                                         iProbeInfo.text(
@@ -126,7 +124,7 @@ public class WootTopPlugin {
                         TileEntity te = world.getTileEntity(iProbeHitData.getPos());
                         if (te instanceof LayoutTileEntity) {
                             LayoutTileEntity lte = (LayoutTileEntity)te;
-                            iProbeInfo.text(TextStyleClass.LABEL + "Tier: " + TextStyleClass.INFO + StringHelper.translate(lte.getTier().getTranslationKey()));
+                            iProbeInfo.text(TextStyleClass.LABEL + "Tier: " + TextStyleClass.INFO + StringHelper.translate(lte.getTier().getTranslationKey()).getUnformattedComponentText());
 
                             if (playerEntity.isCrouching()) {
                                 PatternRepository.Pattern pattern = PatternRepository.get().getPattern(lte.getTier());
@@ -134,11 +132,11 @@ public class WootTopPlugin {
                                     for (FactoryComponent component : FactoryComponent.VALUES) {
                                         int count = pattern.getFactoryBlockCount((component));
                                         if (count > 0) {
-                                            String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
+                                            String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()).getUnformattedComponentText());
                                             if (component == FactoryComponent.CELL)
-                                                text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell"));
+                                                text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell").getUnformattedComponentText());
                                             else if (component == FactoryComponent.CONTROLLER)
-                                                text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
+                                                text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()).getUnformattedComponentText());
 
                                             iProbeInfo.text(TextStyleClass.INFO + text);
                                         }

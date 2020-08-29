@@ -2,7 +2,6 @@ package ipsis.woot.compat.jei;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
-import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
@@ -89,7 +88,7 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
 
     @Override
     public String getTitle() {
-        return StringHelper.translate("gui.woot.infuser.name");
+        return StringHelper.translate("gui.woot.infuser.name").getUnformattedComponentText();
     }
 
     @Override

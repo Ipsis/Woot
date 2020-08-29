@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
@@ -153,7 +152,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     List<String> tooltip = getTooltipFromItem(itemStack);
                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                     if (entityType != null) {
-                        ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+                        ITextComponent iTextComponent = StringHelper.translate(entityType.getTranslationKey());
                         tooltip.add(String.format("%s : %.2f%%",
                                         iTextComponent.getFormattedText(),
                                         itemStack.getCount() / 100.0F));
@@ -186,7 +185,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 }
                 if (!mobInfo.fluidIngredients.isEmpty()) {
                     for (FluidStack fluidStack : mobInfo.fluidIngredients)
-                        tooltip.add("Ingredient: " + fluidStack.getAmount() + "mb " + StringHelper.translate(fluidStack.getTranslationKey()));
+                        tooltip.add("Ingredient: " + fluidStack.getAmount() + "mb " + StringHelper.translate(fluidStack.getTranslationKey()).getUnformattedComponentText());
                 }
                 mobElements.get(idx).addDrop(controllerStack, tooltip);
                 mobElements.get(idx).unlock();
@@ -201,7 +200,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     MobParam mobParam = clientFactorySetup.mobParams.get(fakeMob);
                     EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                     if (entityType != null) {
-                        ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+                        ITextComponent iTextComponent = StringHelper.translate(entityType.getTranslationKey());
                         if (Perk.EFFICIENCY_PERKS.contains(perk))
                             tooltip.add(String.format("%s : %d%%", iTextComponent.getFormattedText(), mobParam.getPerkEfficiencyValue()));
                         else if (Perk.RATE_PERKS.contains(perk))
@@ -226,16 +225,16 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         }
 
 
-        addInfoLine(0, StringHelper.translate("gui.woot.heart.0"), title.getFormattedText());
+        addInfoLine(0, StringHelper.translate("gui.woot.heart.0").getUnformattedComponentText(), title.getFormattedText());
         addInfoLine(1, StringHelper.translate(
-                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1).getTranslationKey()), clientFactorySetup.recipeFluid + " mB");
-        addInfoLine(2,StringHelper.translate("gui.woot.heart.1"), clientFactorySetup.recipeTicks + " ticks");
-        addInfoLine(3, StringHelper.translate("gui.woot.heart.2"), container.getProgress() + "%");
+                new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1).getTranslationKey()).getUnformattedComponentText(), clientFactorySetup.recipeFluid + " mB");
+        addInfoLine(2,StringHelper.translate("gui.woot.heart.1").getUnformattedComponentText(), clientFactorySetup.recipeTicks + " ticks");
+        addInfoLine(3, StringHelper.translate("gui.woot.heart.2").getUnformattedComponentText(), container.getProgress() + "%");
 
 
-        font.drawString(StringHelper.translate("gui.woot.heart.3"), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
-        font.drawString(StringHelper.translate("gui.woot.heart.4"), UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
-        font.drawString(StringHelper.translate("gui.woot.heart.5"), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
+        font.drawString(StringHelper.translate("gui.woot.heart.3").getUnformattedComponentText(), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
+        font.drawString(StringHelper.translate("gui.woot.heart.4").getUnformattedComponentText(), UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
+        font.drawString(StringHelper.translate("gui.woot.heart.5").getUnformattedComponentText(), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
 
         mobElements.forEach(e -> e.drawForeground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(mouseX, mouseY));

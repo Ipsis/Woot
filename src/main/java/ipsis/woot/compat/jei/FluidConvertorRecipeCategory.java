@@ -63,7 +63,7 @@ public class FluidConvertorRecipeCategory implements IRecipeCategory<FluidConver
 
     @Override
     public String getTitle() {
-        return StringHelper.translate("gui.woot.fluidconvertor.name");
+        return StringHelper.translate("gui.woot.fluidconvertor.name").getUnformattedComponentText();
     }
 
     @Override

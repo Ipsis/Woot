@@ -11,13 +11,13 @@ import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -142,7 +142,7 @@ public class SimulationCommand {
 
         if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             List<ItemStack> drops = MobSimulator.getInstance().getRolledDrops(new FakeMobKey(fakeMob, looting));
-            source.sendFeedback(new TranslationTextComponent(TAG + "roll",
+            source.sendFeedback(StringHelper.translate(TAG + "roll",
                     fakeMob, looting,
                     drops.stream().map(ItemStack::toString).collect(Collectors.joining(","))), true);
         }
@@ -161,9 +161,9 @@ public class SimulationCommand {
         if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             boolean result = ipsis.woot.simulator.MobSimulator.getInstance().learn(fakeMob);
             if (result)
-                source.sendFeedback(new TranslationTextComponent(TAG + "learn.ok", resourceLocation.toString()), true);
+                source.sendFeedback(StringHelper.translate(TAG + "learn.ok", resourceLocation.toString()), true);
             else
-                source.sendFeedback(new TranslationTextComponent(TAG + "learn.fail", resourceLocation.toString()), true);
+                source.sendFeedback(StringHelper.translate(TAG + "learn.fail", resourceLocation.toString()), true);
         }
 
         return 0;
@@ -179,7 +179,7 @@ public class SimulationCommand {
 
         if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
             for (SimulatedMobDropSummary summary : ipsis.woot.simulator.MobSimulator.getInstance().getDropSummary(fakeMob))
-                source.sendFeedback(new TranslationTextComponent(TAG + "dump.drop", summary), true);
+                source.sendFeedback(StringHelper.translate(TAG + "dump.drop", summary), true);
         }
 
         return 0;
@@ -194,10 +194,10 @@ public class SimulationCommand {
     }
 
      private static int status (CommandSource source) throws CommandSyntaxException {
-        source.sendFeedback(new TranslationTextComponent(TAG + "status.simulating",
+        source.sendFeedback(StringHelper.translate(TAG + "status.simulating",
                 ipsis.woot.simulator.MobSimulator.getInstance().getSimulations().stream().map(
                         FakeMobKey::toString).collect(Collectors.joining(","))), true);
-         source.sendFeedback(new TranslationTextComponent(TAG + "status.waiting",
+         source.sendFeedback(StringHelper.translate(TAG + "status.waiting",
                  ipsis.woot.simulator.MobSimulator.getInstance().getWaiting().stream().map(
                          FakeMobKey::toString).collect(Collectors.joining(","))), true);
 

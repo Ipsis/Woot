@@ -2,7 +2,6 @@ package ipsis.woot.modules.fluidconvertor.blocks;
 
 import ipsis.woot.modules.debug.items.DebugItem;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
-import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
@@ -26,7 +25,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -125,19 +123,21 @@ public class FluidConvertorBlock extends Block implements WootDebug {
 
         if (nbt.contains("energy")) {
             CompoundNBT nbtEnergy = nbt.getCompound("energy");
-            tooltip.add(new TranslationTextComponent("info.woot.energy",
+            tooltip.add(StringHelper.translate("info.woot.energy",
                     nbtEnergy.getInt("energy"), FluidConvertorConfiguration.FLUID_CONV_MAX_ENERGY.get()));
         }
 
         if (nbt.contains("inputTank")) {
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(nbt.getCompound("inputTank"));
             if (!fluidStack.isEmpty()) {
-                tooltip.add(new TranslationTextComponent("info.woot.input_tank",
-                        StringHelper.translate(fluidStack.getTranslationKey()),
+                tooltip.add(StringHelper.translate(
+                        "info.woot.input_tank",
+                        StringHelper.translate(fluidStack.getTranslationKey()).getUnformattedComponentText(),
                         fluidStack.getAmount(),
                         FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get()));
             } else {
-                tooltip.add(new TranslationTextComponent("info.woot.input_tank.empty",
+                tooltip.add(StringHelper.translate(
+                        "info.woot.input_tank.empty",
                         FluidConvertorConfiguration.FLUID_CONV_INPUT_TANK_CAPACITY.get()));
             }
 
@@ -146,13 +146,15 @@ public class FluidConvertorBlock extends Block implements WootDebug {
         if (nbt.contains("outputTank")) {
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(nbt.getCompound("outputTank"));
             if (!fluidStack.isEmpty()) {
-                tooltip.add(new TranslationTextComponent("info.woot.output_tank",
-                        StringHelper.translate(fluidStack.getTranslationKey()),
+                tooltip.add(StringHelper.translate(
+                        "info.woot.input_tank",
+                        StringHelper.translate(fluidStack.getTranslationKey()).getUnformattedComponentText(),
                         fluidStack.getAmount(),
                         FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get()));
             } else {
-                tooltip.add(new TranslationTextComponent("info.woot.output_tank.empty",
-                    FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get()));
+                tooltip.add(StringHelper.translate(
+                        "info.woot.output_tank.empty",
+                        FluidConvertorConfiguration.FLUID_CONV_OUTPUT_TANK_CAPACITY.get()));
             }
         }
     }

@@ -16,6 +16,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -91,8 +92,8 @@ public class FactoryScanner {
             BlockState currState = world.getBlockState(p.getBlockPos());
             Block currBlock = currState.getBlock();
 
-            String found = StringHelper.translate(currBlock.getTranslationKey());
-            String expected = StringHelper.translate(p.getFactoryComponent().getTranslationKey());
+            TranslationTextComponent found = StringHelper.translate(currBlock.getTranslationKey());
+            TranslationTextComponent expected = StringHelper.translate(p.getFactoryComponent().getTranslationKey());
 
             if (p.getFactoryComponent() == FactoryComponent.CELL)
                 expected = StringHelper.translate("info.woot.intern.cell");
@@ -100,9 +101,9 @@ public class FactoryScanner {
             if (!(currBlock instanceof FactoryComponentProvider)) {
                 // Controllers are special as they are optional
                 if (p.getFactoryComponent() != FactoryComponent.CONTROLLER) {
-                    feedback.add(StringHelper.translateFormat(
+                    feedback.add(StringHelper.translate(
                             "chat.woot.intern.validate.missing",
-                            expected, p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()));
+                            expected.getUnformattedComponentText(), p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()).getUnformattedComponentText());
                     valid = false;
                 }
                 continue;
@@ -110,9 +111,9 @@ public class FactoryScanner {
 
             FactoryComponentProvider factoryComponent = (FactoryComponentProvider)currBlock;
             if (!FactoryComponent.isSameComponentFuzzy(factoryComponent.getFactoryComponent(), p.getFactoryComponent())) {
-                feedback.add(StringHelper.translateFormat(
+                feedback.add(StringHelper.translate(
                         "chat.woot.intern.validate.incorrect",
-                        expected, p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(), found));
+                        expected.getUnformattedComponentText(), p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(), found.getUnformattedComponentText()).getUnformattedComponentText());
                 valid = false;
                 continue;
             }
@@ -139,15 +140,15 @@ public class FactoryScanner {
                          */
                         if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation())) {
                             Woot.setup.getLogger().debug("compareToWorld:    {} is invalid policy", fakeMob);
-                            feedback.add(StringHelper.translateFormat(
-                                    "chat.woot.intern.validate.blacklisted",
-                                    p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()));
+                            feedback.add(StringHelper.translate(
+                            "chat.woot.intern.validate.blacklisted",
+                                    p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ()).getUnformattedComponentText());
                         } else if (!absolutePattern.getTier().isValidForTier(mobTier)) {
                             Woot.setup.getLogger().debug("compareToWorld: {} is invalid tier", fakeMob);
-                            feedback.add(StringHelper.translateFormat(
+                            feedback.add(StringHelper.translate(
                                     "chat.woot.intern.validate.wrongtier",
                                     p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(),
-                                    absolutePattern.getTier()));
+                                    StringHelper.translate(absolutePattern.getTier().getTranslationKey()).getUnformattedComponentText()).getUnformattedComponentText());
                         } else {
                             // This is a valid controller
                             absolutePattern.addControllerPos(p.getBlockPos());
@@ -166,9 +167,8 @@ public class FactoryScanner {
         }
 
         if (foundPrimaryController == false) {
-            feedback.add(StringHelper.translateFormat("chat.woot.intern.validate.noprimary",
-                    primaryControllerPos.getX(), primaryControllerPos.getY(), primaryControllerPos.getZ()
-                    ));
+            feedback.add(StringHelper.translate("chat.woot.intern.validate.noprimary",
+                    primaryControllerPos.getX(), primaryControllerPos.getY(), primaryControllerPos.getZ()).getUnformattedComponentText());
             valid = false;
         }
 

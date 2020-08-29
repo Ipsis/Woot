@@ -7,6 +7,7 @@ import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.infuser.blocks.InfuserTileEntity;
 import ipsis.woot.util.WootDebug;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -25,7 +26,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -107,8 +107,8 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(compoundNBT.getCompound("Tank"));
             contents = fluidStack.getAmount();
         }
-        tooltip.add(new TranslationTextComponent("info.woot.cell.0", contents, capacity));
-        tooltip.add(new TranslationTextComponent("info.woot.cell.1", transfer));
+        tooltip.add(StringHelper.translate("info.woot.cell.0", contents, capacity));
+        tooltip.add(StringHelper.translate("info.woot.cell.1", transfer));
     }
 
     /**

@@ -11,6 +11,7 @@ import ipsis.woot.util.WootEnergyStorage;
 import ipsis.woot.util.WootFluidTank;
 import ipsis.woot.util.WootMachineTileEntity;
 import ipsis.woot.util.helper.EnchantmentHelper;
+import ipsis.woot.util.helper.StringHelper;
 import ipsis.woot.util.helper.WorldHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,7 +30,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
@@ -197,7 +197,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     //region Container
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("gui.woot.enchsqueezer.name");
+        return StringHelper.translate("gui.woot.enchsqueezer.name");
     }
 
     @Nullable

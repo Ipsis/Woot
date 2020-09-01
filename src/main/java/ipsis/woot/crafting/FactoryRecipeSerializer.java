@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.FluidStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.ShapedRecipe;
@@ -48,7 +49,9 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
         JsonArray fluidArray = JSONUtils.getJsonArray(json, "fluids");
         for (int i = 0; i < fluidArray.size(); i++) {
             if (fluidArray.get(i) instanceof JsonObject) {
-                // TODO deserializer fluid array
+                FluidStack fluidStack = FluidStackHelper.parse((JsonObject)fluidArray.get(i));
+                if (!fluidStack.isEmpty())
+                    fluids.add(fluidStack);
             }
         }
 

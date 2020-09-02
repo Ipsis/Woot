@@ -162,12 +162,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         List<ItemStack> items = new ArrayList<>();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             if (recipe.items.containsKey(fakeMob)) {
-                for (ItemStack itemStack : recipe.items.get(fakeMob)) {
-                    int count = itemStack.getCount() * formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS));
-                    ItemStack newStack = itemStack.copy();
-                    newStack.setCount(count);
-                    items.add(newStack);
-                }
+                // items are already calculated based on mob count
+                for (ItemStack itemStack : recipe.items.get(fakeMob))
+                    items.add(itemStack.copy());
             }
         }
         return StorageHelper.flattenItemStackList(items);
@@ -177,12 +174,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         List<FluidStack> fluids = new ArrayList<>();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             if (recipe.fluids.containsKey(fakeMob)) {
-                for (FluidStack fluidStack : recipe.fluids.get(fakeMob)) {
-                    int amount = fluidStack.getAmount() * formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS));
-                    FluidStack newStack = fluidStack.copy();
-                    newStack.setAmount(amount);
-                    fluids.add(newStack);
-                }
+                // fluids are already calculated based on mob count
+                for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
+                    fluids.add(fluidStack.copy());
             }
         }
         return fluids;

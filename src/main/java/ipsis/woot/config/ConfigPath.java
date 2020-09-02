@@ -125,6 +125,7 @@ public class ConfigPath {
         public static final String CATEGORY_TIER_SHARD = "tierShard";
         public static final String CATEGORY_HEADLESS = "headless";
         public static final String CATEGORY_XP = "xp";
+        public static final String CATEGORY_EXOTIC = "exotic";
 
         public static final String TICK_ACCELERATION_TAG = "tickAcceleration";
 
@@ -148,6 +149,12 @@ public class ConfigPath {
         public static final String TIER_SHARD_L1_ROLLS_TAG = "l1Rolls";
         public static final String TIER_SHARD_L2_ROLLS_TAG = "l2Rolls";
         public static final String TIER_SHARD_L3_ROLLS_TAG = "l3Rolls";
+
+        public static final String EXOTIC_A_PERCENTAGE = "exoticAPercentage";
+        public static final String EXOTIC_B_PERCENTAGE = "exoticBPercentage";
+        public static final String EXOTIC_C_PERCENTAGE = "exoticCPercentage";
+        public static final String EXOTIC_D_TICKS = "exoticDTicks";
+        public static final String EXOTIC_E_COUNT = "exoticECount";
 
         // These support config override
         public static final String MASS_COUNT_TAG = "massCount";

@@ -1,0 +1,11 @@
+{
+  "name": "Enochian Key: LIL",
+  "category": "woot:exotics",
+  "icon": "woot:exotic_a",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This exotic reduces the amount of fluid ingredients required by a recipe."
+    }
+  ]
+}

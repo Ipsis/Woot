@@ -51,7 +51,7 @@ public class LootGeneration {
         // Drops
         List<ItemStack> rolledDrops = new ArrayList<>();
         for (FakeMob mob : setup.getAllMobs()) {
-            int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS));
+            int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
             LOGGER.debug("generate: {} * {}", mob, mobCount);
 
             FakeMobKey fakeMobKey = new FakeMobKey(mob, looting);
@@ -78,7 +78,7 @@ public class LootGeneration {
             int genXp = 0;
             for (FakeMob mob : setup.getAllMobs()) {
                 int xpPercent = setup.getAllMobParams().get(mob).getPerkXpValue();
-                int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS));
+                int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
                 int x = (int) ((SpawnController.get().getMobExperience(mob, setup.getWorld()) / 100.0F) * xpPercent);
                 genXp += (x * mobCount);
             }

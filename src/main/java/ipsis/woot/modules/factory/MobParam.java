@@ -17,7 +17,10 @@ public class MobParam {
     private int perkHeadlessValue = MOB_PARAM_UNDEFINED;
 
     // Mass has a value regardless of perk
-    public int getMobCount(boolean hasMassPerk) {
+    public int getMobCount(boolean hasMassPerk, boolean hasMassExotic) {
+        if (hasMassExotic)
+            return FactoryConfiguration.EXOTIC_E.get();
+
         return hasMassPerk ? perkMassValue : baseMassCount;
     }
 

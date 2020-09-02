@@ -32,6 +32,12 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue TIER_4_MAX_UNITS;
     public static ForgeConfigSpec.IntValue TIER_5_MAX_UNITS;
 
+    public static ForgeConfigSpec.DoubleValue EXOTIC_A;
+    public static ForgeConfigSpec.DoubleValue EXOTIC_B;
+    public static ForgeConfigSpec.DoubleValue EXOTIC_C;
+    public static ForgeConfigSpec.IntValue EXOTIC_D;
+    public static ForgeConfigSpec.IntValue EXOTIC_E;
+
     public static ForgeConfigSpec.IntValue EFFICIENCY_1;
     public static ForgeConfigSpec.IntValue EFFICIENCY_2;
     public static ForgeConfigSpec.IntValue EFFICIENCY_3;
@@ -173,6 +179,31 @@ public class FactoryConfiguration {
                         .worldRestart()
                         .defineInRange(ConfigPath.Common.TANK_RX_TAG,
                                 Factory.CELL_4_MAX_TRANSFER_DEF, 1, Integer.MAX_VALUE);
+            }
+            COMMON_BUILDER.pop();
+
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_EXOTIC);
+            {
+                EXOTIC_A = COMMON_BUILDER
+                        .comment("Percentage reduction for recipe fluids")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_A_PERCENTAGE,
+                                Factory.EXOTIC_A_DEF, 0.0F, 100.0F);
+                EXOTIC_B = COMMON_BUILDER
+                        .comment("Percentage reduction for recipe fluids")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_B_PERCENTAGE,
+                                Factory.EXOTIC_B_DEF, 0.0F, 100.0F);
+                EXOTIC_C = COMMON_BUILDER
+                        .comment("Percentage reduction for Conatus fluid")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_C_PERCENTAGE,
+                                Factory.EXOTIC_C_DEF, 0.0F, 100.0F);
+                EXOTIC_D = COMMON_BUILDER
+                        .comment("Number of ticks between spawns")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_D_TICKS,
+                                Factory.EXOTIC_D_DEF, 1, Integer.MAX_VALUE);
+                EXOTIC_E = COMMON_BUILDER
+                        .comment("Number of mobs to spawn")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_E_COUNT,
+                                Factory.EXOTIC_E_DEF, 1, Integer.MAX_VALUE);
             }
             COMMON_BUILDER.pop();
 

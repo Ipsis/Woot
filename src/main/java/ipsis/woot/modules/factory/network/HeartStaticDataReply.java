@@ -49,6 +49,7 @@ public class HeartStaticDataReply {
         buf.writeInt(formedSetup.getCellCapacity());
         buf.writeInt(formedSetup.getCellFluidAmount());
         buf.writeInt(formedSetup.getLootingLevel());
+        buf.writeInt(formedSetup.getExotic().ordinal());
 
         buf.writeInt(recipe.getNumTicks());
         buf.writeInt(recipe.getNumUnits());
@@ -78,7 +79,7 @@ public class HeartStaticDataReply {
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseFluidCost);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkRateValue());
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkEfficiencyValue());
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS)));
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS), formedSetup.hasMassExotic()));
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkXpValue());
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkHeadlessValue());
 

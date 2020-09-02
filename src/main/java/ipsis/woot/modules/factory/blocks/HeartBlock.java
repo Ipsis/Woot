@@ -1,6 +1,8 @@
 package ipsis.woot.modules.factory.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.modules.debug.DebugSetup;
+import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.tools.ToolsSetup;
 import ipsis.woot.modules.debug.items.DebugItem;
@@ -25,6 +27,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -63,24 +66,27 @@ public class HeartBlock extends Block implements FactoryComponentProvider, WootD
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
+        if (player.isSneaking())
+            return ActionResultType.FAIL;
+
         if (worldIn.isRemote)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
         if (player.getHeldItemMainhand().getItem() == LayoutSetup.INTERN_ITEM.get() || player.getHeldItemMainhand().getItem() == DebugSetup.DEBUG_ITEM.get()) {
                 // intern is used on the heart, so cannot open the gui
-                return ActionResultType.FAIL; // Block was not activated
+                return ActionResultType.CONSUME; // Block was not activated
         }
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof HeartTileEntity && !((HeartTileEntity) te).isFormed())
-                return ActionResultType.FAIL;
+                return ActionResultType.CONSUME;
 
         if (te instanceof INamedContainerProvider)
             NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());
         else
             throw new IllegalStateException("Named container provider is missing");
 
-        return ActionResultType.SUCCESS; // Block was activated
+        return ActionResultType.CONSUME; // Block was activated
     }
 
     /**

@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "dimension": "the_end"
+      }
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "feature": "endcity"
+      }
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "block": {
+          "block": "minecraft:chest"
+        }
+      }
+    }
+  ],
+  "rolls": 1,
+  "dropChance": 1.0,
+  "weights": [ 4, 4, 2, 1, 1 ]
+}

@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.client;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.modules.factory.Exotic;
 import ipsis.woot.modules.factory.MobParam;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
@@ -21,6 +22,7 @@ public class ClientFactorySetup {
     public List<Perk> perks = new ArrayList<>();
     public HashMap<FakeMob, MobParam> mobParams = new HashMap<>();
     public HashMap<FakeMob, Mob> mobInfo = new HashMap<>();
+    public Exotic exotic = Exotic.NONE;
     public int cellCapacity = 0;
     public int looting = 0;
     public int recipeTicks = 0;
@@ -47,6 +49,7 @@ public class ClientFactorySetup {
         factorySetup.cellCapacity = buf.readInt();
         buf.readInt(); /// fluid amount
         factorySetup.looting = buf.readInt();
+        factorySetup.exotic = Exotic.getExotic(buf.readInt());
 
         factorySetup.recipeTicks = buf.readInt();
         factorySetup.recipeFluid = buf.readInt();

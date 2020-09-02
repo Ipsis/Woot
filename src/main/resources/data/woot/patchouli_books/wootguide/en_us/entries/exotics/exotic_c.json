@@ -1,0 +1,11 @@
+{
+  "name": "Enochian Key: ZOM",
+  "category": "woot:exotics",
+  "icon": "woot:exotic_c",
+  "pages": [
+    {
+      "type": "text",
+      "text": "This exotic reduces the amount of Conatus fluid required."
+    }
+  ]
+}

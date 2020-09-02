@@ -1,7 +1,6 @@
 package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
-import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
@@ -83,6 +82,11 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.MOB_SHARD_ITEM.get(), "Mob Shard");
         add(FactorySetup.XP_SHARD_ITEM.get(), "Experience Shard");
         add(FactorySetup.XP_SPLINTER_ITEM.get(), "Experience Splinter");
+        add(FactorySetup.EXOTIC_A_BLOCK.get(), "Enochian Key - LIL");
+        add(FactorySetup.EXOTIC_B_BLOCK.get(), "Enochian Key - ARN");
+        add(FactorySetup.EXOTIC_C_BLOCK.get(), "Enochian Key - ZOM");
+        add(FactorySetup.EXOTIC_D_BLOCK.get(), "Enochian Key - PAZ");
+        add(FactorySetup.EXOTIC_E_BLOCK.get(), "Enochian Key - LAT");
 
         // Fluid Convertor
         add(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "Fluid Vat");
@@ -215,6 +219,11 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.xp", "Generate experience");
         add("info.woot.perk.xp.0", "Generate %d%% of mob experience");
         add("info.woot.controller.0", "Right-click for required tier information");
+        add("info.woot.exotic.exotic_a", "Reduce fluid ingredients by %0.2f%%");
+        add("info.woot.exotic.exotic_b", "Reduce item ingredients by %0.2f%%");
+        add("info.woot.exotic.exotic_c", "Increase efficiency of Conatus usage to %0.2f%%");
+        add("info.woot.exotic.exotic_d", "Fixed spawn time of %d ticks");
+        add("info.woot.exotic.exotic_e", "Spawns %d mobs");
 
         // Chat
         add("chat.woot.intern.noedit", "Player is not allowed to edit");

@@ -2,7 +2,7 @@ package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.*;
-import ipsis.woot.modules.factory.blocks.TickConverterBlock;
+import ipsis.woot.loot.ExoticDropsLootModifier;
 import ipsis.woot.simulator.MobSimulatorSetup;
 import ipsis.woot.simulator.tartarus.TartarusModDimension;
 import net.minecraft.block.Block;
@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,6 +55,12 @@ public class Registration {
         event.getRegistry().register(new InfuserRecipeSerializer<>(InfuserRecipe::new).setRegistryName(Woot.MODID, "infuser"));
         event.getRegistry().register(new FluidConvertorRecipeSerializer<>(FluidConvertorRecipe::new).setRegistryName(Woot.MODID, "fluidconvertor"));
         event.getRegistry().register(new FactoryRecipeSerializer<>(FactoryRecipe::new).setRegistryName(Woot.MODID, "factory"));
+    }
 
+    @SubscribeEvent
+    public static void registerLootModifierSerializer(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
+        Woot.setup.getLogger().info("registerLootModifierSerializer");
+
+        event.getRegistry().register(new ExoticDropsLootModifier.Serializer().setRegistryName(Woot.MODID, "exotic_drops"));
     }
 }

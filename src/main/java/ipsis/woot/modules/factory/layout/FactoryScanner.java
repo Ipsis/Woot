@@ -2,12 +2,10 @@ package ipsis.woot.modules.factory.layout;
 
 import ipsis.woot.Woot;
 import ipsis.woot.config.Config;
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.*;
+import ipsis.woot.modules.factory.blocks.ExoticBlock;
 import ipsis.woot.modules.factory.blocks.UpgradeBlock;
 import ipsis.woot.policy.PolicyRegistry;
-import ipsis.woot.modules.factory.FactoryComponent;
-import ipsis.woot.modules.factory.FactoryComponentProvider;
-import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.StringHelper;
@@ -80,6 +78,17 @@ public class FactoryScanner {
 
         BlockPos primaryControllerPos;
         primaryControllerPos = new BlockPos(heartPos.offset(absolutePattern.facing, 1).add(0,-2,0));
+
+        if (absolutePattern.getTier() == Tier.TIER_5) {
+            BlockState exoticBlockState = world.getBlockState(heartPos.up());
+            if (exoticBlockState.getBlock() instanceof ExoticBlock) {
+                Block b = exoticBlockState.getBlock();
+                Exotic exotic = ((ExoticBlock) b).getExotic();
+                absolutePattern.setExotic(((ExoticBlock) b).getExotic());
+            }
+        } else {
+            absolutePattern.setExotic(Exotic.NONE);
+        }
 
         for (PatternBlock p : absolutePattern.getBlocks()) {
 
@@ -204,6 +213,9 @@ public class FactoryScanner {
                 return false;
 
         if (pattern1.perks.size() != pattern2.perks.size())
+            return false;
+
+        if (pattern1.exotic != pattern2.exotic)
             return false;
 
         // Does the new perk setup equal the old setup

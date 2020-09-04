@@ -2,6 +2,7 @@
   "name": "Stygian Iron And The Anvil",
   "category": "woot:basics",
   "icon": "woot:si_ingot",
+  "sortnum": 3,
   "pages": [
     {
       "type": "text",

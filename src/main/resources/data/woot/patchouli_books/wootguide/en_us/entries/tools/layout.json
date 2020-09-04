@@ -1,0 +1,15 @@
+{
+  "name": "Layout Guide",
+  "category": "woot:tools",
+  "icon": "woot:layout",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Layout Guide will show you where the blocks need to be placed for a factory. It can be placed on top of an existing Factory Heart or on its own."
+    },
+    {
+      "type": "text",
+      "text": "$(li)Right clicking will step through the different tiers$(li)Sneak right click will step through the y-levels of the current tier"
+    }
+  ]
+}

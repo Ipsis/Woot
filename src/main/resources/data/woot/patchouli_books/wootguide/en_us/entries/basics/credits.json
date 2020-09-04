@@ -1,7 +1,8 @@
 {
   "name": "Credits",
   "category": "woot:basics",
-  "icon": "minecraft:book_and_quill",
+  "icon": "minecraft:paper",
+  "sortnum": "5",
   "pages": [
     {
       "type": "text",
@@ -9,7 +10,7 @@
     },
     {
       "type": "text",
-      "text": "$(li)The Forge developmess$(li)Vazkii - for Patchouli$(li)McJty - for his modding tutorials$(li)The Forge Forum members that help with my questions."
+      "text": "$(li)The Forge developmers$(li)Vazkii - for Patchouli$(li)McJty - for his modding tutorials$(li)The Forge Forum members that help with my questions."
     }
   ]
 }

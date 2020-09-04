@@ -2,7 +2,7 @@
   "name": "What is this mod for",
   "category": "woot:basics",
   "icon": "minecraft:book",
-  "priority": true,
+  "sortnum": "0",
   "pages": [
     {
       "type": "text",

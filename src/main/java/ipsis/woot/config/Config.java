@@ -2,6 +2,7 @@ package ipsis.woot.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import ipsis.woot.commands.CommandConfiguration;
 import ipsis.woot.modules.anvil.AnvilConfiguration;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
@@ -28,6 +29,7 @@ public class Config {
 
     static {
         setupGeneralConfig();
+        CommandConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         AnvilConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         FactoryConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);
         InfuserConfiguration.init(COMMON_BUILDER, CLIENT_BUILDER);

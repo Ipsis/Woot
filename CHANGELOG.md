@@ -4,7 +4,6 @@
 - The version is based off [Forge Versioning](https://mcforge.readthedocs.io/en/latest/conventions/versioning/.)
 
 # Notes
-
 There have been two issues identified with loot learning and the Tartarus dimension. If Tartarus is not loaded then 
 no loot learning can occur.
 

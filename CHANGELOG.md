@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added sounds for intern block placement (succeed and fail)
 - Added Head Start Perk for skull drops configurable via common.toml
 - Added Tier 5 factory exotic blocks found in End City chests
+- Added Woot command permission levels to configuration
 ### Changed
 - Fixed item ingredients not being consumed
 - Fixed Byzantium Block placing with incorrect texture

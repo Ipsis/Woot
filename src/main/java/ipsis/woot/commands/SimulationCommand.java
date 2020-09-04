@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.simulator.spawning.SpawnController;
@@ -44,7 +45,7 @@ public class SimulationCommand {
     private static class LearnCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("learn")
-                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_LEARN_COMMAND_LEVEL))
+                    .requires(cs -> cs.hasPermissionLevel(CommandConfiguration.COMMAND_LEVEL_SIM_LEARN.get()))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                 .executes(ctx -> learnEntity(
@@ -65,7 +66,7 @@ public class SimulationCommand {
     private static class RollDropsCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("roll")
-                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_ROLL_DROPS_COMMAND_LEVEL))
+                    .requires(cs -> cs.hasPermissionLevel(CommandConfiguration.COMMAND_LEVEL_SIM_ROLL_DROPS.get()))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                     .then (
@@ -93,7 +94,7 @@ public class SimulationCommand {
     private static class DumpCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("dump")
-                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_DUMP_COMMAND_LEVEL))
+                    .requires(cs -> cs.hasPermissionLevel(CommandConfiguration.COMMAND_LEVEL_SIM_DUMP.get()))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                     .executes(ctx -> dumpEntity(
@@ -114,7 +115,7 @@ public class SimulationCommand {
     private static class FlushCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("flush")
-                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_FLUSH_COMMAND_LEVEL))
+                    .requires(cs -> cs.hasPermissionLevel(CommandConfiguration.COMMAND_LEVEL_SIM_FLUSH.get()))
                     .then(
                             Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
                                     .executes(ctx -> flushEntity(
@@ -188,7 +189,7 @@ public class SimulationCommand {
     private static class StatusCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("status")
-                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.SIMULATION_STATUS_COMMAND_LEVEL))
+                    .requires(cs -> cs.hasPermissionLevel(CommandConfiguration.COMMAND_LEVEL_SIM_STATUS.get()))
                     .executes(ctx -> status(ctx.getSource()));
         }
     }

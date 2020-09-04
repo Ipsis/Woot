@@ -25,6 +25,16 @@ public class ConfigPath {
         public static final String ENERGY_USE_PER_TICK_COMMENT = "Energy used per tick (RF)";
     }
 
+    public static final class Commands {
+        public static final String CATEGORY = "commands";
+        public static final String COMMAND_LEVEL_SIM_LEARN = "simLearnLevel";
+        public static final String COMMAND_LEVEL_SIM_DUMP = "simDumpLevel";
+        public static final String COMMAND_LEVEL_SIM_FLUSH = "simFlushLevel";
+        public static final String COMMAND_LEVEL_SIM_STATUS = "simStatusLevel";
+        public static final String COMMAND_LEVEL_SIM_ROLL_DROPS = "simRollDropsLevel";
+        public static final String COMMAND_LEVEL_GIVE= "giveControllerLevel";
+    }
+
     public static final class Squeezer {
         public static final String CATEGORY = "squeezer";
         public static final String CATEGORY_DYE_SQUEEZER = "dye";

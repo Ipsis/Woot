@@ -1,11 +1,11 @@
 {
-  "name": "Enochian Key: ARN",
+  "name": "guide.woot.exotics.exotic_b.name",
   "category": "woot:exotics",
   "icon": "woot:exotic_b",
   "pages": [
     {
       "type": "text",
-      "text": "This exotic reduces the amount of item ingredients required by a recipe."
+      "text": "guide.woot.exotics.exotic_b.0"
     }
   ]
 }

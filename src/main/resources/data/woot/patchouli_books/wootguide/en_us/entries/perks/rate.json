@@ -1,11 +1,15 @@
 {
-  "name": "Feeding Frenzy",
+  "name": "guide.woot.perks.rate.name",
   "category": "woot:perks",
   "icon": "woot:rate_1",
   "pages": [
     {
       "type": "text",
-      "text": "The Feeding Frenzy perk decreases the time to generate the mobs. Higher levels of this perk will decrease the time further. When a factory contains multiple mobs, then the mob with the smallest rate reduction will be used."
+      "text": "guide.woot.perks.rate.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.perks.rate.1"
     },
     {
       "type": "crafting",

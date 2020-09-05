@@ -1,56 +1,56 @@
 {
-  "name": "Factory Tiers",
+  "name": "guide.woot.basics.tiers.name",
   "category": "woot:basics",
   "icon": "woot:cap_d",
   "sortnum": 2,
   "pages": [
     {
       "type": "text",
-      "text": "The factory comes in various tiers, with higher tiers support higher value mobs and higher level perks. Each factory tier builds upon the structure of the previous tier. Lower value mobs can be used in higher tier factories."
+      "text": "guide.woot.basics.tiers.0"
     },
     {
       "type": "text",
-      "text": "Every factory requires the following$(br2)$(li)1xHeart$(li)1xPrimary Base$(li)1xConatus Cell$(li)1xIngredient Importer$(li)1xLoot Exporter"
+      "text": "guide.woot.basics.tiers.1"
     },
     {
       "type": "text",
-      "text": "$(l)Zelator [I]$()$(br2)Supports the following:$(br)$(li)1xMob Controller$(li)1xPerk I$(br2)"
+      "text": "guide.woot.basics.tiers.2"
     },
     {
       "type": "text",
-      "text": "Requires the following extra blocks:$(br)$(li)2x$(l:factory_blocks/factory_a)Amaranth Block$()$(li)2x$(l:factory_blocks/factory_connector)Factory Connector$(li)1x$(l:factory_blocks/perkslot)Perk Slot$()"
+      "text": "guide.woot.basics.tiers.3"
     },
     {
       "type": "text",
-      "text": "$(l)Theoricus [II]$()$(br2)Supports the following:$(br)$(li)4xMob Controller$(li)4xPerk I$(br2)"
+      "text": "guide.woot.basics.tiers.4"
     },
     {
       "type": "text",
-      "text": "Requires the following extra blocks:$(br)$(li)10x$(l:factory_blocks/factory_a)Amaranth Block$()$(li)17x$(l:factory_blocks/factory_b)Amber Block$()$(li)11x$(l:factory_blocks/factory_connector)Factory Connector$()$(li)3x$(l:factory_blocks/secctrl_base)Secondary Base$()$(li)4x$(l:factory_blocks/perkslot)Perk Slot$()$(li)4x$(l:factory_blocks/cap_a)Theoricus Cap$()"
+      "text": "guide.woot.basics.tiers.5"
     },
     {
       "type": "text",
-      "text": "$(l)Practicus [III]$()$(br2)Supports the following:$(br)$(li)4xMob Controller$(li)4xPerk II$(br2)"
+      "text": "guide.woot.basics.tiers.6"
     },
     {
       "type": "text",
-      "text": "Requires the following extra blocks:$(br)$(li)10x$(l:factory_blocks/factory_a)Amaranth Block$()$(li)17x$(l:factory_blocks/factory_b)Amber Block$()$(li)24x$(l:factory_blocks/factory_c)Celadon Block$()$(li)11x$(l:factory_blocks/factory_connector)Factory Connector$()$(li)3x$(l:factory_blocks/secctrl_base)Secondary Base$()$(li)4x$(l:factory_blocks/perkslot)Perk Slot$()$(li)4x$(l:factory_blocks/cap_a)Theoricus Cap$()$(li)8x$(l:factory_blocks/cap_b)Practicus Cap$()"
+      "text": "guide.woot.basics.tiers.7"
     },
     {
       "type": "text",
-      "text": "$(l)Exemptus [IV]$()$(br2)Supports the following:$(br)$(li)4xMob Controller$(li)4xPerk III$(br2)"
+      "text": "guide.woot.basics.tiers.8"
     },
     {
       "type": "text",
-      "text": "Requires the following extra blocks:$(br)$(li)10x$(l:factory_blocks/factory_a)Amaranth Block$()$(li)17x$(l:factory_blocks/factory_b)Amber Block$()$(li)24x$(l:factory_blocks/factory_c)Celadon Block$()$(li)8x$(l:factory_blocks/factory_d)Cerulean Block$()$(li)11x$(l:factory_blocks/factory_connector)Factory Connector$()$(li)3x$(l:factory_blocks/secctrl_base)Secondary Base$()$(li)4x$(l:factory_blocks/perkslot)Perk Slot$()$(li)4x$(l:factory_blocks/cap_a)Theoricus Cap$()$(li)8x$(l:factory_blocks/cap_b)Practicus Cap$()$(li)4x$(l:factory_blocks/cap_c)Exemptus Cap$()"
+      "text": "guide.woot.basics.tiers.9"
     },
     {
       "type": "text",
-      "text": "$(l)Magister [V]$()$(br2)This tier is normally used for bosses such as the Ender Dragon. It is the only tier that can use exotics.$(br2)Supports the following:$(br)$(li)4xMob Controller$(li)4xPerk III$(br2)"
+      "text": "guide.woot.basics.tiers.10"
     },
     {
       "type": "text",
-      "text": "Requires the following extra blocks:$(br)$(li)10x$(l:factory_blocks/factory_a)Amaranth Block$()$(li)17x$(l:factory_blocks/factory_b)Amber Block$()$(li)24x$(l:factory_blocks/factory_c)Celadon Block$()$(li)8x$(l:factory_blocks/factory_d)Cerulean Block$()$(li)8x$(l:factory_blocks/factory_e)Byzantium Block$()$(li)11x$(l:factory_blocks/factory_connector)Factory Connector$()$(li)3x$(l:factory_blocks/secctrl_base)Secondary Base$()$(li)4x$(l:factory_blocks/perkslot)Perk Slot$()$(li)4x$(l:factory_blocks/cap_a)Theoricus Cap$()$(li)8x$(l:factory_blocks/cap_b)Practicus Cap$()$(li)4x$(l:factory_blocks/cap_c)Exemptus Cap$()$(li)8x$(l:factory_blocks/cap_d)Magister Cap$()"
+      "text": "guide.woot.basics.tiers.11"
     }
   ]
 }

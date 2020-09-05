@@ -299,7 +299,7 @@ public class Languages extends LanguageProvider {
         add("jei.woot.mob_shard.2", "Once fully programmed it can be turned into a controller on the anvil.");
 
         // Patchouli
-        add("item.woot.wootguide.name", "Woot Guide");
-        add("item.woot.wootguide.landing", "A guide to the big, bad, magic multiblock Mob Factory. Like Marmite, you will either love it or hate it - you choose.");
+
+        LanguagesGuide.addTranslations(this);
     }
 }

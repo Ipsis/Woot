@@ -1,15 +1,15 @@
 {
-  "name": "YA Hammer",
+  "name": "guide.woot.tools.hammer.name",
   "category": "woot:tools",
   "icon": "woot:hammer",
   "pages": [
     {
       "type": "text",
-      "text": "The YA Hammer has two main usages. The first is for crafting on the anvil. The second is for use in vanilla crafting. The YA Hammer is never consumed when used in recipes."
+      "text": "guide.woot.tools.hammer.0"
     },
     {
       "type": "crafting",
-      "text": "Yet Another Hammer",
+      "text": "guide.woot.tools.hammer.craft.0",
       "recipe": "woot:hammer"
     }
   ]

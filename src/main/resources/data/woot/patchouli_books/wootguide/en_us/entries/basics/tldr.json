@@ -1,16 +1,16 @@
 {
-  "name": "TLDR",
+  "name": "guide.woot.basics.tldr.name",
   "category": "woot:basics",
   "icon": "minecraft:diamond",
   "sortnum": 1,
   "pages": [
     {
       "type": "text",
-      "text": "$(li)Layout guide shows you the factory layout and can step through each y-level$(li)Layout guide and Factory Heart are directional$(li)Use the Intern on the heart to autobuild$(li)Factory needs Conatus Fluid to run, but no power"
+      "text": "guide.woot.basics.tldr.0"
     },
     {
       "type": "text",
-      "text": "$(li)Some mobs need ingredients to generate loot$(li)Intern can also validate your factory structure$(li)Mobs have a minimum tier of factory to spawn$(li)Must apply all the previous tiers of a perk to use higher tier ones"
+      "text": "guide.woot.basics.tldr.1"
     }
   ]
 }

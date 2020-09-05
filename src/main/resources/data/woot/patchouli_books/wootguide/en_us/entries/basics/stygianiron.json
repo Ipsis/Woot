@@ -1,0 +1,21 @@
+{
+  "name": "guide.woot.basics.stygianiron.name",
+  "category": "woot:basics",
+  "icon": "woot:si_ingot",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.basics.stygianiron.0"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:si_dust_1",
+      "recipe2": "woot:si_dust_2"
+    },
+    {
+      "type": "smelting",
+      "recipe": "woot:si_ingot"
+    }
+  ]
+}

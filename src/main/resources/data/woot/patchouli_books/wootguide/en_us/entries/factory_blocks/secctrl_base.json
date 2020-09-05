@@ -1,11 +1,11 @@
 {
-  "name": "Secondary Base",
+  "name": "guide.woot.factory_blocks.sec_base.name",
   "category": "woot:factory_blocks",
   "icon": "woot:factory_ctr_base_sec",
   "pages": [
     {
       "type": "text",
-      "text": "A valid $(item)Mob Controller$(0) may be placed on this block."
+      "text": "guide.woot.factory_blocks.sec_base.0"
     },
     {
       "type": "crafting",

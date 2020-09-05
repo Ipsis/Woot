@@ -1,5 +1,5 @@
 {
-  "name": "Machines",
+  "name": "guide.woot.category.machines",
   "icon": "woot:squeezer",
-  "description": "Important machines for creating and running your Woot factory."
+  "description": "guide.woot.category.machines.desc"
 }

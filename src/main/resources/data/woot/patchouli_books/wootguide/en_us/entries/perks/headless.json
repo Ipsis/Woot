@@ -1,11 +1,15 @@
 {
-  "name": "Head Start",
+  "name": "guide.woot.perks.headless.name",
   "category": "woot:perks",
   "icon": "woot:headless_1",
   "pages": [
     {
       "type": "text",
-      "text": "The Head Start perk drops skulls. Higher levels of this perk give a better chance of the drop."
+      "text": "guide.woot.perks.headless.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.perks.headless.1"
     },
     {
       "type": "crafting",

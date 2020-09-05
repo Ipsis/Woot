@@ -1,5 +1,5 @@
 {
-  "name": "Exotics",
+  "name": "guide.woot.category.exotics",
   "icon": "woot:exotic_a",
-  "description": "Exotic extensions to the factory"
+  "description": "guide.woot.category.exotics.desc"
 }

@@ -1,11 +1,11 @@
 {
-  "name": "Enochian Key: PAZ",
+  "name": "guide.woot.exotics.exotic_d.name",
   "category": "woot:exotics",
   "icon": "woot:exotic_d",
   "pages": [
     {
       "type": "text",
-      "text": "This exotic runs the factory at a fixed spawn time regardless of the mob controllers used."
+      "text": "guide.woot.exotics.exotic_d.0"
     }
   ]
 }

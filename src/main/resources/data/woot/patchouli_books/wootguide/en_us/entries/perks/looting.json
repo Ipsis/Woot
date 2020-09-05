@@ -1,11 +1,11 @@
 {
-  "name": "Treasure Island",
+  "name": "guide.woot.perks.looting.name",
   "category": "woot:perks",
   "icon": "woot:looting_1",
   "pages": [
     {
       "type": "text",
-      "text": "The Treasure Island perk sets the looting level that the factory will use. The looting levels vary from Looting 1 to Looting 3."
+      "text": "guide.woot.perks.looting.0"
     },
     {
       "type": "crafting",

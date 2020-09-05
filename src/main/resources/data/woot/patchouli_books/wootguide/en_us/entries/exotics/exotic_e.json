@@ -1,11 +1,11 @@
 {
-  "name": "Enochian Key: LAT",
+  "name": "guide.woot.exotics.exotic_e.name",
   "category": "woot:exotics",
   "icon": "woot:exotic_e",
   "pages": [
     {
       "type": "text",
-      "text": "This exotic spawns a fixed number of mobs for each controller in the factory."
+      "text": "guide.woot.exotics.exotic_e.0"
     }
   ]
 }

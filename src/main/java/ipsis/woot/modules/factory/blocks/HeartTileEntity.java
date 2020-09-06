@@ -42,6 +42,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The factory is formed manually by the user via the intern -> interrupt
@@ -449,6 +450,21 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         if (isFormed())
             mobs.addAll(formedSetup.getAllMobs());
         return mobs;
+    }
+
+    public Map<PerkType, Integer> getPerks() {
+        Map<PerkType, Integer> perks = new HashMap<>();
+        if (isFormed())
+            perks.putAll(formedSetup.getAllPerks());
+        return perks;
+    }
+
+    public Tier getTier() {
+        return isFormed() ? formedSetup.getTier() : Tier.UNKNOWN;
+    }
+
+    public Exotic getExotic() {
+        return isFormed() ? formedSetup.getExotic() : Exotic.NONE;
     }
 
     @OnlyIn(Dist.CLIENT)

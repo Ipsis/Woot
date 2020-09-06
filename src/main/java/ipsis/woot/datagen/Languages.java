@@ -285,6 +285,8 @@ public class Languages extends LanguageProvider {
         add("misc.woot.tier_3", "Practicus [III]");
         add("misc.woot.tier_4", "Exemptus [IV]");
         add("misc.woot.tier_5", "Magister [V]");
+        add("misc.woot.unknown_entity", "Unknown entity");
+        add("misc.woot.tagged_mob", "%s [%s]");
 
         // Jei
         add("jei.woot.shard", "Generated from the factory with the Shard perk installed.");
@@ -299,7 +301,28 @@ public class Languages extends LanguageProvider {
         add("jei.woot.mob_shard.2", "Once fully programmed it can be turned into a controller on the anvil.");
 
         // Patchouli
-
         LanguagesGuide.addTranslations(this);
+
+        // Top
+        add("top.woot.heart.unformed", "Unformed");
+        add("top.woot.heart.tier.label", "Tier");
+        add("top.woot.heart.progress.label", "Progress");
+        add("top.woot.heart.progress.0", "%d%%");
+        add("top.woot.heart.mob.label", "Mob");
+        add("top.woot.heart.perk.label", "Perk");
+        add("top.woot.heart.exotic.label", "Exotic");
+        add("top.woot.controller.mob.label", "Mob");
+        add("top.woot.controller.tier.label", "Required Tier");
+        add("top.woot.squeezer.red.label", "Red Dye");
+        add("top.woot.squeezer.yellow.label", "Yellow Dye");
+        add("top.woot.squeezer.blue.label", "Blue Dye");
+        add("top.woot.squeezer.white.label", "White Dye");
+        add("top.woot.squeezer.dye.0", "%d mb");
+        add("top.woot.squeezer.tanks.label", "Tank Mode");
+        add("top.woot.squeezer.tanks.0", "Dumping");
+        add("top.woot.squeezer.tanks.1", "Strict");
+        add("top.woot.perk.type.label", "Perk");
+        add("top.woot.perk.type.empty", "Empty");
+        add("top.woot.layout.tier.label", "Tier");
     }
 }

@@ -5,9 +5,8 @@ import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
-import ipsis.woot.modules.factory.blocks.HeartTileEntity;
+import ipsis.woot.modules.factory.blocks.HeartRecipe;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
-import ipsis.woot.modules.oracle.blocks.OracleContainer;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
@@ -28,11 +27,11 @@ import java.util.function.Supplier;
 public class HeartStaticDataReply {
 
     public FormedSetup formedSetup;
-    public HeartTileEntity.Recipe recipe;
+    public HeartRecipe recipe;
     public ClientFactorySetup clientFactorySetup;
 
     public HeartStaticDataReply() { }
-    public HeartStaticDataReply(FormedSetup formedSetup, HeartTileEntity.Recipe recipe) {
+    public HeartStaticDataReply(FormedSetup formedSetup, HeartRecipe recipe) {
         this.formedSetup = formedSetup;
         this.recipe = recipe;
     }

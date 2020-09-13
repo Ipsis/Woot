@@ -25,7 +25,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -58,7 +57,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     Layout layout;
     FormedSetup formedSetup;
-    Recipe recipe;
+    HeartRecipe recipe;
     TickTracker tickTracker = new TickTracker();
     boolean loadedFromNBT = false;
 
@@ -151,7 +150,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        }
     }
 
-    private List<ItemStack> createItemIngredients(Recipe recipe, FormedSetup formedSetup) {
+    private List<ItemStack> createItemIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
         List<ItemStack> items = new ArrayList<>();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             if (recipe.items.containsKey(fakeMob)) {
@@ -163,7 +162,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         return StorageHelper.flattenItemStackList(items);
     }
 
-    private List<FluidStack> createFluidIngredients(Recipe recipe, FormedSetup formedSetup) {
+    private List<FluidStack> createFluidIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
         List<FluidStack> fluids = new ArrayList<>();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             if (recipe.fluids.containsKey(fakeMob)) {
@@ -341,62 +340,6 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
             currStructureTicks = 0;
         }
     }
-
-    /**
-     * Currently running recipe
-     */
-    public static class Recipe {
-
-        int numTicks;
-        int numUnits;
-        public HashMap<FakeMob, List<ItemStack>> items = new HashMap<>();
-        public HashMap<FakeMob, List<FluidStack>> fluids = new HashMap<>();
-
-        public int getNumTicks() {
-            return numTicks;
-        }
-
-        public int getNumUnits() {
-            return numUnits;
-        }
-
-        public Recipe() {
-            numTicks = 1;
-            numUnits = 1;
-        }
-
-        public Recipe(int numTicks, int numUnits) {
-            this.numTicks = MathHelper.clamp(numTicks, 1, Integer.MAX_VALUE);
-            this.numUnits = MathHelper.clamp(numUnits, 1, Integer.MAX_VALUE);
-        }
-
-        public void addItem(FakeMob fakeMob, ItemStack itemStack) {
-            if (!items.containsKey(fakeMob))
-                items.put(fakeMob, new ArrayList<>());
-
-            if (!itemStack.isEmpty())
-                items.get(fakeMob).add(itemStack.copy());
-        }
-
-        public void addFluid(FakeMob fakeMob, FluidStack fluidStack) {
-            if (!fluids.containsKey(fakeMob))
-                fluids.put(fakeMob, new ArrayList<>());
-
-            if (!fluidStack.isEmpty())
-                fluids.get(fakeMob).add(fluidStack.copy());
-        }
-
-        @Override
-        public String toString() {
-            return "Recipe{" +
-                    "numTicks=" + numTicks +
-                    ", numUnits=" + numUnits +
-                    ", items=" + items.size() +
-                    ", fluids=" + fluids.size() +
-                    '}';
-        }
-    }
-
 
 
     /**

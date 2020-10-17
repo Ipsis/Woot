@@ -109,9 +109,9 @@ public final class ConfigDefaults {
         public static final double T4_SHARD_DROP_CHANCE_DEF = 30.0F;
         public static final double T5_SHARD_DROP_CHANCE_DEF = 40.0F;
         public static final ArrayList<Integer> T1_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 80, 20, 1);
-        public static final ArrayList<Integer> T2_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 70, 25, 1);
-        public static final ArrayList<Integer> T3_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 60, 30, 1);
-        public static final ArrayList<Integer> T4_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 50, 40, 1);
-        public static final ArrayList<Integer> T5_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 40, 50, 1);
+        public static final ArrayList<Integer> T2_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 70, 25, 4);
+        public static final ArrayList<Integer> T3_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 60, 30, 8);
+        public static final ArrayList<Integer> T4_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 50, 40, 12);
+        public static final ArrayList<Integer> T5_SHARD_DROP_WEIGHTS_DEF = Lists.newArrayList( 40, 50, 16);
     }
 }

@@ -14,25 +14,21 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 repositories {
-    maven { // TOP
-        name 'tterrag maven'
-        url "http://maven.tterrag.com/"
+    maven {
+        name 'TOP'
+        url "https://maven.tterrag.com/"
     }
     maven {
-        // JEI
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name 'JEI'
+        url "https://dvs1.progwml6.com/files/maven"
     }
-    maven {
-        // JEI fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
+    
 
     maven {
-        // Patchouli
-        url 'https://maven.blamejared.com'
+        name 'Patchouli'
+        url "https://maven.blamejared.com"
     }
+
 }
 
 version = "${minecraft_version}-${woot_version}"
@@ -141,16 +137,16 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     // TOP
-    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version + ":api")
-    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-" + top_version)
+    compileOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:${top_version}:api")
+    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:${top_version}")
 
     // JEI
-    compileOnly fg.deobf("mezz.jei:jei-" + jei_version + ":api")
-    runtimeOnly fg.deobf("mezz.jei:jei-" + jei_version)
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
     // Patchouli
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:" + patchouli_version + ":api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:" + patchouli_version)
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

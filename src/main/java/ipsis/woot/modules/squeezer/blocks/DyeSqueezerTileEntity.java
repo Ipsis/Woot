@@ -117,9 +117,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //-------------------------------------------------------------------------
     //region NBT
     @Override
-    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+    public void read(BlockState blockState, CompoundNBT compoundNBT) {
         readFromNBT(compoundNBT);
-        super.fromTag(blockState, compoundNBT);
+        super.read(blockState, compoundNBT);
     }
 
     @Override

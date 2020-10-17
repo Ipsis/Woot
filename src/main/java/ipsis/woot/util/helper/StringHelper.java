@@ -6,10 +6,10 @@ import net.minecraft.util.text.LanguageMap;
 public class StringHelper {
 
     public static String translate(String key) {
-        return LanguageMap.getInstance().get(key);
+        return LanguageMap.getInstance().func_230503_a_(key);
     }
 
     public static String translateFormat(String key, Object... format) {
-        return String.format(LanguageMap.getInstance().get(key), format);
+        return String.format(LanguageMap.getInstance().func_230503_a_(key), format);
     }
 }

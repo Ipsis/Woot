@@ -130,8 +130,8 @@ public class LayoutTileEntity extends TileEntity {
     }
 
     @Override
-    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
-        super.fromTag(blockState, compoundNBT);
+    public void read(BlockState blockState, CompoundNBT compoundNBT) {
+        super.read(blockState, compoundNBT);
         readFromNBT(compoundNBT);
     }
 

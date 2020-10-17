@@ -71,7 +71,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         fill(matrixStack, guiLeft + x1, guiTop + y1, guiLeft + x2, guiTop + y2, color);
         int p = curr * (x2 - x1) / max;
         for (int i = 0; i < p; i++)
-            drawVerticalLine(
+            vLine(
                     matrixStack,
                     guiLeft + x1 + 1 + i,
                     guiTop + y1,
@@ -106,7 +106,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         int color = fluid.getFluid().getAttributes().getColor(fluid);
         setGLColorFromInt(color);
         ResourceLocation resourceLocation = fluid.getFluid().getAttributes().getStillTexture();
-        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getSpriteAtlas(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(resourceLocation);
+        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(resourceLocation);
         drawTiledTexture(x, y, textureAtlasSprite, width, height);
     }
 
@@ -146,10 +146,10 @@ public abstract class WootContainerScreen<T extends Container> extends Container
 
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        buffer.vertex(x, y + height, this.itemRenderer.zLevel).texture(minU, minV + (maxV - minV) * height / 16F).endVertex();
-        buffer.vertex(x + width, y + height, this.itemRenderer.zLevel).texture(minU + (maxU - minU) * width / 16F, minV + (maxV - minV) * height / 16F).endVertex();
-        buffer.vertex(x + width, y, this.itemRenderer.zLevel).texture(minU + (maxU - minU) * width / 16F, minV).endVertex();
-        buffer.vertex(x, y, this.itemRenderer.zLevel).texture(minU, minV).endVertex();
+        buffer.pos(x, y + height, this.itemRenderer.zLevel).tex(minU, minV + (maxV - minV) * height / 16F).endVertex();
+        buffer.pos(x + width, y + height, this.itemRenderer.zLevel).tex(minU + (maxU - minU) * width / 16F, minV + (maxV - minV) * height / 16F).endVertex();
+        buffer.pos(x + width, y, this.itemRenderer.zLevel).tex(minU + (maxU - minU) * width / 16F, minV).endVertex();
+        buffer.pos(x, y, this.itemRenderer.zLevel).tex(minU, minV).endVertex();
         Tessellator.getInstance().draw();
     }
 }

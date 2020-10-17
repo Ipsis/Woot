@@ -3,9 +3,9 @@ package ipsis.woot.util.oss;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 /**
  * McJtyMods/McJtyLib/1.15/src/main/java/mcjty/lib/datagen/BaseItemModelProvider.java

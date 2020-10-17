@@ -122,7 +122,7 @@ public class ForgeEventHandlers {
         if (event.phase == TickEvent.Phase.START)
             return;
 
-        if (event.world.getRegistryKey().equals(MobSimulatorSetup.TARTARUS)) {
+        if (event.world.getDimensionKey().equals(MobSimulatorSetup.TARTARUS)) {
             MobSimulator.getInstance().tick(event.world);
         } else {
             if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
@@ -147,7 +147,7 @@ public class ForgeEventHandlers {
         CustomDropsLoader.load(event.getServer().getRecipeManager());
 
         for (ServerWorld dim : event.getServer().getWorlds()) {
-            if (dim.getRegistryKey().equals(MobSimulatorSetup.TARTARUS)) {
+            if (dim.getDimensionKey().equals(MobSimulatorSetup.TARTARUS)) {
                 Woot.setup.getLogger().debug("onServerStarting: force load Tartarus Cells");
                 dim.forceChunk(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
                 break;

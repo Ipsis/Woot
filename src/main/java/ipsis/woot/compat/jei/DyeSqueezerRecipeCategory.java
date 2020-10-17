@@ -63,12 +63,12 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.draw(matrixStack, "Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
-            minecraft.fontRenderer.draw(matrixStack, "Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
-            minecraft.fontRenderer.draw(matrixStack, "Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
-            minecraft.fontRenderer.draw(matrixStack, "White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString(matrixStack, "Red: " + recipe.getRed() + " mb", 70.0F, 28.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString(matrixStack, "Yellow: " + recipe.getYellow() + " mb", 70.0F, 38.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString(matrixStack, "Blue: " + recipe.getBlue() + " mb", 70.0F, 48.0F, Color.BLACK.getRGB());
+            minecraft.fontRenderer.drawString(matrixStack, "White: " + recipe.getWhite() + " mb", 70.0F, 58.0F, Color.BLACK.getRGB());
 
-            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
         }
     }

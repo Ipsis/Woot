@@ -28,7 +28,7 @@ public class ItemTagsGen extends ItemTagsProvider {
 
     @Override
     protected void registerTags() {
-        getOrCreateTagBuilder(FACTORY_BLOCK).add(
+        getOrCreateBuilder(FACTORY_BLOCK).add(
                 FactorySetup.FACTORY_A_BLOCK_ITEM.get(),
                 FactorySetup.FACTORY_B_BLOCK_ITEM.get(),
                 FactorySetup.FACTORY_C_BLOCK_ITEM.get(),
@@ -40,20 +40,20 @@ public class ItemTagsGen extends ItemTagsProvider {
                 FactorySetup.FACTORY_UPGRADE_BLOCK_ITEM.get()
         );
 
-        addColored(getOrCreateTagBuilder(Tags.Items.DYES)::addTags, Tags.Items.DYES, "{color}_dyeplate");
+        addColored(getOrCreateBuilder(Tags.Items.DYES)::addTags, Tags.Items.DYES, "{color}_dyeplate");
     }
 
     // Straight from forge
     private void addColored(Consumer<ITag.INamedTag<Item>> consumer, ITag.INamedTag<Item> group, String pattern)
     {
-        String prefix = group.getId().getPath().toUpperCase(Locale.ENGLISH) + '_';
+        String prefix = group.getName().getPath().toUpperCase(Locale.ENGLISH) + '_';
         for (DyeColor dyeColor : DyeColor.values()) {
             ResourceLocation key = new ResourceLocation(Woot.MODID, pattern.replace("{color}", dyeColor.getTranslationKey()));
             ITag.INamedTag<Item> tag = getForgeItemTag(prefix + dyeColor.getTranslationKey());
             Item item = ForgeRegistries.ITEMS.getValue(key);
             if (item == null || item == Items.AIR)
                 throw new IllegalStateException("Unknown woot item: " + key.toString());
-            getOrCreateTagBuilder(tag).add(item);
+            getOrCreateBuilder(tag).add(item);
             consumer.accept(tag);
         }
     }

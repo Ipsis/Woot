@@ -26,11 +26,11 @@ import java.util.*;
 public class TartarusChunkGenerator extends ChunkGenerator {
 
     public static final Codec<TartarusChunkGenerator> codecTartarusChunk =
-            RegistryLookupCodec.func_244331_a(Registry.BIOME_KEY)
+            RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY)
                     .xmap(TartarusChunkGenerator::new, TartarusChunkGenerator::getBiome).stable().codec();
 
     private TartarusChunkGenerator(Registry<Biome> biome) {
-        super(new SingleBiomeProvider(biome.func_243576_d(Biomes.PLAINS)), new DimensionStructuresSettings(false));
+        super(new SingleBiomeProvider(biome.getOrThrow(Biomes.PLAINS)), new DimensionStructuresSettings(false));
         this.biome = biome;
     }
 
@@ -96,12 +96,12 @@ public class TartarusChunkGenerator extends ChunkGenerator {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public ChunkGenerator withSeed(long p_230349_1_) {
+    public ChunkGenerator func_230349_a_(long p_230349_1_) {
         return this;
     }
 
     @Override
-    public void buildSurface(WorldGenRegion worldGenRegion, IChunk iChunk) {
+    public void generateSurface(WorldGenRegion worldGenRegion, IChunk iChunk) {
 
         /**
          * This is all based off chunk coordinates - therefore 0->16
@@ -133,12 +133,11 @@ public class TartarusChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void carve(long p_230350_1_, BiomeManager p_230350_3_, IChunk p_230350_4_, GenerationStage.Carving p_230350_5_) {
+    public void func_230350_a_(long p_230350_1_, BiomeManager p_230350_3_, IChunk p_230350_4_, GenerationStage.Carving p_230350_5_) {
     }
 
-
     @Override
-    public void generateFeatures(WorldGenRegion p_230351_1_, StructureManager p_230351_2_) {
+    public void func_230351_a_(WorldGenRegion p_230351_1_, StructureManager p_230351_2_) {
     }
 
     @Override
@@ -147,16 +146,16 @@ public class TartarusChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void populateNoise(IWorld p_230352_1_, StructureManager p_230352_2_, IChunk p_230352_3_) {
+    public void func_230352_b_(IWorld p_230352_1_, StructureManager p_230352_2_, IChunk p_230352_3_) {
     }
 
     @Override
-    public int func_222529_a(int i, int i1, Heightmap.Type type) {
+    public int getHeight(int i, int i1, Heightmap.Type type) {
         return 0;
     }
 
     @Override
-    public IBlockReader getColumnSample(int p_230348_1_, int p_230348_2_) {
+    public IBlockReader func_230348_a_(int p_230348_1_, int p_230348_2_) {
         return new Blockreader((new BlockState[0]));
     }
 }

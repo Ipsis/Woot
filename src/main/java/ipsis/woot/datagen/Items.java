@@ -13,7 +13,7 @@ import ipsis.woot.modules.oracle.OracleSetup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.oss.BaseItemModelProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class Items extends BaseItemModelProvider {
 

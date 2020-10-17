@@ -154,9 +154,9 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     }
 
     @Override
-    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+    public void read(BlockState blockState, CompoundNBT compoundNBT) {
         readfromNBT(compoundNBT);
-        super.fromTag(blockState, compoundNBT);
+        super.read(blockState, compoundNBT);
     }
 
     public void readfromNBT(CompoundNBT compoundNBT) {

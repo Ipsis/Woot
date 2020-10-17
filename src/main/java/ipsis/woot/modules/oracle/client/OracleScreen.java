@@ -39,12 +39,12 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        drawTexture(matrixStack, relX, relY, 0, 0, xSize, ySize);
+        this.blit(matrixStack, relX, relY, 0, 0, xSize, ySize);
 
         if (!container.simulatedDrops.isEmpty()) {
             int currRow = 0;
@@ -54,8 +54,9 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                 int stackX = guiLeft + (currCol * 18) + 10;
                 int stackY = guiTop + (currRow * 18) + 41;
 
-                RenderHelper.enable();
+                RenderHelper.enableStandardItemLighting();
                 itemRenderer.renderItemIntoGUI(summary.itemStack, stackX, stackY);
+                RenderHelper.disableStandardItemLighting();
 
                 currCol++;
                 if (currCol == 9) {
@@ -67,12 +68,12 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.textRenderer.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 
         if (container.simulatedMobs.isEmpty()) {
             String mob = "N/A";
-            this.textRenderer.draw(matrixStack, mob, (float)(this.xSize / 2 - this.textRenderer.getStringWidth(mob) / 2), 25.0F, 4210752);
+            this.font.drawString(matrixStack, mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
         } else {
             FakeMob fakeMob = container.simulatedMobs.get(mobIndex);
             EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
@@ -80,7 +81,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                 String mob = new TranslationTextComponent(entityType.getTranslationKey()).getString();
                 if (fakeMob.hasTag())
                     mob += "[" + fakeMob.getTag() + "]";
-                this.textRenderer.draw(matrixStack, mob, (float)(this.xSize / 2 - this.textRenderer.getStringWidth(mob) / 2), 25.0F, 4210752);
+                this.font.drawString(matrixStack, mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
             }
         }
 
@@ -96,7 +97,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                 if (mouseX - guiLeft > stackX && mouseX - guiLeft <= stackX + 20 && mouseY - guiTop >= stackY && mouseY - guiTop <= stackY + 20) {
                     FontRenderer fontRenderer = summary.itemStack.getItem().getFontRenderer(summary.itemStack);
                     if (fontRenderer == null)
-                        fontRenderer = textRenderer;
+                        fontRenderer = font;
                     List<ITextComponent> tooltip = getTooltipFromItem(summary.itemStack);
                     tooltip.add(new StringTextComponent(String.format("No looting : %.2f%%", summary.chanceToDrop[0])));
                     tooltip.add(new StringTextComponent(String.format("Looting 1 : %.2f%%", summary.chanceToDrop[1])));

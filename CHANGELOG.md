@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Custom recipe file for sheep wool drops is for display only.
   - Custom recipe file for sheep can still be used to provide non-wool drops.
 ### Changed
+- Fixed gui text alignment for inventory
 ### Removed
 
 ## [1.16.2-1.0.0.0] - 2020-08-27

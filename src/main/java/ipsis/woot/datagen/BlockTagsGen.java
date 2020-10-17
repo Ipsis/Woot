@@ -19,7 +19,7 @@ public class BlockTagsGen extends BlockTagsProvider {
     @Override
     protected void registerTags() {
 
-        getOrCreateTagBuilder(FACTORY_BLOCK).add(
+        getOrCreateBuilder(FACTORY_BLOCK).add(
                 FactorySetup.FACTORY_A_BLOCK.get(),
                 FactorySetup.FACTORY_B_BLOCK.get(),
                 FactorySetup.FACTORY_C_BLOCK.get(),

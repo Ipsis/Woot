@@ -14,6 +14,7 @@ import ipsis.woot.util.oss.BaseBlockStateProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class Blocks extends BaseBlockStateProvider {
 

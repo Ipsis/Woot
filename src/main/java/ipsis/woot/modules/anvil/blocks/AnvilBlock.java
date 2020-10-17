@@ -83,10 +83,10 @@ public class AnvilBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onUse(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
 
         if (world.isRemote)
-            super.onUse(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
+            super.onBlockActivated(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
 
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof AnvilTileEntity) {

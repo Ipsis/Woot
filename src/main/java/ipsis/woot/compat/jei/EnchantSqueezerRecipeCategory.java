@@ -82,7 +82,7 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70, 70, Color.BLACK.getRGB());
         }
     }

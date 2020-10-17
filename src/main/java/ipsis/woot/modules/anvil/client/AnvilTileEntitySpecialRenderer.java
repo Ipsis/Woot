@@ -43,8 +43,8 @@ public class AnvilTileEntitySpecialRenderer extends TileEntityRenderer<AnvilTile
         matrixStack.push();
         matrixStack.translate(x, y, z);
         matrixStack.scale(scale, scale, scale);
-        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
-        matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
+        matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
 
         Minecraft.getInstance().getItemRenderer().renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrixStack, iRenderTypeBuffer);
         matrixStack.pop();;

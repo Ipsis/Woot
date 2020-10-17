@@ -110,7 +110,7 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
+            minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
         }
     }

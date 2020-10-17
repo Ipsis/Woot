@@ -180,9 +180,9 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     @Override
-    public void fromTag(BlockState blockState, CompoundNBT compoundNBT) {
+    public void read(BlockState blockState, CompoundNBT compoundNBT) {
         readFromNBT(compoundNBT);
-        super.fromTag(blockState, compoundNBT);
+        super.read(blockState, compoundNBT);
     }
 
     private void readFromNBT(CompoundNBT compoundNBT) {

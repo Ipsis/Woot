@@ -72,7 +72,7 @@ public class InfuserBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
         if (worldIn.isRemote)
             return ActionResultType.SUCCESS;
 

@@ -45,7 +45,7 @@ public class SpawnController {
         MobEntity mobEntity = (MobEntity)entity;
 
         mobEntity.onInitialSpawn(world,
-                world.getDifficultyForLocation(new BlockPos(entity.getBlockPos())),
+                world.getDifficultyForLocation(new BlockPos(entity.getPosition())),
                 SpawnReason.SPAWNER,
                 null, null);
 
@@ -64,7 +64,7 @@ public class SpawnController {
 
         CompoundNBT nbt = new CompoundNBT();
         nbt.putString("id", rl.toString());
-        Entity entity = EntityType.func_220335_a(nbt, world, (xc) -> {
+        Entity entity = EntityType.loadEntityAndExecute(nbt, world, (xc) -> {
             xc.setLocationAndAngles(pos.getX(), pos.getY(), pos.getZ(), xc.rotationYaw, xc.rotationPitch);
             return xc;
         });

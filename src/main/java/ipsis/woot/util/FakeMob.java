@@ -150,7 +150,7 @@ public class FakeMob {
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
         // shouldRenderOverlay reports the POWERED state of the entity
-        return mobEntity instanceof CreeperEntity && ((CreeperEntity) mobEntity).shouldRenderOverlay();
+        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).isCharged();
     }
 
     private boolean isSlime(MobEntity mobEntity) { return mobEntity instanceof SlimeEntity; }

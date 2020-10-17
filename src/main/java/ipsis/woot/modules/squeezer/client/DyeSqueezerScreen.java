@@ -48,7 +48,7 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.drawMouseoverTooltip(matrixStack, mouseX, mouseY);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
 
         if (isPointInRegion(82, 30, 51, 8, mouseX, mouseY))
             renderTooltip(matrixStack, new StringTextComponent(String.format("Red: %d/%d mb",
@@ -80,16 +80,16 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         getMinecraft().getTextureManager().bindTexture(GUI);
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize) / 2;
-        drawTexture(matrixStack, relX, relY, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, relX, relY, 0, 0, this.xSize, this.ySize);
 
         // Progress
         int progress = container.getProgress();
-        drawTexture(matrixStack, this.guiLeft + 58, this.guiTop + 30, 180, 0,(int)(19 * (progress / 100.0F)) , 40);
+        this.blit(matrixStack, this.guiLeft + 58, this.guiTop + 30, 180, 0,(int)(19 * (progress / 100.0F)) , 40);
 
         // NB: The tanks will change the texture so progress has to be above that or rebind the texture
         renderHorizontalGauge(matrixStack, 82, 30, 132, 37,
@@ -124,10 +124,10 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
-        super.drawForeground(matrixStack, mouseX, mouseY);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 
         String text2 = container.getDumpExcess() ? "Dumping" : "Strict";
-        this.textRenderer.draw(matrixStack, text2, 82.0F, 70.0F, 4210752);
+        this.font.drawString(matrixStack, text2, 82.0F, 70.0F, 4210752);
     }
 }

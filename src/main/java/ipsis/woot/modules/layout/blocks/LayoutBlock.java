@@ -56,17 +56,18 @@ public class LayoutBlock extends Block {
         if (worldIn.isRemote)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
-        if (handIn == Hand.MAIN_HAND) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof LayoutTileEntity) {
-                LayoutTileEntity layout = (LayoutTileEntity)te;
-                if (player.isSneaking()) {
-                    layout.setNextLevel();
-                } else {
-                    layout.setNextTier();
-                }
-                WorldHelper.updateClient(worldIn, pos);
+        if (!player.getHeldItemMainhand().isEmpty())
+            return ActionResultType.FAIL;
+
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof LayoutTileEntity) {
+            LayoutTileEntity layout = (LayoutTileEntity)te;
+            if (player.isSneaking()) {
+                layout.setNextLevel();
+            } else {
+                layout.setNextTier();
             }
+            WorldHelper.updateClient(worldIn, pos);
         }
 
         return ActionResultType.SUCCESS;

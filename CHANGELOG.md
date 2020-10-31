@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.16.3-1.0.0.1] - 2020-10-31
+### Added
+## Changed
+- Fixed divide by zero possibility in gui rendering [#457]
+
 ## [1.16.3-1.0.0.0] - 2020-10-24
 ### Added
 - First release for 1.16.3

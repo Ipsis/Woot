@@ -32,7 +32,9 @@ public abstract class WootContainerScreen<T extends Container> extends Container
      * x1, y1 is the bottom right of the energy bar
      */
     public void renderEnergyBar(MatrixStack matrixStack, int x1, int y1, int height, int width, int curr, int max) {
-        int filled = curr * 100 / max;
+        int filled = 0;
+        if (max > 0)
+            filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
         fill(matrixStack,
@@ -46,21 +48,27 @@ public abstract class WootContainerScreen<T extends Container> extends Container
      * x1, y1 is the bottom right of the fluid tank
      */
     public void renderFluidTank(int x1, int y1, int height, int width, int curr, int max, FluidStack fluidStack)  {
-        int filled = curr * 100 / max;
+        int filled = 0;
+        if (max > 0)
+            filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
         drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
     }
 
     public void renderFluidTank(MatrixStack matrixStack, int x1, int y1, int height, int width, int max, FluidStack fluidStack)  {
-        int filled = fluidStack.getAmount() * 100 / max;
+        int filled = 0;
+        if (max > 0)
+            filled = fluidStack.getAmount() * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
         drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
     }
 
     public void renderHorizontalBar(MatrixStack matrixStack, int x1, int y1, int x2, int y2, int curr, int max, int color) {
-        int filled = curr * max / 100;
+        int filled = 0;
+        if (max > 0)
+            filled = curr * max / 100;
         filled = MathHelper.clamp(filled, 0, 100);
         int l = filled * (x2 - x1) / 100;
         fill(matrixStack, guiLeft + x1, guiTop + y2,
@@ -69,14 +77,17 @@ public abstract class WootContainerScreen<T extends Container> extends Container
 
     public void renderHorizontalGauge(MatrixStack matrixStack, int x1, int y1, int x2, int y2, int curr, int max, int color) {
         fill(matrixStack, guiLeft + x1, guiTop + y1, guiLeft + x2, guiTop + y2, color);
-        int p = curr * (x2 - x1) / max;
-        for (int i = 0; i < p; i++)
-            vLine(
-                    matrixStack,
-                    guiLeft + x1 + 1 + i,
-                    guiTop + y1,
-                    guiTop + y2 - 1,
-                    i % 2 == 0 ? color : 0xff000000);
+
+        if (max > 0) {
+            int p = curr * (x2 - x1) / max;
+            for (int i = 0; i < p; i++)
+                vLine(
+                        matrixStack,
+                        guiLeft + x1 + 1 + i,
+                        guiTop + y1,
+                        guiTop + y2 - 1,
+                        i % 2 == 0 ? color : 0xff000000);
+        }
     }
 
     public void renderFluidTankTooltip(MatrixStack matrixStack, int mouseX, int mouseY, FluidStack fluidStack, int capacity) {

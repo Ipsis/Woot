@@ -74,15 +74,19 @@ public class SpawnController {
 
     Map<String, Integer> mobHealthCache = new HashMap<>();
     Map<String, Integer> mobXpCache = new HashMap<>();
+
+    private static final int UNKNOWN_MOB_HEALTH = 100;
     public int getMobHealth(@Nonnull FakeMob fakeMob, @Nonnull World world) {
         if (world.isRemote)
-            return -1;
+            return UNKNOWN_MOB_HEALTH;
 
         if (!fakeMob.isValid())
-            return -1;
+            return UNKNOWN_MOB_HEALTH;
 
-        if (!isCached(fakeMob))
-            updateCache(fakeMob, world);
+        if (!isCached(fakeMob)) {
+            if (!updateCache(fakeMob, world))
+                return UNKNOWN_MOB_HEALTH;
+        }
 
         // Configuration value has priority
         if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.HEALTH))
@@ -92,15 +96,18 @@ public class SpawnController {
         return mobHealthCache.get(key);
     }
 
+    private static final int UNKNOWN_MOB_EXP = 1;
     public int getMobExperience(@Nonnull FakeMob fakeMob, @Nonnull World world) {
         if (world.isRemote)
-            return -1;
+            return UNKNOWN_MOB_EXP;
 
         if (!fakeMob.isValid())
-            return -1;
+            return UNKNOWN_MOB_EXP;
 
-        if (!isCached(fakeMob))
-            updateCache(fakeMob, world);
+        if (!isCached(fakeMob)) {
+            if (!updateCache(fakeMob, world))
+                return UNKNOWN_MOB_EXP;
+        }
 
         // Configuration value has priority
         if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.XP))
@@ -114,11 +121,11 @@ public class SpawnController {
         return mobHealthCache.containsKey(fakeMob.toString());
     }
 
-    private void updateCache(@Nonnull FakeMob fakeMob, @Nonnull World world) {
+    private boolean updateCache(@Nonnull FakeMob fakeMob, @Nonnull World world) {
         // Cache miss, create the entity
         Entity entity = createEntity(fakeMob, world, new BlockPos(0, 0, 0));
         if (entity == null || !(entity instanceof LivingEntity))
-            return;
+            return false;
 
         int health = (int)((LivingEntity) entity).getMaxHealth();
 
@@ -136,6 +143,7 @@ public class SpawnController {
         String key = fakeMob.toString();
         mobHealthCache.put(key, health);
         mobXpCache.put(key, xp);
+        return false;
     }
 
     public boolean isLivingEntity(FakeMob fakeMob, World world) {

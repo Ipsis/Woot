@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 ### Changed
 - Added check for health/xp cache miss [#459]
+- Change MultiBlockTracker to notify after list operations [#460]
 ### Removed
 
 ## [1.16.3-1.0.0.1] - 2020-10-31

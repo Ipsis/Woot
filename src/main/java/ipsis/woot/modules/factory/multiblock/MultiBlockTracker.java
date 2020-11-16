@@ -37,16 +37,23 @@ public class MultiBlockTracker {
         if (world.isRemote || blocks.isEmpty())
             return;
 
+        List<TileEntity> notify = new ArrayList<>();
+
         //LOGGER.debug("Running multiblock tracker");
         Iterator<BlockPos> iter = blocks.iterator();
         while (iter.hasNext()) {
             BlockPos pos = iter.next();
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof MultiBlockGlueProvider) {
-                //LOGGER.debug("GlueProvider at {} saying hello {}", pos, te);
-                ((MultiBlockGlueProvider) te).getGlue().onHello(world, pos);
+                notify.add(te);
                 iter.remove();
             }
         }
+
+        notify.forEach(i -> {
+            MultiBlockGlueProvider p = (MultiBlockGlueProvider)i;
+            //LOGGER.debug("GlueProvider at {} saying hello {}", i.getPos(), p);
+            ((MultiBlockGlueProvider) i).getGlue().onHello(world, i.getPos());
+        });
     }
 }

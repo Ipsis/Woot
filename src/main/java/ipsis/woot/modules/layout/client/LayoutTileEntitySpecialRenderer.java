@@ -8,9 +8,12 @@ import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.blocks.HeartBlock;
 import ipsis.woot.modules.layout.LayoutConfiguration;
+import ipsis.woot.modules.layout.LayoutSetup;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
 import ipsis.woot.modules.factory.layout.PatternBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -26,6 +29,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.EmptyModelData;
@@ -47,10 +51,13 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
     @Override
     public void render(LayoutTileEntity layoutTileEntity, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
-        if (layoutTileEntity.getAbsolutePattern() == null)
-            layoutTileEntity.refresh();
+        World world = layoutTileEntity.getWorld();
+        if (world != null) {
+            if (layoutTileEntity.getAbsolutePattern() == null)
+                layoutTileEntity.refresh();
 
-        textureRender(layoutTileEntity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+            textureRender(layoutTileEntity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+        }
     }
 
     void textureRender(LayoutTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
@@ -58,6 +65,13 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
         boolean showAll = tileEntityIn.getLevel() == -1;
         int validY = showAll ? 0 : tileEntityIn.getYForLevel();
         BlockPos origin = tileEntityIn.getPos();
+        Direction facing = Direction.SOUTH;
+
+        // Watch for this being called after the block is broken
+        // Ensure that we still have a Layout Block at the position to extract the facing from
+        Block layoutBlock = tileEntityIn.getWorld().getBlockState(origin).getBlock();
+        if (layoutBlock == LayoutSetup.LAYOUT_BLOCK.get())
+            facing = tileEntityIn.getWorld().getBlockState(origin).get(BlockStateProperties.HORIZONTAL_FACING);
 
         float minX = 0.0F, minY = 0.0F, minZ = 0.0F;
         float maxX = 0.0F, maxY = 0.0F, maxZ = 0.0F;
@@ -83,7 +97,7 @@ public class LayoutTileEntitySpecialRenderer extends TileEntityRenderer<LayoutTi
 
                     BlockState blockState = block.getFactoryComponent().getDefaultBlockState();
                     if (block.getFactoryComponent() == FactoryComponent.HEART)
-                        blockState = FactorySetup.HEART_BLOCK.get().getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING,  tileEntityIn.getWorld().getBlockState(tileEntityIn.getPos()).get(BlockStateProperties.HORIZONTAL_FACING));
+                        blockState = FactorySetup.HEART_BLOCK.get().getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, facing);
 
                     Minecraft.getInstance().getBlockRendererDispatcher().renderBlock(blockState,
                             matrixStack, bufferIn, 0x00f000f0, combinedOverlayIn, EmptyModelData.INSTANCE);

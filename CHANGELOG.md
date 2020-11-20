@@ -2,7 +2,13 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.16.3-1.x.y.z] - 2020-11-??
+## [1.16.3-1.x.y.z] - 2020-XX-X
+### Added
+### Changed
+- Added protection in layout tesr for layout block being air after broken [#461]
+### Removed
+
+## [1.16.3-1.0.0.2] - 2020-11-16
 ### Added
 ### Changed
 - Added check for health/xp cache miss [#459]

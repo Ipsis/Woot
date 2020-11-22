@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 ### Changed
 - Added protection in layout tesr for layout block being air after broken [#461]
+  - CTD when breaking layout block (Cannot get property DirectionProperty)
+- Changed how Tartarus is force loaded on startup
+  - Now performs a lookup of the expected dimension.
 ### Removed
 
 ## [1.16.3-1.0.0.2] - 2020-11-16

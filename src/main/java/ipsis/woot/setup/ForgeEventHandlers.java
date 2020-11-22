@@ -146,12 +146,15 @@ public class ForgeEventHandlers {
         FluidConvertorRecipes.load(event.getServer().getRecipeManager());
         CustomDropsLoader.load(event.getServer().getRecipeManager());
 
-        for (ServerWorld dim : event.getServer().getWorlds()) {
-            if (dim.getDimensionKey().equals(MobSimulatorSetup.TARTARUS)) {
-                Woot.setup.getLogger().debug("onServerStarting: force load Tartarus Cells");
-                dim.forceChunk(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
-                break;
-            }
+        for (ServerWorld world : event.getServer().getWorlds())
+            Woot.setup.getLogger().debug("onServerStarting: world {}", world.getDimensionKey());
+
+        ServerWorld serverWorld = event.getServer().getWorld(MobSimulatorSetup.TARTARUS);
+        if (serverWorld == null) {
+            Woot.setup.getLogger().error("onServerStarting: tartarus not found");
+        } else {
+            Woot.setup.getLogger().info("onServerStarting: force load Tartarus Cells");
+            serverWorld.forceChunk(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
         }
     }
 

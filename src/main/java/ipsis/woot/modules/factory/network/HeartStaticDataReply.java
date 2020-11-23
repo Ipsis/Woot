@@ -5,7 +5,7 @@ import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
-import ipsis.woot.modules.factory.blocks.HeartRecipe;
+import ipsis.woot.modules.factory.recipe.HeartRecipe;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;

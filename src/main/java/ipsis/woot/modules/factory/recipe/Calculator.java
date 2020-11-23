@@ -1,11 +1,10 @@
-package ipsis.woot.modules.factory.calculators;
+package ipsis.woot.modules.factory.recipe;
 
 import ipsis.woot.crafting.FactoryRecipe;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
-import ipsis.woot.modules.factory.blocks.HeartRecipe;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FluidStackHelper;
 import ipsis.woot.util.ItemStackHelper;
@@ -20,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculatorVersion2 {
+public class Calculator {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -114,7 +113,7 @@ public class CalculatorVersion2 {
     }
 
 
-    public static HeartRecipe calculate(FormedSetup setup) {
+    public static HeartRecipe createRecipe(FormedSetup setup) {
 
         for (FakeMob fakeMob : setup.getAllMobs())
             LOGGER.debug("Calulator mob:{} params:{}", fakeMob, setup.getAllMobParams().get(fakeMob));
@@ -154,6 +153,8 @@ public class CalculatorVersion2 {
                     List<FluidStack> recipeFluids = getRecipeFluids(fakeMob, factoryRecipe.getFluids(), setup);
                     recipeItems.forEach(i -> recipe.addItem(fakeMob, i.copy()));
                     recipeFluids.forEach(i -> recipe.addFluid(fakeMob, i.copy()));
+                    recipeItems.forEach(i -> recipe.addIngredient(i));
+                    recipeFluids.forEach(i -> recipe.addIngredient(i));
                     break;
                 }
             }

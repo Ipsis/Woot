@@ -90,7 +90,7 @@ public class FormedSetup {
     }
     public int getLootingLevel() { return MathHelper.clampLooting(perks.getOrDefault(PerkType.LOOTING, 0)); }
 
-    public List<LazyOptional<IItemHandler>> getImportHandlers() {
+    public List<LazyOptional<IItemHandler>> getImportItemHandlers() {
         List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
             if (!world.isBlockLoaded(importPos.offset(facing)))
@@ -118,7 +118,7 @@ public class FormedSetup {
         return handlers;
     }
 
-    public List<LazyOptional<IItemHandler>> getExportHandlers() {
+    public List<LazyOptional<IItemHandler>> getExportItemHandlers() {
         List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
             if (!world.isBlockLoaded(exportPos.offset(facing)))

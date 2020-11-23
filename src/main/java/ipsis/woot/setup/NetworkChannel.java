@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.fluilds.network.FluidStackPacket;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
+import ipsis.woot.modules.factory.network.HeartStaticDataReply2;
 import ipsis.woot.modules.oracle.network.SimulatedMobDropsSummaryReply;
 import ipsis.woot.modules.oracle.network.SimulatedMobsReply;
 import net.minecraft.util.ResourceLocation;
@@ -34,8 +35,8 @@ public class NetworkChannel {
 
         channel.registerMessage(
                 2,
-                HeartStaticDataReply.class,
-                HeartStaticDataReply::toBytes, HeartStaticDataReply::fromBytes, HeartStaticDataReply::handle);
+                HeartStaticDataReply2.class,
+                HeartStaticDataReply2::toBytes, HeartStaticDataReply2::fromBytes, HeartStaticDataReply2::handle);
 
         channel.registerMessage(
                 3,

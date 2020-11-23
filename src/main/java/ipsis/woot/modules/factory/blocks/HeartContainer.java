@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.fluilds.network.TankPacket;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
+import ipsis.woot.modules.factory.recipe.HeartSummary;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.util.TankPacketHandler;
 import ipsis.woot.util.WootContainer;
@@ -101,6 +102,11 @@ public class HeartContainer extends WootContainer implements TankPacketHandler  
     public void handleStaticDataReply(ClientFactorySetup clientFactorySetup) {
         tileEntity.setClientFactorySetup(clientFactorySetup);
     }
+
+    public void handleStaticDataReply(HeartSummary heartSummary) {
+        tileEntity.setClientHeartSummary(heartSummary);
+    }
+
 
     @Override
     public void handlePacket(TankPacket packet) {

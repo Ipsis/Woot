@@ -1,7 +1,6 @@
 package ipsis.woot.modules.factory.generators;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
@@ -44,7 +43,7 @@ public class LootGeneration {
         /**
          * Get the output options
          */
-        List<LazyOptional<IItemHandler>> itemHandlers = setup.getExportHandlers();
+        List<LazyOptional<IItemHandler>> itemHandlers = setup.getExportItemHandlers();
 
         int looting = setup.getLootingLevel();
 

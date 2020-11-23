@@ -4,12 +4,15 @@ import ipsis.woot.Woot;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.mod.ModNBT;
 import ipsis.woot.modules.factory.*;
-import ipsis.woot.modules.factory.calculators.CalculatorVersion2;
+import ipsis.woot.modules.factory.network.HeartStaticDataReply2;
+import ipsis.woot.modules.factory.recipe.Calculator;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
 import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
+import ipsis.woot.modules.factory.recipe.HeartRecipe;
+import ipsis.woot.modules.factory.recipe.HeartSummary;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
@@ -38,10 +41,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * The factory is formed manually by the user via the intern -> interrupt
@@ -107,7 +109,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                LOGGER.debug("formedSetup: {}", formedSetup);
 
                formedSetup.getAllMobs().forEach(m -> MobSimulator.getInstance().learn(m));
-               recipe = CalculatorVersion2.calculate(formedSetup);
+               recipe = Calculator.createRecipe(formedSetup);
 
                // Restore the progress on load
                if (loadedFromNBT) {
@@ -129,134 +131,89 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                consumedUnits = 0;
                markDirty();
 
-               List<ItemStack> items = createItemIngredients(recipe, formedSetup);
-               List<FluidStack> fluids = createFluidIngredients(recipe, formedSetup);
-
-               if (hasItemIngredients(items, formedSetup) && hasFluidIngredients(fluids, formedSetup)) {
+               if (recipe.canFindIngredients(formedSetup)) {
                    LazyOptional<IFluidHandler> hdlr = formedSetup.getCellFluidHandler();
-                   if (hdlr.isPresent()) {
-                       IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
-                       FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
+                   hdlr.ifPresent(h -> {
+                       FluidStack fluidStack = h.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
                        if (fluidStack.getAmount() == recipe.getNumUnits()) {
                            LOGGER.debug("Generate loot");
-                           consumeItemIngredients(items, formedSetup);
-                           consumeFluidIngredients(fluids, formedSetup);
-                           iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
+                           consumeIngredients(recipe, formedSetup);
+                           h.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);
                            LootGeneration.get().generate(this, formedSetup);
                        }
-                   }
+
+                   });
                }
            }
        }
     }
 
-    private List<ItemStack> createItemIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
-        List<ItemStack> items = new ArrayList<>();
-        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
-            if (recipe.items.containsKey(fakeMob)) {
-                // items are already calculated based on mob count
-                for (ItemStack itemStack : recipe.items.get(fakeMob))
-                    items.add(itemStack.copy());
-            }
-        }
-        return StorageHelper.flattenItemStackList(items);
-    }
-
-    private List<FluidStack> createFluidIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
-        List<FluidStack> fluids = new ArrayList<>();
-        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
-            if (recipe.fluids.containsKey(fakeMob)) {
-                // fluids are already calculated based on mob count
-                for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
-                    fluids.add(fluidStack.copy());
-            }
-        }
-        return fluids;
-    }
-
-    private boolean hasItemIngredients(List<ItemStack> items, FormedSetup formedSetup) {
-        if (items.isEmpty())
-            return true;
-
-        for (ItemStack itemStack : items) {
-            int count = StorageHelper.getCount(itemStack, formedSetup.getImportHandlers());
-            if (count == 0 || count < itemStack.getCount())
-                return false;
-        }
-
-        return true;
-    }
-
-    private boolean hasFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
-        if (fluids.isEmpty())
-            return true;
-
-        for (FluidStack fluidStack : fluids) {
-            int amount = StorageHelper.getAmount(fluidStack, formedSetup.getImportFluidHandlers());
-            if (amount == 0 || amount < fluidStack.getAmount())
-                return false;
-        }
-
-        return true;
-    }
-
-    private void consumeItemIngredients(List<ItemStack> items, FormedSetup formedSetup) {
-        if (items.isEmpty())
+    private void consumeIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
+        if (!recipe.hasFluidIngredients() && !recipe.hasItemIngredients())
             return;
 
-        for (LazyOptional<IItemHandler> hdlr : formedSetup.getImportHandlers()) {
-            if (items.isEmpty())
+        /**
+         * This is only called when we are sure that correct amount of ingredients
+         * are already present.
+         */
+
+        List<LazyOptional<IItemHandler>> itemImportHandlers = formedSetup.getImportItemHandlers();
+        List<LazyOptional<IFluidHandler>> fluidImportHandlers = formedSetup.getImportFluidHandlers();
+
+        for (HeartRecipe.Ingredient i : recipe.getIngredients()) {
+            if (i instanceof HeartRecipe.ItemIngredient) {
+                HeartRecipe.ItemIngredient itemIngredient = (HeartRecipe.ItemIngredient)i;
+                consumeItemIngredient(itemIngredient.getItemStack().copy(), itemIngredient.getAmount(), itemImportHandlers);
+            } else if (i instanceof HeartRecipe.FluidIngredient) {
+                HeartRecipe.FluidIngredient fluidIngredient = (HeartRecipe.FluidIngredient)i;
+                consumeFluidIngredient(fluidIngredient.getFluidStack().copy(), fluidIngredient.getAmount(), fluidImportHandlers);
+            }
+        }
+    }
+
+    private void consumeItemIngredient(ItemStack itemStack, int amount, List<LazyOptional<IItemHandler>> itemImportHandlers) {
+
+        Woot.setup.getLogger().debug("consumeItemIngredient: to consume {}*{}", amount, itemStack);
+
+        AtomicInteger left = new AtomicInteger(amount);
+        for (LazyOptional<IItemHandler> hdlr : itemImportHandlers) {
+            if (left.get() == 0)
                 break;
 
             hdlr.ifPresent(h -> {
-                for (ItemStack itemStack : items) {
-                    if (itemStack.isEmpty())
-                        continue;
-
-                    Woot.setup.getLogger().debug("consumeItemIngredients: to consume {}", itemStack);
-
                     for (int slot = 0; slot < h.getSlots(); slot++) {
                         ItemStack slotStack = h.getStackInSlot(slot);
                         if (!slotStack.isEmpty() && ItemStack.areItemsEqual(itemStack, slotStack)) {
 
-                            int consumed = 0;
-                            if (itemStack.getCount() > slotStack.getCount())
+                            int consumed;
+                            if (left.get() > slotStack.getCount())
                                 consumed = slotStack.getCount();
                             else
-                                consumed = itemStack.getCount();
+                                consumed = left.get();
 
                             Woot.setup.getLogger().debug("consumeItemIngredients: consumed {}", consumed);
                             slotStack.shrink(consumed);
-                            itemStack.shrink(consumed);
+                            left.set(left.get() - consumed);
                         }
                     }
-                }
             });
         }
     }
 
-    private void consumeFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
-        if (fluids.isEmpty())
-            return;
+    private void consumeFluidIngredient(FluidStack fluidStack, int amount, List<LazyOptional<IFluidHandler>> fluidImportHandlers) {
 
+        Woot.setup.getLogger().debug("consumeFluidIngredient: to consume {}*{}", amount, fluidStack);
+
+        AtomicInteger left = new AtomicInteger(amount);
         for (LazyOptional<IFluidHandler> hdlr : formedSetup.getImportFluidHandlers()) {
-            if (fluids.isEmpty())
+            if (left.get() == 0)
                 break;
 
             hdlr.ifPresent(h -> {
-                for (FluidStack fluidStack : fluids) {
-                    if (fluidStack.isEmpty())
-                        continue;
-
-                    Woot.setup.getLogger().debug("consumeFluidIngredients: to consume {}", fluidStack);
-
-                    FluidStack drainedStack = h.drain(fluidStack, IFluidHandler.FluidAction.EXECUTE);
-                    int consumed = drainedStack.getAmount();
-                    fluidStack.setAmount(fluidStack.getAmount() - consumed);
-                    if (fluidStack.getAmount() < 0)
-                        fluidStack.setAmount(0);
-                    Woot.setup.getLogger().debug("consumeFluidIngredients: consumed {}", consumed);
-                }
+                FluidStack toDrain = new FluidStack(fluidStack, left.get());
+                FluidStack drainedStack = h.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
+                Woot.setup.getLogger().debug("consumeFluidIngredient: consumed {}", drainedStack.getAmount());
+                left.set(left.get() - drainedStack.getAmount());
             });
         }
     }
@@ -418,7 +375,15 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         this.clientFactorySetup = clientFactorySetup;
     }
 
-    public HeartStaticDataReply createStaticDataReply2() {
-        return new HeartStaticDataReply(formedSetup, recipe);
+    @OnlyIn(Dist.CLIENT)
+    public HeartSummary clientHeartSummary;
+
+    @OnlyIn(Dist.CLIENT)
+    public void setClientHeartSummary(HeartSummary heartSummary) {
+        this.clientHeartSummary = heartSummary;
+    }
+
+    public HeartStaticDataReply2 createStaticDataReply2() {
+        return new HeartStaticDataReply2(new HeartSummary(formedSetup, recipe));
     }
 }

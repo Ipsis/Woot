@@ -3,6 +3,7 @@ package ipsis.woot.setup;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.anvil.client.AnvilTileEntitySpecialRenderer;
+import ipsis.woot.modules.factory.client.HeartScreen2;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.fluidconvertor.client.FluidConvertorScreen;
 import ipsis.woot.modules.infuser.InfuserSetup;
@@ -35,7 +36,7 @@ public class ClientRegistration {
         Woot.setup.getLogger().debug("FMLClientSetupEvent");
         ClientRegistry.bindTileEntityRenderer(LayoutSetup.LAYOUT_BLOCK_TILE.get(), LayoutTileEntitySpecialRenderer::new);
         ClientRegistry.bindTileEntityRenderer(AnvilSetup.ANVIL_BLOCK_TILE.get(), AnvilTileEntitySpecialRenderer::new);
-        ScreenManager.registerFactory(FactorySetup.HEART_BLOCK_CONTAINER.get(), HeartScreen::new);
+        ScreenManager.registerFactory(FactorySetup.HEART_BLOCK_CONTAINER.get(), HeartScreen2::new);
         ScreenManager.registerFactory(OracleSetup.ORACLE_BLOCK_CONTAINER.get(), OracleScreen::new);
         ScreenManager.registerFactory(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), DyeSqueezerScreen::new);
         ScreenManager.registerFactory(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_CONTAINER.get(), EnchantSqueezerScreen::new);

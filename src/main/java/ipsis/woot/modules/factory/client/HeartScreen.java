@@ -44,28 +44,34 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
     public HeartScreen(HeartContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
-        xSize = 252;
-        ySize = 152;
+        xSize = GUI_WIDTH;
+        ySize = GUI_HEIGHT;
     }
 
     private List<StackElement> stackElements = new ArrayList<>();
     private List<StackElement> mobElements = new ArrayList<>();
     private List<StackElement> upgradeElements = new ArrayList<>();
 
+    private int GUI_WIDTH = 252;
+    private int GUI_HEIGHT = 222;
     private int DROPS_COLS = 13;
-    private int DROPS_ROWS = 2;
+    private int DROPS_ROWS = 4;
     private int DROPS_X = 10;
-    private int DROPS_Y = 110;
+    private int DROPS_Y = 144;
     private int MOBS_X = 10;
     private int MOBS_Y = 76;
-    private int UPGRADES_X = 99;
-    private int UPGRADES_Y = 76;
+    private int PERKS_X = 99;
+    private int PERKS_Y = 76;
+    private int RECIPE_X = 10;
+    private int RECIPE_Y = 110;
     private float DROP_CYCLE_MS = 5000.0F;
     private int TEXT_COLOR = 4210752;
     private static final int TANK_LX = 226;
     private static final int TANK_LY = 8;
     private static final int TANK_RX = 241;
     private static final int TANK_RY = 91;
+    private static int EXOTIC_X = 190;
+    private static int EXOTIC_Y = 76;
 
     private long renderTime;
 
@@ -79,7 +85,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         // Upgrades
         for (int i = 0; i < 4; i++)
-            upgradeElements.add(new StackElement(UPGRADES_X + (i * 18), UPGRADES_Y, true));
+            upgradeElements.add(new StackElement(PERKS_X + (i * 18), PERKS_Y, true));
 
         // Recipe
 
@@ -233,7 +239,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         addInfoLine(matrixStack, 3, StringHelper.translate("gui.woot.heart.2"), container.getProgress() + "%");
 
         font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.3"), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
-        font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.4"), UPGRADES_X, UPGRADES_Y - 10, TEXT_COLOR);
+        font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.4"), PERKS_X, PERKS_Y - 10, TEXT_COLOR);
         font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.5"), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
 
         mobElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));

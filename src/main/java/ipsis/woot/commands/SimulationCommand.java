@@ -165,6 +165,8 @@ public class SimulationCommand {
                 source.sendFeedback(new TranslationTextComponent(TAG + "learn.ok", resourceLocation.toString()), true);
             else
                 source.sendFeedback(new TranslationTextComponent(TAG + "learn.fail", resourceLocation.toString()), true);
+        } else {
+            source.sendFeedback(new TranslationTextComponent(TAG + "learn.fail", resourceLocation.toString()), true);
         }
 
         return 0;

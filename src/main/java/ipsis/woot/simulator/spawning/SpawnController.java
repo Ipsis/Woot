@@ -59,8 +59,10 @@ public class SpawnController {
     private @Nullable Entity createEntity(@Nonnull FakeMob fakeMob, @Nonnull World world, @Nonnull BlockPos pos) {
 
         ResourceLocation rl = fakeMob.getResourceLocation();
-        if (!ForgeRegistries.ENTITIES.containsKey(rl))
+        if (!ForgeRegistries.ENTITIES.containsKey(rl)) {
+            Woot.setup.getLogger().debug("createEntity: {} not in entity list", rl);
             return null;
+        }
 
         CompoundNBT nbt = new CompoundNBT();
         nbt.putString("id", rl.toString());

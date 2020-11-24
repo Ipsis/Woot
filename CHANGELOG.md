@@ -26,6 +26,7 @@ no loot learning can occur.
   - See policy.mob.perk.headlessSkulls for custom configuration
 ### Changed
 - Moved guide book into datagen
+- Blacklisted Ice & Fire Myrmex mobs as they are incompatible with Woot
 ### Fixed
 - Fix layout block changing tiers in steps of two
 ### Removed

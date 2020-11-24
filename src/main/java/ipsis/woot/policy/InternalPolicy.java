@@ -12,7 +12,12 @@ public class InternalPolicy {
     public static final List<String> CAPTURED_ENTITY = Arrays.asList(
         "twighlightforest:knight_phantom",
         "twighlightforest:lich",
-        "twighlightforest:quest_ram"
+        "twighlightforest:quest_ram",
+        "iceandfire:myrmex_worker",
+        "iceandfire:myrmex_soldier",
+        "iceandfire:myrmex_sentinel",
+        "iceandfire:myrmex_royal",
+        "iceandfire:myrmex_queen"
     );
 
     public static final List<String> LEARN_MOD = Arrays.asList(

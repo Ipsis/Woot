@@ -5,14 +5,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.Exotic;
-import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.util.helper.RandomHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -44,7 +43,6 @@ public class ExoticDropsLootModifier extends LootModifier {
         drops.add(new DropWeighted(Exotic.EXOTIC_D.getItemStack(), weights[3]));
         drops.add(new DropWeighted(Exotic.EXOTIC_E.getItemStack(), weights[4]));
     }
-
 
     @Nonnull
     @Override
@@ -98,6 +96,12 @@ public class ExoticDropsLootModifier extends LootModifier {
 
             Woot.setup.getLogger().info("ExoticDrops rolls:{} chance:{} weights:{}", rolls, chance, weights);
             return new ExoticDropsLootModifier(conditions, rolls, chance, weights);
+        }
+
+        @Override
+        public JsonObject write(ExoticDropsLootModifier instance) {
+            ILootCondition[] conditions = new ILootCondition[0];
+            return makeConditions(conditions);
         }
     }
 }

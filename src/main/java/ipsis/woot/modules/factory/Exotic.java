@@ -44,7 +44,7 @@ public enum Exotic {
     }
 
     public TranslationTextComponent getTooltip() {
-        return StringHelper.translate("info.woot.exotic." + getName());
+        return new TranslationTextComponent("info.woot.exotic." + getName());
     }
 
     public ItemStack getItemStack() {

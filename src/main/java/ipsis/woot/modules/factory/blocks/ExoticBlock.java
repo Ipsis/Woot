@@ -17,6 +17,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -61,15 +62,15 @@ public class ExoticBlock extends Block implements WootDebug {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
         if (stack.getItem() == FactorySetup.EXOTIC_A_BLOCK_ITEM.get()) {
-            tooltip.add(StringHelper.translate("info.woot.exotic.exotic_a", FactoryConfiguration.EXOTIC_A.get()));
+            tooltip.add(new TranslationTextComponent("info.woot.exotic.exotic_a", FactoryConfiguration.EXOTIC_A.get()));
         } else if (stack.getItem() == FactorySetup.EXOTIC_B_BLOCK_ITEM.get()) {
-            tooltip.add(StringHelper.translate("info.woot.exotic.exotic_b", FactoryConfiguration.EXOTIC_B.get()));
+            tooltip.add(new TranslationTextComponent("info.woot.exotic.exotic_b", FactoryConfiguration.EXOTIC_B.get()));
         } else if (stack.getItem() == FactorySetup.EXOTIC_C_BLOCK_ITEM.get()) {
-            tooltip.add(StringHelper.translate("info.woot.exotic.exotic_c", FactoryConfiguration.EXOTIC_C.get()));
+            tooltip.add(new TranslationTextComponent("info.woot.exotic.exotic_c", FactoryConfiguration.EXOTIC_C.get()));
         } else if (stack.getItem() == FactorySetup.EXOTIC_D_BLOCK_ITEM.get()) {
-            tooltip.add(StringHelper.translate("info.woot.exotic.exotic_d", FactoryConfiguration.EXOTIC_D.get()));
+            tooltip.add(new TranslationTextComponent("info.woot.exotic.exotic_d", FactoryConfiguration.EXOTIC_D.get()));
         } else if (stack.getItem() == FactorySetup.EXOTIC_E_BLOCK_ITEM.get()) {
-            tooltip.add(StringHelper.translate("info.woot.exotic.exotic_e", FactoryConfiguration.EXOTIC_E.get()));
+            tooltip.add(new TranslationTextComponent("info.woot.exotic.exotic_e", FactoryConfiguration.EXOTIC_E.get()));
         }
     }
 

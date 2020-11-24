@@ -21,10 +21,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
@@ -154,11 +151,26 @@ public class InternItem extends Item {
                 if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
                     FactoryHelper.BuildResult buildResult = (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier()));
                     if (buildResult == FactoryHelper.BuildResult.SUCCESS) {
-                        if (context.getWorld().isRemote)
-                            spawnParticle(context.getWorld(), context.getPos().up(), 10);
+                        context.getWorld().playSound(
+                                null,
+                                context.getPlayer().getPosX(),
+                                context.getPlayer().getPosY(),
+                                context.getPlayer().getPosZ(),
+                                SoundEvents.BLOCK_STONE_PLACE,
+                                SoundCategory.BLOCKS,
+                                1.0F,
+                                0.5F * ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.8F));
                     } else if (buildResult == FactoryHelper.BuildResult.ALL_BLOCKS_PLACED) {
-                        if (!context.getWorld().isRemote)
-                            FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                    } else {
+                        context.getWorld().playSound(
+                                null,
+                                context.getPlayer().getPosX(),
+                                context.getPlayer().getPosY(),
+                                context.getPlayer().getPosZ(),
+                                SoundEvents.BLOCK_ANVIL_DESTROY,
+                                SoundCategory.BLOCKS,
+                                1.0F, 1.0F);
                     }
                     result = ActionResultType.SUCCESS;
                 } else if (toolMode.isValidateMode()) {

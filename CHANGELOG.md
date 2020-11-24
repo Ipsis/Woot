@@ -17,6 +17,8 @@ no loot learning can occur.
 - Added exotic block
   - Found only in end loot chests 
   - See factory.exotic for custom configuration
+  - See exotic_drops.json for custom configuration
+  - default is 1% drop chance weights lil-4,arn-4,zom-2,paz-1,lat-1
 - Updated Woot guide
 - Added command permission level configuration
 - Updated TOP display for factory blocks

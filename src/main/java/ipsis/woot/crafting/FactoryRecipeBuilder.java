@@ -92,13 +92,14 @@ public class FactoryRecipeBuilder {
             }
             json.add("items", array);
 
-            // TODO fluids
+            // fluids
             array = new JsonArray();
-            /*
             for (FluidStack fluidStack : fluids) {
                 JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(fluidStack.getFluid()).toString());
+                jsonObject.addProperty("amount", fluidStack.getAmount());
                 array.add(jsonObject);
-            } */
+            }
             json.add("fluids", array);
 
 

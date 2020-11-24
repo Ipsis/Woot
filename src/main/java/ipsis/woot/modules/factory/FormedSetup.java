@@ -21,6 +21,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -41,6 +42,7 @@ public class FormedSetup {
     private double shardDropChance = 0.0F;
     private int[] shardDropWeights = new int[]{ 0, 0, 0 };
     private int perkTierShardValue = 0;
+    private Exotic exotic = Exotic.NONE;
 
     private FormedSetup() {}
     private FormedSetup(World world, Tier tier) {
@@ -58,6 +60,13 @@ public class FormedSetup {
         }
         return LazyOptional.empty();
     }
+
+    public Exotic getExotic() { return this.exotic; }
+    public boolean hasFluidIngredientExotic() { return this.exotic == Exotic.EXOTIC_A; }
+    public boolean hasItemIngredientExotic() { return this.exotic == Exotic.EXOTIC_B; }
+    public boolean hasConatusExotic() { return this.exotic == Exotic.EXOTIC_C; }
+    public boolean hasSpawnTimExotic() { return this.exotic == Exotic.EXOTIC_D; }
+    public boolean hasMassExotic() { return this.exotic == Exotic.EXOTIC_E; }
 
     public double getShardDropChance() { return this.shardDropChance; }
     public int getBasicShardWeight() { return shardDropWeights[0]; }
@@ -91,6 +100,20 @@ public class FormedSetup {
                 continue;
 
             handlers.add(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()));
+        }
+        return handlers;
+    }
+
+    public List<LazyOptional<IFluidHandler>> getImportFluidHandlers() {
+        List<LazyOptional<IFluidHandler>> handlers = new ArrayList<>();
+        for (Direction facing : Direction.values()) {
+            if (!world.isBlockLoaded(importPos.offset(facing)))
+                continue;
+            TileEntity te = world.getTileEntity(importPos.offset(facing));
+            if (!(te instanceof TileEntity))
+                continue;
+
+            handlers.add(te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite()));
         }
         return handlers;
     }
@@ -180,6 +203,14 @@ public class FormedSetup {
                             Config.OVERRIDE.getKeyByPerk(PerkType.XP, perkLevel)));
             }
 
+            // Headless
+            if (perks.containsKey(PerkType.HEADLESS)) {
+                int perkLevel = perks.getOrDefault(PerkType.HEADLESS, 0);
+                if (perkLevel > 0)
+                    param.setPerkHeadlessValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
+                            Config.OVERRIDE.getKeyByPerk(PerkType.HEADLESS, perkLevel)));
+            }
+
             mobParams.put(fakeMob, param);
         }
     }
@@ -195,6 +226,7 @@ public class FormedSetup {
                 ", exportPos=" + exportPos +
                 ", cellPos=" + cellPos +
                 ", cellCapacity=" + cellCapacity +
+                ", exotic=" + exotic +
                 '}';
     }
 
@@ -277,6 +309,7 @@ public class FormedSetup {
             }
         }
 
+        formedSetup.exotic = layout.getAbsolutePattern().getExotic();
         formedSetup.setupMobParams();
         return formedSetup;
     }

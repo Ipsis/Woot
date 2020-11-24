@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class DebugItem extends Item {
                 List<String> debug = new ArrayList<>();
                 ((WootDebug)b).getDebugText(debug, context);
                 for (String s : debug)
-                    PlayerHelper.sendChatMessage(context.getPlayer(), s);
+                    context.getPlayer().sendStatusMessage(new StringTextComponent(s), false);
             }
         }
         return ActionResultType.SUCCESS;

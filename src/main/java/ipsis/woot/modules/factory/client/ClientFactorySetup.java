@@ -1,10 +1,12 @@
 package ipsis.woot.modules.factory.client;
 
 import io.netty.buffer.ByteBuf;
+import ipsis.woot.modules.factory.Exotic;
 import ipsis.woot.modules.factory.MobParam;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.NetworkHelper;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,6 +22,7 @@ public class ClientFactorySetup {
     public List<Perk> perks = new ArrayList<>();
     public HashMap<FakeMob, MobParam> mobParams = new HashMap<>();
     public HashMap<FakeMob, Mob> mobInfo = new HashMap<>();
+    public Exotic exotic = Exotic.NONE;
     public int cellCapacity = 0;
     public int looting = 0;
     public int recipeTicks = 0;
@@ -46,6 +49,7 @@ public class ClientFactorySetup {
         factorySetup.cellCapacity = buf.readInt();
         buf.readInt(); /// fluid amount
         factorySetup.looting = buf.readInt();
+        factorySetup.exotic = Exotic.getExotic(buf.readInt());
 
         factorySetup.recipeTicks = buf.readInt();
         factorySetup.recipeFluid = buf.readInt();
@@ -67,6 +71,7 @@ public class ClientFactorySetup {
             mobParam.setPerkEfficiencyValue(buf.readInt());
             mobParam.setPerkMassValue(buf.readInt());
             mobParam.setPerkXpValue(buf.readInt());
+            mobParam.setPerkHeadlessValue(buf.readInt());
             factorySetup.controllerMobs.add(fakeMob);
             factorySetup.mobParams.put(fakeMob, mobParam);
 
@@ -77,7 +82,7 @@ public class ClientFactorySetup {
 
             int fluidCount = buf.readInt();
             for (int y = 0; y < fluidCount; y++) {
-                //mob.fluidIngredients.add(NetworkTools.readItemStack(buf));
+                mob.fluidIngredients.add(NetworkHelper.readFluidStack(buf));
             }
 
             int drops = buf.readInt();

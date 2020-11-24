@@ -1,11 +1,15 @@
 {
-  "name": "Stoke The Boiler",
+  "name": "guide.woot.perks.efficiency.name",
   "category": "woot:perks",
   "icon": "woot:efficiency_1",
   "pages": [
     {
       "type": "text",
-      "text": "The Stoke The Boiler perk decreases the amount of Conatus Fluid required by the factory. Higher levels of this perk will decrease the fluid requirement further."
+      "text": "guide.woot.perks.efficiency.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.perks.efficiency.1"
     },
     {
       "type": "crafting",

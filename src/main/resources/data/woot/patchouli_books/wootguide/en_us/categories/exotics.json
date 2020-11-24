@@ -1,5 +1,5 @@
 {
-  "name": "Exotics",
-  "icon": "minecraft:diamond",
-  "description": "Exotic extensions to the factory - WIP"
+  "name": "guide.woot.category.exotics",
+  "icon": "woot:exotic_a",
+  "description": "guide.woot.category.exotics.desc"
 }

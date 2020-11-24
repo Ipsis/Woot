@@ -378,6 +378,28 @@ public class Blocks extends BaseBlockStateProvider {
                 .with(UpgradeBlock.UPGRADE, Perk.XP_3)
                 .modelForState().modelFile(upgrade3).addModel();
 
+        upgrade1 = models().cubeAll("factory_upgrade_headless_1", modLoc("item/headless_1"));
+        upgrade2 = models().cubeAll("factory_upgrade_headless_2", modLoc("item/headless_2"));
+        upgrade3 = models().cubeAll("factory_upgrade_headless_3", modLoc("item/headless_3"));
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_2)
+                .modelForState().modelFile(upgrade2).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_2)
+                .modelForState().modelFile(upgrade2).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_3)
+                .modelForState().modelFile(upgrade3).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_3)
+                .modelForState().modelFile(upgrade3).addModel();
+
 
         machineBlock(FactorySetup.HEART_BLOCK.get(), "heart", "block/heart");
         machineBlock(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "fluidconvertor", "block/fluidconvertor");
@@ -388,6 +410,10 @@ public class Blocks extends BaseBlockStateProvider {
         machineBlock(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get(), "enchsqueezer", "block/enchsqueezer");
         singleTextureBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "creative_conatus", "block/creative_conatus");
         singleTextureBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "creative_power", "block/creative_power");
-
+        singleTextureBlock(FactorySetup.EXOTIC_A_BLOCK.get(), "exotic_a", "block/exotic_a");
+        singleTextureBlock(FactorySetup.EXOTIC_B_BLOCK.get(), "exotic_b", "block/exotic_b");
+        singleTextureBlock(FactorySetup.EXOTIC_C_BLOCK.get(), "exotic_c", "block/exotic_c");
+        singleTextureBlock(FactorySetup.EXOTIC_D_BLOCK.get(), "exotic_d", "block/exotic_d");
+        singleTextureBlock(FactorySetup.EXOTIC_E_BLOCK.get(), "exotic_e", "block/exotic_e");
     }
 }

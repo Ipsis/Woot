@@ -32,6 +32,12 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue TIER_4_MAX_UNITS;
     public static ForgeConfigSpec.IntValue TIER_5_MAX_UNITS;
 
+    public static ForgeConfigSpec.DoubleValue EXOTIC_A;
+    public static ForgeConfigSpec.DoubleValue EXOTIC_B;
+    public static ForgeConfigSpec.DoubleValue EXOTIC_C;
+    public static ForgeConfigSpec.IntValue EXOTIC_D;
+    public static ForgeConfigSpec.IntValue EXOTIC_E;
+
     public static ForgeConfigSpec.IntValue EFFICIENCY_1;
     public static ForgeConfigSpec.IntValue EFFICIENCY_2;
     public static ForgeConfigSpec.IntValue EFFICIENCY_3;
@@ -47,6 +53,9 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue TIER_SHARD_1;
     public static ForgeConfigSpec.IntValue TIER_SHARD_2;
     public static ForgeConfigSpec.IntValue TIER_SHARD_3;
+    public static ForgeConfigSpec.IntValue HEADLESS_1;
+    public static ForgeConfigSpec.IntValue HEADLESS_2;
+    public static ForgeConfigSpec.IntValue HEADLESS_3;
     public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
@@ -173,6 +182,31 @@ public class FactoryConfiguration {
             }
             COMMON_BUILDER.pop();
 
+            COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_EXOTIC);
+            {
+                EXOTIC_A = COMMON_BUILDER
+                        .comment("Percentage reduction for recipe fluids")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_A_PERCENTAGE,
+                                Factory.EXOTIC_A_DEF, 0.0F, 100.0F);
+                EXOTIC_B = COMMON_BUILDER
+                        .comment("Percentage reduction for recipe fluids")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_B_PERCENTAGE,
+                                Factory.EXOTIC_B_DEF, 0.0F, 100.0F);
+                EXOTIC_C = COMMON_BUILDER
+                        .comment("Percentage reduction for Conatus fluid")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_C_PERCENTAGE,
+                                Factory.EXOTIC_C_DEF, 0.0F, 100.0F);
+                EXOTIC_D = COMMON_BUILDER
+                        .comment("Number of ticks between spawns")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_D_TICKS,
+                                Factory.EXOTIC_D_DEF, 1, Integer.MAX_VALUE);
+                EXOTIC_E = COMMON_BUILDER
+                        .comment("Number of mobs to spawn")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_E_COUNT,
+                                Factory.EXOTIC_E_DEF, 1, Integer.MAX_VALUE);
+            }
+            COMMON_BUILDER.pop();
+
             COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_PERKS);
             {
                 COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_EFFICIENCY);
@@ -282,6 +316,23 @@ public class FactoryConfiguration {
                             .comment("Weights of the Celadon, Cerulean, Byzantium shard from a Tier 5 factory")
                             .define(ConfigPath.Factory.TIER_SHARD_T5_WEIGHTS_TAG,
                                     Factory.T5_SHARD_DROP_WEIGHTS_DEF);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_HEADLESS);
+                {
+                    HEADLESS_1 = COMMON_BUILDER
+                            .comment("Percentage chance to drop a skull for headless 1 perks")
+                            .defineInRange(ConfigPath.Factory.HEADLESS_1_TAG,
+                                    Factory.HEADLESS_1_DEF, 0, 1000);
+                    HEADLESS_2 = COMMON_BUILDER
+                            .comment("Percentage chance to drop a skull for headless 2 perks")
+                            .defineInRange(ConfigPath.Factory.HEADLESS_2_TAG,
+                                    Factory.HEADLESS_2_DEF, 0, 1000);
+                    HEADLESS_3 = COMMON_BUILDER
+                            .comment("Percentage chance to drop a skull for headless 3 perks")
+                            .defineInRange(ConfigPath.Factory.HEADLESS_3_TAG,
+                                    Factory.HEADLESS_3_DEF, 0, 1000);
                 }
                 COMMON_BUILDER.pop();
 

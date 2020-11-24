@@ -1,0 +1,12 @@
+{
+  "name": "guide.woot.basics.conatus.name",
+  "category": "woot:basics",
+  "icon": "woot:conatus_fluid_bucket",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.basics.conatus.0"
+    }
+  ]
+}

@@ -1,19 +1,23 @@
 {
-  "name": "The Intern",
+  "name": "guide.woot.tools.intern.name",
   "category": "woot:tools",
   "icon": "woot:intern",
   "pages": [
     {
       "type": "text",
-      "text": "The Intern is there to replace that tedious task of building the factory structures. Not only can it build but also, with no extra payment, validate an existing structure. The current mode can be cycled by left-clicking in the air."
+      "text": "guide.woot.tools.intern.0"
     },
     {
       "type": "text",
-      "text": "When in build mode, The Intern will take the factory blocks from your inventory and place them into the world. The tier of factory depends on the mode that The Intern is in. The tool should be used on a pre-placed Heart"
+      "text": "guide.woot.tools.intern.1"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.tools.intern.2"
     },
     {
       "type": "crafting",
-      "text": "Why bark when you have a dog.",
+      "text": "guide.woot.tools.intern.craft.0",
       "recipe": "woot:intern"
     }
   ]

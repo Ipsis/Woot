@@ -1,5 +1,5 @@
 {
-  "name": "Perks",
+  "name": "guide.woot.category.perks",
   "icon": "woot:efficiency_1",
-  "description": "How to make your factory better."
+  "description": "guide.woot.category.perks.desc"
 }

@@ -50,6 +50,11 @@ public class Items extends BaseItemModelProvider {
         parentedBlock(FactorySetup.CELL_2_BLOCK.get(), "block/cell_2");
         parentedBlock(FactorySetup.CELL_3_BLOCK.get(), "block/cell_3");
         parentedBlock(FactorySetup.CELL_4_BLOCK.get(), "block/cell_4");
+        parentedBlock(FactorySetup.EXOTIC_A_BLOCK.get(), "block/exotic_a");
+        parentedBlock(FactorySetup.EXOTIC_B_BLOCK.get(), "block/exotic_b");
+        parentedBlock(FactorySetup.EXOTIC_C_BLOCK.get(), "block/exotic_c");
+        parentedBlock(FactorySetup.EXOTIC_D_BLOCK.get(), "block/exotic_d");
+        parentedBlock(FactorySetup.EXOTIC_E_BLOCK.get(), "block/exotic_e");
         itemGenerated(FactorySetup.EFFICIENCY_1_ITEM.get(), "item/efficiency_1");
         itemGenerated(FactorySetup.EFFICIENCY_2_ITEM.get(), "item/efficiency_2");
         itemGenerated(FactorySetup.EFFICIENCY_3_ITEM.get(), "item/efficiency_3");
@@ -68,6 +73,9 @@ public class Items extends BaseItemModelProvider {
         itemGenerated(FactorySetup.XP_1_ITEM.get(), "item/xp_1");
         itemGenerated(FactorySetup.XP_2_ITEM.get(), "item/xp_2");
         itemGenerated(FactorySetup.XP_3_ITEM.get(), "item/xp_3");
+        itemGenerated(FactorySetup.HEADLESS_1_ITEM.get(), "item/headless_1");
+        itemGenerated(FactorySetup.HEADLESS_2_ITEM.get(), "item/headless_2");
+        itemGenerated(FactorySetup.HEADLESS_3_ITEM.get(), "item/headless_3");
         itemGenerated(FactorySetup.MOB_SHARD_ITEM.get(), "item/mobshard");
         itemGenerated(FactorySetup.XP_SHARD_ITEM.get(), "item/xpshard");
         itemGenerated(FactorySetup.XP_SPLINTER_ITEM.get(), "item/xpsplinter");

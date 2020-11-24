@@ -4,14 +4,33 @@
 - The version is based off [Forge Versioning](https://mcforge.readthedocs.io/en/latest/conventions/versioning/.)
 
 # Notes
-
 There have been two issues identified with loot learning and the Tartarus dimension. If Tartarus is not loaded then 
 no loot learning can occur.
 
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.3-1.0.1.0] - 2020-XX-X
+## [1.16.3-1.0.2.0] - 2020-XX-YY
+### Added
+- Add fluid ingredients
+- Add sounds for success and failure of block placement by Intern
+- Added exotic block
+  - Found only in end loot chests 
+  - See factory.exotic for custom configuration
+  - See exotic_drops.json for custom configuration
+  - default is 1% drop chance weights lil-4,arn-4,zom-2,paz-1,lat-1
+- Updated Woot guide
+- Added command permission level configuration
+- Updated TOP display for factory blocks
+- Added headless perk to generate skull drops
+  - See policy.mob.perk.headlessSkulls for custom configuration
+### Changed
+- Moved guide book into datagen
+### Fixed
+- Fix layout block changing tiers in steps of two
+### Removed
+
+## [1.16.3-1.0.1.0] - 2020-11-22
 ### Added
 - Heart has larger loot display pool [#456]
 ### Changed
@@ -27,8 +46,8 @@ no loot learning can occur.
 ### Changed
 ### Fixed
 - Added check for health/xp cache miss [#459]
-- Change MultiBlockTracker to notify after list operations [#460]
 ### Removed
+- Change MultiBlockTracker to notify after list operations [#460]
 
 ## [1.16.3-1.0.0.1] - 2020-10-31
 ### Added
@@ -46,10 +65,10 @@ no loot learning can occur.
   - Custom recipe file for sheep can still be used to provide non-wool drops.
 ### Changed
 - Default drop rates for Byzantium now increase per factory tier
-### Fixed
 - Fixed gui text alignment for inventory
 - Fixed blocks placed against Layout Guide vanishing from users hand. Layout Guide now needs an empty hand to change tiers and layers.
 ### Removed
+### Fixed
 
 
 

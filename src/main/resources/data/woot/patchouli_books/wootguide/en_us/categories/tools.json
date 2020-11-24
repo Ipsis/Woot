@@ -1,5 +1,5 @@
 {
-  "name": "Tools",
+  "name": "guide.woot.category.tools",
   "icon": "woot:intern",
-  "description": "The tools of Woot. (Yes, another mod with a hammer.)"
+  "description": "guide.woot.category.tools.desc"
 }

@@ -14,22 +14,17 @@ import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.StorageHelper;
-import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -49,6 +44,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The factory is formed manually by the user via the intern -> interrupt
@@ -64,7 +60,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
      */
     Layout layout;
     FormedSetup formedSetup;
-    Recipe recipe;
+    HeartRecipe recipe;
     TickTracker tickTracker = new TickTracker();
     boolean loadedFromNBT = false;
 
@@ -157,23 +153,27 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
        }
     }
 
-    private List<ItemStack> createItemIngredients(Recipe recipe, FormedSetup formedSetup) {
+    private List<ItemStack> createItemIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
         List<ItemStack> items = new ArrayList<>();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             if (recipe.items.containsKey(fakeMob)) {
-                for (ItemStack itemStack : recipe.items.get(fakeMob)) {
-                    int count = itemStack.getCount() * formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS));
-                    ItemStack newStack = itemStack.copy();
-                    newStack.setCount(count);
-                    items.add(newStack);
-                }
+                // items are already calculated based on mob count
+                for (ItemStack itemStack : recipe.items.get(fakeMob))
+                    items.add(itemStack.copy());
             }
         }
         return StorageHelper.flattenItemStackList(items);
     }
 
-    private List<FluidStack> createFluidIngredients(Recipe recipe, FormedSetup formedSetup) {
+    private List<FluidStack> createFluidIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
         List<FluidStack> fluids = new ArrayList<>();
+        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
+            if (recipe.fluids.containsKey(fakeMob)) {
+                // fluids are already calculated based on mob count
+                for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
+                    fluids.add(fluidStack.copy());
+            }
+        }
         return fluids;
     }
 
@@ -193,6 +193,12 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     private boolean hasFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
         if (fluids.isEmpty())
             return true;
+
+        for (FluidStack fluidStack : fluids) {
+            int amount = StorageHelper.getAmount(fluidStack, formedSetup.getImportFluidHandlers());
+            if (amount == 0 || amount < fluidStack.getAmount())
+                return false;
+        }
 
         return true;
     }
@@ -233,6 +239,29 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     private void consumeFluidIngredients(List<FluidStack> fluids, FormedSetup formedSetup) {
+        if (fluids.isEmpty())
+            return;
+
+        for (LazyOptional<IFluidHandler> hdlr : formedSetup.getImportFluidHandlers()) {
+            if (fluids.isEmpty())
+                break;
+
+            hdlr.ifPresent(h -> {
+                for (FluidStack fluidStack : fluids) {
+                    if (fluidStack.isEmpty())
+                        continue;
+
+                    Woot.setup.getLogger().debug("consumeFluidIngredients: to consume {}", fluidStack);
+
+                    FluidStack drainedStack = h.drain(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                    int consumed = drainedStack.getAmount();
+                    fluidStack.setAmount(fluidStack.getAmount() - consumed);
+                    if (fluidStack.getAmount() < 0)
+                        fluidStack.setAmount(0);
+                    Woot.setup.getLogger().debug("consumeFluidIngredients: consumed {}", consumed);
+                }
+            });
+        }
     }
 
     /**
@@ -326,62 +355,6 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         }
     }
 
-    /**
-     * Currently running recipe
-     */
-    public static class Recipe {
-
-        int numTicks;
-        int numUnits;
-        public HashMap<FakeMob, List<ItemStack>> items = new HashMap<>();
-        public HashMap<FakeMob, List<FluidStack>> fluids = new HashMap<>();
-
-        public int getNumTicks() {
-            return numTicks;
-        }
-
-        public int getNumUnits() {
-            return numUnits;
-        }
-
-        public Recipe() {
-            numTicks = 1;
-            numUnits = 1;
-        }
-
-        public Recipe(int numTicks, int numUnits) {
-            this.numTicks = MathHelper.clamp(numTicks, 1, Integer.MAX_VALUE);
-            this.numUnits = MathHelper.clamp(numUnits, 1, Integer.MAX_VALUE);
-        }
-
-        public void addItem(FakeMob fakeMob, ItemStack itemStack) {
-            if (!items.containsKey(fakeMob))
-                items.put(fakeMob, new ArrayList<>());
-
-            if (!itemStack.isEmpty())
-                items.get(fakeMob).add(itemStack.copy());
-        }
-
-        public void addFluid(FakeMob fakeMob, FluidStack fluidStack) {
-            if (!fluids.containsKey(fakeMob))
-                fluids.put(fakeMob, new ArrayList<>());
-
-            if (!fluidStack.isEmpty())
-                fluids.get(fakeMob).add(fluidStack.copy());
-        }
-
-        @Override
-        public String toString() {
-            return "Recipe{" +
-                    "numTicks=" + numTicks +
-                    ", numUnits=" + numUnits +
-                    ", items=" + items.size() +
-                    ", fluids=" + fluids.size() +
-                    '}';
-        }
-    }
-
-
 
     /**
      * WootDebug
@@ -434,6 +407,21 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         if (isFormed())
             mobs.addAll(formedSetup.getAllMobs());
         return mobs;
+    }
+
+    public Map<PerkType, Integer> getPerks() {
+        Map<PerkType, Integer> perks = new HashMap<>();
+        if (isFormed())
+            perks.putAll(formedSetup.getAllPerks());
+        return perks;
+    }
+
+    public Tier getTier() {
+        return isFormed() ? formedSetup.getTier() : Tier.UNKNOWN;
+    }
+
+    public Exotic getExotic() {
+        return isFormed() ? formedSetup.getExotic() : Exotic.NONE;
     }
 
     @OnlyIn(Dist.CLIENT)

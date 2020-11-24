@@ -1,0 +1,16 @@
+{
+  "name": "guide.woot.basics.tldr.name",
+  "category": "woot:basics",
+  "icon": "minecraft:diamond",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.basics.tldr.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.basics.tldr.1"
+    }
+  ]
+}

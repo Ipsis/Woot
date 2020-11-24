@@ -21,15 +21,13 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -95,15 +93,15 @@ public class InternItem extends Item {
                 mode = mode.getNext();
                 setToolModeInStack(itemStack, mode);
                 if (mode.isBuildMode()) {
-                    PlayerHelper.sendActionBarMessage(playerEntity,
-                            StringHelper.translateFormat(
+                    playerEntity.sendStatusMessage(
+                            new TranslationTextComponent(
                                     "info.woot.intern.mode.build",
-                                    StringHelper.translate(mode.getTier().getTranslationKey())));
+                                    StringHelper.translate(mode.getTier().getTranslationKey())), true);
                 } else if (mode.isValidateMode()) {
-                    PlayerHelper.sendActionBarMessage(playerEntity,
-                            StringHelper.translateFormat(
+                    playerEntity.sendStatusMessage(
+                            new TranslationTextComponent(
                                     "info.woot.intern.mode.validate",
-                                    StringHelper.translate(mode.getTier().getTranslationKey())));
+                                    StringHelper.translate(mode.getTier().getTranslationKey())), true);
                 }
             }
         }
@@ -153,11 +151,26 @@ public class InternItem extends Item {
                 if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
                     FactoryHelper.BuildResult buildResult = (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier()));
                     if (buildResult == FactoryHelper.BuildResult.SUCCESS) {
-                        if (context.getWorld().isRemote)
-                            spawnParticle(context.getWorld(), context.getPos().up(), 10);
+                        context.getWorld().playSound(
+                                null,
+                                context.getPlayer().getPosX(),
+                                context.getPlayer().getPosY(),
+                                context.getPlayer().getPosZ(),
+                                SoundEvents.BLOCK_STONE_PLACE,
+                                SoundCategory.BLOCKS,
+                                1.0F,
+                                0.5F * ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.8F));
                     } else if (buildResult == FactoryHelper.BuildResult.ALL_BLOCKS_PLACED) {
-                        if (!context.getWorld().isRemote)
-                            FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                    } else {
+                        context.getWorld().playSound(
+                                null,
+                                context.getPlayer().getPosX(),
+                                context.getPlayer().getPosY(),
+                                context.getPlayer().getPosZ(),
+                                SoundEvents.BLOCK_ANVIL_DESTROY,
+                                SoundCategory.BLOCKS,
+                                1.0F, 1.0F);
                     }
                     result = ActionResultType.SUCCESS;
                 } else if (toolMode.isValidateMode()) {
@@ -209,15 +222,17 @@ public class InternItem extends Item {
                 for (FactoryComponent component : FactoryComponent.VALUES) {
                     int count = pattern.getFactoryBlockCount((component));
                     if (count > 0) {
-                        String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
-                        if (component == FactoryComponent.CELL)
-                            text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell"));
-                        else if (toolMode == ToolMode.BUILD_1 && component == FactoryComponent.CONTROLLER)
-                            text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
-                        else if (component == FactoryComponent.CONTROLLER)
-                            text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
+                        String key = "info.woot.intern.other.count";
+                        TranslationTextComponent text = new TranslationTextComponent(component.getTranslationKey());
+                        if (component == FactoryComponent.CELL) {
+                            text = new TranslationTextComponent("info.woot.intern.cell");
+                        } else if (toolMode == ToolMode.BUILD_1 && component == FactoryComponent.CONTROLLER) {
+                            key = "info.woot.intern.controller.count.0";
+                        } else if (component == FactoryComponent.CONTROLLER) {
+                            key = "info.woot.intern.controller.count.1";
+                        }
 
-                        tooltip.add(new StringTextComponent(text));
+                        tooltip.add(new TranslationTextComponent(key, count, text));
                     }
                 }
             }

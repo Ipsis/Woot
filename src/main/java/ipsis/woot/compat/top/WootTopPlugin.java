@@ -1,15 +1,17 @@
 package ipsis.woot.compat.top;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.factory.FactoryComponent;
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.blocks.*;
+import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.layout.PatternRepository;
+import ipsis.woot.modules.infuser.blocks.InfuserTileEntity;
 import ipsis.woot.modules.layout.blocks.LayoutBlock;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
 import ipsis.woot.modules.layout.items.InternItem;
 import ipsis.woot.modules.squeezer.blocks.DyeSqueezerBlock;
 import ipsis.woot.modules.squeezer.blocks.DyeSqueezerTileEntity;
+import ipsis.woot.modules.squeezer.blocks.EnchantSqueezerTileEntity;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.StringHelper;
 import mcjty.theoneprobe.api.*;
@@ -17,8 +19,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.InterModComms;
@@ -60,91 +64,192 @@ public class WootTopPlugin {
 
                 @Override
                 public void addProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, PlayerEntity playerEntity, World world, BlockState blockState, IProbeHitData iProbeHitData) {
-                    Block block = blockState.getBlock();
-                    if (block instanceof ControllerBlock) {
-                        TileEntity te = world.getTileEntity(iProbeHitData.getPos());
-                        if (te instanceof ControllerTileEntity) {
-                            ControllerTileEntity cte = (ControllerTileEntity) te;
-                            FakeMob fakeMob = cte.getFakeMob();
-                            if (probeMode == ProbeMode.DEBUG) {
-                                iProbeInfo.text(CompoundText.createLabelInfo("Mob:", fakeMob.toString()));
-                            } else {
-                                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
-                                if (entityType != null) {
-                                    String name = new TranslationTextComponent(entityType.getTranslationKey()).getString();
-                                    if (fakeMob.hasTag())
-                                        name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
-                                    iProbeInfo.text(CompoundText.createLabelInfo("Mob:", name));
-                                }
-                            }
-                        }
-                    } else if (block instanceof UpgradeBlock) {
-                        TileEntity te = world.getTileEntity(iProbeHitData.getPos());
-                        if (te instanceof UpgradeTileEntity) {
-                           UpgradeTileEntity ute = (UpgradeTileEntity)te;
-                            Perk perk = ute.getUpgrade(blockState);
-                            if (perk != Perk.EMPTY) {
-                                String text = StringHelper.translate("item.woot." + perk.getName());
-                                iProbeInfo.text(CompoundText.createLabelInfo("Perk:", text));
-                            }
-                        }
-                    } else if (block instanceof DyeSqueezerBlock) {
-                        TileEntity te = world.getTileEntity(iProbeHitData.getPos());
-                        if (te instanceof DyeSqueezerTileEntity) {
-                            DyeSqueezerTileEntity dte = (DyeSqueezerTileEntity)te;
-                            iProbeInfo.text(CompoundText.createLabelInfo("Red:", dte.getRed() + "mb"));
-                            iProbeInfo.text(CompoundText.createLabelInfo("Yellow:", dte.getYellow() + "mb"));
-                            iProbeInfo.text(CompoundText.createLabelInfo("Blue:", dte.getBlue() + "mb"));
-                            iProbeInfo.text(CompoundText.createLabelInfo("White:", dte.getWhite() + "mb"));
-                            iProbeInfo.text(CompoundText.createLabelInfo("Tanks:", dte.getDumpExcess() ? "Dumping" : "Strict"));
-                        }
-                    } else if (block instanceof HeartBlock) {
-                        TileEntity te = world.getTileEntity(iProbeHitData.getPos());
-                        if (te instanceof HeartTileEntity) {
-                            HeartTileEntity hte = (HeartTileEntity)te;
-                            if (hte.isFormed()) {
-                                iProbeInfo.text(CompoundText.createLabelInfo("Progress:", hte.getProgress() + "%"));
-                                for (FakeMob fakeMob : hte.getFormedMobs()) {
-                                    EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
-                                    if (entityType != null) {
-                                        String name = new TranslationTextComponent(entityType.getTranslationKey()).getString();
-                                        if (fakeMob.hasTag())
-                                            name += " " + new StringTextComponent("[" + fakeMob.getTag() + "]");
-                                        iProbeInfo.text(
-                                                CompoundText.createLabelInfo("Mob:", name));
-                                    }
-                                }
-                            }
-                        }
-                    } else if (block instanceof LayoutBlock) {
-                        TileEntity te = world.getTileEntity(iProbeHitData.getPos());
-                        if (te instanceof LayoutTileEntity) {
-                            LayoutTileEntity lte = (LayoutTileEntity)te;
-                            iProbeInfo.text(CompoundText.createLabelInfo("Tier:", StringHelper.translate(lte.getTier().getTranslationKey())));
-
-                            if (playerEntity.isSneaking()) {
-                                PatternRepository.Pattern pattern = PatternRepository.get().getPattern(lte.getTier());
-                                if (pattern != null) {
-                                    for (FactoryComponent component : FactoryComponent.VALUES) {
-                                        int count = pattern.getFactoryBlockCount((component));
-                                        if (count > 0) {
-                                            String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
-                                            if (component == FactoryComponent.CELL)
-                                                text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell"));
-                                            else if (component == FactoryComponent.CONTROLLER)
-                                                text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
-
-                                            iProbeInfo.text(CompoundText.create().text(text));
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    TileEntity tileEntity = world.getTileEntity(iProbeHitData.getPos());
+                    if (tileEntity != null) {
+                        addControllerProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
+                        addHeartProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
+                        addPerkProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
+                        addDyeSqueezerProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
+                        addEnchantSqueezerProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
+                        addLayoutProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
+                        addInfuserProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
                     }
                 }
             });
 
             return null;
+        }
+
+        private void addPerkProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+
+            if (!(te instanceof UpgradeTileEntity))
+                return;
+
+            UpgradeTileEntity upgrade = (UpgradeTileEntity) te;
+            Perk perk = upgrade.getUpgrade(blockState);
+            if (perk == Perk.EMPTY) {
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.perk.type.label") + ": ",
+                                StringHelper.translate("top.woot.perk.type.empty")));
+
+            } else {
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.perk.type.label") + ": ",
+                                StringHelper.translate("item.woot." + perk.getName())));
+            }
+        }
+
+        private void addDyeSqueezerProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+
+            if (!(te instanceof DyeSqueezerTileEntity))
+                return;
+
+            DyeSqueezerTileEntity squeezer = (DyeSqueezerTileEntity) te;
+            iProbeInfo.text(
+                    CompoundText.createLabelInfo(
+                            StringHelper.translate("top.woot.squeezer.red.label") + ": ",
+                            StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getRed())));
+
+            iProbeInfo.text(
+                    CompoundText.createLabelInfo(
+                            StringHelper.translate("top.woot.squeezer.yellow.label") + ": ",
+                            StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getYellow())));
+
+            iProbeInfo.text(
+                    CompoundText.createLabelInfo(
+                            StringHelper.translate("top.woot.squeezer.blue.label") + ": ",
+                            StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getBlue())));
+
+            iProbeInfo.text(
+                    CompoundText.createLabelInfo(
+                            StringHelper.translate("top.woot.squeezer.white.label") + ": ",
+                            StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getWhite())));
+
+            iProbeInfo.text(
+                    CompoundText.createLabelInfo(
+                            StringHelper.translate("top.woot.squeezer.tanks.label") + ": ",
+                            (squeezer.getDumpExcess() ?
+                                    StringHelper.translate("top.woot.squeezer.tanks.0") :
+                                    StringHelper.translate("top.woot.squeezer.tanks.1"))));
+        }
+
+        private void addEnchantSqueezerProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+
+            if (!(te instanceof EnchantSqueezerTileEntity))
+                return;
+
+            EnchantSqueezerTileEntity squeezer = (EnchantSqueezerTileEntity) te;
+        }
+
+        private void addInfuserProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+
+            if (!(te instanceof InfuserTileEntity))
+                return;
+
+            InfuserTileEntity infuser = (InfuserTileEntity) te;
+        }
+
+        private void addLayoutProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+
+            if (!(te instanceof LayoutTileEntity))
+                return;
+
+            LayoutTileEntity layout = (LayoutTileEntity) te;
+            Tier tier = layout.getTier();
+
+            iProbeInfo.text(
+                    CompoundText.createLabelInfo(
+                            StringHelper.translate("top.woot.layout.tier.label") + ": ",
+                            StringHelper.translate(tier.getTranslationKey())));
+
+            if (playerEntity.isSneaking()) {
+                PatternRepository.Pattern pattern = PatternRepository.get().getPattern(tier);
+                if (pattern != null) {
+                    for (FactoryComponent component : FactoryComponent.VALUES) {
+                        int count = pattern.getFactoryBlockCount((component));
+                        if (count > 0) {
+                            String text = String.format("%2d * %s", count, StringHelper.translate(component.getTranslationKey()));
+                            if (component == FactoryComponent.CELL)
+                                text = String.format("%2d * %s", count, StringHelper.translate("info.woot.intern.cell"));
+                            else if (component == FactoryComponent.CONTROLLER)
+                                text = String.format(" 1-%d * %s", count, StringHelper.translate(component.getTranslationKey()));
+
+                            iProbeInfo.text(CompoundText.create().text(text));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void addControllerProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+
+            if (!(te instanceof ControllerTileEntity))
+                return;
+
+            ControllerTileEntity controller = (ControllerTileEntity) te;
+
+            if (probeMode == ProbeMode.DEBUG) {
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.controller.mob.label") + ": ",
+                                controller.getFakeMob().toString()));
+            } else {
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.controller.mob.label") + ": ",
+                                StringHelper.translate(controller.getFakeMob())));
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.controller.tier.label") + ": ",
+                                StringHelper.translate(controller.getTier().getTranslationKey())));
+            }
+        }
+
+        private void addHeartProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, TileEntity te, PlayerEntity playerEntity, BlockState blockState) {
+            if (!(te instanceof HeartTileEntity))
+                return;
+
+            HeartTileEntity heart = (HeartTileEntity) te;
+            if (heart.isFormed()) {
+                // Add tier
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.heart.tier.label") + ": ",
+                                StringHelper.translate(heart.getTier().getTranslationKey())));
+                // Add perks
+                for (PerkType perkType : heart.getPerks().keySet()) {
+                    int level = heart.getPerks().get(perkType);
+                    ItemStack itemStack = PerkItem.getItemStack(perkType, level);
+                    if (!itemStack.isEmpty())
+                        iProbeInfo.text(
+                                CompoundText.createLabelInfo(
+                                        StringHelper.translate("top.woot.heart.perk.label") + ": ",
+                                        StringHelper.translate(itemStack.getItem().getTranslationKey())));
+                }
+                // Add exotic
+                if (heart.getExotic() != Exotic.NONE) {
+                    iProbeInfo.text(
+                            CompoundText.createLabelInfo(
+                                    StringHelper.translate("top.woot.heart.exotic.label") + ": ",
+                                    heart.getExotic().getTooltip().getUnformattedComponentText()));
+                }
+                // Add tank
+                iProbeInfo.text(
+                        CompoundText.createLabelInfo(
+                                StringHelper.translate("top.woot.heart.progress.label") + ": ",
+                                StringHelper.translateFormat("top.woot.heart.progress.0", heart.getProgress())));
+
+                for (FakeMob fakeMob : heart.getFormedMobs()) {
+                    iProbeInfo.text(
+                            CompoundText.createLabelInfo(
+                                    StringHelper.translate("top.woot.heart.mob.label") + ": ",
+                                    StringHelper.translate(fakeMob)));
+                }
+            } else {
+                iProbeInfo.text(CompoundText.create().error(StringHelper.translate("top.woot.heart.unformed")));
+            }
         }
     }
 }

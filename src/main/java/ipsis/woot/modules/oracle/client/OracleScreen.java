@@ -99,10 +99,10 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                     if (fontRenderer == null)
                         fontRenderer = font;
                     List<ITextComponent> tooltip = getTooltipFromItem(summary.itemStack);
-                    tooltip.add(new StringTextComponent(String.format("No looting : %.2f%%", summary.chanceToDrop[0])));
-                    tooltip.add(new StringTextComponent(String.format("Looting 1 : %.2f%%", summary.chanceToDrop[1])));
-                    tooltip.add(new StringTextComponent(String.format("Looting 2 : %.2f%%", summary.chanceToDrop[2])));
-                    tooltip.add(new StringTextComponent(String.format("Looting 3: %.2f%%", summary.chanceToDrop[3])));
+                    tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.0", summary.chanceToDrop[0]));
+                    tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.1", summary.chanceToDrop[1]));
+                    tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.2", summary.chanceToDrop[2]));
+                    tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.3", summary.chanceToDrop[3]));
                     func_243308_b(matrixStack, tooltip, mouseX - guiLeft, mouseY - guiTop);
                     break;
                 }

@@ -6,5 +6,6 @@ public enum PerkType {
     MASS,
     RATE,
     XP,
-    TIER_SHARD
+    TIER_SHARD,
+    HEADLESS
 }

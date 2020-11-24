@@ -1,5 +1,5 @@
 {
-  "name": "Factory Components",
+  "name": "guide.woot.category.factoryBlocks",
   "icon": "woot:heart",
-  "description": "The different blocks that make up the factory."
+  "description": "guide.woot.category.factoryBlocks.desc"
 }

@@ -15,12 +15,10 @@ import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -226,6 +224,31 @@ public class FactorySetup {
             CELL_4_TAG, () ->
                     TileEntityType.Builder.create(Cell4TileEntity::new, CELL_4_BLOCK.get()).build(null));
 
+    public static final RegistryObject<ExoticBlock> EXOTIC_A_BLOCK = BLOCKS.register(
+            Exotic.EXOTIC_A.getName(), () -> new ExoticBlock(Exotic.EXOTIC_A));
+    public static final RegistryObject<Item> EXOTIC_A_BLOCK_ITEM = ITEMS.register(
+            Exotic.EXOTIC_A.getName(), () -> new BlockItem(EXOTIC_A_BLOCK.get(), Woot.createStandardProperties()));
+
+    public static final RegistryObject<ExoticBlock> EXOTIC_B_BLOCK = BLOCKS.register(
+            Exotic.EXOTIC_B.getName(), () -> new ExoticBlock(Exotic.EXOTIC_B));
+    public static final RegistryObject<Item> EXOTIC_B_BLOCK_ITEM = ITEMS.register(
+            Exotic.EXOTIC_B.getName(), () -> new BlockItem(EXOTIC_B_BLOCK.get(), Woot.createStandardProperties()));
+
+    public static final RegistryObject<ExoticBlock> EXOTIC_C_BLOCK = BLOCKS.register(
+            Exotic.EXOTIC_C.getName(), () -> new ExoticBlock(Exotic.EXOTIC_C));
+    public static final RegistryObject<Item> EXOTIC_C_BLOCK_ITEM = ITEMS.register(
+            Exotic.EXOTIC_C.getName(), () -> new BlockItem(EXOTIC_C_BLOCK.get(), Woot.createStandardProperties()));
+
+    public static final RegistryObject<ExoticBlock> EXOTIC_D_BLOCK = BLOCKS.register(
+            Exotic.EXOTIC_D.getName(), () -> new ExoticBlock(Exotic.EXOTIC_D));
+    public static final RegistryObject<Item> EXOTIC_D_BLOCK_ITEM = ITEMS.register(
+            Exotic.EXOTIC_D.getName(), () -> new BlockItem(EXOTIC_D_BLOCK.get(), Woot.createStandardProperties()));
+
+    public static final RegistryObject<ExoticBlock> EXOTIC_E_BLOCK = BLOCKS.register(
+            Exotic.EXOTIC_E.getName(), () -> new ExoticBlock(Exotic.EXOTIC_E));
+    public static final RegistryObject<Item> EXOTIC_E_BLOCK_ITEM = ITEMS.register(
+            Exotic.EXOTIC_E.getName(), () -> new BlockItem(EXOTIC_E_BLOCK.get(), Woot.createStandardProperties()));
+
     public static final RegistryObject<PerkItem> EFFICIENCY_1_ITEM = ITEMS.register(
             PerkItem.EFFICIENCY_1_REGNAME, () -> new PerkItem(Perk.EFFICIENCY_1));
     public static final RegistryObject<PerkItem> EFFICIENCY_2_ITEM = ITEMS.register(
@@ -267,6 +290,13 @@ public class FactorySetup {
             PerkItem.XP_2_REGNAME, () -> new PerkItem(Perk.XP_2));
     public static final RegistryObject<PerkItem> XP_3_ITEM = ITEMS.register(
             PerkItem.XP_3_REGNAME, () -> new PerkItem(Perk.XP_3));
+
+    public static final RegistryObject<PerkItem> HEADLESS_1_ITEM = ITEMS.register(
+            PerkItem.HEADLESS_1_REGNAME, () -> new PerkItem(Perk.HEADLESS_1));
+    public static final RegistryObject<PerkItem> HEADLESS_2_ITEM = ITEMS.register(
+            PerkItem.HEADLESS_2_REGNAME, () -> new PerkItem(Perk.HEADLESS_2));
+    public static final RegistryObject<PerkItem> HEADLESS_3_ITEM = ITEMS.register(
+            PerkItem.HEADLESS_3_REGNAME, () -> new PerkItem(Perk.HEADLESS_3));
 
     public static final RegistryObject<MobShardItem> MOB_SHARD_ITEM = ITEMS.register(
             "mobshard", () -> new MobShardItem());

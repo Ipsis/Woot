@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.layout;
 
+import ipsis.woot.modules.factory.Exotic;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.Tier;
@@ -10,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +27,7 @@ public class AbsolutePattern {
     List<Perk> perks = new ArrayList<>();
     List<FakeMob> mobs = new ArrayList<>();
     List<BlockPos> validControllerPos = new ArrayList<>();
+    Exotic exotic = Exotic.NONE;
     public List<PatternBlock> getBlocks() { return Collections.unmodifiableList(blocks); }
 
     public AbsolutePattern(Tier tier) {
@@ -37,7 +40,10 @@ public class AbsolutePattern {
 
     public Tier getTier() { return tier; }
 
+    public Exotic getExotic() { return this.exotic; }
+
     public void addPerk(Perk perk) { this.perks.add(perk); }
+    public void setExotic(Exotic exotic) { this.exotic = exotic; }
     public void clearPerks() { this.perks.clear(); }
     public void addMob(FakeMob fakeMob) { this.mobs.add(fakeMob); }
     public void clearMobs() { this.mobs.clear(); }
@@ -68,6 +74,7 @@ public class AbsolutePattern {
                 ", facing=" + facing +
                 ", perks=" + perks +
                 ", mobs=" + mobs +
+                ", exotic=" + exotic +
                 '}';
     }
 }

@@ -5,17 +5,18 @@ import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
-import ipsis.woot.modules.factory.blocks.HeartTileEntity;
+import ipsis.woot.modules.factory.blocks.HeartRecipe;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
-import ipsis.woot.modules.oracle.blocks.OracleContainer;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
+import ipsis.woot.util.NetworkHelper;
 import ipsis.woot.util.oss.NetworkTools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -26,11 +27,11 @@ import java.util.function.Supplier;
 public class HeartStaticDataReply {
 
     public FormedSetup formedSetup;
-    public HeartTileEntity.Recipe recipe;
+    public HeartRecipe recipe;
     public ClientFactorySetup clientFactorySetup;
 
     public HeartStaticDataReply() { }
-    public HeartStaticDataReply(FormedSetup formedSetup, HeartTileEntity.Recipe recipe) {
+    public HeartStaticDataReply(FormedSetup formedSetup, HeartRecipe recipe) {
         this.formedSetup = formedSetup;
         this.recipe = recipe;
     }
@@ -47,6 +48,7 @@ public class HeartStaticDataReply {
         buf.writeInt(formedSetup.getCellCapacity());
         buf.writeInt(formedSetup.getCellFluidAmount());
         buf.writeInt(formedSetup.getLootingLevel());
+        buf.writeInt(formedSetup.getExotic().ordinal());
 
         buf.writeInt(recipe.getNumTicks());
         buf.writeInt(recipe.getNumUnits());
@@ -76,8 +78,9 @@ public class HeartStaticDataReply {
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseFluidCost);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkRateValue());
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkEfficiencyValue());
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS)));
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS), formedSetup.hasMassExotic()));
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkXpValue());
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkHeadlessValue());
 
             if (recipe.items.containsKey(fakeMob)) {
                 buf.writeInt(recipe.items.get(fakeMob).size());
@@ -88,11 +91,9 @@ public class HeartStaticDataReply {
             }
 
             if (recipe.fluids.containsKey(fakeMob)) {
-                buf.writeInt(0);
-                /*
                 buf.writeInt(recipe.fluids.get(fakeMob).size());
                 for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
-                    NetworkTools.writeItemStack(buf, itemStack); */
+                    NetworkHelper.writeFluidStack(buf, fluidStack);
             } else {
                 buf.writeInt(0);
             }

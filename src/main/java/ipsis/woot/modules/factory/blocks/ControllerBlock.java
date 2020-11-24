@@ -86,7 +86,7 @@ public class ControllerBlock extends Block implements FactoryComponentProvider, 
         if (te instanceof ControllerTileEntity) {
             Tier tier = ((ControllerTileEntity) te).getTier();
             if (tier != Tier.UNKNOWN)
-                PlayerHelper.sendActionBarMessage(player, StringHelper.translate(tier.getTranslationKey()));
+                player.sendStatusMessage(new TranslationTextComponent(tier.getTranslationKey()), true);
         }
 
         return ActionResultType.SUCCESS;

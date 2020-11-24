@@ -94,4 +94,13 @@ public class PolicyDefaults {
     public static final ArrayList<String> DEFAULT_MOB_PERK_XP_1 = Lists.newArrayList();
     public static final ArrayList<String> DEFAULT_MOB_PERK_XP_2 = Lists.newArrayList();
     public static final ArrayList<String> DEFAULT_MOB_PERK_XP_3 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_HEADLESS_1 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_HEADLESS_2 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_HEADLESS_3 = Lists.newArrayList();
+    public static final ArrayList<String> DEFAULT_MOB_PERK_HEADLESS_SKULLS = Lists.newArrayList(
+            "minecraft:skeleton,{\"item\": \"minecraft:skeleton_skull\"}",
+            "minecraft:wither_skeleton,{\"item\": \"minecraft:wither_skeleton_skull\"}",
+            "minecraft:zombie,{\"item\": \"minecraft:zombie_head\"}",
+            "minecraft:creeper,{\"item\": \"minecraft:creeper_head\"}"
+    );
 }

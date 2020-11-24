@@ -245,7 +245,13 @@ public class Factory {
                         FactorySetup.TIER_SHARD_2_ITEM,
                         FactorySetup.TIER_SHARD_3_ITEM,
                         Items.GOLDEN_CARROT,
-                        Items.NETHER_WART)
+                        Items.NETHER_WART),
+                new RecipePerk(
+                        FactorySetup.HEADLESS_1_ITEM,
+                        FactorySetup.HEADLESS_2_ITEM,
+                        FactorySetup.HEADLESS_3_ITEM,
+                        Items.ZOMBIE_HEAD,
+                        Items.SKELETON_SKULL)
         };
 
         for (RecipePerk recipePerk : recipePerks) {

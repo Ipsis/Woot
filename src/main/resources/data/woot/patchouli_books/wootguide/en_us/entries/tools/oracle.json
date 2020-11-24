@@ -1,0 +1,15 @@
+{
+  "name": "guide.woot.tools.oracle.name",
+  "category": "woot:tools",
+  "icon": "woot:oracle",
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.tools.oracle.0"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:oracle"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " 1 ",
+    "eee",
+    " 2 "
+  ],
+  "key": {
+    "e": {
+      "item": "woot:ench_plate_3"
+    },
+    "1": {
+      "item": "minecraft:zombie_head"
+    },
+    "2": {
+      "item": "minecraft:skeleton_skull"
+    }
+  },
+  "result": {
+    "item": "woot:headless_3"
+  }
+}

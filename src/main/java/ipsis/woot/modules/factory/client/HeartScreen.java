@@ -51,6 +51,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
     private List<StackElement> stackElements = new ArrayList<>();
     private List<StackElement> mobElements = new ArrayList<>();
     private List<StackElement> upgradeElements = new ArrayList<>();
+    private StackElement exoticElement = new StackElement(EXOTIC_X, EXOTIC_Y);
 
     private int GUI_WIDTH = 252;
     private int GUI_HEIGHT = 222;
@@ -96,6 +97,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             }
         }
 
+
         // Request the static data
         NetworkChannel.channel.sendToServer(new ServerDataRequest(
                 ServerDataRequest.Type.HEART_STATIC_DATA,
@@ -122,6 +124,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         stackElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
+        exoticElement.drawTooltip(matrixStack, mouseX, mouseY);
 
         if (renderTime == 0L)
             renderTime = Util.milliTime();
@@ -214,7 +217,10 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                         else if (Perk.RATE_PERKS.contains(perk))
                             tooltip.add(new StringTextComponent(String.format("%s : %d%%", iTextComponent.getString(), mobParam.getPerkRateValue())));
                         else if (Perk.MASS_PERKS.contains(perk))
-                            tooltip.add(new StringTextComponent(String.format("%s : %d mobs", iTextComponent.getString(), mobParam.getMobCount(true))));
+                            tooltip.add(new StringTextComponent(
+                                    String.format("%s : %d mobs",
+                                            iTextComponent.getString(),
+                                            mobParam.getMobCount(true, clientFactorySetup.exotic == Exotic.EXOTIC_E))));
                         else if (Perk.XP_PERKS.contains(perk))
                             tooltip.add(new StringTextComponent(String.format("%s : %d%%", iTextComponent.getString(), mobParam.getPerkXpValue())));
                     }
@@ -232,6 +238,15 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             sync = true;
         }
 
+        if (clientFactorySetup.tier != Tier.TIER_5) {
+            exoticElement.isLocked = true;
+        } else {
+            if (clientFactorySetup.exotic != Exotic.NONE) {
+                List<ITextComponent> tooltip = getTooltipFromItem(clientFactorySetup.exotic.getItemStack());
+                exoticElement.addDrop(clientFactorySetup.exotic.getItemStack(), tooltip);
+            }
+        }
+
         addInfoLine(matrixStack, 0, StringHelper.translate("gui.woot.heart.0"), title.getString());
         addInfoLine(matrixStack, 1, StringHelper.translate(
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1).getTranslationKey()), clientFactorySetup.recipeFluid + " mB");
@@ -245,6 +260,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         stackElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
+        exoticElement.drawForeground(matrixStack, mouseX, mouseY);
     }
 
     private void addInfoLine(MatrixStack matrixStack, int offset, String tag, String value) {
@@ -266,6 +282,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
+        exoticElement.drawBackground(mouseX, mouseY);
 
         renderFluidTank(
                 matrixStack,

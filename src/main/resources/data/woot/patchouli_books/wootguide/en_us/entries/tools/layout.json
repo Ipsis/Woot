@@ -1,0 +1,19 @@
+{
+  "name": "guide.woot.tools.layout.name",
+  "category": "woot:tools",
+  "icon": "woot:layout",
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.tools.layout.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.tools.layout.1"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:layout"
+    }
+  ]
+}

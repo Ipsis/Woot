@@ -1,11 +1,12 @@
 {
-  "name": "Capturing Mobs",
+  "name": "guide.woot.basics.mobshard.name",
   "category": "woot:basics",
   "icon": "woot:mobshard",
+  "sortnum": 4,
   "pages": [
     {
       "type": "text",
-      "text": "A $(item)Mob Shard$(0) is used to capture a mob to use in the factory. First you must create the a ${item}Mob Shard${0} then attack a mob to program that shard. With the shard in your inventory you must kill a certain number of that mob. When the kill count is reached the shard will be programmed and can then be converted into a $(l:mobs/controller)Mob Controller."
+      "text": "guide.woot.basics.mobshard.0"
     },
     {
       "type": "crafting",

@@ -25,6 +25,16 @@ public class ConfigPath {
         public static final String ENERGY_USE_PER_TICK_COMMENT = "Energy used per tick (RF)";
     }
 
+    public static final class Commands {
+        public static final String CATEGORY = "commands";
+        public static final String COMMAND_LEVEL_SIM_LEARN = "simLearnLevel";
+        public static final String COMMAND_LEVEL_SIM_DUMP = "simDumpLevel";
+        public static final String COMMAND_LEVEL_SIM_FLUSH = "simFlushLevel";
+        public static final String COMMAND_LEVEL_SIM_STATUS = "simStatusLevel";
+        public static final String COMMAND_LEVEL_SIM_ROLL_DROPS = "simRollDropsLevel";
+        public static final String COMMAND_LEVEL_GIVE= "giveControllerLevel";
+    }
+
     public static final class Squeezer {
         public static final String CATEGORY = "squeezer";
         public static final String CATEGORY_DYE_SQUEEZER = "dye";
@@ -104,6 +114,10 @@ public class ConfigPath {
         public static final String MOB_PERK_XP_1_TAG = "xp1";
         public static final String MOB_PERK_XP_2_TAG = "xp2";
         public static final String MOB_PERK_XP_3_TAG = "xp3";
+        public static final String MOB_PERK_HEADLESS_1_TAG = "headless1";
+        public static final String MOB_PERK_HEADLESS_2_TAG = "headless2";
+        public static final String MOB_PERK_HEADLESS_3_TAG = "headless3";
+        public static final String MOB_PERK_HEADLESS_SKULLS_TAG = "headlessSkulls";
     }
 
     public static final class Factory {
@@ -119,7 +133,9 @@ public class ConfigPath {
         public static final String CATEGORY_MASS = "mass";
         public static final String CATEGORY_RATE = "rate";
         public static final String CATEGORY_TIER_SHARD = "tierShard";
+        public static final String CATEGORY_HEADLESS = "headless";
         public static final String CATEGORY_XP = "xp";
+        public static final String CATEGORY_EXOTIC = "exotic";
 
         public static final String TICK_ACCELERATION_TAG = "tickAcceleration";
 
@@ -144,6 +160,12 @@ public class ConfigPath {
         public static final String TIER_SHARD_L2_ROLLS_TAG = "l2Rolls";
         public static final String TIER_SHARD_L3_ROLLS_TAG = "l3Rolls";
 
+        public static final String EXOTIC_A_PERCENTAGE = "exoticAPercentage";
+        public static final String EXOTIC_B_PERCENTAGE = "exoticBPercentage";
+        public static final String EXOTIC_C_PERCENTAGE = "exoticCPercentage";
+        public static final String EXOTIC_D_TICKS = "exoticDTicks";
+        public static final String EXOTIC_E_COUNT = "exoticECount";
+
         // These support config override
         public static final String MASS_COUNT_TAG = "massCount";
         public static final String SPAWN_TICKS_TAG = "spawnTicks";
@@ -165,6 +187,9 @@ public class ConfigPath {
         public static final String XP_1_TAG = "l1Generate";
         public static final String XP_2_TAG = "l2Generate";
         public static final String XP_3_TAG = "l3Generate";
+        public static final String HEADLESS_1_TAG = "l1HeadlessChance";
+        public static final String HEADLESS_2_TAG = "l2HeadlessChance";
+        public static final String HEADLESS_3_TAG = "l3HeadlessChance";
 
     }
 }

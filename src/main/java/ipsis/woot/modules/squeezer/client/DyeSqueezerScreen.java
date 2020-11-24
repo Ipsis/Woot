@@ -7,11 +7,13 @@ import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.blocks.DyeSqueezerContainer;
 import ipsis.woot.util.WootContainerScreen;
+import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
@@ -51,24 +53,28 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
 
         if (isPointInRegion(82, 30, 51, 8, mouseX, mouseY))
-            renderTooltip(matrixStack, new StringTextComponent(String.format("Red: %d/%d mb",
+            renderTooltip(matrixStack, new TranslationTextComponent(
+                          "gui.woot.squeezer.red",
                         container.getRedDyeAmount(),
-                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
+                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(82, 40, 51, 8, mouseX, mouseY))
-            renderTooltip(matrixStack, new StringTextComponent(String.format("Yellow: %d/%d mb",
+            renderTooltip(matrixStack, new TranslationTextComponent(
+                    "gui.woot.squeezer.yellow",
                     container.getYellowDyeAmount(),
-                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
+                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(82, 50, 51, 8, mouseX, mouseY))
-            renderTooltip(matrixStack, new StringTextComponent(String.format("Blue: %d/%d mb",
+            renderTooltip(matrixStack, new TranslationTextComponent(
+                    "gui.woot.squeezer.blue",
                         container.getBlueDyeAmount(),
-                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
+                        SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(82, 60, 51, 8, mouseX, mouseY))
-            renderTooltip(matrixStack, new StringTextComponent(String.format("White: %d/%d mb",
+            renderTooltip(matrixStack, new TranslationTextComponent(
+                    "gui.woot.squeezer.blue",
                     container.getWhiteDyeAmount(),
-                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get())),
+                    SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);
         if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
             renderFluidTankTooltip(matrixStack, mouseX, mouseY,
@@ -127,7 +133,9 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
 
-        String text2 = container.getDumpExcess() ? "Dumping" : "Strict";
+        String text2 = container.getDumpExcess() ?
+                StringHelper.translate("gui.woot.squeezer.dump") :
+                StringHelper.translate("gui.woot.squeezer.strict");
         this.font.drawString(matrixStack, text2, 82.0F, 70.0F, 4210752);
     }
 }

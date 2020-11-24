@@ -1,7 +1,6 @@
 package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
-import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
@@ -77,9 +76,17 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.XP_1_ITEM.get(), "Wisdom I Perk");
         add(FactorySetup.XP_2_ITEM.get(), "Wisdom II Perk");
         add(FactorySetup.XP_3_ITEM.get(), "Wisdom III Perk");
+        add(FactorySetup.HEADLESS_1_ITEM.get(), "Head Start I Perk");
+        add(FactorySetup.HEADLESS_2_ITEM.get(), "Head Start II Perk");
+        add(FactorySetup.HEADLESS_3_ITEM.get(), "Head Start III Perk");
         add(FactorySetup.MOB_SHARD_ITEM.get(), "Mob Shard");
         add(FactorySetup.XP_SHARD_ITEM.get(), "Experience Shard");
         add(FactorySetup.XP_SPLINTER_ITEM.get(), "Experience Splinter");
+        add(FactorySetup.EXOTIC_A_BLOCK.get(), "Enochian Key - LIL");
+        add(FactorySetup.EXOTIC_B_BLOCK.get(), "Enochian Key - ARN");
+        add(FactorySetup.EXOTIC_C_BLOCK.get(), "Enochian Key - ZOM");
+        add(FactorySetup.EXOTIC_D_BLOCK.get(), "Enochian Key - PAZ");
+        add(FactorySetup.EXOTIC_E_BLOCK.get(), "Enochian Key - LAT");
 
         // Fluid Convertor
         add(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "Fluid Vat");
@@ -167,12 +174,15 @@ public class Languages extends LanguageProvider {
         add("item.woot.mob_essence_fluid_bucket", "Purge Fluid Bucket");
 
         // Tooltips
-        add("info.woot.intern", "§aUse on the factory heart to form, build or validate a factory");
-        add("info.woot.intern.0", "§bSneak-right click to change modes");
-        add("info.woot.intern.1", "§bPlace controllers and cells manually");
+        add("info.woot.intern", "Use on the factory heart to form, build or validate a factory");
+        add("info.woot.intern.0", "Sneak-right click to change modes");
+        add("info.woot.intern.1", "Place controllers and cells manually");
         add("info.woot.intern.mode.form", "Form the factory");
         add("info.woot.intern.mode.build", "Build a %s factory");
         add("info.woot.intern.mode.validate", "Validate a %s factory");
+        add("info.woot.intern.other.count", "%2d of %s");
+        add("info.woot.intern.controller.count.0", "%2d of %s");
+        add("info.woot.intern.controller.count.1", "1 to %2d of %s");
         add("info.woot.mobshard.0", "Attack mob with shard to capture");
         add("info.woot.mobshard.1", "Kill mobs to fill the shard");
         add("info.woot.mobshard.2", "Shard must be in your hotbar to fill");
@@ -200,6 +210,8 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.mass.0", "Spawn %d mobs");
         add("info.woot.perk.rate", "Speeds up the spawn time");
         add("info.woot.perk.rate.0", "Reduce spawn time by %d%%");
+        add("info.woot.perk.headless", "Generate skulls");
+        add("info.woot.perk.headless.0", "Chance to drop a skull %d%%");
         add("info.woot.perk.tier_shard", "Generate essence to upgrade the factory");
         add("info.woot.perk.tier_shard.0", "%d chances to drop essence");
         add("info.woot.perk.tier_shard.1", "- %s drop chance %.02f%%");
@@ -207,6 +219,11 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.xp", "Generate experience");
         add("info.woot.perk.xp.0", "Generate %d%% of mob experience");
         add("info.woot.controller.0", "Right-click for required tier information");
+        add("info.woot.exotic.exotic_a", "Reduce fluid ingredients by %0.2f%%");
+        add("info.woot.exotic.exotic_b", "Reduce item ingredients by %0.2f%%");
+        add("info.woot.exotic.exotic_c", "Increase efficiency of Conatus usage to %0.2f%%");
+        add("info.woot.exotic.exotic_d", "Fixed spawn time of %d ticks");
+        add("info.woot.exotic.exotic_e", "Spawns %d mobs");
 
         // Chat
         add("chat.woot.intern.noedit", "Player is not allowed to edit");
@@ -235,6 +252,8 @@ public class Languages extends LanguageProvider {
         add("chat.woot.perk.fail.2", "Max level perk already installed");
         add("chat.woot.perk.fail.3", "Perk level %d already installed");
         add("chat.woot.perk.fail.4", "Can only add the same perk with level %d");
+        add("chat.woot.squeezer.dump", "Dumping excess");
+        add("chat.woot.squeezer.strict", "Strict internal tanks");
 
         // Gui
         add("gui.woot.anvil.name", "Stygian Anvil");
@@ -249,6 +268,16 @@ public class Languages extends LanguageProvider {
         add("gui.woot.heart.3", "Controllers");
         add("gui.woot.heart.4", "Perks");
         add("gui.woot.heart.5", "Loot Pool");
+        add("gui.woot.oracle.looting.0", "No looting : %.2f%%");
+        add("gui.woot.oracle.looting.1", "Looting I : %.2f%%");
+        add("gui.woot.oracle.looting.2", "Looting II : %.2f%%");
+        add("gui.woot.oracle.looting.3", "Looting III : %.2f%%");
+        add("gui.woot.squeezer.red", "Red %d/%d mb");
+        add("gui.woot.squeezer.yellow", "Yellow %d/%d mb");
+        add("gui.woot.squeezer.blue", "Blue %d/%d mb");
+        add("gui.woot.squeezer.white", "White %d/%d mb");
+        add("gui.woot.squeezer.dump", "Dumping");
+        add("gui.woot.squeezer.strict", "Strict");
 
         // Misc
         add("misc.woot.tier_1", "Zelator [I]");
@@ -256,6 +285,8 @@ public class Languages extends LanguageProvider {
         add("misc.woot.tier_3", "Practicus [III]");
         add("misc.woot.tier_4", "Exemptus [IV]");
         add("misc.woot.tier_5", "Magister [V]");
+        add("misc.woot.unknown_entity", "Unknown entity");
+        add("misc.woot.tagged_mob", "%s [%s]");
 
         // Jei
         add("jei.woot.shard", "Generated from the factory with the Shard perk installed.");
@@ -270,7 +301,28 @@ public class Languages extends LanguageProvider {
         add("jei.woot.mob_shard.2", "Once fully programmed it can be turned into a controller on the anvil.");
 
         // Patchouli
-        add("item.woot.wootguide.name", "Woot Guide");
-        add("item.woot.wootguide.landing", "A guide to the big, bad, magic multiblock Mob Factory. Like Marmite, you will either love it or hate it - you choose.");
+        LanguagesGuide.addTranslations(this);
+
+        // Top
+        add("top.woot.heart.unformed", "Unformed");
+        add("top.woot.heart.tier.label", "Tier");
+        add("top.woot.heart.progress.label", "Progress");
+        add("top.woot.heart.progress.0", "%d%%");
+        add("top.woot.heart.mob.label", "Mob");
+        add("top.woot.heart.perk.label", "Perk");
+        add("top.woot.heart.exotic.label", "Exotic");
+        add("top.woot.controller.mob.label", "Mob");
+        add("top.woot.controller.tier.label", "Required Tier");
+        add("top.woot.squeezer.red.label", "Red Dye");
+        add("top.woot.squeezer.yellow.label", "Yellow Dye");
+        add("top.woot.squeezer.blue.label", "Blue Dye");
+        add("top.woot.squeezer.white.label", "White Dye");
+        add("top.woot.squeezer.dye.0", "%d mb");
+        add("top.woot.squeezer.tanks.label", "Tank Mode");
+        add("top.woot.squeezer.tanks.0", "Dumping");
+        add("top.woot.squeezer.tanks.1", "Strict");
+        add("top.woot.perk.type.label", "Perk");
+        add("top.woot.perk.type.empty", "Empty");
+        add("top.woot.layout.tier.label", "Tier");
     }
 }

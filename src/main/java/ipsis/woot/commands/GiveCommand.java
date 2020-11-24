@@ -3,6 +3,7 @@ package ipsis.woot.commands;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
@@ -29,7 +30,7 @@ public class GiveCommand {
 
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("give")
-                .requires(cs -> cs.hasPermissionLevel(CommandHelper.GIVE_COMMAND_LEVEL))
+                .requires(cs -> cs.hasPermissionLevel(CommandConfiguration.COMMAND_LEVEL_GIVE.get()))
                 .then(
                         Commands.argument("target", EntityArgument.player())
                         .then(

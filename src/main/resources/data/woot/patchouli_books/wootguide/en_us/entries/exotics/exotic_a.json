@@ -1,0 +1,11 @@
+{
+  "name": "guide.woot.exotics.exotic_a.name",
+  "category": "woot:exotics",
+  "icon": "woot:exotic_a",
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.exotics.exotic_a.0"
+    }
+  ]
+}

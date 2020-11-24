@@ -27,6 +27,7 @@ no loot learning can occur.
 ### Changed
 - Moved guide book into datagen
 ### Fixed
+- Fix layout block changing tiers in steps of two
 ### Removed
 
 ## [1.16.3-1.0.1.0] - 2020-11-22

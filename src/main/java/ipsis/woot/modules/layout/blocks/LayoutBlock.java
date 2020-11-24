@@ -53,7 +53,8 @@ public class LayoutBlock extends Block {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
-        if (worldIn.isRemote)
+
+        if (worldIn.isRemote || handIn == Hand.OFF_HAND)
             return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
         if (!player.getHeldItemMainhand().isEmpty())

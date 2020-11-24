@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 //import ipsis.woot.compat.top.WootTopPlugin;
+import ipsis.woot.compat.top.WootTopPlugin;
 import ipsis.woot.config.OverrideLoader;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
@@ -92,7 +93,7 @@ public class ModSetup {
     }
 
     public void setupPlugins() {
-        //WootTopPlugin.init();
+        WootTopPlugin.init();
     }
 
     public Logger getLogger() { return logger; }

@@ -90,13 +90,13 @@ public class WootTopPlugin {
             if (perk == Perk.EMPTY) {
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.perk.type.label"),
+                                StringHelper.translate("top.woot.perk.type.label") + ": ",
                                 StringHelper.translate("top.woot.perk.type.empty")));
 
             } else {
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.perk.type.label"),
+                                StringHelper.translate("top.woot.perk.type.label") + ": ",
                                 StringHelper.translate("item.woot." + perk.getName())));
             }
         }
@@ -109,27 +109,27 @@ public class WootTopPlugin {
             DyeSqueezerTileEntity squeezer = (DyeSqueezerTileEntity) te;
             iProbeInfo.text(
                     CompoundText.createLabelInfo(
-                            StringHelper.translate("top.woot.perk.red.label"),
+                            StringHelper.translate("top.woot.squeezer.red.label") + ": ",
                             StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getRed())));
 
             iProbeInfo.text(
                     CompoundText.createLabelInfo(
-                            StringHelper.translate("top.woot.perk.yellow.label"),
+                            StringHelper.translate("top.woot.squeezer.yellow.label") + ": ",
                             StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getYellow())));
 
             iProbeInfo.text(
                     CompoundText.createLabelInfo(
-                            StringHelper.translate("top.woot.perk.blue.label"),
+                            StringHelper.translate("top.woot.squeezer.blue.label") + ": ",
                             StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getBlue())));
 
             iProbeInfo.text(
                     CompoundText.createLabelInfo(
-                            StringHelper.translate("top.woot.perk.white.label"),
+                            StringHelper.translate("top.woot.squeezer.white.label") + ": ",
                             StringHelper.translateFormat("top.woot.squeezer.dye.0", squeezer.getWhite())));
 
             iProbeInfo.text(
                     CompoundText.createLabelInfo(
-                            StringHelper.translate("top.woot.perk.tanks.label"),
+                            StringHelper.translate("top.woot.squeezer.tanks.label") + ": ",
                             (squeezer.getDumpExcess() ?
                                     StringHelper.translate("top.woot.squeezer.tanks.0") :
                                     StringHelper.translate("top.woot.squeezer.tanks.1"))));
@@ -161,7 +161,7 @@ public class WootTopPlugin {
 
             iProbeInfo.text(
                     CompoundText.createLabelInfo(
-                            StringHelper.translate("top.woot.perk.tier.label"),
+                            StringHelper.translate("top.woot.layout.tier.label") + ": ",
                             StringHelper.translate(tier.getTranslationKey())));
 
             if (playerEntity.isSneaking()) {
@@ -193,17 +193,16 @@ public class WootTopPlugin {
             if (probeMode == ProbeMode.DEBUG) {
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.perk.mob.label"),
+                                StringHelper.translate("top.woot.controller.mob.label") + ": ",
                                 controller.getFakeMob().toString()));
             } else {
-                TranslationTextComponent t = StringHelper.translate(controller.getFakeMob());
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.perk.mob.label"),
-                                t.getUnformattedComponentText()));
+                                StringHelper.translate("top.woot.controller.mob.label") + ": ",
+                                StringHelper.translate(controller.getFakeMob())));
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.perk.tier.label"),
+                                StringHelper.translate("top.woot.controller.tier.label") + ": ",
                                 StringHelper.translate(controller.getTier().getTranslationKey())));
             }
         }
@@ -217,7 +216,7 @@ public class WootTopPlugin {
                 // Add tier
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.perk.tier.label"),
+                                StringHelper.translate("top.woot.heart.tier.label") + ": ",
                                 StringHelper.translate(heart.getTier().getTranslationKey())));
                 // Add perks
                 for (PerkType perkType : heart.getPerks().keySet()) {
@@ -226,28 +225,27 @@ public class WootTopPlugin {
                     if (!itemStack.isEmpty())
                         iProbeInfo.text(
                                 CompoundText.createLabelInfo(
-                                        StringHelper.translate("top.woot.perk.perk.label"),
+                                        StringHelper.translate("top.woot.heart.perk.label") + ": ",
                                         StringHelper.translate(itemStack.getItem().getTranslationKey())));
                 }
                 // Add exotic
                 if (heart.getExotic() != Exotic.NONE) {
                     iProbeInfo.text(
                             CompoundText.createLabelInfo(
-                                    StringHelper.translate("top.woot.perk.exotic.label"),
+                                    StringHelper.translate("top.woot.heart.exotic.label") + ": ",
                                     heart.getExotic().getTooltip().getUnformattedComponentText()));
                 }
                 // Add tank
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.heart.progress.label"),
+                                StringHelper.translate("top.woot.heart.progress.label") + ": ",
                                 StringHelper.translateFormat("top.woot.heart.progress.0", heart.getProgress())));
 
                 for (FakeMob fakeMob : heart.getFormedMobs()) {
-                    TranslationTextComponent t = StringHelper.translate(fakeMob);
                     iProbeInfo.text(
                             CompoundText.createLabelInfo(
-                                    StringHelper.translate("top.woot.heart.mob.label"),
-                                    t.getUnformattedComponentText()));
+                                    StringHelper.translate("top.woot.heart.mob.label") + ": ",
+                                    StringHelper.translate(fakeMob)));
                 }
             } else {
                 iProbeInfo.text(CompoundText.create().error(StringHelper.translate("top.woot.heart.unformed")));

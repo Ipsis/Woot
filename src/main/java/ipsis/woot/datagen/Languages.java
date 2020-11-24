@@ -167,12 +167,15 @@ public class Languages extends LanguageProvider {
         add("item.woot.mob_essence_fluid_bucket", "Purge Fluid Bucket");
 
         // Tooltips
-        add("info.woot.intern", "§aUse on the factory heart to form, build or validate a factory");
-        add("info.woot.intern.0", "§bSneak-right click to change modes");
-        add("info.woot.intern.1", "§bPlace controllers and cells manually");
+        add("info.woot.intern", "Use on the factory heart to form, build or validate a factory");
+        add("info.woot.intern.0", "Sneak-right click to change modes");
+        add("info.woot.intern.1", "Place controllers and cells manually");
         add("info.woot.intern.mode.form", "Form the factory");
         add("info.woot.intern.mode.build", "Build a %s factory");
         add("info.woot.intern.mode.validate", "Validate a %s factory");
+        add("info.woot.intern.other.count", "%2d of %s");
+        add("info.woot.intern.controller.count.0", "%2d of %s");
+        add("info.woot.intern.controller.count.1", "1 to %2d of %s");
         add("info.woot.mobshard.0", "Attack mob with shard to capture");
         add("info.woot.mobshard.1", "Kill mobs to fill the shard");
         add("info.woot.mobshard.2", "Shard must be in your hotbar to fill");
@@ -235,6 +238,8 @@ public class Languages extends LanguageProvider {
         add("chat.woot.perk.fail.2", "Max level perk already installed");
         add("chat.woot.perk.fail.3", "Perk level %d already installed");
         add("chat.woot.perk.fail.4", "Can only add the same perk with level %d");
+        add("chat.woot.squeezer.dump", "Dumping excess");
+        add("chat.woot.squeezer.strict", "Strict internal tanks");
 
         // Gui
         add("gui.woot.anvil.name", "Stygian Anvil");
@@ -249,6 +254,16 @@ public class Languages extends LanguageProvider {
         add("gui.woot.heart.3", "Controllers");
         add("gui.woot.heart.4", "Perks");
         add("gui.woot.heart.5", "Loot Pool");
+        add("gui.woot.oracle.looting.0", "No looting : %.2f%%");
+        add("gui.woot.oracle.looting.1", "Looting I : %.2f%%");
+        add("gui.woot.oracle.looting.2", "Looting II : %.2f%%");
+        add("gui.woot.oracle.looting.3", "Looting III : %.2f%%");
+        add("gui.woot.squeezer.red", "Red %d/%d mb");
+        add("gui.woot.squeezer.yellow", "Yellow %d/%d mb");
+        add("gui.woot.squeezer.blue", "Blue %d/%d mb");
+        add("gui.woot.squeezer.white", "White %d/%d mb");
+        add("gui.woot.squeezer.dump", "Dumping");
+        add("gui.woot.squeezer.strict", "Strict");
 
         // Misc
         add("misc.woot.tier_1", "Zelator [I]");

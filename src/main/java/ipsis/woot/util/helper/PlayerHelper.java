@@ -8,16 +8,6 @@ import java.util.List;
 
 public class PlayerHelper {
 
-    public static void sendActionBarMessage(PlayerEntity entityPlayer, String translatedText) {
-        if (entityPlayer != null && translatedText != null)
-            entityPlayer.sendStatusMessage(new StringTextComponent(translatedText), true);
-    }
-
-    public static void sendChatMessage(PlayerEntity entityPlayer, String translatedText) {
-        if (entityPlayer != null && translatedText != null)
-            entityPlayer.sendStatusMessage(new StringTextComponent(translatedText), false);
-    }
-
    public  static boolean playerHasFactoryComponent(PlayerEntity playerEntity, List<ItemStack> validStacks) {
         if (playerEntity.isCreative())
             return true;

@@ -27,6 +27,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -84,8 +85,9 @@ public class DyeSqueezerBlock extends Block implements WootDebug {
 
         if (heldItem.getItem() == Items.GLOWSTONE_DUST) {
             squeezer.toggleDumpExcess();
-            PlayerHelper.sendActionBarMessage(playerEntity,
-                    squeezer.getDumpExcess() ? "Dumping excess" : "Strict internal tanks");
+            playerEntity.sendStatusMessage(
+                    squeezer.getDumpExcess() ? new TranslationTextComponent("chat.woot.squeezer.dump") :
+                            new TranslationTextComponent("chat.woot.squeezer.strict"), true);
         } else {
             // open the gui
             if (squeezer instanceof INamedContainerProvider)

@@ -23,8 +23,10 @@ public class IndustrialForegoingPlugin {
             return FluidStack.EMPTY;
 
         int health = SpawnController.get().getMobHealth(fakeMob, world);
-        // TODO needs to check for Animal - cache here the results
-        return new FluidStack(LIQUID_MEAT_FLUID, health * 20);
+        if (!SpawnController.get().isAnimal(fakeMob, world))
+            health *= 20;
+
+        return new FluidStack(LIQUID_MEAT_FLUID, health);
     }
 
     public static FluidStack getPinkSlimeAmount(FakeMob fakeMob, World world) {
@@ -32,8 +34,10 @@ public class IndustrialForegoingPlugin {
             return FluidStack.EMPTY;
 
         int health = SpawnController.get().getMobHealth(fakeMob, world);
-        // TODO needs to check for Animal - cache here the results
-        return new FluidStack(PINK_SLIME_FLUID, health * 20);
+        if (!SpawnController.get().isAnimal(fakeMob, world))
+            health *= 20;
+
+        return new FluidStack(PINK_SLIME_FLUID, health);
     }
 
     public static FluidStack getEssenceAmount(FakeMob fakeMob, World world) {

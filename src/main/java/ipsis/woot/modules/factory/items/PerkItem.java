@@ -36,6 +36,12 @@ public class PerkItem extends Item {
     public static final String HEADLESS_1_REGNAME = "headless_1";
     public static final String HEADLESS_2_REGNAME = "headless_2";
     public static final String HEADLESS_3_REGNAME = "headless_3";
+    public static final String SLAUGHTER_1_REGNAME = "slaughter_1";
+    public static final String SLAUGHTER_2_REGNAME = "slaughter_2";
+    public static final String SLAUGHTER_3_REGNAME = "slaughter_3";
+    public static final String CRUSHER_1_REGNAME = "crusher_1";
+    public static final String CRUSHER_2_REGNAME = "crusher_2";
+    public static final String CRUSHER_3_REGNAME = "crusher_3";
 
     final Perk perk;
 
@@ -90,6 +96,18 @@ public class PerkItem extends Item {
             return new ItemStack(FactorySetup.HEADLESS_2_ITEM.get());
         else if (perk == Perk.HEADLESS_3)
             return new ItemStack(FactorySetup.HEADLESS_3_ITEM.get());
+        else if (perk == Perk.SLAUGHTER_1)
+            return new ItemStack(FactorySetup.SLAUGHTER_1_ITEM.get());
+        else if (perk == Perk.SLAUGHTER_2)
+            return new ItemStack(FactorySetup.SLAUGHTER_2_ITEM.get());
+        else if (perk == Perk.SLAUGHTER_3)
+            return new ItemStack(FactorySetup.SLAUGHTER_3_ITEM.get());
+        else if (perk == Perk.CRUSHER_1)
+            return new ItemStack(FactorySetup.CRUSHER_1_ITEM.get());
+        else if (perk == Perk.CRUSHER_2)
+            return new ItemStack(FactorySetup.CRUSHER_2_ITEM.get());
+        else if (perk == Perk.CRUSHER_3)
+            return new ItemStack(FactorySetup.CRUSHER_3_ITEM.get());
 
         return ItemStack.EMPTY;
     }

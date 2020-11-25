@@ -298,6 +298,20 @@ public class FactorySetup {
     public static final RegistryObject<PerkItem> HEADLESS_3_ITEM = ITEMS.register(
             PerkItem.HEADLESS_3_REGNAME, () -> new PerkItem(Perk.HEADLESS_3));
 
+    public static final RegistryObject<PerkItem> SLAUGHTER_1_ITEM = ITEMS.register(
+            PerkItem.SLAUGHTER_1_REGNAME, () -> new PerkItem(Perk.SLAUGHTER_1));
+    public static final RegistryObject<PerkItem> SLAUGHTER_2_ITEM = ITEMS.register(
+            PerkItem.SLAUGHTER_2_REGNAME, () -> new PerkItem(Perk.SLAUGHTER_2));
+    public static final RegistryObject<PerkItem> SLAUGHTER_3_ITEM = ITEMS.register(
+            PerkItem.SLAUGHTER_3_REGNAME, () -> new PerkItem(Perk.SLAUGHTER_3));
+
+    public static final RegistryObject<PerkItem> CRUSHER_1_ITEM = ITEMS.register(
+            PerkItem.CRUSHER_1_REGNAME, () -> new PerkItem(Perk.CRUSHER_1));
+    public static final RegistryObject<PerkItem> CRUSHER_2_ITEM = ITEMS.register(
+            PerkItem.CRUSHER_2_REGNAME, () -> new PerkItem(Perk.CRUSHER_2));
+    public static final RegistryObject<PerkItem> CRUSHER_3_ITEM = ITEMS.register(
+            PerkItem.CRUSHER_3_REGNAME, () -> new PerkItem(Perk.CRUSHER_3));
+
     public static final RegistryObject<MobShardItem> MOB_SHARD_ITEM = ITEMS.register(
             "mobshard", () -> new MobShardItem());
 

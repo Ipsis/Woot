@@ -7,5 +7,7 @@ public enum PerkType {
     RATE,
     XP,
     TIER_SHARD,
-    HEADLESS
+    HEADLESS,
+    SLAUGHTER, /* Industrial Foregoing */
+    CRUSHER /* Industrial Foregoing */
 }

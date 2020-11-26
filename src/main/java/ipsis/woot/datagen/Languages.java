@@ -80,12 +80,12 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.HEADLESS_1_ITEM.get(), "Head Start I Perk");
         add(FactorySetup.HEADLESS_2_ITEM.get(), "Head Start II Perk");
         add(FactorySetup.HEADLESS_3_ITEM.get(), "Head Start III Perk");
-        add(FactorySetup.SLAUGHTER_1_ITEM.get(), "Slaughter I Perk");
-        add(FactorySetup.SLAUGHTER_2_ITEM.get(), "Slaughter II Perk");
-        add(FactorySetup.SLAUGHTER_3_ITEM.get(), "Slaughter III Perk");
-        add(FactorySetup.CRUSHER_1_ITEM.get(), "Crusher I Perk");
-        add(FactorySetup.CRUSHER_2_ITEM.get(), "Crusher II Perk");
-        add(FactorySetup.CRUSHER_3_ITEM.get(), "Crusher III Perk");
+        add(FactorySetup.SLAUGHTER_1_ITEM.get(), "Tumbling Doll Of Flesh I Perk");
+        add(FactorySetup.SLAUGHTER_2_ITEM.get(), "Tumbling Doll Of Flesh II Perk");
+        add(FactorySetup.SLAUGHTER_3_ITEM.get(), "Tumbling Doll Of Flesh III Perk");
+        add(FactorySetup.CRUSHER_1_ITEM.get(), "Pressing Engagement I Perk");
+        add(FactorySetup.CRUSHER_2_ITEM.get(), "Pressing Engagement II Perk");
+        add(FactorySetup.CRUSHER_3_ITEM.get(), "Pressing Engagement III Perk");
         add(FactorySetup.MOB_SHARD_ITEM.get(), "Mob Shard");
         add(FactorySetup.XP_SHARD_ITEM.get(), "Experience Shard");
         add(FactorySetup.XP_SPLINTER_ITEM.get(), "Experience Splinter");

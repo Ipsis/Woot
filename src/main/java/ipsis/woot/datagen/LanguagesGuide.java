@@ -396,6 +396,17 @@ public class LanguagesGuide {
             final String PERKS_TAG = GUIDE_TAG + "perks.";
             String[][] text = {
                 // Applying Perks
+                // Crusher
+                { PERKS_TAG + "crusher.name", "Pressing Engagement" },
+                { PERKS_TAG + "crusher.0",
+                        "This perk generates Industrial Foregoing essence." +
+                                "Higher levels of this perk will increase the generated amount of fluid."
+                },
+                { PERKS_TAG + "crusher.1",
+                        "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +
+                                "$(li)Tier II - " + FactoryConfiguration.CRUSHER_2.get() + "%%" +
+                                "$(li)Tier III - " + FactoryConfiguration.CRUSHER_3.get() + "%%"
+                },
                 // Efficiency
                 { PERKS_TAG + "efficiency.name", "Stoke The Boiler" },
                 { PERKS_TAG + "efficiency.0",
@@ -447,6 +458,17 @@ public class LanguagesGuide {
                     "$(li)Tier I - " + FactoryConfiguration.RATE_1.get() + "%% decrease" +
                     "$(li)Tier II - " + FactoryConfiguration.RATE_2.get() + "%% decrease" +
                     "$(li)Tier III - " + FactoryConfiguration.RATE_3.get() + "%% decrease"
+                },
+                // Slaugher
+                { PERKS_TAG + "slaughter.name", "Tumbling Doll Of Flesh" },
+                { PERKS_TAG + "slaughter.0",
+                        "This perk generates Industrial Foregoing pink slime and liquid meat." +
+                                "Higher levels of this perk will increase the generated amount of the fluids."
+                },
+                { PERKS_TAG + "slaughter.1",
+                        "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +
+                                "$(li)Tier II - " + FactoryConfiguration.CRUSHER_2.get() + "%%" +
+                                "$(li)Tier III - " + FactoryConfiguration.CRUSHER_3.get() + "%%"
                 },
                 // Tier Shard
                 { PERKS_TAG + "tier_shard.name", "Scale The Summit" },

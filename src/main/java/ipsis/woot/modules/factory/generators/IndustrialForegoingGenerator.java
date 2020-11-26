@@ -19,10 +19,10 @@ public class IndustrialForegoingGenerator {
     public static GeneratedFluids getFluids(FormedSetup formedSetup, World world) {
         GeneratedFluids generatedFluids = new GeneratedFluids();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
-            int mobCount = formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
+            int mobCount = formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS), formedSetup.hasMassExotic());
             FluidStack fluidStack = IndustrialForegoingPlugin.getLiquidMeatAmount(fakeMob, world);
-            fluidStack.setAmount(fluidStack.getAmount() * mobCount);
             if (!fluidStack.isEmpty()) {
+                fluidStack.setAmount(fluidStack.getAmount() * mobCount);
                 if (generatedFluids.meat.isEmpty())
                     generatedFluids.meat = fluidStack.copy();
                 else
@@ -30,8 +30,8 @@ public class IndustrialForegoingGenerator {
             }
 
             fluidStack = IndustrialForegoingPlugin.getPinkSlimeAmount(fakeMob, world);
-            fluidStack.setAmount(fluidStack.getAmount() * mobCount);
             if (!fluidStack.isEmpty()) {
+                fluidStack.setAmount(fluidStack.getAmount() * mobCount);
                 if (generatedFluids.pink.isEmpty())
                     generatedFluids.pink = fluidStack.copy();
                 else
@@ -39,8 +39,8 @@ public class IndustrialForegoingGenerator {
             }
 
             fluidStack = IndustrialForegoingPlugin.getEssenceAmount(fakeMob, world);
-            fluidStack.setAmount(fluidStack.getAmount() * mobCount);
             if (!fluidStack.isEmpty()) {
+                fluidStack.setAmount(fluidStack.getAmount() * mobCount);
                 if (generatedFluids.essence.isEmpty())
                     generatedFluids.essence = fluidStack.copy();
                 else

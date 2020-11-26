@@ -3,6 +3,7 @@ package ipsis.woot.modules.factory.generators;
 import ipsis.woot.compat.industforegoing.IndustrialForegoingPlugin;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.util.FakeMob;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -41,6 +42,7 @@ public class IndustrialForegoingGenerator {
                     generatedFluids.essence.setAmount(generatedFluids.essence.getAmount() + fluidStack.getAmount());
             }
         }
+
         return generatedFluids;
     }
 }

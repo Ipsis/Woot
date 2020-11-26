@@ -2,6 +2,7 @@ package ipsis.woot.modules.factory.generators;
 
 import ipsis.woot.compat.industforegoing.IndustrialForegoingPlugin;
 import ipsis.woot.modules.factory.FormedSetup;
+import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.world.World;
@@ -18,7 +19,9 @@ public class IndustrialForegoingGenerator {
     public static GeneratedFluids getFluids(FormedSetup formedSetup, World world) {
         GeneratedFluids generatedFluids = new GeneratedFluids();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
+            int mobCount = formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
             FluidStack fluidStack = IndustrialForegoingPlugin.getLiquidMeatAmount(fakeMob, world);
+            fluidStack.setAmount(fluidStack.getAmount() * mobCount);
             if (!fluidStack.isEmpty()) {
                 if (generatedFluids.meat.isEmpty())
                     generatedFluids.meat = fluidStack.copy();
@@ -27,6 +30,7 @@ public class IndustrialForegoingGenerator {
             }
 
             fluidStack = IndustrialForegoingPlugin.getPinkSlimeAmount(fakeMob, world);
+            fluidStack.setAmount(fluidStack.getAmount() * mobCount);
             if (!fluidStack.isEmpty()) {
                 if (generatedFluids.pink.isEmpty())
                     generatedFluids.pink = fluidStack.copy();
@@ -35,6 +39,7 @@ public class IndustrialForegoingGenerator {
             }
 
             fluidStack = IndustrialForegoingPlugin.getEssenceAmount(fakeMob, world);
+            fluidStack.setAmount(fluidStack.getAmount() * mobCount);
             if (!fluidStack.isEmpty()) {
                 if (generatedFluids.essence.isEmpty())
                     generatedFluids.essence = fluidStack.copy();

@@ -93,7 +93,8 @@ public class LanguagesGuide {
                 { BASICS_TAG + "tiers.0",
                     "The factory comes in various tiers, with higher tiers support higher value mobs and higher level perks. " +
                     "Each factory tier builds upon the structure of the previous tier. " +
-                    "Lower value mobs can be used in higher tier factories."
+                    "Lower value mobs can be used in higher tier factories. " +
+                    "You use Scale The Summit perk to get higher tier shards."
                 },
                 { BASICS_TAG + "tiers.1",
                     "Every factory requires the following$(br2)" + "" +
@@ -204,7 +205,7 @@ public class LanguagesGuide {
                     "$(li)Mobs have a minimum tier of factory to spawn" +
                     "$(li)Must apply all the previous tiers of a perk to use higher tier ones" +
                     "$(li)Place chests beside the $(item)Loot Exporter$(0)" +
-                    "$(li)Sheep controller will generate all wool colours"
+                    "$(li)Scale The Summit perk generates shards for higher tier blocks"
                 }
             };
 

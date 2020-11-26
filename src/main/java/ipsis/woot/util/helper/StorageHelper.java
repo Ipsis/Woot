@@ -1,5 +1,6 @@
 package ipsis.woot.util.helper;
 
+import ipsis.woot.Woot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -29,6 +30,64 @@ public class StorageHelper {
                     items.set(i, remainder);
                 }
             });
+        }
+    }
+
+    public static void insertFluids(List<FluidStack> fluids, List<LazyOptional<IFluidHandler>> hdlrs) {
+
+        if (fluids.isEmpty() || hdlrs.isEmpty())
+            return;
+
+        // Try to fill non-empty tanks
+        for (LazyOptional<IFluidHandler> hdlr : hdlrs) {
+            hdlr.ifPresent(h -> {
+                int tanks = h.getTanks();
+                if (tanks > 0) {
+                    for (int tank = 0; tank < tanks; tank++) {
+                        FluidStack fluidStack = h.getFluidInTank(tank);
+                        if (fluidStack != null && !fluidStack.isEmpty()) {
+                            for (FluidStack f : fluids) {
+                                if (!f.isEmpty() && fluidStack.isFluidEqual(f)) {
+                                    int filled = h.fill(f, IFluidHandler.FluidAction.EXECUTE);
+                                    Woot.setup.getLogger().debug("insertFluids: {} ----> topup {} {}", tank, f.getTranslationKey(), filled);
+                                    if (filled > 0)
+                                        f.setAmount(f.getAmount() - filled);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        boolean haveFluids = false;
+        for (FluidStack f : fluids) {
+            if (!f.isEmpty())
+                haveFluids = true;
+        }
+
+        if (haveFluids) {
+            // Try to fill empty tanks
+            for (LazyOptional<IFluidHandler> hdlr : hdlrs) {
+                hdlr.ifPresent(h -> {
+                    int tanks = h.getTanks();
+                    if (tanks > 0) {
+                        for (int tank = 0; tank < tanks; tank++) {
+                            FluidStack fluidStack = h.getFluidInTank(tank);
+                            if (fluidStack.isEmpty()) {
+                                for (FluidStack f : fluids) {
+                                    if (!f.isEmpty()) {
+                                        int filled = h.fill(f, IFluidHandler.FluidAction.EXECUTE);
+                                        Woot.setup.getLogger().debug("insertFluids: {} ----> new fill {} {}", tank, f.getTranslationKey(), filled);
+                                        if (filled > 0)
+                                            f.setAmount(f.getAmount() - filled);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 

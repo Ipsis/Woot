@@ -76,6 +76,12 @@ public class Items extends BaseItemModelProvider {
         itemGenerated(FactorySetup.HEADLESS_1_ITEM.get(), "item/headless_1");
         itemGenerated(FactorySetup.HEADLESS_2_ITEM.get(), "item/headless_2");
         itemGenerated(FactorySetup.HEADLESS_3_ITEM.get(), "item/headless_3");
+        itemGenerated(FactorySetup.SLAUGHTER_1_ITEM.get(), "item/slaughter_1");
+        itemGenerated(FactorySetup.SLAUGHTER_2_ITEM.get(), "item/slaughter_2");
+        itemGenerated(FactorySetup.SLAUGHTER_3_ITEM.get(), "item/slaughter_3");
+        itemGenerated(FactorySetup.CRUSHER_1_ITEM.get(), "item/crusher_1");
+        itemGenerated(FactorySetup.CRUSHER_2_ITEM.get(), "item/crusher_2");
+        itemGenerated(FactorySetup.CRUSHER_3_ITEM.get(), "item/crusher_3");
         itemGenerated(FactorySetup.MOB_SHARD_ITEM.get(), "item/mobshard");
         itemGenerated(FactorySetup.XP_SHARD_ITEM.get(), "item/xpshard");
         itemGenerated(FactorySetup.XP_SPLINTER_ITEM.get(), "item/xpsplinter");
@@ -140,6 +146,7 @@ public class Items extends BaseItemModelProvider {
         itemHandheld(DebugSetup.DEBUG_ITEM.get(), "item/debug");
         parentedBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "block/creative_conatus");
         parentedBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "block/creative_power");
+        parentedBlock(DebugSetup.DEBUG_TANK_BLOCK.get(), "block/debug_tank");
     }
 
     @Override

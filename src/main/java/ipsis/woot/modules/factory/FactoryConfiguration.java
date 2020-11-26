@@ -56,6 +56,12 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue HEADLESS_1;
     public static ForgeConfigSpec.IntValue HEADLESS_2;
     public static ForgeConfigSpec.IntValue HEADLESS_3;
+    public static ForgeConfigSpec.IntValue SLAUGHTER_1;
+    public static ForgeConfigSpec.IntValue SLAUGHTER_2;
+    public static ForgeConfigSpec.IntValue SLAUGHTER_3;
+    public static ForgeConfigSpec.IntValue CRUSHER_1;
+    public static ForgeConfigSpec.IntValue CRUSHER_2;
+    public static ForgeConfigSpec.IntValue CRUSHER_3;
     public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
@@ -333,6 +339,40 @@ public class FactoryConfiguration {
                             .comment("Percentage chance to drop a skull for headless 3 perks")
                             .defineInRange(ConfigPath.Factory.HEADLESS_3_TAG,
                                     Factory.HEADLESS_3_DEF, 0, 1000);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_SLAUGHTER);
+                {
+                    SLAUGHTER_1 = COMMON_BUILDER
+                            .comment("Percentage of liquid meat and pink slime to drop for slaughter 1 perks")
+                            .defineInRange(ConfigPath.Factory.SLAUGHTER_1_TAG,
+                                    Factory.SLAUGHTER_1_DEF, 0, 1000);
+                    SLAUGHTER_2 = COMMON_BUILDER
+                            .comment("Percentage of liquid meat and pink slime to drop for slaughter 2 perks")
+                            .defineInRange(ConfigPath.Factory.SLAUGHTER_2_TAG,
+                                    Factory.SLAUGHTER_2_DEF, 0, 1000);
+                    SLAUGHTER_3 = COMMON_BUILDER
+                            .comment("Percentage of liquid meat and pink slime to drop for slaughter 3 perks")
+                            .defineInRange(ConfigPath.Factory.SLAUGHTER_3_TAG,
+                                    Factory.SLAUGHTER_3_DEF, 0, 1000);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_CRUSHER);
+                {
+                    CRUSHER_1 = COMMON_BUILDER
+                            .comment("Percentage of essence to drop for crusher 1 perks")
+                            .defineInRange(ConfigPath.Factory.CRUSHER_1_TAG,
+                                    Factory.CRUSHER_1_DEF, 0, 1000);
+                    CRUSHER_2 = COMMON_BUILDER
+                            .comment("Percentage of essence to drop for crusher 2 perks")
+                            .defineInRange(ConfigPath.Factory.CRUSHER_2_TAG,
+                                    Factory.CRUSHER_2_DEF, 0, 1000);
+                    CRUSHER_3 = COMMON_BUILDER
+                            .comment("Percentage of essence to drop for crusher 3 perks")
+                            .defineInRange(ConfigPath.Factory.CRUSHER_3_TAG,
+                                    Factory.CRUSHER_3_DEF, 0, 1000);
                 }
                 COMMON_BUILDER.pop();
 

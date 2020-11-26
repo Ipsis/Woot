@@ -105,6 +105,12 @@ public final class ConfigDefaults {
         public static final int HEADLESS_1_DEF = 25;
         public static final int HEADLESS_2_DEF = 50;
         public static final int HEADLESS_3_DEF = 80;
+        public static final int SLAUGHTER_1_DEF = 100;
+        public static final int SLAUGHTER_2_DEF = 120;
+        public static final int SLAUGHTER_3_DEF = 140;
+        public static final int CRUSHER_1_DEF = 100;
+        public static final int CRUSHER_2_DEF = 120;
+        public static final int CRUSHER_3_DEF = 140;
 
         public static final float EXOTIC_A_DEF = 85.0F;
         public static final float EXOTIC_B_DEF = 85.0F;

@@ -134,6 +134,8 @@ public class ConfigPath {
         public static final String CATEGORY_RATE = "rate";
         public static final String CATEGORY_TIER_SHARD = "tierShard";
         public static final String CATEGORY_HEADLESS = "headless";
+        public static final String CATEGORY_SLAUGHTER = "slaughter";
+        public static final String CATEGORY_CRUSHER = "crusher";
         public static final String CATEGORY_XP = "xp";
         public static final String CATEGORY_EXOTIC = "exotic";
 
@@ -190,6 +192,12 @@ public class ConfigPath {
         public static final String HEADLESS_1_TAG = "l1HeadlessChance";
         public static final String HEADLESS_2_TAG = "l2HeadlessChance";
         public static final String HEADLESS_3_TAG = "l3HeadlessChance";
+        public static final String SLAUGHTER_1_TAG = "l1SlaughterAmount";
+        public static final String SLAUGHTER_2_TAG = "l2SlaughterAmount";
+        public static final String SLAUGHTER_3_TAG = "l3SlaughterAmount";
+        public static final String CRUSHER_1_TAG = "l1CrusherAmount";
+        public static final String CRUSHER_2_TAG = "l2CrusherAmount";
+        public static final String CRUSHER_3_TAG = "l3CrusherAmount";
 
     }
 }

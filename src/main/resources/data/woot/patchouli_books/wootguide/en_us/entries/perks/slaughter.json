@@ -1,0 +1,24 @@
+{
+  "name": "guide.woot.perks.slaughter.name",
+  "category": "woot:perks",
+  "icon": "woot:slaughter_1",
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.perks.slaughter.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.perks.slaughter.1"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:slaughter_1",
+      "recipe2": "woot:slaughter_2"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:slaughter_3"
+    }
+  ]
+}

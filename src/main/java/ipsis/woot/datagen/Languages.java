@@ -34,6 +34,7 @@ public class Languages extends LanguageProvider {
         // Debug
         add(DebugSetup.CREATIVE_POWER_BLOCK.get(), "Creative Power (Dev)");
         add(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "Creative Conatus (Dev)");
+        add(DebugSetup.DEBUG_TANK_BLOCK.get(), "Debug Tank (Dev)");
         add(DebugSetup.DEBUG_ITEM.get(), "Debug Tool (Dev)");
 
         // Factory
@@ -79,6 +80,12 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.HEADLESS_1_ITEM.get(), "Head Start I Perk");
         add(FactorySetup.HEADLESS_2_ITEM.get(), "Head Start II Perk");
         add(FactorySetup.HEADLESS_3_ITEM.get(), "Head Start III Perk");
+        add(FactorySetup.SLAUGHTER_1_ITEM.get(), "Tumbling Doll Of Flesh I Perk");
+        add(FactorySetup.SLAUGHTER_2_ITEM.get(), "Tumbling Doll Of Flesh II Perk");
+        add(FactorySetup.SLAUGHTER_3_ITEM.get(), "Tumbling Doll Of Flesh III Perk");
+        add(FactorySetup.CRUSHER_1_ITEM.get(), "Pressing Engagement I Perk");
+        add(FactorySetup.CRUSHER_2_ITEM.get(), "Pressing Engagement II Perk");
+        add(FactorySetup.CRUSHER_3_ITEM.get(), "Pressing Engagement III Perk");
         add(FactorySetup.MOB_SHARD_ITEM.get(), "Mob Shard");
         add(FactorySetup.XP_SHARD_ITEM.get(), "Experience Shard");
         add(FactorySetup.XP_SPLINTER_ITEM.get(), "Experience Splinter");
@@ -212,6 +219,10 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.rate.0", "Reduce spawn time by %d%%");
         add("info.woot.perk.headless", "Generate skulls");
         add("info.woot.perk.headless.0", "Chance to drop a skull %d%%");
+        add("info.woot.perk.slaughter", "Generate Industrial Foregoing pink slime and liquid meat");
+        add("info.woot.perk.slaughter.0", "Produce %d%% of liquid");
+        add("info.woot.perk.crusher", "Generate Industrial Foregoing essence");
+        add("info.woot.perk.crusher.0", "Produce %d%% of liquid");
         add("info.woot.perk.tier_shard", "Generate essence to upgrade the factory");
         add("info.woot.perk.tier_shard.0", "%d chances to drop essence");
         add("info.woot.perk.tier_shard.1", "- %s drop chance %.02f%%");

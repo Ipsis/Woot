@@ -6,6 +6,7 @@ import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import net.minecraft.entity.*;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
@@ -74,9 +75,6 @@ public class SpawnController {
         return entity;
     }
 
-    Map<String, Integer> mobHealthCache = new HashMap<>();
-    Map<String, Integer> mobXpCache = new HashMap<>();
-
     private static final int UNKNOWN_MOB_HEALTH = 100;
     public int getMobHealth(@Nonnull FakeMob fakeMob, @Nonnull World world) {
         if (world.isRemote)
@@ -94,8 +92,7 @@ public class SpawnController {
         if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.HEALTH))
             return Config.OVERRIDE.getInteger(fakeMob, ConfigOverride.OverrideKey.HEALTH);
 
-        String key = fakeMob.toString();
-        return mobHealthCache.get(key);
+        return mobCacheEntryHashMap.get(fakeMob.toString()).health;
     }
 
     private static final int UNKNOWN_MOB_EXP = 1;
@@ -115,12 +112,21 @@ public class SpawnController {
         if (Config.OVERRIDE.hasOverride(fakeMob, ConfigOverride.OverrideKey.XP))
             return Config.OVERRIDE.getInteger(fakeMob, ConfigOverride.OverrideKey.XP);
 
-        String key = fakeMob.toString();
-        return mobXpCache.get(key);
+        return mobCacheEntryHashMap.get(fakeMob.toString()).xp;
+    }
+
+    public boolean isAnimal(@Nonnull FakeMob fakeMob, @Nonnull World world) {
+
+        if (!isCached(fakeMob)) {
+            if (!updateCache(fakeMob, world))
+                return false;
+        }
+
+        return mobCacheEntryHashMap.get(fakeMob.toString()).isAnimal;
     }
 
     private boolean isCached(@Nonnull FakeMob fakeMob) {
-        return mobHealthCache.containsKey(fakeMob.toString());
+        return mobCacheEntryHashMap.containsKey(fakeMob.toString());
     }
 
     private boolean updateCache(@Nonnull FakeMob fakeMob, @Nonnull World world) {
@@ -142,14 +148,30 @@ public class SpawnController {
             Woot.setup.getLogger().debug("Reflection of getExperiencePoints failed {}", e);
         }
 
-        String key = fakeMob.toString();
-        mobHealthCache.put(key, health);
-        mobXpCache.put(key, xp);
+        addToCache(fakeMob, entity instanceof AnimalEntity, xp, health);
         return false;
     }
+
 
     public boolean isLivingEntity(FakeMob fakeMob, World world) {
         Entity entity = createEntity(fakeMob, world, new BlockPos(0, 0, 0));
         return entity != null && entity instanceof MobEntity;
+    }
+
+    private static Map<String, MobCacheEntry> mobCacheEntryHashMap = new HashMap<>();
+    private void addToCache(FakeMob fakeMob, boolean isAnimal, int xp, int health) {
+        mobCacheEntryHashMap.put(fakeMob.toString(), new MobCacheEntry(isAnimal, xp, health));
+    }
+
+    class MobCacheEntry {
+        public boolean isAnimal = false;
+        public int xp = 1;
+        public int health = 1;
+
+        public MobCacheEntry(boolean isAnimal, int xp, int health) {
+            this.isAnimal = isAnimal;
+            this.xp = xp;
+            this.health = health;
+        }
     }
 }

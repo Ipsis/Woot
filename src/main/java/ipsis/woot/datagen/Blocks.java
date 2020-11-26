@@ -400,6 +400,49 @@ public class Blocks extends BaseBlockStateProvider {
                 .with(UpgradeBlock.UPGRADE, Perk.HEADLESS_3)
                 .modelForState().modelFile(upgrade3).addModel();
 
+        upgrade1 = models().cubeAll("factory_upgrade_slaughter_1", modLoc("item/slaughter_1"));
+        upgrade2 = models().cubeAll("factory_upgrade_slaughter_2", modLoc("item/slaughter_2"));
+        upgrade3 = models().cubeAll("factory_upgrade_slaughter_3", modLoc("item/slaughter_3"));
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_2)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_2)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_3)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_3)
+                .modelForState().modelFile(upgrade1).addModel();
+
+        upgrade1 = models().cubeAll("factory_upgrade_crusher_1", modLoc("item/crusher_1"));
+        upgrade2 = models().cubeAll("factory_upgrade_crusher_2", modLoc("item/crusher_2"));
+        upgrade3 = models().cubeAll("factory_upgrade_crusher_3", modLoc("item/crusher_3"));
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_2)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_2)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_3)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_3)
+                .modelForState().modelFile(upgrade1).addModel();
 
         machineBlock(FactorySetup.HEART_BLOCK.get(), "heart", "block/heart");
         machineBlock(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "fluidconvertor", "block/fluidconvertor");
@@ -410,6 +453,7 @@ public class Blocks extends BaseBlockStateProvider {
         machineBlock(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get(), "enchsqueezer", "block/enchsqueezer");
         singleTextureBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "creative_conatus", "block/creative_conatus");
         singleTextureBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "creative_power", "block/creative_power");
+        singleTextureBlock(DebugSetup.DEBUG_TANK_BLOCK.get(), "debug_tank", "block/debug_tank");
         singleTextureBlock(FactorySetup.EXOTIC_A_BLOCK.get(), "exotic_a", "block/exotic_a");
         singleTextureBlock(FactorySetup.EXOTIC_B_BLOCK.get(), "exotic_b", "block/exotic_b");
         singleTextureBlock(FactorySetup.EXOTIC_C_BLOCK.get(), "exotic_c", "block/exotic_c");

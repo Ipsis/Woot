@@ -1,0 +1,24 @@
+{
+  "name": "guide.woot.perks.crusher.name",
+  "category": "woot:perks",
+  "icon": "woot:crusher_1",
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.perks.crusher.0"
+    },
+    {
+      "type": "text",
+      "text": "guide.woot.perks.crusher.1"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:crusher_1",
+      "recipe2": "woot:crusher_2"
+    },
+    {
+      "type": "crafting",
+      "recipe": "woot:crusher_3"
+    }
+  ]
+}

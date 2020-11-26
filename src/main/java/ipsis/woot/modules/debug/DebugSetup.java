@@ -1,11 +1,8 @@
 package ipsis.woot.modules.debug;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.debug.blocks.CreativePowerBlock;
-import ipsis.woot.modules.debug.blocks.CreativePowerTileEntity;
+import ipsis.woot.modules.debug.blocks.*;
 import ipsis.woot.modules.debug.items.DebugItem;
-import ipsis.woot.modules.factory.blocks.TickConverterBlock;
-import ipsis.woot.modules.factory.blocks.TickConverterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -50,4 +47,14 @@ public class DebugSetup {
     public static final RegistryObject<TileEntityType<?>> CREATIVE_CONATUS_BLOCK_TILE = TILES.register(
             CREATIVE_CONATUS_TAG, () ->
                     TileEntityType.Builder.create(TickConverterTileEntity::new, CREATIVE_CONATUS_BLOCK.get()).build(null));
+
+    public static final String DEBUG_TANK_TAG = "debug_tank";
+    public static final RegistryObject<DebugTankBlock> DEBUG_TANK_BLOCK = BLOCKS.register(
+            DEBUG_TANK_TAG, () -> new DebugTankBlock());
+    public static final RegistryObject<Item> DEBUG_TANK_BLOCK_ITEM = ITEMS.register(
+            DEBUG_TANK_TAG, () ->
+                    new BlockItem(DEBUG_TANK_BLOCK.get(), Woot.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> DEBUG_TANK_BLOCK_TILE = TILES.register(
+            DEBUG_TANK_TAG, () ->
+                    TileEntityType.Builder.create(DebugTankTileEntity::new, DEBUG_TANK_BLOCK.get()).build(null));
 }

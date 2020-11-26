@@ -17,6 +17,8 @@ import ipsis.woot.util.helper.StorageHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,6 +47,7 @@ public class LootGeneration {
          * Get the output options
          */
         List<LazyOptional<IItemHandler>> itemHandlers = setup.getExportHandlers();
+        List<LazyOptional<IFluidHandler>> fluidHandlers = setup.getExportFluidHandlers();
 
         int looting = setup.getLootingLevel();
 
@@ -121,5 +124,22 @@ public class LootGeneration {
             setup.getAllMobs().forEach(m -> skulls.add(SKULL_GENERATOR.getSkullDrop(m, setup.getAllMobParams().get(m).getPerkHeadlessValue())));
             StorageHelper.insertItems(skulls, itemHandlers);
         }
+
+        // Industrial Foregoing
+        if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) || setup.getAllPerks().containsKey(PerkType.CRUSHER)) {
+            IndustrialForegoingGenerator.GeneratedFluids fluids = IndustrialForegoingGenerator.getFluids(setup, setup.getWorld());
+            if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) && !fluids.meat.isEmpty() && !fluids.pink.isEmpty()) {
+                List<FluidStack> slaughterFluids = new ArrayList<>();
+                slaughterFluids.add(fluids.meat);
+                slaughterFluids.add(fluids.pink);
+                StorageHelper.insertFluids(slaughterFluids, fluidHandlers);
+            }
+            if (setup.getAllPerks().containsKey(PerkType.CRUSHER) && !fluids.essence.isEmpty()) {
+                List<FluidStack> crusherFluids = new ArrayList<>();
+                crusherFluids.add(fluids.essence);
+                StorageHelper.insertFluids(crusherFluids, fluidHandlers);
+            }
+        }
+
     }
 }

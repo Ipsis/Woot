@@ -32,6 +32,57 @@ public class StorageHelper {
         }
     }
 
+    public static void insertFluids(List<FluidStack> fluids, List<LazyOptional<IFluidHandler>> hdlrs) {
+
+        if (fluids.isEmpty() || hdlrs.isEmpty())
+            return;
+
+        // Try to fill non-empty tanks
+        for (LazyOptional<IFluidHandler> hdlr : hdlrs) {
+            hdlr.ifPresent(h -> {
+                int tanks = h.getTanks();
+                if (tanks > 0) {
+                    for (int tank = 0; tank < tanks; tank++) {
+                        FluidStack fluidStack = h.getFluidInTank(tank);
+                        if (fluidStack != null || !fluidStack.isEmpty()) {
+                            for (FluidStack f : fluids) {
+                                if (!f.isEmpty() && h.isFluidValid(tank, f)) {
+                                    int filled = h.fill(f, IFluidHandler.FluidAction.EXECUTE);
+                                    if (filled > 0)
+                                        f.setAmount(f.getAmount() - filled);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        boolean haveFluids = false;
+        for (FluidStack f : fluids) {
+            if (!f.isEmpty())
+                haveFluids = true;
+        }
+
+        if (haveFluids) {
+            // Try to fill empty tanks
+            for (LazyOptional<IFluidHandler> hdlr : hdlrs) {
+                hdlr.ifPresent(h -> {
+                    int tanks = h.getTanks();
+                    if (tanks > 0) {
+                        for (int tank = 0; tank < tanks; tank++) {
+                            for (FluidStack f : fluids) {
+                                int filled = h.fill(f, IFluidHandler.FluidAction.EXECUTE);
+                                if (filled > 0)
+                                    f.setAmount(f.getAmount() - filled);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
     /**
      * Flattens the list and returns a list of unique items
      * The item counts may break the max stack size

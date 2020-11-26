@@ -6,18 +6,15 @@ import ipsis.woot.util.FakeMob;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class IndustrialForegoingGenerator {
 
-    public class GeneratedFluids {
+    public static class GeneratedFluids {
         public FluidStack meat = FluidStack.EMPTY;
         public FluidStack pink = FluidStack.EMPTY;
         public FluidStack essence = FluidStack.EMPTY;
     }
 
-    public GeneratedFluids getFluids(FormedSetup formedSetup, World world) {
+    public static GeneratedFluids getFluids(FormedSetup formedSetup, World world) {
         GeneratedFluids generatedFluids = new GeneratedFluids();
         for (FakeMob fakeMob : formedSetup.getAllMobs()) {
             FluidStack fluidStack = IndustrialForegoingPlugin.getLiquidMeatAmount(fakeMob, world);

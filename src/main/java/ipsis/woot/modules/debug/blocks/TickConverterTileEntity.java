@@ -1,6 +1,7 @@
-package ipsis.woot.modules.factory.blocks;
+package ipsis.woot.modules.debug.blocks;
 
 import ipsis.woot.modules.debug.DebugSetup;
+import ipsis.woot.modules.factory.blocks.CellTileEntityBase;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;

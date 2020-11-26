@@ -1,4 +1,4 @@
-package ipsis.woot.modules.factory.blocks;
+package ipsis.woot.modules.debug.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

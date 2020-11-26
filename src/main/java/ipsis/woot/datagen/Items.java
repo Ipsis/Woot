@@ -146,6 +146,7 @@ public class Items extends BaseItemModelProvider {
         itemHandheld(DebugSetup.DEBUG_ITEM.get(), "item/debug");
         parentedBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "block/creative_conatus");
         parentedBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "block/creative_power");
+        parentedBlock(DebugSetup.DEBUG_TANK_BLOCK.get(), "block/debug_tank");
     }
 
     @Override

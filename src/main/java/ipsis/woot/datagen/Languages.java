@@ -34,6 +34,7 @@ public class Languages extends LanguageProvider {
         // Debug
         add(DebugSetup.CREATIVE_POWER_BLOCK.get(), "Creative Power (Dev)");
         add(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "Creative Conatus (Dev)");
+        add(DebugSetup.DEBUG_TANK_BLOCK.get(), "Debug Tank (Dev)");
         add(DebugSetup.DEBUG_ITEM.get(), "Debug Tool (Dev)");
 
         // Factory

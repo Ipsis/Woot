@@ -453,6 +453,7 @@ public class Blocks extends BaseBlockStateProvider {
         machineBlock(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get(), "enchsqueezer", "block/enchsqueezer");
         singleTextureBlock(DebugSetup.CREATIVE_CONATUS_BLOCK.get(), "creative_conatus", "block/creative_conatus");
         singleTextureBlock(DebugSetup.CREATIVE_POWER_BLOCK.get(), "creative_power", "block/creative_power");
+        singleTextureBlock(DebugSetup.DEBUG_TANK_BLOCK.get(), "debug_tank", "block/debug_tank");
         singleTextureBlock(FactorySetup.EXOTIC_A_BLOCK.get(), "exotic_a", "block/exotic_a");
         singleTextureBlock(FactorySetup.EXOTIC_B_BLOCK.get(), "exotic_b", "block/exotic_b");
         singleTextureBlock(FactorySetup.EXOTIC_C_BLOCK.get(), "exotic_c", "block/exotic_c");

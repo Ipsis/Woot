@@ -24,6 +24,9 @@ no loot learning can occur.
 - Updated TOP display for factory blocks
 - Added headless perk to generate skull drops
   - See policy.mob.perk.headlessSkulls for custom configuration
+- Add support for Industrial Foregoing
+  - Pressing Engagement perk generates essence
+  - Tumbling Doll Of Flesh perk generates pink slime and liquid meat
 ### Changed
 - Moved guide book into datagen
 - Blacklisted Ice & Fire Myrmex mobs as they are incompatible with Woot

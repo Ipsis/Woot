@@ -22,7 +22,11 @@ repositories {
         name 'JEI'
         url "https://dvs1.progwml6.com/files/maven"
     }
-    
+
+    maven {
+        name "Hwyla"
+        url "https://maven.tehnut.info"
+    }
 
     maven {
         name 'Patchouli'
@@ -147,6 +151,10 @@ dependencies {
     // Patchouli
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+
+    // Hwyla
+    compileOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}:api")
+    runtimeOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

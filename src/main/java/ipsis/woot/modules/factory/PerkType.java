@@ -10,4 +10,11 @@ public enum PerkType {
     HEADLESS,
     SLAUGHTER, /* Industrial Foregoing */
     CRUSHER /* Industrial Foregoing */
+    ;
+
+    public static PerkType byIndex(int index) {
+        if (index < 0 && index >= PerkType.values().length)
+            return EFFICIENCY;
+        return values()[index];
+    }
 }

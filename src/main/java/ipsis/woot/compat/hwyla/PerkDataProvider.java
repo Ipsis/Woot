@@ -19,15 +19,16 @@ public class PerkDataProvider implements IComponentProvider {
 
         BlockState blockState = accessor.getBlockState();
         Perk perk = blockState.get(UpgradeBlock.UPGRADE);
-        if (perk == Perk.EMPTY) {
-            tooltip.add(new StringTextComponent(
-                    StringHelper.translate("top.woot.perk.type.label") + ": " +
-                    StringHelper.translate("top.woot.perk.type.empty")));
-        } else {
-            tooltip.add(new StringTextComponent(
-                    StringHelper.translate("top.woot.perk.type.label") + ": " +
-                    StringHelper.translate("item.woot." + perk.getName())));
+        if (perk != null) {
+            if (perk == Perk.EMPTY) {
+                tooltip.add(new StringTextComponent(
+                        StringHelper.translate("top.woot.perk.type.label") + ": " +
+                                StringHelper.translate("top.woot.perk.type.empty")));
+            } else {
+                tooltip.add(new StringTextComponent(
+                        StringHelper.translate("top.woot.perk.type.label") + ": " +
+                                StringHelper.translate("item.woot." + perk.getName())));
+            }
         }
-
     }
 }

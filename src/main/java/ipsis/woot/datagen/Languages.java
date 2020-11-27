@@ -335,5 +335,9 @@ public class Languages extends LanguageProvider {
         add("top.woot.perk.type.label", "Perk");
         add("top.woot.perk.type.empty", "Empty");
         add("top.woot.layout.tier.label", "Tier");
+
+        // Hwyla
+        add("config.waila.plugin_woot", "Woot");
+        add("config.waila.plugin_woot.display_layout_items", "Show Layout Items");
     }
 }

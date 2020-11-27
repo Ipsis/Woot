@@ -22,18 +22,20 @@ public class ControllerDataProvider implements IServerDataProvider<TileEntity>, 
     @Override
     public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
         CompoundNBT nbt = accessor.getServerData();
-        if (nbt.getBoolean("valid")) {
-            FakeMob fakeMob = new FakeMob(nbt);
-            Tier tier = Tier.byIndex(nbt.getInt("tier"));
-            tooltip.add(new StringTextComponent(
-                            StringHelper.translate("top.woot.controller.mob.label") + ": " +
-                                    StringHelper.translate(fakeMob)));
-            tooltip.add(new StringTextComponent(
-                            StringHelper.translate("top.woot.controller.tier.label") + ": " +
-                            StringHelper.translate(tier.getTranslationKey())));
-        } else {
-            tooltip.add(new StringTextComponent(
-                    StringHelper.translate("top.woot.controller.mob.label") + ": "));
+        if (nbt != null) {
+            if (nbt.getBoolean("valid")) {
+                FakeMob fakeMob = new FakeMob(nbt);
+                Tier tier = Tier.byIndex(nbt.getInt("tier"));
+                tooltip.add(new StringTextComponent(
+                        StringHelper.translate("top.woot.controller.mob.label") + ": " +
+                                StringHelper.translate(fakeMob)));
+                tooltip.add(new StringTextComponent(
+                        StringHelper.translate("top.woot.controller.tier.label") + ": " +
+                                StringHelper.translate(tier.getTranslationKey())));
+            } else {
+                tooltip.add(new StringTextComponent(
+                        StringHelper.translate("top.woot.controller.mob.label") + ": "));
+            }
         }
     }
 

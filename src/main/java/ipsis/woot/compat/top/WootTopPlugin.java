@@ -190,20 +190,25 @@ public class WootTopPlugin {
 
             ControllerTileEntity controller = (ControllerTileEntity) te;
 
-            if (probeMode == ProbeMode.DEBUG) {
-                iProbeInfo.text(
-                        CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.controller.mob.label") + ": ",
-                                controller.getFakeMob().toString()));
+            if (controller.getFakeMob().isValid()) {
+                if (probeMode == ProbeMode.DEBUG) {
+                    iProbeInfo.text(
+                            CompoundText.createLabelInfo(
+                                    StringHelper.translate("top.woot.controller.mob.label") + ": ",
+                                    controller.getFakeMob().toString()));
+                } else {
+                    iProbeInfo.text(
+                            CompoundText.createLabelInfo(
+                                    StringHelper.translate("top.woot.controller.mob.label") + ": ",
+                                    StringHelper.translate(controller.getFakeMob())));
+                    iProbeInfo.text(
+                            CompoundText.createLabelInfo(
+                                    StringHelper.translate("top.woot.controller.tier.label") + ": ",
+                                    StringHelper.translate(controller.getTier().getTranslationKey())));
+                }
             } else {
                 iProbeInfo.text(
-                        CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.controller.mob.label") + ": ",
-                                StringHelper.translate(controller.getFakeMob())));
-                iProbeInfo.text(
-                        CompoundText.createLabelInfo(
-                                StringHelper.translate("top.woot.controller.tier.label") + ": ",
-                                StringHelper.translate(controller.getTier().getTranslationKey())));
+                        CompoundText.createLabelInfo(StringHelper.translate("top.woot.controller.mob.label") + ":", ""));
             }
         }
 

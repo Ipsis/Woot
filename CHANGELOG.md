@@ -22,6 +22,8 @@ no loot learning can occur.
 - Updated Woot guide
 - Added command permission level configuration
 - Updated TOP display for factory blocks
+- Added support for Hwyla
+  - Config option to enable/disable layout guide block counts
 - Added headless perk to generate skull drops
   - See policy.mob.perk.headlessSkulls for custom configuration
 - Add support for Industrial Foregoing

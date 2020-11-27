@@ -32,6 +32,7 @@ no loot learning can occur.
 - Blacklisted Ice & Fire Myrmex mobs as they are incompatible with Woot
 ### Fixed
 - Fix layout block changing tiers in steps of two
+- Fix duplicate texture for Scale The Summit III [#465]
 ### Removed
 
 ## [1.16.3-1.0.1.0] - 2020-11-22

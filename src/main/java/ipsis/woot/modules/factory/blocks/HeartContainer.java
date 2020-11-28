@@ -64,14 +64,14 @@ public class HeartContainer extends WootContainer implements TankPacketHandler  
 
     private int progress = 0;
     private FluidStack inputFluid = FluidStack.EMPTY;
-    private int capacity = 0;
+    private int cellType = 0;
 
-    @OnlyIn(Dist.CLIENT)
-    public int getCapacity() { return this.capacity; }
     @OnlyIn(Dist.CLIENT)
     public FluidStack getInputFluid() { return inputFluid; }
     @OnlyIn(Dist.CLIENT)
     public int getProgress() { return this.progress; }
+    @OnlyIn(Dist.CLIENT)
+    public int getCellType() { return this.cellType; }
 
 
     private void addListeners() {
@@ -85,11 +85,11 @@ public class HeartContainer extends WootContainer implements TankPacketHandler  
         addIntegerListener(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getFluidCapacity();
+                return tileEntity.getCellType();
             }
 
             @Override
-            public void set(int i) { capacity = i; }
+            public void set(int i) { cellType = i; }
         });
     }
 

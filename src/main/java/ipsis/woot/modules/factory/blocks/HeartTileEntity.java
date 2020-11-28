@@ -389,6 +389,9 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     public int getFluidCapacity() {
         return formedSetup != null ? formedSetup.getCellCapacity() : 0;
     }
+    public int getCellType() {
+        return formedSetup != null ? formedSetup.getCellType() : 0;
+    }
     public FluidStack getTankFluid() {
         return formedSetup != null ?
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), formedSetup.getCellFluidAmount()) :

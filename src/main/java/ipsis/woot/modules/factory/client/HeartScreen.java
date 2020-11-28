@@ -105,6 +105,19 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 ""));
     }
 
+    private int getCapacity() {
+        int capacity = 0;
+        if (container.getCellType() == 0)
+            capacity = FactoryConfiguration.CELL_1_CAPACITY.get();
+        else if (container.getCellType() == 1)
+            capacity = FactoryConfiguration.CELL_2_CAPACITY.get();
+        else if (container.getCellType() == 2)
+            capacity = FactoryConfiguration.CELL_3_CAPACITY.get();
+        else if (container.getCellType() == 3)
+            capacity = FactoryConfiguration.CELL_4_CAPACITY.get();
+        return capacity;
+    }
+
     /**
      * ContainerScreen render
      *
@@ -137,7 +150,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
             renderFluidTankTooltip(matrixStack, mouseX, mouseY,
-                container.getInputFluid(), container.getCapacity());
+                    container.getInputFluid(), getCapacity());
     }
 
     /**
@@ -290,7 +303,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 TANK_RY,
                 TANK_RY - TANK_LY + 1,
                 TANK_RX - TANK_LX + 1,
-                container.getCapacity(),
+                getCapacity(),
                 container.getInputFluid());
     }
 

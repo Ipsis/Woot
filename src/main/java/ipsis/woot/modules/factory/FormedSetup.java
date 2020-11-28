@@ -3,9 +3,7 @@ package ipsis.woot.modules.factory;
 import ipsis.woot.Woot;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
-import ipsis.woot.modules.factory.blocks.CellTileEntityBase;
-import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
-import ipsis.woot.modules.factory.blocks.UpgradeTileEntity;
+import ipsis.woot.modules.factory.blocks.*;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.layout.PatternBlock;
 import ipsis.woot.simulator.spawning.SpawnController;
@@ -39,6 +37,7 @@ public class FormedSetup {
     private BlockPos exportPos = BlockPos.ZERO;
     private BlockPos cellPos = BlockPos.ZERO;
     private int cellCapacity = 0;
+    private int cellType = 0;
     private double shardDropChance = 0.0F;
     private int[] shardDropWeights = new int[]{ 0, 0, 0 };
     private int perkTierShardValue = 0;
@@ -80,6 +79,7 @@ public class FormedSetup {
 
     public Tier getTier() { return this.tier; }
     public int getCellCapacity() { return this.cellCapacity; }
+    public int getCellType() { return this.cellType; }
     public int getCellFluidAmount() {
         LazyOptional<IFluidHandler> hdlr = getCellFluidHandler();
         if (hdlr.isPresent()) {
@@ -314,8 +314,17 @@ public class FormedSetup {
             } else if (pb.getFactoryComponent() == FactoryComponent.CELL) {
                 formedSetup.cellPos = new BlockPos(pb.getBlockPos());
                 TileEntity te = world.getTileEntity(pb.getBlockPos());
-                if (te instanceof CellTileEntityBase)
+                if (te instanceof CellTileEntityBase) {
                     formedSetup.cellCapacity = ((CellTileEntityBase) te).getCapacity();
+                    if (te instanceof Cell1TileEntity)
+                        formedSetup.cellType = 0;
+                    else if (te instanceof Cell2TileEntity)
+                        formedSetup.cellType = 1;
+                    else if (te instanceof Cell3TileEntity)
+                        formedSetup.cellType = 2;
+                    else if (te instanceof Cell4TileEntity)
+                        formedSetup.cellType = 3;
+                }
             } else if (pb.getFactoryComponent() == FactoryComponent.IMPORT) {
                 formedSetup.importPos = new BlockPos(pb.getBlockPos());
             } else if (pb.getFactoryComponent() == FactoryComponent.EXPORT) {

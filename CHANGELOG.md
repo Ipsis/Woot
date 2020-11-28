@@ -35,6 +35,7 @@ no loot learning can occur.
 ### Fixed
 - Fix layout block changing tiers in steps of two
 - Fix duplicate texture for Scale The Summit III [#465]
+- Fix Mob Shard recipe missing for clearing in crafting table [#466]
 ### Removed
 
 ## [1.16.3-1.0.1.0] - 2020-11-22

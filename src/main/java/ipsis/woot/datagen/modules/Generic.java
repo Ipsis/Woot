@@ -74,6 +74,12 @@ public class Generic {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
+        ShapelessRecipeBuilder.shapelessRecipe(FactorySetup.MOB_SHARD_ITEM.get())
+                .addIngredient(FactorySetup.MOB_SHARD_ITEM.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer, new ResourceLocation(Woot.MODID, "mobshard2"));
+
         ShapedRecipeBuilder.shapedRecipe(GenericSetup.MACHINE_CASING_ITEM.get())
                 .patternLine(" p ")
                 .patternLine("pcp")

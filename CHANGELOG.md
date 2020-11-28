@@ -37,6 +37,7 @@ no loot learning can occur.
 - Fix duplicate texture for Scale The Summit III [#465]
 - Fix Mob Shard recipe missing for clearing in crafting table [#466]
 - Fix heart display showing wrong cell capacity [#463]
+- Fix Infuser not accepting stacks in augment slot that exceed the exact recipe requirements [#451]
 ### Removed
 
 ## [1.16.3-1.0.1.0] - 2020-11-22

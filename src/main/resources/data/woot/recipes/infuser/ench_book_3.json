@@ -4,9 +4,8 @@
     "item": "minecraft:book"
   },
   "augment": {
-    "item": "minecraft:lapis_lazuli"
+    "item": "minecraft:redstone_block"
   },
-  "augment_count": 3,
   "infuse": {
     "fluid": "woot:enchant_fluid",
     "amount": 3000

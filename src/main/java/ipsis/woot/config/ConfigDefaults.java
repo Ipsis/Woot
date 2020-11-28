@@ -18,7 +18,7 @@ public final class ConfigDefaults {
         public static final int DYE_SQUEEZER_MAX_ENERGY_RX_DEF = 100;
         public static final int DYE_SQUEEZER_ENERGY_PER_TICK_DEF = 20;
 
-        public static final int ENCH_SQUEEZER_TANK_CAPACITY_DEF = 5000;
+        public static final int ENCH_SQUEEZER_TANK_CAPACITY_DEF = 10000;
         public static final int ENCH_SQUEEZER_MAX_ENERGY_DEF = 10000;
         public static final int ENCH_SQUEEZER_MAX_ENERGY_RX_DEF = 100;
         public static final int ENCH_SQUEEZER_ENERGY_PER_TICK_DEF = 20;

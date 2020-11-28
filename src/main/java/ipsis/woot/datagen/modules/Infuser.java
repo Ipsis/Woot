@@ -110,31 +110,31 @@ public class Infuser {
         InfuserRecipeBuilder.infuserRecipe(
                 book.getItem(),  1,
                 Ingredient.fromItems(Items.BOOK),
-                Ingredient.fromItems(Items.LAPIS_LAZULI), 1,
+                Ingredient.fromItems(Items.REDSTONE), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_1_FLUID_COST),
                 ENCH_BOOK_1_ENERGY_COST).build(consumer, "ench_book_1");
         InfuserRecipeBuilder.infuserRecipe(
                 book.getItem(),  2,
                 Ingredient.fromItems(Items.BOOK),
-                Ingredient.fromItems(Items.LAPIS_LAZULI), 2,
+                Ingredient.fromItems(Items.QUARTZ), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_2_FLUID_COST),
                 ENCH_BOOK_2_ENERGY_COST).build(consumer, "ench_book_2");
         InfuserRecipeBuilder.infuserRecipe(
                 book.getItem(),  3,
                 Ingredient.fromItems(Items.BOOK),
-                Ingredient.fromItems(Items.LAPIS_LAZULI), 3,
+                Ingredient.fromItems(Items.REDSTONE_BLOCK), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_3_FLUID_COST),
                 ENCH_BOOK_3_ENERGY_COST).build(consumer, "ench_book_3");
         InfuserRecipeBuilder.infuserRecipe(
                 book.getItem(),  4,
                 Ingredient.fromItems(Items.BOOK),
-                Ingredient.fromItems(Items.LAPIS_LAZULI), 4,
+                Ingredient.fromItems(Items.QUARTZ_BLOCK), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_4_FLUID_COST),
                 ENCH_BOOK_4_ENERGY_COST).build(consumer, "ench_book_4");
         InfuserRecipeBuilder.infuserRecipe(
                 book.getItem(),  5,
                 Ingredient.fromItems(Items.BOOK),
-                Ingredient.fromItems(Items.LAPIS_LAZULI), 5,
+                Ingredient.fromItems(Items.LAPIS_LAZULI), 3,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_5_FLUID_COST),
                 ENCH_BOOK_5_ENERGY_COST).build(consumer, "ench_book_5");
 

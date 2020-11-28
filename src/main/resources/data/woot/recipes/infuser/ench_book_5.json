@@ -6,7 +6,7 @@
   "augment": {
     "item": "minecraft:lapis_lazuli"
   },
-  "augment_count": 5,
+  "augment_count": 3,
   "infuse": {
     "fluid": "woot:enchant_fluid",
     "amount": 5000

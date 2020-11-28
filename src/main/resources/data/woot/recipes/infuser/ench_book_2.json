@@ -4,7 +4,7 @@
     "item": "minecraft:book"
   },
   "augment": {
-    "item": "minecraft:lapis_lazuli"
+    "item": "minecraft:quartz"
   },
   "augment_count": 2,
   "infuse": {

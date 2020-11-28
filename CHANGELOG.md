@@ -32,6 +32,8 @@ no loot learning can occur.
 ### Changed
 - Moved guide book into datagen
 - Blacklisted Ice & Fire Myrmex mobs as they are incompatible with Woot
+- Changed Infuser enchanted books recipes to make them unique
+- Increased internal tank of the Infuser from 5000mb -> 10000mb
 ### Fixed
 - Fix layout block changing tiers in steps of two
 - Fix duplicate texture for Scale The Summit III [#465]

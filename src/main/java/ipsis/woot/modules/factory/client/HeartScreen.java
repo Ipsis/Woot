@@ -51,6 +51,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
     private List<StackElement> stackElements = new ArrayList<>();
     private List<StackElement> mobElements = new ArrayList<>();
     private List<StackElement> upgradeElements = new ArrayList<>();
+    private List<GuiStackElement> recipeElements = new ArrayList<>();
     private StackElement exoticElement = new StackElement(EXOTIC_X, EXOTIC_Y);
 
     private int GUI_WIDTH = 252;
@@ -97,7 +98,6 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             }
         }
 
-
         // Request the static data
         NetworkChannel.channel.sendToServer(new ServerDataRequest(
                 ServerDataRequest.Type.HEART_STATIC_DATA,
@@ -137,6 +137,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         stackElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
+        recipeElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         exoticElement.drawTooltip(matrixStack, mouseX, mouseY);
 
         if (renderTime == 0L)
@@ -197,20 +198,6 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
                 ItemStack controllerStack = ControllerTileEntity.getItemStack(fakeMob);
                 List<ITextComponent> tooltip = getTooltipFromItem(controllerStack);
-                ClientFactorySetup.Mob mobInfo = clientFactorySetup.mobInfo.get(fakeMob);
-                if (!mobInfo.itemIngredients.isEmpty()) {
-                    for (ItemStack itemStack : mobInfo.itemIngredients) {
-                        ITextComponent iTextComponent = itemStack.getDisplayName();
-                        tooltip.add(new StringTextComponent(String.format("Ingredient: %d * %s", itemStack.getCount(), iTextComponent.getString())));
-                    }
-                }
-                if (!mobInfo.fluidIngredients.isEmpty()) {
-                    for (FluidStack fluidStack : mobInfo.fluidIngredients)
-                        tooltip.add(new StringTextComponent(String.format(
-                                "Ingredient: %dmb %s",
-                                fluidStack.getAmount(),
-                                fluidStack.toString())));
-                }
                 mobElements.get(idx).addDrop(controllerStack, tooltip);
                 mobElements.get(idx).unlock();
                 idx++;
@@ -248,6 +235,28 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                 upgradeElements.get(idx).unlock();
                 idx = (idx + 1) % upgradeElements.size();
             }
+
+            idx = 0;
+            for (ItemStack itemStack : clientFactorySetup.itemIng) {
+                GuiItemStackElement stackElement = new GuiItemStackElement(RECIPE_X + (idx * 18), RECIPE_Y);
+                List<ITextComponent> tooltip = getTooltipFromItem(itemStack);
+                tooltip.add(new StringTextComponent(String.format("%d items", itemStack.getCount())));
+                stackElement.setItemStack(itemStack.copy());
+                stackElement.addToolTip(tooltip);
+                recipeElements.add(stackElement);
+                idx++;
+            }
+            for (FluidStack fluidStack : clientFactorySetup.fluidIng) {
+                GuiFluidStackElement stackElement = new GuiFluidStackElement(RECIPE_X + (idx * 18), RECIPE_Y);
+                List<ITextComponent> tooltip = new ArrayList<>();
+                tooltip.add(fluidStack.getDisplayName());
+                tooltip.add(new StringTextComponent(String.format("%d mb", fluidStack.getAmount())));
+                stackElement.setStack(fluidStack.copy());
+                stackElement.addTooltip(tooltip);
+                recipeElements.add(stackElement);
+                idx++;
+            }
+
             sync = true;
         }
 
@@ -269,9 +278,12 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.3"), MOBS_X, MOBS_Y - 10, TEXT_COLOR);
         font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.4"), PERKS_X, PERKS_Y - 10, TEXT_COLOR);
         font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.5"), DROPS_X, DROPS_Y - 10, TEXT_COLOR);
+        font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.6"), RECIPE_X, RECIPE_Y - 10, TEXT_COLOR);
+        font.drawString(matrixStack, StringHelper.translate("gui.woot.heart.7"), EXOTIC_X, EXOTIC_Y - 10, TEXT_COLOR);
 
         mobElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
+        recipeElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         stackElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         exoticElement.drawForeground(matrixStack, mouseX, mouseY);
     }
@@ -295,6 +307,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
+        recipeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         exoticElement.drawBackground(mouseX, mouseY);
 
         renderFluidTank(
@@ -356,8 +369,6 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             List<ITextComponent> tooltip = tooltips.get(idx);
             if (isPointInRegion(x, y, 16, 16, mouseX, mouseY)) {
                 FontRenderer fontRenderer = itemStack.getItem().getFontRenderer(itemStack);
-                if (fontRenderer == null)
-                    fontRenderer = fontRenderer;
                 func_243308_b(matrixStack, tooltip, mouseX, mouseY);
             }
         }
@@ -382,6 +393,150 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             RenderHelper.disableStandardItemLighting();
             itemRenderer.zLevel = 0.0F;
             setBlitOffset(0);
+        }
+    }
+
+    class GuiStackElement {
+        int posX;
+        int posY;
+        boolean isLocked;
+
+        public GuiStackElement() {
+            isLocked = false;
+        }
+
+        public GuiStackElement(int posX, int posY) {
+            this();
+            this.posX = posX;
+            this.posY = posY;
+        }
+
+        public GuiStackElement(int posX, int posY, boolean isLocked) {
+            this(posX, posY);
+            this.isLocked = isLocked;
+        }
+
+        public void unlock() {
+            isLocked = false;
+        }
+
+        public void lock() {
+            isLocked = true;
+        }
+
+        public void drawBackground(int mouseX, int mouseY) {}
+        public void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
+            if (isLocked)
+                fill(matrixStack, posX - 1, posY - 1, posX - 1 + 18, posY - 1 + 18, -2130706433);
+        }
+
+        public void drawTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+        }
+    }
+
+    public class GuiItemStackElement extends GuiStackElement {
+        private ItemStack itemStack;
+        List<ITextComponent> tooltip = new ArrayList<>();
+
+        public GuiItemStackElement(int posX, int posY, boolean isLocked) {
+            super(posX, posY, isLocked);
+            this.itemStack = ItemStack.EMPTY;
+        }
+
+        public GuiItemStackElement(int posX, int posY) {
+            super(posX, posY);
+            this.itemStack = ItemStack.EMPTY;
+        }
+
+        public void setItemStack(ItemStack itemStack) {
+            this.itemStack = itemStack.copy();
+        }
+
+        public void addToolTip(List<ITextComponent> tooltip) {
+            this.tooltip.addAll(tooltip);
+        }
+
+        @Override
+        public void drawBackground(int mouseX, int mouseY) {
+            if (isLocked || itemStack.isEmpty())
+                return;
+        }
+
+        @Override
+        public void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
+            super.drawForeground(matrixStack, mouseX, mouseY);
+
+            if (itemStack.isEmpty())
+                return;
+
+            setBlitOffset(100);
+            itemRenderer.zLevel = 100.0F;
+            RenderHelper.enableStandardItemLighting();
+            GlStateManager.enableDepthTest();
+            itemRenderer.renderItemIntoGUI(itemStack, posX, posY);
+            RenderHelper.disableStandardItemLighting();
+            itemRenderer.zLevel = 0.0F;
+            setBlitOffset(0);
+        }
+
+        @Override
+        public void drawTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+            if (isLocked || itemStack.isEmpty() || tooltip.isEmpty())
+                return;
+
+            if (!isPointInRegion(posX, posY, 16, 16, mouseX, mouseY))
+                return;
+
+            func_243308_b(matrixStack, tooltip, mouseX, mouseY);
+        }
+    }
+
+    public class GuiFluidStackElement extends GuiStackElement {
+
+        private FluidStack fluidStack;
+        private List<ITextComponent> tooltip = new ArrayList<>();
+
+        public GuiFluidStackElement(int posX, int posY, boolean isLocked) {
+            super(posX, posY, isLocked);
+            this.fluidStack = FluidStack.EMPTY;
+        }
+
+        public GuiFluidStackElement(int posX, int posY) {
+            super(posX, posY);
+            this.fluidStack = FluidStack.EMPTY;
+        }
+
+        public void setStack(FluidStack fluidStack) {
+            this.fluidStack = fluidStack.copy();
+        }
+
+        public void addTooltip(List<ITextComponent> tooltip) {
+            this.tooltip.addAll(tooltip);
+        }
+
+        @Override
+        public void drawBackground(int mouseX, int mouseY) {
+            if (isLocked || fluidStack.isEmpty())
+                return;
+
+            drawFluid(guiLeft + posX, guiTop + posY, fluidStack, 16, 16);
+        }
+
+        @Override
+        public void drawForeground(MatrixStack matrixStack, int mouseX, int mouseY) {
+            super.drawForeground(matrixStack, mouseX, mouseY);
+
+        }
+
+        @Override
+        public void drawTooltip(MatrixStack matrixStack, int mouseX, int mouseY) {
+            if (isLocked || fluidStack.isEmpty() || tooltip.isEmpty())
+                return;
+
+            if (!isPointInRegion(posX, posY, 16, 16, mouseX, mouseY))
+                return;
+
+            func_243308_b(matrixStack, tooltip, mouseX, mouseY);
         }
     }
 }

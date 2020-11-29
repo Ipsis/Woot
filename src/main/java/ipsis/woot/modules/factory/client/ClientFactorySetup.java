@@ -34,10 +34,11 @@ public class ClientFactorySetup {
     public double[] shardDrops = new double[]{ 0.0F, 0.0F, 0.0F };
 
     public static class Mob {
-        public List<ItemStack> itemIngredients = new ArrayList<>();
-        public List<FluidStack> fluidIngredients = new ArrayList<>();
         public List<ItemStack> drops = new ArrayList<>();
     }
+
+    public List<ItemStack> itemIng = new ArrayList<>();
+    public List<FluidStack> fluidIng = new ArrayList<>();
 
     private ClientFactorySetup() {}
 
@@ -76,15 +77,6 @@ public class ClientFactorySetup {
             factorySetup.mobParams.put(fakeMob, mobParam);
 
             Mob mob = new Mob();
-            int itemCount = buf.readInt();
-            for (int y = 0; y < itemCount; y++)
-                mob.itemIngredients.add(NetworkTools.readItemStack(buf));
-
-            int fluidCount = buf.readInt();
-            for (int y = 0; y < fluidCount; y++) {
-                mob.fluidIngredients.add(NetworkHelper.readFluidStack(buf));
-            }
-
             int drops = buf.readInt();
             for (int y = 0; y < drops; y++) {
                 ItemStack itemStack = NetworkTools.readItemStack(buf);
@@ -92,13 +84,24 @@ public class ClientFactorySetup {
                 if (!itemStack.isEmpty())
                     mob.drops.add(itemStack);
             }
-
             factorySetup.mobInfo.put(fakeMob, mob);
         }
 
         int perkCount = buf.readInt();
         for (int x = 0; x < perkCount; x++)
             factorySetup.perks.add(Perk.getPerks(buf.readInt()));
+
+        int itemIng = buf.readInt();
+        for (int y = 0; y < itemIng; y++) {
+            ItemStack itemStack = NetworkTools.readItemStack(buf);
+            factorySetup.itemIng.add(itemStack);
+        }
+
+        int fluidIng = buf.readInt();
+        for (int y = 0; y < fluidIng; y++) {
+            FluidStack fluidStack = NetworkHelper.readFluidStack(buf);
+            factorySetup.fluidIng.add(fluidStack);
+        }
 
         return factorySetup;
     }

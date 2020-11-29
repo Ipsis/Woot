@@ -279,6 +279,8 @@ public class Languages extends LanguageProvider {
         add("gui.woot.heart.3", "Controllers");
         add("gui.woot.heart.4", "Perks");
         add("gui.woot.heart.5", "Loot Pool");
+        add("gui.woot.heart.6", "Item/Fluid Ingredients");
+        add("gui.woot.heart.7", "Exotic");
         add("gui.woot.oracle.looting.0", "No looting : %.2f%%");
         add("gui.woot.oracle.looting.1", "Looting I : %.2f%%");
         add("gui.woot.oracle.looting.2", "Looting II : %.2f%%");

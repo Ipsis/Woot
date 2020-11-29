@@ -155,25 +155,15 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
     private List<ItemStack> createItemIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
         List<ItemStack> items = new ArrayList<>();
-        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
-            if (recipe.items.containsKey(fakeMob)) {
-                // items are already calculated based on mob count
-                for (ItemStack itemStack : recipe.items.get(fakeMob))
-                    items.add(itemStack.copy());
-            }
-        }
-        return StorageHelper.flattenItemStackList(items);
+        for (ItemStack itemStack : recipe.recipeItems)
+            items.add(itemStack.copy());
+        return items;
     }
 
     private List<FluidStack> createFluidIngredients(HeartRecipe recipe, FormedSetup formedSetup) {
         List<FluidStack> fluids = new ArrayList<>();
-        for (FakeMob fakeMob : formedSetup.getAllMobs()) {
-            if (recipe.fluids.containsKey(fakeMob)) {
-                // fluids are already calculated based on mob count
-                for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
-                    fluids.add(fluidStack.copy());
-            }
-        }
+        for (FluidStack fluidStack : recipe.recipeFluids)
+            fluids.add(fluidStack.copy());
         return fluids;
     }
 

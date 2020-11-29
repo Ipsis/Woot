@@ -16,8 +16,8 @@ public class HeartRecipe {
 
     int numTicks;
     int numUnits;
-    public HashMap<FakeMob, List<ItemStack>> items = new HashMap<>();
-    public HashMap<FakeMob, List<FluidStack>> fluids = new HashMap<>();
+    public List<ItemStack> recipeItems = new ArrayList<>();
+    public List<FluidStack> recipeFluids = new ArrayList<>();
 
     public int getNumTicks() {
         return numTicks;
@@ -37,20 +37,37 @@ public class HeartRecipe {
         this.numUnits = MathHelper.clamp(numUnits, 1, Integer.MAX_VALUE);
     }
 
-    public void addItem(FakeMob fakeMob, ItemStack itemStack) {
-        if (!items.containsKey(fakeMob))
-            items.put(fakeMob, new ArrayList<>());
+    public void addItem(ItemStack itemStack) {
+        boolean added = false;
+        for (ItemStack currStack : recipeItems) {
+            if (currStack.isItemEqual(itemStack)) {
+                currStack.setCount(currStack.getCount() + itemStack.getCount());
+                added = true;
+            }
+        }
 
-        if (!itemStack.isEmpty())
-            items.get(fakeMob).add(itemStack.copy());
+        if (!added) {
+            ItemStack addStack = itemStack.copy();
+            addStack.setCount(addStack.getCount() + itemStack.getCount());
+            recipeItems.add(addStack);
+        }
     }
 
-    public void addFluid(FakeMob fakeMob, FluidStack fluidStack) {
-        if (!fluids.containsKey(fakeMob))
-            fluids.put(fakeMob, new ArrayList<>());
+    public void addFluid(FluidStack fluidStack) {
+        boolean added = false;
+        for (FluidStack currStack : recipeFluids) {
+            if (currStack.isFluidEqual(fluidStack)) {
+                currStack.setAmount(currStack.getAmount() + fluidStack.getAmount());
+                added = true;
+            }
 
-        if (!fluidStack.isEmpty())
-            fluids.get(fakeMob).add(fluidStack.copy());
+        }
+
+        if (!added) {
+            FluidStack addStack = fluidStack.copy();
+            addStack.setAmount(addStack.getAmount() + fluidStack.getAmount());
+            recipeFluids.add(addStack);
+        }
     }
 
     @Override
@@ -58,8 +75,8 @@ public class HeartRecipe {
         return "Recipe{" +
                 "numTicks=" + numTicks +
                 ", numUnits=" + numUnits +
-                ", items=" + items.size() +
-                ", fluids=" + fluids.size() +
+                ", items=" + recipeItems.size() +
+                ", fluids=" + recipeFluids.size() +
                 '}';
     }
 }

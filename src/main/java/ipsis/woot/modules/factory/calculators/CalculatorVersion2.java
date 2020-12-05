@@ -174,9 +174,6 @@ public class CalculatorVersion2 {
                     List<FluidStack> recipeFluids = getRecipeFluids(fakeMob, factoryRecipe.getFluids(), setup);
                     recipeItems.forEach(i -> recipe.addItem(i.copy()));
                     recipeFluids.forEach(i -> recipe.addFluid(i.copy()));
-                    int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
-                    recipe.addFluid(new FluidStack(Fluids.LAVA, 1000 * mobCount));
-                    recipe.addFluid(new FluidStack(Fluids.WATER, 100 * mobCount));
                     break;
                 }
             }

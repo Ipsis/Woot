@@ -14,6 +14,7 @@ no loot learning can occur.
 ### Added
 - Add fluid ingredients
 - Add sounds for success and failure of block placement by Intern
+- Updated Heart display to show recipe ingredients on gui rather than tooltip
 - Added exotic block
   - Found only in end loot chests 
   - See factory.exotic for custom configuration

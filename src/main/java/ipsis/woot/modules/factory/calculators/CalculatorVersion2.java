@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.calculators;
 
+import ipsis.woot.Woot;
 import ipsis.woot.crafting.FactoryRecipe;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
@@ -9,8 +10,11 @@ import ipsis.woot.modules.factory.blocks.HeartRecipe;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FluidStackHelper;
 import ipsis.woot.util.ItemStackHelper;
+import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fluids.FluidStack;
@@ -67,6 +71,9 @@ public class CalculatorVersion2 {
         return ticks;
     }
 
+    /**
+     * Returns all the items, with exotic reductions and mass settings, to spawn the count of fakemob
+     */
     public static List<ItemStack> getRecipeItems(FakeMob fakeMob, NonNullList<ItemStack> recipeItems, FormedSetup setup) {
         int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
         List<ItemStack> items = new ArrayList<>();
@@ -81,15 +88,23 @@ public class CalculatorVersion2 {
         } else {
             for (ItemStack itemStack : recipeItems) {
                 if (!itemStack.isEmpty()) {
+                    Woot.setup.getLogger().debug("getRecipeItems: {} {} {} {}",
+                            fakeMob, itemStack.getTranslationKey(), itemStack.getCount(), mobCount);
                     ItemStack itemStack1 = itemStack.copy();
                     itemStack1.setCount(itemStack1.getCount() * mobCount);
                     items.add(itemStack1);
                 }
             }
         }
+
+        for (ItemStack itemStack : items)
+            Woot.setup.getLogger().debug("getRecipeItems: {} ", itemStack);
         return items;
     }
 
+    /**
+     * Returns all the fluids, with exotic reductions and mass settings, to spawn the count of fakemob
+     */
     public static List<FluidStack> getRecipeFluids(FakeMob fakeMob, NonNullList<FluidStack> recipeFluids, FormedSetup setup) {
         int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
         List<FluidStack> fluids = new ArrayList<>();
@@ -104,12 +119,17 @@ public class CalculatorVersion2 {
         } else {
             for (FluidStack fluidStack : recipeFluids) {
                 if (!fluidStack.isEmpty()) {
+                    Woot.setup.getLogger().debug("getRecipeFluids: {} {} {} {}",
+                            fakeMob, fluidStack.getTranslationKey(), fluidStack.getAmount(), mobCount);
                     FluidStack fluidStack1 = fluidStack.copy();
                     fluidStack1.setAmount(fluidStack1.getAmount() * mobCount);
                     fluids.add(fluidStack1);
                 }
             }
         }
+
+        for (FluidStack fluidStack : fluids)
+            Woot.setup.getLogger().debug("getRecipeItems: {} ", fluidStack);
         return fluids;
     }
 
@@ -152,8 +172,8 @@ public class CalculatorVersion2 {
                 if (factoryRecipe.getFakeMob().equals(fakeMob)) {
                     List<ItemStack> recipeItems = getRecipeItems(fakeMob, factoryRecipe.getItems(), setup);
                     List<FluidStack> recipeFluids = getRecipeFluids(fakeMob, factoryRecipe.getFluids(), setup);
-                    recipeItems.forEach(i -> recipe.addItem(fakeMob, i.copy()));
-                    recipeFluids.forEach(i -> recipe.addFluid(fakeMob, i.copy()));
+                    recipeItems.forEach(i -> recipe.addItem(i.copy()));
+                    recipeFluids.forEach(i -> recipe.addFluid(i.copy()));
                     break;
                 }
             }

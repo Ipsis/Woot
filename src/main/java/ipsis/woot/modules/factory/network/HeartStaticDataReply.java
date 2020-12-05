@@ -82,22 +82,6 @@ public class HeartStaticDataReply {
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkXpValue());
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkHeadlessValue());
 
-            if (recipe.items.containsKey(fakeMob)) {
-                buf.writeInt(recipe.items.get(fakeMob).size());
-                for (ItemStack itemStack : recipe.items.get(fakeMob))
-                    NetworkTools.writeItemStack(buf, itemStack);
-            } else {
-                buf.writeInt(0);
-            }
-
-            if (recipe.fluids.containsKey(fakeMob)) {
-                buf.writeInt(recipe.fluids.get(fakeMob).size());
-                for (FluidStack fluidStack : recipe.fluids.get(fakeMob))
-                    NetworkHelper.writeFluidStack(buf, fluidStack);
-            } else {
-                buf.writeInt(0);
-            }
-
             List<SimulatedMobDropSummary> drops = MobSimulator.getInstance().getDropSummary(fakeMob);
             buf.writeInt(drops.size());
             for (SimulatedMobDropSummary drop : drops) {
@@ -113,6 +97,12 @@ public class HeartStaticDataReply {
             Perk perk = Perk.getPerks(e.getKey(), e.getValue());
             buf.writeInt(perk.ordinal());
         }
+
+        // Ingredients are the sum from all the mobs
+        buf.writeInt(recipe.recipeItems.size());
+        recipe.recipeItems.forEach(i -> NetworkTools.writeItemStack(buf, i));
+        buf.writeInt(recipe.recipeFluids.size());
+        recipe.recipeFluids.forEach(i -> NetworkHelper.writeFluidStack(buf, i));
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {

@@ -33,14 +33,15 @@ no loot learning can occur.
 ### Changed
 - Moved guide book into datagen
 - Blacklisted Ice & Fire Myrmex mobs as they are incompatible with Woot
-- Changed Infuser enchanted books recipes to make them unique
-- Increased internal tank of the Infuser from 5000mb -> 10000mb
+- Changed Injection Press enchanted books recipes to make them unique
+- Increased internal tank of the Injection Press from 5000mb -> 10000mb
 ### Fixed
 - Fix layout block changing tiers in steps of two
 - Fix duplicate texture for Scale The Summit III [#465]
 - Fix Mob Shard recipe missing for clearing in crafting table [#466]
 - Fix heart display showing wrong cell capacity [#463]
-- Fix Infuser not accepting stacks in augment slot that exceed the exact recipe requirements [#451]
+- Fix Injection Press not accepting stacks in augment slot that exceed the exact recipe requirements [#451]
+- Fix Injection Press creating enchanted books with Enchantments NBT instead of StoredEnchantments NBT [#470]
 ### Removed
 
 ## [1.16.3-1.0.1.0] - 2020-11-22

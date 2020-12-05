@@ -3,6 +3,7 @@ package ipsis.woot.util;
 import ipsis.woot.Woot;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.WeightedRandom;
@@ -19,6 +20,7 @@ public class EnchantingHelper {
      * on suitability of the enchantment. This one only cares about applying an
      * enchant of a specific level
      * Always reutrns an enchanted book
+     * Manually check with "data get entity @s SelectedItem"
      */
     public static ItemStack addRandomBookEnchant(ItemStack itemStack, int level) {
 
@@ -36,7 +38,12 @@ public class EnchantingHelper {
         if (!enchantments.isEmpty()) {
             //enchantments.forEach(h -> Woot.LOGGER.info("Enchant {} Level {}", h.enchantment, h.enchantmentLevel));
             EnchantmentData d = WeightedRandom.getRandomItem(new Random(), enchantments);
-            itemStack.addEnchantment(d.enchantment, d.enchantmentLevel);
+
+            // StoredEnchantments nbt
+            EnchantedBookItem.addEnchantment(itemStack, d);
+
+            // Enchantments nbt
+            // itemStack.addEnchantment(d.enchantment, d.enchantmentLevel);
         }
         return itemStack;
     }

@@ -6,7 +6,6 @@
   "augment": {
     "item": "minecraft:quartz"
   },
-  "augment_count": 2,
   "infuse": {
     "fluid": "woot:enchant_fluid",
     "amount": 2000

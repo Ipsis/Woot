@@ -47,10 +47,12 @@ public class HeartDataProvider implements IServerDataProvider<TileEntity>, IComp
                     }
 
                     Exotic exotic = Exotic.getExotic(nbt.getInt("exotic"));
-                    if (exotic != Exotic.NONE)
+                    if (exotic != Exotic.NONE) {
+                        ItemStack itemStack = exotic.getItemStack();
                         tooltip.add(new StringTextComponent(
                                 StringHelper.translate("top.woot.heart.exotic.label") + ": " +
-                                        exotic.getTooltip().getUnformattedComponentText()));
+                                        StringHelper.translate(itemStack.getItem().getTranslationKey())));
+                    }
 
                     int progress = nbt.getInt("progress");
                     tooltip.add(new StringTextComponent(

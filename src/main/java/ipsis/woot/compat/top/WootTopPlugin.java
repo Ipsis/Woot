@@ -234,11 +234,13 @@ public class WootTopPlugin {
                                         StringHelper.translate(itemStack.getItem().getTranslationKey())));
                 }
                 // Add exotic
-                if (heart.getExotic() != Exotic.NONE) {
+                Exotic exotic = heart.getExotic();
+                if (exotic != Exotic.NONE) {
+                    ItemStack itemStack = exotic.getItemStack();
                     iProbeInfo.text(
                             CompoundText.createLabelInfo(
                                     StringHelper.translate("top.woot.heart.exotic.label") + ": ",
-                                    heart.getExotic().getTooltip().getUnformattedComponentText()));
+                                    StringHelper.translate(itemStack.getItem().getTranslationKey())));
                 }
                 // Add tank
                 iProbeInfo.text(

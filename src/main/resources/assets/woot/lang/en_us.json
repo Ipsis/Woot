@@ -88,6 +88,8 @@
   "gui.woot.heart.3": "Controllers",
   "gui.woot.heart.4": "Perks",
   "gui.woot.heart.5": "Loot Pool",
+  "gui.woot.heart.6": "Item/Fluid Ingredients",
+  "gui.woot.heart.7": "Exotic",
   "gui.woot.infuser.name": "Injection Press",
   "gui.woot.oracle.looting.0": "No looting : %.2f%%",
   "gui.woot.oracle.looting.1": "Looting I : %.2f%%",

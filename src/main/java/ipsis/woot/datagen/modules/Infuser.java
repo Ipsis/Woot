@@ -134,7 +134,7 @@ public class Infuser {
         InfuserRecipeBuilder.infuserRecipe(
                 book.getItem(),  5,
                 Ingredient.fromItems(Items.BOOK),
-                Ingredient.fromItems(Items.LAPIS_LAZULI), 3,
+                Ingredient.fromItems(Blocks.LAPIS_BLOCK), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), ENCH_BOOK_5_FLUID_COST),
                 ENCH_BOOK_5_ENERGY_COST).build(consumer, "ench_book_5");
 

@@ -48,7 +48,6 @@ public class HeartRecipe {
 
         if (!added) {
             ItemStack addStack = itemStack.copy();
-            addStack.setCount(addStack.getCount() + itemStack.getCount());
             recipeItems.add(addStack);
         }
     }
@@ -65,7 +64,6 @@ public class HeartRecipe {
 
         if (!added) {
             FluidStack addStack = fluidStack.copy();
-            addStack.setAmount(addStack.getAmount() + fluidStack.getAmount());
             recipeFluids.add(addStack);
         }
     }

@@ -243,6 +243,7 @@
   "info.woot.cell.1": "Transfer rate %dmB/tick",
   "info.woot.controller.0": "Right-click for required tier information",
   "info.woot.energy": "Energy: %d/%d RF",
+  "info.woot.exotic.0": "Drops from End City loot chests",
   "info.woot.exotic.exotic_a": "Reduce fluid ingredients by %0.2f%%",
   "info.woot.exotic.exotic_b": "Reduce item ingredients by %0.2f%%",
   "info.woot.exotic.exotic_c": "Increase efficiency of Conatus usage to %0.2f%%",

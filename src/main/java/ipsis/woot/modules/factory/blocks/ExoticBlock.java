@@ -61,6 +61,7 @@ public class ExoticBlock extends Block implements WootDebug {
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
+        tooltip.add(new TranslationTextComponent("info.woot.exotic.0"));
         if (stack.getItem() == FactorySetup.EXOTIC_A_BLOCK_ITEM.get()) {
             tooltip.add(new TranslationTextComponent("info.woot.exotic.exotic_a", FactoryConfiguration.EXOTIC_A.get()));
         } else if (stack.getItem() == FactorySetup.EXOTIC_B_BLOCK_ITEM.get()) {

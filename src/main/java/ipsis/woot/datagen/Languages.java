@@ -230,6 +230,7 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.xp", "Generate experience");
         add("info.woot.perk.xp.0", "Generate %d%% of mob experience");
         add("info.woot.controller.0", "Right-click for required tier information");
+        add("info.woot.exotic.0", "Drops from End City loot chests");
         add("info.woot.exotic.exotic_a", "Reduce fluid ingredients by %0.2f%%");
         add("info.woot.exotic.exotic_b", "Reduce item ingredients by %0.2f%%");
         add("info.woot.exotic.exotic_c", "Increase efficiency of Conatus usage to %0.2f%%");

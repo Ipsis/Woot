@@ -10,7 +10,7 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.3-1.0.2.0] - 2020-12-06
+## [1.16.3-1.0.2.1] - 2020-12-06
 ### Added
 - Add fluid ingredients
 - Add sounds for success and failure of block placement by Intern

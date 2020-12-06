@@ -106,8 +106,6 @@ public class TartarusChunkGenerator extends ChunkGenerator {
         /**
          * This is all based off chunk coordinates - therefore 0->16
          */
-        Woot.setup.getLogger().debug("generateSurface: {}", iChunk);
-
         BlockState blockState = Blocks.AIR.getDefaultState();
         BlockPos.Mutable pos = new BlockPos.Mutable();
         for (int x1 = 0; x1 < 16; x1++) {

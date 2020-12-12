@@ -10,14 +10,24 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
+## [1.16.3-1.0.2.4] - 2020-12-??
+### Added
+### Changed
+### Fixed
+- When capturing a charged creeper ensure that loot learning uses the charged variant [#472]
+  - Note Vanilla only drops gunpowder when killed by a player
+  - Records and Creeper heads are obtained through non-player kills
+  - However this change will mean that mod added charged creeper drops can be learned
+### Removed
+
 ## [1.16.3-1.0.2.2] - 2020-12-12
 ### Added
+### Changed
+### Fixed
 - Fix incorrect perk texture displayed when applied to factory [#471]
   - Tumbling Doll Of Flesh and Pressing Engagement
 - Fix incorrect recipe for Tumbling Doll and Pressing Engagement [#471]
   - These recipes were both creating other perks
-### Changed
-### Fixed
 ### Removed
 
 ## [1.16.3-1.0.2.1] - 2020-12-06

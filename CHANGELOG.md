@@ -10,6 +10,16 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
+## [1.16.3-1.0.2.2] - 2020-12-12
+### Added
+- Fix incorrect perk texture displayed when applied to factory [#471]
+  - Tumbling Doll Of Flesh and Pressing Engagement
+- Fix incorrect recipe for Tumbling Doll and Pressing Engagement [#471]
+  - These recipes were both creating other perks
+### Changed
+### Fixed
+### Removed
+
 ## [1.16.3-1.0.2.1] - 2020-12-06
 ### Added
 - Add fluid ingredients

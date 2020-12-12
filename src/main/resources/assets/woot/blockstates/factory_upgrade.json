@@ -139,16 +139,16 @@
       "model": "woot:block/factory_upgrade_slaughter_1"
     },
     "attached=false,upgrade=slaughter_2": {
-      "model": "woot:block/factory_upgrade_slaughter_1"
+      "model": "woot:block/factory_upgrade_slaughter_2"
     },
     "attached=true,upgrade=slaughter_2": {
-      "model": "woot:block/factory_upgrade_slaughter_1"
+      "model": "woot:block/factory_upgrade_slaughter_2"
     },
     "attached=false,upgrade=slaughter_3": {
-      "model": "woot:block/factory_upgrade_slaughter_1"
+      "model": "woot:block/factory_upgrade_slaughter_3"
     },
     "attached=true,upgrade=slaughter_3": {
-      "model": "woot:block/factory_upgrade_slaughter_1"
+      "model": "woot:block/factory_upgrade_slaughter_3"
     },
     "attached=false,upgrade=crusher_1": {
       "model": "woot:block/factory_upgrade_crusher_1"
@@ -157,16 +157,16 @@
       "model": "woot:block/factory_upgrade_crusher_1"
     },
     "attached=false,upgrade=crusher_2": {
-      "model": "woot:block/factory_upgrade_crusher_1"
+      "model": "woot:block/factory_upgrade_crusher_2"
     },
     "attached=true,upgrade=crusher_2": {
-      "model": "woot:block/factory_upgrade_crusher_1"
+      "model": "woot:block/factory_upgrade_crusher_2"
     },
     "attached=false,upgrade=crusher_3": {
-      "model": "woot:block/factory_upgrade_crusher_1"
+      "model": "woot:block/factory_upgrade_crusher_3"
     },
     "attached=true,upgrade=crusher_3": {
-      "model": "woot:block/factory_upgrade_crusher_1"
+      "model": "woot:block/factory_upgrade_crusher_3"
     }
   }
 }

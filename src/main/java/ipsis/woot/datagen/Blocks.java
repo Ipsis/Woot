@@ -411,16 +411,16 @@ public class Blocks extends BaseBlockStateProvider {
                 .modelForState().modelFile(upgrade1).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, false)
                 .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_2)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade2).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, true)
                 .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_2)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade2).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, false)
                 .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_3)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade3).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, true)
                 .with(UpgradeBlock.UPGRADE, Perk.SLAUGHTER_3)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade3).addModel();
 
         upgrade1 = models().cubeAll("factory_upgrade_crusher_1", modLoc("item/crusher_1"));
         upgrade2 = models().cubeAll("factory_upgrade_crusher_2", modLoc("item/crusher_2"));
@@ -433,16 +433,16 @@ public class Blocks extends BaseBlockStateProvider {
                 .modelForState().modelFile(upgrade1).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, false)
                 .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_2)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade2).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, true)
                 .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_2)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade2).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, false)
                 .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_3)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade3).addModel();
         builder.partialState().with(BlockStateProperties.ATTACHED, true)
                 .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_3)
-                .modelForState().modelFile(upgrade1).addModel();
+                .modelForState().modelFile(upgrade3).addModel();
 
         machineBlock(FactorySetup.HEART_BLOCK.get(), "heart", "block/heart");
         machineBlock(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "fluidconvertor", "block/fluidconvertor");

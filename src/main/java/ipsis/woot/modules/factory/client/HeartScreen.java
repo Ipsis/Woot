@@ -48,9 +48,9 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         ySize = GUI_HEIGHT;
     }
 
-    private List<StackElement> stackElements = new ArrayList<>();
-    private List<StackElement> mobElements = new ArrayList<>();
-    private List<StackElement> upgradeElements = new ArrayList<>();
+    private List<GuiItemStackElement> dropElements = new ArrayList<>();
+    private List<GuiItemStackElement> mobElements = new ArrayList<>();
+    private List<GuiItemStackElement> upgradeElements = new ArrayList<>();
     private List<GuiStackElement> recipeElements = new ArrayList<>();
     private StackElement exoticElement = new StackElement(EXOTIC_X, EXOTIC_Y);
 
@@ -83,18 +83,18 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         // Mobs
         for (int i = 0; i < 4; i++)
-            mobElements.add(new StackElement(MOBS_X + (i * 18), MOBS_Y, true));
+            mobElements.add(new GuiItemStackElement(MOBS_X + (i * 18), MOBS_Y, true));
 
         // Upgrades
         for (int i = 0; i < 4; i++)
-            upgradeElements.add(new StackElement(PERKS_X + (i * 18), PERKS_Y, true));
+            upgradeElements.add(new GuiItemStackElement(PERKS_X + (i * 18), PERKS_Y, true));
 
         // Recipe
 
         // Drops
         for (int row = 0; row < DROPS_ROWS; row++) {
             for (int col = 0; col < DROPS_COLS; col++) {
-                stackElements.add(new StackElement(DROPS_X + (col * 18), DROPS_Y + (row * 18)));
+                dropElements.add(new GuiItemStackElement(DROPS_X + (col * 18), DROPS_Y + (row * 18)));
             }
         }
 
@@ -136,18 +136,18 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         mobElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
-        stackElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
+        dropElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         recipeElements.forEach(e -> e.drawTooltip(matrixStack, mouseX, mouseY));
         exoticElement.drawTooltip(matrixStack, mouseX, mouseY);
 
         if (renderTime == 0L)
             renderTime = Util.milliTime();
 
-        // Cycle the stacks every 5s
+        /*
         if (Util.milliTime() - renderTime > DROP_CYCLE_MS) {
-            stackElements.forEach(e -> e.cycle());
+            dropElements.forEach(e -> e.cycle());
             renderTime = Util.milliTime();
-        }
+        } */
 
         if (mouseX > guiLeft + TANK_LX && mouseX < guiLeft + TANK_RX && mouseY > guiTop + TANK_LY && mouseY < guiTop + TANK_RY)
             renderFluidTankTooltip(matrixStack, mouseX, mouseY,
@@ -159,6 +159,33 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
      */
     private boolean sync = false;
 
+    /**
+     * return true if unique drop added
+     */
+    private boolean addToDropElements(int idx, FakeMob fakeMob, ItemStack itemStack) {
+        List<ITextComponent> tooltip = getTooltipFromItem(itemStack);
+        EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
+        if (entityType != null) {
+            ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
+            tooltip.add(new StringTextComponent(String.format("%s : %.2f%%",
+                    iTextComponent.getString(), itemStack.getCount() / 100.0F)));
+        }
+
+        boolean found = false;
+        for (GuiItemStackElement guiItemStackElement : dropElements) {
+            if (guiItemStackElement.itemStack.isItemEqual(itemStack)) {
+                guiItemStackElement.addToolTip(tooltip);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            dropElements.get(idx).setItemStack(itemStack);
+            dropElements.get(idx).addToolTip(tooltip);
+        }
+        return true;
+    }
+
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
         ClientFactorySetup clientFactorySetup = container.getTileEntity().clientFactorySetup;
@@ -169,18 +196,16 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             int idx = 0;
 
             // Drops
+            List<FakeMob> knownMobs = new ArrayList<>();
             for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
+                if (knownMobs.contains(fakeMob))
+                    continue;
+
+                knownMobs.add(fakeMob);
                 ClientFactorySetup.Mob mobInfo = clientFactorySetup.mobInfo.get(fakeMob);
                 for (ItemStack itemStack : mobInfo.drops) {
-                    List<ITextComponent> tooltip = getTooltipFromItem(itemStack);
-                    EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
-                    if (entityType != null) {
-                        ITextComponent iTextComponent = new TranslationTextComponent(entityType.getTranslationKey());
-                        tooltip.add(new StringTextComponent(String.format("%s : %.2f%%",
-                                iTextComponent.getString(), itemStack.getCount() / 100.0F)));
-                    }
-                    stackElements.get(idx).addDrop(itemStack, tooltip);
-                    idx = (idx + 1) % stackElements.size();
+                    if (addToDropElements(idx, fakeMob, itemStack))
+                        idx = (idx + 1) % dropElements.size();
                 }
             }
 
@@ -198,7 +223,8 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
             for (FakeMob fakeMob : clientFactorySetup.controllerMobs) {
                 ItemStack controllerStack = ControllerTileEntity.getItemStack(fakeMob);
                 List<ITextComponent> tooltip = getTooltipFromItem(controllerStack);
-                mobElements.get(idx).addDrop(controllerStack, tooltip);
+                mobElements.get(idx).setItemStack(controllerStack);
+                mobElements.get(idx).addToolTip(tooltip);
                 mobElements.get(idx).unlock();
                 idx++;
             }
@@ -231,7 +257,8 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     tooltip.add(new StringTextComponent(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1])));
                     tooltip.add(new StringTextComponent(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2])));
                 }
-                upgradeElements.get(idx).addDrop(itemStack, tooltip);
+                upgradeElements.get(idx).setItemStack(itemStack);
+                upgradeElements.get(idx).addToolTip(tooltip);
                 upgradeElements.get(idx).unlock();
                 idx = (idx + 1) % upgradeElements.size();
             }
@@ -284,7 +311,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         mobElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         recipeElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
-        stackElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
+        dropElements.forEach(e -> e.drawForeground(matrixStack, mouseX, mouseY));
         exoticElement.drawForeground(matrixStack, mouseX, mouseY);
     }
 
@@ -306,7 +333,7 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
 
         mobElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         upgradeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
-        stackElements.forEach(e -> e.drawBackground(mouseX, mouseY));
+        dropElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         recipeElements.forEach(e -> e.drawBackground(mouseX, mouseY));
         exoticElement.drawBackground(mouseX, mouseY);
 

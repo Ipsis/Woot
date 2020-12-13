@@ -13,11 +13,13 @@ no loot learning can occur.
 ## [1.16.3-1.0.2.4] - 2020-12-??
 ### Added
 ### Changed
+- Heart display now shows unique items (ie. two creeper controllers only shown gunpowder once)
 ### Fixed
 - When capturing a charged creeper ensure that loot learning uses the charged variant [#472]
   - Note Vanilla only drops gunpowder when killed by a player
   - Records and Creeper heads are obtained through non-player kills
   - However this change will mean that mod added charged creeper drops can be learned
+- Fixed the 1.16.3-1.0.2.2 changelog reporting fixes as additions ....
 ### Removed
 
 ## [1.16.3-1.0.2.2] - 2020-12-12

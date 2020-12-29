@@ -303,7 +303,7 @@ public class Languages extends LanguageProvider {
         add("misc.woot.tagged_mob", "%s [%s]");
 
         // Jei
-        add("jei.woot.shard", "Generated from the factory with the Shard perk installed.");
+        add("jei.woot.shard", "Generated from the factory with the Scale The Summit perk installed.");
         add("jei.woot.anvil.0", "Used to create controllers.");
         add("jei.woot.anvil.1", "Must be placed on a Magma block.");
         add("jei.woot.anvil.2", "Items are right-clicked onto the top of the anvil to place them.");

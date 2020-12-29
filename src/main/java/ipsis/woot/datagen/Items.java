@@ -24,7 +24,7 @@ public class Items extends BaseItemModelProvider {
     @Override
     protected void registerModels() {
         itemHandheld(AnvilSetup.HAMMER_ITEM.get(), "item/hammer");
-        itemGenerated(AnvilSetup.PLATE_DIE_ITEM.get(), "item/dye_die");
+        itemGenerated(AnvilSetup.PLATE_DIE_ITEM.get(), "item/plate_die");
         itemGenerated(AnvilSetup.SHARD_DIE_ITEM.get(), "item/shard_die");
         itemGenerated(AnvilSetup.DYE_DIE_ITEM.get(), "item/dye_die");
         parentedBlock(AnvilSetup.ANVIL_BLOCK.get(), "block/anvil");

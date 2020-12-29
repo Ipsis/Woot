@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "woot:item/dye_die"
+    "layer0": "woot:item/plate_die"
   }
 }

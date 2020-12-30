@@ -342,5 +342,49 @@ public class Languages extends LanguageProvider {
         // Hwyla
         add("config.waila.plugin_woot", "Woot");
         add("config.waila.plugin_woot.display_layout_items", "Show Layout Items");
+
+        // Advancements
+        add("advancements.woot.root.title", "Woot");
+        add("advancements.woot.root.description", "Get your lovely loot drops here");
+
+        add("advancements.woot.si_ingot.title", "How much for one ingot!?");
+        add("advancements.woot.si_ingot.description", "Craft your first ingot the expensive way");
+
+        add("advancements.woot.si_anvil.title", "Shape the things to come");
+        add("advancements.woot.si_anvil.description", "Craft an Stygian Anvil");
+
+        add("advancements.woot.ya_hammer.title", "Yet ANOTHER #?!$ Hammer");
+        add("advancements.woot.ya_hammer.description", "Because we all need just one more hammer");
+
+        add("advancements.woot.layout.title", "I'm not building that by hand!");
+        add("advancements.woot.layout.description", "Craft a Layout Guide to see the factory layouts");
+
+        add("advancements.woot.intern.title", "Will work for exposure");
+        add("advancements.woot.intern.description", "Get an Intern to do all the factory building for you");
+
+        add("advancements.woot.shard_die.title", "Careful, it's got shard edges");
+        add("advancements.woot.shard_die.description", "Craft a Shard Die on the Stygian Anvil");
+
+        add("advancements.woot.plate_die.title", "Hammering plates doesn't break them");
+        add("advancements.woot.plate_die.description", "Craft a Plate Die on the Stygian Anvil");
+
+        add("advancements.woot.dye_die.title", "Dye, Die, My Darling");
+        add("advancements.woot.dye_die.description", "Craft a Dye Casing Die on the Stygian Anvil");
+
+        add("advancements.woot.capture_mob.title", "All mobs were harmed");
+        add("advancements.woot.capture_mob.description", "Create a Mob Shard, capture a sheep and fully program it");
+
+        add("advancements.woot.squeezer.title", "A tight squeeze");
+        add("advancements.woot.squeezer.description", "Craft a Dye Liquifier for all your dye needs");
+
+        add("advancements.woot.infuser.title", "Injection Press");
+        add("advancements.woot.infuser.description", "Craft an Injection Press");
+
+        add("advancements.woot.vat.title", "Value added tax");
+        add("advancements.woot.vat.description", "Craft a VAT");
+
+        add("advancements.woot.pure_dye.title", "All the (16) colours in the world");
+        add("advancements.woot.pure_dye.description", "Collect a bucket of Pure Dye Fluid");
+
     }
 }

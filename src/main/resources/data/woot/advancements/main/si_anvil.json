@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/si_ingot",
+  "display": {
+    "icon": {
+      "item": "woot:anvil"
+    },
+    "title": {
+      "translate": "advancements.woot.si_anvil.title"
+    },
+    "description": {
+      "translate": "advancements.woot.si_anvil.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "si_anvil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:anvil"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "si_anvil"
+    ]
+  ]
+}

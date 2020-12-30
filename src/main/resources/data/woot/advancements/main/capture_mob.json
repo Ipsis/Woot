@@ -1,0 +1,31 @@
+{
+  "parent": "woot:main/shard_die",
+  "display": {
+    "icon": {
+      "item": "woot:mobshard"
+    },
+    "title": {
+      "translate": "advancements.woot.capture_mob.title"
+    },
+    "description": {
+      "translate": "advancements.woot.capture_mob.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "capture_mob": {
+      "trigger": "woot:mobcapture",
+      "conditions": {
+        "mob": "minecraft:sheep"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "capture_mob"
+    ]
+  ]
+}

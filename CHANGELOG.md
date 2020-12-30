@@ -10,7 +10,7 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.3-1.0.2.4] - 2020-12-??
+## [1.16.3-1.0.3.0] - 2020-12-??
 ### Added
 ### Changed
 - Heart display now shows unique items (ie. two creeper controllers only shown gunpowder once)
@@ -21,6 +21,9 @@ no loot learning can occur.
   - However this change will mean that mod added charged creeper drops can be learned
 - Fixed the 1.16.3-1.0.2.2 changelog reporting fixes as additions ....
 - Fixed Injection Press not checking for correct amount of fluid [#477]
+- Fixed duplicate texture for plate and dye die
+- Fix primary base using dye casing and dye plate - should only use dye plates
+- Fix tier shard JEI info to state Scale The Summit perk generates them [#474]
 ### Removed
 
 ## [1.16.3-1.0.2.2] - 2020-12-12

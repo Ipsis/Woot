@@ -20,6 +20,7 @@ no loot learning can occur.
   - Records and Creeper heads are obtained through non-player kills
   - However this change will mean that mod added charged creeper drops can be learned
 - Fixed the 1.16.3-1.0.2.2 changelog reporting fixes as additions ....
+- Fixed Injection Press not checking for correct amount of fluid [#477]
 ### Removed
 
 ## [1.16.3-1.0.2.2] - 2020-12-12

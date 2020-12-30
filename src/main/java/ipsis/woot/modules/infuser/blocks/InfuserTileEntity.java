@@ -330,6 +330,10 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         if (currRecipe.hasAugment() && currRecipe.getAugmentCount() > inputSlots.getStackInSlot(AUGMENT_SLOT).getCount())
             return false;
 
+        FluidStack fluidStack = inputTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
+        if (!fluidStack.containsFluid(currRecipe.getFluidInput()))
+            return false;
+
         if (outputSlot.getStackInSlot(OUTPUT_SLOT).isEmpty())
             return true;
 
@@ -352,6 +356,10 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             return false;
 
         if (currRecipe.hasAugment() && currRecipe.getAugmentCount() > inputSlots.getStackInSlot(AUGMENT_SLOT).getCount())
+            return false;
+
+        FluidStack fluidStack = inputTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
+        if (!fluidStack.containsFluid(currRecipe.getFluidInput()))
             return false;
 
         return true;
@@ -381,8 +389,8 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             FluidStack fluidStack = inputTank.map(h ->h.getFluid()).orElse(FluidStack.EMPTY);
             for (InfuserRecipe r : recipes) {
                 if (r.getFluidInput().isFluidEqual(fluidStack)) {
-                    currRecipe = r;
-                    return;
+                        currRecipe = r;
+                        return;
                 }
             }
         }

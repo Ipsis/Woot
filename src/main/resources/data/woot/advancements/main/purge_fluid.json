@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/vat",
+  "display": {
+    "icon": {
+      "item": "woot:mob_essence_fluid_bucket"
+    },
+    "title": {
+      "translate": "advancements.woot.purge_fluid.title"
+    },
+    "description": {
+      "translate": "advancements.woot.purge_fluid.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "purge_fluid": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:mob_essence_fluid_bucket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "purge_fluid"
+    ]
+  ]
+}

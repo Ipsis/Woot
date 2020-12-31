@@ -1,18 +1,19 @@
 package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.Woot;
+import ipsis.woot.advancements.Advancements;
 import ipsis.woot.config.Config;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.util.FakeMob;
-import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -130,8 +131,11 @@ public class MobShardItem extends Item {
             }
         }
 
-        if (!foundStack.isEmpty())
+        if (!foundStack.isEmpty()) {
             incrementKills(foundStack, 1);
+            if (isFullyProgrammed(foundStack) && playerEntity instanceof ServerPlayerEntity)
+                Advancements.MOB_CAPTURE_TRIGGER.trigger((ServerPlayerEntity) playerEntity, fakeMob);
+        }
     }
 
     private static void incrementKills(ItemStack itemStack, int v) {

@@ -2,9 +2,12 @@ package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactorySetup;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -105,6 +108,8 @@ public class XpShardBaseItem extends Item {
         if (itemStack.isEmpty())
             return ActionResult.resultPass(playerIn.getHeldItem(handIn));
 
+        ItemStack advancementStack = itemStack.copy();
+
         worldIn.playSound(
                 null,
                 playerIn.getPosX(),
@@ -136,6 +141,8 @@ public class XpShardBaseItem extends Item {
             }
             if (xp > 0) {
                 playerIn.giveExperiencePoints(xp);
+                if (playerIn instanceof ServerPlayerEntity)
+                    CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerIn, advancementStack);
             }
         }
         return ActionResult.resultSuccess(itemStack);

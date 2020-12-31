@@ -13,6 +13,10 @@ import ipsis.woot.modules.squeezer.SqueezerSetup;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class Languages extends LanguageProvider {
 
     public Languages(DataGenerator gen, String locale) {
@@ -342,5 +346,91 @@ public class Languages extends LanguageProvider {
         // Hwyla
         add("config.waila.plugin_woot", "Woot");
         add("config.waila.plugin_woot.display_layout_items", "Show Layout Items");
+
+        // Advancements
+        class AdvText {
+            String name, title, description;
+            public AdvText(String name, String title, String description) {
+                this.name = name;
+                this.title = title;
+                this.description = description;
+            }
+        }
+        AdvText[] advancements = {
+                new AdvText("root", "Woot", "The loot mod (yes those are the real textures)"),
+
+                new AdvText("oracle", "Scrying The Future", "Craft Dee's Oracle to see learned mob drops"),
+
+                new AdvText("si_ingot", "How much for one ingot!?", "Craft your first ingot the expensive way"),
+                new AdvText("si_anvil", "Shape the things to come", "Craft a Stygian Anvil"),
+                new AdvText("ya_hammer", "Yet ANOTHER #?!$ Hammer","Because we all need just one more hammer"),
+                new AdvText("si_dust", "Cheaper ingots", "Craft Stygian Iron Dust"),
+
+                new AdvText("layout", "I'm not building that by hand!", "Craft a Layout Guide to see the factory layouts"),
+                new AdvText("intern" ,"Will work for exposure", "Get an Intern to do all the factory building for you"),
+
+                new AdvText("shard_die", "Careful, it's got shard edges", "Craft a Shard Die on the Stygian Anvil"),
+                new AdvText("plate_die", "A plate by any other name",  "Craft a Plate Die on the Stygian Anvil"),
+                new AdvText("dye_die", "Dye, Die, My Darling", "Craft a Dye Casing Die on the Stygian Anvil"),
+                new AdvText("si_plate", "Served on a Stygian platter", "Craft a Stygian Iron Plate"),
+                new AdvText("casing", "Casing the joint", "Craft a Machine Casing"),
+
+                new AdvText("squeezer", "A tight squeeze", "Craft a Dye Liquifier for all your dye needs"),
+                new AdvText("pure_dye", "All the (16) colours in the world", "Collect a bucket of Pure Dye Fluid"),
+
+                new AdvText("infuser", "Freedom of the press", "Craft an Injection Press"),
+                new AdvText("prism", "Prism or prison?", "Craft a Prism"),
+                new AdvText("magenta", "ZX Spectrum key 3", "Craft a Magenta Dye Plate"),
+                new AdvText("factory_a", "Dark Passion Play", "Craft an Amaranth Block"),
+                new AdvText("factory_b", "No bugs in this resin", "Craft an Amber Block"),
+
+                new AdvText("vat", "Value added tax", "Craft a VAT"),
+                new AdvText("purge_fluid", "Smells foul to me", "Collect a bucket of Purge Fluid"),
+                new AdvText("conatus_fluid", "Takes a lot of effort", "Collect a bucket of Conatus Fluid"),
+                new AdvText("cell_1", "Shotglass", "Craft a Basic Conatus Cell"),
+                new AdvText("cell_2", "Tumbler", "Craft an Advanced Conatus Cell"),
+                new AdvText("cell_3", "Pint glass", "Craft a Premium Conatus Cell"),
+                new AdvText("cell_4", "Stein glass", "Craft an Ultimate Conatus Cell"),
+
+                new AdvText("ench_squeezer", "Look how it sparkles", "Craft an Enchant Liquifier"),
+                new AdvText("ench_fluid", "Do not drink", "Collect a bucket of Liquid Enchant"),
+                new AdvText("ench_plate_1", "GD. 1=10", "Craft a Neophyte Plate"),
+                new AdvText("ench_plate_2", "GD. 6=5", "Craft an Adeptus Plate"),
+                new AdvText("ench_plate_3", "GD. 9=2", "Craft a Magus Plate"),
+
+                new AdvText("crusher_perk_1", "Please do not press this again", "Craft a Pressing Engagement I Perk"),
+                new AdvText("eff_perk_1", "More coals for Thomas", "Craft a Stoke The Boiler I Perk"),
+                new AdvText("head_perk_1", "Anne Boleyn's bad hair day", "Craft a Head Start I Perk"),
+                new AdvText("looting_perk_1", "Captain Jack Sparrow?", "Craft a Treasure Island I Perk"),
+                new AdvText("mass_perk_1", "Exterminate", "Craft a Rampage I Perk"),
+                new AdvText("rate_perk_1", "Punch It (Chewie)!", "Craft a Feeding Frenzy I Perk"),
+                new AdvText("shard_perk_1", "Nearly at the top", "Craft a Scale The Summit I Perk"),
+                new AdvText("slaughter_perk_1", "Not for the faint hearted", "Craft a Tumbling Doll Of Flesh I Perk"),
+                new AdvText("tier_1_shard", "Basic essentials", "Collect Celadon Essence"),
+                new AdvText("tier_2_shard", "Hard to find", "Collect Cerulean Essence"),
+                new AdvText("tier_3_shard", "Could this be any rarer", "Collect Byzantium Essence"),
+                new AdvText("factory_c_block", "Hulk smash", "Craft a Celadon Block"),
+                new AdvText("factory_d_block", "Heaven sent", "Craft a Cerulean Block"),
+                new AdvText("factory_e_block", "Not Tyrian", "Craft a Byzantium Block"),
+                new AdvText("xp_perk_1", "Madman's knowledge", "Craft a Wisdom I Perk"),
+                new AdvText("xp_shard", "A bit of experience", "Consume an XP Shard"),
+                new AdvText("xp_splinter", "A tiny bit of experience", "Consume an XP Splinter"),
+
+                new AdvText("capture_mob", "All mobs were harmed", "Create a Mob Shard, capture a sheep and fully program it"),
+                new AdvText("controller", "I have the power", "Craft a Mob Controller"),
+                new AdvText("tier1", "Graduate engineer", "Validate a Zelator factory with the Intern"),
+                new AdvText("tier2", "Engineer", "Validate a Theoricus factory with the Intern"),
+                new AdvText("tier3", "Lead Engineer","Validate a Practicus factory with the Intern"),
+                new AdvText("tier4", "Principal Engineer","Validate a Exemptus factory with the Intern"),
+                new AdvText("tier5", "Architect","Validate a Magister factory with the Intern"),
+        };
+
+        for (AdvText a : advancements) {
+            add("advancements.woot." + a.name + ".title", a.title);
+            add("advancements.woot." + a.name + ".description", a.description);
+        }
+
+
+
     }
 }

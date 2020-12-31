@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/magenta",
+  "display": {
+    "icon": {
+      "item": "woot:factory_a"
+    },
+    "title": {
+      "translate": "advancements.woot.factory_a.title"
+    },
+    "description": {
+      "translate": "advancements.woot.factory_a.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "factory_a": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:factory_a"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "factory_a"
+    ]
+  ]
+}

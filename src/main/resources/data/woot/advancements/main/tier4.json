@@ -1,0 +1,35 @@
+{
+  "parent": "woot:main/factory_d_block",
+  "display": {
+    "icon": {
+      "item": "woot:cap_c"
+    },
+    "title": {
+      "translate": "advancements.woot.tier4.title"
+    },
+    "description": {
+      "translate": "advancements.woot.tier4.description"
+    },
+    "frame": "goal",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "tier4": {
+      "trigger": "woot:validatetier",
+      "conditions": {
+        "tier": 4
+      }
+    }
+  },
+  "requirements": [
+    [
+      "tier4"
+    ]
+  ]
+}

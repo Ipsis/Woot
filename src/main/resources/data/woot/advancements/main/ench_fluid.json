@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/ench_squeezer",
+  "display": {
+    "icon": {
+      "item": "woot:enchant_fluid_bucket"
+    },
+    "title": {
+      "translate": "advancements.woot.ench_fluid.title"
+    },
+    "description": {
+      "translate": "advancements.woot.ench_fluid.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "ench_fluid": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:enchant_fluid_bucket"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ench_fluid"
+    ]
+  ]
+}

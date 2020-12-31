@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.layout;
 
+import ipsis.woot.advancements.Advancements;
 import ipsis.woot.modules.factory.FactoryComponent;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.multiblock.MultiBlockGlueProvider;
@@ -9,6 +10,7 @@ import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -138,6 +140,8 @@ public class FactoryHelper {
                     new TranslationTextComponent(
                     "chat.woot.intern.validate.valid", StringHelper.translate(tier.getTranslationKey())),
                     true);
+            if (playerEntity instanceof ServerPlayerEntity)
+                Advancements.TIER_VALIDATE_TRIGGER.trigger((ServerPlayerEntity)playerEntity, tier);
         }
     }
 }

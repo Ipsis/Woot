@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/cell_3",
+  "display": {
+    "icon": {
+      "item": "woot:cell_4"
+    },
+    "title": {
+      "translate": "advancements.woot.cell_4.title"
+    },
+    "description": {
+      "translate": "advancements.woot.cell_4.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "cell_4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:cell_4"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cell_4"
+    ]
+  ]
+}

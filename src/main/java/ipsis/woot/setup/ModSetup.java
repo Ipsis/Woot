@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 //import ipsis.woot.compat.top.WootTopPlugin;
+import ipsis.woot.advancements.Advancements;
 import ipsis.woot.compat.top.WootTopPlugin;
 import ipsis.woot.config.OverrideLoader;
 import ipsis.woot.fluilds.FluidSetup;
@@ -68,6 +69,7 @@ public class ModSetup {
 
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
 
+        Advancements.init();
         PolicyRegistry.get().loadFromConfig();
         ModFiles.INSTANCE.init();
         NetworkChannel.init();

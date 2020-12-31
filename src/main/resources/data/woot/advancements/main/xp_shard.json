@@ -1,0 +1,34 @@
+{
+  "parent": "woot:main/xp_perk_1",
+  "display": {
+    "icon": {
+      "item": "woot:xpshard"
+    },
+    "title": {
+      "translate": "advancements.woot.xp_shard.title"
+    },
+    "description": {
+      "translate": "advancements.woot.xp_shard.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "xp_shard": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "woot:xpshard"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "xp_shard"
+    ]
+  ]
+}

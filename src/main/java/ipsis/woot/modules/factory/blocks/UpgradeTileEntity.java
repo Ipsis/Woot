@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.Woot;
+import ipsis.woot.advancements.Advancements;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.factory.Perk;
 import ipsis.woot.modules.factory.PerkType;
@@ -11,6 +12,7 @@ import ipsis.woot.util.WootDebug;
 import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -37,6 +39,8 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
                 glue.onGoodbye();
                 MultiBlockTracker.get().addEntry(pos);
                 Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
+                if (playerEntity instanceof ServerPlayerEntity)
+                    Advancements.APPLY_PERK_TRIGGER.trigger((ServerPlayerEntity) playerEntity, type);
                 return true;
             } else {
                 playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.0"), false);

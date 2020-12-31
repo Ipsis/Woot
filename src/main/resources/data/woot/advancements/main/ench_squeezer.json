@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/casing",
+  "display": {
+    "icon": {
+      "item": "woot:enchsqueezer"
+    },
+    "title": {
+      "translate": "advancements.woot.ench_squeezer.title"
+    },
+    "description": {
+      "translate": "advancements.woot.ench_squeezer.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "ench_squeezer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:enchsqueezer"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ench_squeezer"
+    ]
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "parent": "woot:main/prism",
+  "display": {
+    "icon": {
+      "item": "woot:controller"
+    },
+    "title": {
+      "translate": "advancements.woot.controller.title"
+    },
+    "description": {
+      "translate": "advancements.woot.controller.description"
+    },
+    "frame": "goal",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "controller": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "woot:controller"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "controller"
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "woot:heart"
+    },
+    "title": {
+      "translate": "advancements.woot.root.title"
+    },
+    "description": {
+      "translate": "advancements.woot.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
+  },
+  "criteria": {
+    "killed_something": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "killed_something"
+    ]
+  ]
+}

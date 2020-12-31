@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/tier_3_shard",
+  "parent": "woot:main/ench_squeezer",
   "display": {
     "icon": {
-      "item": "woot:factory_e"
+      "item": "woot:enchant_fluid_bucket"
     },
     "title": {
-      "translate": "advancements.woot.tier_3_block.title"
+      "translate": "advancements.woot.ench_fluid.title"
     },
     "description": {
-      "translate": "advancements.woot.tier_3_block.description"
+      "translate": "advancements.woot.ench_fluid.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "tier_3_block": {
+    "ench_fluid": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:factory_e"
+            "item": "woot:enchant_fluid_bucket"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "tier_3_block"
+      "ench_fluid"
     ]
   ]
 }

@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/casing",
+  "parent": "woot:main/infuser",
   "display": {
     "icon": {
-      "item": "woot:enchsqueezer"
+      "item": "woot:prism"
     },
     "title": {
-      "translate": "advancements.woot.ench_squeezer.title"
+      "translate": "advancements.woot.prism.title"
     },
     "description": {
-      "translate": "advancements.woot.ench_squeezer.description"
+      "translate": "advancements.woot.prism.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "ench_squeezer": {
+    "prism": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:enchsqueezer"
+            "item": "woot:prism"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "ench_squeezer"
+      "prism"
     ]
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "woot:main/ench_squeezer",
+  "parent": "woot:main/ench_fluid",
   "display": {
     "icon": {
       "item": "woot:ench_plate_2"

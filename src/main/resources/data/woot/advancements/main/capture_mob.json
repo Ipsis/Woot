@@ -12,8 +12,9 @@
     },
     "frame": "task",
     "show_toast": false,
-    "announce_to_chat": false,
-    "hidden": false
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
     "capture_mob": {

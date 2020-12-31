@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/casing",
+  "parent": "woot:main/ench_plate_1",
   "display": {
     "icon": {
-      "item": "woot:enchsqueezer"
+      "item": "woot:slaughter_1"
     },
     "title": {
-      "translate": "advancements.woot.ench_squeezer.title"
+      "translate": "advancements.woot.slaughter_perk_1.title"
     },
     "description": {
-      "translate": "advancements.woot.ench_squeezer.description"
+      "translate": "advancements.woot.slaughter_perk_1.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "ench_squeezer": {
+    "slaughter": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:enchsqueezer"
+            "item": "woot:slaughter_1"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "ench_squeezer"
+      "slaughter"
     ]
   ]
 }

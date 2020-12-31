@@ -18,13 +18,11 @@
   },
   "criteria": {
     "xp_splinter": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "minecraft:consume_item",
       "conditions": {
-        "items": [
-          {
-            "item": "woot:xpsplinter"
-          }
-        ]
+        "item": {
+          "item": "woot:xpsplinter"
+        }
       }
     }
   },

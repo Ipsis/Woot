@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/casing",
+  "parent": "woot:main/tier_2_shard",
   "display": {
     "icon": {
-      "item": "woot:enchsqueezer"
+      "item": "woot:factory_d"
     },
     "title": {
-      "translate": "advancements.woot.ench_squeezer.title"
+      "translate": "advancements.woot.factory_d_block.title"
     },
     "description": {
-      "translate": "advancements.woot.ench_squeezer.description"
+      "translate": "advancements.woot.factory_d_block.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "ench_squeezer": {
+    "factory_d_block": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:enchsqueezer"
+            "item": "woot:factory_d"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "ench_squeezer"
+      "factory_d_block"
     ]
   ]
 }

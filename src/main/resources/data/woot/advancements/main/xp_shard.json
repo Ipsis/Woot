@@ -18,13 +18,11 @@
   },
   "criteria": {
     "xp_shard": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "minecraft:consume_item",
       "conditions": {
-        "items": [
-          {
-            "item": "woot:xpshard"
-          }
-        ]
+        "item": {
+          "item": "woot:xpshard"
+        }
       }
     }
   },

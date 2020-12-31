@@ -1,5 +1,5 @@
 {
-  "parent": "woot:main/plate_die",
+  "parent": "woot:main/casing",
   "display": {
     "icon": {
       "item": "woot:fluidconvertor"

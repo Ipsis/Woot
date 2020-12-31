@@ -12,6 +12,7 @@ no loot learning can occur.
 
 ## [1.16.3-1.0.3.0] - 2020-12-??
 ### Added
+- Add advancements to give some path through the mod
 ### Changed
 - Heart display now shows unique items (ie. two creeper controllers only shown gunpowder once)
 ### Fixed

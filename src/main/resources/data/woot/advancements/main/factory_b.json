@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/casing",
+  "parent": "woot:main/factory_a",
   "display": {
     "icon": {
-      "item": "woot:enchsqueezer"
+      "item": "woot:factory_b"
     },
     "title": {
-      "translate": "advancements.woot.ench_squeezer.title"
+      "translate": "advancements.woot.factory_b.title"
     },
     "description": {
-      "translate": "advancements.woot.ench_squeezer.description"
+      "translate": "advancements.woot.factory_b.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "ench_squeezer": {
+    "factory_b": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:enchsqueezer"
+            "item": "woot:factory_b"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "ench_squeezer"
+      "factory_b"
     ]
   ]
 }

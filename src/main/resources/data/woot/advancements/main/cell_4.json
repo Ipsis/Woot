@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/tier_2_shard",
+  "parent": "woot:main/cell_3",
   "display": {
     "icon": {
-      "item": "woot:factory_d"
+      "item": "woot:cell_4"
     },
     "title": {
-      "translate": "advancements.woot.tier_2_block.title"
+      "translate": "advancements.woot.cell_4.title"
     },
     "description": {
-      "translate": "advancements.woot.tier_2_block.description"
+      "translate": "advancements.woot.cell_4.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "tier_2_block": {
+    "cell_4": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:factory_d"
+            "item": "woot:cell_4"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "tier_2_block"
+      "cell_4"
     ]
   ]
 }

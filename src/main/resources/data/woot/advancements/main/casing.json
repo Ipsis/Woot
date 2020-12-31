@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/casing",
+  "parent": "woot:main/si_plate",
   "display": {
     "icon": {
-      "item": "woot:enchsqueezer"
+      "item": "woot:machine_casing"
     },
     "title": {
-      "translate": "advancements.woot.ench_squeezer.title"
+      "translate": "advancements.woot.casing.title"
     },
     "description": {
-      "translate": "advancements.woot.ench_squeezer.description"
+      "translate": "advancements.woot.casing.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "ench_squeezer": {
+    "casing": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:enchsqueezer"
+            "item": "woot:machine_casing"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "ench_squeezer"
+      "casing"
     ]
   ]
 }

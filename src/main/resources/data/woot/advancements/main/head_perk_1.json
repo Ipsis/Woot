@@ -10,21 +10,20 @@
     "description": {
       "translate": "advancements.woot.head_perk_1.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": false,
     "announce_to_chat": true,
     "hidden": false,
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
+  "rewards": {
+    "experience": 5
+  },
   "criteria": {
     "head_perk_1": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "woot:applyperk",
       "conditions": {
-        "items": [
-          {
-            "item": "woot:headless_1"
-          }
-        ]
+        "perk": 19
       }
     }
   },

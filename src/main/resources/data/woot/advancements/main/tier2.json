@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/ench_plate_1",
+  "parent": "woot:main/factory_b",
   "display": {
     "icon": {
-      "item": "woot:efficiency_1"
+      "item": "woot:cap_a"
     },
     "title": {
-      "translate": "advancements.woot.eff_perk_1.title"
+      "translate": "advancements.woot.tier2.title"
     },
     "description": {
-      "translate": "advancements.woot.eff_perk_1.description"
+      "translate": "advancements.woot.tier2.description"
     },
     "frame": "goal",
     "show_toast": false,
@@ -20,16 +20,16 @@
     "experience": 5
   },
   "criteria": {
-    "eff_perk_1": {
-      "trigger": "woot:applyperk",
+    "tier2": {
+      "trigger": "woot:validatetier",
       "conditions": {
-        "perk": 1
+        "tier": 2
       }
     }
   },
   "requirements": [
     [
-      "eff_perk_1"
+      "tier2"
     ]
   ]
 }

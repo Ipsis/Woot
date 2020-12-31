@@ -1,14 +1,14 @@
 {
-  "parent": "woot:main/tier_1_shard",
+  "parent": "woot:main/ya_hammer",
   "display": {
     "icon": {
-      "item": "woot:factory_c"
+      "item": "woot:si_dust"
     },
     "title": {
-      "translate": "advancements.woot.tier_1_block.title"
+      "translate": "advancements.woot.si_dust.title"
     },
     "description": {
-      "translate": "advancements.woot.tier_1_block.description"
+      "translate": "advancements.woot.si_dust.description"
     },
     "frame": "task",
     "show_toast": false,
@@ -17,12 +17,12 @@
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
   "criteria": {
-    "tier_1_block": {
+    "si_dust": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "woot:factory_c"
+            "item": "woot:si_dust"
           }
         ]
       }
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "tier_1_block"
+      "si_dust"
     ]
   ]
 }

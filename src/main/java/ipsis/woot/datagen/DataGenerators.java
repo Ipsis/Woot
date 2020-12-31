@@ -17,7 +17,7 @@ public class DataGenerators {
             BlockTagsProvider blockTagsProvider = new BlockTagsGen(generator);
             generator.addProvider(blockTagsProvider);
             generator.addProvider(new ItemTagsGen(generator, blockTagsProvider));
-            generator.addProvider(new WootAdvancements(generator));
+            generator.addProvider(new Advancements(generator));
         }
         if (event.includeClient()) {
             generator.addProvider(new Items(generator, event.getExistingFileHelper()));

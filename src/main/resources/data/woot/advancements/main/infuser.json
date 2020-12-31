@@ -1,5 +1,5 @@
 {
-  "parent": "woot:main/plate_die",
+  "parent": "woot:main/pure_dye",
   "display": {
     "icon": {
       "item": "woot:infuser"

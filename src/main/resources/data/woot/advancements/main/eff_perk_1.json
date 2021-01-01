@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancements.woot.eff_perk_1.description"
     },
-    "frame": "goal",
+    "frame": "task",
     "show_toast": false,
     "announce_to_chat": true,
     "hidden": false,

@@ -42,6 +42,7 @@ public class FormedSetup {
     private int[] shardDropWeights = new int[]{ 0, 0, 0 };
     private int perkTierShardValue = 0;
     private Exotic exotic = Exotic.NONE;
+    private Boolean perkCapped = false;
 
     private FormedSetup() {}
     private FormedSetup(World world, Tier tier) {
@@ -60,6 +61,7 @@ public class FormedSetup {
         return LazyOptional.empty();
     }
 
+    public boolean isPerkCapped() { return this.perkCapped; }
     public Exotic getExotic() { return this.exotic; }
     public boolean hasFluidIngredientExotic() { return this.exotic == Exotic.EXOTIC_A; }
     public boolean hasItemIngredientExotic() { return this.exotic == Exotic.EXOTIC_B; }
@@ -265,10 +267,13 @@ public class FormedSetup {
                          * Tier 4+ - all upgrades
                          * You can still apply them but they don't get the same level if not a high enough tier
                          */
-                        if ((formedSetup.tier == Tier.TIER_1 || formedSetup.tier == Tier.TIER_2) && perkLevel > 1)
+                        if ((formedSetup.tier == Tier.TIER_1 || formedSetup.tier == Tier.TIER_2) && perkLevel > 1) {
                             perkLevel = 1;
-                        else if (formedSetup.tier == Tier.TIER_3 && perkLevel > 2)
+                            formedSetup.perkCapped = true;
+                        } else if (formedSetup.tier == Tier.TIER_3 && perkLevel > 2) {
                             perkLevel = 2;
+                            formedSetup.perkCapped = true;
+                        }
 
                         Woot.setup.getLogger().debug("createFromValidLayout: adding perk {}/{}", perkType, perkLevel);
                         formedSetup.perks.put(perkType, perkLevel);

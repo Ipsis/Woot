@@ -92,6 +92,7 @@ public class HeartStaticDataReply {
             }
         }
 
+        buf.writeBoolean(formedSetup.isPerkCapped());
         buf.writeInt(formedSetup.getAllPerks().size());
         for (Map.Entry<PerkType, Integer> e : formedSetup.getAllPerks().entrySet()) {
             Perk perk = Perk.getPerks(e.getKey(), e.getValue());

@@ -202,6 +202,7 @@
   "gui.woot.heart.5": "Loot Pool",
   "gui.woot.heart.6": "Item/Fluid Ingredients",
   "gui.woot.heart.7": "Exotic",
+  "gui.woot.heart.8": "Perks levels capped due to factory tier",
   "gui.woot.infuser.name": "Injection Press",
   "gui.woot.oracle.looting.0": "No looting : %.2f%%",
   "gui.woot.oracle.looting.1": "Looting I : %.2f%%",

@@ -286,6 +286,7 @@ public class Languages extends LanguageProvider {
         add("gui.woot.heart.5", "Loot Pool");
         add("gui.woot.heart.6", "Item/Fluid Ingredients");
         add("gui.woot.heart.7", "Exotic");
+        add("gui.woot.heart.8", "Perks levels capped due to factory tier");
         add("gui.woot.oracle.looting.0", "No looting : %.2f%%");
         add("gui.woot.oracle.looting.1", "Looting I : %.2f%%");
         add("gui.woot.oracle.looting.2", "Looting II : %.2f%%");

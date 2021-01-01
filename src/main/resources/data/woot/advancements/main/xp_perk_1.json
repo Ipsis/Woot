@@ -16,15 +16,14 @@
     "hidden": false,
     "background": "minecraft:textures/block/black_concrete_powder.png"
   },
+  "rewards": {
+    "experience": 5
+  },
   "criteria": {
     "xp_perk_1": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "woot:applyperk",
       "conditions": {
-        "items": [
-          {
-            "item": "woot:xp_1"
-          }
-        ]
+        "perk": 16
       }
     }
   },

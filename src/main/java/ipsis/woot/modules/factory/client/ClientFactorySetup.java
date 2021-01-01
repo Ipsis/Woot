@@ -27,6 +27,7 @@ public class ClientFactorySetup {
     public int looting = 0;
     public int recipeTicks = 0;
     public int recipeFluid = 0;
+    public boolean perkCapped = false;
 
     // shards
     public int shardRolls = 1;
@@ -87,6 +88,7 @@ public class ClientFactorySetup {
             factorySetup.mobInfo.put(fakeMob, mob);
         }
 
+        factorySetup.perkCapped = buf.readBoolean();
         int perkCount = buf.readInt();
         for (int x = 0; x < perkCount; x++)
             factorySetup.perks.add(Perk.getPerks(buf.readInt()));

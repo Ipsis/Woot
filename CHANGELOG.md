@@ -10,9 +10,10 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.3-1.0.3.0] - 2020-12-??
+## [1.16.3-1.0.3.0] - 2021-01-??
 ### Added
 - Add advancements to give some path through the mod
+- Visual indication in Heart GUI when perk tier has been capped due to low factory tier [#478]
 ### Changed
 - Heart display now shows unique items (ie. two creeper controllers only shown gunpowder once)
 ### Fixed

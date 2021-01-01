@@ -18,13 +18,9 @@
   },
   "criteria": {
     "slaughter": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "woot:applyperk",
       "conditions": {
-        "items": [
-          {
-            "item": "woot:slaughter_1"
-          }
-        ]
+        "perk": 22
       }
     }
   },

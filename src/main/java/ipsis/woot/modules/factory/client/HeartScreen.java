@@ -22,12 +22,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -256,6 +258,11 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
                     tooltip.add(new StringTextComponent(String.format("Basic: %.2f%%", clientFactorySetup.shardDrops[0])));
                     tooltip.add(new StringTextComponent(String.format("Advanced: %.2f%%", clientFactorySetup.shardDrops[1])));
                     tooltip.add(new StringTextComponent(String.format("Elite: %.2f%%", clientFactorySetup.shardDrops[2])));
+                }
+                if (clientFactorySetup.perkCapped) {
+                    ITextComponent iTextComponent1 = new TranslationTextComponent(clientFactorySetup.tier.getTranslationKey());
+                    ITextComponent iTextComponent2 = new TranslationTextComponent("gui.woot.heart.8");
+                    tooltip.add(new StringTextComponent(TextFormatting.RED + String.format("%s : %s", iTextComponent2.getString(), iTextComponent1.getString())));
                 }
                 upgradeElements.get(idx).setItemStack(itemStack);
                 upgradeElements.get(idx).addToolTip(tooltip);

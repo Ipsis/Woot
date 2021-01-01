@@ -18,13 +18,9 @@
   },
   "criteria": {
     "crusher": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "woot:applyperk",
       "conditions": {
-        "items": [
-          {
-            "item": "woot:crusher_1"
-          }
-        ]
+        "perk": 25
       }
     }
   },

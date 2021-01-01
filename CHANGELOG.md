@@ -10,7 +10,7 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.3-1.0.3.0] - 2021-01-??
+## [1.16.4-1.0.3.0] - 2021-01-01
 ### Added
 - Add advancements to give some path through the mod
 - Visual indication in Heart GUI when perk tier has been capped due to low factory tier [#478]
@@ -28,7 +28,7 @@ no loot learning can occur.
 - Fix tier shard JEI info to state Scale The Summit perk generates them [#474]
 ### Removed
 
-## [1.16.3-1.0.2.2] - 2020-12-12
+## [1.16.4-1.0.2.2] - 2020-12-12
 ### Added
 ### Changed
 ### Fixed
@@ -38,7 +38,7 @@ no loot learning can occur.
   - These recipes were both creating other perks
 ### Removed
 
-## [1.16.3-1.0.2.1] - 2020-12-06
+## [1.16.4-1.0.2.1] - 2020-12-06
 ### Added
 - Add fluid ingredients
 - Add sounds for success and failure of block placement by Intern

@@ -13,6 +13,7 @@ no loot learning can occur.
 ## [1.16.4-1.0.3.1] - 2021-??-??
 ### Added
 ### Changed
+- Cap the maximum enchant in the Enchant Liquifier so every item can be processed [#486]
 ### Fixed
 - Fix Dye Liquifier tooltip for white [#482]
 ### Removed

@@ -29,6 +29,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -319,6 +320,14 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         return super.getCapability(cap, side);
     }
 
+    private int capEnchantAmount(int amount) {
+
+        int max = SqueezerConfiguration.getEnchantFluidAmount(5);
+        max *= 4;
+        max = MathHelper.clamp(max, 0, SqueezerConfiguration.ENCH_SQUEEZER_TANK_CAPACITY.get());
+        return MathHelper.clamp(amount, 0, max);
+    }
+
     private int getEnchantAmount(ItemStack itemStack) {
         int amount = 0;
         if (!itemStack.isEmpty() && EnchantmentHelper.isEnchanted(itemStack)) {
@@ -335,7 +344,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
                     amount += SqueezerConfiguration.getEnchantFluidAmount(compoundNBT.getInt("lvl"));
             }
         }
-        return amount;
+        return capEnchantAmount(amount);
     }
 
     private int getEnchantEnergy(ItemStack itemStack) {

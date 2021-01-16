@@ -72,7 +72,7 @@ public class DyeSqueezerScreen extends WootContainerScreen<DyeSqueezerContainer>
                     mouseX, mouseY);
         if (isPointInRegion(82, 60, 51, 8, mouseX, mouseY))
             renderTooltip(matrixStack, new TranslationTextComponent(
-                    "gui.woot.squeezer.blue",
+                    "gui.woot.squeezer.white",
                     container.getWhiteDyeAmount(),
                     SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get()),
                     mouseX, mouseY);

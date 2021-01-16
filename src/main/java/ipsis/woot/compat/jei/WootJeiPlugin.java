@@ -5,18 +5,22 @@ import ipsis.woot.crafting.*;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.fluidconvertor.client.FluidConvertorScreen;
 import ipsis.woot.modules.generic.GenericSetup;
+import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.infuser.client.InfuserScreen;
 import ipsis.woot.modules.layout.LayoutSetup;
-import ipsis.woot.modules.squeezer.DyeMakeup;
+
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.modules.squeezer.client.DyeSqueezerScreen;
 import ipsis.woot.modules.squeezer.client.EnchantSqueezerScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
@@ -147,6 +151,15 @@ public class WootJeiPlugin implements IModPlugin {
                 VanillaTypes.FLUID,
                 "jei.woot.puredye"
         );
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(AnvilSetup.ANVIL_BLOCK.get()), AnvilRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(SqueezerSetup.SQUEEZER_BLOCK.get()), DyeSqueezerRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get()), EnchantSqueezerRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get()), FluidConvertorRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(InfuserSetup.INFUSER_BLOCK.get()), InfuserRecipeCategory.UID);
     }
 
     @Override

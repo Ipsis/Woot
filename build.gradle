@@ -68,6 +68,9 @@ minecraft {
             // Ansi control
             property 'forge.logging.noansi', 'false'
 
+            // Needed for Patchouli to work in-dev
+            property 'mixin.env.disableRefMap', 'true'
+
             mods {
                 woot {
                     source sourceSets.main
@@ -88,6 +91,9 @@ minecraft {
             // Ansi control
             property 'forge.logging.noansi', 'false'
 
+            // Needed for Patchouli to work in-dev
+            property 'mixin.env.disableRefMap', 'true'
+
             mods {
                 woot {
                     source sourceSets.main
@@ -104,6 +110,9 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            // Needed for Patchouli to work in-dev
+            property 'mixin.env.disableRefMap', 'true'
 
             args '--mod', 'woot', '--all', '--output', file('src/generated/resources'), '--existing', sourceSets.main.resources.srcDirs[0]
 

@@ -66,20 +66,20 @@ public class HeartBlock extends Block implements FactoryComponentProvider, WootD
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
+        if (worldIn.isRemote || handIn == Hand.OFF_HAND)
+            return ActionResultType.SUCCESS;
+
         if (player.isSneaking())
             return ActionResultType.FAIL;
 
-        if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
-
         if (player.getHeldItemMainhand().getItem() == LayoutSetup.INTERN_ITEM.get() || player.getHeldItemMainhand().getItem() == DebugSetup.DEBUG_ITEM.get()) {
                 // intern is used on the heart, so cannot open the gui
-                return ActionResultType.CONSUME; // Block was not activated
+                return ActionResultType.FAIL; // Block was not activated
         }
 
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof HeartTileEntity && !((HeartTileEntity) te).isFormed())
-                return ActionResultType.CONSUME;
+                return ActionResultType.FAIL;
 
         if (te instanceof INamedContainerProvider)
             NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());

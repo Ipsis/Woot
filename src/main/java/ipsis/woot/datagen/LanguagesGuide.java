@@ -406,8 +406,8 @@ public class LanguagesGuide {
                 // Crusher
                 { PERKS_TAG + "crusher.name", "Pressing Engagement" },
                 { PERKS_TAG + "crusher.0",
-                        "This perk generates Industrial Foregoing essence." +
-                                "Higher levels of this perk will increase the generated amount of fluid."
+                        "This perk generates Industrial Foregoing essence in tanks adjacent to the Loot Exporter. " +
+                        "Higher levels of this perk will increase the generated amount of fluid."
                 },
                 { PERKS_TAG + "crusher.1",
                         "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +
@@ -469,8 +469,8 @@ public class LanguagesGuide {
                 // Slaugher
                 { PERKS_TAG + "slaughter.name", "Tumbling Doll Of Flesh" },
                 { PERKS_TAG + "slaughter.0",
-                        "This perk generates Industrial Foregoing pink slime and liquid meat." +
-                                "Higher levels of this perk will increase the generated amount of the fluids."
+                        "This perk generates Industrial Foregoing pink slime and liquid meat in tanks adjacent to the Loot Exporter. " +
+                        "Higher levels of this perk will increase the generated amount of the fluids."
                 },
                 { PERKS_TAG + "slaughter.1",
                         "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +

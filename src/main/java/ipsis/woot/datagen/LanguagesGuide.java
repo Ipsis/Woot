@@ -88,6 +88,12 @@ public class LanguagesGuide {
                     "The factory is fueled by Conatus Fluid which is stored in the $(item)Conatus Cell$(0) at the base of the factory. " +
                     "This can be created in the $(item)Fluid Vat$(0) from a variety of different sources."
                 },
+                // Conatus Fluid
+                { BASICS_TAG + "ingredients.name", "Ingredients" },
+                { BASICS_TAG + "ingredients.0",
+                     "Some mobs require ingredients to drop their loot and these must be provided in chests/tanks beside the $(item)Ingredient Importer$(0)." +
+                     "ALL ingredients for ALL mobs be provided or no loot will be produced."
+                },
                 // Tiers
                 { BASICS_TAG + "tiers.name", "Factory tiers"},
                 { BASICS_TAG + "tiers.0",

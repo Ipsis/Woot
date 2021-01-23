@@ -1,0 +1,12 @@
+{
+  "name": "guide.woot.basics.ingredients.name",
+  "category": "woot:basics",
+  "icon": "woot:import",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "text",
+      "text": "guide.woot.basics.ingredients.0"
+    }
+  ]
+}

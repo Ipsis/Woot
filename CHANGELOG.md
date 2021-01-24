@@ -10,12 +10,17 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.4-1.0.3.1] - 2021-??-??
+## [1.16.4-1.0.3.1] - 2021-01-21
 ### Added
+- New guide page for ingredients [#491]
+- Update Pressing Engagement and Tumbling Doll perks to indicate need of output tanks beside Loot Exporter [#489]
 ### Changed
+- Bumped Exotic drop from 1% to 15% as they were so rare it felt like Destiny 2. Weights remain the same as before [#492]
 - Cap the maximum enchant in the Enchant Liquifier so every item can be processed [#486]
+- Disable some debug entries as it makes the debug output too noisy wrt to loot generation
 ### Fixed
 - Fix Dye Liquifier tooltip for white [#482]
+- Fix Heart consuming blocks manually placed against it when not formed [#490]
 ### Removed
 
 ## [1.16.4-1.0.3.0] - 2021-01-01

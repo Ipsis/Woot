@@ -14,14 +14,14 @@ public class RandomHelper {
     public static boolean rollPercentage(double limit, String context) {
         limit = MathHelper.clamp(limit, PERCENT_MIN, PERCENT_MAX);
         if (limit == PERCENT_MAX) {
-            Woot.setup.getLogger().debug("rollPercentage: {} guaranteed drop", context);
+            //Woot.setup.getLogger().debug("rollPercentage: {} guaranteed drop", context);
             return true;
         } else if (limit == PERCENT_MIN) {
             return false;
         }
 
         double x = (Math.random() * ((PERCENT_MAX - PERCENT_MIN) + 1)) + PERCENT_MIN;
-        Woot.setup.getLogger().debug("rollPercentage: {} rolled:{} limit:{}", context, x, limit);
+        //Woot.setup.getLogger().debug("rollPercentage: {} rolled:{} limit:{}", context, x, limit);
         return x <= limit;
     }
 }

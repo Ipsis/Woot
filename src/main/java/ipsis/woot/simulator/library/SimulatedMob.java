@@ -94,7 +94,7 @@ public class SimulatedMob {
 
 
     public @Nonnull List<ItemStack> getRolledDrops(int looting) {
-        Woot.setup.getLogger().debug("getRolledDrop: *** looting {}:{}", looting, fakeMob);
+        //Woot.setup.getLogger().debug("getRolledDrop: *** looting {}:{}", looting, fakeMob);
         List<ItemStack> drops = new ArrayList<>();
         looting = MathHelper.clampLooting(looting);
         for (SimulatedMobDrop drop : simulatedMobDrops) {

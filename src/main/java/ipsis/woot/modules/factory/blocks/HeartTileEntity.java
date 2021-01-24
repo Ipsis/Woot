@@ -141,7 +141,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                        IFluidHandler iFluidHandler = hdlr.orElseThrow(NullPointerException::new);
                        FluidStack fluidStack = iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.SIMULATE);
                        if (fluidStack.getAmount() == recipe.getNumUnits()) {
-                           LOGGER.debug("Generate loot");
+                           //LOGGER.debug("Generate loot");
                            consumeItemIngredients(items, formedSetup);
                            consumeFluidIngredients(fluids, formedSetup);
                            iFluidHandler.drain(recipe.getNumUnits(), IFluidHandler.FluidAction.EXECUTE);

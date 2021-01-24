@@ -55,7 +55,7 @@ public class LootGeneration {
         List<ItemStack> rolledDrops = new ArrayList<>();
         for (FakeMob mob : setup.getAllMobs()) {
             int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
-            LOGGER.debug("generate: {} * {}", mob, mobCount);
+            //LOGGER.debug("generate: {} * {}", mob, mobCount);
 
             FakeMobKey fakeMobKey = new FakeMobKey(mob, looting);
             for (int i = 0; i < mobCount; i++)
@@ -102,10 +102,10 @@ public class LootGeneration {
             int rolls = setup.getPerkTierShardValue();
             List<ItemStack> dropShards = new ArrayList<>();
 
-            Woot.setup.getLogger().debug("Shard gen installed");
-            Woot.setup.getLogger().debug("Level:{} Drop:{} Basic:{} Advanced:{} Elite:{} Rolls:{}",
-                    setup.getAllPerks().get(PerkType.TIER_SHARD),
-                    setup.getShardDropChance(), setup.getBasicShardWeight(), setup.getAdvancedShardWeight(), setup.getEliteShardWeight(), rolls);
+            //Woot.setup.getLogger().debug("Shard gen installed");
+            //Woot.setup.getLogger().debug("Level:{} Drop:{} Basic:{} Advanced:{} Elite:{} Rolls:{}",
+            //        setup.getAllPerks().get(PerkType.TIER_SHARD),
+            //        setup.getShardDropChance(), setup.getBasicShardWeight(), setup.getAdvancedShardWeight(), setup.getEliteShardWeight(), rolls);
 
             for (int i = 0; i < rolls; i++) {
                 if (RandomHelper.rollPercentage(setup.getShardDropChance(), "shardGen")) {

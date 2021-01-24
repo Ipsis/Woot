@@ -22,6 +22,6 @@
     }
   ],
   "rolls": 1,
-  "dropChance": 1.0,
+  "dropChance": 15.0,
   "weights": [ 4, 4, 2, 1, 1 ]
 }

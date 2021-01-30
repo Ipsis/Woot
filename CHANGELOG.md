@@ -14,6 +14,7 @@ no loot learning can occur.
 ### Added
 - New guide page for ingredients [#491]
 - Update Pressing Engagement and Tumbling Doll perks to indicate need of output tanks beside Loot Exporter [#489]
+- Added JEI recipe catalyst registration - (by Parker8283) [#487]
 ### Changed
 - Bumped Exotic drop from 1% to 15% as they were so rare it felt like Destiny 2. Weights remain the same as before [#492]
 - Cap the maximum enchant in the Enchant Liquifier so every item can be processed [#486]

@@ -10,7 +10,7 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.4-1.0.3.1] - 2021-01-21
+## [1.16.4-1.0.3.1] - 2021-01-30
 ### Added
 - New guide page for ingredients [#491]
 - Update Pressing Engagement and Tumbling Doll perks to indicate need of output tanks beside Loot Exporter [#489]
@@ -21,6 +21,7 @@ no loot learning can occur.
 ### Fixed
 - Fix Dye Liquifier tooltip for white [#482]
 - Fix Heart consuming blocks manually placed against it when not formed [#490]
+- Multiblock tracker now used synchronized lists [#460]
 ### Removed
 
 ## [1.16.4-1.0.3.0] - 2021-01-01

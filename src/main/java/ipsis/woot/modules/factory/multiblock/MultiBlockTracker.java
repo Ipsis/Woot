@@ -25,6 +25,9 @@ import java.util.List;
  * it is something to do with the world tick based MultiBlockTracker.run walking/remove from the
  * list and the MultiBlockTracker.addEntry adding to the list. So I'm switching over
  * to synchronizedList
+ *
+ * There is a good possibility that the onHello is actually triggering (somehow) the addEntry,
+ * but I just cannot find that path, so there is some attempt at protecting that as well.
  */
 public class MultiBlockTracker {
 
@@ -43,18 +46,21 @@ public class MultiBlockTracker {
     }
 
     public void run(World world) {
+        //LOGGER.debug("MultiBlockTracker run remote={} blocks={}", world.isRemote, syncBlocks.size());
+        if (world.isRemote)
+            return;
 
-        //LOGGER.debug("Running multiblock tracker");
+        List<BlockPos> helloBlocks = Lists.newArrayList();
         synchronized ( syncBlocks) {
-            if (!world.isRemote) {
-                Iterator<BlockPos> iterator = syncBlocks.iterator();
-                while (iterator.hasNext()) {
-                    BlockPos blockPos = iterator.next();
-                    TileEntity te = world.getTileEntity(blockPos);
-                    if (te instanceof MultiBlockGlueProvider)
-                        ((MultiBlockGlueProvider) te).getGlue().onHello(world, te.getPos());
-                    iterator.remove();
-                }
+            helloBlocks.addAll(syncBlocks);
+            syncBlocks.clear();
+        }
+
+        for (BlockPos pos : helloBlocks) {
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof MultiBlockGlueProvider)
+                    ((MultiBlockGlueProvider) te).getGlue().onHello(world, te.getPos());
             }
         }
     }

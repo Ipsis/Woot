@@ -15,6 +15,7 @@ no loot learning can occur.
 ### Changed
 ### Fixed
 - Fixed guide book showing wrong recipe for secondary controller base [#496]
+- Multiblock tracker operates only on loaded blocks [#460]
 ### Removed
 
 ## [1.16.4-1.0.3.1] - 2021-01-30

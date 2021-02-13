@@ -148,8 +148,9 @@ public class SpawnController {
             Woot.setup.getLogger().debug("Reflection of getExperiencePoints failed {}", e);
         }
 
+        Woot.setup.getLogger().debug("updateCache: caching mob:{} xp:{} health:{}", fakeMob, xp, health);
         addToCache(fakeMob, entity instanceof AnimalEntity, xp, health);
-        return false;
+        return true;
     }
 
 

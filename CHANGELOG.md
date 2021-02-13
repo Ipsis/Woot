@@ -16,6 +16,7 @@ no loot learning can occur.
 ### Fixed
 - Fixed guide book showing wrong recipe for secondary controller base [#496]
 - Multiblock tracker operates only on loaded blocks [#460]
+- Fixed health/xp cache additions returning unknown mob xp/health [#497]
 ### Removed
 
 ## [1.16.4-1.0.3.1] - 2021-01-30

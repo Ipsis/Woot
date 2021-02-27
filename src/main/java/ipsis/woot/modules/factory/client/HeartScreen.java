@@ -184,8 +184,9 @@ public class HeartScreen extends WootContainerScreen<HeartContainer> {
         if (!found) {
             dropElements.get(idx).setItemStack(itemStack);
             dropElements.get(idx).addToolTip(tooltip);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

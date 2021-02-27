@@ -211,16 +211,10 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                     for (int slot = 0; slot < h.getSlots(); slot++) {
                         ItemStack slotStack = h.getStackInSlot(slot);
                         if (!slotStack.isEmpty() && ItemStack.areItemsEqual(itemStack, slotStack)) {
-
-                            int consumed = 0;
-                            if (itemStack.getCount() > slotStack.getCount())
-                                consumed = slotStack.getCount();
-                            else
-                                consumed = itemStack.getCount();
-
-                            Woot.setup.getLogger().debug("consumeItemIngredients: consumed {}", consumed);
-                            slotStack.shrink(consumed);
-                            itemStack.shrink(consumed);
+                            Woot.setup.getLogger().debug("consumeItemIngredients: slot {} consume {}", slot, itemStack.getCount());
+                            ItemStack extractedStack = h.extractItem(slot, itemStack.getCount(), false);
+                            if (!extractedStack.isEmpty())
+                                itemStack.shrink(extractedStack.getCount());
                         }
                     }
                 }

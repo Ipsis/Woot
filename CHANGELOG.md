@@ -15,6 +15,7 @@ no loot learning can occur.
 ### Changed
 ### Fixed
 - Fixed empty drop slots in the heart gui [#505]
+- Fixed invalid use of getStackInSlot for consuming from external storage [#493]
 ### Removed
 
 ## [1.16.5-1.0.4.0] - 2021-02-13

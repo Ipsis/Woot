@@ -47,7 +47,7 @@ public class UpgradeBlock extends FactoryBlock {
 
                 TileEntity te = worldIn.getTileEntity(pos);
                 if (te instanceof UpgradeTileEntity) {
-                    if (((UpgradeTileEntity) te).tryAddUpgrade(player, state, perkItem.getFactoryUpgrade())) {
+                    if (((UpgradeTileEntity) te).tryAddUpgrade(worldIn, player, state, perkItem.getFactoryUpgrade())) {
                         if (!player.isCreative())
                             itemStack.shrink(1);
                     }

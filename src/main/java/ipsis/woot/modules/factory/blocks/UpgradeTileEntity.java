@@ -29,7 +29,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
         super(FactorySetup.FACTORY_UPGRADE_BLOCK_TILE.get());
     }
 
-    public boolean tryAddUpgrade(PlayerEntity playerEntity, BlockState state, Perk type) {
+    public boolean tryAddUpgrade(World world, PlayerEntity playerEntity, BlockState state, Perk type) {
 
         if (state.get(UpgradeBlock.UPGRADE) == Perk.EMPTY) {
             // Add to empty must be level 1
@@ -37,7 +37,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
                 world.setBlockState(pos,
                         state.with(UpgradeBlock.UPGRADE, type), 2);
                 glue.onGoodbye();
-                MultiBlockTracker.get().addEntry(pos);
+                MultiBlockTracker.get().addEntry(world, pos);
                 Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
                 if (playerEntity instanceof ServerPlayerEntity)
                     Advancements.APPLY_PERK_TRIGGER.trigger((ServerPlayerEntity) playerEntity, type);
@@ -76,7 +76,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
             world.setBlockState(pos,
                     state.with(UpgradeBlock.UPGRADE, type), 2);
             glue.onGoodbye();
-            MultiBlockTracker.get().addEntry(pos);
+            MultiBlockTracker.get().addEntry(world, pos);
             Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
             return true;
         }

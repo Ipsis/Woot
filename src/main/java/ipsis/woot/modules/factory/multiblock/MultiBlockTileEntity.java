@@ -33,7 +33,7 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
         super.validate();
         if (!world.isRemote) {
             //LOGGER.debug("validate");
-            MultiBlockTracker.get().addEntry(pos);
+            MultiBlockTracker.get().addEntry(world, pos);
         }
     }
 

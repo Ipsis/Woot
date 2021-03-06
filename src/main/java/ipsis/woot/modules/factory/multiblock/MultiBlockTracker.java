@@ -1,6 +1,7 @@
 package ipsis.woot.modules.factory.multiblock;
 
 import com.google.common.collect.Lists;
+import ipsis.woot.Woot;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -37,31 +38,51 @@ public class MultiBlockTracker {
     static MultiBlockTracker INSTANCE;
     static { INSTANCE = new MultiBlockTracker(); }
 
-    private List<BlockPos> syncBlocks = Collections.synchronizedList(Lists.newArrayList());
-    public void addEntry(BlockPos pos) {
-        //LOGGER.debug("Adding entry at {} to block tracker", pos);
-        synchronized ( syncBlocks) {
-            syncBlocks.add(new BlockPos(pos));
-        }
+    private List<MultiBlock> syncBlocks = new ArrayList<>();
+    public void addEntry(World world, BlockPos pos) {
+        //LOGGER.info("Adding entry {} at {} to block tracker", world.getDimensionKey(), pos);
+        syncBlocks.add(new MultiBlock(pos, world));
     }
 
     public void run(World world) {
-        //LOGGER.debug("MultiBlockTracker run remote={} blocks={}", world.isRemote, syncBlocks.size());
+        //LOGGER.info("MultiBlockTracker run world={} blocks={}", world.getDimensionKey(), syncBlocks.size());
         if (world.isRemote)
             return;
 
-        List<BlockPos> helloBlocks = Lists.newArrayList();
-        synchronized ( syncBlocks) {
-            helloBlocks.addAll(syncBlocks);
-            syncBlocks.clear();
+        List<MultiBlock> helloBlocks = Lists.newArrayList();
+        Iterator i = syncBlocks.iterator();
+        while (i.hasNext()) {
+            MultiBlock m = (MultiBlock)i.next();
+            if (m.world == world) {
+                //Woot.setup.getLogger().info("run {}: process {} {}", world.getDimensionKey(), m.world.getDimensionKey(), m.pos);
+                helloBlocks.add(m);
+                i.remove();
+            }
         }
 
-        for (BlockPos pos : helloBlocks) {
-            if (world.isBlockLoaded(pos)) {
-                TileEntity te = world.getTileEntity(pos);
+        if (helloBlocks.isEmpty())
+            return;
+
+        //Woot.setup.getLogger().info("run: {} blocks {}", world.getDimensionKey(), helloBlocks.size());
+        for (MultiBlock m : helloBlocks) {
+            if (world.isBlockLoaded(m.pos)) {
+                //Woot.setup.getLogger().info("run {}: loaded", world.getDimensionKey());
+                TileEntity te = world.getTileEntity(m.pos);
                 if (te instanceof MultiBlockGlueProvider)
                     ((MultiBlockGlueProvider) te).getGlue().onHello(world, te.getPos());
+            } else {
+                //Woot.setup.getLogger().info("run {}: not loaded", world.getDimensionKey());
             }
+        }
+    }
+
+    private static class MultiBlock {
+        BlockPos pos;
+        World world;
+
+        public MultiBlock(BlockPos pos, World world) {
+            this.world = world;
+            this.pos = new BlockPos(pos);
         }
     }
 }

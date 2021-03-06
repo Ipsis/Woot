@@ -30,6 +30,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.util.FakePlayer;
@@ -118,19 +119,46 @@ public class ForgeEventHandlers {
     }
 
     private static final long MULTI_BLOCK_TRACKER_DELAY = 20;
-    private static long lastWorldTick = 0;
+    private static class TickTrack {
+        public World world;
+        public long lastWorldTick;
+        public TickTrack(World world) {
+            this.world = world;
+            this.lastWorldTick = 0;
+        }
+
+        public boolean tick(long gameTime) {
+            if (gameTime > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
+                lastWorldTick = gameTime;
+                return true;
+            }
+            return false;
+        }
+    }
+    private static List<TickTrack> tickTracks = new ArrayList<>();
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         if (event.phase == TickEvent.Phase.START)
             return;
 
+        TickTrack currTick = null;
+        for (TickTrack tickTrack : tickTracks) {
+            if (tickTrack.world == event.world) {
+                currTick = tickTrack;
+                break;
+            }
+        }
+
+        if (currTick == null) {
+            currTick = new TickTrack(event.world);
+            tickTracks.add(currTick);
+        }
+
         if (event.world.getDimensionKey().equals(MobSimulatorSetup.TARTARUS)) {
             MobSimulator.getInstance().tick(event.world);
         } else {
-            if (event.world.getGameTime() > lastWorldTick + MULTI_BLOCK_TRACKER_DELAY) {
-                lastWorldTick += MULTI_BLOCK_TRACKER_DELAY;
+            if (currTick.tick(event.world.getGameTime()))
                 MultiBlockTracker.get().run(event.world);
-            }
         }
     }
 

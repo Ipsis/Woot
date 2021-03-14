@@ -1,5 +1,6 @@
 package ipsis.woot.modules.squeezer.blocks;
 
+import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.fluilds.network.TankPacket;
@@ -224,6 +225,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         if (world.isRemote)
             return;
 
+        if (world.getGameTime() % 20 == 0)
+            generatePureFluid();
+
         if (outputTank.map(WootFluidTank::isEmpty).orElse(true))
             return;
 
@@ -266,6 +270,19 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         currRecipe = null;
     }
 
+    private void generatePureFluid() {
+        outputTank.ifPresent(f -> {
+            while (canCreateOutput() && canStoreOutput()) {
+                f.internalFill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
+                red -= DyeMakeup.LCM;
+                yellow -= DyeMakeup.LCM;
+                blue -= DyeMakeup.LCM;
+                white -= DyeMakeup.LCM;
+                markDirty();
+            }
+        });
+    }
+
     @Override
     protected void processFinish() {
         if (currRecipe == null)
@@ -288,15 +305,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         white = MathHelper.clamp(white, 0, SqueezerConfiguration.DYE_SQUEEZER_INTERNAL_FLUID_MAX.get());
 
         inventory.extractItem(INPUT_SLOT, 1, false);
-        outputTank.ifPresent(f -> {
-            while (canCreateOutput() && canStoreOutput()) {
-                f.internalFill(new FluidStack(FluidSetup.PUREDYE_FLUID.get(), DyeMakeup.LCM * 4), IFluidHandler.FluidAction.EXECUTE);
-                red -= DyeMakeup.LCM;
-                yellow -= DyeMakeup.LCM;
-                blue -= DyeMakeup.LCM;
-                white -= DyeMakeup.LCM;
-            }
-        });
+        generatePureFluid();
         markDirty();
     }
 

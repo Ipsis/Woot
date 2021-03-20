@@ -337,6 +337,10 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         if (outputSlot.getStackInSlot(OUTPUT_SLOT).isEmpty())
             return true;
 
+        ItemStack outStack = outputSlot.getStackInSlot(OUTPUT_SLOT);
+        if (outStack.getCount() == outStack.getMaxStackSize())
+            return false;
+
         if (ItemHandlerHelper.canItemStacksStack(currRecipe.getOutput(), outputSlot.getStackInSlot(OUTPUT_SLOT)))
             return true;
 

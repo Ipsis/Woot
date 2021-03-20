@@ -18,6 +18,7 @@ no loot learning can occur.
 - Fix Dye Liquifier becoming stalled with pure dye tank full and all internal tanks full.
   Emptying the pure dye tank did not allow any new fluid to be generated as no items could be processed
   which triggers the pure dye generation.
+- Fix Infuser still processing when no space in output slot [#512]
 ### Removed
 
 ## [1.16.5-1.0.4.1] - 2021-03-05

@@ -12,6 +12,7 @@ no loot learning can occur.
 
 ## [1.16.5-1.0.4.1] - 2021-03-05
 ### Added
+- Can now clear machines in crafting grid
 ### Changed
 ### Fixed
 - Fix Dye Liquifier becoming stalled with pure dye tank full and all internal tanks full.

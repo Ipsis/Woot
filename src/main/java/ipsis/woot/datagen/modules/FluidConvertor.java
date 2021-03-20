@@ -7,6 +7,7 @@ import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.factory.FactorySetup;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.generic.GenericSetup;
+import ipsis.woot.modules.squeezer.SqueezerSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
@@ -37,6 +38,12 @@ public class FluidConvertor {
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
+                .addIngredient(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer, "fluid_conv_1");
 
         /**
          * Contaus Fluid

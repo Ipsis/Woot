@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "woot",
+  "ingredients": [
+    {
+      "item": "woot:squeezer"
+    }
+  ],
+  "result": {
+    "item": "woot:squeezer"
+  }
+}

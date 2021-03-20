@@ -12,6 +12,7 @@ import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -84,6 +85,13 @@ public class Infuser {
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(InfuserSetup.INFUSER_BLOCK.get())
+                .addIngredient(InfuserSetup.INFUSER_BLOCK.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer, "infuser_1");
+
 
         InfuserRecipeBuilder.infuserRecipe(
                 GenericSetup.PRISM_ITEM.get(), 1,

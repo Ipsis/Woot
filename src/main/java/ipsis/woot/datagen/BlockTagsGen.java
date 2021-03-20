@@ -7,13 +7,14 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockTagsGen extends BlockTagsProvider {
 
     public static final ITag.INamedTag<Block> FACTORY_BLOCK = BlockTags.makeWrapperTag(Woot.MODID + ":factory_blocks");
 
-    public BlockTagsGen(DataGenerator generator) {
-        super(generator);
+    public BlockTagsGen(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+        super(generator, Woot.MODID, existingFileHelper);
     }
 
     @Override

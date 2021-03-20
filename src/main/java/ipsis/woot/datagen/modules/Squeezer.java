@@ -4,12 +4,14 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.DyeSqueezerRecipe;
 import ipsis.woot.crafting.DyeSqueezerRecipeBuilder;
 import ipsis.woot.modules.generic.GenericSetup;
+import ipsis.woot.modules.infuser.InfuserSetup;
 import ipsis.woot.modules.squeezer.DyeMakeup;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -38,6 +40,12 @@ public class Squeezer {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
+        ShapelessRecipeBuilder.shapelessRecipe(SqueezerSetup.SQUEEZER_BLOCK.get())
+                .addIngredient(SqueezerSetup.SQUEEZER_BLOCK.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer, "squeezer_1");
+
         ShapedRecipeBuilder.shapedRecipe(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
                 .patternLine("tpt")
                 .patternLine("tct")
@@ -49,6 +57,12 @@ public class Squeezer {
                 .setGroup(Woot.MODID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
+
+        ShapelessRecipeBuilder.shapelessRecipe(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
+                .addIngredient(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
+                .setGroup(Woot.MODID)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer, "ench_squeezer_1");
 
         /**
          * Vanilla dyes

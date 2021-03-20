@@ -12,6 +12,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
@@ -22,8 +23,8 @@ public class ItemTagsGen extends ItemTagsProvider {
     public static final ITag.INamedTag<Item> FACTORY_BLOCK = ItemTags.makeWrapperTag(Woot.MODID + ":factory_blocks");
     //public static final ITag.INamedTag<Item> BLACK_DYE = ItemTags.makeWrapperTag("forge:dyes/black");
 
-    public ItemTagsGen(DataGenerator generator, BlockTagsProvider provider) {
-        super(generator, provider);
+    public ItemTagsGen(DataGenerator generator, BlockTagsProvider provider, ExistingFileHelper existingFileHelper) {
+        super(generator, provider, Woot.MODID, existingFileHelper);
     }
 
     @Override

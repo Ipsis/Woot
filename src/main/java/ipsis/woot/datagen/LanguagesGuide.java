@@ -466,11 +466,22 @@ public class LanguagesGuide {
                     "$(li)Tier II - " + FactoryConfiguration.RATE_2.get() + "%% decrease" +
                     "$(li)Tier III - " + FactoryConfiguration.RATE_3.get() + "%% decrease"
                 },
-                // Slaugher
+                // Slaughter
                 { PERKS_TAG + "slaughter.name", "Tumbling Doll Of Flesh" },
                 { PERKS_TAG + "slaughter.0",
                         "This perk generates Industrial Foregoing pink slime and liquid meat in tanks adjacent to the Loot Exporter. " +
                         "Higher levels of this perk will increase the generated amount of the fluids."
+                },
+                { PERKS_TAG + "slaughter.1",
+                        "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +
+                                "$(li)Tier II - " + FactoryConfiguration.CRUSHER_2.get() + "%%" +
+                                "$(li)Tier III - " + FactoryConfiguration.CRUSHER_3.get() + "%%"
+                },
+                // Laser
+                { PERKS_TAG + "laser.name", "Frickin Laser Breams" },
+                { PERKS_TAG + "laser.0",
+                        "This perk generates Industrial Foregoing ether gas in tanks adjacent to the Loot Exporter. " +
+                                "Higher levels of this perk will increase the generated amount of the gas."
                 },
                 { PERKS_TAG + "slaughter.1",
                         "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +

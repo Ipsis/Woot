@@ -87,9 +87,9 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.SLAUGHTER_1_ITEM.get(), "Tumbling Doll Of Flesh I Perk");
         add(FactorySetup.SLAUGHTER_2_ITEM.get(), "Tumbling Doll Of Flesh II Perk");
         add(FactorySetup.SLAUGHTER_3_ITEM.get(), "Tumbling Doll Of Flesh III Perk");
-        add(FactorySetup.LASER_1_ITEM.get(), "Laser I Perk");
-        add(FactorySetup.LASER_2_ITEM.get(), "Laser II Perk");
-        add(FactorySetup.LASER_3_ITEM.get(), "Laser III Perk");
+        add(FactorySetup.LASER_1_ITEM.get(), "Frickin Laser Beams I Perk");
+        add(FactorySetup.LASER_2_ITEM.get(), "Frickin Laser Beams II Perk");
+        add(FactorySetup.LASER_3_ITEM.get(), "Frickin Laser Beams III Perk");
         add(FactorySetup.CRUSHER_1_ITEM.get(), "Pressing Engagement I Perk");
         add(FactorySetup.CRUSHER_2_ITEM.get(), "Pressing Engagement II Perk");
         add(FactorySetup.CRUSHER_3_ITEM.get(), "Pressing Engagement III Perk");
@@ -230,6 +230,8 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.slaughter.0", "Produce %d%% of liquid");
         add("info.woot.perk.crusher", "Generate Industrial Foregoing essence");
         add("info.woot.perk.crusher.0", "Produce %d%% of liquid");
+        add("info.woot.perk.laser", "Generate Industrial Foregoing ether gas");
+        add("info.woot.perk.laser.0", "Produce %d%% of gas");
         add("info.woot.perk.tier_shard", "Generate essence to upgrade the factory");
         add("info.woot.perk.tier_shard.0", "%d chances to drop essence");
         add("info.woot.perk.tier_shard.1", "- %s drop chance %.02f%%");

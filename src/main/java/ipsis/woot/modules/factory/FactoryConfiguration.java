@@ -382,15 +382,15 @@ public class FactoryConfiguration {
                 COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_LASER);
                 {
                     LASER_1 = COMMON_BUILDER
-                            .comment("Percentage of essence to drop for laser 1 perks")
+                            .comment("Percentage of ether gas to drop for laser 1 perks")
                             .defineInRange(ConfigPath.Factory.LASER_1_TAG,
                                     Factory.LASER_1_DEF, 0, 1000);
                     LASER_2 = COMMON_BUILDER
-                            .comment("Percentage of essence to drop for laser 2 perks")
+                            .comment("Percentage of ether gas to drop for laser 2 perks")
                             .defineInRange(ConfigPath.Factory.LASER_2_TAG,
                                     Factory.LASER_2_DEF, 0, 1000);
                     LASER_3 = COMMON_BUILDER
-                            .comment("Percentage of essence to drop for laser 3 perks")
+                            .comment("Percentage of ether gas to drop for laser 3 perks")
                             .defineInRange(ConfigPath.Factory.LASER_3_TAG,
                                     Factory.LASER_3_DEF, 0, 1000);
                 }

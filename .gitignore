@@ -21,6 +21,7 @@ build
 eclipse
 run
 src/generated
+src/main/resources/.cache
 logs
 
 # Files from Forge MDK

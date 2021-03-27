@@ -412,6 +412,7 @@ public class Languages extends LanguageProvider {
                 new AdvText("rate_perk_1", "Punch It (Chewie)!", "Craft a Feeding Frenzy I Perk"),
                 new AdvText("shard_perk_1", "Nearly at the top", "Craft a Scale The Summit I Perk"),
                 new AdvText("slaughter_perk_1", "Not for the faint hearted", "Craft a Tumbling Doll Of Flesh I Perk"),
+                new AdvText("laser_perk_1", "New hats for sharks", "Craft a Frickin Laser Beam I Perk"),
                 new AdvText("tier_1_shard", "Basic essentials", "Collect Celadon Essence"),
                 new AdvText("tier_2_shard", "Hard to find", "Collect Cerulean Essence"),
                 new AdvText("tier_3_shard", "Could this be any rarer", "Collect Byzantium Essence"),

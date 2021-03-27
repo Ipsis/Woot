@@ -167,6 +167,24 @@
     },
     "attached=true,upgrade=crusher_3": {
       "model": "woot:block/factory_upgrade_crusher_3"
+    },
+    "attached=false,upgrade=laser_1": {
+      "model": "woot:block/factory_upgrade_laser_1"
+    },
+    "attached=true,upgrade=laser_1": {
+      "model": "woot:block/factory_upgrade_laser_1"
+    },
+    "attached=false,upgrade=laser_2": {
+      "model": "woot:block/factory_upgrade_laser_2"
+    },
+    "attached=true,upgrade=laser_2": {
+      "model": "woot:block/factory_upgrade_laser_2"
+    },
+    "attached=false,upgrade=laser_3": {
+      "model": "woot:block/factory_upgrade_laser_3"
+    },
+    "attached=true,upgrade=laser_3": {
+      "model": "woot:block/factory_upgrade_laser_3"
     }
   }
 }

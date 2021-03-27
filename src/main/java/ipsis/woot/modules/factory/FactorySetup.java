@@ -312,6 +312,13 @@ public class FactorySetup {
     public static final RegistryObject<PerkItem> CRUSHER_3_ITEM = ITEMS.register(
             PerkItem.CRUSHER_3_REGNAME, () -> new PerkItem(Perk.CRUSHER_3));
 
+    public static final RegistryObject<PerkItem> LASER_1_ITEM = ITEMS.register(
+            PerkItem.LASER_1_REGNAME, () -> new PerkItem(Perk.LASER_1));
+    public static final RegistryObject<PerkItem> LASER_2_ITEM = ITEMS.register(
+            PerkItem.LASER_2_REGNAME, () -> new PerkItem(Perk.LASER_2));
+    public static final RegistryObject<PerkItem> LASER_3_ITEM = ITEMS.register(
+            PerkItem.LASER_3_REGNAME, () -> new PerkItem(Perk.LASER_3));
+
     public static final RegistryObject<MobShardItem> MOB_SHARD_ITEM = ITEMS.register(
             "mobshard", () -> new MobShardItem());
 

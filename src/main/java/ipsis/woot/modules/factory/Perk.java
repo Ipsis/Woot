@@ -37,7 +37,10 @@ public enum Perk implements IStringSerializable {
     SLAUGHTER_3,
     CRUSHER_1,
     CRUSHER_2,
-    CRUSHER_3
+    CRUSHER_3,
+    LASER_1,
+    LASER_2,
+    LASER_3
     ;
 
     public static Perk[] VALUES = values();
@@ -49,9 +52,9 @@ public enum Perk implements IStringSerializable {
         return VALUES[index];
     }
 
-    public static final EnumSet<Perk> LEVEL_1_PERKS = EnumSet.of(EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, TIER_SHARD_1, XP_1, HEADLESS_1, SLAUGHTER_1, CRUSHER_1);
-    public static final EnumSet<Perk> LEVEL_2_PERKS = EnumSet.of(EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, TIER_SHARD_2, XP_2, HEADLESS_2, SLAUGHTER_2, CRUSHER_2);
-    public static final EnumSet<Perk> LEVEL_3_PERKS = EnumSet.of(EFFICIENCY_3, LOOTING_3, MASS_3, RATE_3, TIER_SHARD_3, XP_3, HEADLESS_3, SLAUGHTER_3, CRUSHER_3);
+    public static final EnumSet<Perk> LEVEL_1_PERKS = EnumSet.of(EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, TIER_SHARD_1, XP_1, HEADLESS_1, SLAUGHTER_1, CRUSHER_1, LASER_1);
+    public static final EnumSet<Perk> LEVEL_2_PERKS = EnumSet.of(EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, TIER_SHARD_2, XP_2, HEADLESS_2, SLAUGHTER_2, CRUSHER_2, LASER_2);
+    public static final EnumSet<Perk> LEVEL_3_PERKS = EnumSet.of(EFFICIENCY_3, LOOTING_3, MASS_3, RATE_3, TIER_SHARD_3, XP_3, HEADLESS_3, SLAUGHTER_3, CRUSHER_3, LASER_3);
 
     public static final EnumSet<Perk> EFFICIENCY_PERKS = EnumSet.of(EFFICIENCY_1, EFFICIENCY_2, EFFICIENCY_3);
     public static final EnumSet<Perk> LOOTING_PERKS = EnumSet.of(LOOTING_1, LOOTING_2, LOOTING_3);
@@ -62,6 +65,7 @@ public enum Perk implements IStringSerializable {
     public static final EnumSet<Perk> HEADLESS_PERKS = EnumSet.of(HEADLESS_1, HEADLESS_2, HEADLESS_3);
     public static final EnumSet<Perk> SLAUGHTER_PERKS = EnumSet.of(SLAUGHTER_1, SLAUGHTER_2, SLAUGHTER_3);
     public static final EnumSet<Perk> CRUSHER_PERKS = EnumSet.of(CRUSHER_1, CRUSHER_2, CRUSHER_3);
+    public static final EnumSet<Perk> LASER_PERKS = EnumSet.of(LASER_1, LASER_2, LASER_3);
 
     public static Perk getPerks(PerkType type, int level) {
         // Hmmmm, not sure about this
@@ -85,6 +89,8 @@ public enum Perk implements IStringSerializable {
             upgrade = SLAUGHTER_PERKS.toArray(new Perk[0])[level];
         } else if (type == PerkType.CRUSHER) {
             upgrade = CRUSHER_PERKS.toArray(new Perk[0])[level];
+        } else if (type == PerkType.LASER) {
+            upgrade = LASER_PERKS.toArray(new Perk[0])[level];
         }
         return upgrade;
     }
@@ -106,6 +112,8 @@ public enum Perk implements IStringSerializable {
             return PerkType.SLAUGHTER;
         if (CRUSHER_PERKS.contains(perk))
             return PerkType.CRUSHER;
+        if (LASER_PERKS.contains(perk))
+            return PerkType.LASER;
 
         return PerkType.XP;
     }
@@ -139,6 +147,8 @@ public enum Perk implements IStringSerializable {
             return new TranslationTextComponent("info.woot.perk.slaughter");
         if (CRUSHER_PERKS.contains(this))
             return new TranslationTextComponent("info.woot.perk.crusher");
+        if (LASER_PERKS.contains(this))
+            return new TranslationTextComponent("info.woot.perk.laser");
 
         return new TranslationTextComponent("");
     }
@@ -193,6 +203,12 @@ public enum Perk implements IStringSerializable {
             tooltips.add(new TranslationTextComponent("info.woot.perk.crusher.0", FactoryConfiguration.CRUSHER_2.get()));
         else if (CRUSHER_PERKS.contains(this) && getLevel(this) == 3)
             tooltips.add(new TranslationTextComponent("info.woot.perk.crusher.0", FactoryConfiguration.CRUSHER_3.get()));
+        else if (LASER_PERKS.contains(this) && getLevel(this) == 1)
+            tooltips.add(new TranslationTextComponent("info.woot.perk.laser.0", FactoryConfiguration.LASER_1.get()));
+        else if (LASER_PERKS.contains(this) && getLevel(this) == 2)
+            tooltips.add(new TranslationTextComponent("info.woot.perk.laser.0", FactoryConfiguration.LASER_2.get()));
+        else if (LASER_PERKS.contains(this) && getLevel(this) == 3)
+            tooltips.add(new TranslationTextComponent("info.woot.perk.laser.0", FactoryConfiguration.LASER_3.get()));
 
         return tooltips;
     }

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "woot",
+  "pattern": [
+    " 1 ",
+    " e ",
+    "234"
+  ],
+  "key": {
+    "e": {
+      "item": "woot:ench_plate_1"
+    },
+    "1": {
+      "item": "minecraft:bucket"
+    },
+    "2": {
+      "item": "industrialforegoing:laser_drill"
+    },
+    "3": {
+      "item": "industrialforegoing:laser_lens14"
+    },
+    "4": {
+      "item": "industrialforegoing:fluid_laser_base"
+    }
+  },
+  "result": {
+    "item": "woot:laser_1"
+  }
+}

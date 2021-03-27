@@ -18,6 +18,9 @@ public class IndustrialForegoingPlugin {
     @ObjectHolder("industrialforegoing:essence")
     private static Fluid ESSENCE_FLUID = null;
 
+    @ObjectHolder("industrialforegoing:ether_gas")
+    private static Fluid ETHER_FLUID = null;
+
     public static FluidStack getLiquidMeatAmount(FakeMob fakeMob, World world) {
         if (LIQUID_MEAT_FLUID == null || world == null || fakeMob == null || !fakeMob.isValid())
             return FluidStack.EMPTY;
@@ -46,5 +49,12 @@ public class IndustrialForegoingPlugin {
 
         int xp = SpawnController.get().getMobExperience(fakeMob, world);
         return new FluidStack(ESSENCE_FLUID, xp * 20);
+    }
+
+    public static FluidStack getEtherAmount(FakeMob fakeMob, World world) {
+        if (ETHER_FLUID == null || world == null || fakeMob == null || !fakeMob.isValid() || !fakeMob.isWither())
+            return FluidStack.EMPTY;
+
+        return new FluidStack(ETHER_FLUID, 10);
     }
 }

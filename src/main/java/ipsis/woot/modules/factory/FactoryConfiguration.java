@@ -62,6 +62,9 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue CRUSHER_1;
     public static ForgeConfigSpec.IntValue CRUSHER_2;
     public static ForgeConfigSpec.IntValue CRUSHER_3;
+    public static ForgeConfigSpec.IntValue LASER_1;
+    public static ForgeConfigSpec.IntValue LASER_2;
+    public static ForgeConfigSpec.IntValue LASER_3;
     public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
@@ -373,6 +376,23 @@ public class FactoryConfiguration {
                             .comment("Percentage of essence to drop for crusher 3 perks")
                             .defineInRange(ConfigPath.Factory.CRUSHER_3_TAG,
                                     Factory.CRUSHER_3_DEF, 0, 1000);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_LASER);
+                {
+                    LASER_1 = COMMON_BUILDER
+                            .comment("Percentage of ether gas to drop for laser 1 perks")
+                            .defineInRange(ConfigPath.Factory.LASER_1_TAG,
+                                    Factory.LASER_1_DEF, 0, 1000);
+                    LASER_2 = COMMON_BUILDER
+                            .comment("Percentage of ether gas to drop for laser 2 perks")
+                            .defineInRange(ConfigPath.Factory.LASER_2_TAG,
+                                    Factory.LASER_2_DEF, 0, 1000);
+                    LASER_3 = COMMON_BUILDER
+                            .comment("Percentage of ether gas to drop for laser 3 perks")
+                            .defineInRange(ConfigPath.Factory.LASER_3_TAG,
+                                    Factory.LASER_3_DEF, 0, 1000);
                 }
                 COMMON_BUILDER.pop();
 

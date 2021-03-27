@@ -87,6 +87,9 @@ public class Languages extends LanguageProvider {
         add(FactorySetup.SLAUGHTER_1_ITEM.get(), "Tumbling Doll Of Flesh I Perk");
         add(FactorySetup.SLAUGHTER_2_ITEM.get(), "Tumbling Doll Of Flesh II Perk");
         add(FactorySetup.SLAUGHTER_3_ITEM.get(), "Tumbling Doll Of Flesh III Perk");
+        add(FactorySetup.LASER_1_ITEM.get(), "Laser I Perk");
+        add(FactorySetup.LASER_2_ITEM.get(), "Laser II Perk");
+        add(FactorySetup.LASER_3_ITEM.get(), "Laser III Perk");
         add(FactorySetup.CRUSHER_1_ITEM.get(), "Pressing Engagement I Perk");
         add(FactorySetup.CRUSHER_2_ITEM.get(), "Pressing Engagement II Perk");
         add(FactorySetup.CRUSHER_3_ITEM.get(), "Pressing Engagement III Perk");

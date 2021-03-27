@@ -126,7 +126,7 @@ public class LootGeneration {
         }
 
         // Industrial Foregoing
-        if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) || setup.getAllPerks().containsKey(PerkType.CRUSHER)) {
+        if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) || setup.getAllPerks().containsKey(PerkType.CRUSHER) || setup.getAllPerks().containsKey(PerkType.LASER)) {
             IndustrialForegoingGenerator.GeneratedFluids fluids = IndustrialForegoingGenerator.getFluids(setup, setup.getWorld());
             if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) && !fluids.meat.isEmpty() && !fluids.pink.isEmpty()) {
                 List<FluidStack> slaughterFluids = new ArrayList<>();
@@ -138,6 +138,11 @@ public class LootGeneration {
                 List<FluidStack> crusherFluids = new ArrayList<>();
                 crusherFluids.add(fluids.essence);
                 StorageHelper.insertFluids(crusherFluids, fluidHandlers);
+            }
+            if (setup.getAllPerks().containsKey(PerkType.LASER) && !fluids.ether.isEmpty()) {
+                List<FluidStack> etherFluids = new ArrayList<>();
+                etherFluids.add(fluids.ether);
+                StorageHelper.insertFluids(etherFluids, fluidHandlers);
             }
         }
 

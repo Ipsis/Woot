@@ -444,6 +444,28 @@ public class Blocks extends BaseBlockStateProvider {
                 .with(UpgradeBlock.UPGRADE, Perk.CRUSHER_3)
                 .modelForState().modelFile(upgrade3).addModel();
 
+        upgrade1 = models().cubeAll("factory_upgrade_laser_1", modLoc("item/laser_1"));
+        upgrade2 = models().cubeAll("factory_upgrade_laser_2", modLoc("item/laser_2"));
+        upgrade3 = models().cubeAll("factory_upgrade_laser_3", modLoc("item/laser_3"));
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.LASER_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.LASER_1)
+                .modelForState().modelFile(upgrade1).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.LASER_2)
+                .modelForState().modelFile(upgrade2).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.LASER_2)
+                .modelForState().modelFile(upgrade2).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, false)
+                .with(UpgradeBlock.UPGRADE, Perk.LASER_3)
+                .modelForState().modelFile(upgrade3).addModel();
+        builder.partialState().with(BlockStateProperties.ATTACHED, true)
+                .with(UpgradeBlock.UPGRADE, Perk.LASER_3)
+                .modelForState().modelFile(upgrade3).addModel();
+
         machineBlock(FactorySetup.HEART_BLOCK.get(), "heart", "block/heart");
         machineBlock(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get(), "fluidconvertor", "block/fluidconvertor");
         machineBlock(InfuserSetup.INFUSER_BLOCK.get(), "infuser", "block/infuser");

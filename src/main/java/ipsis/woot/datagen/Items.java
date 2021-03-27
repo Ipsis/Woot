@@ -82,6 +82,9 @@ public class Items extends BaseItemModelProvider {
         itemGenerated(FactorySetup.CRUSHER_1_ITEM.get(), "item/crusher_1");
         itemGenerated(FactorySetup.CRUSHER_2_ITEM.get(), "item/crusher_2");
         itemGenerated(FactorySetup.CRUSHER_3_ITEM.get(), "item/crusher_3");
+        itemGenerated(FactorySetup.LASER_1_ITEM.get(), "item/laser_1");
+        itemGenerated(FactorySetup.LASER_2_ITEM.get(), "item/laser_2");
+        itemGenerated(FactorySetup.LASER_3_ITEM.get(), "item/laser_3");
         itemGenerated(FactorySetup.MOB_SHARD_ITEM.get(), "item/mobshard");
         itemGenerated(FactorySetup.XP_SHARD_ITEM.get(), "item/xpshard");
         itemGenerated(FactorySetup.XP_SPLINTER_ITEM.get(), "item/xpsplinter");

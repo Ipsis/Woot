@@ -9,7 +9,8 @@ public enum PerkType {
     TIER_SHARD,
     HEADLESS,
     SLAUGHTER, /* Industrial Foregoing */
-    CRUSHER /* Industrial Foregoing */
+    CRUSHER, /* Industrial Foregoing */
+    LASER /* Industrial Foregoing */
     ;
 
     public static PerkType byIndex(int index) {

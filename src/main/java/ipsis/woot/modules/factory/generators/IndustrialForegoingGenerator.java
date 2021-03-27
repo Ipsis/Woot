@@ -14,6 +14,7 @@ public class IndustrialForegoingGenerator {
         public FluidStack meat = FluidStack.EMPTY;
         public FluidStack pink = FluidStack.EMPTY;
         public FluidStack essence = FluidStack.EMPTY;
+        public FluidStack ether = FluidStack.EMPTY;
     }
 
     public static GeneratedFluids getFluids(FormedSetup formedSetup, World world) {
@@ -45,6 +46,15 @@ public class IndustrialForegoingGenerator {
                     generatedFluids.essence = fluidStack.copy();
                 else
                     generatedFluids.essence.setAmount(generatedFluids.essence.getAmount() + fluidStack.getAmount());
+            }
+
+            fluidStack = IndustrialForegoingPlugin.getEtherAmount(fakeMob, world);
+            if (!fluidStack.isEmpty()) {
+                fluidStack.setAmount(fluidStack.getAmount() * mobCount);
+                if (generatedFluids.ether.isEmpty())
+                    generatedFluids.ether = fluidStack.copy();
+                else
+                    generatedFluids.ether.setAmount(generatedFluids.ether.getAmount() + fluidStack.getAmount());
             }
         }
 

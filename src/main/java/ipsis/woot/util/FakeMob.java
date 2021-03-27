@@ -184,6 +184,10 @@ public class FakeMob {
         return getEntityKey().equalsIgnoreCase(WITHER_SKELETON);
     }
 
+    public boolean isWither() {
+        return getEntityKey().equalsIgnoreCase(WITHER);
+    }
+
     public boolean isZombie() {
         return getEntityKey().equalsIgnoreCase(ZOMBIE);
     }

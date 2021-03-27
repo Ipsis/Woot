@@ -4,7 +4,7 @@
   "pattern": [
     " 1 ",
     "e e",
-    " 2 "
+    "234"
   ],
   "key": {
     "e": {
@@ -15,6 +15,12 @@
     },
     "2": {
       "item": "industrialforegoing:laser_drill"
+    },
+    "3": {
+      "item": "industrialforegoing:laser_lens13"
+    },
+    "4": {
+      "item": "industrialforegoing:fluid_laser_base"
     }
   },
   "result": {

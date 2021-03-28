@@ -10,6 +10,7 @@ import ipsis.woot.modules.factory.generators.LootGeneration;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.multiblock.MultiBlockMaster;
 import ipsis.woot.modules.factory.network.HeartStaticDataReply;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.WootDebug;
@@ -34,9 +35,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -396,8 +395,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         return mobs;
     }
 
-    public Map<PerkType, Integer> getPerks() {
-        Map<PerkType, Integer> perks = new HashMap<>();
+    public Map<Perk.Group, Integer> getPerks() {
+        Map<Perk.Group, Integer> perks = new HashMap<>();
         if (isFormed())
             perks.putAll(formedSetup.getAllPerks());
         return perks;

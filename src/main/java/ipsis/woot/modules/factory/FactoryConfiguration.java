@@ -3,6 +3,7 @@ package ipsis.woot.modules.factory;
 import ipsis.woot.config.ConfigDefaults;
 import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.config.ConfigPath;
+import ipsis.woot.modules.factory.perks.Perk;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import ipsis.woot.config.ConfigDefaults.Factory;
@@ -75,6 +76,37 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T4_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T5_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T5_FARM_DROP_SHARD_WEIGHTS;
+
+    public static ForgeConfigSpec.IntValue getPerkIntValue(Perk.Group group, int level) {
+        if (group == Perk.Group.EFFICIENCY && level == 1) return EFFICIENCY_1;
+        if (group == Perk.Group.EFFICIENCY && level == 2) return EFFICIENCY_2;
+        if (group == Perk.Group.EFFICIENCY && level == 3) return EFFICIENCY_3;
+        if (group == Perk.Group.MASS && level == 1) return MASS_COUNT_1;
+        if (group == Perk.Group.MASS && level == 2) return MASS_COUNT_2;
+        if (group == Perk.Group.MASS && level == 3) return MASS_COUNT_3;
+        if (group == Perk.Group.RATE && level == 1) return RATE_1;
+        if (group == Perk.Group.RATE && level == 2) return RATE_2;
+        if (group == Perk.Group.RATE && level == 3) return RATE_3;
+        if (group == Perk.Group.TIER_SHARD && level == 1) return TIER_SHARD_1;
+        if (group == Perk.Group.TIER_SHARD && level == 2) return TIER_SHARD_2;
+        if (group == Perk.Group.TIER_SHARD && level == 3) return TIER_SHARD_3;
+        if (group == Perk.Group.XP && level == 1) return XP_1;
+        if (group == Perk.Group.XP && level == 1) return XP_2;
+        if (group == Perk.Group.XP && level == 1) return XP_3;
+        if (group == Perk.Group.HEADLESS && level == 1) return HEADLESS_1;
+        if (group == Perk.Group.HEADLESS && level == 2) return HEADLESS_2;
+        if (group == Perk.Group.HEADLESS && level == 3) return HEADLESS_3;
+        if (group == Perk.Group.SLAUGHTER && level == 1) return SLAUGHTER_1;
+        if (group == Perk.Group.SLAUGHTER && level == 2) return SLAUGHTER_2;
+        if (group == Perk.Group.SLAUGHTER && level == 3) return SLAUGHTER_3;
+        if (group == Perk.Group.CRUSHER && level == 1) return CRUSHER_1;
+        if (group == Perk.Group.CRUSHER && level == 2) return CRUSHER_2;
+        if (group == Perk.Group.CRUSHER && level == 3) return CRUSHER_3;
+        if (group == Perk.Group.LASER && level == 1) return LASER_1;
+        if (group == Perk.Group.LASER && level == 2) return LASER_2;
+        if (group == Perk.Group.LASER && level == 3) return LASER_3;
+        return null; // Some don't have config values
+    }
 
     public static void init(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
 

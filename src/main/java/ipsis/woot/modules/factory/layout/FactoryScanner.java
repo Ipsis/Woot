@@ -5,6 +5,7 @@ import ipsis.woot.config.Config;
 import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.blocks.ExoticBlock;
 import ipsis.woot.modules.factory.blocks.UpgradeBlock;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.policy.PolicyRegistry;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.util.FakeMob;

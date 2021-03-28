@@ -10,7 +10,7 @@ import ipsis.woot.advancements.TierValidateTrigger;
 import ipsis.woot.fluilds.FluidSetup;
 import ipsis.woot.modules.anvil.AnvilSetup;
 import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.generic.GenericSetup;

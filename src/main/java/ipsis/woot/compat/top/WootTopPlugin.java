@@ -5,29 +5,21 @@ import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.blocks.*;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.layout.PatternRepository;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.infuser.blocks.InfuserTileEntity;
-import ipsis.woot.modules.layout.blocks.LayoutBlock;
 import ipsis.woot.modules.layout.blocks.LayoutTileEntity;
-import ipsis.woot.modules.layout.items.InternItem;
-import ipsis.woot.modules.squeezer.blocks.DyeSqueezerBlock;
 import ipsis.woot.modules.squeezer.blocks.DyeSqueezerTileEntity;
 import ipsis.woot.modules.squeezer.blocks.EnchantSqueezerTileEntity;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.StringHelper;
 import mcjty.theoneprobe.api.*;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -97,7 +89,7 @@ public class WootTopPlugin {
                 iProbeInfo.text(
                         CompoundText.createLabelInfo(
                                 StringHelper.translate("top.woot.perk.type.label") + ": ",
-                                StringHelper.translate("item.woot." + perk.getName())));
+                                StringHelper.translate("item.woot." + perk.getLowerCaseName())));
             }
         }
 
@@ -224,9 +216,9 @@ public class WootTopPlugin {
                                 StringHelper.translate("top.woot.heart.tier.label") + ": ",
                                 StringHelper.translate(heart.getTier().getTranslationKey())));
                 // Add perks
-                for (PerkType perkType : heart.getPerks().keySet()) {
-                    int level = heart.getPerks().get(perkType);
-                    ItemStack itemStack = PerkItem.getItemStack(perkType, level);
+                for (Perk.Group group : heart.getPerks().keySet()) {
+                    int level = heart.getPerks().get(group);
+                    ItemStack itemStack = PerkItem.getItemStack(group, level);
                     if (!itemStack.isEmpty())
                         iProbeInfo.text(
                                 CompoundText.createLabelInfo(

@@ -2,11 +2,11 @@ package ipsis.woot.modules.factory.network;
 
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.factory.FormedSetup;
-import ipsis.woot.modules.factory.Perk;
-import ipsis.woot.modules.factory.PerkType;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.blocks.HeartRecipe;
 import ipsis.woot.modules.factory.client.ClientFactorySetup;
+import ipsis.woot.modules.factory.perks.Helper;
 import ipsis.woot.simulator.MobSimulator;
 import ipsis.woot.simulator.SimulatedMobDropSummary;
 import ipsis.woot.util.FakeMob;
@@ -16,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -53,7 +52,7 @@ public class HeartStaticDataReply {
         buf.writeInt(recipe.getNumTicks());
         buf.writeInt(recipe.getNumUnits());
 
-        if (formedSetup.getAllPerks().containsKey(PerkType.TIER_SHARD)) {
+        if (formedSetup.getAllPerks().containsKey(Perk.Group.TIER_SHARD)) {
             buf.writeInt(formedSetup.getPerkTierShardValue());
             buf.writeDouble(formedSetup.getShardDropChance());
             double full = formedSetup.getBasicShardWeight() + formedSetup.getAdvancedShardWeight() + formedSetup.getEliteShardWeight();
@@ -78,7 +77,7 @@ public class HeartStaticDataReply {
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).baseFluidCost);
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkRateValue());
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkEfficiencyValue());
-            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(PerkType.MASS), formedSetup.hasMassExotic()));
+            buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getMobCount(formedSetup.getAllPerks().containsKey(Perk.Group.MASS), formedSetup.hasMassExotic()));
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkXpValue());
             buf.writeInt(formedSetup.getAllMobParams().get(fakeMob).getPerkHeadlessValue());
 
@@ -94,8 +93,8 @@ public class HeartStaticDataReply {
 
         buf.writeBoolean(formedSetup.isPerkCapped());
         buf.writeInt(formedSetup.getAllPerks().size());
-        for (Map.Entry<PerkType, Integer> e : formedSetup.getAllPerks().entrySet()) {
-            Perk perk = Perk.getPerks(e.getKey(), e.getValue());
+        for (Map.Entry<Perk.Group, Integer> e : formedSetup.getAllPerks().entrySet()) {
+            Perk perk = Helper.getPerk(e.getKey(), e.getValue());
             buf.writeInt(perk.ordinal());
         }
 

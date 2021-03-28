@@ -3,8 +3,7 @@ package ipsis.woot.advancements;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
-import ipsis.woot.modules.factory.Perk;
-import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.modules.factory.perks.Perk;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
@@ -26,7 +25,7 @@ public class ApplyPerkTrigger extends AbstractCriterionTrigger<ApplyPerkTrigger.
         JsonElement element = json.get("perk");
         Perk perk = Perk.EMPTY;
         if (element != null && !element.isJsonNull())
-            perk = Perk.getPerks(JSONUtils.getInt(json, "perk"));
+            perk = Perk.byIndex(JSONUtils.getInt(json, "perk"));
 
         return new Instance(entityPredicate, perk);
     }

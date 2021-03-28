@@ -2,6 +2,8 @@ package ipsis.woot.modules.factory.items;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.*;
+import ipsis.woot.modules.factory.perks.Helper;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.util.helper.StringHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -121,21 +123,20 @@ public class PerkItem extends Item {
         return ItemStack.EMPTY;
     }
 
-    public static ItemStack getItemStack(PerkType type, int level) {
+    public static ItemStack getItemStack(Perk.Group type, int level) {
 
         if (level < 1 || level > 3)
             return ItemStack.EMPTY;
 
-        Perk perk = Perk.getPerks(type, level);
-        return getItemStack(perk);
+        return getItemStack(Helper.getPerk(type, level));
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        tooltip.add(perk.getTooltip());
-        tooltip.addAll(perk.getTooltipForLevel());
+        tooltip.add(Helper.getTooltip(perk));
+        tooltip.addAll(Helper.getTooltip(perk, Perk.getLevel(perk)));
         if (Perk.TIER_SHARD_PERKS.contains(perk)) {
             {
                 // tier 1 factory

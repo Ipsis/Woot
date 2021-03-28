@@ -1,8 +1,8 @@
 package ipsis.woot.config;
 
 import ipsis.woot.modules.factory.FactoryConfiguration;
-import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Tier;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.util.math.MathHelper;
@@ -17,18 +17,18 @@ public class ConfigOverride {
 
     private final Logger LOGGER = LogManager.getLogger();
     private HashMap<FakeMob, HashMap<OverrideKey, Object>> overrides = new HashMap<>();
-    private HashMap<PerkType, OverrideKey[]> perkMap = new HashMap<>();
+    private HashMap<Perk.Group, OverrideKey[]> perkMap = new HashMap<>();
 
     public ConfigOverride() {
-        perkMap.put(PerkType.EFFICIENCY,
+        perkMap.put(Perk.Group.EFFICIENCY,
                 new OverrideKey[]{OverrideKey.PERK_EFFICIENCY_1_REDUCTION, OverrideKey.PERK_EFFICIENCY_2_REDUCTION, OverrideKey.PERK_EFFICIENCY_3_REDUCTION});
-        perkMap.put(PerkType.MASS,
+        perkMap.put(Perk.Group.MASS,
                 new OverrideKey[]{OverrideKey.PERK_MASS_1_COUNT, OverrideKey.PERK_MASS_2_COUNT, OverrideKey.PERK_MASS_3_COUNT});
-        perkMap.put(PerkType.RATE,
+        perkMap.put(Perk.Group.RATE,
                 new OverrideKey[]{OverrideKey.PERK_RATE_1_REDUCTION, OverrideKey.PERK_RATE_2_REDUCTION, OverrideKey.PERK_RATE_3_REDUCTION});
-        perkMap.put(PerkType.XP,
+        perkMap.put(Perk.Group.XP,
                 new OverrideKey[]{OverrideKey.PERK_XP_1_PERCENTAGE, OverrideKey.PERK_XP_2_PERCENTAGE, OverrideKey.PERK_XP_3_PERCENTAGE});
-        perkMap.put(PerkType.HEADLESS,
+        perkMap.put(Perk.Group.HEADLESS,
                 new OverrideKey[]{OverrideKey.PERK_HEADLESS_1_PERCENTAGE, OverrideKey.PERK_HEADLESS_2_PERCENTAGE, OverrideKey.PERK_HEADLESS_3_PERCENTAGE});
     }
 
@@ -193,9 +193,9 @@ public class ConfigOverride {
         }
     }
 
-    public OverrideKey getKeyByPerk(PerkType perkType, int level) {
+    public OverrideKey getKeyByPerk(Perk.Group group, int level) {
         level = MathHelper.clamp(level, 1, 3) - 1;
-        return perkMap.get(perkType)[level];
+        return perkMap.get(group)[level];
     }
 
     public Tier getMobTier(FakeMob fakeMob, World world) {

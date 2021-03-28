@@ -4,17 +4,14 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.FactoryRecipe;
 import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
-import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartRecipe;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FluidStackHelper;
 import ipsis.woot.util.ItemStackHelper;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fluids.FluidStack;
@@ -33,7 +30,7 @@ public class CalculatorVersion2 {
         if (setup.hasConatusExotic()) {
             v = FactoryConfiguration.EXOTIC_C.get();
             LOGGER.debug("Calculator: EXOTIC {} conatus efficiency", v);
-        } else if (setup.getAllPerks().containsKey(PerkType.EFFICIENCY)) {
+        } else if (setup.getAllPerks().containsKey(Perk.Group.EFFICIENCY)) {
             v = setup.getAllMobParams().get(fakeMob).getPerkEfficiencyValue();
             LOGGER.debug("Calculator: PERK {} conatus efficiency", v);
         }
@@ -43,7 +40,7 @@ public class CalculatorVersion2 {
     private static int calcConatus(FormedSetup setup) {
         int fluidCost = 0;
         for (FakeMob fakeMob : setup.getAllMobs()) {
-            int mobCost = setup.getAllMobParams().get(fakeMob).baseFluidCost * setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
+            int mobCost = setup.getAllMobParams().get(fakeMob).baseFluidCost * setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(Perk.Group.MASS), setup.hasMassExotic());
             LOGGER.debug("Calculator mob:{} fluidCost:{}", fakeMob, mobCost);
 
             int fluidSaving = (int)((mobCost / 100.0F) * getEfficiency(fakeMob, setup));
@@ -75,7 +72,7 @@ public class CalculatorVersion2 {
      * Returns all the items, with exotic reductions and mass settings, to spawn the count of fakemob
      */
     public static List<ItemStack> getRecipeItems(FakeMob fakeMob, NonNullList<ItemStack> recipeItems, FormedSetup setup) {
-        int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
+        int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(Perk.Group.MASS), setup.hasMassExotic());
         List<ItemStack> items = new ArrayList<>();
         if (setup.hasItemIngredientExotic()) {
             for (ItemStack itemStack : recipeItems) {
@@ -106,7 +103,7 @@ public class CalculatorVersion2 {
      * Returns all the fluids, with exotic reductions and mass settings, to spawn the count of fakemob
      */
     public static List<FluidStack> getRecipeFluids(FakeMob fakeMob, NonNullList<FluidStack> recipeFluids, FormedSetup setup) {
-        int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
+        int mobCount = setup.getAllMobParams().get(fakeMob).getMobCount(setup.getAllPerks().containsKey(Perk.Group.MASS), setup.hasMassExotic());
         List<FluidStack> fluids = new ArrayList<>();
         if (setup.hasFluidIngredientExotic()) {
             for (FluidStack fluidStack : recipeFluids) {

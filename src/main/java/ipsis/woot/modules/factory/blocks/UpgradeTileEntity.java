@@ -3,13 +3,11 @@ package ipsis.woot.modules.factory.blocks;
 import ipsis.woot.Woot;
 import ipsis.woot.advancements.Advancements;
 import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.factory.Perk;
-import ipsis.woot.modules.factory.PerkType;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTracker;
 import ipsis.woot.util.WootDebug;
-import ipsis.woot.util.helper.PlayerHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -49,8 +47,8 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
         } else {
             // Add to non-empty, must be same type and level + 1
             Perk upgrade = getBlockState().get(UpgradeBlock.UPGRADE);
-            PerkType currType = Perk.getType(upgrade);
-            PerkType addType = Perk.getType(type);
+            Perk.Group currType = Perk.getGroup(upgrade);
+            Perk.Group addType = Perk.getGroup(type);
             int currLevel = Perk.getLevel(upgrade);
             int addLevel = Perk.getLevel(type);
             if (currType != addType) {
@@ -90,7 +88,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
         int currLevel = Perk.getLevel(upgrade);
         for (int i = 1; i <= 3; i++) {
             if (i <= currLevel) {
-                PerkType type = Perk.getType(upgrade);
+                Perk.Group type = Perk.getGroup(upgrade);
                 ItemStack itemStack = PerkItem.getItemStack(type, i);
                 if (!itemStack.isEmpty()) {
                     itemStack.setCount(1);

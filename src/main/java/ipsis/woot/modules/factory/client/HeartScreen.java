@@ -8,6 +8,7 @@ import ipsis.woot.modules.factory.*;
 import ipsis.woot.modules.factory.blocks.ControllerTileEntity;
 import ipsis.woot.modules.factory.blocks.HeartContainer;
 import ipsis.woot.modules.factory.items.PerkItem;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.setup.NetworkChannel;
 import ipsis.woot.setup.ServerDataRequest;
 import ipsis.woot.util.FakeMob;
@@ -29,7 +30,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

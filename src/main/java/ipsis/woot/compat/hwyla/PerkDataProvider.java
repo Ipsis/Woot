@@ -1,6 +1,6 @@
 package ipsis.woot.compat.hwyla;
 
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.blocks.UpgradeBlock;
 import ipsis.woot.util.helper.StringHelper;
 import mcp.mobius.waila.api.IComponentProvider;
@@ -27,7 +27,7 @@ public class PerkDataProvider implements IComponentProvider {
             } else {
                 tooltip.add(new StringTextComponent(
                         StringHelper.translate("top.woot.perk.type.label") + ": " +
-                                StringHelper.translate("item.woot." + perk.getName())));
+                                StringHelper.translate("item.woot." + perk.getLowerCaseName())));
             }
         }
     }

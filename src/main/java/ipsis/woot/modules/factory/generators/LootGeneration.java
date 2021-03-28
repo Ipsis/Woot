@@ -1,11 +1,9 @@
 package ipsis.woot.modules.factory.generators;
 
-import ipsis.woot.Woot;
-import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.modules.factory.FormedSetup;
-import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.generic.items.GenericItem;
 import ipsis.woot.policy.PolicyConfiguration;
 import ipsis.woot.simulator.MobSimulator;
@@ -54,7 +52,7 @@ public class LootGeneration {
         // Drops
         List<ItemStack> rolledDrops = new ArrayList<>();
         for (FakeMob mob : setup.getAllMobs()) {
-            int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
+            int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(Perk.Group.MASS), setup.hasMassExotic());
             //LOGGER.debug("generate: {} * {}", mob, mobCount);
 
             FakeMobKey fakeMobKey = new FakeMobKey(mob, looting);
@@ -77,11 +75,11 @@ public class LootGeneration {
 
 
         // Experience
-        if (setup.getAllPerks().containsKey(PerkType.XP)) {
+        if (setup.getAllPerks().containsKey(Perk.Group.XP)) {
             int genXp = 0;
             for (FakeMob mob : setup.getAllMobs()) {
                 int xpPercent = setup.getAllMobParams().get(mob).getPerkXpValue();
-                int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(PerkType.MASS), setup.hasMassExotic());
+                int mobCount = setup.getAllMobParams().get(mob).getMobCount(setup.getAllPerks().containsKey(Perk.Group.MASS), setup.hasMassExotic());
                 int x = (int) ((SpawnController.get().getMobExperience(mob, setup.getWorld()) / 100.0F) * xpPercent);
                 genXp += (x * mobCount);
             }
@@ -92,7 +90,7 @@ public class LootGeneration {
         }
 
         // Shard gen
-        if (setup.getAllPerks().containsKey(PerkType.TIER_SHARD)) {
+        if (setup.getAllPerks().containsKey(Perk.Group.TIER_SHARD)) {
 
             List<ShardPerkData> shards = new ArrayList<>();
             shards.add(new ShardPerkData(GenericItem.GenericItemType.BASIC_UP_SHARD, setup.getBasicShardWeight()));
@@ -119,27 +117,27 @@ public class LootGeneration {
         }
 
         // Skull gen
-        if (setup.getAllPerks().containsKey(PerkType.HEADLESS)) {
+        if (setup.getAllPerks().containsKey(Perk.Group.HEADLESS)) {
             List<ItemStack> skulls = new ArrayList<>();
             setup.getAllMobs().forEach(m -> skulls.add(SKULL_GENERATOR.getSkullDrop(m, setup.getAllMobParams().get(m).getPerkHeadlessValue())));
             StorageHelper.insertItems(skulls, itemHandlers);
         }
 
         // Industrial Foregoing
-        if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) || setup.getAllPerks().containsKey(PerkType.CRUSHER) || setup.getAllPerks().containsKey(PerkType.LASER)) {
+        if (setup.getAllPerks().containsKey(Perk.Group.SLAUGHTER) || setup.getAllPerks().containsKey(Perk.Group.CRUSHER) || setup.getAllPerks().containsKey(Perk.Group.LASER)) {
             IndustrialForegoingGenerator.GeneratedFluids fluids = IndustrialForegoingGenerator.getFluids(setup, setup.getWorld());
-            if (setup.getAllPerks().containsKey(PerkType.SLAUGHTER) && !fluids.meat.isEmpty() && !fluids.pink.isEmpty()) {
+            if (setup.getAllPerks().containsKey(Perk.Group.SLAUGHTER) && !fluids.meat.isEmpty() && !fluids.pink.isEmpty()) {
                 List<FluidStack> slaughterFluids = new ArrayList<>();
                 slaughterFluids.add(fluids.meat);
                 slaughterFluids.add(fluids.pink);
                 StorageHelper.insertFluids(slaughterFluids, fluidHandlers);
             }
-            if (setup.getAllPerks().containsKey(PerkType.CRUSHER) && !fluids.essence.isEmpty()) {
+            if (setup.getAllPerks().containsKey(Perk.Group.CRUSHER) && !fluids.essence.isEmpty()) {
                 List<FluidStack> crusherFluids = new ArrayList<>();
                 crusherFluids.add(fluids.essence);
                 StorageHelper.insertFluids(crusherFluids, fluidHandlers);
             }
-            if (setup.getAllPerks().containsKey(PerkType.LASER) && !fluids.ether.isEmpty()) {
+            if (setup.getAllPerks().containsKey(Perk.Group.LASER) && !fluids.ether.isEmpty()) {
                 List<FluidStack> etherFluids = new ArrayList<>();
                 etherFluids.add(fluids.ether);
                 StorageHelper.insertFluids(etherFluids, fluidHandlers);

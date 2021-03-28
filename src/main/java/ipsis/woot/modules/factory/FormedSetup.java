@@ -6,6 +6,7 @@ import ipsis.woot.config.ConfigOverride;
 import ipsis.woot.modules.factory.blocks.*;
 import ipsis.woot.modules.factory.layout.Layout;
 import ipsis.woot.modules.factory.layout.PatternBlock;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.simulator.spawning.SpawnController;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.MathHelper;
@@ -19,7 +20,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -30,7 +30,7 @@ public class FormedSetup {
 
     private Tier tier = Tier.TIER_1;
     private List<FakeMob> controllerMobs = new ArrayList<>();
-    private HashMap<PerkType, Integer> perks = new HashMap<>();
+    private HashMap<Perk.Group, Integer> perks = new HashMap<>();
     private HashMap<FakeMob, MobParam> mobParams = new HashMap<>();
     private World world;
     private BlockPos importPos = BlockPos.ZERO;
@@ -52,7 +52,7 @@ public class FormedSetup {
 
     public List<FakeMob> getAllMobs() { return Collections.unmodifiableList(controllerMobs); }
     public Map<FakeMob, MobParam> getAllMobParams() { return Collections.unmodifiableMap(mobParams); }
-    public Map<PerkType, Integer> getAllPerks() { return Collections.unmodifiableMap(perks); }
+    public Map<Perk.Group, Integer> getAllPerks() { return Collections.unmodifiableMap(perks); }
     public LazyOptional<IFluidHandler> getCellFluidHandler() {
         if (world != null) {
             TileEntity te = world.getTileEntity(cellPos);
@@ -90,7 +90,7 @@ public class FormedSetup {
         }
         return 0;
     }
-    public int getLootingLevel() { return MathHelper.clampLooting(perks.getOrDefault(PerkType.LOOTING, 0)); }
+    public int getLootingLevel() { return MathHelper.clampLooting(perks.getOrDefault(Perk.Group.LOOTING, 0)); }
 
     public List<LazyOptional<IItemHandler>> getImportHandlers() {
         List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
@@ -188,43 +188,43 @@ public class FormedSetup {
             }
 
             // Efficiency
-            if (perks.containsKey(PerkType.EFFICIENCY)) {
-                int perkLevel = perks.getOrDefault(PerkType.EFFICIENCY, 0);
+            if (perks.containsKey(Perk.Group.EFFICIENCY)) {
+                int perkLevel = perks.getOrDefault(Perk.Group.EFFICIENCY, 0);
                 if (perkLevel > 0)
                     param.setPerkEfficiencyValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.EFFICIENCY, perkLevel)));
+                            Config.OVERRIDE.getKeyByPerk(Perk.Group.EFFICIENCY, perkLevel)));
             }
 
             // Mass
-            if (perks.containsKey(PerkType.MASS)) {
-                int perkLevel = perks.getOrDefault(PerkType.MASS, 0);
+            if (perks.containsKey(Perk.Group.MASS)) {
+                int perkLevel = perks.getOrDefault(Perk.Group.MASS, 0);
                 if (perkLevel > 0)
                     param.setPerkMassValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.MASS, perkLevel)));
+                            Config.OVERRIDE.getKeyByPerk(Perk.Group.MASS, perkLevel)));
             }
 
             // Rate
-            if (perks.containsKey(PerkType.RATE)) {
-                int perkLevel = perks.getOrDefault(PerkType.RATE, 0);
+            if (perks.containsKey(Perk.Group.RATE)) {
+                int perkLevel = perks.getOrDefault(Perk.Group.RATE, 0);
                 if (perkLevel > 0)
                     param.setPerkRateValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.RATE, perkLevel)));
+                            Config.OVERRIDE.getKeyByPerk(Perk.Group.RATE, perkLevel)));
             }
 
             // Xp
-            if (perks.containsKey(PerkType.XP)) {
-                int perkLevel = perks.getOrDefault(PerkType.XP, 0);
+            if (perks.containsKey(Perk.Group.XP)) {
+                int perkLevel = perks.getOrDefault(Perk.Group.XP, 0);
                 if (perkLevel > 0)
                     param.setPerkXpValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.XP, perkLevel)));
+                            Config.OVERRIDE.getKeyByPerk(Perk.Group.XP, perkLevel)));
             }
 
             // Headless
-            if (perks.containsKey(PerkType.HEADLESS)) {
-                int perkLevel = perks.getOrDefault(PerkType.HEADLESS, 0);
+            if (perks.containsKey(Perk.Group.HEADLESS)) {
+                int perkLevel = perks.getOrDefault(Perk.Group.HEADLESS, 0);
                 if (perkLevel > 0)
                     param.setPerkHeadlessValue(Config.OVERRIDE.getIntegerOrDefault(fakeMob,
-                            Config.OVERRIDE.getKeyByPerk(PerkType.HEADLESS, perkLevel)));
+                            Config.OVERRIDE.getKeyByPerk(Perk.Group.HEADLESS, perkLevel)));
             }
 
             mobParams.put(fakeMob, param);
@@ -259,7 +259,7 @@ public class FormedSetup {
                 if (te instanceof UpgradeTileEntity) {
                     Perk perk = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));
                     if (perk != Perk.EMPTY) {
-                        PerkType perkType = Perk.getType(perk);
+                        Perk.Group group = Perk.getGroup(perk);
                         int perkLevel = Perk.getLevel(perk);
                         /**
                          * Tier 1,2 - level 1 upgrades only
@@ -275,10 +275,10 @@ public class FormedSetup {
                             formedSetup.perkCapped = true;
                         }
 
-                        Woot.setup.getLogger().debug("createFromValidLayout: adding perk {}/{}", perkType, perkLevel);
-                        formedSetup.perks.put(perkType, perkLevel);
+                        Woot.setup.getLogger().debug("createFromValidLayout: adding perk {}/{}", group, perkLevel);
+                        formedSetup.perks.put(group, perkLevel);
 
-                        if (perkType == PerkType.TIER_SHARD) {
+                        if (group == Perk.Group.TIER_SHARD) {
                             if (perkLevel == 1)
                                 formedSetup.perkTierShardValue = FactoryConfiguration.TIER_SHARD_1.get();
                             else if (perkLevel == 2)

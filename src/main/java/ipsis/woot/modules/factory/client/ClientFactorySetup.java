@@ -3,7 +3,7 @@ package ipsis.woot.modules.factory.client;
 import io.netty.buffer.ByteBuf;
 import ipsis.woot.modules.factory.Exotic;
 import ipsis.woot.modules.factory.MobParam;
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.NetworkHelper;
@@ -91,7 +91,7 @@ public class ClientFactorySetup {
         factorySetup.perkCapped = buf.readBoolean();
         int perkCount = buf.readInt();
         for (int x = 0; x < perkCount; x++)
-            factorySetup.perks.add(Perk.getPerks(buf.readInt()));
+            factorySetup.perks.add(Perk.byIndex(buf.readInt()));
 
         int itemIng = buf.readInt();
         for (int y = 0; y < itemIng; y++) {

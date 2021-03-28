@@ -14,6 +14,7 @@ import ipsis.woot.modules.factory.items.MobShardItem;
 import ipsis.woot.modules.factory.items.PerkItem;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
 import ipsis.woot.modules.factory.multiblock.MultiBlockTileEntity;
+import ipsis.woot.modules.factory.perks.Perk;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;

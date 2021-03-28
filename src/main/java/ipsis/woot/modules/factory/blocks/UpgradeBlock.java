@@ -1,7 +1,7 @@
 package ipsis.woot.modules.factory.blocks;
 
 import ipsis.woot.modules.factory.FactoryComponent;
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.items.PerkItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

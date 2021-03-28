@@ -1,13 +1,12 @@
 package ipsis.woot.compat.hwyla;
 
 import ipsis.woot.modules.factory.Exotic;
-import ipsis.woot.modules.factory.PerkType;
 import ipsis.woot.modules.factory.Tier;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.items.PerkItem;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.helper.StringHelper;
-import mcjty.theoneprobe.api.CompoundText;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
@@ -39,8 +38,8 @@ public class HeartDataProvider implements IServerDataProvider<TileEntity>, IComp
                     for (int i = 0; i < nbt.getInt("perks"); i++) {
                         CompoundNBT nbt1 = nbt.getCompound("perks" + i);
                         int level = nbt1.getInt("level");
-                        PerkType perkType = PerkType.byIndex(nbt1.getInt("perk"));
-                        ItemStack itemStack = PerkItem.getItemStack(perkType, level);
+                        Perk.Group group = Perk.Group.byIndex(nbt1.getInt("perk"));
+                        ItemStack itemStack = PerkItem.getItemStack(group, level);
                         tooltip.add(new StringTextComponent(
                                 StringHelper.translate("top.woot.heart.perk.label") + ": " +
                                         StringHelper.translate(itemStack.getItem().getTranslationKey())));
@@ -85,11 +84,11 @@ public class HeartDataProvider implements IServerDataProvider<TileEntity>, IComp
                 compoundNBT.putInt("tier", heartTileEntity.getTier().ordinal());
                 compoundNBT.putInt("perks", heartTileEntity.getPerks().keySet().size());
                 int i = 0;
-                for (PerkType perkType : heartTileEntity.getPerks().keySet()) {
-                    int level = heartTileEntity.getPerks().get(perkType);
+                for (Perk.Group group : heartTileEntity.getPerks().keySet()) {
+                    int level = heartTileEntity.getPerks().get(group);
                     CompoundNBT nbt2 = new CompoundNBT();
                     nbt2.putInt("level", level);
-                    nbt2.putInt("perk", perkType.ordinal());
+                    nbt2.putInt("perk", group.ordinal());
                     compoundNBT.put("perks" + i, nbt2);
                     i++;
                 }

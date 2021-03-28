@@ -3,7 +3,7 @@ package ipsis.woot.datagen;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.debug.DebugSetup;
 import ipsis.woot.modules.factory.FactorySetup;
-import ipsis.woot.modules.factory.Perk;
+import ipsis.woot.modules.factory.perks.Perk;
 import ipsis.woot.modules.factory.blocks.UpgradeBlock;
 import ipsis.woot.modules.fluidconvertor.FluidConvertorSetup;
 import ipsis.woot.modules.infuser.InfuserSetup;

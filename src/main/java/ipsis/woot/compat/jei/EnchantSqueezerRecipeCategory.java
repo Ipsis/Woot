@@ -3,6 +3,7 @@ package ipsis.woot.compat.jei;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.EnchantSqueezerRecipe;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.modules.squeezer.SqueezerSetup;
 import ipsis.woot.util.helper.StringHelper;
@@ -17,8 +18,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
@@ -84,6 +87,13 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70, 70, Color.BLACK.getRGB());
+
+            Screen screen = Minecraft.getInstance().currentScreen;
+            EnergyBarHelper.drawEnergyBar(matrixStack,
+                    screen,
+                    SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(),
+                    recipe.getEnergy(),
+                    10, 78, 16, 60);
         }
     }
 }

@@ -10,6 +10,13 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
+## [1.16.5-1.0.6.1] - 2021-??-??
+### Added
+- Added energy display in JEI recipes rather than blank gui space
+### Changed
+### Fixed
+### Removed
+
 ## [1.16.5-1.0.6.0] - 2021-04-25
 ### Added
 - Added Ritual Of The Martyr/Flayed Perk for Blood Magic support [#514]

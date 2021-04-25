@@ -19,8 +19,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
@@ -70,6 +72,13 @@ public class DyeSqueezerRecipeCategory implements IRecipeCategory<DyeSqueezerRec
 
             minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
+
+            Screen screen = Minecraft.getInstance().currentScreen;
+            EnergyBarHelper.drawEnergyBar(matrixStack,
+                    screen,
+                    SqueezerConfiguration.DYE_SQUEEZER_MAX_ENERGY.get(),
+                    recipe.getEnergy(),
+                    10, 78, 16, 60);
         }
     }
 

@@ -3,7 +3,10 @@ package ipsis.woot.compat.jei;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import ipsis.woot.Woot;
 import ipsis.woot.crafting.FluidConvertorRecipe;
+import ipsis.woot.modules.fluidconvertor.FluidConvertorConfiguration;
+import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -16,8 +19,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 import java.awt.*;
 
@@ -84,6 +89,13 @@ public class FluidConvertorRecipeCategory implements IRecipeCategory<FluidConver
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     90, 70, Color.BLACK.getRGB());
+
+            Screen screen = Minecraft.getInstance().currentScreen;
+            EnergyBarHelper.drawEnergyBar(matrixStack,
+                    screen,
+                    FluidConvertorConfiguration.FLUID_CONV_MAX_ENERGY.get(),
+                    recipe.getEnergy(),
+                    10, 78, 16, 60);
         }
     }
 }

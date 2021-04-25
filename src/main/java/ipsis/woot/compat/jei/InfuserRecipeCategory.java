@@ -5,6 +5,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.crafting.InfuserRecipe;
 import ipsis.woot.modules.infuser.InfuserConfiguration;
 import ipsis.woot.modules.infuser.InfuserSetup;
+import ipsis.woot.modules.squeezer.SqueezerConfiguration;
 import ipsis.woot.util.helper.StringHelper;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -18,13 +19,16 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, ITooltipCallback<ItemStack>  {
@@ -112,6 +116,13 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
+
+            Screen screen = Minecraft.getInstance().currentScreen;
+            EnergyBarHelper.drawEnergyBar(matrixStack,
+                    screen,
+                    InfuserConfiguration.INFUSER_MAX_ENERGY.get(),
+                    recipe.getEnergy(),
+                    10, 78, 16, 60);
         }
     }
 }

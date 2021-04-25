@@ -1,11 +1,10 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -31,6 +30,11 @@ repositories {
     maven {
         name 'Patchouli'
         url "https://maven.blamejared.com"
+    }
+
+    maven {
+        name "CurseMaven"
+        url "https://www.cursemaven.com"
     }
 
 }
@@ -164,6 +168,8 @@ dependencies {
     // Hwyla
     compileOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}:api")
     runtimeOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
+
+    implementation fg.deobf("curse.maven:BloodMagic-224791:3184485")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

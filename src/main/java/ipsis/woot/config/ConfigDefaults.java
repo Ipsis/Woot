@@ -114,6 +114,9 @@ public final class ConfigDefaults {
         public static final int LASER_1_DEF = 100;
         public static final int LASER_2_DEF = 120;
         public static final int LASER_3_DEF = 140;
+        public static final int FLAYED_1_DEF = 90;
+        public static final int FLAYED_2_DEF = 100;
+        public static final int FLAYED_3_DEF = 110;
 
         public static final float EXOTIC_A_DEF = 85.0F;
         public static final float EXOTIC_B_DEF = 85.0F;

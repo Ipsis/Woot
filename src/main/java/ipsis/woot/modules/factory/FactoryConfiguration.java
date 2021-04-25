@@ -66,6 +66,9 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.IntValue LASER_1;
     public static ForgeConfigSpec.IntValue LASER_2;
     public static ForgeConfigSpec.IntValue LASER_3;
+    public static ForgeConfigSpec.IntValue FLAYED_1;
+    public static ForgeConfigSpec.IntValue FLAYED_2;
+    public static ForgeConfigSpec.IntValue FLAYED_3;
     public static ForgeConfigSpec.DoubleValue T1_FARM_DROP_CHANCE;
     public static ForgeConfigSpec.ConfigValue<List<Integer>> T1_FARM_DROP_SHARD_WEIGHTS;
     public static ForgeConfigSpec.DoubleValue T2_FARM_DROP_CHANCE;
@@ -105,6 +108,9 @@ public class FactoryConfiguration {
         if (group == Perk.Group.LASER && level == 1) return LASER_1;
         if (group == Perk.Group.LASER && level == 2) return LASER_2;
         if (group == Perk.Group.LASER && level == 3) return LASER_3;
+        if (group == Perk.Group.FLAYED && level == 1) return FLAYED_1;
+        if (group == Perk.Group.FLAYED && level == 2) return FLAYED_2;
+        if (group == Perk.Group.FLAYED && level == 3) return FLAYED_3;
         return null; // Some don't have config values
     }
 
@@ -425,6 +431,23 @@ public class FactoryConfiguration {
                             .comment("Percentage of ether gas to drop for laser 3 perks")
                             .defineInRange(ConfigPath.Factory.LASER_3_TAG,
                                     Factory.LASER_3_DEF, 0, 1000);
+                }
+                COMMON_BUILDER.pop();
+
+                COMMON_BUILDER.push(ConfigPath.Factory.CATEGORY_FLAYED);
+                {
+                    FLAYED_1 = COMMON_BUILDER
+                            .comment("Percentage of mob health for flayed 1 perks")
+                            .defineInRange(ConfigPath.Factory.FLAYED_1_TAG,
+                                    Factory.FLAYED_1_DEF, 0, 1000);
+                    FLAYED_2 = COMMON_BUILDER
+                            .comment("Percentage of mob health for flayed 2 perks")
+                            .defineInRange(ConfigPath.Factory.FLAYED_2_TAG,
+                                    Factory.FLAYED_2_DEF, 0, 1000);
+                    FLAYED_3 = COMMON_BUILDER
+                            .comment("Percentage of mob health for flayed 3 perks")
+                            .defineInRange(ConfigPath.Factory.FLAYED_3_TAG,
+                                    Factory.FLAYED_3_DEF, 0, 1000);
                 }
                 COMMON_BUILDER.pop();
 

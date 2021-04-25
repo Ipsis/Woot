@@ -1,9 +1,7 @@
 package ipsis.woot.modules.factory.perks;
 
-import ipsis.woot.modules.factory.FactoryConfiguration;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.*;
 
@@ -39,7 +37,10 @@ public enum Perk implements IStringSerializable {
     CRUSHER_3(Group.CRUSHER),
     LASER_1(Group.LASER),
     LASER_2(Group.LASER),
-    LASER_3(Group.LASER)
+    LASER_3(Group.LASER),
+    FLAYED_1(Group.FLAYED),
+    FLAYED_2(Group.FLAYED),
+    FLAYED_3(Group.FLAYED)
     ;
 
     private Group group;
@@ -56,9 +57,9 @@ public enum Perk implements IStringSerializable {
         return VALUES[index];
     }
 
-    public static final EnumSet<Perk> LEVEL_1_PERKS = EnumSet.of(EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, TIER_SHARD_1, XP_1, HEADLESS_1, SLAUGHTER_1, CRUSHER_1, LASER_1);
-    public static final EnumSet<Perk> LEVEL_2_PERKS = EnumSet.of(EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, TIER_SHARD_2, XP_2, HEADLESS_2, SLAUGHTER_2, CRUSHER_2, LASER_2);
-    public static final EnumSet<Perk> LEVEL_3_PERKS = EnumSet.of(EFFICIENCY_3, LOOTING_3, MASS_3, RATE_3, TIER_SHARD_3, XP_3, HEADLESS_3, SLAUGHTER_3, CRUSHER_3, LASER_3);
+    public static final EnumSet<Perk> LEVEL_1_PERKS = EnumSet.of(EFFICIENCY_1, LOOTING_1, MASS_1, RATE_1, TIER_SHARD_1, XP_1, HEADLESS_1, SLAUGHTER_1, CRUSHER_1, LASER_1, FLAYED_1);
+    public static final EnumSet<Perk> LEVEL_2_PERKS = EnumSet.of(EFFICIENCY_2, LOOTING_2, MASS_2, RATE_2, TIER_SHARD_2, XP_2, HEADLESS_2, SLAUGHTER_2, CRUSHER_2, LASER_2, FLAYED_2);
+    public static final EnumSet<Perk> LEVEL_3_PERKS = EnumSet.of(EFFICIENCY_3, LOOTING_3, MASS_3, RATE_3, TIER_SHARD_3, XP_3, HEADLESS_3, SLAUGHTER_3, CRUSHER_3, LASER_3, FLAYED_3);
 
     public static final EnumSet<Perk> EFFICIENCY_PERKS = EnumSet.of(EFFICIENCY_1, EFFICIENCY_2, EFFICIENCY_3);
     public static final EnumSet<Perk> LOOTING_PERKS = EnumSet.of(LOOTING_1, LOOTING_2, LOOTING_3);
@@ -70,6 +71,7 @@ public enum Perk implements IStringSerializable {
     public static final EnumSet<Perk> SLAUGHTER_PERKS = EnumSet.of(SLAUGHTER_1, SLAUGHTER_2, SLAUGHTER_3);
     public static final EnumSet<Perk> CRUSHER_PERKS = EnumSet.of(CRUSHER_1, CRUSHER_2, CRUSHER_3);
     public static final EnumSet<Perk> LASER_PERKS = EnumSet.of(LASER_1, LASER_2, LASER_3);
+    public static final EnumSet<Perk> FLAYED_PERKS = EnumSet.of(FLAYED_1, FLAYED_2, FLAYED_3);
 
     private static final Map<Group, EnumSet<Perk>> perkMap = new HashMap<>();
     static {
@@ -83,6 +85,7 @@ public enum Perk implements IStringSerializable {
         perkMap.put(Group.SLAUGHTER, SLAUGHTER_PERKS);
         perkMap.put(Group.CRUSHER, CRUSHER_PERKS);
         perkMap.put(Group.LASER, LASER_PERKS);
+        perkMap.put(Group.FLAYED, FLAYED_PERKS);
     }
 
     public static EnumSet<Perk> getPerksByGroup(Group group) {
@@ -116,7 +119,10 @@ public enum Perk implements IStringSerializable {
         HEADLESS,
 
         // Industrial Foregoing
-        SLAUGHTER, CRUSHER, LASER
+        SLAUGHTER, CRUSHER, LASER,
+
+        // Blood Magic
+        FLAYED
         ;
 
         private static final Group VALUES[] = Group.values();

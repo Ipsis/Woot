@@ -185,6 +185,24 @@
     },
     "attached=true,upgrade=laser_3": {
       "model": "woot:block/factory_upgrade_laser_3"
+    },
+    "attached=false,upgrade=flayed_1": {
+      "model": "woot:block/factory_upgrade_flayed_1"
+    },
+    "attached=true,upgrade=flayed_1": {
+      "model": "woot:block/factory_upgrade_flayed_1"
+    },
+    "attached=false,upgrade=flayed_2": {
+      "model": "woot:block/factory_upgrade_flayed_2"
+    },
+    "attached=true,upgrade=flayed_2": {
+      "model": "woot:block/factory_upgrade_flayed_2"
+    },
+    "attached=false,upgrade=flayed_3": {
+      "model": "woot:block/factory_upgrade_flayed_3"
+    },
+    "attached=true,upgrade=flayed_3": {
+      "model": "woot:block/factory_upgrade_flayed_3"
     }
   }
 }

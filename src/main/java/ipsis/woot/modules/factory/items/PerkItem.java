@@ -47,6 +47,9 @@ public class PerkItem extends Item {
     public static final String LASER_1_REGNAME = "laser_1";
     public static final String LASER_2_REGNAME = "laser_2";
     public static final String LASER_3_REGNAME = "laser_3";
+    public static final String FLAYED_1_REGNAME = "flayed_1";
+    public static final String FLAYED_2_REGNAME = "flayed_2";
+    public static final String FLAYED_3_REGNAME = "flayed_3";
 
     final Perk perk;
 
@@ -119,6 +122,12 @@ public class PerkItem extends Item {
             return new ItemStack(FactorySetup.LASER_2_ITEM.get());
         else if (perk == Perk.LASER_3)
             return new ItemStack(FactorySetup.LASER_3_ITEM.get());
+        else if (perk == Perk.FLAYED_1)
+            return new ItemStack(FactorySetup.FLAYED_1_ITEM.get());
+        else if (perk == Perk.FLAYED_2)
+            return new ItemStack(FactorySetup.FLAYED_2_ITEM.get());
+        else if (perk == Perk.FLAYED_3)
+            return new ItemStack(FactorySetup.FLAYED_3_ITEM.get());
 
         return ItemStack.EMPTY;
     }

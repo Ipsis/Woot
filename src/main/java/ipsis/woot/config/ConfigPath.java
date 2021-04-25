@@ -137,6 +137,7 @@ public class ConfigPath {
         public static final String CATEGORY_SLAUGHTER = "slaughter";
         public static final String CATEGORY_CRUSHER = "crusher";
         public static final String CATEGORY_LASER = "laser";
+        public static final String CATEGORY_FLAYED = "flayed";
         public static final String CATEGORY_XP = "xp";
         public static final String CATEGORY_EXOTIC = "exotic";
 
@@ -202,6 +203,9 @@ public class ConfigPath {
         public static final String LASER_1_TAG = "l1LaserAmount";
         public static final String LASER_2_TAG = "l2LaserAmount";
         public static final String LASER_3_TAG = "l3LaserAmount";
+        public static final String FLAYED_1_TAG = "l1FlayedAmount";
+        public static final String FLAYED_2_TAG = "l2FlayedAmount";
+        public static final String FLAYED_3_TAG = "l3FlayedAmount";
 
     }
 }

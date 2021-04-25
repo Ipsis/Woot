@@ -477,6 +477,17 @@ public class LanguagesGuide {
                                 "$(li)Tier II - " + FactoryConfiguration.CRUSHER_2.get() + "%%" +
                                 "$(li)Tier III - " + FactoryConfiguration.CRUSHER_3.get() + "%%"
                 },
+                // Flayed
+                { PERKS_TAG + "flayed.name", "Flayed" },
+                { PERKS_TAG + "flayed.0",
+                        "This perk allows mobs being processed by the Woot factory to be used by the Martyr ritual to generate LP. " +
+                                "Higher levels of this perk will increase the mob health available to the ritual."
+                },
+                { PERKS_TAG + "flayed.1",
+                        "$(li)Tier I - " + FactoryConfiguration.FLAYED_1.get() + "%%" +
+                                "$(li)Tier II - " + FactoryConfiguration.FLAYED_2.get() + "%%" +
+                                "$(li)Tier III - " + FactoryConfiguration.FLAYED_3.get() + "%%"
+                },
                 // Laser
                 { PERKS_TAG + "laser.name", "Frickin Laser Breams" },
                 { PERKS_TAG + "laser.0",
@@ -498,8 +509,8 @@ public class LanguagesGuide {
                 },
                 { PERKS_TAG + "tier_shard.1",
                     "$(li)Tier I - " + FactoryConfiguration.TIER_SHARD_1.get() + " chances to drop essence" +
-                    "$(li)Tier II - " + FactoryConfiguration.TIER_SHARD_1.get() + " chances to drop essence" +
-                    "$(li)Tier III - " + FactoryConfiguration.TIER_SHARD_1.get() + " chances to drop essence"
+                    "$(li)Tier II - " + FactoryConfiguration.TIER_SHARD_2.get() + " chances to drop essence" +
+                    "$(li)Tier III - " + FactoryConfiguration.TIER_SHARD_3.get() + " chances to drop essence"
                 },
                 { PERKS_TAG + "tier_shard.2",
                     "A Tier I Factory has a " + FactoryConfiguration.T1_FARM_DROP_CHANCE.get() + "%% chance to drop a shard." +

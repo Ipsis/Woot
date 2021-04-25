@@ -82,6 +82,10 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
             layout.fullDisconnect();
     }
 
+    public boolean isRunning() {
+        return !world.isBlockPowered(pos);
+    }
+
     public boolean isFormed() { return layout != null && layout.isFormed(); }
 
     @Override
@@ -122,7 +126,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                layout.clearChanged();
            }
 
-           if (world.isBlockPowered(pos))
+           if (!isRunning())
                return;
 
            tickRecipe();
@@ -282,6 +286,26 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     /**
+     * For BloodMagic
+     */
+    public boolean couldFinish() {
+        /**
+         * Enough Conatus in the tank to complete the spawn and we are running
+         */
+
+        if (!isRunning() || !isFormed())
+            return false;
+
+        return formedSetup.getCellFluidAmount() >= recipe.getNumUnits();
+    }
+
+    public boolean hasFlayedPerk() {
+        if (!isFormed())
+            return false;
+        return formedSetup.getAllPerks().containsKey(Perk.Group.FLAYED);
+    }
+
+    /**
      * MultiBlockMaster
      */
     @Override
@@ -400,6 +424,11 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
         if (isFormed())
             perks.putAll(formedSetup.getAllPerks());
         return perks;
+    }
+
+    @Nullable
+    public FormedSetup getFormedSetup() {
+        return formedSetup;
     }
 
     public Tier getTier() {

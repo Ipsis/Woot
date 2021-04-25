@@ -492,7 +492,8 @@ public class LanguagesGuide {
                 { PERKS_TAG + "laser.name", "Frickin Laser Breams" },
                 { PERKS_TAG + "laser.0",
                         "This perk generates Industrial Foregoing ether gas in tanks adjacent to the Loot Exporter. " +
-                                "Higher levels of this perk will increase the generated amount of the gas."
+                                "Higher levels of this perk will increase the generated amount of the gas." +
+                                    "As per the original mod, only generates from Withers"
                 },
                 { PERKS_TAG + "laser.1",
                         "$(li)Tier I - " + FactoryConfiguration.CRUSHER_1.get() + "%%" +

@@ -233,7 +233,7 @@ public class Languages extends LanguageProvider {
         add("info.woot.perk.slaughter.0", "Produce %d%% of liquid");
         add("info.woot.perk.crusher", "Generate Industrial Foregoing essence");
         add("info.woot.perk.crusher.0", "produce %d%% of liquid");
-        add("info.woot.perk.laser", "Generate industrial foregoing ether gas");
+        add("info.woot.perk.laser", "Generate industrial foregoing ether gas from Withers");
         add("info.woot.perk.laser.0", "Produce %d%% of gas");
         add("info.woot.perk.flayed", "Allows mobs to be subjected to the Ritual Of The Martyr");
         add("info.woot.perk.flayed.0", "Produce %d%% of mob health");

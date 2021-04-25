@@ -10,7 +10,15 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
-## [1.16.5-1.0.5.0] - 2021-??-??
+## [1.16.5-1.0.6.0] - 2021-04-25
+### Added
+- Added Ritual Of The Martyr/Flayed Perk for Blood Magic support [#514]
+### Changed
+- Added Ether Gas Wither requirement information to tooltip and guide [#516]
+### Fixed
+### Removed
+
+## [1.16.5-1.0.5.0] - 2021-04-03
 ### Added
 - Added Ether Gas perk for Industrial Foregoing when using Withers [#513]
 ### Changed

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "side": "woot:block/factory",
-    "front": "woot:block/enchsqueezer",
-    "top": "woot:block/factory"
-  }
-}

@@ -73,7 +73,8 @@ minecraft {
             property 'forge.logging.noansi', 'false'
 
             // Needed for Patchouli to work in-dev
-            property 'mixin.env.disableRefMap', 'true'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 woot {
@@ -169,7 +170,7 @@ dependencies {
     compileOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}:api")
     runtimeOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
 
-    implementation fg.deobf("curse.maven:BloodMagic-224791:3184485")
+    // implementation fg.deobf("curse.maven:BloodMagic-224791:3184485")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

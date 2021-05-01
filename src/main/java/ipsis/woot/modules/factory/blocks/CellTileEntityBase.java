@@ -39,8 +39,8 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
-        super.read(blockState, compoundNBT);
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
+        super.load(blockState, compoundNBT);
         readFromNBT(compoundNBT);
     }
 
@@ -50,8 +50,8 @@ public abstract class CellTileEntityBase extends MultiBlockTileEntity implements
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
         CompoundNBT tankNBT = new CompoundNBT();
         tank.writeToNBT(tankNBT);
         compound.put(ModNBT.TANK_TAG, tankNBT);

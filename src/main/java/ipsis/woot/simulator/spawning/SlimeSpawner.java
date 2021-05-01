@@ -16,10 +16,10 @@ public class SlimeSpawner extends AbstractMobSpawner {
 
         SlimeEntity slimeEntity = (SlimeEntity)mobEntity;
         if (fakeMob.isSmallSlime()) {
-            slimeEntity.setSlimeSize(1, false);
+            slimeEntity.setSize(1, false);
             //Woot.setup.getLogger().debug("SlimeSpawner: set size to small {}", slimeEntity.getSlimeSize());
         } else {
-            slimeEntity.setSlimeSize(2, false);
+            slimeEntity.setSize(2, false);
             //Woot.setup.getLogger().debug("SlimeSpawner: set size to small {}", slimeEntity.getSlimeSize());
         }
     }

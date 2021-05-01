@@ -54,7 +54,7 @@ public class PerkItem extends Item {
     final Perk perk;
 
     public PerkItem(Perk perk) {
-        super(new Item.Properties().group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().tab(Woot.setup.getCreativeTab()));
         this.perk = perk;
     }
 
@@ -141,8 +141,8 @@ public class PerkItem extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         tooltip.add(Helper.getTooltip(perk));
         tooltip.addAll(Helper.getTooltip(perk, Perk.getLevel(perk)));

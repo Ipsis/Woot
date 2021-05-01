@@ -16,10 +16,10 @@ public class MagmaCubeSpawner extends AbstractMobSpawner {
 
         MagmaCubeEntity magmaCubeEntity = (MagmaCubeEntity)mobEntity;
         if (fakeMob.isSmallMagmaCube()) {
-            magmaCubeEntity.setSlimeSize(1, false);
+            magmaCubeEntity.setSize(1, false);
             //Woot.setup.getLogger().debug("SlimeSpawner: set size to small {}", magmaCubeEntity.getSlimeSize());
         } else {
-            magmaCubeEntity.setSlimeSize(2, false);
+            magmaCubeEntity.setSize(2, false);
             //Woot.setup.getLogger().debug("SlimeSpawner: set size to small {}", magmaCubeEntity.getSlimeSize());
         }
     }

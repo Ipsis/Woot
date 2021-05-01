@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -28,8 +29,8 @@ public class FactoryHelper {
 
     public static void disconnectOld(World world, AbsolutePattern absolutePattern) {
         for (PatternBlock pb : absolutePattern.getBlocks()) {
-            if (world.isBlockLoaded(pb.getBlockPos())) {
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
+            if (world.isLoaded(pb.getBlockPos())) {
+                TileEntity te = world.getBlockEntity(pb.getBlockPos());
                 if (te instanceof MultiBlockGlueProvider)
                     ((MultiBlockGlueProvider)te).getGlue().clearMaster();
             }
@@ -41,8 +42,8 @@ public class FactoryHelper {
             if (pb.getFactoryComponent() == FactoryComponent.CONTROLLER && !absolutePattern.isValidControllerPos(pb.getBlockPos()))
                 continue;
 
-            if (world.isBlockLoaded(pb.getBlockPos())) {
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
+            if (world.isLoaded(pb.getBlockPos())) {
+                TileEntity te = world.getBlockEntity(pb.getBlockPos());
                 if (te instanceof MultiBlockGlueProvider)
                     ((MultiBlockGlueProvider)te).getGlue().setMaster(master);
             }
@@ -61,8 +62,8 @@ public class FactoryHelper {
         ALL_BLOCKS_PLACED
     }
     public static BuildResult tryBuild(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
-        if (!playerEntity.isAllowEdit()) {
-            playerEntity.sendStatusMessage(
+        if (!playerEntity.mayBuild()) {
+            playerEntity.displayClientMessage(
                     new TranslationTextComponent("chat.woot.intern.noedit"), false);
             return BuildResult.ERROR;
         }
@@ -87,17 +88,18 @@ public class FactoryHelper {
 
             Block placeBlock = correctBlocks.get(0);
             if (!PlayerHelper.playerHasFactoryComponent(playerEntity, correctItemStacks)) {
-                playerEntity.sendStatusMessage(
+                playerEntity.displayClientMessage(
                         new TranslationTextComponent("chat.woot.intern.missingblock",
                                 StringHelper.translate(pb.getFactoryComponent().getTranslationKey())), false);
                 return BuildResult.NO_BLOCK_IN_INV;
             }
-            if (world.isBlockModifiable(playerEntity, pb.getBlockPos()) && (world.isAirBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
+            // TODO isUnderSpawnProtection(serverworld, pos, playerentity) && within world border
+            if (world.getWorldBorder().isWithinBounds(pb.getBlockPos()) && (world.isEmptyBlock(pb.getBlockPos()) || currState.getMaterial().isReplaceable())) {
                 ItemStack takenStack = PlayerHelper.takeFactoryComponent(playerEntity, correctItemStacks);
                 if (!takenStack.isEmpty()) {
 
-                    BlockSnapshot blockSnapshot = BlockSnapshot.create(world.getDimensionKey(), world, pos);
-                    world.setBlockState(pb.getBlockPos(), placeBlock.getDefaultState(), 11);
+                    BlockSnapshot blockSnapshot = BlockSnapshot.create(world.dimension(), world, pos);
+                    world.setBlock(pb.getBlockPos(), placeBlock.defaultBlockState(), 11);
                     if (ForgeEventFactory.onBlockPlace(playerEntity, blockSnapshot, Direction.UP)) {
                         blockSnapshot.restore(true, false);
                         return BuildResult.ERROR;
@@ -106,7 +108,7 @@ public class FactoryHelper {
                 return BuildResult.SUCCESS;
             } else {
                 // cannot replace block
-                playerEntity.sendStatusMessage(
+                playerEntity.displayClientMessage(
                         new TranslationTextComponent("chat.woot.intern.noreplace",
                                 StringHelper.translate(pb.getFactoryComponent().getTranslationKey()),
                                 pb.getBlockPos().getX(), pb.getBlockPos().getY(), pb.getBlockPos().getZ()), false);
@@ -118,7 +120,7 @@ public class FactoryHelper {
 
     public static void tryValidate(World world, BlockPos pos, PlayerEntity playerEntity, Direction facing, Tier tier) {
 
-        playerEntity.sendStatusMessage(
+        playerEntity.displayClientMessage(
                 new TranslationTextComponent(
                 "chat.woot.intern.validate.start",
                         StringHelper.translate(tier.getTranslationKey())),
@@ -127,16 +129,16 @@ public class FactoryHelper {
         List<String> feedback = new ArrayList<>();
         AbsolutePattern absolutePattern = AbsolutePattern.create(world, tier, pos, facing);
         if (!FactoryScanner.compareToWorld(absolutePattern, world, feedback)) {
-            playerEntity.sendStatusMessage(new StringTextComponent("----"), false);
-            playerEntity.sendStatusMessage(
+            playerEntity.displayClientMessage(new StringTextComponent("----"), false);
+            playerEntity.displayClientMessage(
                     new TranslationTextComponent(
                     "chat.woot.intern.validate.invalid", StringHelper.translate(tier.getTranslationKey())),
             true);
             for (String s : feedback)
-                playerEntity.sendStatusMessage(new StringTextComponent(s), false);
-            playerEntity.sendStatusMessage(new StringTextComponent("----"), false);
+                playerEntity.displayClientMessage(new StringTextComponent(s), false);
+            playerEntity.displayClientMessage(new StringTextComponent("----"), false);
         } else {
-            playerEntity.sendStatusMessage(
+            playerEntity.displayClientMessage(
                     new TranslationTextComponent(
                     "chat.woot.intern.validate.valid", StringHelper.translate(tier.getTranslationKey())),
                     true);

@@ -18,7 +18,7 @@ public class SqueezerRecipes {
             if (recipe instanceof DyeSqueezerRecipe) {
                 DyeSqueezerRecipe dRecipe = (DyeSqueezerRecipe)recipe;
                 Ingredient ingredient = dRecipe.getIngredient();
-                for (ItemStack itemStack :  ingredient.getMatchingStacks())
+                for (ItemStack itemStack :  ingredient.getItems())
                     DyeSqueezerRecipe.addValidInput(itemStack);
             }
         }

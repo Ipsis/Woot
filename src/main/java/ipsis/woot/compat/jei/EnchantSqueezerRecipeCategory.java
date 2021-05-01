@@ -85,10 +85,10 @@ public class EnchantSqueezerRecipeCategory implements IRecipeCategory<EnchantSqu
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
+            minecraft.font.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70, 70, Color.BLACK.getRGB());
 
-            Screen screen = Minecraft.getInstance().currentScreen;
+            Screen screen = Minecraft.getInstance().screen;
             EnergyBarHelper.drawEnergyBar(matrixStack,
                     screen,
                     SqueezerConfiguration.ENCH_SQUEEZER_MAX_ENERGY.get(),

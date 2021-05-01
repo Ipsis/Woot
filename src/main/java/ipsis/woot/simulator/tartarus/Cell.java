@@ -25,7 +25,7 @@ public class Cell {
 
     public Cell(BlockPos origin) {
         this.origin = origin;
-        spawnPos = origin.add(4, 4, 4);
+        spawnPos = origin.offset(4, 4, 4);
         fakeMobKey = null;
         axisAlignedBB = null;
     }
@@ -40,7 +40,7 @@ public class Cell {
 
         this.fakeMobKey = fakeMobKey;
         if (axisAlignedBB == null)
-            axisAlignedBB = new AxisAlignedBB(spawnPos).grow(3); // 6x6x6 cell
+            axisAlignedBB = new AxisAlignedBB(spawnPos).inflate(3); // 6x6x6 cell
         return true;
     }
 
@@ -49,7 +49,7 @@ public class Cell {
          * Remove everything from the cell.
          * This should catch any entity that spawns entities on death
          */
-        for (LivingEntity livingEntity : world.getEntitiesWithinAABB(LivingEntity.class, axisAlignedBB, x -> x.isAlive())) {
+        for (LivingEntity livingEntity : world.getEntitiesOfClass(LivingEntity.class, axisAlignedBB, x -> x.isAlive())) {
             livingEntity.remove();
         }
     }
@@ -57,7 +57,7 @@ public class Cell {
     public @Nonnull List<ItemStack> sweep(@Nonnull World world) {
         List<ItemStack> drops = new ArrayList<>();
         if (isOccupied()) {
-            for (ItemEntity itemEntity : world.getEntitiesWithinAABB(ItemEntity.class, axisAlignedBB, x -> x.isAlive())) {
+            for (ItemEntity itemEntity : world.getEntitiesOfClass(ItemEntity.class, axisAlignedBB, x -> x.isAlive())) {
                 drops.add(itemEntity.getItem().copy());
                 itemEntity.lifespan = 0;
             }

@@ -21,17 +21,17 @@ public class ApplyPerkTrigger extends AbstractCriterionTrigger<ApplyPerkTrigger.
     public ResourceLocation getId() { return ID; }
 
     @Override
-    protected ApplyPerkTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    protected ApplyPerkTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         JsonElement element = json.get("perk");
         Perk perk = Perk.EMPTY;
         if (element != null && !element.isJsonNull())
-            perk = Perk.byIndex(JSONUtils.getInt(json, "perk"));
+            perk = Perk.byIndex(JSONUtils.getAsInt(json, "perk"));
 
         return new Instance(entityPredicate, perk);
     }
 
     public void trigger(ServerPlayerEntity playerEntity, Perk perk) {
-        this.triggerListeners(playerEntity, instance -> instance.test(playerEntity, perk));
+        this.trigger(playerEntity, instance -> instance.test(playerEntity, perk));
     }
 
     public static class Instance extends CriterionInstance {
@@ -43,7 +43,7 @@ public class ApplyPerkTrigger extends AbstractCriterionTrigger<ApplyPerkTrigger.
         }
 
         public static ApplyPerkTrigger.Instance forPerk(Perk perk) {
-            return new ApplyPerkTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, perk);
+            return new ApplyPerkTrigger.Instance(EntityPredicate.AndPredicate.ANY, perk);
         }
 
         public boolean test(ServerPlayerEntity playerEntity, Perk perk) {
@@ -51,8 +51,8 @@ public class ApplyPerkTrigger extends AbstractCriterionTrigger<ApplyPerkTrigger.
         }
 
         @Override
-        public JsonObject serialize(ConditionArraySerializer conditions) {
-            JsonObject jsonObject = super.serialize(conditions);
+        public JsonObject serializeToJson(ConditionArraySerializer conditions) {
+            JsonObject jsonObject = super.serializeToJson(conditions);
             jsonObject.addProperty("perk", perk.ordinal());
             return jsonObject;
         }

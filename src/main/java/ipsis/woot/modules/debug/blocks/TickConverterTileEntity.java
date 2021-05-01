@@ -20,7 +20,7 @@ public class TickConverterTileEntity extends TileEntity implements ITickableTile
     @Override
     public void tick() {
         for (Direction facing : Direction.values()) {
-            TileEntity te = world.getTileEntity(getPos().offset(facing));
+            TileEntity te = level.getBlockEntity(getBlockPos().relative(facing));
             if (!(te instanceof CellTileEntityBase))
                 continue;
 

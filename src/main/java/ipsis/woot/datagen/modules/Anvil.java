@@ -18,49 +18,49 @@ public class Anvil {
 
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shapedRecipe(AnvilSetup.ANVIL_BLOCK.get())
-                .patternLine("iii")
-                .patternLine(" a ")
-                .patternLine("ooo")
-                .key('i', GenericSetup.SI_INGOT_ITEM.get())
-                .key('a', Blocks.ANVIL)
-                .key('o', Tags.Items.OBSIDIAN)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(AnvilSetup.ANVIL_BLOCK.get())
+                .pattern("iii")
+                .pattern(" a ")
+                .pattern("ooo")
+                .define('i', GenericSetup.SI_INGOT_ITEM.get())
+                .define('a', Blocks.ANVIL)
+                .define('o', Tags.Items.OBSIDIAN)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(AnvilSetup.HAMMER_ITEM.get())
-                .patternLine(" si")
-                .patternLine(" ws")
-                .patternLine("w  ")
-                .key('i', GenericSetup.SI_INGOT_ITEM.get())
-                .key('s', Tags.Items.STRING)
-                .key('w', Items.STICK)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(AnvilSetup.HAMMER_ITEM.get())
+                .pattern(" si")
+                .pattern(" ws")
+                .pattern("w  ")
+                .define('i', GenericSetup.SI_INGOT_ITEM.get())
+                .define('s', Tags.Items.STRING)
+                .define('w', Items.STICK)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
         AnvilRecipeBuilder.anvilRecipe(
                 AnvilSetup.PLATE_DIE_ITEM.get(), 1,
-                Ingredient.fromItems(Items.STONE_SLAB))
-                .addIngredient(Ingredient.fromItems(Blocks.OBSIDIAN))
+                Ingredient.of(Items.STONE_SLAB))
+                .addIngredient(Ingredient.of(Blocks.OBSIDIAN))
                 .build(consumer, "plate_die");
 
         AnvilRecipeBuilder.anvilRecipe(
                 AnvilSetup.SHARD_DIE_ITEM.get(), 1,
-                Ingredient.fromItems(Items.QUARTZ))
-                .addIngredient(Ingredient.fromItems(Blocks.OBSIDIAN))
+                Ingredient.of(Items.QUARTZ))
+                .addIngredient(Ingredient.of(Blocks.OBSIDIAN))
                 .build(consumer, "shard_die");
 
         AnvilRecipeBuilder.anvilRecipe(
                 AnvilSetup.DYE_DIE_ITEM.get(), 1,
-                Ingredient.fromItems(Items.GUNPOWDER))
-                .addIngredient(Ingredient.fromItems(Blocks.OBSIDIAN))
+                Ingredient.of(Items.GUNPOWDER))
+                .addIngredient(Ingredient.of(Blocks.OBSIDIAN))
                 .build(consumer, "dye_die");
 
         AnvilRecipeBuilder.anvilRecipe(
                 FactorySetup.CONTROLLER_BLOCK.get(), 1,
-                Ingredient.fromItems(FactorySetup.MOB_SHARD_ITEM.get()))
-                .addIngredient(Ingredient.fromItems(GenericSetup.PRISM_ITEM.get()))
-                .addIngredient(Ingredient.fromItems(GenericSetup.SI_PLATE_ITEM.get()))
+                Ingredient.of(FactorySetup.MOB_SHARD_ITEM.get()))
+                .addIngredient(Ingredient.of(GenericSetup.PRISM_ITEM.get()))
+                .addIngredient(Ingredient.of(GenericSetup.SI_PLATE_ITEM.get()))
                 .build(consumer, "controller");
     }
 }

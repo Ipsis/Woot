@@ -11,14 +11,14 @@ import net.minecraft.world.World;
 
 public class MobSimulatorSetup {
 
-    public static final RegistryKey<DimensionType> TARTARUS_DIMENSION_TYPE = RegistryKey.getOrCreateKey(
-            Registry.DIMENSION_TYPE_KEY, new ResourceLocation(Woot.MODID + ":mobsimulator"));
-    public static final RegistryKey<World> TARTARUS = RegistryKey.getOrCreateKey(
-            Registry.WORLD_KEY, new ResourceLocation(Woot.MODID + ":tartarus"));
+    public static final RegistryKey<DimensionType> TARTARUS_DIMENSION_TYPE = RegistryKey.create(
+            Registry.DIMENSION_TYPE_REGISTRY, new ResourceLocation(Woot.MODID + ":mobsimulator"));
+    public static final RegistryKey<World> TARTARUS = RegistryKey.create(
+            Registry.DIMENSION_REGISTRY, new ResourceLocation(Woot.MODID + ":tartarus"));
 
     public static void init() {
         Registry.register(
-                Registry.CHUNK_GENERATOR_CODEC,
+                Registry.CHUNK_GENERATOR,
                 Woot.MODID + ":simulation_cells",
                 TartarusChunkGenerator.codecTartarusChunk);
     }

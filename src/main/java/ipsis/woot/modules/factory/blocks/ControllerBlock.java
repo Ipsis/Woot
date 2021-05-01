@@ -45,12 +45,12 @@ public class ControllerBlock extends Block implements FactoryComponentProvider, 
 
     public ControllerBlock() {
 
-        super(Properties.create(Material.IRON) .sound(SoundType.METAL).hardnessAndResistance(3.5F));
-        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
+        super(Properties.of(Material.METAL) .sound(SoundType.METAL).strength(3.5F));
+        registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.ATTACHED, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.ATTACHED);
     }
 
@@ -68,25 +68,25 @@ public class ControllerBlock extends Block implements FactoryComponentProvider, 
     /**
      * Block display since we are less than a full block
      */
-    private final VoxelShape shape = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
+    private final VoxelShape shape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.get(BlockStateProperties.ATTACHED))
-            return VoxelShapes.fullCube();
+        if (state.getValue(BlockStateProperties.ATTACHED))
+            return VoxelShapes.block();
         else
             return shape;
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (worldIn.isClientSide)
+            return super.use(state, worldIn, pos, player, handIn, hit);
 
-        TileEntity te = worldIn.getTileEntity(pos);
+        TileEntity te = worldIn.getBlockEntity(pos);
         if (te instanceof ControllerTileEntity) {
             Tier tier = ((ControllerTileEntity) te).getTier();
             if (tier != Tier.UNKNOWN)
-                player.sendStatusMessage(new TranslationTextComponent(tier.getTranslationKey()), true);
+                player.displayClientMessage(new TranslationTextComponent(tier.getTranslationKey()), true);
         }
 
         return ActionResultType.SUCCESS;

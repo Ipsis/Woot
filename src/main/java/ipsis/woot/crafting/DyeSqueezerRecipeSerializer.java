@@ -22,9 +22,9 @@ public class DyeSqueezerRecipeSerializer<T extends DyeSqueezerRecipe> extends Fo
 
     @Nullable
     @Override
-    public T read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public T fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
         try {
-            Ingredient ingredient = Ingredient.read(buffer);
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
             int energy = buffer.readInt();
             int red = buffer.readInt();
             int yellow = buffer.readInt();
@@ -38,10 +38,10 @@ public class DyeSqueezerRecipeSerializer<T extends DyeSqueezerRecipe> extends Fo
     }
 
     @Override
-    public void write(PacketBuffer buffer, T recipe) {
+    public void toNetwork(PacketBuffer buffer, T recipe) {
         //Woot.setup.getLogger().debug("DyeSqueezerRecipeSerializer:write");
         try {
-            recipe.getIngredient().write(buffer);
+            recipe.getIngredient().toNetwork(buffer);
             buffer.writeInt(recipe.getEnergy());
             buffer.writeInt(recipe.getRed());
             buffer.writeInt(recipe.getYellow());
@@ -54,15 +54,15 @@ public class DyeSqueezerRecipeSerializer<T extends DyeSqueezerRecipe> extends Fo
     }
 
     @Override
-    public T read(ResourceLocation recipeId, JsonObject json) {
-        JsonElement jsonelement = (JsonElement)(JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient"));
-        Ingredient ingredient = Ingredient.deserialize(jsonelement);
+    public T fromJson(ResourceLocation recipeId, JsonObject json) {
+        JsonElement jsonelement = (JsonElement)(JSONUtils.isArrayNode(json, "ingredient") ? JSONUtils.getAsJsonArray(json, "ingredient") : JSONUtils.getAsJsonObject(json, "ingredient"));
+        Ingredient ingredient = Ingredient.fromJson(jsonelement);
 
-        int energy = JSONUtils.getInt(json, "energy", 100);
-        int red = JSONUtils.getInt(json, "red", 0);
-        int yellow = JSONUtils.getInt(json, "yellow", 0);
-        int blue = JSONUtils.getInt(json, "blue", 0);
-        int white = JSONUtils.getInt(json, "white", 0);
+        int energy = JSONUtils.getAsInt(json, "energy", 100);
+        int red = JSONUtils.getAsInt(json, "red", 0);
+        int yellow = JSONUtils.getAsInt(json, "yellow", 0);
+        int blue = JSONUtils.getAsInt(json, "blue", 0);
+        int white = JSONUtils.getAsInt(json, "white", 0);
 
         return this.factory.create(recipeId, ingredient, energy, red, yellow, blue, white);
     }

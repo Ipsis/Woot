@@ -32,12 +32,12 @@ public class Glue implements MultiBlockGlue {
         if (hasMaster()) {
             //LOGGER.debug("clearMaster: {}", te.getPos());
             this.master = null;
-            te.getWorld().setBlockState(te.getPos(),
-                    te.getBlockState().with(BlockStateProperties.ATTACHED, false), 3);
+            te.getLevel().setBlock(te.getBlockPos(),
+                    te.getBlockState().setValue(BlockStateProperties.ATTACHED, false), 3);
 
-            WorldHelper.updateClient(te.getWorld(), te.getPos());
+            WorldHelper.updateClient(te.getLevel(), te.getBlockPos());
             // Update neighbours to trigger possible connection changes eg. power cables
-            WorldHelper.updateNeighbours(te.getWorld(), te.getPos());
+            WorldHelper.updateNeighbours(te.getLevel(), te.getBlockPos());
         }
     }
 
@@ -47,20 +47,20 @@ public class Glue implements MultiBlockGlue {
             return;
 
         if (this.master == null || !this.master.equals(master)) {
-            //LOGGER.debug("setMaster: {} has a new master {}", te.getPos(), master);
+            //LOGGER.debug("setMaster: {} has a new master {}", te.getBlockPos(), master);
             this.master = master;
-            te.getWorld().setBlockState(te.getPos(),
-                    te.getBlockState().with(BlockStateProperties.ATTACHED, true), 3);
-            WorldHelper.updateClient(te.getWorld(), te.getPos());
+            te.getLevel().setBlock(te.getBlockPos(),
+                    te.getBlockState().setValue(BlockStateProperties.ATTACHED, true), 3);
+            WorldHelper.updateClient(te.getLevel(), te.getBlockPos());
             // Update neighbours to trigger possible connection changes eg. power cables
-            WorldHelper.updateNeighbours(te.getWorld(), te.getPos());
+            WorldHelper.updateNeighbours(te.getLevel(), te.getBlockPos());
         }
     }
 
     @Override
     public void onGoodbye() {
         if (hasMaster()) {
-            //LOGGER.debug("onGoodbye: {} has no master", te.getPos());
+            //LOGGER.debug("onGoodbye: {} has no master", te.getBlockPos());
             master.interrupt();
         }
     }
@@ -68,7 +68,7 @@ public class Glue implements MultiBlockGlue {
     @Override
     public void onHello(World world, BlockPos pos) {
         if (!hasMaster()) {
-            //LOGGER.debug("onHello: {} find master", te.getPos());
+            //LOGGER.debug("onHello: {} find master", te.getBlockPos());
             MultiBlockMaster tmpMaster = GlueHelper.findMaster(world, iMultiBlockGlueProvider);
             if (tmpMaster != null)
                 tmpMaster.interrupt();
@@ -82,6 +82,6 @@ public class Glue implements MultiBlockGlue {
 
     @Override
     public BlockPos getPos() {
-        return te.getPos();
+        return te.getBlockPos();
     }
 }

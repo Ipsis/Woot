@@ -52,7 +52,7 @@ public class Woot {
     }
 
     public static Item.Properties createStandardProperties() {
-        return new Item.Properties().group(setup.getCreativeTab());
+        return new Item.Properties().tab(setup.getCreativeTab());
     }
 
 }

@@ -32,8 +32,8 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compoundNBT) {
-        super.write(compoundNBT);
+    public CompoundNBT save(CompoundNBT compoundNBT) {
+        super.save(compoundNBT);
         CompoundNBT nbt = new CompoundNBT();
         FakeMob.writeToNBT(fakeMob, nbt);
         compoundNBT.put(ModNBT.Controller.MOB_TAG, nbt);
@@ -41,8 +41,8 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
-        super.read(blockState, compoundNBT);
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
+        super.load(blockState, compoundNBT);
         readFromNBT(compoundNBT);
     }
 
@@ -61,7 +61,7 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
         if (fakeMob == null || !fakeMob.isValid())
             return Tier.UNKNOWN;
 
-        return Config.OVERRIDE.getMobTier(fakeMob, world);
+        return Config.OVERRIDE.getMobTier(fakeMob, level);
     }
 
     public static ItemStack getItemStack(FakeMob fakeMob) {
@@ -70,7 +70,7 @@ public class ControllerTileEntity extends MultiBlockTileEntity implements WootDe
         /**
          * setTileEntityNBT
          */
-        CompoundNBT compoundNBT = itemStack.getOrCreateChildTag("BlockEntityTag");
+        CompoundNBT compoundNBT = itemStack.getOrCreateTagElement("BlockEntityTag");
         CompoundNBT nbt = new CompoundNBT();
         FakeMob.writeToNBT(fakeMob, nbt);
         compoundNBT.put(ModNBT.Controller.MOB_TAG, nbt);

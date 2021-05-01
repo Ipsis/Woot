@@ -46,23 +46,23 @@ public class FakeMob {
     public FakeMob(MobEntity mobEntity) {
         this();
 
-        if (mobEntity.getEntityString() == null) {
+        if (mobEntity.getEncodeId() == null) {
             setInfo(INVALID_ENTITY_KEY, EMPTY_TAG);
         } else {
             if (isSlime(mobEntity)) {
-                if (((SlimeEntity) mobEntity).isSmallSlime())
-                    setInfo(mobEntity.getEntityString(), SMALL_TAG);
+                if (((SlimeEntity) mobEntity).isTiny())
+                    setInfo(mobEntity.getEncodeId(), SMALL_TAG);
                 else
-                    setInfo(mobEntity.getEntityString(), LARGE_TAG);
+                    setInfo(mobEntity.getEncodeId(), LARGE_TAG);
             } else if (isMagmaCube(mobEntity)) {
-                if (((MagmaCubeEntity) mobEntity).isSmallSlime())
-                    setInfo(mobEntity.getEntityString(), SMALL_TAG);
+                if (((MagmaCubeEntity) mobEntity).isTiny())
+                    setInfo(mobEntity.getEncodeId(), SMALL_TAG);
                 else
-                    setInfo(mobEntity.getEntityString(), LARGE_TAG);
+                    setInfo(mobEntity.getEncodeId(), LARGE_TAG);
             } else if (isChargedCreeper(mobEntity)) {
-                setInfo(mobEntity.getEntityString(), CHARGED_TAG);
+                setInfo(mobEntity.getEncodeId(), CHARGED_TAG);
             } else {
-                setInfo(mobEntity.getEntityString(), EMPTY_TAG);
+                setInfo(mobEntity.getEncodeId(), EMPTY_TAG);
             }
         }
     }
@@ -153,7 +153,7 @@ public class FakeMob {
 
     private boolean isChargedCreeper(MobEntity mobEntity) {
         // shouldRenderOverlay reports the POWERED state of the entity
-        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).isCharged();
+        return mobEntity instanceof CreeperEntity && ((CreeperEntity)mobEntity).isPowered();
     }
 
     private boolean isSlime(MobEntity mobEntity) { return mobEntity instanceof SlimeEntity; }

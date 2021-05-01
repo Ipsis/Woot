@@ -44,7 +44,7 @@ import java.util.Locale;
 public class InternItem extends Item {
 
     public InternItem() {
-        super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(1).tab(Woot.setup.getCreativeTab()));
     }
 
     public enum ToolMode {
@@ -79,26 +79,26 @@ public class InternItem extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity playerEntity, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
 
-        ItemStack itemStack = playerEntity.getHeldItem(hand);
-        playerEntity.setActiveHand(hand);
-        if (!world.isRemote) {
-            if (playerEntity.isSneaking()) {
-                RayTraceResult rayTraceResult = rayTrace(world, playerEntity, RayTraceContext.FluidMode.NONE);
+        ItemStack itemStack = playerEntity.getItemInHand(hand);
+        // TODO playerEntity.setActiveHand(hand);
+        if (!world.isClientSide) {
+            if (playerEntity.isCrouching()) {
+                RayTraceResult rayTraceResult = getPlayerPOVHitResult(world, playerEntity, RayTraceContext.FluidMode.NONE);
                 if (rayTraceResult != null && rayTraceResult.getType() == RayTraceResult.Type.BLOCK)
-                    return super.onItemRightClick(world, playerEntity, hand);
+                    return super.use(world, playerEntity, hand);
 
                 ToolMode mode = getToolModeFromStack(itemStack);
                 mode = mode.getNext();
                 setToolModeInStack(itemStack, mode);
                 if (mode.isBuildMode()) {
-                    playerEntity.sendStatusMessage(
+                    playerEntity.displayClientMessage(
                             new TranslationTextComponent(
                                     "info.woot.intern.mode.build",
                                     StringHelper.translate(mode.getTier().getTranslationKey())), true);
                 } else if (mode.isValidateMode()) {
-                    playerEntity.sendStatusMessage(
+                    playerEntity.displayClientMessage(
                             new TranslationTextComponent(
                                     "info.woot.intern.mode.validate",
                                     StringHelper.translate(mode.getTier().getTranslationKey())), true);
@@ -140,42 +140,42 @@ public class InternItem extends Item {
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 
         ActionResultType result = ActionResultType.PASS;
-        ItemStack itemStack = context.getItem();
+        ItemStack itemStack = context.getItemInHand();
 
-        if (!context.getPlayer().isSneaking() && !context.getWorld().isRemote) {
-            Block b = context.getWorld().getBlockState(context.getPos()).getBlock();
+        if (!context.getPlayer().isCrouching() && !context.getLevel().isClientSide) {
+            Block b = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
             if (b instanceof HeartBlock) {
-                BlockState blockState = context.getWorld().getBlockState(context.getPos());
-                Direction facing = blockState.get(BlockStateProperties.HORIZONTAL_FACING);
+                BlockState blockState = context.getLevel().getBlockState(context.getClickedPos());
+                Direction facing = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
                 ToolMode toolMode = getToolModeFromStack(itemStack);
-                if (toolMode.isBuildMode() && context.getPlayer().isAllowEdit()) {
-                    FactoryHelper.BuildResult buildResult = (FactoryHelper.tryBuild(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier()));
+                if (toolMode.isBuildMode() && context.getPlayer().mayBuild()) {
+                    FactoryHelper.BuildResult buildResult = (FactoryHelper.tryBuild(context.getLevel(), context.getClickedPos(), context.getPlayer(), facing, toolMode.getTier()));
                     if (buildResult == FactoryHelper.BuildResult.SUCCESS) {
-                        context.getWorld().playSound(
+                        context.getLevel().playSound(
                                 null,
-                                context.getPlayer().getPosX(),
-                                context.getPlayer().getPosY(),
-                                context.getPlayer().getPosZ(),
-                                SoundEvents.BLOCK_STONE_PLACE,
+                                context.getPlayer().getX(),
+                                context.getPlayer().getY(),
+                                context.getPlayer().getZ(),
+                                SoundEvents.STONE_PLACE,
                                 SoundCategory.BLOCKS,
                                 1.0F,
                                 0.5F * ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.8F));
                     } else if (buildResult == FactoryHelper.BuildResult.ALL_BLOCKS_PLACED) {
-                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                        FactoryHelper.tryValidate(context.getLevel(), context.getClickedPos(), context.getPlayer(), facing, toolMode.getTier());
                     } else {
-                        context.getWorld().playSound(
+                        context.getLevel().playSound(
                                 null,
-                                context.getPlayer().getPosX(),
-                                context.getPlayer().getPosY(),
-                                context.getPlayer().getPosZ(),
-                                SoundEvents.BLOCK_ANVIL_DESTROY,
+                                context.getPlayer().getX(),
+                                context.getPlayer().getY(),
+                                context.getPlayer().getZ(),
+                                SoundEvents.ANVIL_DESTROY,
                                 SoundCategory.BLOCKS,
                                 1.0F, 1.0F);
                     }
                     result = ActionResultType.SUCCESS;
                 } else if (toolMode.isValidateMode()) {
-                    if (!context.getWorld().isRemote)
-                        FactoryHelper.tryValidate(context.getWorld(), context.getPos(), context.getPlayer(), facing, toolMode.getTier());
+                    if (!context.getLevel().isClientSide)
+                        FactoryHelper.tryValidate(context.getLevel(), context.getClickedPos(), context.getPlayer(), facing, toolMode.getTier());
                     result = ActionResultType.SUCCESS;
                 }
             }

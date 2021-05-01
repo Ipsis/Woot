@@ -119,10 +119,10 @@ public class LootLibrary {
         if (jsonObject == null || jsonObject.isJsonNull())
             throw new JsonSyntaxException("JsonObject cannot be null");
 
-        if (JSONUtils.getInt(jsonObject, TAG_VERSION, 0) != JSON_VERSION)
+        if (JSONUtils.getAsInt(jsonObject, TAG_VERSION, 0) != JSON_VERSION)
             throw new JsonSyntaxException("Loot file version missing or invalid");
 
-        for (JsonElement jsonElement : JSONUtils.getJsonArray(jsonObject, TAG_SIMULATED_MOBS)) {
+        for (JsonElement jsonElement : JSONUtils.getAsJsonArray(jsonObject, TAG_SIMULATED_MOBS)) {
             if (jsonElement == null || !jsonElement.isJsonObject())
                 throw new JsonSyntaxException("Simulated mob must be an object");
 

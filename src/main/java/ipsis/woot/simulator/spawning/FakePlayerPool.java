@@ -38,8 +38,8 @@ public class FakePlayerPool {
     private static void addFakePlayer(@Nonnull WootFakePlayer fakePlayer, int looting, Enchantment enchantment) {
         ItemStack sword = new ItemStack(Items.DIAMOND_SWORD);
         if (looting > 0 && enchantment != null)
-            sword.addEnchantment(enchantment, looting);
-        fakePlayer.setItemStackToSlot(EquipmentSlotType.MAINHAND, sword);
+            sword.enchant(enchantment, looting);
+        fakePlayer.setItemSlot(EquipmentSlotType.MAINHAND, sword);
         fakePlayerMap.put(looting, fakePlayer);
     }
 
@@ -67,7 +67,7 @@ public class FakePlayerPool {
             return false;
 
         FakePlayer fp = (FakePlayer)entity;
-        UUID uuid = fp.getUniqueID();
+        UUID uuid = fp.getUUID();
         return GP_LOOT_0.getId().equals(uuid) || GP_LOOT_1.getId().equals(uuid) || GP_LOOT_2.getId().equals(uuid) || GP_LOOT_3.getId().equals(uuid);
     }
 

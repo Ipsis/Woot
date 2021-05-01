@@ -15,9 +15,9 @@ public class NetworkTools {
     public static void writeItemStack(ByteBuf dataOut, ItemStack itemStack) {
         PacketBuffer buf = new PacketBuffer(dataOut);
         CompoundNBT nbt = new CompoundNBT();
-        itemStack.write(nbt);
+        itemStack.save(nbt);
         try {
-            buf.writeCompoundTag(nbt);
+            buf.writeNbt(nbt);
             buf.writeInt(itemStack.getCount());
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,8 +27,8 @@ public class NetworkTools {
     /// This function supports itemstacks with more then 64 items.
     public static ItemStack readItemStack(ByteBuf dataIn) {
         PacketBuffer buf = new PacketBuffer(dataIn);
-        CompoundNBT nbt = buf.readCompoundTag();
-        ItemStack stack = ItemStack.read(nbt);
+        CompoundNBT nbt = buf.readNbt();
+        ItemStack stack = ItemStack.of(nbt);
         stack.setCount(buf.readInt());
         return stack;
     }

@@ -24,7 +24,7 @@ import java.util.List;
 public class DebugTankBlock extends Block implements WootDebug {
 
     public DebugTankBlock() {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL));
     }
 
     @Override
@@ -39,14 +39,14 @@ public class DebugTankBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (worldIn.isRemote)
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if (worldIn.isClientSide)
             return ActionResultType.SUCCESS;
 
-        if (!(worldIn.getTileEntity(pos) instanceof DebugTankTileEntity))
+        if (!(worldIn.getBlockEntity(pos) instanceof DebugTankTileEntity))
             throw new IllegalStateException("Tile entity is missing");
 
-        ItemStack heldItem = player.getHeldItem(handIn);
+        ItemStack heldItem = player.getItemInHand(handIn);
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
             return FluidUtil.interactWithFluidHandler(
                     player,

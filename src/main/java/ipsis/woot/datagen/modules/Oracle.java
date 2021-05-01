@@ -17,14 +17,14 @@ import java.util.function.Consumer;
 public class Oracle {
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shapedRecipe(OracleSetup.ORACLE_BLOCK.get())
-                .patternLine(" b ")
-                .patternLine("bcb")
-                .patternLine(" b ")
-                .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
-                .key('b', Blocks.BOOKSHELF)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(OracleSetup.ORACLE_BLOCK.get())
+                .pattern(" b ")
+                .pattern("bcb")
+                .pattern(" b ")
+                .define('c', GenericSetup.MACHINE_CASING_ITEM.get())
+                .define('b', Blocks.BOOKSHELF)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
     }
 }

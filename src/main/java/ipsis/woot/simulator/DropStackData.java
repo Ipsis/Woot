@@ -14,7 +14,7 @@ public class DropStackData extends WeightedRandom.Item {
     public String toString() {
         return "DropStackData{" +
                 "stackSize=" + stackSize +
-                ", itemWeight=" + itemWeight +
+                ", itemWeight=" + weight +
                 '}';
     }
 }

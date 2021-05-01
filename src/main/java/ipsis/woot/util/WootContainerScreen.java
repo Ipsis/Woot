@@ -38,10 +38,10 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
         fill(matrixStack,
-                guiLeft + x1,
-             guiTop + y1 - h + 1,
-             guiLeft + x1 + width,
-             guiTop + y1 + 1, 0xffff0000);
+                leftPos + x1,
+             topPos + y1 - h + 1,
+             leftPos + x1 + width,
+             topPos + y1 + 1, 0xffff0000);
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
             filled = curr * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
-        drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
+        drawFluid(leftPos + x1, topPos + y1 - h + 1, fluidStack, width,  h);
     }
 
     public void renderFluidTank(MatrixStack matrixStack, int x1, int y1, int height, int width, int max, FluidStack fluidStack)  {
@@ -62,7 +62,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
             filled = fluidStack.getAmount() * 100 / max;
         filled = MathHelper.clamp(filled, 0, 100);
         int h = filled * height / 100;
-        drawFluid(guiLeft + x1, guiTop + y1 - h + 1, fluidStack, width,  h);
+        drawFluid(leftPos + x1, topPos + y1 - h + 1, fluidStack, width,  h);
     }
 
     public void renderHorizontalBar(MatrixStack matrixStack, int x1, int y1, int x2, int y2, int curr, int max, int color) {
@@ -71,21 +71,21 @@ public abstract class WootContainerScreen<T extends Container> extends Container
             filled = curr * max / 100;
         filled = MathHelper.clamp(filled, 0, 100);
         int l = filled * (x2 - x1) / 100;
-        fill(matrixStack, guiLeft + x1, guiTop + y2,
-                guiLeft + x2 + l, guiTop + y2, color);
+        fill(matrixStack, leftPos + x1, topPos + y2,
+                leftPos + x2 + l, topPos + y2, color);
     }
 
     public void renderHorizontalGauge(MatrixStack matrixStack, int x1, int y1, int x2, int y2, int curr, int max, int color) {
-        fill(matrixStack, guiLeft + x1, guiTop + y1, guiLeft + x2, guiTop + y2, color);
+        fill(matrixStack, leftPos + x1, topPos + y1, leftPos + x2, topPos + y2, color);
 
         if (max > 0) {
             int p = curr * (x2 - x1) / max;
             for (int i = 0; i < p; i++)
                 vLine(
                         matrixStack,
-                        guiLeft + x1 + 1 + i,
-                        guiTop + y1,
-                        guiTop + y2 - 1,
+                        leftPos + x1 + 1 + i,
+                        topPos + y1,
+                        topPos + y2 - 1,
                         i % 2 == 0 ? color : 0xff000000);
         }
     }
@@ -98,14 +98,14 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         } else {
             tooltip.add(new StringTextComponent(String.format("0/%d mb", capacity)));
         }
-        func_243308_b(matrixStack, tooltip, mouseX, mouseY);
+        renderComponentTooltip(matrixStack, tooltip, mouseX, mouseY);
     }
 
     public void renderEnergyTooltip(MatrixStack matrixStack, int mouseX, int mouseY, int curr, int capacity, int rate) {
         List<ITextComponent> tooltip = Arrays.asList(
                 new StringTextComponent(String.format("%d/%d RF", curr, capacity)),
                 new StringTextComponent( String.format("%d RF/tick", rate)));
-        func_243308_b(matrixStack, tooltip, mouseX, mouseY);
+        renderComponentTooltip(matrixStack, tooltip, mouseX, mouseY);
     }
 
     public void drawFluid(int x, int y, FluidStack fluid, int width, int height) {
@@ -113,11 +113,11 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         if (fluid == null)
             return;
 
-        Minecraft.getInstance().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        Minecraft.getInstance().getTextureManager().bind(AtlasTexture.LOCATION_BLOCKS);
         int color = fluid.getFluid().getAttributes().getColor(fluid);
         setGLColorFromInt(color);
         ResourceLocation resourceLocation = fluid.getFluid().getAttributes().getStillTexture();
-        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(resourceLocation);
+        TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(resourceLocation);
         drawTiledTexture(x, y, textureAtlasSprite, width, height);
     }
 
@@ -126,7 +126,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         float green = (float)(color >> 8 & 255) / 255.0F;
         float blue = (float)(color & 255) / 255.0F;
         float alpha = (float)(color >> 24 & 255) / 255.0F;
-        GlStateManager.color4f(red, green, blue, alpha);
+        GlStateManager._color4f(red, green, blue, alpha);
     }
 
     private void drawTiledTexture(int x, int y, TextureAtlasSprite icon, int width, int height) {
@@ -142,7 +142,7 @@ public abstract class WootContainerScreen<T extends Container> extends Container
                 drawScaledTexturedModelRectFromIcon(x + i, y + j, icon, drawWidth, drawHeight);
             }
         }
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public void drawScaledTexturedModelRectFromIcon(int x, int y, TextureAtlasSprite icon, int width, int height) {
@@ -150,17 +150,17 @@ public abstract class WootContainerScreen<T extends Container> extends Container
         if (icon == null) {
             return;
         }
-        float minU = icon.getMinU();
-        float maxU = icon.getMaxU();
-        float minV = icon.getMinV();
-        float maxV = icon.getMaxV();
+        float minU = icon.getU0();
+        float maxU = icon.getU1();
+        float minV = icon.getV0();
+        float maxV = icon.getV1();
 
-        BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+        BufferBuilder buffer = Tessellator.getInstance().getBuilder();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos(x, y + height, this.itemRenderer.zLevel).tex(minU, minV + (maxV - minV) * height / 16F).endVertex();
-        buffer.pos(x + width, y + height, this.itemRenderer.zLevel).tex(minU + (maxU - minU) * width / 16F, minV + (maxV - minV) * height / 16F).endVertex();
-        buffer.pos(x + width, y, this.itemRenderer.zLevel).tex(minU + (maxU - minU) * width / 16F, minV).endVertex();
-        buffer.pos(x, y, this.itemRenderer.zLevel).tex(minU, minV).endVertex();
-        Tessellator.getInstance().draw();
+        buffer.vertex(x, y + height, this.itemRenderer.blitOffset).uv(minU, minV + (maxV - minV) * height / 16F).endVertex();
+        buffer.vertex(x + width, y + height, this.itemRenderer.blitOffset).uv(minU + (maxU - minU) * width / 16F, minV + (maxV - minV) * height / 16F).endVertex();
+        buffer.vertex(x + width, y, this.itemRenderer.blitOffset).uv(minU + (maxU - minU) * width / 16F, minV).endVertex();
+        buffer.vertex(x, y, this.itemRenderer.blitOffset).uv(minU, minV).endVertex();
+        Tessellator.getInstance().end();
     }
 }

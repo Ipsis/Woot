@@ -13,7 +13,7 @@ public class ConfigCommand {
 
     static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("config")
-                .requires(cs -> cs.hasPermissionLevel(CommandHelper.CONFIG_COMMAND_LEVEL))
+                .requires(cs -> cs.hasPermission(CommandHelper.CONFIG_COMMAND_LEVEL))
                 .then(Commands.argument("entity", StringArgumentType.string())
                         .then(Commands.argument("key", StringArgumentType.string())
                                 .executes(ctx -> showConfig(ctx.getSource(), StringArgumentType.getString(ctx, "entity"), StringArgumentType.getString(ctx, "key")))));
@@ -21,7 +21,7 @@ public class ConfigCommand {
 
     private static int showConfig(CommandSource source, String entityKey, String key) throws CommandSyntaxException {
         FakeMob fakeMob = new FakeMob(entityKey);
-        source.sendFeedback(new StringTextComponent(Config.OVERRIDE.getConfigAsString(fakeMob, key)), true);
+        source.sendSuccess(new StringTextComponent(Config.OVERRIDE.getConfigAsString(fakeMob, key)), true);
         return 0;
     }
 }

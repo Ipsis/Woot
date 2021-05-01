@@ -147,7 +147,7 @@ public class MobSimulator {
     }
 
     public boolean isEqualForLearning(@Nonnull ItemStack a, @Nonnull ItemStack b) {
-        return ItemStack.areItemsEqualIgnoreDurability(a, b);
+        return ItemStack.isSameIgnoreDurability(a, b);
     }
 
     public void tick(World world) {

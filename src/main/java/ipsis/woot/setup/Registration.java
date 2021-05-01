@@ -24,7 +24,7 @@ public class Registration {
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
         Woot.setup.getLogger().info("registerItems");
-        Item.Properties properties = new Item.Properties().group(Woot.setup.getCreativeTab());
+        Item.Properties properties = new Item.Properties().tab(Woot.setup.getCreativeTab());
     }
 
     @SubscribeEvent

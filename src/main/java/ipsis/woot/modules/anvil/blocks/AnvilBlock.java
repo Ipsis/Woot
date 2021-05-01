@@ -41,19 +41,19 @@ import java.util.Random;
 public class AnvilBlock extends Block implements WootDebug {
 
     // From vanilla
-    private static final VoxelShape PART_BASE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
-    private static final VoxelShape PART_LOWER_X = Block.makeCuboidShape(3.0D, 4.0D, 4.0D, 13.0D, 5.0D, 12.0D);
-    private static final VoxelShape PART_MID_X = Block.makeCuboidShape(4.0D, 5.0D, 6.0D, 12.0D, 10.0D, 10.0D);
-    private static final VoxelShape PART_UPPER_X = Block.makeCuboidShape(0.0D, 10.0D, 3.0D, 16.0D, 16.0D, 13.0D);
-    private static final VoxelShape PART_LOWER_Z = Block.makeCuboidShape(4.0D, 4.0D, 3.0D, 12.0D, 5.0D, 13.0D);
-    private static final VoxelShape PART_MID_Z = Block.makeCuboidShape(6.0D, 5.0D, 4.0D, 10.0D, 10.0D, 12.0D);
-    private static final VoxelShape PART_UPPER_Z = Block.makeCuboidShape(3.0D, 10.0D, 0.0D, 13.0D, 16.0D, 16.0D);
+    private static final VoxelShape PART_BASE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
+    private static final VoxelShape PART_LOWER_X = Block.box(3.0D, 4.0D, 4.0D, 13.0D, 5.0D, 12.0D);
+    private static final VoxelShape PART_MID_X = Block.box(4.0D, 5.0D, 6.0D, 12.0D, 10.0D, 10.0D);
+    private static final VoxelShape PART_UPPER_X = Block.box(0.0D, 10.0D, 3.0D, 16.0D, 16.0D, 13.0D);
+    private static final VoxelShape PART_LOWER_Z = Block.box(4.0D, 4.0D, 3.0D, 12.0D, 5.0D, 13.0D);
+    private static final VoxelShape PART_MID_Z = Block.box(6.0D, 5.0D, 4.0D, 10.0D, 10.0D, 12.0D);
+    private static final VoxelShape PART_UPPER_Z = Block.box(3.0D, 10.0D, 0.0D, 13.0D, 16.0D, 16.0D);
     private static final VoxelShape X_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_X, PART_MID_X, PART_UPPER_X);
     private static final VoxelShape Z_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_Z, PART_MID_Z, PART_UPPER_Z);
 
     public AnvilBlock() {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
-        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(3.5F));
+        registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
     }
 
     @Override
@@ -68,32 +68,32 @@ public class AnvilBlock extends Block implements WootDebug {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().rotateY());
+        return this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getClockWise());
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        Direction direction = state.get(BlockStateProperties.HORIZONTAL_FACING);
+        Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
         return direction.getAxis() == Direction.Axis.X ? X_AXIS_AABB : Z_AXIS_AABB;
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType use(BlockState blockState, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
 
-        if (world.isRemote)
-            super.onBlockActivated(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
+        if (world.isClientSide)
+            super.use(blockState, world, pos, playerEntity, hand, blockRayTraceResult);
 
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = world.getBlockEntity(pos);
         if (te instanceof AnvilTileEntity) {
             AnvilTileEntity anvil = (AnvilTileEntity)te;
-            ItemStack heldItem = playerEntity.getHeldItem(hand);
+            ItemStack heldItem = playerEntity.getItemInHand(hand);
 
-            if (playerEntity.isSneaking() && heldItem.isEmpty()) {
+            if (playerEntity.isCrouching() && heldItem.isEmpty()) {
                 // Sneak with empty hand to empty
                 anvil.dropItem(playerEntity);
             } else if (heldItem.getItem() == AnvilSetup.HAMMER_ITEM.get()) {
@@ -108,12 +108,12 @@ public class AnvilBlock extends Block implements WootDebug {
                         anvil.setBaseItem(baseItem);
                         heldItem.shrink(1);
                         if (heldItem.isEmpty())
-                            playerEntity.inventory.setInventorySlotContents( playerEntity.inventory.currentItem, ItemStack.EMPTY);
+                            playerEntity.inventory.setItem( playerEntity.inventory.selected, ItemStack.EMPTY);
                         else
-                            playerEntity.inventory.setInventorySlotContents( playerEntity.inventory.currentItem, heldItem);
-                        playerEntity.openContainer.detectAndSendChanges();
+                            playerEntity.inventory.setItem( playerEntity.inventory.selected, heldItem);
+                        playerEntity.containerMenu.broadcastChanges();
                     } else {
-                        playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.anvil.nobase"), true);
+                        playerEntity.displayClientMessage(new TranslationTextComponent("chat.woot.anvil.nobase"), true);
                     }
                 } else {
                     // Base item already present
@@ -122,10 +122,10 @@ public class AnvilBlock extends Block implements WootDebug {
                     if (anvil.addIngredient(ingredient)) {
                         heldItem.shrink(1);
                         if (heldItem.isEmpty())
-                            playerEntity.inventory.setInventorySlotContents( playerEntity.inventory.currentItem, ItemStack.EMPTY);
+                            playerEntity.inventory.setItem( playerEntity.inventory.selected, ItemStack.EMPTY);
                         else
-                            playerEntity.inventory.setInventorySlotContents( playerEntity.inventory.currentItem, heldItem);
-                        playerEntity.openContainer.detectAndSendChanges();
+                            playerEntity.inventory.setItem( playerEntity.inventory.selected, heldItem);
+                        playerEntity.containerMenu.broadcastChanges();
                     }
                 }
             }
@@ -136,7 +136,7 @@ public class AnvilBlock extends Block implements WootDebug {
     }
 
     public boolean isAnvilHot(World world, BlockPos pos) {
-        return world.getBlockState(pos.down()).getBlock() == Blocks.MAGMA_BLOCK;
+        return world.getBlockState(pos.below()).getBlock() == Blocks.MAGMA_BLOCK;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -147,12 +147,12 @@ public class AnvilBlock extends Block implements WootDebug {
     }
 
     @Override
-    public void onReplaced(BlockState blockState, World world, BlockPos pos, BlockState newBlockState, boolean isMoving) {
+    public void onPlace(BlockState blockState, World world, BlockPos pos, BlockState newBlockState, boolean isMoving) {
         if (blockState.getBlock() != newBlockState.getBlock()) {
-            TileEntity te = world.getTileEntity(pos);
+            TileEntity te = world.getBlockEntity(pos);
             if (te instanceof AnvilTileEntity)
                 ((AnvilTileEntity) te).dropContents(world, pos);
-            super.onReplaced(blockState, world, pos, newBlockState, isMoving);
+            super.onPlace(blockState, world, pos, newBlockState, isMoving);
         }
     }
 

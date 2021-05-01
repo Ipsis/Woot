@@ -40,7 +40,7 @@ public class HeartRecipe {
     public void addItem(ItemStack itemStack) {
         boolean added = false;
         for (ItemStack currStack : recipeItems) {
-            if (currStack.isItemEqual(itemStack)) {
+            if (currStack.sameItem(itemStack)) {
                 currStack.setCount(currStack.getCount() + itemStack.getCount());
                 added = true;
             }

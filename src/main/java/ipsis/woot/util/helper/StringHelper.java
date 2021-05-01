@@ -9,11 +9,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class StringHelper {
 
     public static String translate(String key) {
-        return LanguageMap.getInstance().func_230503_a_(key);
+        return LanguageMap.getInstance().getOrDefault(key);
     }
 
     public static String translateFormat(String key, Object... format) {
-        return String.format(LanguageMap.getInstance().func_230503_a_(key), format);
+        return String.format(LanguageMap.getInstance().getOrDefault(key), format);
     }
 
     public static String translate(FakeMob fakeMob) {
@@ -21,7 +21,7 @@ public class StringHelper {
         if (entityType == null)
             return translate("misc.woot.unknown_entity");
 
-        String mob = translate(entityType.getTranslationKey());
+        String mob = translate(entityType.getDescriptionId());
 
         if (fakeMob.hasTag())
             return translateFormat("misc.woot.tagged_mob", mob, fakeMob.getTag());

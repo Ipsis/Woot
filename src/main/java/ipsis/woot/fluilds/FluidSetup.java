@@ -34,16 +34,16 @@ public class FluidSetup {
     public static RegistryObject<FlowingFluid> CONATUS_FLUID_FLOWING = FLUIDS.register("conatus_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSetup.CONATUS_FLUID_PROPERTIES));
     public static RegistryObject<FlowingFluidBlock> CONATUS_FLUID_BLOCK = BLOCKS.register("conatus_fluid_block",
             () -> new FlowingFluidBlock(CONATUS_FLUID,
-                    Block.Properties.create(Material.WATER)
-                            .doesNotBlockMovement()
-                            .hardnessAndResistance(100.0F)
+                    Block.Properties.of(Material.WATER)
+                            .noCollission()
+                            .strength(100.0F)
                             .noDrops()));
     public static RegistryObject<Item> CONATUS_FLUID_BUCKET = ITEMS.register("conatus_fluid_bucket",
             () -> new BucketItem(CONATUS_FLUID,
                     new Item.Properties()
-                            .containerItem(Items.BUCKET)
-                            .maxStackSize(1)
-                            .group(Woot.setup.getCreativeTab())));
+                            .craftRemainder(Items.BUCKET)
+                            .stacksTo(1)
+                            .tab(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties CONATUS_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             CONATUS_FLUID,
             CONATUS_FLUID_FLOWING,
@@ -61,16 +61,16 @@ public class FluidSetup {
     public static RegistryObject<FlowingFluid> PUREDYE_FLUID_FLOWING = FLUIDS.register("puredye_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSetup.PUREDYE_FLUID_PROPERTIES));
     public static RegistryObject<FlowingFluidBlock> PUREDYE_FLUID_BLOCK = BLOCKS.register("puredye_fluid_block",
             () -> new FlowingFluidBlock(PUREDYE_FLUID,
-                    Block.Properties.create(Material.WATER)
-                            .doesNotBlockMovement()
-                            .hardnessAndResistance(100.0F)
+                    Block.Properties.of(Material.WATER)
+                            .noCollission()
+                            .strength(100.0F)
                             .noDrops()));
     public static RegistryObject<Item> PUREDYE_FLUID_BUCKET = ITEMS.register("puredye_fluid_bucket",
             () -> new BucketItem(PUREDYE_FLUID,
                     new Item.Properties()
-                            .containerItem(Items.BUCKET)
-                            .maxStackSize(1)
-                            .group(Woot.setup.getCreativeTab())));
+                            .craftRemainder(Items.BUCKET)
+                            .stacksTo(1)
+                            .tab(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties PUREDYE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             PUREDYE_FLUID,
             PUREDYE_FLUID_FLOWING,
@@ -88,16 +88,16 @@ public class FluidSetup {
     public static RegistryObject<FlowingFluid> ENCHANT_FLUID_FLOWING = FLUIDS.register("enchant_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSetup.ENCHANT_FLUID_PROPERTIES));
     public static RegistryObject<FlowingFluidBlock> ENCHANT_FLUID_BLOCK = BLOCKS.register("enchant_fluid_block",
             () -> new FlowingFluidBlock(ENCHANT_FLUID,
-                    Block.Properties.create(Material.WATER)
-                            .doesNotBlockMovement()
-                            .hardnessAndResistance(100.0F)
+                    Block.Properties.of(Material.WATER)
+                            .noCollission()
+                            .strength(100.0F)
                             .noDrops()));
     public static RegistryObject<Item> ENCHANT_FLUID_BUCKET = ITEMS.register("enchant_fluid_bucket",
             () -> new BucketItem(ENCHANT_FLUID,
                     new Item.Properties()
-                            .containerItem(Items.BUCKET)
-                            .maxStackSize(1)
-                            .group(Woot.setup.getCreativeTab())));
+                            .craftRemainder(Items.BUCKET)
+                            .stacksTo(1)
+                            .tab(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties ENCHANT_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             ENCHANT_FLUID,
             ENCHANT_FLUID_FLOWING,
@@ -115,16 +115,16 @@ public class FluidSetup {
     public static RegistryObject<FlowingFluid> MOB_ESSENCE_FLUID_FLOWING = FLUIDS.register("mob_essence_fluid_flowing", () -> new ForgeFlowingFluid.Flowing(FluidSetup.MOB_ESSENCE_FLUID_PROPERTIES));
     public static RegistryObject<FlowingFluidBlock> MOB_ESSENCE_FLUID_BLOCK = BLOCKS.register("mob_essence_fluid_block",
             () -> new FlowingFluidBlock(MOB_ESSENCE_FLUID,
-                    Block.Properties.create(Material.WATER)
-                            .doesNotBlockMovement()
-                            .hardnessAndResistance(100.0F)
+                    Block.Properties.of(Material.WATER)
+                            .noCollission()
+                            .strength(100.0F)
                             .noDrops()));
     public static RegistryObject<Item> MOB_ESSENCE_FLUID_BUCKET = ITEMS.register("mob_essence_fluid_bucket",
             () -> new BucketItem(MOB_ESSENCE_FLUID,
                     new Item.Properties()
-                            .containerItem(Items.BUCKET)
-                            .maxStackSize(1)
-                            .group(Woot.setup.getCreativeTab())));
+                            .craftRemainder(Items.BUCKET)
+                            .stacksTo(1)
+                            .tab(Woot.setup.getCreativeTab())));
     public static final ForgeFlowingFluid.Properties MOB_ESSENCE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
             MOB_ESSENCE_FLUID,
             MOB_ESSENCE_FLUID_FLOWING,

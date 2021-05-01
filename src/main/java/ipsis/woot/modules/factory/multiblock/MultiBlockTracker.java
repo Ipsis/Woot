@@ -46,7 +46,7 @@ public class MultiBlockTracker {
 
     public void run(World world) {
         //LOGGER.info("MultiBlockTracker run world={} blocks={}", world.getDimensionKey(), syncBlocks.size());
-        if (world.isRemote)
+        if (world.isClientSide)
             return;
 
         List<MultiBlock> helloBlocks = Lists.newArrayList();
@@ -65,11 +65,11 @@ public class MultiBlockTracker {
 
         //Woot.setup.getLogger().info("run: {} blocks {}", world.getDimensionKey(), helloBlocks.size());
         for (MultiBlock m : helloBlocks) {
-            if (world.isBlockLoaded(m.pos)) {
+            if (world.isLoaded(m.pos)) {
                 //Woot.setup.getLogger().info("run {}: loaded", world.getDimensionKey());
-                TileEntity te = world.getTileEntity(m.pos);
+                TileEntity te = world.getBlockEntity(m.pos);
                 if (te instanceof MultiBlockGlueProvider)
-                    ((MultiBlockGlueProvider) te).getGlue().onHello(world, te.getPos());
+                    ((MultiBlockGlueProvider) te).getGlue().onHello(world, te.getBlockPos());
             } else {
                 //Woot.setup.getLogger().info("run {}: not loaded", world.getDimensionKey());
             }

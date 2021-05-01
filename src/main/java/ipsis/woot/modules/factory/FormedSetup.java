@@ -55,7 +55,7 @@ public class FormedSetup {
     public Map<Perk.Group, Integer> getAllPerks() { return Collections.unmodifiableMap(perks); }
     public LazyOptional<IFluidHandler> getCellFluidHandler() {
         if (world != null) {
-            TileEntity te = world.getTileEntity(cellPos);
+            TileEntity te = world.getBlockEntity(cellPos);
             return te instanceof TileEntity ? te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) : LazyOptional.empty();
         }
         return LazyOptional.empty();
@@ -95,9 +95,9 @@ public class FormedSetup {
     public List<LazyOptional<IItemHandler>> getImportHandlers() {
         List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
-            if (!world.isBlockLoaded(importPos.offset(facing)))
+            if (!world.isLoaded(importPos.relative(facing)))
                 continue;
-            TileEntity te = world.getTileEntity(importPos.offset(facing));
+            TileEntity te = world.getBlockEntity(importPos.relative(facing));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -109,9 +109,9 @@ public class FormedSetup {
     public List<LazyOptional<IFluidHandler>> getImportFluidHandlers() {
         List<LazyOptional<IFluidHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
-            if (!world.isBlockLoaded(importPos.offset(facing)))
+            if (!world.isLoaded(importPos.relative(facing)))
                 continue;
-            TileEntity te = world.getTileEntity(importPos.offset(facing));
+            TileEntity te = world.getBlockEntity(importPos.relative(facing));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -123,9 +123,9 @@ public class FormedSetup {
     public List<LazyOptional<IFluidHandler>> getExportFluidHandlers() {
         List<LazyOptional<IFluidHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
-            if (!world.isBlockLoaded(exportPos.offset(facing)))
+            if (!world.isLoaded(exportPos.relative(facing)))
                 continue;
-            TileEntity te = world.getTileEntity(exportPos.offset(facing));
+            TileEntity te = world.getBlockEntity(exportPos.relative(facing));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -137,9 +137,9 @@ public class FormedSetup {
     public List<LazyOptional<IItemHandler>> getExportHandlers() {
         List<LazyOptional<IItemHandler>> handlers = new ArrayList<>();
         for (Direction facing : Direction.values()) {
-            if (!world.isBlockLoaded(exportPos.offset(facing)))
+            if (!world.isLoaded(exportPos.relative(facing)))
                 continue;
-            TileEntity te = world.getTileEntity(exportPos.offset(facing));
+            TileEntity te = world.getBlockEntity(exportPos.relative(facing));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -255,7 +255,7 @@ public class FormedSetup {
 
         for (PatternBlock pb : layout.getAbsolutePattern().getBlocks()) {
             if (pb.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
+                TileEntity te = world.getBlockEntity(pb.getBlockPos());
                 if (te instanceof UpgradeTileEntity) {
                     Perk perk = ((UpgradeTileEntity) te).getUpgrade(world.getBlockState(pb.getBlockPos()));
                     if (perk != Perk.EMPTY) {
@@ -318,7 +318,7 @@ public class FormedSetup {
                 }
             } else if (pb.getFactoryComponent() == FactoryComponent.CELL) {
                 formedSetup.cellPos = new BlockPos(pb.getBlockPos());
-                TileEntity te = world.getTileEntity(pb.getBlockPos());
+                TileEntity te = world.getBlockEntity(pb.getBlockPos());
                 if (te instanceof CellTileEntityBase) {
                     formedSetup.cellCapacity = ((CellTileEntityBase) te).getCapacity();
                     if (te instanceof Cell1TileEntity)

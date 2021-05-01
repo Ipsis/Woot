@@ -18,25 +18,25 @@ import java.util.List;
 public class DebugItem extends Item {
 
     public DebugItem() {
-        super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(1).tab(Woot.setup.getCreativeTab()));
     }
 
     @Override
     public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-        if (!context.getWorld().isRemote) {
-            Block b =  context.getWorld().getBlockState(context.getPos()).getBlock();
+        if (!context.getLevel().isClientSide) {
+            Block b =  context.getLevel().getBlockState(context.getClickedPos()).getBlock();
             if (b instanceof WootDebug) {
                 List<String> debug = new ArrayList<>();
                 ((WootDebug)b).getDebugText(debug, context);
                 for (String s : debug)
-                    context.getPlayer().sendStatusMessage(new StringTextComponent(s), false);
+                    context.getPlayer().displayClientMessage(new StringTextComponent(s), false);
             }
         }
         return ActionResultType.SUCCESS;
     }
 
     public static List<String> getTileEntityDebug(List<String> debug, ItemUseContext context) {
-        TileEntity te = context.getWorld().getTileEntity(context.getPos());
+        TileEntity te = context.getLevel().getBlockEntity(context.getClickedPos());
         if (te instanceof WootDebug)
             ((WootDebug) te).getDebugText(debug, context);
         return debug;

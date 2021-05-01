@@ -147,40 +147,40 @@ public enum FactoryComponent {
 
     public BlockState getDefaultBlockState() {
         if (this == FACTORY_A)
-            return FactorySetup.FACTORY_A_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_A_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_B)
-            return FactorySetup.FACTORY_B_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_B_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_C)
-            return FactorySetup.FACTORY_C_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_C_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_D)
-            return FactorySetup.FACTORY_D_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_D_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_E)
-            return FactorySetup.FACTORY_E_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_E_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_CONNECT)
-            return FactorySetup.FACTORY_CONNECT_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_CONNECT_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_CTR_BASE_PRI)
-            return FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_CTR_BASE_PRI_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_CTR_BASE_SEC)
-            return FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_CTR_BASE_SEC_BLOCK.get().defaultBlockState();
         else if (this == FACTORY_UPGRADE)
-            return FactorySetup.FACTORY_UPGRADE_BLOCK.get().getDefaultState();
+            return FactorySetup.FACTORY_UPGRADE_BLOCK.get().defaultBlockState();
         else if (this == CAP_A)
-            return FactorySetup.CAP_A_BLOCK.get().getDefaultState();
+            return FactorySetup.CAP_A_BLOCK.get().defaultBlockState();
         else if (this == CAP_B)
-            return FactorySetup.CAP_B_BLOCK.get().getDefaultState();
+            return FactorySetup.CAP_B_BLOCK.get().defaultBlockState();
         else if (this == CAP_C)
-            return FactorySetup.CAP_C_BLOCK.get().getDefaultState();
+            return FactorySetup.CAP_C_BLOCK.get().defaultBlockState();
         else if (this == CAP_D)
-            return FactorySetup.CAP_D_BLOCK.get().getDefaultState();
+            return FactorySetup.CAP_D_BLOCK.get().defaultBlockState();
         else if (this == IMPORT)
-            return FactorySetup.IMPORT_BLOCK.get().getDefaultState();
+            return FactorySetup.IMPORT_BLOCK.get().defaultBlockState();
         else if (this == EXPORT)
-            return FactorySetup.EXPORT_BLOCK.get().getDefaultState();
+            return FactorySetup.EXPORT_BLOCK.get().defaultBlockState();
         else if (this == CONTROLLER)
-            return FactorySetup.CONTROLLER_BLOCK.get().getDefaultState();
+            return FactorySetup.CONTROLLER_BLOCK.get().defaultBlockState();
         else if (this == CELL)
-            return FactorySetup.CELL_1_BLOCK.get().getDefaultState();
+            return FactorySetup.CELL_1_BLOCK.get().defaultBlockState();
 
-        return FactorySetup.HEART_BLOCK.get().getDefaultState();
+        return FactorySetup.HEART_BLOCK.get().defaultBlockState();
     }
 }

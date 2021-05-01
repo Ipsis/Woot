@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class HammerItem extends Item{
 
     public HammerItem() {
-        super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(1).tab(Woot.setup.getCreativeTab()));
     }
 
     @Override

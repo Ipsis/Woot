@@ -45,16 +45,16 @@ public class SpawnController {
 
         MobEntity mobEntity = (MobEntity)entity;
 
-        mobEntity.onInitialSpawn(world,
-                world.getDifficultyForLocation(new BlockPos(entity.getPosition())),
+        mobEntity.finalizeSpawn(world,
+                world.getCurrentDifficultyAt(new BlockPos(entity.blockPosition())),
                 SpawnReason.SPAWNER,
                 null, null);
 
-        mobEntity.recentlyHit = 100;
-        mobEntity.attackingPlayer = fakePlayer;
+        mobEntity.lastHurtByPlayerTime = 100;
+        mobEntity.lastHurtByPlayer = fakePlayer;
 
         CustomSpawnController.get().apply(mobEntity, fakeMobKey.getMob(), world);
-        mobEntity.onDeath(DamageSource.causePlayerDamage(fakePlayer));
+        mobEntity.die(DamageSource.playerAttack(fakePlayer));
     }
 
     private @Nullable Entity createEntity(@Nonnull FakeMob fakeMob, @Nonnull World world, @Nonnull BlockPos pos) {
@@ -67,8 +67,8 @@ public class SpawnController {
 
         CompoundNBT nbt = new CompoundNBT();
         nbt.putString("id", rl.toString());
-        Entity entity = EntityType.loadEntityAndExecute(nbt, world, (xc) -> {
-            xc.setLocationAndAngles(pos.getX(), pos.getY(), pos.getZ(), xc.rotationYaw, xc.rotationPitch);
+        Entity entity = EntityType.loadEntityRecursive(nbt, world, (xc) -> {
+            xc.absMoveTo(pos.getX(), pos.getY(), pos.getZ(), xc.yRot, xc.xRot);
             return xc;
         });
 
@@ -77,7 +77,7 @@ public class SpawnController {
 
     private static final int UNKNOWN_MOB_HEALTH = 100;
     public int getMobHealth(@Nonnull FakeMob fakeMob, @Nonnull World world) {
-        if (world.isRemote)
+        if (world.isClientSide)
             return UNKNOWN_MOB_HEALTH;
 
         if (!fakeMob.isValid())
@@ -97,7 +97,7 @@ public class SpawnController {
 
     private static final int UNKNOWN_MOB_EXP = 1;
     public int getMobExperience(@Nonnull FakeMob fakeMob, @Nonnull World world) {
-        if (world.isRemote)
+        if (world.isClientSide)
             return UNKNOWN_MOB_EXP;
 
         if (!fakeMob.isValid())

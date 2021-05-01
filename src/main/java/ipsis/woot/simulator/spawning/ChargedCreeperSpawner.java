@@ -20,7 +20,7 @@ public class ChargedCreeperSpawner extends AbstractMobSpawner {
             return;
 
         if (fakeMob.isChargedCreeper())
-            ((CreeperEntity)mobEntity).func_241841_a((ServerWorld) world,
+            ((CreeperEntity)mobEntity).thunderHit((ServerWorld) world,
                         new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world));
     }
 }

@@ -30,7 +30,7 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
 
     public FluidConvertorContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK_CONTATAINER.get(), windowId);
-        tileEntity = (FluidConvertorTileEntity)world.getTileEntity(pos);
+        tileEntity = (FluidConvertorTileEntity)world.getBlockEntity(pos);
 
         addOwnSlots(tileEntity.getInventory());
         addPlayerSlots(playerInventory);
@@ -58,8 +58,8 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
                 playerIn, FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get());
     }
 
@@ -97,15 +97,15 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
     }
 
     @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
+    public void broadcastChanges() {
+        super.broadcastChanges();
 
         if (!inputFluid.isFluidStackIdentical(tileEntity.getInputTankFluid())) {
             inputFluid = tileEntity.getInputTankFluid().copy();
             TankPacket tankPacket = new TankPacket(0, inputFluid);
-            for (IContainerListener l : listeners) {
+            for (IContainerListener l : containerListeners) {
                 if (l instanceof ServerPlayerEntity) {
-                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.connection,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
@@ -114,9 +114,9 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
         if (!outputFluid.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
             outputFluid = tileEntity.getOutputTankFluid().copy();
             TankPacket tankPacket = new TankPacket(1, outputFluid);
-            for (IContainerListener l : listeners) {
+            for (IContainerListener l : containerListeners) {
                 if (l instanceof ServerPlayerEntity) {
-                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.connection,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
@@ -124,14 +124,14 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 
         // Based off Gigaherz Elements Of Power code
-        Slot slot = this.inventorySlots.get(index);
-        if (slot == null || !slot.getHasStack())
+        Slot slot = this.slots.get(index);
+        if (slot == null || !slot.hasItem())
             return ItemStack.EMPTY;
 
-        ItemStack stack = slot.getStack();
+        ItemStack stack = slot.getItem();
         ItemStack stackCopy = stack.copy();
 
         int startIndex;
@@ -164,13 +164,13 @@ public class FluidConvertorContainer extends WootContainer implements TankPacket
             endIndex = startIndex + PLAYER_INV_SIZE + TOOLBAR_INV_SIZE;
         }
 
-        if (!this.mergeItemStack(stack, startIndex, endIndex, false))
+        if (!this.moveItemStackTo(stack, startIndex, endIndex, false))
             return ItemStack.EMPTY;
 
         if (stack.getCount() == 0)
-            slot.putStack(ItemStack.EMPTY);
+            slot.set(ItemStack.EMPTY);
         else
-            slot.onSlotChanged();
+            slot.setChanged();
 
         if (stack.getCount() == stackCopy.getCount())
             return ItemStack.EMPTY;

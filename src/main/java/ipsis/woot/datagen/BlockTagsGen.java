@@ -11,16 +11,16 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BlockTagsGen extends BlockTagsProvider {
 
-    public static final ITag.INamedTag<Block> FACTORY_BLOCK = BlockTags.makeWrapperTag(Woot.MODID + ":factory_blocks");
+    public static final ITag.INamedTag<Block> FACTORY_BLOCK = BlockTags.bind(Woot.MODID + ":factory_blocks");
 
     public BlockTagsGen(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Woot.MODID, existingFileHelper);
     }
 
     @Override
-    protected void registerTags() {
+    protected void addTags() {
 
-        getOrCreateBuilder(FACTORY_BLOCK).add(
+        tag(FACTORY_BLOCK).add(
                 FactorySetup.FACTORY_A_BLOCK.get(),
                 FactorySetup.FACTORY_B_BLOCK.get(),
                 FactorySetup.FACTORY_C_BLOCK.get(),

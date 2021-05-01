@@ -9,12 +9,12 @@ public class WorldHelper {
     public static void updateClient(World world, BlockPos pos) {
         if (world != null) {
             BlockState blockState = world.getBlockState(pos);
-            world.notifyBlockUpdate(pos, blockState, blockState, 4);
+            world.sendBlockUpdated(pos, blockState, blockState, 4);
         }
     }
 
     public static void updateNeighbours(World world, BlockPos pos) {
         if (world != null)
-            world.notifyNeighborsOfStateChange(pos, world.getBlockState(pos).getBlock());
+            world.updateNeighborsAt(pos, world.getBlockState(pos).getBlock());
     }
 }

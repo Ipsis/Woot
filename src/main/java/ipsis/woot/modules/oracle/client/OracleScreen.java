@@ -28,8 +28,8 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
 
     public OracleScreen(OracleContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
-        xSize = 180;
-        ySize = 177;
+        imageWidth = 180;
+        imageHeight = 177;
     }
 
     @Override
@@ -39,24 +39,24 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        getMinecraft().getTextureManager().bindTexture(GUI);
-        int relX = (this.width - this.xSize) / 2;
-        int relY = (this.height - this.ySize) / 2;
-        this.blit(matrixStack, relX, relY, 0, 0, xSize, ySize);
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        getMinecraft().getTextureManager().bind(GUI);
+        int relX = (this.width - this.getXSize()) / 2;
+        int relY = (this.height - this.getYSize()) / 2;
+        this.blit(matrixStack, relX, relY, 0, 0, getXSize(), getYSize());
 
-        if (!container.simulatedDrops.isEmpty()) {
+        if (!menu.simulatedDrops.isEmpty()) {
             int currRow = 0;
             int currCol = 0;
-            for (SimulatedMobDropSummary summary : container.simulatedDrops) {
+            for (SimulatedMobDropSummary summary : menu.simulatedDrops) {
 
-                int stackX = guiLeft + (currCol * 18) + 10;
-                int stackY = guiTop + (currRow * 18) + 41;
+                int stackX = getGuiLeft() + (currCol * 18) + 10;
+                int stackY = getGuiTop() + (currRow * 18) + 41;
 
-                RenderHelper.enableStandardItemLighting();
-                itemRenderer.renderItemIntoGUI(summary.itemStack, stackX, stackY);
-                RenderHelper.disableStandardItemLighting();
+                RenderHelper.setupForFlatItems();
+                itemRenderer.renderGuiItem(summary.itemStack, stackX, stackY);
+                RenderHelper.setupFor3DItems();
 
                 currCol++;
                 if (currCol == 9) {
@@ -68,33 +68,33 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+    protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
+        this.font.draw(matrixStack, this.title, (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
 
-        if (container.simulatedMobs.isEmpty()) {
+        if (menu.simulatedMobs.isEmpty()) {
             String mob = "N/A";
-            this.font.drawString(matrixStack, mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
+            this.font.draw(matrixStack, mob, (float)(this.getXSize() / 2 - this.font.width(mob) / 2), 25.0F, 4210752);
         } else {
-            FakeMob fakeMob = container.simulatedMobs.get(mobIndex);
+            FakeMob fakeMob = menu.simulatedMobs.get(mobIndex);
             EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
             if (entityType != null) {
-                String mob = new TranslationTextComponent(entityType.getTranslationKey()).getString();
+                String mob = new TranslationTextComponent(entityType.getDescriptionId()).getString();
                 if (fakeMob.hasTag())
                     mob += "[" + fakeMob.getTag() + "]";
-                this.font.drawString(matrixStack, mob, (float)(this.xSize / 2 - this.font.getStringWidth(mob) / 2), 25.0F, 4210752);
+                this.font.draw(matrixStack, mob, (float)(this.getXSize() / 2 - this.font.width(mob) / 2), 25.0F, 4210752);
             }
         }
 
-        if (!container.simulatedDrops.isEmpty()) {
+        if (!menu.simulatedDrops.isEmpty()) {
             int currRow = 0;
             int currCol = 0;
-            for (SimulatedMobDropSummary summary : container.simulatedDrops) {
+            for (SimulatedMobDropSummary summary : menu.simulatedDrops) {
 
                 int stackX = (currCol * 18) + 10;
                 int stackY = (currRow * 18) + 41;
 
 
-                if (mouseX - guiLeft > stackX && mouseX - guiLeft <= stackX + 20 && mouseY - guiTop >= stackY && mouseY - guiTop <= stackY + 20) {
+                if (mouseX - getGuiLeft() > stackX && mouseX - getGuiLeft() <= stackX + 20 && mouseY - getGuiTop() >= stackY && mouseY - getGuiTop() <= stackY + 20) {
                     FontRenderer fontRenderer = summary.itemStack.getItem().getFontRenderer(summary.itemStack);
                     if (fontRenderer == null)
                         fontRenderer = font;
@@ -103,7 +103,7 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
                     tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.1", summary.chanceToDrop[1]));
                     tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.2", summary.chanceToDrop[2]));
                     tooltip.add(new TranslationTextComponent("gui.woot.oracle.looting.3", summary.chanceToDrop[3]));
-                    func_243308_b(matrixStack, tooltip, mouseX - guiLeft, mouseY - guiTop);
+                    renderComponentTooltip(matrixStack, tooltip, mouseX - getGuiLeft(), mouseY - getGuiTop());
                     break;
                 }
 
@@ -126,27 +126,27 @@ public class OracleScreen extends ContainerScreen<OracleContainer> {
         super.init(); // This sets guiLeft/guiTop
 
         this.nextMobButton = this.addButton(new Button(
-                this.guiLeft + 9 + (8 * 18),
-                this.guiTop + 18, 18, 18, new StringTextComponent(">"),
+                this.getGuiLeft() + 9 + (8 * 18),
+                this.getGuiTop() + 18, 18, 18, new StringTextComponent(">"),
                 h -> {
-                    if (!container.simulatedMobs.isEmpty()) {
+                    if (!menu.simulatedMobs.isEmpty()) {
                         mobIndex = (mobIndex + 1);
-                        mobIndex = MathHelper.clamp(mobIndex, 0, container.simulatedMobs.size() - 1);
-                        container.refreshDrops(mobIndex);
+                        mobIndex = MathHelper.clamp(mobIndex, 0, menu.simulatedMobs.size() - 1);
+                        menu.refreshDrops(mobIndex);
                     }
                 }));
 
         this.prevMobButton = this.addButton(new Button(
-                this.guiLeft + 9,
-                this.guiTop + 18, 18, 18, new StringTextComponent("<"),
+                this.getGuiLeft() + 9,
+                this.getGuiTop() + 18, 18, 18, new StringTextComponent("<"),
                 h -> {
-                    if (!container.simulatedMobs.isEmpty()) {
+                    if (!menu.simulatedMobs.isEmpty()) {
                         mobIndex = (mobIndex - 1);
-                        mobIndex = MathHelper.clamp(mobIndex, 0, container.simulatedMobs.size() - 1);
-                        container.refreshDrops(mobIndex);
+                        mobIndex = MathHelper.clamp(mobIndex, 0, menu.simulatedMobs.size() - 1);
+                        menu.refreshDrops(mobIndex);
                     }
                 }));
 
-        container.refreshMobs();
+        menu.refreshMobs();
     }
 }

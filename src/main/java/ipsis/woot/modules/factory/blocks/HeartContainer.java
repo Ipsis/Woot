@@ -27,7 +27,7 @@ public class HeartContainer extends WootContainer implements TankPacketHandler  
 
     public HeartContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(FactorySetup.HEART_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = (HeartTileEntity)world.getTileEntity(pos);
+        tileEntity = (HeartTileEntity)world.getBlockEntity(pos);
         addListeners();
 
         /**
@@ -36,26 +36,26 @@ public class HeartContainer extends WootContainer implements TankPacketHandler  
     }
 
     public BlockPos getPos() {
-        return tileEntity.getPos();
+        return tileEntity.getBlockPos();
     }
 
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
                 playerIn, FactorySetup.HEART_BLOCK.get());
     }
 
     @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
+    public void broadcastChanges() {
+        super.broadcastChanges();
 
         if (!inputFluid.isFluidStackIdentical(tileEntity.getTankFluid())) {
             inputFluid = tileEntity.getTankFluid().copy();
             TankPacket tankPacket = new TankPacket(0, inputFluid);
-            for (IContainerListener l : listeners) {
+            for (IContainerListener l : containerListeners) {
                 if (l instanceof ServerPlayerEntity) {
-                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.connection,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }

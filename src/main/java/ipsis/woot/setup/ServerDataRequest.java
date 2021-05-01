@@ -46,25 +46,25 @@ public class ServerDataRequest {
         final ServerPlayerEntity serverPlayerEntity = ctx.get().getSender();
         if (serverPlayerEntity != null) {
             ctx.get().enqueueWork(() -> {
-                TileEntity te = serverPlayerEntity.world.getTileEntity(pos);
+                TileEntity te = serverPlayerEntity.level.getBlockEntity(pos);
                 if (requestType == Type.DROP_REGISTRY_STATUS) {
                     if (te instanceof OracleTileEntity) {
                         NetworkChannel.channel.sendTo(new SimulatedMobsReply(),
-                                serverPlayerEntity.connection.netManager,
+                                serverPlayerEntity.connection.connection,
                                 NetworkDirection.PLAY_TO_CLIENT);
                         ctx.get().setPacketHandled(true);
                     }
                 } else if (requestType == Type.SIMULATED_MOB_DROPS) {
                     if (te instanceof OracleTileEntity) {
                         NetworkChannel.channel.sendTo(SimulatedMobDropsSummaryReply.fromMob(s),
-                                serverPlayerEntity.connection.netManager,
+                                serverPlayerEntity.connection.connection,
                                 NetworkDirection.PLAY_TO_CLIENT);
                         ctx.get().setPacketHandled(true);
                     }
                 } else if (requestType == Type.HEART_STATIC_DATA) {
                     if (te instanceof HeartTileEntity) {
                         NetworkChannel.channel.sendTo((((HeartTileEntity) te).createStaticDataReply2()),
-                                serverPlayerEntity.connection.netManager,
+                                serverPlayerEntity.connection.connection,
                                 NetworkDirection.PLAY_TO_CLIENT);
                         ctx.get().setPacketHandled(true);
                     }

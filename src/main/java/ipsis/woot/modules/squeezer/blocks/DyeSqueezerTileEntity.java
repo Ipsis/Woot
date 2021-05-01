@@ -66,7 +66,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         @Override
         protected void onContentsChanged(int slot) {
             DyeSqueezerTileEntity.this.onContentsChanged(slot);
-            markDirty();
+            setChanged();
         }
 
         public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
@@ -118,9 +118,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //-------------------------------------------------------------------------
     //region NBT
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
         readFromNBT(compoundNBT);
-        super.read(blockState, compoundNBT);
+        super.load(blockState, compoundNBT);
     }
 
     @Override
@@ -157,7 +157,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
 
     @Override
-    public CompoundNBT write(CompoundNBT compoundNBT) {
+    public CompoundNBT save(CompoundNBT compoundNBT) {
         compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
                 Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null)));
 
@@ -178,7 +178,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
         dyeTag.putInt(ModNBT.DyeSqueezer.WHITE_TAG, white);
         compoundNBT.put(ModNBT.DyeSqueezer.INTERNAL_DYE_TANKS_TAG, dyeTag);
         compoundNBT.putBoolean(ModNBT.DyeSqueezer.EXCESS_TAG, dumpExcess);
-        return super.write(compoundNBT);
+        return super.save(compoundNBT);
     }
     //endregion
 
@@ -203,7 +203,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new DyeSqueezerContainer(i, world, pos, playerInventory, playerEntity);
+        return new DyeSqueezerContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
     //endregion
 
@@ -222,10 +222,10 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     public void tick() {
         super.tick();
 
-        if (world.isRemote)
+        if (level.isClientSide)
             return;
 
-        if (world.getGameTime() % 20 == 0)
+        if (level.getGameTime() % 20 == 0)
             generatePureFluid();
 
         if (outputTank.map(WootFluidTank::isEmpty).orElse(true))
@@ -233,7 +233,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
 
         for (Direction direction : Direction.values()) {
-            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            TileEntity te = level.getBlockEntity(getBlockPos().relative(direction));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -244,7 +244,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
                 if (!fluidStack.isEmpty()) {
                     int filled = iFluidHandler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
                     outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
-                    markDirty();
+                    setChanged();
                 }
             }
         }
@@ -278,7 +278,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
                 yellow -= DyeMakeup.LCM;
                 blue -= DyeMakeup.LCM;
                 white -= DyeMakeup.LCM;
-                markDirty();
+                setChanged();
             }
         });
     }
@@ -306,7 +306,7 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
 
         inventory.extractItem(INPUT_SLOT, 1, false);
         generatePureFluid();
-        markDirty();
+        setChanged();
     }
 
     @Override
@@ -350,9 +350,9 @@ public class DyeSqueezerTileEntity extends WootMachineTileEntity implements Woot
     //endregion
 
     private void getRecipe() {
-        currRecipe = world.getRecipeManager().getRecipe(DYE_SQUEEZER_TYPE,
+        currRecipe = level.getRecipeManager().getRecipeFor(DYE_SQUEEZER_TYPE,
                 new Inventory(inventory.getStackInSlot(INPUT_SLOT)),
-                world).orElse(null);
+                level).orElse(null);
     }
 
     private boolean canStoreInternal(DyeSqueezerRecipe recipe) {

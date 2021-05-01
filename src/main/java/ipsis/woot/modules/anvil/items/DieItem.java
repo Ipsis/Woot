@@ -12,7 +12,7 @@ public class DieItem extends Item {
 
     final DieType dieType;
     public DieItem(DieType dieType) {
-        super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(1).tab(Woot.setup.getCreativeTab()));
         this.dieType = dieType;
     }
 

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 public class OracleBlock extends Block {
 
     public OracleBlock() {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(3.5F));
     }
 
     @Override
@@ -36,13 +36,13 @@ public class OracleBlock extends Block {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
-        if (worldIn.isRemote)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+        if (worldIn.isClientSide)
+            return super.use(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
-        TileEntity te = worldIn.getTileEntity((pos));
+        TileEntity te = worldIn.getBlockEntity((pos));
         if (te instanceof INamedContainerProvider)
-            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getPos());
+            NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, te.getBlockPos());
         else
             throw new IllegalStateException("Named container provider is missing");
 

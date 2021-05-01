@@ -125,7 +125,7 @@ public class StorageHelper {
                     ItemStack slotStack = h.getStackInSlot(slot);
                     if (slotStack.isEmpty())
                         continue;
-                    if (ItemStack.areItemsEqual(itemStack, slotStack))
+                    if (ItemStack.isSame(itemStack, slotStack))
                         count.getAndAdd(slotStack.getCount());
                 }
             });

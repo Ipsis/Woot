@@ -36,9 +36,9 @@ public class SkullGenerator {
                     Woot.setup.getLogger().error(s + " == INVALID (mob {})", parts[0]);
                 } else {
                     try {
-                        JsonObject jsonObject = JSONUtils.fromJson(parts[1]);
+                        JsonObject jsonObject = JSONUtils.parse(parts[1]);
                         if (jsonObject.isJsonObject()) {
-                            ItemStack itemStack = ShapedRecipe.deserializeItem(jsonObject);
+                            ItemStack itemStack = ShapedRecipe.itemFromJson(jsonObject);
                             if (!itemStack.isEmpty()) {
                                 Woot.setup.getLogger().info("SkullGenerator: {} -> {}", fakeMob, itemStack);
                                 skulls.put(fakeMob, itemStack);

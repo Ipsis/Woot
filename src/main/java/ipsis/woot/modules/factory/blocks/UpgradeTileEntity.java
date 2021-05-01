@@ -29,59 +29,59 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
 
     public boolean tryAddUpgrade(World world, PlayerEntity playerEntity, BlockState state, Perk type) {
 
-        if (state.get(UpgradeBlock.UPGRADE) == Perk.EMPTY) {
+        if (state.getValue(UpgradeBlock.UPGRADE) == Perk.EMPTY) {
             // Add to empty must be level 1
             if (Perk.LEVEL_1_PERKS.contains(type)) {
-                world.setBlockState(pos,
-                        state.with(UpgradeBlock.UPGRADE, type), 2);
+                world.setBlock(worldPosition,
+                        state.setValue(UpgradeBlock.UPGRADE, type), 2);
                 glue.onGoodbye();
-                MultiBlockTracker.get().addEntry(world, pos);
+                MultiBlockTracker.get().addEntry(world, worldPosition);
                 Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
                 if (playerEntity instanceof ServerPlayerEntity)
                     Advancements.APPLY_PERK_TRIGGER.trigger((ServerPlayerEntity) playerEntity, type);
                 return true;
             } else {
-                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.0"), false);
+                playerEntity.displayClientMessage(new TranslationTextComponent("chat.woot.perk.fail.0"), false);
                 return false;
             }
         } else {
             // Add to non-empty, must be same type and level + 1
-            Perk upgrade = getBlockState().get(UpgradeBlock.UPGRADE);
+            Perk upgrade = getBlockState().getValue(UpgradeBlock.UPGRADE);
             Perk.Group currType = Perk.getGroup(upgrade);
             Perk.Group addType = Perk.getGroup(type);
             int currLevel = Perk.getLevel(upgrade);
             int addLevel = Perk.getLevel(type);
             if (currType != addType) {
-                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.1"), false);
+                playerEntity.displayClientMessage(new TranslationTextComponent("chat.woot.perk.fail.1"), false);
                 return false;
             }
 
             if (currLevel == 3) {
-                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.2"), false);
+                playerEntity.displayClientMessage(new TranslationTextComponent("chat.woot.perk.fail.2"), false);
                 return false;
             }
 
             if (currLevel == addLevel) {
-                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.4"), false);
+                playerEntity.displayClientMessage(new TranslationTextComponent("chat.woot.perk.fail.4"), false);
                 return false;
             }
 
             if (currLevel + 1 != addLevel) {
-                playerEntity.sendStatusMessage(new TranslationTextComponent("chat.woot.perk.fail.4", currLevel + 1), false);
+                playerEntity.displayClientMessage(new TranslationTextComponent("chat.woot.perk.fail.4", currLevel + 1), false);
                 return false;
             }
 
-            world.setBlockState(pos,
-                    state.with(UpgradeBlock.UPGRADE, type), 2);
+            world.setBlock(worldPosition,
+                    state.setValue(UpgradeBlock.UPGRADE, type), 2);
             glue.onGoodbye();
-            MultiBlockTracker.get().addEntry(world, pos);
+            MultiBlockTracker.get().addEntry(world, worldPosition);
             Woot.setup.getLogger().debug("tryAddUpgrade: added {}", type);
             return true;
         }
     }
 
     public void dropItems(BlockState state, World world, BlockPos pos) {
-        Perk upgrade = state.get(UpgradeBlock.UPGRADE);
+        Perk upgrade = state.getValue(UpgradeBlock.UPGRADE);
         if (upgrade == Perk.EMPTY)
             return;
 
@@ -92,7 +92,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
                 ItemStack itemStack = PerkItem.getItemStack(type, i);
                 if (!itemStack.isEmpty()) {
                     itemStack.setCount(1);
-                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+                    InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
                 }
             }
         }
@@ -100,7 +100,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
 
     public @Nullable
     Perk getUpgrade(BlockState state) {
-        return state.get(UpgradeBlock.UPGRADE);
+        return state.getValue(UpgradeBlock.UPGRADE);
     }
 
     /**
@@ -110,7 +110,7 @@ public class UpgradeTileEntity extends MultiBlockTileEntity implements WootDebug
     public List<String> getDebugText(List<String> debug, ItemUseContext itemUseContext) {
         debug.add("====> UpgradeTileEntity");
         debug.add("      hasMaster: " + glue.hasMaster());
-        debug.add("      upgrade: " + world.getBlockState(pos).get(UpgradeBlock.UPGRADE));
+        debug.add("      upgrade: " + level.getBlockState(worldPosition).getValue(UpgradeBlock.UPGRADE));
         return debug;
     }
 }

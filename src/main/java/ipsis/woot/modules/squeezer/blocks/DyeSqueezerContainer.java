@@ -31,7 +31,7 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
 
     public DyeSqueezerContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(SqueezerSetup.SQUEEZER_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = (DyeSqueezerTileEntity)world.getTileEntity(pos);
+        tileEntity = (DyeSqueezerTileEntity)world.getBlockEntity(pos);
         addOwnSlots(tileEntity.getInventory());
         addPlayerSlots(playerInventory);
         addListeners();
@@ -58,20 +58,20 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
                 playerIn, SqueezerSetup.SQUEEZER_BLOCK.get());
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 
         // Based off Gigaherz Elements Of Power code
-        Slot slot = this.inventorySlots.get(index);
-        if (slot == null || !slot.getHasStack())
+        Slot slot = this.slots.get(index);
+        if (slot == null || !slot.hasItem())
             return ItemStack.EMPTY;
 
-        ItemStack stack = slot.getStack();
+        ItemStack stack = slot.getItem();
         ItemStack stackCopy = stack.copy();
 
         int startIndex;
@@ -104,13 +104,13 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
             endIndex = startIndex + PLAYER_INV_SIZE + TOOLBAR_INV_SIZE;
         }
 
-        if (!this.mergeItemStack(stack, startIndex, endIndex, false))
+        if (!this.moveItemStackTo(stack, startIndex, endIndex, false))
             return ItemStack.EMPTY;
 
         if (stack.getCount() == 0)
-            slot.putStack(ItemStack.EMPTY);
+            slot.set(ItemStack.EMPTY);
         else
-            slot.onSlotChanged();
+            slot.setChanged();
 
         if (stack.getCount() == stackCopy.getCount())
             return ItemStack.EMPTY;
@@ -199,14 +199,14 @@ public class DyeSqueezerContainer extends WootContainer implements TankPacketHan
     }
 
     @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
+    public void broadcastChanges() {
+        super.broadcastChanges();
 
         if (!pureDye.isFluidStackIdentical(tileEntity.getOutputTankFluid())) {
             pureDye = tileEntity.getOutputTankFluid().copy();
-            for (IContainerListener l : listeners) {
+            for (IContainerListener l : containerListeners) {
                 if (l instanceof ServerPlayerEntity) {
-                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tileEntity.getOutputTankPacket(), ((ServerPlayerEntity) l).connection.connection,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }

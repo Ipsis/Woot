@@ -28,67 +28,67 @@ public class Generic {
 
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shapedRecipe(GenericSetup.SI_DUST_ITEM.get(), 1)
-                .patternLine(" i ")
-                .patternLine("n n")
-                .patternLine(" s ")
-                .key('i', Tags.Items.INGOTS_IRON)
-                .key('n', Tags.Items.NETHERRACK)
-                .key('s', Blocks.SOUL_SAND)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer, new ResourceLocation(Woot.MODID, "si_dust_1"));
+        ShapedRecipeBuilder.shaped(GenericSetup.SI_DUST_ITEM.get(), 1)
+                .pattern(" i ")
+                .pattern("n n")
+                .pattern(" s ")
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('n', Tags.Items.NETHERRACK)
+                .define('s', Blocks.SOUL_SAND)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer, new ResourceLocation(Woot.MODID, "si_dust_1"));
 
-        ShapedRecipeBuilder.shapedRecipe(GenericSetup.SI_DUST_ITEM.get(), 3)
-                .patternLine(" i ")
-                .patternLine("nhn")
-                .patternLine(" s ")
-                .key('i', Tags.Items.INGOTS_IRON)
-                .key('n', Tags.Items.NETHERRACK)
-                .key('s', Blocks.SOUL_SAND)
-                .key('h', AnvilSetup.HAMMER_ITEM.get())
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer, new ResourceLocation(Woot.MODID, "si_dust_2"));
+        ShapedRecipeBuilder.shaped(GenericSetup.SI_DUST_ITEM.get(), 3)
+                .pattern(" i ")
+                .pattern("nhn")
+                .pattern(" s ")
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('n', Tags.Items.NETHERRACK)
+                .define('s', Blocks.SOUL_SAND)
+                .define('h', AnvilSetup.HAMMER_ITEM.get())
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer, new ResourceLocation(Woot.MODID, "si_dust_2"));
 
-        CookingRecipeBuilder.smeltingRecipe(
-                Ingredient.fromItems(GenericSetup.SI_DUST_ITEM.get()),
+        CookingRecipeBuilder.smelting(
+                Ingredient.of(GenericSetup.SI_DUST_ITEM.get()),
                 GenericSetup.SI_INGOT_ITEM.get(),
                 1.0F, 200)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapelessRecipeBuilder.shapelessRecipe(GenericSetup.SI_PLATE_ITEM.get())
-                .addIngredient(Ingredient.fromItems(GenericSetup.SI_INGOT_ITEM.get()))
-                .addIngredient(AnvilSetup.PLATE_DIE_ITEM.get())
-                .addIngredient(Ingredient.fromItems(AnvilSetup.HAMMER_ITEM.get()))
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapelessRecipeBuilder.shapeless(GenericSetup.SI_PLATE_ITEM.get())
+                .requires(Ingredient.of(GenericSetup.SI_INGOT_ITEM.get()))
+                .requires(AnvilSetup.PLATE_DIE_ITEM.get())
+                .requires(Ingredient.of(AnvilSetup.HAMMER_ITEM.get()))
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapelessRecipeBuilder.shapelessRecipe(FactorySetup.MOB_SHARD_ITEM.get())
-                .addIngredient(Ingredient.fromItems(Items.ENDER_PEARL))
-                .addIngredient(AnvilSetup.SHARD_DIE_ITEM.get())
-                .addIngredient(Ingredient.fromItems(AnvilSetup.HAMMER_ITEM.get()))
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapelessRecipeBuilder.shapeless(FactorySetup.MOB_SHARD_ITEM.get())
+                .requires(Ingredient.of(Items.ENDER_PEARL))
+                .requires(AnvilSetup.SHARD_DIE_ITEM.get())
+                .requires(Ingredient.of(AnvilSetup.HAMMER_ITEM.get()))
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapelessRecipeBuilder.shapelessRecipe(FactorySetup.MOB_SHARD_ITEM.get())
-                .addIngredient(FactorySetup.MOB_SHARD_ITEM.get())
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer, new ResourceLocation(Woot.MODID, "mobshard2"));
+        ShapelessRecipeBuilder.shapeless(FactorySetup.MOB_SHARD_ITEM.get())
+                .requires(FactorySetup.MOB_SHARD_ITEM.get())
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer, new ResourceLocation(Woot.MODID, "mobshard2"));
 
-        ShapedRecipeBuilder.shapedRecipe(GenericSetup.MACHINE_CASING_ITEM.get())
-                .patternLine(" p ")
-                .patternLine("pcp")
-                .patternLine(" p ")
-                .key('p', GenericSetup.SI_PLATE_ITEM.get())
-                .key('c', Tags.Items.CHESTS)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(GenericSetup.MACHINE_CASING_ITEM.get())
+                .pattern(" p ")
+                .pattern("pcp")
+                .pattern(" p ")
+                .define('p', GenericSetup.SI_PLATE_ITEM.get())
+                .define('c', Tags.Items.CHESTS)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
         /**
          * Casings
@@ -123,13 +123,13 @@ public class Generic {
         };
 
         for (Casing c : casings) {
-            ShapelessRecipeBuilder.shapelessRecipe(c.casing.get(), 16)
-                    .addIngredient(Ingredient.fromTag(c.tag))
-                    .addIngredient(AnvilSetup.DYE_DIE_ITEM.get())
-                    .addIngredient(Ingredient.fromItems(AnvilSetup.HAMMER_ITEM.get()))
-                    .setGroup(Woot.MODID)
-                    .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                    .build(consumer);
+            ShapelessRecipeBuilder.shapeless(c.casing.get(), 16)
+                    .requires(Ingredient.of(c.tag))
+                    .requires(AnvilSetup.DYE_DIE_ITEM.get())
+                    .requires(Ingredient.of(AnvilSetup.HAMMER_ITEM.get()))
+                    .group(Woot.MODID)
+                    .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                    .save(consumer);
         }
     }
 }

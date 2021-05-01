@@ -10,7 +10,7 @@ public class DyeCasingItem extends Item {
     final DyeColor color;
 
     public DyeCasingItem(DyeColor color) {
-        super(new Item.Properties().maxStackSize(64).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(64).tab(Woot.setup.getCreativeTab()));
         this.color = color;
     }
 

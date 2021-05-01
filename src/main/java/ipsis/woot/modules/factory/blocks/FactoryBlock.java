@@ -42,27 +42,27 @@ public class FactoryBlock extends Block implements FactoryComponentProvider, Woo
     public static final String EXPORT_REGNAME = "export";
 
     public FactoryBlock(FactoryComponent component) {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.STONE).hardnessAndResistance(3.5F));
-        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
+        super(Block.Properties.of(Material.METAL).sound(SoundType.STONE).strength(3.5F));
+        registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.ATTACHED, false));
         this.component = component;
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.ATTACHED);
     }
 
     /**
      * Block display since we are less than a full block
      */
-    private final VoxelShape shape = Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
+    private final VoxelShape shape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D);
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         if (this.component == FactoryComponent.FACTORY_UPGRADE)
             return super.getShape(state, worldIn, pos, context);
         
-        if (state.get(BlockStateProperties.ATTACHED))
-            return VoxelShapes.fullCube();
+        if (state.getValue(BlockStateProperties.ATTACHED))
+            return VoxelShapes.block();
         else
             return shape;
     }

@@ -58,12 +58,12 @@ public class RitualInfernalMachine extends Ritual {
         /**
          * Find the altar
          */
-        BlockPos altarPos = ritualPos.add(altarOffsetPos);
-        TileEntity altarTile = world.getTileEntity(altarPos);
+        BlockPos altarPos = ritualPos.offset(altarOffsetPos);
+        TileEntity altarTile = world.getBlockEntity(altarPos);
         AreaDescriptor altarRange = iMasterRitualStone.getBlockRange(ALTAR_RANGE);
         if (!altarRange.isWithinArea(altarOffsetPos) || !(altarTile instanceof TileAltar)) {
             for (BlockPos pos : altarRange.getContainedPositions(ritualPos)) {
-                TileEntity tile = world.getTileEntity(pos);
+                TileEntity tile = world.getBlockEntity(pos);
                 if (tile instanceof TileAltar) {
                     //Woot.setup.getLogger().debug("Found altar");
                     altarTile = tile;
@@ -79,12 +79,12 @@ public class RitualInfernalMachine extends Ritual {
             /**
              * Find the heart
              */
-            BlockPos heartPos = ritualPos.add(heartOffsetPos);
-            TileEntity heartTile = world.getTileEntity(heartPos);
+            BlockPos heartPos = ritualPos.offset(heartOffsetPos);
+            TileEntity heartTile = world.getBlockEntity(heartPos);
             AreaDescriptor heartRange = iMasterRitualStone.getBlockRange(HEART_RANGE);
             if (!heartRange.isWithinArea(heartOffsetPos) || !(heartTile instanceof HeartTileEntity)) {
                 for (BlockPos pos : heartRange.getContainedPositions(ritualPos)) {
-                    TileEntity tile = world.getTileEntity(pos);
+                    TileEntity tile = world.getBlockEntity(pos);
                     if (tile instanceof HeartTileEntity && ((HeartTileEntity) tile).isFormed()) {
                         //Woot.setup.getLogger().debug("Found formed factory");
                         heartTile = tile;

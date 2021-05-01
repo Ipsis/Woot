@@ -59,8 +59,8 @@ public class FluidStackPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             final ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (player.openContainer instanceof FluidStackPacketHandler)
-                ((FluidStackPacketHandler) player.openContainer).handlePacket(this);
+            if (player.containerMenu instanceof FluidStackPacketHandler)
+                ((FluidStackPacketHandler) player.containerMenu).handlePacket(this);
             ctx.get().setPacketHandled(true);
         })) ;
     }

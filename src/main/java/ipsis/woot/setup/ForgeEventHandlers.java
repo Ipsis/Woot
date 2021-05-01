@@ -68,7 +68,7 @@ public class ForgeEventHandlers {
         if (damageSource == null)
             return;
 
-        if (!FakePlayerPool.isFakePlayer(damageSource.getTrueSource()))
+        if (!FakePlayerPool.isFakePlayer(damageSource.getEntity()))
             return;
 
         // Cancel our fake spawns
@@ -85,18 +85,18 @@ public class ForgeEventHandlers {
     public void onLivingDeathEvent(LivingDeathEvent event) {
 
         // Only player kills
-        if (!(event.getSource().getTrueSource() instanceof PlayerEntity))
+        if (!(event.getSource().getEntity() instanceof PlayerEntity))
             return;
 
         if (event.getEntityLiving() == null)
             return;
 
-        PlayerEntity killer = (PlayerEntity)event.getSource().getTrueSource();
+        PlayerEntity killer = (PlayerEntity)event.getSource().getEntity();
         LivingEntity victim = event.getEntityLiving();
 
         if (ignoreDeathEvent(event.getEntity())) {
             Woot.setup.getLogger().debug("onLivingDeathEvent: duplicate {} {}",
-                    event.getEntity(), event.getEntity().getCachedUniqueIdString());
+                    event.getEntity(), event.getEntity().getStringUUID());
             return;
         }
 
@@ -154,7 +154,7 @@ public class ForgeEventHandlers {
             tickTracks.add(currTick);
         }
 
-        if (event.world.getDimensionKey().equals(MobSimulatorSetup.TARTARUS)) {
+        if (event.world.dimension().equals(MobSimulatorSetup.TARTARUS)) {
             MobSimulator.getInstance().tick(event.world);
         } else {
             if (currTick.tick(event.world.getGameTime()))
@@ -176,15 +176,15 @@ public class ForgeEventHandlers {
         FluidConvertorRecipes.load(event.getServer().getRecipeManager());
         CustomDropsLoader.load(event.getServer().getRecipeManager());
 
-        for (ServerWorld world : event.getServer().getWorlds())
-            Woot.setup.getLogger().debug("onServerStarting: world {}", world.getDimensionKey());
+        for (ServerWorld world : event.getServer().getAllLevels())
+            Woot.setup.getLogger().debug("onServerStarting: world {}", world.dimension());
 
-        ServerWorld serverWorld = event.getServer().getWorld(MobSimulatorSetup.TARTARUS);
+        ServerWorld serverWorld = event.getServer().getLevel(MobSimulatorSetup.TARTARUS);
         if (serverWorld == null) {
             Woot.setup.getLogger().error("onServerStarting: tartarus not found");
         } else {
             Woot.setup.getLogger().info("onServerStarting: force load Tartarus Cells");
-            serverWorld.forceChunk(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
+            serverWorld.setChunkForced(TartarusChunkGenerator.WORK_CHUNK_X, TartarusChunkGenerator.WORK_CHUNK_Z, true);
         }
     }
 
@@ -228,7 +228,7 @@ public class ForgeEventHandlers {
     private final int MAX_UUID_CACHE_SIZE = 10;
     private List<String> uuidList = new ArrayList<>();
     private boolean ignoreDeathEvent(Entity entity) {
-        String uuid = entity.getCachedUniqueIdString();
+        String uuid = entity.getStringUUID();
         if (uuidList.contains(uuid))
             return true;
 

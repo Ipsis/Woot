@@ -38,13 +38,13 @@ public class GlueHelper {
             BlockPos currPos = traversing.pop();
             connected.add(currPos);
             for (Direction facing : Direction.values()) {
-                BlockPos pos = currPos.offset(facing);
-                if (world.isBlockLoaded(pos)) {
+                BlockPos pos = currPos.relative(facing);
+                if (world.isLoaded(pos)) {
                     Block b = world.getBlockState(pos).getBlock();
                     if (isGlueBlock(b) && !connected.contains(pos)) {
                         traversing.add(pos);
                     } else if (isMaster(b)) {
-                        TileEntity te = world.getTileEntity(pos);
+                        TileEntity te = world.getBlockEntity(pos);
                         if (te instanceof MultiBlockMaster) {
                             master = (MultiBlockMaster)te;
                         }
@@ -67,9 +67,9 @@ public class GlueHelper {
             MultiBlockGlueProvider curr = traversing.pop();
             connected.add(curr);
             for (Direction facing : Direction.values()) {
-                BlockPos pos = curr.getGlue().getPos().offset(facing);
-                if (world.isBlockLoaded(pos)) {
-                    TileEntity te = world.getTileEntity(curr.getGlue().getPos().offset(facing));
+                BlockPos pos = curr.getGlue().getPos().relative(facing);
+                if (world.isLoaded(pos)) {
+                    TileEntity te = world.getBlockEntity(curr.getGlue().getPos().relative(facing));
                     if (te instanceof  MultiBlockGlueProvider && !connected.contains(te)) {
                         traversing.add((MultiBlockGlueProvider)te);
                     } else if (te instanceof MultiBlockMaster) {

@@ -17,12 +17,12 @@ import javax.annotation.Nonnull;
 public class FluidStackHelper {
 
     public static FluidStack parse(@Nonnull JsonObject jsonObject) {
-        ResourceLocation id = new ResourceLocation(JSONUtils.getString(jsonObject, "fluid"));
+        ResourceLocation id = new ResourceLocation(JSONUtils.getAsString(jsonObject, "fluid"));
         Fluid fluid = ForgeRegistries.FLUIDS.getValue(id);
         if (fluid == null)
             throw new JsonSyntaxException("Unknown fluid");
 
-        return new FluidStack(fluid, JSONUtils.getInt(jsonObject, "amount", 1000));
+        return new FluidStack(fluid, JSONUtils.getAsInt(jsonObject, "amount", 1000));
     }
 
     public static JsonObject create(@Nonnull FluidStack fluidStack) {

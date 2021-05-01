@@ -24,18 +24,18 @@ public class FluidConvertorRecipeSerializer<T extends FluidConvertorRecipe> exte
     }
 
     @Override
-    public T read(ResourceLocation recipeId, JsonObject json) {
+    public T fromJson(ResourceLocation recipeId, JsonObject json) {
 
-            JsonElement jsonelement = (JsonElement) (JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "catalyst") : JSONUtils.getJsonObject(json, "catalyst"));
-            Ingredient catalyst = Ingredient.deserialize(jsonelement);
+            JsonElement jsonelement = (JsonElement) (JSONUtils.isArrayNode(json, "ingredient") ? JSONUtils.getAsJsonArray(json, "catalyst") : JSONUtils.getAsJsonObject(json, "catalyst"));
+            Ingredient catalyst = Ingredient.fromJson(jsonelement);
 
             int catalystCount = 1;
             if (json.has("catalyst_count"))
-                catalystCount = JSONUtils.getInt(json, "catalyst_count", 1);
+                catalystCount = JSONUtils.getAsInt(json, "catalyst_count", 1);
 
-            FluidStack inputFluid = FluidStackHelper.parse(JSONUtils.getJsonObject(json, "input"));
-            FluidStack outputFluid = FluidStackHelper.parse(JSONUtils.getJsonObject(json, "result"));
-            int energy = JSONUtils.getInt(json, "energy", 1000);
+            FluidStack inputFluid = FluidStackHelper.parse(JSONUtils.getAsJsonObject(json, "input"));
+            FluidStack outputFluid = FluidStackHelper.parse(JSONUtils.getAsJsonObject(json, "result"));
+            int energy = JSONUtils.getAsInt(json, "energy", 1000);
 
             return this.factory.create(recipeId,
                     catalyst, catalystCount, inputFluid, outputFluid, energy);
@@ -43,9 +43,9 @@ public class FluidConvertorRecipeSerializer<T extends FluidConvertorRecipe> exte
 
     @Nullable
     @Override
-    public T read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public T fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
         try {
-            Ingredient catalyst = Ingredient.read(buffer);
+            Ingredient catalyst = Ingredient.fromNetwork(buffer);
             int catalystCount = buffer.readInt();
             FluidStack inputFluid = buffer.readFluidStack();
             FluidStack outputFluid = buffer.readFluidStack();
@@ -59,10 +59,10 @@ public class FluidConvertorRecipeSerializer<T extends FluidConvertorRecipe> exte
     }
 
     @Override
-    public void write(PacketBuffer buffer, T recipe) {
+    public void toNetwork(PacketBuffer buffer, T recipe) {
         //Woot.setup.getLogger().debug("FluidConvertorRecipeSerializer:write");
         try {
-            recipe.getCatalyst().write(buffer);
+            recipe.getCatalyst().toNetwork(buffer);
             buffer.writeInt(recipe.getCatalystCount());
             buffer.writeFluidStack(recipe.getInputFluid());
             buffer.writeFluidStack(recipe.getOutput());

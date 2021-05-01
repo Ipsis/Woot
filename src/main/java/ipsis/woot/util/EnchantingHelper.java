@@ -51,7 +51,7 @@ public class EnchantingHelper {
     private static List<EnchantmentData> getEnchantsAtLevel(int level) {
         List<EnchantmentData> list = new ArrayList<>();
         for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-            if (!enchantment.isTreasureEnchantment() && enchantment.isAllowedOnBooks()) {
+            if (!enchantment.isTreasureOnly() && enchantment.isAllowedOnBooks()) {
                 if (level >= enchantment.getMinLevel() && level <= enchantment.getMaxLevel())
                     list.add(new EnchantmentData(enchantment, level));
             }

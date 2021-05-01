@@ -39,7 +39,7 @@ public class OracleSetup {
                     new BlockItem(ORACLE_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> ORACLE_BLOCK_TILE = TILES.register(
             ORACLE_TAG, () ->
-                    TileEntityType.Builder.create(OracleTileEntity::new, ORACLE_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(OracleTileEntity::new, ORACLE_BLOCK.get()).build(null));
 
     public static final RegistryObject<ContainerType<OracleContainer>> ORACLE_BLOCK_CONTAINER = CONTAINERS.register(
             ORACLE_TAG, () ->

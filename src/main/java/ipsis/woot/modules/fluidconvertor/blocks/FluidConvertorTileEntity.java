@@ -60,7 +60,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
         @Override
         protected void onContentsChanged(int slot) {
             FluidConvertorTileEntity.this.onContentsChanged(slot);
-            markDirty();
+            setChanged();
         }
 
         public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
@@ -79,7 +79,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     };
 
     public void configureSides() {
-        Direction direction = world.getBlockState(getPos()).get(BlockStateProperties.HORIZONTAL_FACING);
+        Direction direction = level.getBlockState(getBlockPos()).getValue(BlockStateProperties.HORIZONTAL_FACING);
         if (direction == Direction.NORTH) {
             settings.put(Direction.UP, Mode.INPUT);
             settings.put(Direction.DOWN, Mode.OUTPUT);
@@ -120,7 +120,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     @Override
     public void tick() {
 
-        if (firstTick && world != null) {
+        if (firstTick && level != null) {
             // Configure sides needs to access the block state so cannot do onLoad
             configureSides();
             firstTick = false;
@@ -128,7 +128,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
 
         super.tick();
 
-        if (world.isRemote)
+        if (level.isClientSide)
             return;
 
         if (outputTank.map(WootFluidTank::isEmpty).orElse(true))
@@ -139,7 +139,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             if (settings.get(direction) != Mode.OUTPUT)
                 continue;
 
-            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            TileEntity te = level.getBlockEntity(getBlockPos().relative(direction));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -150,7 +150,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
                 if (!fluidStack.isEmpty()) {
                     int filled = iFluidHandler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
                     outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
-                    markDirty();
+                    setChanged();
                 }
             }
         }
@@ -200,9 +200,9 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
         readFromNBT(compoundNBT);
-        super.read(blockState, compoundNBT);
+        super.load(blockState, compoundNBT);
     }
 
     private void readFromNBT(CompoundNBT compoundNBT) {
@@ -221,7 +221,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compoundNBT) {
+    public CompoundNBT save(CompoundNBT compoundNBT) {
 
         compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
                 Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null)));
@@ -241,7 +241,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
             compoundNBT.put(ModNBT.ENERGY_TAG, energyTag);
         });
 
-        return super.write(compoundNBT);
+        return super.save(compoundNBT);
     }
     //endregion
 
@@ -270,7 +270,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new FluidConvertorContainer(i, world, pos, playerInventory, playerEntity);
+        return new FluidConvertorContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
     //endregion
 
@@ -315,7 +315,7 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
 
         outputTank.ifPresent(f -> f.internalFill(new FluidStack(finishedRecipe.getOutput(),
                 finishedRecipe.getOutput().getAmount()), IFluidHandler.FluidAction.EXECUTE));
-        markDirty();
+        setChanged();
     }
 
     @Override
@@ -406,9 +406,9 @@ public class FluidConvertorTileEntity extends WootMachineTileEntity implements W
         }
 
         // Get a list of recipes with matching catalyst
-        List<FluidConvertorRecipe> recipes = world.getRecipeManager().getRecipes(
+        List<FluidConvertorRecipe> recipes = level.getRecipeManager().getRecipesFor(
                 FLUID_CONV_TYPE,
-                new Inventory(inventory.getStackInSlot(INPUT_SLOT)), world);
+                new Inventory(inventory.getStackInSlot(INPUT_SLOT)), level);
 
         for (FluidConvertorRecipe recipe : recipes) {
             if (recipe.getInputFluid().isFluidEqual(inFluid)) {

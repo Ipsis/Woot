@@ -69,7 +69,7 @@ public class WootJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
 
-        ClientWorld world = Minecraft.getInstance().world;
+        ClientWorld world = Minecraft.getInstance().level;
         RecipeManager recipeManager = world.getRecipeManager();
 
         List<IRecipe> dyeRecipes = new ArrayList<>();
@@ -110,7 +110,7 @@ public class WootJeiPlugin implements IModPlugin {
         for (Enchantment e : ForgeRegistries.ENCHANTMENTS) {
             for (int i = e.getMinLevel(); i <= e.getMaxLevel(); i++) {
                 ItemStack itemStack = new ItemStack(Items.ENCHANTED_BOOK);
-                itemStack.addEnchantment(e, i);
+                itemStack.enchant(e, i);
                 books.add(new EnchantSqueezerRecipe(itemStack, SqueezerConfiguration.getEnchantFluidAmount(i), SqueezerConfiguration.getEnchantEnergy(i)));
                 if (SqueezerConfiguration.getEnchantFluidAmount(i) > maxEnchantRecipeMb)
                     maxEnchantRecipeMb = SqueezerConfiguration.getEnchantFluidAmount(i);

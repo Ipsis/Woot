@@ -21,17 +21,17 @@ public class MobCaptureTrigger extends AbstractCriterionTrigger<MobCaptureTrigge
     public ResourceLocation getId() { return ID; }
 
     @Override
-    protected MobCaptureTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    protected MobCaptureTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         JsonElement element = json.get("mob");
         FakeMob fakeMob = new FakeMob();
         if (element != null && !element.isJsonNull())
-            fakeMob = new FakeMob(JSONUtils.getString(json, "mob"));
+            fakeMob = new FakeMob(JSONUtils.getAsString(json, "mob"));
 
         return new Instance(entityPredicate, fakeMob);
     }
 
     public void trigger(ServerPlayerEntity player, FakeMob fakeMob) {
-        this.triggerListeners(player, instance -> instance.test(player, fakeMob));
+        this.trigger(player, instance -> instance.test(player, fakeMob));
     }
 
     public static class Instance extends CriterionInstance {
@@ -43,7 +43,7 @@ public class MobCaptureTrigger extends AbstractCriterionTrigger<MobCaptureTrigge
         }
 
         public static MobCaptureTrigger.Instance forMob(FakeMob fakeMob) {
-            return new MobCaptureTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, fakeMob);
+            return new MobCaptureTrigger.Instance(EntityPredicate.AndPredicate.ANY, fakeMob);
         }
 
         public boolean test(ServerPlayerEntity playerEntity, FakeMob fakeMob) {
@@ -51,7 +51,7 @@ public class MobCaptureTrigger extends AbstractCriterionTrigger<MobCaptureTrigge
         }
 
         public JsonObject serialize(ConditionArraySerializer conditions) {
-            JsonObject jsonObject = super.serialize(conditions);
+            JsonObject jsonObject = super.serializeToJson(conditions);
             jsonObject.addProperty("mob", fakeMob.toString());
             return jsonObject;
         }

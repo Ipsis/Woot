@@ -31,15 +31,15 @@ public class ControllerBlockItem extends BlockItem {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        CompoundNBT compoundNBT = stack.getTagElement("BlockEntityTag");
         if (compoundNBT != null && compoundNBT.contains(ModNBT.Controller.MOB_TAG)) {
             FakeMob fakeMob = new FakeMob(compoundNBT.getCompound(ModNBT.Controller.MOB_TAG));
             if (fakeMob.isValid()) {
                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
                 if (entityType != null)
-                    tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
+                    tooltip.add(new TranslationTextComponent(entityType.getDescriptionId()));
                 if (fakeMob.hasTag())
                     tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
 

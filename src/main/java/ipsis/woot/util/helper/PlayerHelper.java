@@ -12,7 +12,7 @@ public class PlayerHelper {
         if (playerEntity.isCreative())
             return true;
 
-        for (ItemStack itemStack : playerEntity.inventory.mainInventory) {
+        for (ItemStack itemStack : playerEntity.inventory.items) {
             if (itemStack.isEmpty())
                 continue;
 
@@ -31,7 +31,7 @@ public class PlayerHelper {
         if (playerEntity.isCreative())
             return validStacks.get(0);
 
-        for (ItemStack itemStack : playerEntity.inventory.mainInventory) {
+        for (ItemStack itemStack : playerEntity.inventory.items) {
             if (itemStack.isEmpty())
                 continue;
 
@@ -39,7 +39,7 @@ public class PlayerHelper {
                 if (c.getItem() == itemStack.getItem()) {
                     ItemStack returnStack = itemStack.copy();
                     itemStack.shrink(1);
-                    playerEntity.inventory.markDirty();
+                    playerEntity.inventory.setChanged();
                     return returnStack;
                 }
             }

@@ -47,8 +47,8 @@ public class SimulatedMobDropsSummaryReply {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             final ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (player.openContainer instanceof OracleContainer)
-                ((OracleContainer) player.openContainer).handleSimulatedMobDropsSummaryReply(this);
+            if (player.containerMenu instanceof OracleContainer)
+                ((OracleContainer) player.containerMenu).handleSimulatedMobDropsSummaryReply(this);
             ctx.get().setPacketHandled(true);
         })) ;
     }

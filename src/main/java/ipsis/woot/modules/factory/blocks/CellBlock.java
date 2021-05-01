@@ -40,13 +40,13 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
 
     final Class<? extends CellTileEntityBase> tileEntityClazz;
     public CellBlock(Class<? extends CellTileEntityBase> clazz) {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
-        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.ATTACHED, false));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(3.5F));
+        registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.ATTACHED, false));
         this.tileEntityClazz = clazz;
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.ATTACHED);
     }
 
@@ -66,25 +66,25 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
-        if (worldIn.isRemote)
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
+        if (worldIn.isClientSide)
             return ActionResultType.SUCCESS;
 
-        if (!(worldIn.getTileEntity(pos) instanceof CellTileEntityBase))
+        if (!(worldIn.getBlockEntity(pos) instanceof CellTileEntityBase))
             throw new IllegalStateException("Tile entity is missing");
 
 
-        ItemStack heldItem = player.getHeldItem(handIn);
+        ItemStack heldItem = player.getItemInHand(handIn);
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
             return FluidUtil.interactWithFluidHandler(player, handIn, worldIn, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
+        return super.use(state, worldIn, pos, player, handIn, p_225533_6_);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         int transfer = 0;
         int capacity = 0;
         if (stack.getItem() == FactorySetup.CELL_1_BLOCK.get().asItem()) {
@@ -102,7 +102,7 @@ public class CellBlock extends Block implements WootDebug, FactoryComponentProvi
         }
 
         int contents = 0;
-        CompoundNBT compoundNBT = stack.getChildTag("BlockEntityTag");
+        CompoundNBT compoundNBT = stack.getTagElement("BlockEntityTag");
         if (compoundNBT != null && compoundNBT.contains("Tank")) {
             FluidStack fluidStack = FluidStack.loadFluidStackFromNBT(compoundNBT.getCompound("Tank"));
             contents = fluidStack.getAmount();

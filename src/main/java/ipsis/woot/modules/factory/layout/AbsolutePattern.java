@@ -59,7 +59,7 @@ public class AbsolutePattern {
         Direction opposite = facing.getOpposite();
         for (PatternBlock patternBlock : pattern.getPatternBlocks()) {
             BlockPos pos = BlockPosHelper.rotateFromSouth(patternBlock.getBlockPos(), opposite);
-            absolutePattern.addAbsoluteBlock(patternBlock.getFactoryComponent(), origin.add(pos));
+            absolutePattern.addAbsoluteBlock(patternBlock.getFactoryComponent(), origin.offset(pos));
         }
 
         absolutePattern.facing = facing;

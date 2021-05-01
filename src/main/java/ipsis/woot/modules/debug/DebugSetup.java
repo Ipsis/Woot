@@ -36,7 +36,7 @@ public class DebugSetup {
                     new BlockItem(CREATIVE_POWER_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CREATIVE_POWER_BLOCK_TILE = TILES.register(
             CREATIVE_POWER_TAG, () ->
-                    TileEntityType.Builder.create(CreativePowerTileEntity::new, CREATIVE_POWER_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(CreativePowerTileEntity::new, CREATIVE_POWER_BLOCK.get()).build(null));
 
     public static final String CREATIVE_CONATUS_TAG = "creative_conatus";
     public static final RegistryObject<TickConverterBlock> CREATIVE_CONATUS_BLOCK = BLOCKS.register(
@@ -46,7 +46,7 @@ public class DebugSetup {
                     new BlockItem(CREATIVE_CONATUS_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CREATIVE_CONATUS_BLOCK_TILE = TILES.register(
             CREATIVE_CONATUS_TAG, () ->
-                    TileEntityType.Builder.create(TickConverterTileEntity::new, CREATIVE_CONATUS_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(TickConverterTileEntity::new, CREATIVE_CONATUS_BLOCK.get()).build(null));
 
     public static final String DEBUG_TANK_TAG = "debug_tank";
     public static final RegistryObject<DebugTankBlock> DEBUG_TANK_BLOCK = BLOCKS.register(
@@ -56,5 +56,5 @@ public class DebugSetup {
                     new BlockItem(DEBUG_TANK_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> DEBUG_TANK_BLOCK_TILE = TILES.register(
             DEBUG_TANK_TAG, () ->
-                    TileEntityType.Builder.create(DebugTankTileEntity::new, DEBUG_TANK_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(DebugTankTileEntity::new, DEBUG_TANK_BLOCK.get()).build(null));
 }

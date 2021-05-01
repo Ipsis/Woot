@@ -29,6 +29,6 @@ public class OracleTileEntity extends TileEntity implements INamedContainerProvi
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new OracleContainer(i, world, pos, playerInventory, playerEntity);
+        return new OracleContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
 }

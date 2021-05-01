@@ -40,7 +40,7 @@ public class FluidConvertorSetup {
                     new BlockItem(FLUID_CONVERTOR_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> FLUID_CONVERTOR_BLOCK_TILE = TILES.register(
             FLUID_CONVERTOR_TAG, () ->
-                    TileEntityType.Builder.create(FluidConvertorTileEntity::new,
+                    TileEntityType.Builder.of(FluidConvertorTileEntity::new,
                             FLUID_CONVERTOR_BLOCK.get()).build((null)));
     public static final RegistryObject<ContainerType<FluidConvertorContainer>> FLUID_CONVERTOR_BLOCK_CONTATAINER = CONTAINERS.register(
             FLUID_CONVERTOR_TAG, () ->

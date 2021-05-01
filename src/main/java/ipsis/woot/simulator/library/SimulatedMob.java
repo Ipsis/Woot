@@ -133,7 +133,7 @@ public class SimulatedMob {
     }
 
     public static @Nullable SimulatedMob fromJson(JsonObject jsonObject) {
-        String mob = JSONUtils.getString(jsonObject, TAG_MOB);
+        String mob = JSONUtils.getAsString(jsonObject, TAG_MOB);
         FakeMob fakeMob = new FakeMob(mob);
         if (!fakeMob.isValid()) {
             Woot.setup.getLogger().info("SimulatedMob:fromJson invalid mob {}", mob);
@@ -145,7 +145,7 @@ public class SimulatedMob {
             return null;
         }
 
-        JsonArray killsArray = JSONUtils.getJsonArray(jsonObject, TAG_SIM_KILLS);
+        JsonArray killsArray = JSONUtils.getAsJsonArray(jsonObject, TAG_SIM_KILLS);
         if (killsArray.size() != 4)
             throw new JsonSyntaxException("Simulated kills array must be of size 4");
 
@@ -153,7 +153,7 @@ public class SimulatedMob {
         for (int i = 0; i < 4; i++)
             simulatedMob.simulatedKills[i] = killsArray.get(i).getAsInt();
 
-        for (JsonElement jsonElement : JSONUtils.getJsonArray(jsonObject, TAG_DROPS)) {
+        for (JsonElement jsonElement : JSONUtils.getAsJsonArray(jsonObject, TAG_DROPS)) {
             if (jsonElement == null || !jsonElement.isJsonObject())
                 throw new JsonSyntaxException("Simulated drop must be an object");
 

@@ -42,9 +42,9 @@ public class InfuserRecipe implements IRecipe<IInventory> {
         this.type = INFUSER_TYPE;
         this.energy = energy;
 
-        inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
+        inputs.add(Arrays.asList(ingredient.getItems()));
         if (hasAugment()) {
-            List<ItemStack> stacks = Arrays.asList(augment.getMatchingStacks());
+            List<ItemStack> stacks = Arrays.asList(augment.getItems());
             for (ItemStack stack : stacks)
                 stack.setCount(augmentCount);
             inputs.add(stacks);
@@ -76,7 +76,7 @@ public class InfuserRecipe implements IRecipe<IInventory> {
     public static void addValidInput(ItemStack itemStack) { validInputs.add(itemStack); }
     public static boolean isValidInput(ItemStack itemStack) {
         for (ItemStack i : validInputs) {
-            if (i.isItemEqual(itemStack))
+            if (i.sameItem(itemStack))
                 return true;
         }
         return false;
@@ -87,7 +87,7 @@ public class InfuserRecipe implements IRecipe<IInventory> {
     public static void addValidAugment(ItemStack itemStack) { validAugments.add(itemStack); }
     public static boolean isValidAugment(ItemStack itemStack) {
         for (ItemStack i : validAugments) {
-            if (i.isItemEqual(itemStack))
+            if (i.sameItem(itemStack))
                 return true;
         }
         return false;
@@ -113,11 +113,11 @@ public class InfuserRecipe implements IRecipe<IInventory> {
     @Override
     public boolean matches(IInventory inv, World worldIn) {
 
-        if (!ingredient.test(inv.getStackInSlot(0)))
+        if (!ingredient.test(inv.getItem(0)))
             return false;
 
         if (augment != Ingredient.EMPTY) {
-            ItemStack invStack = inv.getStackInSlot(1);
+            ItemStack invStack = inv.getItem(1);
             // augment count must be exact
             if (!augment.test(invStack) || augmentCount > invStack.getCount())
                 return false;
@@ -127,17 +127,17 @@ public class InfuserRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
         return null;
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return false;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 

@@ -108,8 +108,8 @@ public class HeartStaticDataReply {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             final ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (player.openContainer instanceof HeartContainer)
-                ((HeartContainer) player.openContainer).handleStaticDataReply(clientFactorySetup);
+            if (player.containerMenu instanceof HeartContainer)
+                ((HeartContainer) player.containerMenu).handleStaticDataReply(clientFactorySetup);
             ctx.get().setPacketHandled(true);
         })) ;
     }

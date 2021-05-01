@@ -25,8 +25,8 @@ public class MobCommand {
     private static final String TAG = "commands.woot.mob.";
 
     static final SuggestionProvider<CommandSource> ENTITY_SUGGESTIONS = (ctx, builder) ->
-            ISuggestionProvider.func_212476_a(
-                    ForgeRegistries.ENTITIES.getKeys().stream(),
+            ISuggestionProvider.suggest(
+                    ForgeRegistries.ENTITIES.getKeys().stream().map(ResourceLocation::toString).map(StringArgumentType::escapeIfRequired),
                     builder);
 
     static ArgumentBuilder<CommandSource, ?> register()  {
@@ -37,17 +37,17 @@ public class MobCommand {
     private static class InfoCommand {
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("info")
-                    .requires(cs -> cs.hasPermissionLevel(CommandHelper.MOB_INFO_COMMAND_LEVEL))
+                    .requires(cs -> cs.hasPermission(CommandHelper.MOB_INFO_COMMAND_LEVEL))
                     .then(
-                            Commands.argument("entity", ResourceLocationArgument.resourceLocation()).suggests(ENTITY_SUGGESTIONS)
+                            Commands.argument("entity", ResourceLocationArgument.id()).suggests(ENTITY_SUGGESTIONS)
                                     .executes(ctx -> mobInfo(
                                             ctx.getSource(),
-                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"), ""))
+                                            ResourceLocationArgument.getId(ctx, "entity"), ""))
                                     .then(
                                             Commands.argument("tag", StringArgumentType.string())
                                                     .executes(ctx -> mobInfo(
                                                             ctx.getSource(),
-                                                            ResourceLocationArgument.getResourceLocation(ctx, "entity"),
+                                                            ResourceLocationArgument.getId(ctx, "entity"),
                                                             StringArgumentType.getString(ctx, "tag")))
                                     )
                     );
@@ -61,12 +61,12 @@ public class MobCommand {
         else
             fakeMob = new FakeMob(resourceLocation.toString() + "," + tag);
 
-        if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getWorld())) {
-            int health = SpawnController.get().getMobHealth(fakeMob, source.getWorld());
-            int xp = SpawnController.get().getMobExperience(fakeMob, source.getWorld());
-            Tier mobTier = Config.OVERRIDE.getMobTier(fakeMob, source.getWorld());
+        if (fakeMob.isValid() && SpawnController.get().isLivingEntity(fakeMob, source.getLevel())) {
+            int health = SpawnController.get().getMobHealth(fakeMob, source.getLevel());
+            int xp = SpawnController.get().getMobExperience(fakeMob, source.getLevel());
+            Tier mobTier = Config.OVERRIDE.getMobTier(fakeMob, source.getLevel());
 
-            source.sendFeedback(new TranslationTextComponent(TAG + "info.summary", fakeMob, health, xp, mobTier), true);
+            source.sendSuccess(new TranslationTextComponent(TAG + "info.summary", fakeMob, health, xp, mobTier), true);
         }
 
         return 0;

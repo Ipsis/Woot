@@ -32,7 +32,7 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
 
     public InfuserContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(InfuserSetup.INFUSER_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = (InfuserTileEntity) world.getTileEntity(pos);
+        tileEntity = (InfuserTileEntity) world.getBlockEntity(pos);
 
         addOwnSlots();
         addPlayerSlots(playerInventory);
@@ -46,7 +46,7 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
                     addSlot(new SlotItemHandler(iItemHandler, 1, 64, 40));
                     addSlot(new SlotItemHandler(iItemHandler, 2, 118, 40){
                         @Override
-                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                        public boolean mayPlace(@Nonnull ItemStack stack) {
                             // Cannot put anything in here as it is an output
                            return false;
                         }
@@ -84,15 +84,15 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
     public FluidStack getInputFluid() { return inputFluid; }
 
     @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
+    public void broadcastChanges() {
+        super.broadcastChanges();
 
         if (!inputFluid.isFluidStackIdentical(tileEntity.getTankFluid())) {
             inputFluid = tileEntity.getTankFluid().copy();
             TankPacket tankPacket = new TankPacket(0, inputFluid);
-            for (IContainerListener l : listeners) {
+            for (IContainerListener l : containerListeners) {
                 if (l instanceof ServerPlayerEntity) {
-                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.netManager,
+                    NetworkChannel.channel.sendTo(tankPacket, ((ServerPlayerEntity) l).connection.connection,
                             NetworkDirection.PLAY_TO_CLIENT);
                 }
             }
@@ -100,20 +100,20 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
                 playerIn, InfuserSetup.INFUSER_BLOCK.get());
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 
         // Based off Gigaherz Elements Of Power code
-        Slot slot = this.inventorySlots.get(index);
-        if (slot == null || !slot.getHasStack())
+        Slot slot = this.slots.get(index);
+        if (slot == null || !slot.hasItem())
             return ItemStack.EMPTY;
 
-        ItemStack stack = slot.getStack();
+        ItemStack stack = slot.getItem();
         ItemStack stackCopy = stack.copy();
 
         int startIndex;
@@ -150,13 +150,13 @@ public class InfuserContainer extends WootContainer implements TankPacketHandler
             endIndex = startIndex + PLAYER_INV_SIZE + TOOLBAR_INV_SIZE;
         }
 
-        if (!this.mergeItemStack(stack, startIndex, endIndex, false))
+        if (!this.moveItemStackTo(stack, startIndex, endIndex, false))
             return ItemStack.EMPTY;
 
         if (stack.getCount() == 0)
-            slot.putStack(ItemStack.EMPTY);
+            slot.set(ItemStack.EMPTY);
         else
-            slot.onSlotChanged();
+            slot.setChanged();
 
         if (stack.getCount() == stackCopy.getCount())
             return ItemStack.EMPTY;

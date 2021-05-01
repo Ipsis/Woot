@@ -27,34 +27,34 @@ public class FluidConvertor {
 
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shapedRecipe(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
-                .patternLine(" s ")
-                .patternLine(" c ")
-                .patternLine("bfb")
-                .key('s', Blocks.BREWING_STAND)
-                .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
-                .key('b', Items.BUCKET)
-                .key('f', Blocks.FURNACE)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
+                .pattern(" s ")
+                .pattern(" c ")
+                .pattern("bfb")
+                .define('s', Blocks.BREWING_STAND)
+                .define('c', GenericSetup.MACHINE_CASING_ITEM.get())
+                .define('b', Items.BUCKET)
+                .define('f', Blocks.FURNACE)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapelessRecipeBuilder.shapelessRecipe(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
-                .addIngredient(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer, "fluid_conv_1");
+        ShapelessRecipeBuilder.shapeless(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
+                .requires(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK.get())
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer, "fluid_conv_1");
 
         /**
          * Contaus Fluid
          */
         Ingredient[] conatus_ingredients = {
-                Ingredient.fromItems(FactorySetup.XP_SHARD_ITEM.get()),
-                Ingredient.fromItems(FactorySetup.XP_SPLINTER_ITEM.get()),
-                Ingredient.fromItems(Items.REDSTONE),
-                Ingredient.fromItems(GenericSetup.T1_SHARD_ITEM.get()),
-                Ingredient.fromItems(GenericSetup.T2_SHARD_ITEM.get()),
-                Ingredient.fromItems(GenericSetup.T3_SHARD_ITEM.get())
+                Ingredient.of(FactorySetup.XP_SHARD_ITEM.get()),
+                Ingredient.of(FactorySetup.XP_SPLINTER_ITEM.get()),
+                Ingredient.of(Items.REDSTONE),
+                Ingredient.of(GenericSetup.T1_SHARD_ITEM.get()),
+                Ingredient.of(GenericSetup.T2_SHARD_ITEM.get()),
+                Ingredient.of(GenericSetup.T3_SHARD_ITEM.get())
         };
         ResourceLocation rl;
         int[] conatus_outputAmount = { 1000, 100, 1000, 1250, 2500, 5000 };
@@ -75,14 +75,14 @@ public class FluidConvertor {
         FluidConvertorRecipeBuilder.fluidConvertorRecipe(
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1250),
                 1000,
-                Ingredient.fromItems(Items.MAGMA_BLOCK), 1,
+                Ingredient.of(Items.MAGMA_BLOCK), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1000))
                 .build(consumer, "conatus_ench1");
 
         FluidConvertorRecipeBuilder.fluidConvertorRecipe(
                 new FluidStack(FluidSetup.CONATUS_FLUID.get(), 1450),
                 1000,
-                Ingredient.fromItems(Items.END_STONE), 1,
+                Ingredient.of(Items.END_STONE), 1,
                 new FluidStack(FluidSetup.ENCHANT_FLUID.get(), 1000))
                 .build(consumer, "conatus_ench2");
 
@@ -90,10 +90,10 @@ public class FluidConvertor {
          * Purge Fluid
          */
         Ingredient[] ingredients = {
-                Ingredient.fromItems(Items.ROTTEN_FLESH),
-                Ingredient.fromItems(Items.BONE),
-                Ingredient.fromItems(Items.BLAZE_ROD),
-                Ingredient.fromItems(Items.ENDER_PEARL),
+                Ingredient.of(Items.ROTTEN_FLESH),
+                Ingredient.of(Items.BONE),
+                Ingredient.of(Items.BLAZE_ROD),
+                Ingredient.of(Items.ENDER_PEARL),
         };
         int[] outputAmount = { 1000, 1000, 2000, 4000 };
 

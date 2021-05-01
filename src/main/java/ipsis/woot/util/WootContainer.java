@@ -20,11 +20,11 @@ public class WootContainer extends Container {
     }
 
     public void addShortListener(IntReferenceHolder holder) {
-        trackInt(holder);
+        addDataSlot(holder);
     }
 
     public void addIntegerListener(IntReferenceHolder holder) {
-        trackInt(new IntReferenceHolder() {
+        addDataSlot(new IntReferenceHolder() {
             private int lastKnown;
 
             @Override
@@ -39,14 +39,14 @@ public class WootContainer extends Container {
             }
 
             @Override
-            public boolean isDirty() {
+            public boolean checkAndClearUpdateFlag() {
                 int i = this.get();
                 boolean flag = i != this.lastKnown;
                 this.lastKnown = i;
                 return flag;
             }
         });
-        trackInt(new IntReferenceHolder() {
+        addDataSlot(new IntReferenceHolder() {
             private int lastKnown;
 
             @Override
@@ -61,7 +61,7 @@ public class WootContainer extends Container {
             }
 
             @Override
-            public boolean isDirty() {
+            public boolean checkAndClearUpdateFlag() {
                 int i = this.get();
                 boolean flag = i != this.lastKnown;
                 this.lastKnown = i;
@@ -71,7 +71,7 @@ public class WootContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(PlayerEntity playerIn) {
         return true;
     }
 }

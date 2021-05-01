@@ -62,7 +62,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             @Override
             protected void onContentsChanged(int slot) {
                 InfuserTileEntity.this.onContentsChanged(slot);
-                markDirty();
+                setChanged();
             }
 
             @Override
@@ -79,7 +79,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     public void configureSides() {
-        Direction direction = world.getBlockState(getPos()).get(BlockStateProperties.HORIZONTAL_FACING);
+        Direction direction = level.getBlockState(getBlockPos()).getValue(BlockStateProperties.HORIZONTAL_FACING);
         if (direction == Direction.NORTH) {
             settings.put(Direction.UP, Mode.INPUT);
             settings.put(Direction.DOWN, Mode.OUTPUT);
@@ -119,7 +119,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
     @Override
     public void tick() {
-        if (firstTick && world != null) {
+        if (firstTick && level != null) {
             // Configure sides needs to access the block state so cannot do onLoad
             configureSides();
             firstTick = false;
@@ -180,9 +180,9 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
         readFromNBT(compoundNBT);
-        super.read(blockState, compoundNBT);
+        super.load(blockState, compoundNBT);
     }
 
     private void readFromNBT(CompoundNBT compoundNBT) {
@@ -202,7 +202,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compoundNBT) {
+    public CompoundNBT save(CompoundNBT compoundNBT) {
 
         compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
                 Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inputSlots, null)));
@@ -220,7 +220,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             compoundNBT.put(ModNBT.ENERGY_TAG, energyTag);
         });
 
-        return super.write(compoundNBT);
+        return super.save(compoundNBT);
     }
     //endregion
 
@@ -245,7 +245,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new InfuserContainer(i, world, pos, playerInventory, playerEntity);
+        return new InfuserContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
     //endregion
 
@@ -291,8 +291,8 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
         }
 
         InfuserRecipe finishedRecipe = currRecipe;
-        final int inputSize = finishedRecipe.getIngredient().getMatchingStacks()[0].getCount();
-        final int augmentSize = finishedRecipe.hasAugment() ? finishedRecipe.getAugment().getMatchingStacks()[0].getCount() : 1;
+        final int inputSize = finishedRecipe.getIngredient().getItems()[0].getCount();
+        final int augmentSize = finishedRecipe.hasAugment() ? finishedRecipe.getAugment().getItems()[0].getCount() : 1;
 
         inputSlots.extractItem(INPUT_SLOT, inputSize, false);
         if (finishedRecipe.hasAugment())
@@ -308,7 +308,7 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
 
         outputSlot.insertItem(OUTPUT_SLOT, itemStack, false);
         inputTank.ifPresent(f -> f.drain(finishedRecipe.getFluidInput().getAmount(), IFluidHandler.FluidAction.EXECUTE));
-        markDirty();
+        setChanged();
     }
 
     @Override
@@ -381,12 +381,12 @@ public class InfuserTileEntity extends WootMachineTileEntity implements WootDebu
             return;
         }
 
-        List<InfuserRecipe> recipes = world.getRecipeManager().getRecipes(
+        List<InfuserRecipe> recipes = level.getRecipeManager().getRecipesFor(
                 INFUSER_TYPE,
                 new Inventory(
                         inputSlots.getStackInSlot(INPUT_SLOT),
                         inputSlots.getStackInSlot(AUGMENT_SLOT)),
-                world);
+                level);
 
         if (!recipes.isEmpty()) {
             // Already checked for empty so this should always be !empty

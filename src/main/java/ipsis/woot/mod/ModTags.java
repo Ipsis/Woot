@@ -12,10 +12,10 @@ public class ModTags {
 
     public static class Blocks
     {
-        public static final ITag.INamedTag<Block> FACTORY_BLOCK = BlockTags.makeWrapperTag(Woot.MODID + ":" + "factory_blocks");
+        public static final ITag.INamedTag<Block> FACTORY_BLOCK = BlockTags.bind(Woot.MODID + ":" + "factory_blocks");
     }
 
     public static class Items {
-        public static final ITag.INamedTag<Item> FACTORY_BLOCK = ItemTags.makeWrapperTag(Woot.MODID + ":" + "factory_blocks");
+        public static final ITag.INamedTag<Item> FACTORY_BLOCK = ItemTags.bind(Woot.MODID + ":" + "factory_blocks");
     }
 }

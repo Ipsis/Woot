@@ -18,7 +18,7 @@ public class PerkDataProvider implements IComponentProvider {
     public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
 
         BlockState blockState = accessor.getBlockState();
-        Perk perk = blockState.get(UpgradeBlock.UPGRADE);
+        Perk perk = blockState.getValue(UpgradeBlock.UPGRADE);
         if (perk != null) {
             if (perk == Perk.EMPTY) {
                 tooltip.add(new StringTextComponent(

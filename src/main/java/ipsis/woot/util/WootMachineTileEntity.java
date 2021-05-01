@@ -40,7 +40,7 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
 
     @Override
     public void tick() {
-        if (world.isRemote)
+        if (level.isClientSide)
             return;
 
         machineTick();
@@ -72,7 +72,7 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
                 processOff();;
             }
         } else if (!isDisabled()) {
-            if (world.getGameTime() % 10 == 0 && canStart()) {
+            if (level.getGameTime() % 10 == 0 && canStart()) {
                 // have a valid set of input items and enough energy
                 processStart(); // set processMax and processRem
                 processTick(); // use energy and update processRem
@@ -161,10 +161,10 @@ public abstract class WootMachineTileEntity extends TileEntity implements ITicka
         for (ItemStack itemStack : items) {
             if (itemStack.isEmpty())
                 continue;
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
+            InventoryHelper.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), itemStack);
         }
-        markDirty();
-        WorldHelper.updateClient(world, pos);
+        setChanged();
+        WorldHelper.updateClient(level, worldPosition);
     }
 
 }

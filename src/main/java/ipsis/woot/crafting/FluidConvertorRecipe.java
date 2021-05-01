@@ -42,7 +42,7 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
         this.type = FLUID_CONV_TYPE;
         this.energy = energy;
 
-        inputs.add(Arrays.asList(catalyst.getMatchingStacks()));
+        inputs.add(Arrays.asList(catalyst.getItems()));
     }
 
     public Ingredient getCatalyst() { return this.catalyst; }
@@ -76,7 +76,7 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
             return false;
 
         for (ItemStack i : validCatalysts) {
-            if (i.isItemEqual(itemStack))
+            if (i.sameItem(itemStack))
                 return true;
         }
         return false;
@@ -109,21 +109,21 @@ public class FluidConvertorRecipe implements IRecipe<IInventory> {
      */
     @Override
     public boolean matches(IInventory inv, World worldIn) {
-        return catalyst.test(inv.getStackInSlot(0));
+        return catalyst.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
         return null;
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return false;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 

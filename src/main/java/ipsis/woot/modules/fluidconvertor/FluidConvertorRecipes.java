@@ -19,7 +19,7 @@ public class FluidConvertorRecipes {
         for (IRecipe recipe : manager.getRecipes()) {
             if (recipe instanceof FluidConvertorRecipe) {
                 FluidConvertorRecipe dRecipe = (FluidConvertorRecipe)recipe;
-                for (ItemStack itemStack : dRecipe.getCatalyst().getMatchingStacks())
+                for (ItemStack itemStack : dRecipe.getCatalyst().getItems())
                     FluidConvertorRecipe.addValidCatalyst(itemStack);
 
                 FluidConvertorRecipe.addValidInput(dRecipe.getInputFluid());

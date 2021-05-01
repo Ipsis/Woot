@@ -19,28 +19,28 @@ import java.util.function.Consumer;
 public class Layout {
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shapedRecipe(LayoutSetup.LAYOUT_BLOCK.get())
-                .patternLine("grg")
-                .patternLine("ytb")
-                .patternLine("gwg")
-                .key('g', Tags.Items.GLASS)
-                .key('r', Tags.Items.DYES_RED)
-                .key('y', Tags.Items.DYES_YELLOW)
-                .key('b', Tags.Items.DYES_BLACK)
-                .key('w', Tags.Items.DYES_WHITE)
-                .key('t', Items.TORCH)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(LayoutSetup.LAYOUT_BLOCK.get())
+                .pattern("grg")
+                .pattern("ytb")
+                .pattern("gwg")
+                .define('g', Tags.Items.GLASS)
+                .define('r', Tags.Items.DYES_RED)
+                .define('y', Tags.Items.DYES_YELLOW)
+                .define('b', Tags.Items.DYES_BLACK)
+                .define('w', Tags.Items.DYES_WHITE)
+                .define('t', Items.TORCH)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapedRecipeBuilder.shapedRecipe(LayoutSetup.INTERN_ITEM.get())
-                .patternLine(" si")
-                .patternLine(" ws")
-                .patternLine("w  ")
-                .key('i', GenericSetup.SI_INGOT_ITEM.get())
-                .key('s', Tags.Items.DUSTS_REDSTONE)
-                .key('w', Items.STICK)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(LayoutSetup.INTERN_ITEM.get())
+                .pattern(" si")
+                .pattern(" ws")
+                .pattern("w  ")
+                .define('i', GenericSetup.SI_INGOT_ITEM.get())
+                .define('s', Tags.Items.DUSTS_REDSTONE)
+                .define('w', Items.STICK)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
     }
 }

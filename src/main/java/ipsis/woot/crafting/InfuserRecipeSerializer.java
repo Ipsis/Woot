@@ -28,38 +28,38 @@ public class InfuserRecipeSerializer<T extends InfuserRecipe> extends ForgeRegis
 
 
     @Override
-    public T read(ResourceLocation recipeId, JsonObject json) {
+    public T fromJson(ResourceLocation recipeId, JsonObject json) {
 
-        JsonElement jsonelement = (JsonElement)(JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient"));
-        Ingredient ingredient = Ingredient.deserialize(jsonelement);
+        JsonElement jsonelement = (JsonElement)(JSONUtils.isArrayNode(json, "ingredient") ? JSONUtils.getAsJsonArray(json, "ingredient") : JSONUtils.getAsJsonObject(json, "ingredient"));
+        Ingredient ingredient = Ingredient.fromJson(jsonelement);
         Ingredient augment = Ingredient.EMPTY;
         if (json.has("augment")) {
-            jsonelement = (JsonElement) (JSONUtils.isJsonArray(json, "augment") ? JSONUtils.getJsonArray(json, "augment") : JSONUtils.getJsonObject(json, "augment"));
-            augment = Ingredient.deserialize(jsonelement);
+            jsonelement = (JsonElement) (JSONUtils.isArrayNode(json, "augment") ? JSONUtils.getAsJsonArray(json, "augment") : JSONUtils.getAsJsonObject(json, "augment"));
+            augment = Ingredient.fromJson(jsonelement);
         }
         int augmentCount = 1;
         if (json.has("augment_count"))
-            augmentCount = JSONUtils.getInt(json, "augment_count", 1);
-        FluidStack fluidStack = FluidStackHelper.parse(JSONUtils.getJsonObject(json, "infuse"));
-        ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-        int energy = JSONUtils.getInt(json, "energy", 1000);
+            augmentCount = JSONUtils.getAsInt(json, "augment_count", 1);
+        FluidStack fluidStack = FluidStackHelper.parse(JSONUtils.getAsJsonObject(json, "infuse"));
+        ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+        int energy = JSONUtils.getAsInt(json, "energy", 1000);
 
         return this.factory.create(recipeId, ingredient, augment, augmentCount, fluidStack, result.getItem(), result.getCount(), energy);
     }
 
     @Nullable
     @Override
-    public T read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public T fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
         try {
             Ingredient augment = Ingredient.EMPTY;
-            Ingredient ingredient = Ingredient.read(buffer);
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
             FluidStack fluidStack = buffer.readFluidStack();
             int augmentCount = buffer.readInt();
             if (augmentCount > 0)
-                augment = Ingredient.read(buffer);
+                augment = Ingredient.fromNetwork(buffer);
 
             int energy = buffer.readInt();
-            ItemStack result = buffer.readItemStack();
+            ItemStack result = buffer.readItem();
             return this.factory.create(recipeId, ingredient, augment, augmentCount, fluidStack, result.getItem(), result.getCount(), energy);
         } catch (Exception e) {
             Woot.setup.getLogger().error("InfuserRecipeSerializer:read", e);
@@ -69,19 +69,19 @@ public class InfuserRecipeSerializer<T extends InfuserRecipe> extends ForgeRegis
 
 
     @Override
-    public void write(PacketBuffer buffer, T recipe) {
+    public void toNetwork(PacketBuffer buffer, T recipe) {
         //Woot.setup.getLogger().debug("InfuserRecipeSerializer:write");
         try {
-            recipe.getIngredient().write(buffer);
+            recipe.getIngredient().toNetwork(buffer);
             buffer.writeFluidStack(recipe.getFluidInput());
             if (recipe.hasAugment()) {
                 buffer.writeInt(recipe.getAugmentCount());
-                recipe.getAugment().write(buffer);
+                recipe.getAugment().toNetwork(buffer);
             } else {
                 buffer.writeInt(0);
             }
             buffer.writeInt(recipe.getEnergy());
-            buffer.writeItemStack(recipe.getOutput());
+            buffer.writeItem(recipe.getOutput());
         } catch (Exception e) {
             Woot.setup.getLogger().error("InfuserRecipeSerializer:write", e);
             throw e;

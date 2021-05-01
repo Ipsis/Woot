@@ -55,15 +55,15 @@ public class Advancements implements IDataProvider {
     private Advancement registerSimpleInvAdvancement(Consumer<Advancement> consumer, String name, Advancement parent, IItemProvider itemProvider, FrameType frameType) {
         return register(consumer,
                 new ResourceLocation(Woot.MODID, "main/" + name),
-                Advancement.Builder.builder()
-                        .withParent(parent)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(parent)
+                        .display(
                                 new ItemStack(itemProvider),
                                 new TranslationTextComponent("advancements.woot." + name + ".title"),
                                 new TranslationTextComponent("advancements.woot." + name + ".description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 frameType, false, true, false)
-                        .withCriterion(name, InventoryChangeTrigger.Instance.forItems(itemProvider)));
+                        .addCriterion(name, InventoryChangeTrigger.Instance.hasItems(itemProvider)));
     }
 
     private Advancement registerSimpleInvAdvancement(Consumer<Advancement> consumer, String name, Advancement parent, IItemProvider itemProvider) {
@@ -73,16 +73,16 @@ public class Advancements implements IDataProvider {
     private Advancement registerTier(Consumer<Advancement> consumer, String name, Advancement parent, IItemProvider itemProvider, Tier tier) {
         return register(consumer,
                 new ResourceLocation(Woot.MODID, "main/" + name),
-                Advancement.Builder.builder()
-                        .withParent(parent)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(parent)
+                        .display(
                                 new ItemStack(itemProvider),
                                 new TranslationTextComponent("advancements.woot." + name + ".title"),
                                 new TranslationTextComponent("advancements.woot." + name + ".description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.GOAL, false, true, false)
-                        .withRewards(AdvancementRewards.Builder.experience(5))
-                        .withCriterion(
+                        .rewards(AdvancementRewards.Builder.experience(5))
+                        .addCriterion(
                                 name,
                                 TierValidateTrigger.Instance.forTier(tier)));
     }
@@ -90,16 +90,16 @@ public class Advancements implements IDataProvider {
     private Advancement registerPerk(Consumer<Advancement> consumer, String name, Advancement parent, IItemProvider itemProvider, Perk perk) {
         return register(consumer,
                 new ResourceLocation(Woot.MODID, "main/" + name),
-                Advancement.Builder.builder()
-                        .withParent(parent)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(parent)
+                        .display(
                                 new ItemStack(itemProvider),
                                 new TranslationTextComponent("advancements.woot." + name + ".title"),
                                 new TranslationTextComponent("advancements.woot." + name + ".description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withRewards(AdvancementRewards.Builder.experience(5))
-                        .withCriterion(
+                        .rewards(AdvancementRewards.Builder.experience(5))
+                        .addCriterion(
                                 name,
                                 ApplyPerkTrigger.Instance.forPerk(perk)));
     }
@@ -108,15 +108,14 @@ public class Advancements implements IDataProvider {
 
         Advancement root = register(consumer,
                 new ResourceLocation(Woot.MODID, "main/root"),
-                Advancement.Builder.builder()
-                        .withParent(null)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .display(
                                 new ItemStack(FactorySetup.HEART_BLOCK.get()),
                                 new TranslationTextComponent("advancements.woot.root.title"),
                                 new TranslationTextComponent("advancements.woot.root.description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withCriterion(
+                        .addCriterion(
                                 "killed_something",
                                 KilledTrigger.Instance.playerKilledEntity()));
 
@@ -176,65 +175,65 @@ public class Advancements implements IDataProvider {
 
         Advancement xp_shard = register(consumer,
                 new ResourceLocation(Woot.MODID, "main/xp_shard"),
-                Advancement.Builder.builder()
-                        .withParent(xp_perk_1)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(xp_perk_1)
+                        .display(
                                 new ItemStack(FactorySetup.XP_SHARD_ITEM.get()),
                                 new TranslationTextComponent("advancements.woot.xp_shard.title"),
                                 new TranslationTextComponent("advancements.woot.xp_shard.description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withCriterion("xp_shard", ConsumeItemTrigger.Instance.forItem(FactorySetup.XP_SHARD_ITEM.get())));
+                        .addCriterion("xp_shard", ConsumeItemTrigger.Instance.usedItem(FactorySetup.XP_SHARD_ITEM.get())));
 
         Advancement xp_splinter = register(consumer,
                 new ResourceLocation(Woot.MODID, "main/xp_splinter"),
-                Advancement.Builder.builder()
-                        .withParent(xp_perk_1)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(xp_perk_1)
+                        .display(
                                 new ItemStack(FactorySetup.XP_SPLINTER_ITEM.get()),
                                 new TranslationTextComponent("advancements.woot.xp_splinter.title"),
                                 new TranslationTextComponent("advancements.woot.xp_splinter.description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withCriterion("xp_splinter", ConsumeItemTrigger.Instance.forItem(FactorySetup.XP_SPLINTER_ITEM.get())));
+                        .addCriterion("xp_splinter", ConsumeItemTrigger.Instance.usedItem(FactorySetup.XP_SPLINTER_ITEM.get())));
 
         Advancement slaughter = register(consumer,
                 new ResourceLocation(Woot.MODID, "main/slaughter"),
-                Advancement.Builder.builder()
-                        .withParent(ench_plate_1)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(ench_plate_1)
+                        .display(
                                 new ItemStack(FactorySetup.SLAUGHTER_1_ITEM.get()),
                                 new TranslationTextComponent("advancements.woot.slaughter_perk_1.title"),
                                 new TranslationTextComponent("advancements.woot.slaughter_perk_1.description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withCriterion("slaughter",
+                        .addCriterion("slaughter",
                                 ApplyPerkTrigger.Instance.forPerk(Perk.SLAUGHTER_1)));
 
         Advancement crusher = register(consumer,
                 new ResourceLocation(Woot.MODID, "main/crusher"),
-                Advancement.Builder.builder()
-                        .withParent(ench_plate_1)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(ench_plate_1)
+                        .display(
                                 new ItemStack(FactorySetup.SLAUGHTER_1_ITEM.get()),
                                 new TranslationTextComponent("advancements.woot.crusher_perk_1.title"),
                                 new TranslationTextComponent("advancements.woot.crusher_perk_1.description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withCriterion("crusher",
+                        .addCriterion("crusher",
                                 ApplyPerkTrigger.Instance.forPerk(Perk.CRUSHER_1)));
 
         Advancement capture_mob = register(consumer,
                 new ResourceLocation(Woot.MODID, "main/capture_mob"),
-                Advancement.Builder.builder()
-                        .withParent(shard_die)
-                        .withDisplay(
+                Advancement.Builder.advancement()
+                        .parent(shard_die)
+                        .display(
                                 new ItemStack(FactorySetup.MOB_SHARD_ITEM.get()),
                                 new TranslationTextComponent("advancements.woot.capture_mob.title"),
                                 new TranslationTextComponent("advancements.woot.capture_mob.description"),
                                 new ResourceLocation("textures/block/black_concrete_powder.png"),
                                 FrameType.TASK, false, true, false)
-                        .withCriterion(
+                        .addCriterion(
                                 "capture_mob",
                                 MobCaptureTrigger.Instance.forMob(new FakeMob("minecraft:sheep"))));
         Advancement controller = registerSimpleInvAdvancement(consumer, "controller", prism, FactorySetup.CONTROLLER_BLOCK.get(), FrameType.GOAL);
@@ -249,10 +248,10 @@ public class Advancements implements IDataProvider {
     }
 
     private Advancement register(Consumer<Advancement> consumer, ResourceLocation resourceLocation, Advancement.Builder builder) {
-        return builder.register(consumer, resourceLocation.toString());
+        return builder.save(consumer, resourceLocation.toString());
     }
 
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         Path path = this.generator.getOutputFolder();
         Set<ResourceLocation> set = Sets.newHashSet();
         Consumer<Advancement> consumer = (advancement) -> {
@@ -262,7 +261,7 @@ public class Advancements implements IDataProvider {
                 Path path1 = getPath(path, advancement);
 
                 try {
-                    IDataProvider.save(GSON, cache, advancement.copy().serialize(), path1);
+                    IDataProvider.save(GSON, cache, advancement.deconstruct().serializeToJson(), path1);
                 } catch (IOException ioexception) {
                     Woot.setup.getLogger().error("Couldn't save advancement {}", path1, ioexception);
                 }

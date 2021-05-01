@@ -17,7 +17,7 @@ public class AnvilRecipes {
             if (recipe instanceof AnvilRecipe) {
                 AnvilRecipe dRecipe = (AnvilRecipe) recipe;
                 Ingredient ingredient = dRecipe.getBaseIngredient();
-                for (ItemStack itemStack :  ingredient.getMatchingStacks())
+                for (ItemStack itemStack :  ingredient.getItems())
                     AnvilRecipe.addValidInput(itemStack);
             }
         }

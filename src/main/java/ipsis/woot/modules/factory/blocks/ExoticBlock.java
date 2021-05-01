@@ -29,7 +29,7 @@ public class ExoticBlock extends Block implements WootDebug {
     private final Exotic exotic;
 
     public ExoticBlock(Exotic exotic) {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(3.5F));
         this.exotic = exotic;
     }
 
@@ -38,28 +38,28 @@ public class ExoticBlock extends Block implements WootDebug {
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-        if (!worldIn.isRemote) {
-            TileEntity te = worldIn.getTileEntity(pos.down());
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
+        if (!worldIn.isClientSide) {
+            TileEntity te = worldIn.getBlockEntity(pos.below());
             if (te instanceof HeartTileEntity)
                 ((HeartTileEntity) te).interrupt();
         }
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBlockHarvested(worldIn, pos, state, player);
-        if (!worldIn.isRemote) {
-            TileEntity te = worldIn.getTileEntity(pos.down());
+    public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        super.playerWillDestroy(worldIn, pos, state, player);
+        if (!worldIn.isClientSide) {
+            TileEntity te = worldIn.getBlockEntity(pos.below());
             if (te instanceof HeartTileEntity)
                 ((HeartTileEntity) te).interrupt();
         }
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         tooltip.add(new TranslationTextComponent("info.woot.exotic.0"));
         if (stack.getItem() == FactorySetup.EXOTIC_A_BLOCK_ITEM.get()) {

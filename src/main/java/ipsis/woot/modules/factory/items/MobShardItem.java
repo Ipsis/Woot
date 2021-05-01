@@ -36,12 +36,12 @@ import java.util.List;
 
 public class MobShardItem extends Item {
 
-    public MobShardItem() { super(new Item.Properties().maxStackSize(1).group(Woot.setup.getCreativeTab())); }
+    public MobShardItem() { super(new Item.Properties().stacksTo(1).tab(Woot.setup.getCreativeTab())); }
 
     @Override
-    public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 
-        if (attacker.getEntityWorld().isRemote || !(attacker instanceof PlayerEntity))
+        if (attacker.getCommandSenderWorld().isClientSide || !(attacker instanceof PlayerEntity))
             return false;
 
         if (!(target instanceof MobEntity))
@@ -56,12 +56,12 @@ public class MobShardItem extends Item {
             return false;
 
         if (!PolicyRegistry.get().canCaptureEntity(fakeMob.getResourceLocation()) || !canShardCaptureMob(fakeMob.getResourceLocation())) {
-            ((PlayerEntity)attacker).sendStatusMessage(new TranslationTextComponent("chat.woot.mobshard.failure"), true);
+            ((PlayerEntity)attacker).displayClientMessage(new TranslationTextComponent("chat.woot.mobshard.failure"), true);
             return false;
         }
 
         setProgrammedMob(stack, fakeMob);
-        ((PlayerEntity)attacker).sendStatusMessage(new TranslationTextComponent("chat.woot.mobshard.success"), true);
+        ((PlayerEntity)attacker).displayClientMessage(new TranslationTextComponent("chat.woot.mobshard.success"), true);
         return true;
 
     }
@@ -124,7 +124,7 @@ public class MobShardItem extends Item {
 
         // Hotbar only
         for (int i = 0; i <= 9; i++) {
-            ItemStack itemStack = playerEntity.inventory.getStackInSlot(i);
+            ItemStack itemStack = playerEntity.inventory.getItem(i);
             if (!itemStack.isEmpty() && isMatchingMob(itemStack, fakeMob)) {
                 foundStack = itemStack;
                 break;
@@ -178,7 +178,7 @@ public class MobShardItem extends Item {
     }
 
     @Override
-    public boolean hasEffect(ItemStack itemStack) {
+    public boolean isFoil(ItemStack itemStack) {
         return isFullyProgrammed(itemStack) || itemStack.getTag().contains("nbt_jei_shard");
     }
 
@@ -187,8 +187,8 @@ public class MobShardItem extends Item {
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         tooltip.add(new TranslationTextComponent("info.woot.mobshard.0"));
         tooltip.add(new TranslationTextComponent("info.woot.mobshard.1"));
@@ -203,7 +203,7 @@ public class MobShardItem extends Item {
 
         EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(fakeMob.getResourceLocation());
         if (entityType != null)
-            tooltip.add(new TranslationTextComponent(entityType.getTranslationKey()));
+            tooltip.add(new TranslationTextComponent(entityType.getDescriptionId()));
         if (fakeMob.hasTag())
             tooltip.add(new StringTextComponent("[" + fakeMob.getTag() + "]"));
 

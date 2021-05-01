@@ -41,7 +41,7 @@ public class XpShardBaseItem extends Item {
 
     final Variant variant;
     public XpShardBaseItem(Variant variant) {
-        super(new Item.Properties().maxStackSize(STACK_SIZE).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(STACK_SIZE).tab(Woot.setup.getCreativeTab()));
         this.variant = variant;
     }
 
@@ -99,37 +99,37 @@ public class XpShardBaseItem extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 
-        if (worldIn.isRemote)
-            return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+        if (worldIn.isClientSide)
+            return ActionResult.pass(playerIn.getItemInHand(handIn));
 
-        ItemStack itemStack = playerIn.getHeldItem(handIn);
+        ItemStack itemStack = playerIn.getItemInHand(handIn);
         if (itemStack.isEmpty())
-            return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+            return ActionResult.pass(playerIn.getItemInHand(handIn));
 
         ItemStack advancementStack = itemStack.copy();
 
         worldIn.playSound(
                 null,
-                playerIn.getPosX(),
-                playerIn.getPosY(),
-                playerIn.getPosZ(),
-                SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
+                playerIn.getX(),
+                playerIn.getY(),
+                playerIn.getZ(),
+                SoundEvents.EXPERIENCE_ORB_PICKUP,
                 SoundCategory.PLAYERS,
                 0.2F,
                 0.5F * ((random.nextFloat() - random.nextFloat()) * 0.7F + 1.8F));
 
         if (playerIn instanceof FakePlayer) {
             // Fake player can only use one at a time
-            worldIn.addEntity(new ExperienceOrbEntity(
+            worldIn.addFreshEntity(new ExperienceOrbEntity(
                             worldIn,
-                            playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(),
+                            playerIn.getX(), playerIn.getY(), playerIn.getZ(),
                             1));
             itemStack.shrink(1);
         } else {
             int xp = 0;
-            if (playerIn.isSneaking()) {
+            if (playerIn.isCrouching()) {
                 // Consume the whole stack
                 xp = getXp(itemStack) * itemStack.getCount();
                 if (!playerIn.isCreative())
@@ -145,13 +145,13 @@ public class XpShardBaseItem extends Item {
                     CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerIn, advancementStack);
             }
         }
-        return ActionResult.resultSuccess(itemStack);
+        return ActionResult.success(itemStack);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         tooltip.add(new TranslationTextComponent("info.woot.shard.0"));
         tooltip.add(new TranslationTextComponent("info.woot.shard.1"));

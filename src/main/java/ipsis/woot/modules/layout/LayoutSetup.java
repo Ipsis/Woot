@@ -37,7 +37,7 @@ public class LayoutSetup {
                     new BlockItem(LAYOUT_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<LayoutTileEntity>> LAYOUT_BLOCK_TILE = TILES.register(
             LAYOUT_TAG, () ->
-                    TileEntityType.Builder.create(LayoutTileEntity::new, LAYOUT_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(LayoutTileEntity::new, LAYOUT_BLOCK.get()).build(null));
 
     public static final RegistryObject<InternItem> INTERN_ITEM = ITEMS.register(
             "intern", () -> new InternItem());

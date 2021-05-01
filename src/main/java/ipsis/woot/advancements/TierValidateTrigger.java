@@ -21,17 +21,17 @@ public class TierValidateTrigger extends AbstractCriterionTrigger<TierValidateTr
     public ResourceLocation getId() { return ID; }
 
     @Override
-    protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    protected Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         JsonElement element = json.get("tier");
         Tier tier = Tier.TIER_1;
         if (element != null && !element.isJsonNull())
-            tier = Tier.byIndex(JSONUtils.getInt(json, "tier"));
+            tier = Tier.byIndex(JSONUtils.getAsInt(json, "tier"));
 
         return new Instance(entityPredicate, tier);
     }
 
     public void trigger(ServerPlayerEntity playerEntity, Tier tier) {
-        this.triggerListeners(playerEntity, instance -> instance.test(playerEntity, tier));
+        this.trigger(playerEntity, instance -> instance.test(playerEntity, tier));
     }
 
     public static class Instance extends CriterionInstance {
@@ -43,13 +43,13 @@ public class TierValidateTrigger extends AbstractCriterionTrigger<TierValidateTr
         }
 
         public static TierValidateTrigger.Instance forTier(Tier tier) {
-            return new TierValidateTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, tier);
+            return new TierValidateTrigger.Instance(EntityPredicate.AndPredicate.ANY, tier);
         }
 
         public boolean test(ServerPlayerEntity playerEntity, Tier tier) { return this.tier == tier; }
 
         public JsonObject serialize(ConditionArraySerializer conditions) {
-            JsonObject jsonObject = super.serialize(conditions);
+            JsonObject jsonObject = super.serializeToJson(conditions);
             jsonObject.addProperty("tier", tier.ordinal());
             return jsonObject;
         }

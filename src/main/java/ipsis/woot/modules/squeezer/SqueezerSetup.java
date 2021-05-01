@@ -37,7 +37,7 @@ public class SqueezerSetup {
                     new BlockItem(SQUEEZER_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> SQUEEZER_BLOCK_TILE = TILES.register(
             SQUEEZER_TAG, () ->
-                    TileEntityType.Builder.create(DyeSqueezerTileEntity::new, SQUEEZER_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(DyeSqueezerTileEntity::new, SQUEEZER_BLOCK.get()).build(null));
 
     public static final RegistryObject<ContainerType<DyeSqueezerContainer>> SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
             SQUEEZER_TAG, () ->
@@ -58,7 +58,7 @@ public class SqueezerSetup {
                     new BlockItem(ENCHANT_SQUEEZER_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> ENCHANT_SQUEEZER_BLOCK_TILE = TILES.register(
             ENCHANT_SQUEEZER_TAG, () ->
-                    TileEntityType.Builder.create(EnchantSqueezerTileEntity::new, ENCHANT_SQUEEZER_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(EnchantSqueezerTileEntity::new, ENCHANT_SQUEEZER_BLOCK.get()).build(null));
 
     public static final RegistryObject<ContainerType<EnchantSqueezerContainer>> ENCHANT_SQUEEZER_BLOCK_CONTAINER = CONTAINERS.register(
             ENCHANT_SQUEEZER_TAG, () ->

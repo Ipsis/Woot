@@ -29,24 +29,24 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
     }
 
     @Override
-    public T read(ResourceLocation recipeId, JsonObject json) {
+    public T fromJson(ResourceLocation recipeId, JsonObject json) {
 
-       FakeMob fakeMob = new FakeMob(JSONUtils.getString(json, "mob", ""));
+       FakeMob fakeMob = new FakeMob(JSONUtils.getAsString(json, "mob", ""));
 
        NonNullList<ItemStack> items = NonNullList.create();
        NonNullList<FluidStack> fluids = NonNullList.create();
         NonNullList<FactoryRecipe.Drop> drops = NonNullList.create();
 
-        JsonArray itemArray = JSONUtils.getJsonArray(json, "items");
+        JsonArray itemArray = JSONUtils.getAsJsonArray(json, "items");
        for (int i = 0; i < itemArray.size(); i++) {
            if (itemArray.get(i) instanceof JsonObject) {
-               ItemStack itemStack = ShapedRecipe.deserializeItem((JsonObject) itemArray.get(i));
+               ItemStack itemStack = ShapedRecipe.itemFromJson((JsonObject) itemArray.get(i));
                if (!itemStack.isEmpty())
                    items.add(itemStack);
            }
        }
 
-        JsonArray fluidArray = JSONUtils.getJsonArray(json, "fluids");
+        JsonArray fluidArray = JSONUtils.getAsJsonArray(json, "fluids");
         for (int i = 0; i < fluidArray.size(); i++) {
             if (fluidArray.get(i) instanceof JsonObject) {
                 FluidStack fluidStack = FluidStackHelper.parse((JsonObject)fluidArray.get(i));
@@ -55,7 +55,7 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
             }
         }
 
-        JsonArray dropArray = JSONUtils.getJsonArray(json, "drops");
+        JsonArray dropArray = JSONUtils.getAsJsonArray(json, "drops");
         for (int i =0 ; i < dropArray.size(); i++) {
             if (dropArray.get(i) instanceof JsonObject) {
                 JsonObject jsonObject = (JsonObject)dropArray.get(i);
@@ -64,8 +64,8 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
 
                     FactoryRecipe.Drop drop = new FactoryRecipe.Drop(itemStack);
 
-                    JsonArray sizeArray = JSONUtils.getJsonArray(jsonObject, "sizes");
-                    JsonArray chanceArray = JSONUtils.getJsonArray(jsonObject, "chances");
+                    JsonArray sizeArray = JSONUtils.getAsJsonArray(jsonObject, "sizes");
+                    JsonArray chanceArray = JSONUtils.getAsJsonArray(jsonObject, "chances");
 
                     for (int j = 0; j < sizeArray.size(); j++) {
                         if (sizeArray.get(j).isJsonPrimitive()) {
@@ -98,17 +98,17 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
 
     @Nullable
     @Override
-    public T read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public T fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 
         try {
-            FakeMob fakeMob = new FakeMob(buffer.readString());
+            FakeMob fakeMob = new FakeMob(buffer.toString());
             NonNullList<ItemStack> items = NonNullList.create();
             NonNullList<FluidStack> fluids = NonNullList.create();
             NonNullList<FactoryRecipe.Drop> drops = NonNullList.create();
 
             int itemCount = buffer.readShort();
             for (int i = 0; i < itemCount; i++)
-                items.add(buffer.readItemStack());
+                items.add(buffer.readItem());
 
             int fluidCount = buffer.readShort();
             for (int i = 0; i < fluidCount; i++)
@@ -122,13 +122,13 @@ public class FactoryRecipeSerializer<T extends FactoryRecipe> extends ForgeRegis
     }
 
     @Override
-    public void write(PacketBuffer buffer, T recipe) {
+    public void toNetwork(PacketBuffer buffer, T recipe) {
 
         try {
-            buffer.writeString(recipe.getFakeMob().toString());
+            buffer.writeUtf(recipe.getFakeMob().toString());
             buffer.writeShort(recipe.getItems().size());
             for (ItemStack itemStack : recipe.getItems())
-                buffer.writeItemStack(itemStack);
+                buffer.writeItem(itemStack);
             buffer.writeShort(recipe.getFluids().size());
             for (FluidStack fluidStack : recipe.getFluids())
                 buffer.writeFluidStack(fluidStack);

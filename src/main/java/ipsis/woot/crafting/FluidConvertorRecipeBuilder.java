@@ -66,8 +66,8 @@ public class FluidConvertorRecipeBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.add("catalyst", this.catalyst.serialize());
+        public void serializeRecipeData(JsonObject json) {
+            json.add("catalyst", this.catalyst.toJson());
             json.addProperty("catalyst_count", this.catalystcount);
             json.add("input", FluidStackHelper.create(this.inputFluid));
             json.add("result", FluidStackHelper.create(this.result));
@@ -75,24 +75,24 @@ public class FluidConvertorRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
             return SERIALIZER;
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return null;
         }
     }

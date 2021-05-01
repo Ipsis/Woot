@@ -42,7 +42,7 @@ public class HeartDataProvider implements IServerDataProvider<TileEntity>, IComp
                         ItemStack itemStack = PerkItem.getItemStack(group, level);
                         tooltip.add(new StringTextComponent(
                                 StringHelper.translate("top.woot.heart.perk.label") + ": " +
-                                        StringHelper.translate(itemStack.getItem().getTranslationKey())));
+                                        StringHelper.translate(itemStack.getItem().getDescriptionId())));
                     }
 
                     Exotic exotic = Exotic.getExotic(nbt.getInt("exotic"));
@@ -50,7 +50,7 @@ public class HeartDataProvider implements IServerDataProvider<TileEntity>, IComp
                         ItemStack itemStack = exotic.getItemStack();
                         tooltip.add(new StringTextComponent(
                                 StringHelper.translate("top.woot.heart.exotic.label") + ": " +
-                                        StringHelper.translate(itemStack.getItem().getTranslationKey())));
+                                        StringHelper.translate(itemStack.getItem().getDescriptionId())));
                     }
 
                     int progress = nbt.getInt("progress");

@@ -21,12 +21,12 @@ public class CreativePowerTileEntity extends TileEntity implements ITickableTile
 
     @Override
     public void tick() {
-        if (world.isRemote)
+        if (level.isClientSide)
             return;
 
         // Fill adjacent every second
         for (Direction facing : Direction.values()) {
-            TileEntity te = world.getTileEntity(pos.offset(facing));
+            TileEntity te = level.getBlockEntity(worldPosition.relative(facing));
             if (te != null) {
                 te.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite())
                         .ifPresent(h -> { if (h.canReceive()) h.receiveEnergy(1000, false); });

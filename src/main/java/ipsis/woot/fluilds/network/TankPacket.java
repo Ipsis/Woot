@@ -41,8 +41,8 @@ public class TankPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             final ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (player.openContainer instanceof TankPacketHandler)
-                ((TankPacketHandler) player.openContainer).handlePacket(this);
+            if (player.containerMenu instanceof TankPacketHandler)
+                ((TankPacketHandler) player.containerMenu).handlePacket(this);
             ctx.get().setPacketHandled(true);
         })) ;
     }

@@ -67,11 +67,11 @@ public class AnvilRecipeBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.add("base", this.baseIngredient.serialize());
+        public void serializeRecipeData(JsonObject json) {
+            json.add("base", this.baseIngredient.toJson());
             JsonArray array = new JsonArray();
             for (Ingredient i : this.ingredients)
-                array.add(i.serialize());
+                array.add(i.toJson());
             json.add("ingredients", array);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
@@ -81,24 +81,24 @@ public class AnvilRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
             return SERIALIZER;
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return null;
         }
     }

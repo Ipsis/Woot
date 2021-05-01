@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 public class CreativePowerBlock extends Block {
 
     public CreativePowerBlock() {
-        super(Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Properties.of(Material.METAL).sound(SoundType.METAL));
     }
 
     @Override

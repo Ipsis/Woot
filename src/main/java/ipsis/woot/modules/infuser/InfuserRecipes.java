@@ -18,11 +18,11 @@ public class InfuserRecipes {
         for (IRecipe recipe : manager.getRecipes()) {
             if (recipe instanceof InfuserRecipe) {
                 InfuserRecipe dRecipe = (InfuserRecipe) recipe;
-                for (ItemStack itemStack : dRecipe.getIngredient().getMatchingStacks())
+                for (ItemStack itemStack : dRecipe.getIngredient().getItems())
                     InfuserRecipe.addValidInput(itemStack);
 
                 if (dRecipe.hasAugment()) {
-                    for (ItemStack itemStack : dRecipe.getAugment().getMatchingStacks())
+                    for (ItemStack itemStack : dRecipe.getAugment().getItems())
                         InfuserRecipe.addValidAugment(itemStack);
                 }
 

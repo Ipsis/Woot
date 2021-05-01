@@ -75,13 +75,13 @@ public class ExoticDropsLootModifier extends LootModifier {
 
         @Override
         public ExoticDropsLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] conditions) {
-            int rolls = JSONUtils.getInt(object, "rolls");
-            double chance = JSONUtils.getFloat(object, "dropChance");
+            int rolls = JSONUtils.getAsInt(object, "rolls");
+            double chance = JSONUtils.getAsFloat(object, "dropChance");
             int[] weights = new int[Exotic.getExoticCount()];
             for (int i = 0; i < weights.length; i++)
                 weights[i] = 1;
 
-            JsonArray jsonArray = JSONUtils.getJsonArray(object, "weights");
+            JsonArray jsonArray = JSONUtils.getAsJsonArray(object, "weights");
             if (jsonArray.isJsonArray() && jsonArray.size() == Exotic.getExoticCount()) {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JsonElement element = jsonArray.get(i);

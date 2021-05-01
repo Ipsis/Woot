@@ -47,16 +47,16 @@ public class AnvilRecipe implements IRecipe<IInventory> {
         this.type = ANVIL_TYPE;
 
 
-        if (baseIngredient.getMatchingStacks().length == 1 && baseIngredient.getMatchingStacks()[0].getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
+        if (baseIngredient.getItems().length == 1 && baseIngredient.getItems()[0].getItem() == FactorySetup.MOB_SHARD_ITEM.get()) {
             ItemStack itemStack = new ItemStack(FactorySetup.MOB_SHARD_ITEM.get());
             MobShardItem.setJEIEnderShard(itemStack);
             inputs.add(Arrays.asList(itemStack));
         } else {
-            inputs.add(Arrays.asList(baseIngredient.getMatchingStacks()));
+            inputs.add(Arrays.asList(baseIngredient.getItems()));
         }
 
         for (Ingredient i : ingredients)
-            inputs.add(Arrays.asList(i.getMatchingStacks()));
+            inputs.add(Arrays.asList(i.getItems()));
     }
 
     public Ingredient getBaseIngredient() { return this.baseIngredient; }
@@ -73,7 +73,7 @@ public class AnvilRecipe implements IRecipe<IInventory> {
     public static void addValidInput(ItemStack itemStack) { validInputs.add(itemStack); }
     public static boolean isValidInput(ItemStack itemStack) {
         for (ItemStack i : validInputs) {
-            if (i.isItemEqual(itemStack))
+            if (i.sameItem(itemStack))
                 return true;
         }
         return false;
@@ -91,12 +91,12 @@ public class AnvilRecipe implements IRecipe<IInventory> {
      */
     @Override
     public boolean matches(IInventory inv, World worldIn) {
-        if (!baseIngredient.test(inv.getStackInSlot(0)))
+        if (!baseIngredient.test(inv.getItem(0)))
             return false;
 
         int count = 0;
         for (int i = 1; i < 4; i++) {
-            if (!inv.getStackInSlot(i).isEmpty())
+            if (!inv.getItem(i).isEmpty())
                 count++;
         }
 
@@ -106,7 +106,7 @@ public class AnvilRecipe implements IRecipe<IInventory> {
         List<Integer> matchedSlots = new ArrayList<>();
         for (Ingredient ingredient : ingredients) {
             for (int i = 1; i < 4; i++) {
-                if (!matchedSlots.contains(i) && ingredient.test(inv.getStackInSlot(i))) {
+                if (!matchedSlots.contains(i) && ingredient.test(inv.getItem(i))) {
                     // found ingredient in one of the slots
                     matchedSlots.add(i);
                     break;
@@ -121,17 +121,17 @@ public class AnvilRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
         return null;
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return true;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 

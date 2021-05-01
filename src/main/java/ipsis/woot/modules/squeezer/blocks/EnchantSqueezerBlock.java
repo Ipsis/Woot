@@ -42,18 +42,21 @@ import java.util.List;
 public class EnchantSqueezerBlock extends Block implements WootDebug {
 
     public EnchantSqueezerBlock() {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5F));
-        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        super(Block.Properties.of(Material.METAL).sound(SoundType.METAL).strength(3.5F));
+        registerDefaultState(getStateDefinition().any().setValue(
+                BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH
+        ));
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
+        return this.getStateDefinition().any().setValue(
+                BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
@@ -69,22 +72,22 @@ public class EnchantSqueezerBlock extends Block implements WootDebug {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
-        if (world.isRemote)
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult blockRayTraceResult) {
+        if (world.isClientSide)
             return ActionResultType.SUCCESS;
 
-        if (!(world.getTileEntity(pos) instanceof EnchantSqueezerTileEntity))
+        if (!(world.getBlockEntity(pos) instanceof EnchantSqueezerTileEntity))
             throw new IllegalStateException("Tile entity is missing");
 
-        EnchantSqueezerTileEntity squeezer = (EnchantSqueezerTileEntity) world.getTileEntity(pos);
-        ItemStack heldItem = playerEntity.getHeldItem(hand);
+        EnchantSqueezerTileEntity squeezer = (EnchantSqueezerTileEntity) world.getBlockEntity(pos);
+        ItemStack heldItem = playerEntity.getItemInHand(hand);
 
         if (FluidUtil.getFluidHandler(heldItem).isPresent())
             return FluidUtil.interactWithFluidHandler(playerEntity, hand, world, pos, null) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 
         // open the gui
         if (squeezer instanceof INamedContainerProvider)
-            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, squeezer, squeezer.getPos());
+            NetworkHooks.openGui((ServerPlayerEntity)playerEntity, squeezer, squeezer.getBlockPos());
         else
             throw new IllegalStateException("Named container provider is missing");
 
@@ -92,12 +95,12 @@ public class EnchantSqueezerBlock extends Block implements WootDebug {
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            TileEntity te = worldIn.getTileEntity(pos);
+            TileEntity te = worldIn.getBlockEntity(pos);
             if (te instanceof EnchantSqueezerTileEntity)
                 ((EnchantSqueezerTileEntity) te).dropContents(worldIn, pos);
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
+            super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
 
@@ -115,10 +118,10 @@ public class EnchantSqueezerBlock extends Block implements WootDebug {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
-        CompoundNBT nbt = stack.getChildTag("BlockEntityTag");
+        CompoundNBT nbt = stack.getTagElement("BlockEntityTag");
         if (nbt == null)
             return;
 

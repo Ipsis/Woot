@@ -219,7 +219,7 @@ public class SimulatedMobDrop {
             return null;
         }
 
-        JsonArray dropsArray = JSONUtils.getJsonArray(jsonObject, TAG_SIM_KILLS);
+        JsonArray dropsArray = JSONUtils.getAsJsonArray(jsonObject, TAG_SIM_KILLS);
         if (dropsArray.size() != 4)
             throw new JsonSyntaxException("Simulated count array must be of size 4");
 
@@ -228,7 +228,7 @@ public class SimulatedMobDrop {
             simulatedMobDrop.simulatedDropCount[i] = dropsArray.get(i).getAsInt();
 
         for (int i = 0; i < 4; i++) {
-            JsonArray sizesArray = JSONUtils.getJsonArray(jsonObject, TAG_STACK_SIZES[i]);
+            JsonArray sizesArray = JSONUtils.getAsJsonArray(jsonObject, TAG_STACK_SIZES[i]);
             if (sizesArray.size() > 0 && sizesArray.size() % 2 == 0) {
                 for (int j = 0; j < sizesArray.size() / 2; j += 2) {
                     int size = sizesArray.get(j).getAsInt();

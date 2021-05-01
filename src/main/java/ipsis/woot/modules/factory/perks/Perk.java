@@ -50,7 +50,7 @@ public enum Perk implements IStringSerializable {
 
     public static Perk[] VALUES = values();
     public String getLowerCaseName() { return name().toLowerCase(Locale.ROOT); }
-    public String getString() { return getLowerCaseName(); }
+    public String getSerializedName() { return getLowerCaseName(); }
 
     public static Perk byIndex(int index) {
         index = MathHelper.clamp(index, 0, VALUES.length - 1);

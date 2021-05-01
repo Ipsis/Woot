@@ -29,7 +29,7 @@ public class ShardPerkData extends WeightedRandom.Item {
     public String toString() {
         return "ShardPerkData{" +
                 "type=" + type +
-                ", itemWeight=" + itemWeight +
+                ", itemWeight=" + weight +
                 '}';
     }
 }

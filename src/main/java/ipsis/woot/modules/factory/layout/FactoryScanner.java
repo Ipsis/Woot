@@ -77,10 +77,10 @@ public class FactoryScanner {
             return false;
 
         BlockPos primaryControllerPos;
-        primaryControllerPos = new BlockPos(heartPos.offset(absolutePattern.facing, 1).add(0,-2,0));
+        primaryControllerPos = new BlockPos(heartPos.relative(absolutePattern.facing, 1).offset(0,-2,0));
 
         if (absolutePattern.getTier() == Tier.TIER_5) {
-            BlockState exoticBlockState = world.getBlockState(heartPos.up());
+            BlockState exoticBlockState = world.getBlockState(heartPos.above());
             if (exoticBlockState.getBlock() instanceof ExoticBlock) {
                 Block b = exoticBlockState.getBlock();
                 Exotic exotic = ((ExoticBlock) b).getExotic();
@@ -93,7 +93,7 @@ public class FactoryScanner {
         for (PatternBlock p : absolutePattern.getBlocks()) {
 
             // Don't load an unloaded chunk
-            if (!world.isBlockLoaded(p.getBlockPos())) {
+            if (!world.isLoaded(p.getBlockPos())) {
                 valid = false;
                 continue;
             }
@@ -101,7 +101,7 @@ public class FactoryScanner {
             BlockState currState = world.getBlockState(p.getBlockPos());
             Block currBlock = currState.getBlock();
 
-            String found = StringHelper.translate(currBlock.getTranslationKey());
+            String found = StringHelper.translate(currBlock.getDescriptionId());
             String expected = StringHelper.translate(p.getFactoryComponent().getTranslationKey());
 
             if (p.getFactoryComponent() == FactoryComponent.CELL)
@@ -129,15 +129,15 @@ public class FactoryScanner {
 
             if (p.getFactoryComponent() == FactoryComponent.FACTORY_UPGRADE) {
                 BlockState blockState = world.getBlockState(p.getBlockPos());
-                if (blockState.get(UpgradeBlock.UPGRADE) != Perk.EMPTY)
-                    absolutePattern.addPerk(blockState.get(UpgradeBlock.UPGRADE));
+                if (blockState.getValue(UpgradeBlock.UPGRADE) != Perk.EMPTY)
+                    absolutePattern.addPerk(blockState.getValue(UpgradeBlock.UPGRADE));
             }
 
             /**
              * Fails if the controller is not valid for the tier
              */
             if (p.getFactoryComponent() == FactoryComponent.CONTROLLER) {
-                TileEntity te = world.getTileEntity(p.getBlockPos());
+                TileEntity te = world.getBlockEntity(p.getBlockPos());
                 if (te instanceof ControllerTileEntity) {
                     FakeMob fakeMob = ((ControllerTileEntity) te).getFakeMob();
                     if (fakeMob.isValid()) {

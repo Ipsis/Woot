@@ -24,18 +24,18 @@ public class OracleContainer extends Container {
 
     public OracleContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         super(OracleSetup.ORACLE_BLOCK_CONTAINER.get(), windowId);
-        tileEntity = world.getTileEntity(pos);
+        tileEntity = world.getBlockEntity(pos);
 
         /**
          * There is no player inventory as it is display only
          */
     }
 
-    public BlockPos getPos() { return tileEntity.getPos(); }
+    public BlockPos getPos() { return tileEntity.getBlockPos(); }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()),
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()),
                 playerIn, OracleSetup.ORACLE_BLOCK.get());
     }
 

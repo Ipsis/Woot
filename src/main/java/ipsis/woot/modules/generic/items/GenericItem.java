@@ -8,7 +8,7 @@ public class GenericItem extends Item {
 
     final GenericItemType itemType;
     public GenericItem(GenericItemType itemType, int stackSize) {
-        super(new Item.Properties().maxStackSize(stackSize).group(Woot.setup.getCreativeTab()));
+        super(new Item.Properties().stacksTo(stackSize).tab(Woot.setup.getCreativeTab()));
         this.itemType = itemType;
     }
 
@@ -19,7 +19,7 @@ public class GenericItem extends Item {
     public GenericItemType genericItemType() { return this.itemType; }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return itemType == GenericItemType.ENCH_PLATE_1 || itemType == GenericItemType.ENCH_PLATE_2 || itemType == GenericItemType.ENCH_PLATE_3;
     }
 

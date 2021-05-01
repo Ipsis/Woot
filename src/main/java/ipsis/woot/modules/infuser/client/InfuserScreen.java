@@ -33,36 +33,36 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
 
     public InfuserScreen(InfuserContainer container, PlayerInventory playerInventory, ITextComponent name) {
         super(container, playerInventory, name);
-        xSize = GUI_XSIZE;
-        ySize = GUI_YSIZE;
-        playerInventoryTitleY = ySize - 94;
+        imageWidth = GUI_XSIZE;
+        imageHeight = GUI_YSIZE;
+        titleLabelY = getYSize() - 94;
     }
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
 
-        if (isPointInRegion(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
-            renderFluidTankTooltip(matrixStack, mouseX, mouseY, container.getInputFluid(),
+        if (isHovering(TANK_LX, TANK_LY, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY))
+            renderFluidTankTooltip(matrixStack, mouseX, mouseY, menu.getInputFluid(),
                     InfuserConfiguration.INFUSER_TANK_CAPACITY.get());
-        if (isPointInRegion(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
-            renderEnergyTooltip(matrixStack, mouseX, mouseY, container.getEnergy(),
+        if (isHovering(ENERGY_LX, ENERGY_LY, ENERGY_WIDTH, ENERGY_HEIGHT, mouseX, mouseY))
+            renderEnergyTooltip(matrixStack, mouseX, mouseY, menu.getEnergy(),
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(), InfuserConfiguration.INFUSER_ENERGY_PER_TICK.get());
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        getMinecraft().getTextureManager().bindTexture(GUI);
-        int relX = (this.width - this.xSize) / 2;
-        int relY = (this.height - this.ySize) / 2;
-        this.blit(matrixStack, relX, relY, 0, 0, this.xSize, this.ySize);
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        getMinecraft().getTextureManager().bind(GUI);
+        int relX = (this.width - this.getXSize()) / 2;
+        int relY = (this.height - this.getYSize()) / 2;
+        this.blit(matrixStack, relX, relY, 0, 0, this.getXSize(), this.getYSize());
 
         // Progress
-        int progress = container.getProgress();
-        this.blit(matrixStack, this.guiLeft + 90, this.guiTop + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
+        int progress = menu.getProgress();
+        this.blit(matrixStack, this.getGuiLeft() + 90, this.getGuiTop() + 39, 180, 0,(int)(18 * (progress / 100.0F)) , 17);
 
         renderEnergyBar(
                 matrixStack,
@@ -70,7 +70,7 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
                 ENERGY_RY,
                 ENERGY_HEIGHT,
                 ENERGY_WIDTH,
-                container.getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
+                menu.getEnergy(), InfuserConfiguration.INFUSER_MAX_ENERGY.get());
 
         renderFluidTank(
                 matrixStack,
@@ -79,7 +79,7 @@ public class InfuserScreen extends WootContainerScreen<InfuserContainer> {
                 TANK_HEIGHT,
                 TANK_WIDTH,
                 InfuserConfiguration.INFUSER_TANK_CAPACITY.get(),
-                container.getInputFluid());
+                menu.getInputFluid());
 
     }
 }

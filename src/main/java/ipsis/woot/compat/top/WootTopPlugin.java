@@ -56,7 +56,7 @@ public class WootTopPlugin {
 
                 @Override
                 public void addProbeInfo(ProbeMode probeMode, IProbeInfo iProbeInfo, PlayerEntity playerEntity, World world, BlockState blockState, IProbeHitData iProbeHitData) {
-                    TileEntity tileEntity = world.getTileEntity(iProbeHitData.getPos());
+                    TileEntity tileEntity = world.getBlockEntity(iProbeHitData.getPos());
                     if (tileEntity != null) {
                         addControllerProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
                         addHeartProbeInfo(probeMode, iProbeInfo, tileEntity, playerEntity, blockState);
@@ -156,7 +156,7 @@ public class WootTopPlugin {
                             StringHelper.translate("top.woot.layout.tier.label") + ": ",
                             StringHelper.translate(tier.getTranslationKey())));
 
-            if (playerEntity.isSneaking()) {
+            if (playerEntity.isCrouching()) {
                 PatternRepository.Pattern pattern = PatternRepository.get().getPattern(tier);
                 if (pattern != null) {
                     for (FactoryComponent component : FactoryComponent.VALUES) {
@@ -223,7 +223,7 @@ public class WootTopPlugin {
                         iProbeInfo.text(
                                 CompoundText.createLabelInfo(
                                         StringHelper.translate("top.woot.heart.perk.label") + ": ",
-                                        StringHelper.translate(itemStack.getItem().getTranslationKey())));
+                                        StringHelper.translate(itemStack.getItem().getDescriptionId())));
                 }
                 // Add exotic
                 Exotic exotic = heart.getExotic();
@@ -232,7 +232,7 @@ public class WootTopPlugin {
                     iProbeInfo.text(
                             CompoundText.createLabelInfo(
                                     StringHelper.translate("top.woot.heart.exotic.label") + ": ",
-                                    StringHelper.translate(itemStack.getItem().getTranslationKey())));
+                                    StringHelper.translate(itemStack.getItem().getDescriptionId())));
                 }
                 // Add tank
                 iProbeInfo.text(

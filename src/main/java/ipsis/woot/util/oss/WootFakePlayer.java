@@ -19,7 +19,7 @@ public class WootFakePlayer extends FakePlayer {
     }
 
     @Override
-    public boolean isPotionApplicable(EffectInstance potioneffectIn) {
+    public boolean canBeAffected(EffectInstance potioneffectIn) {
         return false;
     }
 }

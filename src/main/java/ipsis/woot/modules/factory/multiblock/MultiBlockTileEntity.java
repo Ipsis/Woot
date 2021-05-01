@@ -29,18 +29,18 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     }
 
     @Override
-    public void validate() {
-        super.validate();
-        if (!world.isRemote) {
+    public void clearRemoved() {
+        super.clearRemoved();
+        if (!level.isClientSide) {
             //LOGGER.debug("validate");
-            MultiBlockTracker.get().addEntry(world, pos);
+            MultiBlockTracker.get().addEntry(level, worldPosition);
         }
     }
 
     @Override
-    public void remove() {
-        super.remove();
-        if (!world.isRemote) {
+    public void setRemoved() {
+        super.setRemoved();
+        if (!level.isClientSide) {
             //LOGGER.debug("remove");
             glue.onGoodbye();
         }
@@ -49,7 +49,7 @@ public class MultiBlockTileEntity extends TileEntity implements MultiBlockGluePr
     @Override
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             //LOGGER.debug("onChunkUnloaded");
             glue.onGoodbye();
         }

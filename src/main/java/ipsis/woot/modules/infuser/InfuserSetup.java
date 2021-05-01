@@ -43,7 +43,7 @@ public class InfuserSetup {
                     new BlockItem(INFUSER_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> INFUSER_BLOCK_TILE = TILES.register(
             INFUSER_TAG, () ->
-                    TileEntityType.Builder.create(InfuserTileEntity::new, INFUSER_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(InfuserTileEntity::new, INFUSER_BLOCK.get()).build(null));
     public static final RegistryObject<ContainerType<InfuserContainer>> INFUSER_BLOCK_CONTAINER = CONTAINERS.register(
             INFUSER_TAG, () ->
                     IForgeContainerType.create((windowId, inv, data) -> {
@@ -76,7 +76,7 @@ public class InfuserSetup {
     public static final RegistryObject<DyePlateItem> BLACK_DYE_PLATE_ITEM = getDyePlateItem(ITEMS, DyeColor.BLACK);
 
     private static RegistryObject<DyePlateItem> getDyePlateItem(DeferredRegister<Item> reg, DyeColor color) {
-        return reg.register(color.getTranslationKey() + "_dyeplate", () -> new DyePlateItem(color));
+        return reg.register(color.getName() + "_dyeplate", () -> new DyePlateItem(color));
     }
 
     /**
@@ -100,7 +100,7 @@ public class InfuserSetup {
     public static final RegistryObject<DyeCasingItem> BLACK_DYE_CASING_ITEM = getDyeCasingItem(ITEMS, DyeColor.BLACK);
 
     private static RegistryObject<DyeCasingItem> getDyeCasingItem(DeferredRegister<Item> reg, DyeColor color) {
-        return reg.register(color.getTranslationKey() + "_dyecasing", () -> new DyeCasingItem(color));
+        return reg.register(color.getName() + "_dyecasing", () -> new DyeCasingItem(color));
 
     }
 }

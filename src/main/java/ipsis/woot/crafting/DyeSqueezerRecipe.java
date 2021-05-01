@@ -42,7 +42,7 @@ public class DyeSqueezerRecipe implements IRecipe<IInventory>  {
         this.white = white;
         this.type = DYE_SQUEEZER_TYPE;
 
-        inputs.add(Arrays.asList(ingredient.getMatchingStacks()));
+        inputs.add(Arrays.asList(ingredient.getItems()));
     }
 
     public int getEnergy() { return this.energy; }
@@ -61,7 +61,7 @@ public class DyeSqueezerRecipe implements IRecipe<IInventory>  {
     public static void addValidInput(ItemStack itemStack) { validInputs.add(itemStack); }
     public static boolean isValidInput(ItemStack itemStack) {
         for (ItemStack i : validInputs) {
-            if (i.isItemEqual(itemStack))
+            if (i.sameItem(itemStack))
                 return true;
         }
         return false;
@@ -80,21 +80,21 @@ public class DyeSqueezerRecipe implements IRecipe<IInventory>  {
      */
     @Override
     public boolean matches(IInventory inv, World worldIn) {
-        return this.ingredient.test(inv.getStackInSlot(0));
+        return this.ingredient.test(inv.getItem(0));
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return false;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 

@@ -28,41 +28,41 @@ public class Squeezer {
     public static void registerRecipes(Consumer<IFinishedRecipe> consumer) {
 
 
-        ShapedRecipeBuilder.shapedRecipe(SqueezerSetup.SQUEEZER_BLOCK.get())
-                .patternLine("dpd")
-                .patternLine("dcd")
-                .patternLine("dbd")
-                .key('p', Blocks.PISTON)
-                .key('d', Tags.Items.DYES)
-                .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
-                .key('b', Items.BUCKET)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(SqueezerSetup.SQUEEZER_BLOCK.get())
+                .pattern("dpd")
+                .pattern("dcd")
+                .pattern("dbd")
+                .define('p', Blocks.PISTON)
+                .define('d', Tags.Items.DYES)
+                .define('c', GenericSetup.MACHINE_CASING_ITEM.get())
+                .define('b', Items.BUCKET)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapelessRecipeBuilder.shapelessRecipe(SqueezerSetup.SQUEEZER_BLOCK.get())
-                .addIngredient(SqueezerSetup.SQUEEZER_BLOCK.get())
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer, "squeezer_1");
+        ShapelessRecipeBuilder.shapeless(SqueezerSetup.SQUEEZER_BLOCK.get())
+                .requires(SqueezerSetup.SQUEEZER_BLOCK.get())
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer, "squeezer_1");
 
-        ShapedRecipeBuilder.shapedRecipe(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
-                .patternLine("tpt")
-                .patternLine("tct")
-                .patternLine("tbt")
-                .key('p', Blocks.PISTON)
-                .key('c', GenericSetup.MACHINE_CASING_ITEM.get())
-                .key('b', Items.BUCKET)
-                .key('t', Items.BOOK)
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
+                .pattern("tpt")
+                .pattern("tct")
+                .pattern("tbt")
+                .define('p', Blocks.PISTON)
+                .define('c', GenericSetup.MACHINE_CASING_ITEM.get())
+                .define('b', Items.BUCKET)
+                .define('t', Items.BOOK)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
 
-        ShapelessRecipeBuilder.shapelessRecipe(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
-                .addIngredient(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
-                .setGroup(Woot.MODID)
-                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-                .build(consumer, "ench_squeezer_1");
+        ShapelessRecipeBuilder.shapeless(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
+                .requires(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK.get())
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer, "ench_squeezer_1");
 
         /**
          * Vanilla dyes
@@ -70,7 +70,7 @@ public class Squeezer {
         for (DyeMakeup d : DyeMakeup.values()) {
             Woot.setup.getLogger().info("Generating Dye Squeezer recipe for {}", d);
             DyeSqueezerRecipeBuilder.dyeSqueezerRecipe(
-                    Ingredient.fromTag(d.getItemTag()),
+                    Ingredient.of(d.getItemTag()),
                     DYE_ENERGY_COST,
                     d.getRed(), d.getYellow(), d.getBlue(), d.getWhite())
                     .build(consumer, d.name().toLowerCase(Locale.ROOT));
@@ -115,7 +115,7 @@ public class Squeezer {
         for (VanillaDyes d : dyes) {
             Woot.setup.getLogger().info("Generating Dye Squeezer recipe for {}", d.name);
             DyeSqueezerRecipeBuilder.dyeSqueezerRecipe(
-                    Ingredient.fromItems(d.item),
+                    Ingredient.of(d.item),
                     DYE_ENERGY_COST,
                     d.dyeMakeup.getRed(),
                     d.dyeMakeup.getYellow(),

@@ -25,18 +25,19 @@ import javax.annotation.Nullable;
 public class LayoutBlock extends Block {
 
     public LayoutBlock() {
-        super(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.3F));
-        setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        super(Block.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.3F));
+        registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH ));
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(BlockStateProperties.HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
+        return this.getStateDefinition().any().setValue(
+                BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
 
@@ -52,18 +53,18 @@ public class LayoutBlock extends Block {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
-        if (worldIn.isRemote || handIn == Hand.OFF_HAND)
-            return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
+        if (worldIn.isClientSide || handIn == Hand.OFF_HAND)
+            return super.use(state, worldIn, pos, player, handIn, blockRayTraceResult);
 
-        if (!player.getHeldItemMainhand().isEmpty())
+        if (!player.getMainHandItem().isEmpty())
             return ActionResultType.FAIL;
 
-        TileEntity te = worldIn.getTileEntity(pos);
+        TileEntity te = worldIn.getBlockEntity(pos);
         if (te instanceof LayoutTileEntity) {
             LayoutTileEntity layout = (LayoutTileEntity)te;
-            if (player.isSneaking()) {
+            if (player.isCrouching()) {
                 layout.setNextLevel();
             } else {
                 layout.setNextTier();

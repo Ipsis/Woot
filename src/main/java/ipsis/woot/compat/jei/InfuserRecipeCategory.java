@@ -114,10 +114,10 @@ public class InfuserRecipeCategory implements IRecipeCategory<InfuserRecipe>, IT
         IJeiRuntime runtime = WootJeiPlugin.jeiRuntime;
         if (runtime != null) {
             Minecraft minecraft = Minecraft.getInstance();
-            minecraft.fontRenderer.drawString(matrixStack, String.format("%d RF", recipe.getEnergy()),
+            minecraft.font.draw(matrixStack, String.format("%d RF", recipe.getEnergy()),
                     70.0F, 68.0F, Color.BLACK.getRGB());
 
-            Screen screen = Minecraft.getInstance().currentScreen;
+            Screen screen = Minecraft.getInstance().screen;
             EnergyBarHelper.drawEnergyBar(matrixStack,
                     screen,
                     InfuserConfiguration.INFUSER_MAX_ENERGY.get(),

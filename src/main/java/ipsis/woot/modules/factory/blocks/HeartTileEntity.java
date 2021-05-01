@@ -69,8 +69,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     @Override
-    public void remove() {
-        super.remove();
+    public void setRemoved() {
+        super.setRemoved();
         if (layout != null)
             layout.fullDisconnect();
     }
@@ -83,33 +83,33 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     public boolean isRunning() {
-        return !world.isBlockPowered(pos);
+        return !level.hasNeighborSignal(worldPosition);
     }
 
     public boolean isFormed() { return layout != null && layout.isFormed(); }
 
     @Override
     public void tick() {
-        if (world == null)
+        if (level == null)
             return;
 
-       if (world.isRemote)
+       if (level.isClientSide)
            return;
 
        if (layout == null) {
            layout = new Layout();
-           layout.setLocation(world,pos, world.getBlockState(pos).get(BlockStateProperties.HORIZONTAL_FACING));
+           layout.setLocation(level, worldPosition, level.getBlockState(worldPosition).getValue(BlockStateProperties.HORIZONTAL_FACING));
            layout.setDirty();
        }
 
        // Check for tick acceleration
-       if (!tickTracker.tick(world))
+       if (!tickTracker.tick(level))
            return;
 
        layout.tick(tickTracker, this);
        if (layout.isFormed()) {
            if (layout.hasChanged()) {
-               formedSetup = FormedSetup.createFromValidLayout(world, layout);
+               formedSetup = FormedSetup.createFromValidLayout(level, layout);
                LOGGER.debug("formedSetup: {}", formedSetup);
 
                formedSetup.getAllMobs().forEach(m -> MobSimulator.getInstance().learn(m));
@@ -120,7 +120,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
                    loadedFromNBT = false;
                } else {
                    consumedUnits = 0;
-                   markDirty();
+                   setChanged();
                }
 
                layout.clearChanged();
@@ -133,7 +133,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
            if (consumedUnits >= recipe.getNumTicks()) {
                // get and process the ingredients
                consumedUnits = 0;
-               markDirty();
+               setChanged();
 
                List<ItemStack> items = createItemIngredients(recipe, formedSetup);
                List<FluidStack> fluids = createFluidIngredients(recipe, formedSetup);
@@ -213,7 +213,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
 
                     for (int slot = 0; slot < h.getSlots(); slot++) {
                         ItemStack slotStack = h.getStackInSlot(slot);
-                        if (!slotStack.isEmpty() && ItemStack.areItemsEqual(itemStack, slotStack)) {
+                        if (!slotStack.isEmpty() && ItemStack.isSame(itemStack, slotStack)) {
                             Woot.setup.getLogger().debug("consumeItemIngredients: slot {} consume {}", slot, itemStack.getCount());
                             ItemStack extractedStack = h.extractItem(slot, itemStack.getCount(), false);
                             if (!extractedStack.isEmpty())
@@ -262,8 +262,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
-        super.read(blockState, compoundNBT);
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
+        super.load(blockState, compoundNBT);
         readFromNBT(compoundNBT);
     }
 
@@ -276,8 +276,8 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
         if (isFormed() && recipe != null) {
             compound.putInt(ModNBT.Heart.PROGRESS_TAG, consumedUnits);
             LOGGER.debug("write: saving progress " + consumedUnits);
@@ -322,7 +322,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     void tickRecipe() {
         // Purely the passage of time
         consumedUnits++;
-        markDirty();
+        setChanged();
     }
 
     /**
@@ -390,7 +390,7 @@ public class HeartTileEntity extends TileEntity implements ITickableTileEntity, 
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new HeartContainer(windowId, world, pos, playerInventory, playerEntity);
+        return new HeartContainer(windowId, level, worldPosition, playerInventory, playerEntity);
     }
 
     public int getFluidCapacity() {

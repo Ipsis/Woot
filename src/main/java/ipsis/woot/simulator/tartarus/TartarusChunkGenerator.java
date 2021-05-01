@@ -26,7 +26,7 @@ import java.util.*;
 public class TartarusChunkGenerator extends ChunkGenerator {
 
     public static final Codec<TartarusChunkGenerator> codecTartarusChunk =
-            RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY)
+            RegistryLookupCodec.create(Registry.BIOME_REGISTRY)
                     .xmap(TartarusChunkGenerator::new, TartarusChunkGenerator::getBiome).stable().codec();
 
     private TartarusChunkGenerator(Registry<Biome> biome) {
@@ -96,29 +96,29 @@ public class TartarusChunkGenerator extends ChunkGenerator {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public ChunkGenerator func_230349_a_(long p_230349_1_) {
+    public ChunkGenerator withSeed(long p_230349_1_) {
         return this;
     }
 
     @Override
-    public void generateSurface(WorldGenRegion worldGenRegion, IChunk iChunk) {
+    public void buildSurfaceAndBedrock(WorldGenRegion worldGenRegion, IChunk iChunk) {
 
         /**
          * This is all based off chunk coordinates - therefore 0->16
          */
-        BlockState blockState = Blocks.AIR.getDefaultState();
+        BlockState blockState = Blocks.AIR.defaultBlockState();
         BlockPos.Mutable pos = new BlockPos.Mutable();
         for (int x1 = 0; x1 < 16; x1++) {
             for (int z1 = 0; z1 < 16; z1++) {
                 for (int y1 = 0; y1 < 256; y1++) {
-                    iChunk.setBlockState(pos.setPos(x1, y1, z1), blockState, false);
+                    iChunk.setBlockState(pos.set(x1, y1, z1), blockState, false);
                 }
             }
         }
 
         if (iChunk.getPos().x == WORK_CHUNK_X && iChunk.getPos().z == WORK_CHUNK_Z) {
             Woot.setup.getLogger().debug("generateSurface: work chunk creating cells");
-            BlockState wallState = Blocks.GLASS.getDefaultState();
+            BlockState wallState = Blocks.GLASS.defaultBlockState();
             calcCellStructures();
 
             for (int y = 0; y < 256; y += 8) {
@@ -131,29 +131,29 @@ public class TartarusChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void func_230350_a_(long p_230350_1_, BiomeManager p_230350_3_, IChunk p_230350_4_, GenerationStage.Carving p_230350_5_) {
+    public void applyCarvers(long p_230350_1_, BiomeManager p_230350_3_, IChunk p_230350_4_, GenerationStage.Carving p_230350_5_) {
     }
 
     @Override
-    public void func_230351_a_(WorldGenRegion p_230351_1_, StructureManager p_230351_2_) {
+    public void applyBiomeDecoration(WorldGenRegion p_230351_1_, StructureManager p_230351_2_) {
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> func_230347_a_() {
+    protected Codec<? extends ChunkGenerator> codec() {
         return codecTartarusChunk;
     }
 
     @Override
-    public void func_230352_b_(IWorld p_230352_1_, StructureManager p_230352_2_, IChunk p_230352_3_) {
+    public void fillFromNoise(IWorld p_230352_1_, StructureManager p_230352_2_, IChunk p_230352_3_) {
     }
 
     @Override
-    public int getHeight(int i, int i1, Heightmap.Type type) {
+    public int getBaseHeight(int i, int i1, Heightmap.Type type) {
         return 0;
     }
 
     @Override
-    public IBlockReader func_230348_a_(int p_230348_1_, int p_230348_2_) {
+    public IBlockReader getBaseColumn(int p_230348_1_, int p_230348_2_) {
         return new Blockreader((new BlockState[0]));
     }
 }

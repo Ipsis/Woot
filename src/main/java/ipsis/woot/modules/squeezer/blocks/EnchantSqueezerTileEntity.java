@@ -64,7 +64,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
         @Override
         protected void onContentsChanged(int slot) {
             EnchantSqueezerTileEntity.this.onContentsChanged(slot);
-            markDirty();
+            setChanged();
         }
 
         public boolean isItemValidForSlot(int slot, @Nonnull ItemStack stack) {
@@ -90,7 +90,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     public void tick() {
         super.tick();
 
-        if (world.isRemote)
+        if (level.isClientSide)
             return;
 
 
@@ -102,7 +102,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             if (settings.get(direction) != Mode.OUTPUT)
                 continue;
 
-            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            TileEntity te = level.getBlockEntity(getBlockPos().relative(direction));
             if (!(te instanceof TileEntity))
                 continue;
 
@@ -113,7 +113,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
                 if (!fluidStack.isEmpty()) {
                     int filled = iFluidHandler.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
                     outputTank.ifPresent(f -> f.internalDrain(filled, IFluidHandler.FluidAction.EXECUTE));
-                    markDirty();
+                    setChanged();
                 }
             }
         }
@@ -155,9 +155,9 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
         readfromNBT(compoundNBT);
-        super.read(blockState, compoundNBT);
+        super.load(blockState, compoundNBT);
     }
 
     public void readfromNBT(CompoundNBT compoundNBT) {
@@ -173,7 +173,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compoundNBT) {
+    public CompoundNBT save(CompoundNBT compoundNBT) {
         compoundNBT.put(ModNBT.INPUT_INVENTORY_TAG,
                 Objects.requireNonNull(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null)));
 
@@ -187,7 +187,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             compoundNBT.put(ModNBT.ENERGY_TAG, energyTag);
         });
 
-        return super.write(compoundNBT);
+        return super.save(compoundNBT);
     }
     //endregion
 
@@ -214,7 +214,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new EnchantSqueezerContainer(i, world, pos, playerInventory, playerEntity);
+        return new EnchantSqueezerContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
     //endregion
 
@@ -263,7 +263,7 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             h.internalFill(new FluidStack(FluidSetup.ENCHANT_FLUID.get(), amount), IFluidHandler.FluidAction.EXECUTE);
         });
 
-        markDirty();
+        setChanged();
     }
 
     @Override
@@ -335,11 +335,11 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             if (itemStack.getItem() == Items.ENCHANTED_BOOK)
                 listNBT = EnchantedBookItem.getEnchantments(itemStack);
             else
-                listNBT = itemStack.getEnchantmentTagList();
+                listNBT = itemStack.getEnchantmentTags();
 
             for (int i = 0; i < listNBT.size(); i++) {
                 CompoundNBT compoundNBT = listNBT.getCompound(i);
-                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
+                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(compoundNBT.getString("id")));
                 if (enchantment != null && compoundNBT.contains("lvl"))
                     amount += SqueezerConfiguration.getEnchantFluidAmount(compoundNBT.getInt("lvl"));
             }
@@ -354,11 +354,11 @@ public class EnchantSqueezerTileEntity extends WootMachineTileEntity implements 
             if (itemStack.getItem() == Items.ENCHANTED_BOOK)
                 listNBT = EnchantedBookItem.getEnchantments(itemStack);
             else
-                listNBT = itemStack.getEnchantmentTagList();
+                listNBT = itemStack.getEnchantmentTags();
 
             for (int i = 0; i < listNBT.size(); i++) {
                 CompoundNBT compoundNBT = listNBT.getCompound(i);
-                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryCreate(compoundNBT.getString("id")));
+                Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(compoundNBT.getString("id")));
                 if (enchantment != null && compoundNBT.contains("lvl"))
                     amount += SqueezerConfiguration.getEnchantEnergy(compoundNBT.getInt("lvl"));
             }

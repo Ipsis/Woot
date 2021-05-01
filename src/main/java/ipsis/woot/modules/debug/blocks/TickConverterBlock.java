@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 public class TickConverterBlock extends Block {
 
     public TickConverterBlock() {
-        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL));
+        super(Block.Properties.of(Material.METAL).sound(SoundType.METAL));
     }
 
     @Override

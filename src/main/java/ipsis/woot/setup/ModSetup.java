@@ -45,7 +45,7 @@ public class ModSetup {
     public ModSetup() {
         creativeTab = new ItemGroup(Woot.MODID) {
             @Override
-            public ItemStack createIcon() {
+            public ItemStack makeIcon() {
                 return new ItemStack(FactorySetup.HEART_BLOCK.get());
             }
         };

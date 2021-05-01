@@ -36,7 +36,7 @@ public class WootFakePlayerFactory {
 
     public static void unloadWorld (ServerWorld world) {
 
-        fakePlayers.entrySet().removeIf(entry -> entry.getValue().world == world);
+        fakePlayers.entrySet().removeIf(entry -> entry.getValue().level == world);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

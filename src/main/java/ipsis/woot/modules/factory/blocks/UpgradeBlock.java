@@ -24,7 +24,7 @@ public class UpgradeBlock extends FactoryBlock {
 
     public UpgradeBlock(FactoryComponent component) {
         super(component);
-        this.setDefaultState(getStateContainer().getBaseState().with(UPGRADE, Perk.EMPTY).with(BlockStateProperties.ATTACHED, false));
+        this.registerDefaultState(getStateDefinition().any().setValue(UPGRADE, Perk.EMPTY).setValue(BlockStateProperties.ATTACHED, false));
     }
 
     public static final EnumProperty<Perk> UPGRADE_TYPE;
@@ -33,19 +33,19 @@ public class UpgradeBlock extends FactoryBlock {
     public static final EnumProperty<Perk> UPGRADE = UPGRADE_TYPE;
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(UPGRADE, BlockStateProperties.ATTACHED);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult blockRayTraceResult) {
 
-        if (!worldIn.isRemote) {
-            ItemStack itemStack = player.getHeldItem(handIn);
+        if (!worldIn.isClientSide) {
+            ItemStack itemStack = player.getItemInHand(handIn);
             if (!itemStack.isEmpty() && itemStack.getItem() instanceof PerkItem) {
                 PerkItem perkItem = (PerkItem)itemStack.getItem();
 
-                TileEntity te = worldIn.getTileEntity(pos);
+                TileEntity te = worldIn.getBlockEntity(pos);
                 if (te instanceof UpgradeTileEntity) {
                     if (((UpgradeTileEntity) te).tryAddUpgrade(worldIn, player, state, perkItem.getFactoryUpgrade())) {
                         if (!player.isCreative())
@@ -55,18 +55,18 @@ public class UpgradeBlock extends FactoryBlock {
             }
         }
 
-        return super.onBlockActivated(state, worldIn, pos, player, handIn, blockRayTraceResult);
+        return super.use(state, worldIn, pos, player, handIn, blockRayTraceResult);
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // This is how the chest, hopper etc drop their contents
         if (state.getBlock() != newState.getBlock()) {
-            TileEntity te = worldIn.getTileEntity(pos);
+            TileEntity te = worldIn.getBlockEntity(pos);
             if (te instanceof UpgradeTileEntity) {
                 ((UpgradeTileEntity) te).dropItems(state, worldIn, pos);
             }
-            super.onReplaced(state, worldIn, pos, newState, isMoving);
+            super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
 

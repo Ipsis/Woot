@@ -38,7 +38,7 @@ public class AnvilSetup {
                     new BlockItem(ANVIL_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<AnvilTileEntity>> ANVIL_BLOCK_TILE = TILES.register(
             ANVIL_TAG, () ->
-                    TileEntityType.Builder.create(AnvilTileEntity::new, ANVIL_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(AnvilTileEntity::new, ANVIL_BLOCK.get()).build(null));
 
     public static final RegistryObject<HammerItem> HAMMER_ITEM = ITEMS.register(
             "hammer", () -> new HammerItem());

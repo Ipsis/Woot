@@ -49,7 +49,7 @@ public class FactorySetup {
                     new BlockItem(HEART_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> HEART_BLOCK_TILE = TILES.register(
             HEART_TAG, () ->
-                    TileEntityType.Builder.create(HeartTileEntity::new, HEART_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(HeartTileEntity::new, HEART_BLOCK.get()).build(null));
 
     public static final RegistryObject<ContainerType<HeartContainer>> HEART_BLOCK_CONTAINER = CONTAINERS.register(
             HEART_TAG, () ->
@@ -70,7 +70,7 @@ public class FactorySetup {
                     new ControllerBlockItem(CONTROLLER_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CONTROLLER_BLOCK_TILE = TILES.register(
             CONTROLLER_TAG, () ->
-                    TileEntityType.Builder.create(ControllerTileEntity::new, CONTROLLER_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(ControllerTileEntity::new, CONTROLLER_BLOCK.get()).build(null));
 
     public static final RegistryObject<FactoryBlock> FACTORY_A_BLOCK = BLOCKS.register(
             FactoryBlock.FACTORY_A_REGNAME, () -> new FactoryBlock(FactoryComponent.FACTORY_A));
@@ -158,7 +158,7 @@ public class FactorySetup {
 
     public static final RegistryObject<TileEntityType<?>> MULTIBLOCK_BLOCK_TILE = TILES.register(
             "multiblock", () ->
-                    TileEntityType.Builder.create(MultiBlockTileEntity::new,
+                    TileEntityType.Builder.of(MultiBlockTileEntity::new,
                             IMPORT_BLOCK.get(),
                             EXPORT_BLOCK.get(),
                             FACTORY_A_BLOCK.get(),
@@ -183,7 +183,7 @@ public class FactorySetup {
                     new BlockItem(FACTORY_UPGRADE_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> FACTORY_UPGRADE_BLOCK_TILE = TILES.register(
             FACTORY_UPGRADE_TAG, () ->
-                    TileEntityType.Builder.create(UpgradeTileEntity::new, FACTORY_UPGRADE_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(UpgradeTileEntity::new, FACTORY_UPGRADE_BLOCK.get()).build(null));
 
     public static final String CELL_1_TAG = "cell_1";
     public static final RegistryObject<CellBlock> CELL_1_BLOCK = BLOCKS.register(
@@ -193,7 +193,7 @@ public class FactorySetup {
                     new BlockItem(CELL_1_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CELL_1_BLOCK_TILE = TILES.register(
             CELL_1_TAG, () ->
-                    TileEntityType.Builder.create(Cell1TileEntity::new, CELL_1_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(Cell1TileEntity::new, CELL_1_BLOCK.get()).build(null));
 
     public static final String CELL_2_TAG = "cell_2";
     public static final RegistryObject<CellBlock> CELL_2_BLOCK = BLOCKS.register(
@@ -203,7 +203,7 @@ public class FactorySetup {
                     new BlockItem(CELL_2_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CELL_2_BLOCK_TILE = TILES.register(
             CELL_2_TAG, () ->
-                    TileEntityType.Builder.create(Cell2TileEntity::new, CELL_2_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(Cell2TileEntity::new, CELL_2_BLOCK.get()).build(null));
 
     public static final String CELL_3_TAG = "cell_3";
     public static final RegistryObject<CellBlock> CELL_3_BLOCK = BLOCKS.register(
@@ -213,7 +213,7 @@ public class FactorySetup {
                     new BlockItem(CELL_3_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CELL_3_BLOCK_TILE = TILES.register(
             CELL_3_TAG, () ->
-                    TileEntityType.Builder.create(Cell3TileEntity::new, CELL_3_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(Cell3TileEntity::new, CELL_3_BLOCK.get()).build(null));
 
     public static final String CELL_4_TAG = "cell_4";
     public static final RegistryObject<CellBlock> CELL_4_BLOCK = BLOCKS.register(
@@ -223,7 +223,7 @@ public class FactorySetup {
                     new BlockItem(CELL_4_BLOCK.get(), Woot.createStandardProperties()));
     public static final RegistryObject<TileEntityType<?>> CELL_4_BLOCK_TILE = TILES.register(
             CELL_4_TAG, () ->
-                    TileEntityType.Builder.create(Cell4TileEntity::new, CELL_4_BLOCK.get()).build(null));
+                    TileEntityType.Builder.of(Cell4TileEntity::new, CELL_4_BLOCK.get()).build(null));
 
     public static final RegistryObject<ExoticBlock> EXOTIC_A_BLOCK = BLOCKS.register(
             Exotic.EXOTIC_A.getName(), () -> new ExoticBlock(Exotic.EXOTIC_A));

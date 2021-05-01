@@ -86,7 +86,7 @@ public class CalculatorVersion2 {
             for (ItemStack itemStack : recipeItems) {
                 if (!itemStack.isEmpty()) {
                     Woot.setup.getLogger().debug("getRecipeItems: {} {} {} {}",
-                            fakeMob, itemStack.getTranslationKey(), itemStack.getCount(), mobCount);
+                            fakeMob, itemStack.getDescriptionId(), itemStack.getCount(), mobCount);
                     ItemStack itemStack1 = itemStack.copy();
                     itemStack1.setCount(itemStack1.getCount() * mobCount);
                     items.add(itemStack1);
@@ -161,7 +161,7 @@ public class CalculatorVersion2 {
          */
         for (FakeMob fakeMob : setup.getAllMobs()) {
             ItemStack controller = ControllerTileEntity.getItemStack(fakeMob);
-            List<FactoryRecipe> recipes = setup.getWorld().getRecipeManager().getRecipes(
+            List<FactoryRecipe> recipes = setup.getWorld().getRecipeManager().getRecipesFor(
                     FactoryRecipe.FACTORY_TYPE,
                     new Inventory(controller), setup.getWorld());
 

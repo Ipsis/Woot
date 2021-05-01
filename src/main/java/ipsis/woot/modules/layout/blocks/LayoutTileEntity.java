@@ -24,38 +24,38 @@ public class LayoutTileEntity extends TileEntity {
         super(LayoutSetup.LAYOUT_BLOCK_TILE.get());
     }
 
-    public int getLevel() { return level; }
+    public int getDisplayLevel() { return displayLevel; }
     public int setNextLevel() {
-        level++;
-        if (level >= PatternRepository.get().getPattern(tier).getHeight())
-            level = -1;
-        markDirty();
+        displayLevel++;
+        if (displayLevel >= PatternRepository.get().getPattern(tier).getHeight())
+            displayLevel = -1;
+        setChanged();
         refresh();
-        return level;
+        return displayLevel;
     }
 
     public int getYForLevel() {
         // Heart is one off the top
         // Layout is offset from the heart
         int height = PatternRepository.get().getPattern(tier).getHeight();
-        return getPos().getY() - height - LAYOUT_Y_OFFSET + level + 2;
+        return getBlockPos().getY() - height - LAYOUT_Y_OFFSET + displayLevel + 2;
     }
 
     public Tier getTier() { return tier; }
     public Tier setNextTier() {
         tier = tier.getNextValid();
-        markDirty();
+        setChanged();
         refresh();
         return tier;
     }
 
     AbsolutePattern absolutePattern = null;
     public void refresh() {
-        if (!world.isRemote)
+        if (!level.isClientSide)
             return;
 
-        BlockPos origin = getPos().down(LAYOUT_Y_OFFSET);
-        absolutePattern = AbsolutePattern.create(world, tier, origin, world.getBlockState(pos).get(BlockStateProperties.HORIZONTAL_FACING));
+        BlockPos origin = getBlockPos().below(LAYOUT_Y_OFFSET);
+        absolutePattern = AbsolutePattern.create(level, tier, origin, level.getBlockState(worldPosition).getValue(BlockStateProperties.HORIZONTAL_FACING));
     }
 
     public AbsolutePattern getAbsolutePattern() { return absolutePattern; }
@@ -66,10 +66,10 @@ public class LayoutTileEntity extends TileEntity {
          * This defaults to the bounding box size which will be a single blocks.
          * For this block we need it to be a bit larger to accommodate the largest tier factory
          */
-        BlockPos pos = getPos();
+        BlockPos pos = getBlockPos();
         return new AxisAlignedBB(
-                pos.add(-PatternRepository.get().getMaxXZOffset(), -1, -PatternRepository.get().getMaxXZOffset()),
-                pos.add(PatternRepository.get().getMaxXZOffset(), PatternRepository.get().getMaxYOffset() - 1, PatternRepository.get().getMaxXZOffset()));
+                pos.offset(-PatternRepository.get().getMaxXZOffset(), -1, -PatternRepository.get().getMaxXZOffset()),
+                pos.offset(PatternRepository.get().getMaxXZOffset(), PatternRepository.get().getMaxYOffset() - 1, PatternRepository.get().getMaxXZOffset()));
         // return IForgeTileEntity.INFINITE_EXTENT_AABB;
     }
 
@@ -81,12 +81,12 @@ public class LayoutTileEntity extends TileEntity {
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT compoundNBT = getUpdateTag();
-        return new SUpdateTileEntityPacket(getPos(), 0, compoundNBT);
+        return new SUpdateTileEntityPacket(getBlockPos(), 0, compoundNBT);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        deserializeNBT(pkt.getNbtCompound());
+        deserializeNBT(pkt.getTag());
         refresh();
     }
 
@@ -97,7 +97,7 @@ public class LayoutTileEntity extends TileEntity {
     @Override
     public CompoundNBT getUpdateTag() {
         CompoundNBT compoundNBT = super.getUpdateTag();
-        this.write(compoundNBT);
+        this.save(compoundNBT);
         return compoundNBT;
     }
 
@@ -111,14 +111,14 @@ public class LayoutTileEntity extends TileEntity {
      * NBT
      */
     Tier tier = Tier.TIER_1;
-    int level = -1; // level in the structure to show
+    int displayLevel = -1; // level in the structure to show
     static final String KEY_LEVEL = "level";
     static final String KEY_TIER = "tier";
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
-        compound.putInt(KEY_LEVEL, level);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
+        compound.putInt(KEY_LEVEL, displayLevel);
         compound.putInt(KEY_TIER, tier.ordinal());
         return compound;
     }
@@ -130,13 +130,13 @@ public class LayoutTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(BlockState blockState, CompoundNBT compoundNBT) {
-        super.read(blockState, compoundNBT);
+    public void load(BlockState blockState, CompoundNBT compoundNBT) {
+        super.load(blockState, compoundNBT);
         readFromNBT(compoundNBT);
     }
 
     private void readFromNBT(CompoundNBT compound) {
-        level = MathHelper.clamp(compound.getInt(KEY_LEVEL), -1, 16);
+        displayLevel = MathHelper.clamp(compound.getInt(KEY_LEVEL), -1, 16);
         tier = Tier.byIndex(compound.getInt(KEY_TIER));
     }
 }

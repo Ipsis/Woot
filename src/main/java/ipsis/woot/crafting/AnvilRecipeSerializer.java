@@ -29,17 +29,17 @@ public class AnvilRecipeSerializer<T extends AnvilRecipe> extends ForgeRegistryE
 
     @Nullable
     @Override
-    public T read(ResourceLocation recipeId, PacketBuffer buffer) {
+    public T fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
         try {
-            Ingredient baseIngredient = Ingredient.read(buffer);
+            Ingredient baseIngredient = Ingredient.fromNetwork(buffer);
             NonNullList<Ingredient> ingredients = NonNullList.create();
             int ingCount = buffer.readShort();
             if (ingCount != 0) {
                 for (int i = 0; i < ingCount; i++)
-                    ingredients.add(Ingredient.read(buffer));
+                    ingredients.add(Ingredient.fromNetwork(buffer));
             }
 
-            ItemStack result = buffer.readItemStack();
+            ItemStack result = buffer.readItem();
             return this.factory.create(recipeId, baseIngredient, result.getItem(), result.getCount(), ingredients);
 
         } catch (Exception e) {
@@ -49,14 +49,14 @@ public class AnvilRecipeSerializer<T extends AnvilRecipe> extends ForgeRegistryE
     }
 
     @Override
-    public void write(PacketBuffer buffer, T recipe) {
+    public void toNetwork(PacketBuffer buffer, T recipe) {
         //Woot.setup.getLogger().debug("AnvilRecipeSerializer:write");
         try {
-            recipe.getBaseIngredient().write(buffer);
+            recipe.getBaseIngredient().toNetwork(buffer);
             buffer.writeShort(recipe.getIngredients().size());
             for (Ingredient ingredient : recipe.getIngredients())
-                ingredient.write(buffer);
-            buffer.writeItemStack(recipe.getOutput());
+                ingredient.toNetwork(buffer);
+            buffer.writeItem(recipe.getOutput());
         } catch (Exception e) {
             Woot.setup.getLogger().error("AnvilRecipeSerializer:write", e);
             throw e;
@@ -65,18 +65,18 @@ public class AnvilRecipeSerializer<T extends AnvilRecipe> extends ForgeRegistryE
     }
 
     @Override
-    public T read(ResourceLocation recipeId, JsonObject json) {
+    public T fromJson(ResourceLocation recipeId, JsonObject json) {
 
-        JsonElement jsonelement = (JsonElement) (JSONUtils.isJsonArray(json, "base") ? JSONUtils.getJsonArray(json, "base") : JSONUtils.getJsonObject(json, "base"));
-        Ingredient baseIngredient = Ingredient.deserialize(jsonelement);
+        JsonElement jsonelement = (JsonElement) (JSONUtils.isArrayNode(json, "base") ? JSONUtils.getAsJsonArray(json, "base") : JSONUtils.getAsJsonObject(json, "base"));
+        Ingredient baseIngredient = Ingredient.fromJson(jsonelement);
 
-        NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
+        NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
         if (nonnulllist.isEmpty()) {
             throw new JsonParseException("No ingredients for anvil recipe");
         } else if (nonnulllist.size() > 4) {
             throw new JsonParseException("Too many ingredients for anvil recipe the max is 4");
         } else {
-            ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+            ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
             return this.factory.create(recipeId, baseIngredient, result.getItem(), result.getCount(), nonnulllist);
         }
     }
@@ -84,8 +84,8 @@ public class AnvilRecipeSerializer<T extends AnvilRecipe> extends ForgeRegistryE
     private static NonNullList<Ingredient> readIngredients(JsonArray p_199568_0_) {
         NonNullList<Ingredient> nonnulllist = NonNullList.create();
         for (int i = 0; i < p_199568_0_.size(); ++i) {
-            Ingredient ingredient = Ingredient.deserialize(p_199568_0_.get(i));
-            if (!ingredient.hasNoMatchingItems())
+            Ingredient ingredient = Ingredient.fromJson(p_199568_0_.get(i));
+            if (!ingredient.isEmpty())
                 nonnulllist.add(ingredient);
         }
         return nonnulllist;

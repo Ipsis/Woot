@@ -21,11 +21,12 @@ public class CustomDropsLoader {
             if (recipe instanceof FactoryRecipe) {
                 FactoryRecipe factoryRecipe = (FactoryRecipe) recipe;
                 if (factoryRecipe.getFakeMob().isValid()) {
-                    HashMap<Integer, Integer> stackSizes = new HashMap<>();
                     for (FactoryRecipe.Drop drop : factoryRecipe.getDrops()) {
                         ItemStack itemStack = drop.itemStack.copy();
                         for (int i = 0; i < 4; i++) {
-                            itemStack.setCount(drop.stackSizes[i]);
+                            itemStack.setCount(1);
+                            HashMap<Integer, Integer> stackSizes = new HashMap<>();
+                            stackSizes.put(drop.stackSizes[i], 1);
                             MobSimulator.getInstance().learnCustomDrop(
                                     new FakeMobKey(factoryRecipe.getFakeMob(), i),
                                     itemStack,

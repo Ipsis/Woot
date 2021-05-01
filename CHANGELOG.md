@@ -15,6 +15,7 @@ no loot learning can occur.
 - Added energy display in JEI recipes rather than blank gui space
 ### Changed
 ### Fixed
+- Correct custom drops not allowing stack size > 1 [#517]
 ### Removed
 
 ## [1.16.5-1.0.6.0] - 2021-04-25

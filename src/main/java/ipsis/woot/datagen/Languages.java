@@ -1,7 +1,6 @@
 package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
-import ipsis.woot.modules.factory.FactoryModule;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -15,15 +14,10 @@ public class Languages extends LanguageProvider {
     protected void addTranslations() {
 
         add("itemGroup.woot", "Woot");
+        add("info.woot.sneakforinfo", "Hold shift for more detail");
 
-        add(FactoryModule.LAYOUT.get(), "Layout Guide");
-        add(FactoryModule.HEART.get(), "Heart");
-        add(FactoryModule.IMPORTER.get(), "Importer");
-        add(FactoryModule.EXPORTER.get(), "Exporter");
-        add(FactoryModule.BASE_1.get(), "Casing 1");
-        add(FactoryModule.BASE_2.get(), "Casing 2");
-        add(FactoryModule.BASE_GLASS.get(), "Factory Glass");
-        add(FactoryModule.CORE_1A.get(), "Core 1A");
-        add(FactoryModule.CORE_1B.get(), "Core 1B");
+        Woot.instance.getModules().addTranslations(this);
+
+
     }
 }

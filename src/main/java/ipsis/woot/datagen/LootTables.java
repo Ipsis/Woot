@@ -91,7 +91,9 @@ public class LootTables extends LootTableProvider {
                 new SimpleBlocks(FactoryModule.BASE_2.get(), FactoryModule.BASE_2_ID),
                 new SimpleBlocks(FactoryModule.BASE_GLASS.get(), FactoryModule.BASE_GLASS_ID),
                 new SimpleBlocks(FactoryModule.CORE_1A.get(), FactoryModule.CORE_1A_ID),
-                new SimpleBlocks(FactoryModule.CORE_1B.get(), FactoryModule.CORE_1B_ID)
+                new SimpleBlocks(FactoryModule.CORE_1B.get(), FactoryModule.CORE_1B_ID),
+                new SimpleBlocks(FactoryModule.CORE_2A.get(), FactoryModule.CORE_2A_ID),
+                new SimpleBlocks(FactoryModule.CORE_2B.get(), FactoryModule.CORE_2B_ID),
         };
 
         for (SimpleBlocks s : simpleBlocks)

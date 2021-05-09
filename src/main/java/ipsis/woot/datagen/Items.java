@@ -23,9 +23,18 @@ public class Items extends ItemModelProvider {
         parentedBlock(FactoryModule.EXPORTER.get(), "block/" + FactoryModule.EXPORTER_ID);
         parentedBlock(FactoryModule.BASE_1.get(), "block/" + FactoryModule.BASE_1_ID);
         parentedBlock(FactoryModule.BASE_2.get(), "block/" + FactoryModule.BASE_2_ID);
+        parentedBlock(FactoryModule.BASE_3.get(), "block/" + FactoryModule.BASE_3_ID);
         parentedBlock(FactoryModule.BASE_GLASS.get(), "block/" + FactoryModule.BASE_GLASS_ID);
         parentedBlock(FactoryModule.CORE_1A.get(), "block/" + FactoryModule.CORE_1A_ID);
         parentedBlock(FactoryModule.CORE_1B.get(), "block/" + FactoryModule.CORE_1B_ID);
+        parentedBlock(FactoryModule.CORE_2A.get(), "block/" + FactoryModule.CORE_2A_ID);
+        parentedBlock(FactoryModule.CORE_2B.get(), "block/" + FactoryModule.CORE_2B_ID);
+        parentedBlock(FactoryModule.CORE_3A.get(), "block/" + FactoryModule.CORE_3A_ID);
+        parentedBlock(FactoryModule.CORE_3B.get(), "block/" + FactoryModule.CORE_3B_ID);
+        parentedBlock(FactoryModule.CORE_4A.get(), "block/" + FactoryModule.CORE_4A_ID);
+        parentedBlock(FactoryModule.CORE_4B.get(), "block/" + FactoryModule.CORE_4B_ID);
+        parentedBlock(FactoryModule.CORE_5A.get(), "block/" + FactoryModule.CORE_5A_ID);
+        parentedBlock(FactoryModule.CORE_5B.get(), "block/" + FactoryModule.CORE_5B_ID);
     }
 
     private void parentedBlock(Block block, String model) {

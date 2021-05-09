@@ -1,7 +1,9 @@
 package ipsis.woot.setup;
 
 import ipsis.woot.Woot;
+import ipsis.woot.modules.factory.ComponentType;
 import ipsis.woot.modules.factory.FactoryModule;
+import ipsis.woot.modules.factory.layout.PatternLibrary;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -30,5 +32,8 @@ public class ModSetup {
     }
 
     public void init(FMLCommonSetupEvent e) {
+
+        ComponentType.setup();
+        PatternLibrary.get().load();
     }
 }

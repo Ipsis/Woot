@@ -15,12 +15,15 @@ public class Woot {
     public static final String MODID = "woot";
     public static ModSetup modSetup = new ModSetup();
     private Modules modules = new Modules();
+    public Modules getModules() { return this.modules; }
+    public static Woot instance;
 
     public Woot() {
 
+        instance = this;
         setupModules();
 
-        Config.register();
+        Config.register(modules);
         Registration.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(modSetup::init);

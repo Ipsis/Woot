@@ -1,5 +1,6 @@
 package ipsis.woot.datagen;
 
+import ipsis.woot.Woot;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
@@ -14,5 +15,7 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+
+        Woot.instance.getModules().runRecipes(consumer);
     }
 }

@@ -3,6 +3,7 @@ package ipsis.woot.modules.factory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
 
@@ -42,6 +43,13 @@ public enum ComponentType {
         if (b == null)
             return Blocks.AIR;
         return b;
+    }
+
+    public static ItemStack getItemStack(ComponentType componentType) {
+        Block b = blockHashMap.get(componentType);
+        if (b == null)
+            return ItemStack.EMPTY;
+        return new ItemStack(b);
     }
 
     public static void setup() {

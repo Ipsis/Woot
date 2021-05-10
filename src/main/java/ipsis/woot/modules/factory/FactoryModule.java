@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.datagen.Languages;
 import ipsis.woot.modules.Module;
 import ipsis.woot.modules.factory.blocks.*;
+import ipsis.woot.modules.factory.items.InternItem;
 import ipsis.woot.setup.Config;
 import ipsis.woot.setup.ModSetup;
 import ipsis.woot.setup.Registration;
@@ -18,6 +19,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.RegistryObject;
@@ -44,6 +46,8 @@ public class FactoryModule implements Module {
     public static final String CORE_4B_ID = "core_4b";
     public static final String CORE_5A_ID = "core_5a";
     public static final String CORE_5B_ID = "core_5b";
+
+    public static final String INTERN_ID = "intern";
 
     public static final RegistryObject<Block> LAYOUT = Registration.BLOCKS.register(LAYOUT_ID,
             () -> new LayoutBlock().addSimpleTooltip(LAYOUT_ID).addSneakTooltip("info.woot.sneak.0." + LAYOUT_ID).addSneakTooltip("info.woot.sneak.1." + LAYOUT_ID));
@@ -94,6 +98,8 @@ public class FactoryModule implements Module {
     public static final RegistryObject<Block> CORE_5B = Registration.BLOCKS.register(CORE_5B_ID, () -> new FactoryBlock(ComponentType.CORE_5B, AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_PINK).sound(SoundType.STONE).strength(3.5F).lightLevel((i) -> { return 15; })));
     public static final RegistryObject<Item> CORE_5B_ITEM = Registration.ITEMS.register(CORE_5B_ID, () -> new BlockItem(CORE_5B.get(), ModSetup.createStandardProperties()));
 
+    public static final RegistryObject<Item> INTERN_ITEM = Registration.ITEMS.register(INTERN_ID, () -> new InternItem().addSimpleTooltip(INTERN_ID).addSimpleSneakTooltip(INTERN_ID));
+
 
     // Most of the blocks in the factory have the same set of properties
     public static AbstractBlock.Properties getDefaultBlockProperties() {
@@ -116,12 +122,20 @@ public class FactoryModule implements Module {
                 .pattern("grg")
                 .pattern("ytb")
                 .pattern("gwg")
-                .define('g', Tags.Items.GLASS)
-                .define('r', Tags.Items.DYES_RED)
-                .define('y', Tags.Items.DYES_YELLOW)
-                .define('b', Tags.Items.DYES_BLACK)
-                .define('w', Tags.Items.DYES_WHITE)
-                .define('t', Blocks.GLOWSTONE)
+                .define('g', Tags.Items.GLASS) .define('r', Tags.Items.DYES_RED)
+                .define('y', Tags.Items.DYES_YELLOW) .define('b', Tags.Items.DYES_BLACK)
+                .define('w', Tags.Items.DYES_WHITE) .define('t', Blocks.GLOWSTONE)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(INTERN_ITEM.get())
+                .pattern(" si")
+                .pattern(" ws")
+                .pattern("w  ")
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('s', Tags.Items.DUSTS_REDSTONE)
+                .define('w', Items.STICK)
                 .group(Woot.MODID)
                 .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
                 .save(consumer);
@@ -149,9 +163,24 @@ public class FactoryModule implements Module {
         languages.add(CORE_5A.get(), "Core 5A");
         languages.add(CORE_5B.get(), "Core 5B");
 
+        languages.add(INTERN_ITEM.get(), "Intern");
+
         languages.add("info.woot." + LAYOUT_ID, "Shows layout of factory");
         languages.add("info.woot.sneak.0." + LAYOUT_ID, "Right click to change factory tiers");
         languages.add("info.woot.sneak.1." + LAYOUT_ID, "Sneak right click to change displayed y level");
 
+        languages.add("info.woot." + INTERN_ID, "Use on the Heart to build, destroy and validate");
+        languages.add("info.woot.sneak." + INTERN_ID, "Sneak right click to change modes");
+
+        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_1", "Build Tier I factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_2", "Build Tier II factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_3", "Build Tier III factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_4", "Build Tier IV factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_5", "Build Tier V factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_1", "Validate Tier I factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_2", "Validate Tier II factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_3", "Validate Tier III factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_4", "Validate Tier IV factory");
+        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_5", "Validate Tier V factory");
     }
 }

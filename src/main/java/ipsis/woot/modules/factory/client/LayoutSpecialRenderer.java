@@ -9,6 +9,7 @@ import ipsis.woot.modules.factory.FactoryTier;
 import ipsis.woot.modules.factory.blocks.LayoutTileEntity;
 import ipsis.woot.modules.factory.layout.PatternBlockInfo;
 import ipsis.woot.modules.factory.layout.PatternLibrary;
+import ipsis.woot.util.BlockPosHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -70,7 +71,7 @@ public class LayoutSpecialRenderer extends TileEntityRenderer<LayoutTileEntity> 
             for (PatternBlockInfo block : pattern.getBlocks())  {
                 matrixStack.pushPose();
                 {
-                    BlockPos pos = origin.offset(rotateFromSouth(block.offset, facing)).relative(facing.getOpposite(), 2);
+                    BlockPos pos = origin.offset(BlockPosHelper.rotateFromSouth(block.offset, facing)).relative(facing.getOpposite(), 2);
                     float x = (origin.getX() - pos.getX()) * -1.0F;
                     float y = (origin.getY() - pos.getY()) * -1.0F;
                     float z = (origin.getZ() - pos.getZ()) * -1.0F;
@@ -104,20 +105,8 @@ public class LayoutSpecialRenderer extends TileEntityRenderer<LayoutTileEntity> 
             IVertexBuilder iVertexBuilder = renderTypeBuffer.getBuffer(RenderType.LINES);
             WorldRenderer.renderLineBox(matrixStack, iVertexBuilder,
                     minX, minY, minZ, maxX, maxY, maxZ,
-                    0.9F, 0.9F, 0.9F, 1.0F, 0.5F, 0.5F, 0.F);
+                    0.9F, 0.9F, 0.9F, 1.0F, 0.5F, 0.5F, 0.5F);
         }
         matrixStack.popPose();
-    }
-
-    private BlockPos rotateFromSouth(BlockPos blockPos, Direction to) {
-
-        Rotation rotation = Rotation.NONE;
-        if (to == Direction.EAST)
-            rotation = Rotation.COUNTERCLOCKWISE_90;
-        else if (to == Direction.WEST)
-            rotation = Rotation.CLOCKWISE_90;
-        else if (to == Direction.NORTH)
-            rotation = Rotation.CLOCKWISE_180;
-        return blockPos.rotate(rotation);
     }
 }

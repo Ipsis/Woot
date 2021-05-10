@@ -4,6 +4,7 @@ import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryModule;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -35,10 +36,15 @@ public class Items extends ItemModelProvider {
         parentedBlock(FactoryModule.CORE_4B.get(), "block/" + FactoryModule.CORE_4B_ID);
         parentedBlock(FactoryModule.CORE_5A.get(), "block/" + FactoryModule.CORE_5A_ID);
         parentedBlock(FactoryModule.CORE_5B.get(), "block/" + FactoryModule.CORE_5B_ID);
+
+        itemGenerated(FactoryModule.INTERN_ITEM.get(), "item/" + FactoryModule.INTERN_ID);
     }
 
     private void parentedBlock(Block block, String model) {
-
         getBuilder(block.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(modLoc(model)));
+    }
+
+    private void itemGenerated(Item item, String texture) {
+        getBuilder(item.getRegistryName().getPath()).parent(getExistingFile(mcLoc("item/handheld"))).texture("layer0", texture);
     }
 }

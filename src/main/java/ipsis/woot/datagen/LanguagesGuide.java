@@ -197,6 +197,43 @@ public class LanguagesGuide {
                         "$(li)4x$(l:factory_blocks/cap_c)Exemptus Cap$()" +
                         "$(li)8x$(l:factory_blocks/cap_d)Magister Cap$()"
                 },
+                { BASICS_TAG + "tiers.12",
+                        "Each tier has a maximum mob health that can be handled. The following " +
+                        "pages show the default maximum health and any exceptions to the rules " +
+                        "(cough, cough, Endermen)"
+                },
+                { BASICS_TAG + "tiers.13",
+                        "$(l)Zelator [I]$()$(br2)" +
+                        "$(li)Mobs with health <= 20"
+                },
+                { BASICS_TAG + "tiers.14",
+                        "$(l)Theoricus [II]$()$(br2)" +
+                        "$(li)Mobs with health <= 40"
+                },
+                { BASICS_TAG + "tiers.15",
+                        "$(l)Practicus [III]$()$(br2)" +
+                        "$(li)Mobs with health <= 60" +
+                        "$(li)Magma Cube" +
+                        "$(li)Blaze" +
+                        "$(li)Witch" +
+                        "$(li)Ghast" +
+                        "$(li)Zombie Pigman"
+                },
+                { BASICS_TAG + "tiers.16",
+                        "$(l)Exemptus [IV]$()$(br2)" +
+                        "$(li)Any mob health" +
+                        "$(li)Enderman" +
+                        "$(li)Wither Skeleton" +
+                        "$(li)Villager" +
+                        "$(li)Guardian" +
+                        "$(li)Villager Golem"
+                },
+                { BASICS_TAG + "tiers.17",
+                        "$(l)Magister [V]$()$(br2)" +
+                        "$(li)Any mob health" +
+                        "$(li)Wither" +
+                        "$(li)Ender Dragon"
+                },
                 // TLDR
                 { BASICS_TAG + "tldr.name", "TLDR"},
                 { BASICS_TAG + "tldr.0",

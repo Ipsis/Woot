@@ -13,6 +13,8 @@ no loot learning can occur.
 ## [1.16.5-1.0.6.1] - 2021-??-??
 ### Added
 - Added energy display in JEI recipes rather than blank gui space
+- Added mob to factory mapping information. This has always been here, it 
+  wasn't just added because someone got reprimanded by DireWolf20..... [#522]
 ### Changed
 ### Fixed
 - Correct custom drops not allowing stack size > 1 [#517]

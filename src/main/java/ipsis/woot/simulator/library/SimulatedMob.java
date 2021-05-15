@@ -159,10 +159,14 @@ public class SimulatedMob {
 
             SimulatedMobDrop simulatedMobDrop = SimulatedMobDrop.fromJson(simulatedMob, (JsonObject)jsonElement);
             if (simulatedMobDrop != null) {
-                if (fakeMob.isSheep() && !WoolGenerator.isWoolDrop(simulatedMobDrop.itemStack))
-                    simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
-                else
-                    simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+                if (PolicyRegistry.get().canLearnItem(simulatedMobDrop.itemStack.getItem().getRegistryName())) {
+                    if (fakeMob.isSheep() && !WoolGenerator.isWoolDrop(simulatedMobDrop.itemStack))
+                        simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+                    else
+                        simulatedMob.simulatedMobDrops.add(simulatedMobDrop);
+                } else {
+                    Woot.setup.getLogger().info("Drop {} is blacklisted", simulatedMobDrop.itemStack.getItem());
+                }
             }
 
         }

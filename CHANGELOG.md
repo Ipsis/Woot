@@ -21,6 +21,7 @@ no loot learning can occur.
 - Slight bump to machine processing speed (20->40RF/tick so recipes finshed faster)
 ### Fixed
 - Correct custom drops not allowing stack size > 1 [#517]
+- Blacklisted all RFTools Dimension dimlets [#520]
 ### Removed
 
 ## [1.16.5-1.0.6.0] - 2021-04-25

@@ -1,5 +1,6 @@
 package ipsis.woot.policy;
 
+import ipsis.woot.Woot;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -101,12 +102,12 @@ public class PolicyRegistry {
 
         public void addToGenerateMod(String s) {
             LOGGER.info("Blacklisting generating of all items from {}", s);
-            learnMod.add(s);
+            generateMod.add(s);
         }
 
         public void addToGenerateItem(String s) {
             LOGGER.info("Blacklisting generating of {}", s);
-            learnItem.add(s);
+            generateItem.add(s);
         }
     }
 
@@ -173,8 +174,20 @@ public class PolicyRegistry {
         if (rl == null)
             return false;
 
+        for (String s : internalPolicy.learnMod) {
+            if (rl.getNamespace().equalsIgnoreCase(s)) {
+                return false;
+            }
+        }
+
         for (String s : customPolicy.learnMod) {
             if (rl.getNamespace().equalsIgnoreCase(s)) {
+                return false;
+            }
+        }
+
+        for (String s : internalPolicy.learnItem) {
+            if (s.equalsIgnoreCase(rl.toString())) {
                 return false;
             }
         }

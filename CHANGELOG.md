@@ -15,7 +15,7 @@ no loot learning can occur.
 - Added energy display in JEI recipes rather than blank gui space
 - Added mob to factory mapping information. This has always been here, it 
   wasn't just added because someone got reprimanded by DireWolf20..... [#522]
-- Added Quark-Dragon Scale (100% for 1), Baubly-Green Heart (1% for 1), Tetra-Dragon Sinew (100% for 2) to the 
+- Added Quark-Dragon Scale (100% for 1), Baubly-Green Heart (100% for 1), Tetra-Dragon Sinew (100% for 2) to the 
   Ender Dragon drops. These match the original mod drop rates. [#518]
 ### Changed
 - Slight bump to machine processing speed (20->40RF/tick so recipes finshed faster)

@@ -329,6 +329,7 @@ public class Factory {
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
 
+        /* Now using modded drops as well
         FactoryRecipeBuilder.factoryRecipe(new FakeMob("minecraft:ender_dragon"))
                 .addIngredient(new ItemStack(Items.END_CRYSTAL, 4))
                 .addDrop(new FactoryRecipe.Drop(
@@ -339,7 +340,7 @@ public class Factory {
                         new ItemStack(Items.DRAGON_BREATH),
                         2, 4, 6, 8,
                         100.0F, 100.0F, 100.0F, 100.0F))
-                .build(consumer, "ender_dragon");
+                .build(consumer, "ender_dragon"); */
 
         FactoryRecipeBuilder.factoryRecipe(new FakeMob("minecraft:wither"))
                 .addIngredient(new ItemStack(Items.WITHER_SKELETON_SKULL, 3))

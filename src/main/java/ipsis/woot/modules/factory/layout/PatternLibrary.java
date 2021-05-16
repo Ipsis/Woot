@@ -177,8 +177,71 @@ public class PatternLibrary {
         CHAR_MAPPINGS.put('X', ComponentType.EXPORTER);
         CHAR_MAPPINGS.put(HEART, ComponentType.HEART);
     }
-
+    
     private final String FULL_PATTERN[][] = {
+            {
+                    "---aba---",
+                    "--baaab--",
+                    "-aaaaaaa-",
+                    "IbaaaaabX",
+                    "-aaaaaaa-",
+                    "--baaab--",
+                    "---aba---",
+                    "----H----"
+            },
+            {
+                    "---ggg---",
+                    "--c---c--",
+                    "-g-tqt-g-",
+                    "-g-omo-g-",
+                    "-g-uqu-g-",
+                    "--c---c--",
+                    "---ggg---",
+                    "---------"
+            },
+            {
+                    "---ggg---",
+                    "--c-v-c--",
+                    "-g-srs-g-",
+                    "-gvpnpvg-",
+                    "-g-vrv-g-",
+                    "--c-v-c--",
+                    "---ggg---",
+                    "---------"
+            },
+            {
+                    "---ggg---",
+                    "--c---c--",
+                    "-g-tqt-g-",
+                    "-g-omo-g-",
+                    "-g-uqu-g-",
+                    "--c---c--",
+                    "---ggg---",
+                    "---------"
+            },
+            {
+                    "---aaa---",
+                    "--b---b--",
+                    "-a--s--a-",
+                    "-a-svs-a-",
+                    "-a--s--a-",
+                    "--b---b--",
+                    "---aaa---",
+                    "---------"
+            },
+            {
+                    "---------",
+                    "---aaa---",
+                    "--aagaa--",
+                    "--aggga--",
+                    "--aagaa--",
+                    "---aaa---",
+                    "---------",
+                    "---------"
+            }
+    };
+
+    private final String FULL_PATTERN2[][] = {
             {
                     "---aba---",
                     "--baaab--",

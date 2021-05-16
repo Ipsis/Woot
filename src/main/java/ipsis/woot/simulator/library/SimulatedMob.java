@@ -99,7 +99,7 @@ public class SimulatedMob {
         looting = MathHelper.clampLooting(looting);
         for (SimulatedMobDrop drop : simulatedMobDrops) {
             ItemStack itemStack = drop.getRolledDrop(looting);
-            if (!itemStack.isEmpty())
+            if (!itemStack.isEmpty() && PolicyRegistry.get().canGenerateItem(itemStack.getItem().getRegistryName()))
                 drops.add(itemStack);
         }
         return drops;

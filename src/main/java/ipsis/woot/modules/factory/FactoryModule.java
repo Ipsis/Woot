@@ -118,33 +118,13 @@ public class FactoryModule implements Module {
     @Override
     public void runRecipes(Consumer<IFinishedRecipe> consumer) {
 
-        ShapedRecipeBuilder.shaped(LAYOUT.get())
-                .pattern("grg")
-                .pattern("ytb")
-                .pattern("gwg")
-                .define('g', Tags.Items.GLASS) .define('r', Tags.Items.DYES_RED)
-                .define('y', Tags.Items.DYES_YELLOW) .define('b', Tags.Items.DYES_BLACK)
-                .define('w', Tags.Items.DYES_WHITE) .define('t', Blocks.GLOWSTONE)
-                .group(Woot.MODID)
-                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
-                .save(consumer);
-
-        ShapedRecipeBuilder.shaped(INTERN_ITEM.get())
-                .pattern(" si")
-                .pattern(" ws")
-                .pattern("w  ")
-                .define('i', Tags.Items.INGOTS_IRON)
-                .define('s', Tags.Items.DUSTS_REDSTONE)
-                .define('w', Items.STICK)
-                .group(Woot.MODID)
-                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
-                .save(consumer);
+        InternItem.addRecipe(INTERN_ITEM.get(), consumer);
+        LayoutBlock.addRecipe(LAYOUT.get(), consumer);
     }
 
     @Override
     public void addTranslations(Languages languages) {
 
-        languages.add(LAYOUT.get(), "Layout Guide");
         languages.add(HEART.get(), "Heart");
         languages.add(IMPORTER.get(), "Importer");
         languages.add(EXPORTER.get(), "Exporter");
@@ -163,24 +143,7 @@ public class FactoryModule implements Module {
         languages.add(CORE_5A.get(), "Core 5A");
         languages.add(CORE_5B.get(), "Core 5B");
 
-        languages.add(INTERN_ITEM.get(), "Intern");
-
-        languages.add("info.woot." + LAYOUT_ID, "Shows layout of factory");
-        languages.add("info.woot.sneak.0." + LAYOUT_ID, "Right click to change factory tiers");
-        languages.add("info.woot.sneak.1." + LAYOUT_ID, "Sneak right click to change displayed y level");
-
-        languages.add("info.woot." + INTERN_ID, "Use on the Heart to build, destroy and validate");
-        languages.add("info.woot.sneak." + INTERN_ID, "Sneak right click to change modes");
-
-        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_1", "Build Tier I factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_2", "Build Tier II factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_3", "Build Tier III factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_4", "Build Tier IV factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.build_tier_5", "Build Tier V factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_1", "Validate Tier I factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_2", "Validate Tier II factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_3", "Validate Tier III factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_4", "Validate Tier IV factory");
-        languages.add("info.woot." + INTERN_ID + ".modes.validate_tier_5", "Validate Tier V factory");
+        InternItem.addTranslations(INTERN_ID, languages);
+        LayoutBlock.addTranslations(LAYOUT_ID, languages);
     }
 }

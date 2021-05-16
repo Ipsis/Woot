@@ -1,5 +1,6 @@
 package ipsis.woot.compat.reliquary;
 
+import ipsis.woot.Woot;
 import ipsis.woot.util.FakeMob;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -15,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReliquaryPlugin {
 
-    @ObjectHolder("xlreliquary:mob_charm_fragment")
+    @ObjectHolder("xreliquary:mob_charm_fragment")
     private static Item MOB_CHARM_FRAGMENT = null;
 
     private static boolean isValidMonster(FakeMob fakeMob, World world) {

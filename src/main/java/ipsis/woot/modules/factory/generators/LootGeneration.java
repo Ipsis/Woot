@@ -1,5 +1,6 @@
 package ipsis.woot.modules.factory.generators;
 
+import ipsis.woot.compat.reliquary.ReliquaryPlugin;
 import ipsis.woot.modules.factory.FormedSetup;
 import ipsis.woot.modules.factory.blocks.HeartTileEntity;
 import ipsis.woot.modules.factory.items.XpShardBaseItem;
@@ -58,6 +59,18 @@ public class LootGeneration {
             FakeMobKey fakeMobKey = new FakeMobKey(mob, looting);
             for (int i = 0; i < mobCount; i++)
                 rolledDrops.addAll(MobSimulator.getInstance().getRolledDrops(fakeMobKey));
+
+            List<ItemStack> charmStacks = new ArrayList<>();
+            for (ItemStack itemStack : rolledDrops) {
+                if (ReliquaryPlugin.isCharmFragment(itemStack)) {
+                    itemStack.setCount(0);
+                    ItemStack charmFragment = ReliquaryPlugin.getCharmFragment(fakeMobKey.getMob(), setup.getWorld());
+                    if (!charmFragment.isEmpty())
+                        charmStacks.add(charmFragment);
+                }
+            }
+
+            rolledDrops.addAll(charmStacks);
 
             // Strip out all learned wool drops for vanilla sheep
             // Add custom drop wool drops

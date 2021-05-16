@@ -18,10 +18,11 @@ no loot learning can occur.
 - Added Quark-Dragon Scale (100% for 1), Baubly-Green Heart (100% for 1), Tetra-Dragon Sinew (100% for 2) to the 
   Ender Dragon drops. These match the original mod drop rates. [#518]
 ### Changed
-- Slight bump to machine processing speed (20->40RF/tick so recipes finshed faster)
+- Slight bump to machine processing speed (20->40RF/tick so recipes finish faster)
 ### Fixed
 - Correct custom drops not allowing stack size > 1 [#517]
 - Blacklisted all RFTools Dimension dimlets [#520]
+- Fixed XReliquary Mob Charm Fragments being produced with no entity NBT
 ### Removed
 
 ## [1.16.5-1.0.6.0] - 2021-04-25

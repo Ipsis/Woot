@@ -169,6 +169,7 @@ public class ConfigPath {
         public static final String EXOTIC_C_PERCENTAGE = "exoticCPercentage";
         public static final String EXOTIC_D_TICKS = "exoticDTicks";
         public static final String EXOTIC_E_COUNT = "exoticECount";
+        public static final String EXOTIC_TAG = "exotic";
 
         // These support config override
         public static final String MASS_COUNT_TAG = "massCount";

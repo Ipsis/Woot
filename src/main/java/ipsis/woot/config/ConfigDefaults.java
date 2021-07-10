@@ -76,6 +76,7 @@ public final class ConfigDefaults {
         public static final int TIER_3_MAX_UNITS_DEF = 60;
         public static final int TIER_4_MAX_UNITS_DEF = Integer.MAX_VALUE;
         public static final int TIER_5_MAX_UNITS_DEF = Integer.MAX_VALUE;
+        public static final double EXOTIC_DROP_DEF = 15.0F;
 
         private static final int BUCKET_CAPACITY = 1000;
         public static final int CELL_1_CAPACITY_DEF = BUCKET_CAPACITY * 10;

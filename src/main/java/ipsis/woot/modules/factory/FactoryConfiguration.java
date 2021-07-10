@@ -38,6 +38,7 @@ public class FactoryConfiguration {
     public static ForgeConfigSpec.DoubleValue EXOTIC_C;
     public static ForgeConfigSpec.IntValue EXOTIC_D;
     public static ForgeConfigSpec.IntValue EXOTIC_E;
+    public static ForgeConfigSpec.DoubleValue EXOTIC;
 
     public static ForgeConfigSpec.IntValue EFFICIENCY_1;
     public static ForgeConfigSpec.IntValue EFFICIENCY_2;
@@ -144,6 +145,10 @@ public class FactoryConfiguration {
                         .comment("Max health for a tier 5 mob")
                         .defineInRange(ConfigPath.Factory.TIER_5_MAX_HEALTH_TAG,
                                 Factory.TIER_5_MAX_UNITS_DEF, 5, Integer.MAX_VALUE);
+                EXOTIC = COMMON_BUILDER
+                        .comment("Exotic drop chance")
+                        .defineInRange(ConfigPath.Factory.EXOTIC_TAG,
+                                Factory.EXOTIC_DROP_DEF, 0.0F, 100.0F);
             }
             COMMON_BUILDER.pop();
 

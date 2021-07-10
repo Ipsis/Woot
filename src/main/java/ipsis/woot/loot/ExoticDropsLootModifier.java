@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.Exotic;
+import ipsis.woot.modules.factory.FactoryConfiguration;
 import ipsis.woot.util.helper.RandomHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
@@ -29,8 +30,8 @@ import java.util.List;
 
 public class ExoticDropsLootModifier extends LootModifier {
 
-    private int rolls = 1;
-    private double dropChance = 33.3F;
+    private int rolls;
+    private double dropChance;
 
     private List<DropWeighted> drops = new ArrayList<>();
 
@@ -38,7 +39,7 @@ public class ExoticDropsLootModifier extends LootModifier {
         super(conditions);
         // pull the rolls and drop chances from the config
         this.rolls = rolls;
-        this.dropChance = chance;
+        this.dropChance = FactoryConfiguration.EXOTIC.get();
         drops.add(new DropWeighted(Exotic.EXOTIC_A.getItemStack(), weights[0]));
         drops.add(new DropWeighted(Exotic.EXOTIC_B.getItemStack(), weights[1]));
         drops.add(new DropWeighted(Exotic.EXOTIC_C.getItemStack(), weights[2]));
@@ -54,6 +55,8 @@ public class ExoticDropsLootModifier extends LootModifier {
                 ItemStack drop = getWeightedDrop();
                 if (!drop.isEmpty())
                     generatedLoot.add(drop.copy());
+                else
+                    Woot.setup.getLogger().error("Rolled exotic dropping as empty stack");
             }
         }
         return generatedLoot;

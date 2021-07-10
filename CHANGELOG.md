@@ -14,6 +14,7 @@ no loot learning can occur.
 ### Added
 - Randomize enchant on enchanted items
 - Damage items that can be damaged
+- Added config option to set the exotic drop rate in the End City
 ### Changed
 ### Fixed
 - Exotic loot now correctly drops a copy of the itemstack..... [#530]

@@ -13,8 +13,10 @@ import ipsis.woot.util.FakeMob;
 import ipsis.woot.util.FakeMobKey;
 import ipsis.woot.util.helper.RandomHelper;
 import ipsis.woot.util.helper.StorageHelper;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -71,6 +73,23 @@ public class LootGeneration {
             }
 
             rolledDrops.addAll(charmStacks);
+
+            for (ItemStack itemStack : rolledDrops) {
+                if (itemStack.isDamageable()) {
+                    int dmg = RandomHelper.RANDOM.nextInt(itemStack.getMaxDamage() + 1);
+                    dmg = MathHelper.clamp(dmg, 1, itemStack.getMaxDamage());
+                    itemStack.setDamage(dmg);
+                }
+                if (itemStack.isEnchanted()) {
+                    if (itemStack.hasTag())
+                        itemStack.getTag().remove("ench");
+
+                    float f = setup.getWorld().getDifficultyForLocation(heartTileEntity.getPos()).getClampedAdditionalDifficulty();
+                    boolean allowTreasure = false;
+                    EnchantmentHelper.addRandomEnchantment(RandomHelper.RANDOM, itemStack,
+                            (int)(5.0F + f * (float)RandomHelper.RANDOM.nextInt(18)), allowTreasure);
+                }
+            }
 
             // Strip out all learned wool drops for vanilla sheep
             // Add custom drop wool drops

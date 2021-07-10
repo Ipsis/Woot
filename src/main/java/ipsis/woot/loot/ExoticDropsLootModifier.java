@@ -21,6 +21,8 @@ import java.util.List;
 
 /**
  * Testing
+ * /execute in minecraft:the_end run teleport ~ ~ ~
+ * /locate endcity
  * /loot insert x y z loot minecraft:chests/end_city_treasure
  * /setblock ~ ~ ~ minecraft:chest{LootTable:"minecraft:chests/end_city_treasure"}
  */
@@ -51,7 +53,7 @@ public class ExoticDropsLootModifier extends LootModifier {
             if (RandomHelper.rollPercentage(dropChance, "exoticDrops")) {
                 ItemStack drop = getWeightedDrop();
                 if (!drop.isEmpty())
-                    generatedLoot.add(drop);
+                    generatedLoot.add(drop.copy());
             }
         }
         return generatedLoot;

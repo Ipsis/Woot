@@ -10,6 +10,15 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
+## [1.16.5-1.0.7.1] - 2021-??-??
+### Added
+- Randomize enchant on enchanted items
+- Damage items that can be damaged
+### Changed
+### Fixed
+- Exotic loot now correctly drops a copy of the itemstack..... [#530]
+### Removed
+
 ## [1.16.5-1.0.7.0] - 2021-05-16
 ### Added
 - Added energy display in JEI recipes rather than blank gui space
@@ -23,6 +32,7 @@ no loot learning can occur.
 - Correct custom drops not allowing stack size > 1 [#517]
 - Blacklisted all RFTools Dimension dimlets [#520]
 - Fixed XReliquary Mob Charm Fragments being produced with no entity NBT
+- Fixed the generateItem blacklist not being used
 ### Removed
 
 ## [1.16.5-1.0.6.0] - 2021-04-25

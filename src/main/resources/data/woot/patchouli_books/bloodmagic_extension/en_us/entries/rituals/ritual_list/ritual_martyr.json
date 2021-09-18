@@ -1,6 +1,6 @@
 {
   "name": "Ritual of the Martyr",
-  "icon": "woot:yahammer",
+  "icon": "woot:flayed_1",
   "category": "bloodmagic:rituals/ritual_list",
   "pages": [
     {
@@ -34,7 +34,7 @@
     {
       "type": "bloodmagic:ritual_data",
       "ritual": "ritualInfernalMachine",
-      "page_type": "damage"
+      "page_type": "heart"
     }
   ]
 }

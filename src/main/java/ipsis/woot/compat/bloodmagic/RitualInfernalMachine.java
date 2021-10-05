@@ -50,7 +50,7 @@ public class RitualInfernalMachine extends Ritual {
             return;
         }
 
-        BlockPos ritualPos = iMasterRitualStone.getBlockPos();
+        BlockPos ritualPos = iMasterRitualStone.getMasterBlockPos();
 
         int maxEffects = currEssence / getRefreshCost();
         int totalEffects = 0;

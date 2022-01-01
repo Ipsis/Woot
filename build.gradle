@@ -169,7 +169,7 @@ dependencies {
     compileOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}:api")
     runtimeOnly fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}")
 
-    implementation fg.deobf("curse.maven:BloodMagic-224791:3184485")
+    implementation fg.deobf("curse.maven:BloodMagic-224791:3477631")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

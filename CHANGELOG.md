@@ -10,6 +10,13 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
+## [1.16.5-1.0.8.1] - 2022-01-01
+### Added
+### Changed
+### Fixed
+- Fix from ThakyZ for crash with Bloodmagic 3.1.3-18 and newer [#550]
+### Removed
+
 ## [1.16.5-1.0.8.0] - 2021-07-10
 ### Added
 - Randomize enchant on enchanted items

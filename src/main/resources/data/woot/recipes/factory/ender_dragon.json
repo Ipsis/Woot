@@ -83,6 +83,36 @@
         100.0,
         100.0
       ]
+    },
+    {
+      "item": "draconicevolution:dragon_heart",
+      "sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "chances": [
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    {
+      "item": "draconicevolution:draconium_dust",
+      "sizes": [
+        57,
+        64,
+        71,
+        78
+      ],
+      "chances": [
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ]
     }
   ]
 }

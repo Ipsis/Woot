@@ -10,6 +10,13 @@ no loot learning can occur.
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
 
+## [1.16.5-1.0.8.2] - 2022-01-??
+### Added
+- Ritual added to Blood Magic guidebook from Wrincewind [#546]
+### Changed
+### Fixed
+### Removed
+
 ## [1.16.5-1.0.8.1] - 2022-01-01
 ### Added
 ### Changed

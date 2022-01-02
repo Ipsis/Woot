@@ -13,10 +13,11 @@ no loot learning can occur.
 ## [1.16.5-1.0.8.2] - 2022-01-??
 ### Added
 - Ritual added to Blood Magic guidebook from Wrincewind [#546]
-- Added Draconic drops for Ender Dragon
+- Added Draconic drops for Ender Dragon [#544]
   Based off the default dragonDustLootModifier from DE of 64
 ### Changed
 ### Fixed
+- Fixed fluid texture [#540]
 ### Removed
 
 ## [1.16.5-1.0.8.1] - 2022-01-01

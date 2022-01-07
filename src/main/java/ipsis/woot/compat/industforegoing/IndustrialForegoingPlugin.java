@@ -55,6 +55,6 @@ public class IndustrialForegoingPlugin {
         if (ETHER_FLUID == null || world == null || fakeMob == null || !fakeMob.isValid() || !fakeMob.isWither())
             return FluidStack.EMPTY;
 
-        return new FluidStack(ETHER_FLUID, 10);
+        return new FluidStack(ETHER_FLUID, 600);
     }
 }

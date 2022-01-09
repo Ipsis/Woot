@@ -25,8 +25,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class LootGeneration {
 
@@ -151,7 +153,11 @@ public class LootGeneration {
         // Skull gen
         if (setup.getAllPerks().containsKey(Perk.Group.HEADLESS)) {
             List<ItemStack> skulls = new ArrayList<>();
-            setup.getAllMobs().forEach(m -> skulls.add(SKULL_GENERATOR.getSkullDrop(m, setup.getAllMobParams().get(m).getPerkHeadlessValue())));
+            List<FakeMob> countAdjustedMobParams = setup.getAllMobs().stream().map(m -> {
+                int mobCount = setup.getAllMobParams().get(m).getMobCount(setup.getAllPerks().containsKey(Perk.Group.MASS), setup.hasMassExotic());
+                return Collections.nCopies(mobCount, m);
+            }).flatMap(List::stream).collect(Collectors.toList());
+            countAdjustedMobParams.forEach(m -> skulls.add(SKULL_GENERATOR.getSkullDrop(m, setup.getAllMobParams().get(m).getPerkHeadlessValue())));
             StorageHelper.insertItems(skulls, itemHandlers);
         }
 

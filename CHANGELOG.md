@@ -18,6 +18,8 @@ no loot learning can occur.
 ### Changed
 ### Fixed
 - Fixed fluid texture [#540]
+- Fixed Industrial Foregoing perk scaling with higher tiers from CerulanLumina [#558]
+- Fixed Head Start and Rampage interaction from CerulanLumina [#559]
 ### Removed
 
 ## [1.16.5-1.0.8.1] - 2022-01-01

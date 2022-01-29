@@ -52,7 +52,8 @@ public class FactoryModule implements Module {
     public static final RegistryObject<Block> LAYOUT = Registration.BLOCKS.register(LAYOUT_ID,
             () -> new LayoutBlock().addSimpleTooltip(LAYOUT_ID).addSneakTooltip("info.woot.sneak.0." + LAYOUT_ID).addSneakTooltip("info.woot.sneak.1." + LAYOUT_ID));
     public static final RegistryObject<Item> LAYOUT_ITEM = Registration.ITEMS.register(LAYOUT_ID, () -> new BlockItem(LAYOUT.get(), ModSetup.createStandardProperties()));
-    public static final RegistryObject<TileEntityType<LayoutTileEntity>> LAYOUT_TE = Registration.TILES.register(LAYOUT_ID, () -> TileEntityType.Builder.of(() -> new LayoutTileEntity(), LAYOUT.get()).build(null));
+    public static final RegistryObject<TileEntityType<LayoutTileEntity>> LAYOUT_TE = Registration.TILES.register(LAYOUT_ID,
+            () -> TileEntityType.Builder.of(() -> new LayoutTileEntity(), LAYOUT.get()).build(null));
 
     public static final RegistryObject<Block> HEART = Registration.BLOCKS.register(HEART_ID, HeartBlock::new);
     public static final RegistryObject<Item> HEART_ITEM = Registration.ITEMS.register(HEART_ID, () -> new BlockItem(HEART.get(), ModSetup.createStandardProperties()));
@@ -106,10 +107,7 @@ public class FactoryModule implements Module {
         return AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.5F);
     }
 
-    /**
-     * Module interface
-     */
-
+    // Start Module
     @Override
     public void initConfig() {
         FactoryConfig.setup(Config.SERVER_BUILDER, Config.CLIENT_BUILDER);
@@ -146,4 +144,5 @@ public class FactoryModule implements Module {
         InternItem.addTranslations(INTERN_ID, languages);
         LayoutBlock.addTranslations(LAYOUT_ID, languages);
     }
+    // End Module
 }

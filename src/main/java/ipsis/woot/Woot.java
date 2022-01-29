@@ -2,6 +2,7 @@ package ipsis.woot;
 
 import ipsis.woot.modules.Modules;
 import ipsis.woot.modules.factory.FactoryModule;
+import ipsis.woot.modules.squeezer.SqueezerModule;
 import ipsis.woot.setup.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -32,5 +33,6 @@ public class Woot {
     private void setupModules() {
 
         modules.register(new FactoryModule());
+        modules.register(new SqueezerModule());
     }
 }

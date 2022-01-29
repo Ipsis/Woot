@@ -3,6 +3,7 @@ package ipsis.woot.modules.factory.items;
 import com.mojang.datafixers.util.Pair;
 import ipsis.woot.Woot;
 import ipsis.woot.base.WootItem;
+import ipsis.woot.datagen.Languages;
 import ipsis.woot.modules.factory.ComponentType;
 import ipsis.woot.modules.factory.FactoryModule;
 import ipsis.woot.modules.factory.FactoryTier;
@@ -10,17 +11,21 @@ import ipsis.woot.modules.factory.layout.PatternBlockInfo;
 import ipsis.woot.modules.factory.layout.PatternLibrary;
 import ipsis.woot.util.BlockPosHelper;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -38,12 +43,16 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+
+import static ipsis.woot.modules.factory.FactoryModule.INTERN_ID;
 
 public class InternItem extends WootItem {
 
@@ -266,5 +275,49 @@ public class InternItem extends WootItem {
                         d0, d1, d2);
             }
         }
+    }
+
+    public static void addTranslations(String id, Languages languages) {
+
+        languages.add(FactoryModule.INTERN_ITEM.get(), "Intern");
+        languages.add("info.woot." + id, "Use on the Heart to build, destroy and validate");
+        languages.add("info.woot.sneak." + id, "Sneak right click to change modes");
+        languages.add("info.woot." + id + ".modes.build_tier_1", "Build Tier I factory");
+        languages.add("info.woot." + id + ".modes.build_tier_2", "Build Tier II factory");
+        languages.add("info.woot." + id + ".modes.build_tier_3", "Build Tier III factory");
+        languages.add("info.woot." + id + ".modes.build_tier_4", "Build Tier IV factory");
+        languages.add("info.woot." + id + ".modes.build_tier_5", "Build Tier V factory");
+        languages.add("info.woot." + id + ".modes.validate_tier_1", "Validate Tier I factory");
+        languages.add("info.woot." + id + ".modes.validate_tier_2", "Validate Tier II factory");
+        languages.add("info.woot." + id + ".modes.validate_tier_3", "Validate Tier III factory");
+        languages.add("info.woot." + id + ".modes.validate_tier_4", "Validate Tier IV factory");
+        languages.add("info.woot." + id + ".modes.validate_tier_5", "Validate Tier V factory");
+
+        /* Guide entry */
+        languages.add("guide.woot.tools." + id + ".name", "The Intern");
+        languages.add("guide.woot.tools." + id + ".0",
+                "$(item)The Intern$(0) is there to replace that tedious task of manually building and upgrading the factory structure. " +
+                        "Not only can it build but also, with no extra payment, validate an existing structure.");
+        languages.add("guide.woot.tools." + id + ".1",
+                "When in one of the build modes, $(item)The Intern$(0) will take the factory blocks from your inventory and place them into the world. " +
+                        "The tier of factory built will depend on the mode that $(item)The Intern$(0) is in.");
+        languages.add("guide.woot.tools." + id + ".2",
+                "$(li)The tool should be used on a pre-placed Heart." + "" +
+                        "$(li)The current mode can be cycled by left-clicking in the air.");
+        languages.add("guide.woot.tools." + id + ".craft.0", "Why bark when you have a dog.");
+    }
+
+    public static void addRecipe(Item item, Consumer<IFinishedRecipe> consumer) {
+
+        ShapedRecipeBuilder.shaped(item)
+                .pattern(" si")
+                .pattern(" ws")
+                .pattern("w  ")
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('s', Tags.Items.DUSTS_REDSTONE)
+                .define('w', Items.STICK)
+                .group(Woot.MODID)
+                .unlockedBy("cobblestone", InventoryChangeTrigger.Instance.hasItems(Blocks.COBBLESTONE))
+                .save(consumer);
     }
 }

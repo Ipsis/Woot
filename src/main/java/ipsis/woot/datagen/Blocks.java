@@ -2,6 +2,7 @@ package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryModule;
+import ipsis.woot.modules.squeezer.SqueezerModule;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -18,6 +19,7 @@ public class Blocks extends BlockStateProvider {
 
         final ResourceLocation FACTORY_SIDE = new ResourceLocation(Woot.MODID, "block/factory");
 
+        // Factory Module
         horizontalBlock(FactoryModule.LAYOUT.get(), FACTORY_SIDE, modLoc("block/" + FactoryModule.LAYOUT_ID), FACTORY_SIDE);
         horizontalBlock(FactoryModule.HEART.get(), FACTORY_SIDE, modLoc("block/" + FactoryModule.HEART_ID), FACTORY_SIDE);
         simpleBlock(FactoryModule.IMPORTER.get(), models().cubeAll(FactoryModule.IMPORTER_ID, modLoc("block/" + FactoryModule.IMPORTER_ID)));
@@ -36,5 +38,8 @@ public class Blocks extends BlockStateProvider {
         simpleBlock(FactoryModule.CORE_4B.get(), models().cubeAll(FactoryModule.CORE_4B_ID, modLoc("block/" + FactoryModule.CORE_4B_ID)));
         simpleBlock(FactoryModule.CORE_5A.get(), models().cubeAll(FactoryModule.CORE_5A_ID, modLoc("block/" + FactoryModule.CORE_5A_ID)));
         simpleBlock(FactoryModule.CORE_5B.get(), models().cubeAll(FactoryModule.CORE_5B_ID, modLoc("block/" + FactoryModule.CORE_5B_ID)));
+
+        // Squeezer Module
+        horizontalBlock(SqueezerModule.DYE_SQUEEZER.get(), FACTORY_SIDE, modLoc("block/" + SqueezerModule.DYE_SQUEEZER_ID), FACTORY_SIDE);
     }
 }

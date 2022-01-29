@@ -2,6 +2,7 @@ package ipsis.woot.datagen;
 
 import ipsis.woot.Woot;
 import ipsis.woot.modules.factory.FactoryModule;
+import ipsis.woot.modules.squeezer.SqueezerModule;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
@@ -18,6 +19,7 @@ public class Items extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
+        // Factory Module
         parentedBlock(FactoryModule.LAYOUT.get(), "block/" + FactoryModule.LAYOUT_ID);
         parentedBlock(FactoryModule.HEART.get(), "block/" + FactoryModule.HEART_ID);
         parentedBlock(FactoryModule.IMPORTER.get(), "block/" + FactoryModule.IMPORTER_ID);
@@ -36,8 +38,10 @@ public class Items extends ItemModelProvider {
         parentedBlock(FactoryModule.CORE_4B.get(), "block/" + FactoryModule.CORE_4B_ID);
         parentedBlock(FactoryModule.CORE_5A.get(), "block/" + FactoryModule.CORE_5A_ID);
         parentedBlock(FactoryModule.CORE_5B.get(), "block/" + FactoryModule.CORE_5B_ID);
-
         itemGenerated(FactoryModule.INTERN_ITEM.get(), "item/" + FactoryModule.INTERN_ID);
+
+        // Squeezer Module
+        parentedBlock(SqueezerModule.DYE_SQUEEZER.get(), "block/" + SqueezerModule.DYE_SQUEEZER_ID);
     }
 
     private void parentedBlock(Block block, String model) {

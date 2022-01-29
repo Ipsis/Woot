@@ -9,6 +9,14 @@ no loot learning can occur.
 
 - Forge earlier than 1.16.4-35.0.15 does not load dimensions on servers for first run.
 - Quark realistic terrain causes Tartarus not to load on dedicated servers.
+- 
+## [1.16.5-1.0.8.3] - 2022-02-XX
+### Added
+### Changed
+- Updated to Forge 36.2.22
+### Fixed
+- Moved ItemColor registration to ColorHandlerEvent [#561]
+### Removed
 
 ## [1.16.5-1.0.8.2] - 2022-01-29
 ### Added

@@ -22,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -41,8 +42,12 @@ public class ClientRegistration {
         ScreenManager.registerFactory(SqueezerSetup.ENCHANT_SQUEEZER_BLOCK_CONTAINER.get(), EnchantSqueezerScreen::new);
         ScreenManager.registerFactory(InfuserSetup.INFUSER_BLOCK_CONTAINER.get(), InfuserScreen::new);
         ScreenManager.registerFactory(FluidConvertorSetup.FLUID_CONVERTOR_BLOCK_CONTATAINER.get(), FluidConvertorScreen::new);
+    }
 
-        ItemColors items = Minecraft.getInstance().getItemColors();
+    @SubscribeEvent
+    public static void registerItemColors(ColorHandlerEvent.Item event) {
+        Woot.setup.getLogger().debug("registerItemColors");
+        ItemColors items = event.getItemColors();
         items.register((s, t) -> ((DyePlateItem)s.getItem()).getColor().getColorValue(), InfuserSetup.WHITE_DYE_PLATE_ITEM.get());
         items.register((s, t) -> ((DyePlateItem)s.getItem()).getColor().getColorValue(), InfuserSetup.ORANGE_DYE_PLATE_ITEM.get());
         items.register((s, t) -> ((DyePlateItem)s.getItem()).getColor().getColorValue(), InfuserSetup.MAGENTA_DYE_PLATE_ITEM.get());

@@ -217,7 +217,7 @@ public class FactorySetup {
 
     public static final String CELL_4_TAG = "cell_4";
     public static final RegistryObject<CellBlock> CELL_4_BLOCK = BLOCKS.register(
-            CELL_4_TAG, () -> new CellBlock(Cell3TileEntity.class));
+            CELL_4_TAG, () -> new CellBlock(Cell4TileEntity.class));
     public static final RegistryObject<Item> CELL_4_BLOCK_ITEM = ITEMS.register(
             CELL_4_TAG, () ->
                     new BlockItem(CELL_4_BLOCK.get(), Woot.createStandardProperties()));

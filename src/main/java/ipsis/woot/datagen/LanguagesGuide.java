@@ -92,7 +92,7 @@ public class LanguagesGuide {
                 { BASICS_TAG + "ingredients.name", "Ingredients" },
                 { BASICS_TAG + "ingredients.0",
                      "Some mobs require ingredients to drop their loot and these must be provided in chests/tanks beside the $(item)Ingredient Importer$(0)." +
-                     "ALL ingredients for ALL mobs be provided or no loot will be produced."
+                     "ALL ingredients for ALL mobs must be provided or no loot will be produced."
                 },
                 // Tiers
                 { BASICS_TAG + "tiers.name", "Factory tiers"},
